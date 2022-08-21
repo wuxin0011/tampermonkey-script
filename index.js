@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         huyazhibo
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  屏蔽、禁用不想看到主播直播间!
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -22,6 +22,8 @@
     const isRemoveWall = true
     // 是否屏蔽录左侧tabbar
     const isRemoveTabbar = true
+    // 是否删除底部直播信息
+    const isRemoveRoomFooter = true
     // 是否创建添加按钮
     const isCreateBtn = true
     // 添加
@@ -30,6 +32,8 @@
     let flushRoomBtn = null
     // 搜索
     let searchRoomBtn = null
+    // 清空btn
+    let clearRoomBtn = null
     // 输入框
     let inputValue = null
 
@@ -45,8 +49,6 @@
         ids = getLocalStore()
         // 直播将没有移除，移除直播连接
         if (!removeRoom()) {
-            // // 添加操作button
-            createButton()
             // 添加容器
             create_container()
             // 移除 其他轮播图，导航栏等
@@ -67,6 +69,7 @@
                           <button class="btn btn-success search-room">搜索</button>
                           <button class="btn btn-teal add-room">添加</button>
                           <button class="btn btn-info flush-room">刷新</button>
+                          <button class="btn btn-danger clear-room">清空</button>
                       </div>
                      <table >
                           <thead>
@@ -77,7 +80,6 @@
                           <tbody>
                           </tbody>
                       </table>
-
                     </div>
 `)
 
@@ -89,11 +91,15 @@
 
         inputValue = m_container.querySelector('.m-container .operation input')
 
-        // 搜索
+        // 搜索、刷新、添加
         searchDOM()
         flushDOM()
         addDOM()
+        clearDOM()
+        // 添加直播房间号信息
         createRoomItem(ids)
+        // 添加操作button
+        createButton()
     }
 
 
@@ -185,6 +191,22 @@
 
     }
 
+    // 清空btn
+    const clearDOM = () => {
+        try {
+            clearRoomBtn = document.querySelector('.m-container button.clear-room')
+            clearRoomBtn.addEventListener('click', function () {
+                if(confirm('确认清空？')){
+                    ids = addLocalStore([])
+                    resetTbody(ids)
+                }
+
+
+            })
+        } catch (e) {}
+
+    }
+
     const resetTbody = (arr) => {
         try {
             // 删除原来dom
@@ -212,12 +234,22 @@
             const ads = document.querySelector('.list-adx')
             removeDOM(ads)
         }
+        // 移除直播通知内容
+        const notice = document.querySelector('.liveList-header-r')
+        removeDOM(notice)
 
         // 屏蔽左侧导航栏
         if (isRemoveTabbar) {
             const tabbar = document.querySelector('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
             removeDOM(tabbar)
         }
+
+        // 删除主播直播间底部信息
+        if (isRemoveRoomFooter) {
+            const tabbar = document.querySelector('.room-footer')
+            removeDOM(tabbar)
+        }
+
 
         // 移除直播间窗口
         try {
@@ -243,41 +275,48 @@
         const room = body.querySelector('.room-core')
         // 直播源
         const video = room.querySelector('video')
-        if (video) {
-            video.pause()
+        // 点击播放按钮
+        const videoBtn = room.querySelector('.player-play-btn')
+        try{
+            let ev = new Event("click", {"bubbles":true, "cancelable":false});
+            // 自动触发点击暂停事件 停止播放
+            videoBtn.dispatchEvent(ev)
+        }catch(e){
+            // 如果失败 操作video源
+            if (video&&video.paused) {
+                // 暂停播放
+                video.pause()
+            }
         }
-        setTimeout(()=>{
-            // 删除直播源
-            removeDOM(video)
-            // 删除直播源和直播间
-            removeDOM(room)
-            // 删除页面内容
-            removeDOM(body)
-
-            const h2 = document.createElement('h2')
-            body = document.createElement('body')
-
-            body.style.display = 'flex'
-            body.style.justifyContent = 'center'
-            body.style.alignItems = 'center'
-
-            h2.textContent = '该主播已被你屏蔽！'
-            h2.style.fontSize = '50px'
 
 
-            html.appendChild(body)
-            body.appendChild(h2)
+        // 删除直播间内容
+        // 删除直播源
+        removeDOM(video)
+        // 删除直播源和直播间
+        removeDOM(room)
+        // 删除页面内容
+        removeDOM(body)
 
-            const c = document.querySelector('.m-container')
-            removeDOM(c)
-        },0)
+        const h2 = document.createElement('h2')
+        body = document.createElement('body')
+
+        body.style.display = 'flex'
+        body.style.justifyContent = 'center'
+        body.style.alignItems = 'center'
+
+        h2.textContent = '该主播已被你屏蔽！'
+        h2.style.fontSize = '50px'
 
 
+        html.appendChild(body)
+        body.appendChild(h2)
 
-        try {
-            createButton()
-            create_container()
-        } catch (e) {}
+        const c = document.querySelector('.m-container')
+        removeDOM(c)
+
+        // 创建操作面板
+        create_container()
         return true
     }
 
@@ -363,28 +402,23 @@
       transition: display linear 1s;
       box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2),
       -2px -2px 2px rgba(0, 0, 0, 0.2);
-
     }
-
     .m-container .operation {
       box-sizing: border-box;
       height: 80px;
       padding: 20px 0 0 0;
       text-align: center;
     }
-
     .m-container .operation input {
+      width:40%;
       box-sizing: border-box;
-      width: 60%;
       outline: none;
       border: 1px solid teal;
       padding: 5px;
     }
-
     .m-container .operation input:focus {
       border: 2px solid teal;
     }
-
     .m-container table {
       position: relative;
       box-sizing: border-box;
@@ -395,28 +429,23 @@
       max-height:200px;
       width: 90%;
     }
-
     .m-container  table tbody {
       max-height: 250px;
       text-align: left !important;
     }
-
     .m-container table thead{
       border-top: 1px solid rgba(0,0,0,0.4);
       border-bottom: 1px solid rgba(0,0,0,0.4);
       text-align: left !important;
       padding: 10px;
     }
-
     .m-container table th, m-container table td {
       padding: 10px;
     }
-
     .m-container table tr {
       border-bottom: 1px solid rgba(0,0,0,0.4);
       margin:5px 0;
     }
-
     .m-container .btn {
       cursor: pointer;
       padding: 5px 10px;
@@ -426,27 +455,21 @@
       border-radius:20px;
       z-index:1000;
     }
-
-
     .m-container .btn-warning{
       position:fixed;
       top:300px;
       right:0;
       background-color:rgb(255, 135, 0);
     }
-
     .m-container .btn-teal{
       background-color:teal;
     }
-
     .m-container .btn-success{
       background-color: #008040;
     }
-
     .m-container .btn-info{
       background-color:#777777;
     }
-
     .m-container .btn-danger{
       background-color:red;
     }
