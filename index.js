@@ -56,7 +56,10 @@
             removeWall()
         }
 
-        indexAddRemoveBtn()
+        // 给直播间添加删除按钮
+        indexAddRemoveBtn();
+        // 给直播间添加删除按钮
+        addRemoveBtn();
 
 
     }
@@ -411,39 +414,55 @@
 
     // https://www.huya.com/g/xxxx
     const indexAddRemoveBtn = ()=>{
-
-        try
-        {
-            // 获取所有主播间
-            const rooms = document.querySelectorAll('.game-live-item')
-            for( let room of rooms){
-                // 获取单个主播间房间地址
-                const url = room.querySelector('a').href
-                // 获取房间i
-                const user = room.querySelector('.txt i')
-                const name = user.textContent || ''
-                // 添加点击事件
-                user.addEventListener('click',()=>{
-                    if(confirm(`确认禁用 ${name}？`)){
-                        const roomId = getRoomIdByUrl(url);
-                        if (ids.indexOf(roomId) === -1) {
-                            ids.push(roomId)
-                            addLocalStore(ids)
-                            ids = getLocalStore()
-                            resetTbody(ids)
-                            // 移除直播间
-                            removeDOM(room);
-                        }
-                        else {
-                            alert('该房间已存在！！！')
-                        }
-
+        // 获取所有主播间
+       const rooms = document.querySelectorAll('.game-live-item')
+       if(!rooms){
+         return;
+       }
+       for( let room of rooms){
+         try{
+            // 获取单个主播间房间地址
+            const url = room.querySelector('a').href
+            // 获取房间i
+            const user = room.querySelector('.txt i')
+            const name = user.textContent || ''
+            // 添加点击事件
+            user.addEventListener('click',()=>{
+                if(confirm(`确认禁用 ${name}？`)){
+                    const roomId = getRoomIdByUrl(url);
+                    if (ids.indexOf(roomId) === -1) {
+                        ids.push(roomId)
+                        addLocalStore(ids)
+                        ids = getLocalStore()
+                        resetTbody(ids)
+                        // 移除直播间
+                        removeDOM(room);
                     }
-                })
+                    else {
+                        alert('该房间已存在！！！')
+                    }
 
-            }
-
+                }
+           })
         }catch(e){console.error(e)}
+
+    }
+
+        
+
+    }
+
+   const addRemoveBtn = ()=>{
+        // 直播源
+        const hostName = document.querySelector('.host-name')
+        if(hostName){
+            hostName.addEventListener('click',()=>{
+             if(confirm(`确认禁用 ${hostName.textContent}？`)){
+                removeRoom();         
+              }
+            })
+
+        }
 
     }
 
@@ -539,11 +558,12 @@
       background-color:red;
     }
 
-    .game-live-item i {
+  
+    .game-live-item i,.host-name {
         cursor:pointer;
     }
 
-    .game-live-item .txt i:hover {
+    .game-live-item .txt i:hover,.host-name:hover {
         color:rgb(255, 135, 0);
     }
 
