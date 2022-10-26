@@ -1,7 +1,8 @@
+
 // ==UserScript==
-// @name         huyazhibo
+// @name         虎牙直播
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  屏蔽、禁用不想看到主播直播间!
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -54,6 +55,8 @@
             // 移除 其他轮播图，导航栏等
             removeWall()
         }
+
+        indexAddRemoveBtn()
 
 
     }
@@ -234,6 +237,14 @@
             const ads = document.querySelector('.list-adx')
             removeDOM(ads)
         }
+
+
+        const matchComponent = document.querySelector('#match-cms-content')
+        removeDOM(matchComponent)
+        const matchComponent2 = document.querySelector('#matchComponent2')
+        removeDOM(matchComponent2)
+
+
         // 移除直播通知内容
         const notice = document.querySelector('.liveList-header-r')
         removeDOM(notice)
@@ -250,6 +261,17 @@
             removeDOM(tabbar)
         }
 
+        // 删除礼物 排行
+        const gift_row = document.getElementById('J_roomSideHd')
+        removeDOM(gift_row)
+
+        // 删除直播间礼物窗口
+        const gift = document.querySelector('#player-gift-wrap')
+        removeDOM(gift)
+
+        // 删除礼物活动
+        const root = document.getElementById('root')
+        //removeDOM(root)
 
         // 移除直播间窗口
         try {
@@ -323,15 +345,16 @@
 
     // 该链接是否应该被移除
     const isRemove = (href) => {
-        try {
-            let arr = href.split(baseUrl)
-            let id = arr[arr.length - 1]
-            return ids.indexOf(id) !== -1
-        } catch (e) {
-            return false
-        }
-
+        return ids.indexOf(getRoomIdByUrl(href)) !== -1
     }
+
+    // 通过房间地址获取房间号
+    const getRoomIdByUrl = (url) => {
+        let arr = url.split('/')
+        let roomId = arr[arr.length - 1]
+        return roomId
+    }
+
 
     // 添加右侧按钮
     const createButton = () => {
@@ -372,6 +395,7 @@
     }
 
 
+
     // 添加到本地
     const addLocalStore = (obj) => {
         window.localStorage.setItem(key, JSON.stringify(obj))
@@ -384,6 +408,47 @@
         const obj = JSON.parse(window.localStorage.getItem(key))
         return Array.isArray(obj) ? obj : []
     }
+
+    // https://www.huya.com/g/xxxx
+    const indexAddRemoveBtn = ()=>{
+
+        try
+        {
+            // 获取所有主播间
+            const rooms = document.querySelectorAll('.game-live-item')
+            for( let room of rooms){
+                // 获取单个主播间房间地址
+                const url = room.querySelector('a').href
+                // 获取房间i
+                const user = room.querySelector('.txt i')
+                const name = user.textContent || ''
+                // 添加点击事件
+                user.addEventListener('click',()=>{
+                    if(confirm(`确认禁用 ${name}？`)){
+                        const roomId = getRoomIdByUrl(url);
+                        if (ids.indexOf(roomId) === -1) {
+                            ids.push(roomId)
+                            addLocalStore(ids)
+                            ids = getLocalStore()
+                            resetTbody(ids)
+                            // 移除直播间
+                            removeDOM(room);
+                        }
+                        else {
+                            alert('该房间已存在！！！')
+                        }
+
+                    }
+                })
+
+            }
+
+        }catch(e){console.error(e)}
+
+    }
+
+
+
 
     GM_addStyle(`
     .m-container {
@@ -473,7 +538,14 @@
     .m-container .btn-danger{
       background-color:red;
     }
+
+    .game-live-item i {
+        cursor:pointer;
+    }
+
+    .game-live-item .txt i:hover {
+        color:rgb(255, 135, 0);
+    }
+
       `)
-
-
 })();
