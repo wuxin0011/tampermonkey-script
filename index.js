@@ -296,6 +296,12 @@
         if (!isRemove(href)) {
             return false
         }
+        removeRoomClick();
+        return true
+    }
+
+    const removeRoomClick = () => {
+        const href = window.location.href
         // 直播房间
         const room = body.querySelector('.room-core')
         // 直播源
@@ -458,7 +464,7 @@
         if(hostName){
             hostName.addEventListener('click',()=>{
              if(confirm(`确认禁用 ${hostName.textContent}？`)){
-                removeRoom();         
+                removeRoomClick();         
               }
             })
 
