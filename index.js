@@ -60,6 +60,8 @@
         indexAddRemoveBtn();
         // 给直播间添加删除按钮
         addRemoveBtn();
+        // home
+        indexHome();
 
 
     }
@@ -236,33 +238,20 @@
 
     const removeWall = () => {
         // 屏蔽轮播图
-        if (isRemoveWall) {
-            const ads = document.querySelector('.list-adx')
-            removeDOM(ads)
-        }
-
-
-        const matchComponent = document.querySelector('#match-cms-content')
-        removeDOM(matchComponent)
-        const matchComponent2 = document.querySelector('#matchComponent2')
-        removeDOM(matchComponent2)
-
+        const ads = document.querySelector('.list-adx')
+        removeDOM(ads)
 
         // 移除直播通知内容
         const notice = document.querySelector('.liveList-header-r')
         removeDOM(notice)
 
         // 屏蔽左侧导航栏
-        if (isRemoveTabbar) {
-            const tabbar = document.querySelector('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
-            removeDOM(tabbar)
-        }
+        const tabbar = document.querySelector('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
+        removeDOM(tabbar)
 
         // 删除主播直播间底部信息
-        if (isRemoveRoomFooter) {
-            const tabbar = document.querySelector('.room-footer')
-            removeDOM(tabbar)
-        }
+        const footer = document.querySelector('.room-footer')
+        removeDOM(footer)
 
         // 删除礼物 排行
         const gift_row = document.getElementById('J_roomSideHd')
@@ -272,9 +261,21 @@
         const gift = document.querySelector('#player-gift-wrap')
         removeDOM(gift)
 
+        // 直播间左侧礼物排行1
+        const matchComponent = document.querySelector('#match-cms-content')
+        removeDOM(matchComponent)
+
+        // 直播间左侧礼物排行2
+        const matchComponent2 = document.querySelector('#matchComponent2')
+        removeDOM(matchComponent2)
+
         // 删除礼物活动
         const root = document.getElementById('root')
         //removeDOM(root)
+
+         // 导航栏 游戏广告连接
+        const game = document.querySelector('.hy-nav-item.hy-nav-item-game')
+        removeDOM(game)
 
         // 移除直播间窗口
         try {
@@ -318,12 +319,14 @@
                 // 暂停播放
                 video.pause()
             }
+        }finally{
+            // 删除直播源
+            removeDOM(video)
         }
 
 
         // 删除直播间内容
-        // 删除直播源
-        removeDOM(video)
+        
         // 删除直播源和直播间
         removeDOM(room)
         // 删除页面内容
@@ -421,56 +424,129 @@
     // https://www.huya.com/g/xxxx
     const indexAddRemoveBtn = ()=>{
         // 获取所有主播间
-       const rooms = document.querySelectorAll('.game-live-item')
-       if(!rooms){
-         return;
-       }
-       for( let room of rooms){
-         try{
-            // 获取单个主播间房间地址
-            const url = room.querySelector('a').href
-            // 获取房间i
-            const user = room.querySelector('.txt i')
-            const name = user.textContent || ''
-            // 添加点击事件
-            user.addEventListener('click',()=>{
-                if(confirm(`确认禁用 ${name}？`)){
-                    const roomId = getRoomIdByUrl(url);
-                    if (ids.indexOf(roomId) === -1) {
-                        ids.push(roomId)
-                        addLocalStore(ids)
-                        ids = getLocalStore()
-                        resetTbody(ids)
-                        // 移除直播间
-                        removeDOM(room);
-                    }
-                    else {
-                        alert('该房间已存在！！！')
-                    }
+        const rooms = document.querySelectorAll('.game-live-item')
+        if(!rooms){
+            return;
+        }
+        for( let room of rooms){
+            try{
+                // 获取单个主播间房间地址
+                const url = room.querySelector('a').href
+                // 获取房间i
+                const user = room.querySelector('.txt i')
+                const name = user.textContent || ''
+                // 添加点击事件
+                user.addEventListener('click',()=>{
+                    if(confirm(`确认禁用 ${name}？`)){
+                        const roomId = getRoomIdByUrl(url);
+                        if (ids.indexOf(roomId) === -1) {
+                            ids.push(roomId)
+                            addLocalStore(ids)
+                            ids = getLocalStore()
+                            resetTbody(ids)
+                            // 移除直播间
+                            removeDOM(room);
+                        }
+                        else {
+                            alert('该房间已存在！！！')
+                        }
 
-                }
-           })
-        }catch(e){console.error(e)}
+                    }
+                })
+            }catch(e){console.error(e)}
 
+        }
     }
 
-        
-
-    }
-
-   const addRemoveBtn = ()=>{
+    const addRemoveBtn = ()=>{
         // 直播源
         const hostName = document.querySelector('.host-name')
         if(hostName){
             hostName.addEventListener('click',()=>{
-             if(confirm(`确认禁用 ${hostName.textContent}？`)){
-                removeRoomClick();         
-              }
+                if(confirm(`确认禁用 ${hostName.textContent}？`)){
+                    removeRoomClick()
+                }
             })
 
         }
 
     }
+
+    const indexHome = ()=>{
+       
+        // 直播源
+        const url = window.location.href
+        if( url == baseUrl ){
+            const bd = document.querySelector('.mod-index-main .main-bd')
+            const hd = document.querySelector('.mod-index-main .main-hd')
+            const video = document.querySelector('.mod-index-main video')
+            try{
+                if (video&&video.paused) {
+                    video.pause()
+                }
+            }catch(e){
+
+            }finally{
+                removeDOM(video)
+            }
+
+            // huya-icon
+            const huya = document.querySelector('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
+            // type
+            const type = document.querySelector('.mod-game-type')
+            // actlist
+            const actlist = document.querySelector('.mod-actlist')
+            // livebox
+            const liveBox = document.querySelector('.mod-index-list .live-box')
+            // news
+            const news = document.querySelector('.mod-news-section')
+            // recommend
+            const recommend = document.querySelector('.recommend-wrap')
+            // recommendbg
+            const recommendBg = document.querySelector('.mod-index-recommend')
+
+            // banner
+            const banner_close = document.querySelector('.mod-index-wrap #banner i')
+            if(banner_close){
+                banner_close.click();
+            }
+
+            //remove
+            removeDOM(hd)
+            removeDOM(bd)
+            removeDOM(huya)
+            removeDOM(type)
+            removeDOM(actlist)
+            removeDOM(liveBox)
+            removeDOM(news)
+            removeDOM(recommend)
+            removeDOM(recommendBg)
+           
+            // main
+            const main = document.querySelector('.mod-index-main')
+            removeDOM(main)
+
+            // banner
+            const banner = document.querySelector('#banner')
+            removeDOM(banner)
+
+             // list
+            const l = document.querySelector('.mod-index-list')
+            l.style.marginTop = '100px';
+
+            //顶部
+            const header = document.querySelector('#duya-header')
+            header.style.backgroundColor = '#f4f5f8';
+            header.style.color = 'rgb(79, 79, 79) !important';
+            const headerLink = header.querySelectorAll('.hy-nav-item a')
+            for(let a of headerLink){
+                a.style.color = 'black'
+            }
+
+        }
+
+    }
+
 
 
 
