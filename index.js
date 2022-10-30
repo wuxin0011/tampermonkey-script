@@ -58,6 +58,8 @@
             addRemoveBtn();
             // home
             indexHome();
+            // 添加移除事件
+            indexAddRemoveBtn()
         }catch(e){
             console.error(e)
         }
@@ -309,7 +311,10 @@
             const href = getRoomIdByUrl(li.querySelector('a').href)
             if (isRemove(href)) {
                 removeDOM(li)
-            }else{
+            }
+
+            /**
+            else{
                 // 获取单个主播间房间地址
                 const url = li.querySelector('a').href
                 // 获取房间i
@@ -325,7 +330,10 @@
                 })
 
             }
+            */
         }
+
+
 
     }
 
@@ -508,8 +516,22 @@
         if(!rooms){
             return;
         }
-        for( let room of rooms){
-
+        for( let li of rooms){
+            try{
+               // 获取单个主播间房间地址
+                const url = li.querySelector('a').href
+                // 获取房间i
+                const user = li.querySelector('.txt i')
+                const name = user.textContent || ''
+                // 添加点击事件
+                li.addEventListener('click',()=>{
+                    if(confirm(`确认禁用 ${name}？`)){
+                        const id = getRoomIdByUrl(url);
+                        addUser(id,name);
+                        removeDOM(li);
+                    }
+                })
+            }catch(e){console.error(e)}
 
         }
     }
@@ -528,6 +550,7 @@
         }
 
     }
+
 
     const indexHome = ()=>{
         // 直播源
