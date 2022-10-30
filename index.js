@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         虎牙直播
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      1.0
 // @description  屏蔽、禁用不想看到主播直播间!
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -17,16 +17,8 @@
     const key = 'huyazhibo'
     // 直播源
     const baseUrl = "https://www.huya.com/"
-    // 存放屏蔽主播房间号
-    let ids = []
-    // 是否屏蔽录播广告
-    const isRemoveWall = true
-    // 是否屏蔽录左侧tabbar
-    const isRemoveTabbar = true
-    // 是否删除底部直播信息
-    const isRemoveRoomFooter = true
-    // 是否创建添加按钮
-    const isCreateBtn = true
+    // 存放屏蔽主播信息
+    let users = []
     // 添加
     let addRoomBtn = null
     // 刷新
@@ -38,38 +30,52 @@
     // 输入框
     let inputValue = null
 
-    //=========容器========
+    /*************容器*********/
     let html = null
     let body = null
     let tbody = null
     let m_container = null
     window.onload = () => {
-        html = document.querySelector('html')
-        body = document.querySelector('body')
-        // 初始化房间号
-        ids = getLocalStore()
-        // 直播将没有移除，移除直播连接
-        if (!removeRoom()) {
-            // 添加容器
-            create_container()
-            // 移除 其他轮播图，导航栏等
-            removeWall()
+        try{
+            console.log(
+                ' %c  欢迎使用虎牙直播插件,下载地址： %c '
+                .concat('https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD', ''), 'background: rgb(255, 135, 0); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
+            console.log(
+                '%c 源码地址: %c '
+                .concat('https://github.com/wuxin0011/huya-live', ''), 'background: rgb(255, 135, 0); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
+            html = document.querySelector('html')
+            body = document.querySelector('body')
+            // 初始化房间号
+            users = getLocalStore()
+            // 是否屏蔽直播间
+            if (!removeRoom()) {
+                // 添加容器
+                create_container()
+                // 移除 其他轮播图，导航栏等
+                removeWall()
+            }
+            // 给直播间添加删除按钮
+            addRemoveBtn();
+            // home
+            indexHome();
+        }catch(e){
+            console.error(e)
         }
-
-        // 给直播间添加删除按钮
-        indexAddRemoveBtn();
-        // 给直播间添加删除按钮
-        addRemoveBtn();
-        // home
-        indexHome();
 
 
     }
 
+    // 定义主播类
+    class HostUser{
+        constructor(id,name){
+            this.id = id;
+            this.name = name;
+        }
+    }
 
     const create_container = () => {
         // 初始化房间号
-        ids = getLocalStore()
+        users = getLocalStore()
         m_container = s2d(`
                     <div class="m-container">
                     <div class="operation">
@@ -78,10 +84,12 @@
                           <button class="btn btn-teal add-room">添加</button>
                           <button class="btn btn-info flush-room">刷新</button>
                           <button class="btn btn-danger clear-room">清空</button>
+                          <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank">更新</a>
                       </div>
                      <table >
                           <thead>
                             <th>序号</th>
+                            <th>名称</th>
                             <th>房间号</th>
                             <th>操作</th>
                           </thead>
@@ -94,51 +102,65 @@
         if (!body) {
             body = document.querySelector('body')
         }
+        // 如果还是获取不到插件加载失败
+        if(!body){
+            return;
+        }
         body.appendChild(m_container)
         tbody = document.querySelector('.m-container table tbody')
-
         inputValue = m_container.querySelector('.m-container .operation input')
 
         // 搜索、刷新、添加
         searchDOM()
+        // 刷新
         flushDOM()
+        // 添加
         addDOM()
+        // 清除
         clearDOM()
         // 添加直播房间号信息
-        createRoomItem(ids)
-        // 添加操作button
+        createRoomItem(users)
+        // 右侧点击添加button
         createButton()
+        if(inputValue){
+            inputValue.addEventListener('keyup', function (e) {
+                if(e.key=='Enter'){
+                    let arr = users.filter(item=>{
+                        return item.id.indexOf(inputValue.value) !=-1 || item.name.indexOf(inputValue.value)!=-1
+                    })
+                    resetTbody(arr)
+                }
+            })
+        }
     }
 
 
     // 生成房间号item
     const createRoomItem = (arr) => {
-        try {
-            arr.forEach((id, index) => {
-                let tr = document.createElement('tr')
-                tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
-                tr.style.margin = '10px 0'
-                tr.style.padding = '20px 10px'
-                tr.innerHTML = `<td style="padding:10px;">${index+1}</td><td style="padding:10px;">${id}</td> <td style="padding:10px;"><button class="btn btn-danger" room-id="${id}">删除</button></td>`
-                tbody.appendChild(tr)
-
-                // 添加删除事件
-                const deleteBtn = tr.querySelector('button')
-                deleteBtn.addEventListener('click', function (e) {
-                    let t = e.target
-                    const id = t.getAttribute('room-id')
-                    if (id) {
-                        removeDOM(tr)
-                        ids.splice(ids.indexOf(id), 1)
-                        addLocalStore(ids)
-                    }
-                })
-
-            })
-        } catch (e) {
-
+        if(!Array.isArray(arr)){
+            return;
         }
+        arr.forEach((item, index) => {
+            let tr = document.createElement('tr')
+            tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
+            tr.style.margin = '10px 0'
+            tr.style.padding = '20px 10px'
+            tr.innerHTML =
+                `<td style="padding:10px;">${index+1}</td>
+                 <td style="padding:10px;">${item.name}</td>
+                 <td style="padding:10px;">${item.id}</td>
+                 <td style="padding:10px;">
+                 <button class="btn btn-danger" room-id="${item.id}">删除</button></td>`
+                tbody.appendChild(tr)
+            // 添加删除事件
+            const deleteBtn = tr.querySelector('button')
+            deleteBtn.addEventListener('click', function (e) {
+                const id = e.target.getAttribute('room-id')
+                removeDOM(tr)
+                userDelete(id)
+            })
 
+        })
     }
 
 
@@ -149,89 +171,93 @@
 
     // 搜索btn
     const searchDOM = () => {
-        try {
-            searchRoomBtn = document.querySelector('body .m-container .operation .search-room')
-            searchRoomBtn.addEventListener('click', function () {
-                var keywords = inputValue.value
-                let arr = ids.filter(item => item.indexOf(keywords) !== -1)
-                resetTbody(arr)
-
+        searchRoomBtn = document.querySelector('body .m-container .operation .search-room')
+        searchRoomBtn.addEventListener('click', function () {
+            let arr = users.filter(item=>{
+                return item.id.indexOf(inputValue.value) !=-1 || item.name.indexOf(inputValue.value)!=-1
             })
-
-        } catch (e) {}
+            resetTbody(arr)
+        })
 
     }
 
     // 添加btn
     const addDOM = () => {
-        try {
-            addRoomBtn = document.querySelector('.m-container .operation  button.add-room')
-            addRoomBtn.addEventListener('click', function () {
-                const c = inputValue.value
-                if (!c) {
-                    return alert('请输入房间号！')
+        addRoomBtn = document.querySelector('.m-container .operation  button.add-room')
+        addRoomBtn.addEventListener('click', function () {
+            const keywords = inputValue.value.trim()
+            if (!keywords) {
+                return alert('请输入房间号！')
+            }
+            if (!userIsExist(keywords)) {
+                const hostName = document.querySelector('.host-name')
+                if(!hostName){
+                    const rooms = document.querySelectorAll('.game-live-item')
+                    if(Array.isArray(rooms)){
+                        for(let room of rooms){
+                            const id = getRoomIdByUrl(room.querySelector('a').href)
+                            const user = room.querySelector('.txt i')
+                            if( id  ===  keywords){
+                                hostName = user
+                            }
+                        }
+                    }
                 }
-                if (ids.indexOf(c) === -1) {
-                    ids.push(c)
-                    addLocalStore(ids)
+                const name = hostName && hostName.textContent?hostName.textContent:''
+                if(name){
+                    addUser(hostName.textContent,keywords)
                     inputValue.value = ''
-                    ids = getLocalStore()
-                    resetTbody(ids)
-                } else {
-                    alert('该房间已存在！！！')
+                }else{
+                    if(confirm(`房间号为${inputValue.value}的主播不存在！确定添加？`)){
+                        addUser(keywords,keywords)
+                        inputValue.value = ''
+                    }
                 }
 
-            })
-
-        } catch (e) {}
-
+            } else {
+                alert('该主播已添加！')
+            }
+        })
     }
 
     // 刷新btn
     const flushDOM = () => {
-        try {
-            flushRoomBtn = document.querySelector('.m-container button.flush-room')
-            flushRoomBtn.addEventListener('click', function () {
-                ids = getLocalStore()
-                resetTbody(ids)
-            })
-        } catch (e) {}
-
+        flushRoomBtn = document.querySelector('.m-container button.flush-room')
+        flushRoomBtn.addEventListener('click', function () {
+            users = getLocalStore()
+            resetTbody(users)
+        })
     }
 
     // 清空btn
     const clearDOM = () => {
-        try {
-            clearRoomBtn = document.querySelector('.m-container button.clear-room')
-            clearRoomBtn.addEventListener('click', function () {
-                if(confirm('确认清空？')){
-                    ids = addLocalStore([])
-                    resetTbody(ids)
-                }
-
-
-            })
-        } catch (e) {}
+        clearRoomBtn = document.querySelector('.m-container button.clear-room')
+        clearRoomBtn.addEventListener('click', function () {
+            if(confirm('确认清空？')){
+                users = addLocalStore([])
+                resetTbody(users)
+            }
+        })
 
     }
 
     const resetTbody = (arr) => {
-        try {
-            // 删除原来dom
-            let table = document.querySelector('body .m-container table')
-            removeDOM(tbody)
-            tbody = document.createElement('tbody')
-            let thead = document.createElement('thead')
-            let room_index = document.createElement('th')
-            let room_id = document.createElement('th')
-            let room_operation = document.createElement('th')
-            thead.appendChild(room_index)
-            thead.appendChild(room_id)
-            thead.appendChild(room_operation)
-            table.appendChild(tbody)
-            // 添加操作窗口
-            createRoomItem(arr)
-        } catch (e) {}
+        // 删除原来dom
+        let table = document.querySelector('body .m-container table')
+        removeDOM(tbody)
+        tbody = document.createElement('tbody')
+        let thead = document.createElement('thead')
+        let room_index = document.createElement('th')
+        let room_name = document.createElement('th')
+        let room_id = document.createElement('th')
+        let room_operation = document.createElement('th')
+        thead.appendChild(room_index)
+        thead.appendChild(room_name)
+        thead.appendChild(room_id)
+        thead.appendChild(room_operation)
+        table.appendChild(tbody)
+        // 添加操作窗口
+        createRoomItem(arr)
 
     }
 
@@ -273,21 +299,33 @@
         const root = document.getElementById('root')
         //removeDOM(root)
 
-         // 导航栏 游戏广告连接
+        // 导航栏 游戏广告连接
         const game = document.querySelector('.hy-nav-item.hy-nav-item-game')
         removeDOM(game)
 
         // 移除直播间窗口
-        try {
-            const lis = document.querySelectorAll('.live-list.clearfix li')
-            for (let i = 0; i < lis.length; i++) {
-                if (isRemove(lis[i].querySelector('a').href)) {
-                    // 屏蔽直播间
-                    removeDOM(lis[i])
+        const lis = document.querySelectorAll('.live-list.clearfix li')
+        for(const li of lis){
+            const href = getRoomIdByUrl(li.querySelector('a').href)
+            if (isRemove(href)) {
+                removeDOM(li)
+            }else{
+                // 获取单个主播间房间地址
+                const url = li.querySelector('a').href
+                // 获取房间i
+                const user = li.querySelector('.txt i')
+                const name = user.textContent || ''
+                // 添加点击事件
+                li.addEventListener('click',()=>{
+                    if(confirm(`确认禁用 ${name}？`)){
+                        const id = getRoomIdByUrl(url);
+                        addUser(id,name);
+                        removeDOM(li);
+                    }
+                })
 
-                }
             }
-        } catch (e) {}
+        }
 
     }
 
@@ -302,11 +340,16 @@
     }
 
     const removeRoomClick = () => {
-        const href = window.location.href
         // 直播房间
         const room = body.querySelector('.room-core')
+        if(!room){
+            return;
+        }
         // 直播源
         const video = room.querySelector('video')
+        if(!video){
+            return;
+        }
         // 点击播放按钮
         const videoBtn = room.querySelector('.player-play-btn')
         try{
@@ -323,10 +366,6 @@
             // 删除直播源
             removeDOM(video)
         }
-
-
-        // 删除直播间内容
-        
         // 删除直播源和直播间
         removeDOM(room)
         // 删除页面内容
@@ -346,18 +385,17 @@
         html.appendChild(body)
         body.appendChild(h2)
 
-        const c = document.querySelector('.m-container')
-        removeDOM(c)
+        const core_container = document.querySelector('.m-container')
+        removeDOM(core_container)
 
         // 创建操作面板
         create_container()
-        return true
     }
 
 
     // 该链接是否应该被移除
     const isRemove = (href) => {
-        return ids.indexOf(getRoomIdByUrl(href)) !== -1
+        return userIsExist(getRoomIdByUrl(href));
     }
 
     // 通过房间地址获取房间号
@@ -370,11 +408,11 @@
 
     // 添加右侧按钮
     const createButton = () => {
-        if (!isCreateBtn) {
-            return
+        if(!body){
+            return;
         }
         const btn = document.createElement('button')
-        btn.classList = 'btn btn-warning'
+        // btn.classList = 'btn'
         btn.style.cursor = 'pointer'
         btn.style.position = 'fixed'
         btn.style.top = '300px'
@@ -394,26 +432,68 @@
                 m_container.style.display = 'block'
             }
         })
+        btn.addEventListener('mouseenter', function () {
+            btn.style.backgroundColor = 'rgba(255, 135, 0,0.6)'
+        })
+        btn.addEventListener('mouseleave', function () {
+            btn.style.backgroundColor = 'rgba(255, 135, 0,1)'
+        })
         body.appendChild(btn)
 
     }
 
-
-    const removeDOM = (d) => {
+    // 删除元素
+    const removeDOM = (element) => {
         try {
-            d.style.display = 'none'
-            d.remove()
+            element.style.display = 'none'
+            // 防止element没有remove方法
+            element.remove()
         } catch (e) {}
     }
 
-
-
     // 添加到本地
     const addLocalStore = (obj) => {
+        // 本地获取
         window.localStorage.setItem(key, JSON.stringify(obj))
-        // alert('添加成功')
+        // 保存首次加载能够移除直播间
         removeRoom()
     }
+
+    const userIsExist = (keywords)=>{
+        keywords = keywords.trim()
+        for(let i = 0; i < users.length; i++){
+            if( users[i].name === keywords || users[i].id === keywords){
+                return true
+            }
+        }
+        return false
+    }
+
+
+    const userDelete = (keywords)=>{
+        users.forEach((item,index)=>{
+            if( keywords == item.name || keywords == item.id){
+                users.splice(index,1)
+            }
+        })
+        addLocalStore(users)
+    }
+
+    const addUser = (id,name)=>{
+        if (userIsExist(id)||userIsExist(name)) {
+            alert('该房间已存在！')
+            return;
+        }
+        const newUser = new HostUser(id,name);
+        // 添加
+        users.push(newUser)
+        // 保存到本地
+        addLocalStore(users)
+        // users = getLocalStore()
+        resetTbody(users)
+
+    }
+
 
     // 从本地获取存储信息
     const getLocalStore = () => {
@@ -429,31 +509,7 @@
             return;
         }
         for( let room of rooms){
-            try{
-                // 获取单个主播间房间地址
-                const url = room.querySelector('a').href
-                // 获取房间i
-                const user = room.querySelector('.txt i')
-                const name = user.textContent || ''
-                // 添加点击事件
-                user.addEventListener('click',()=>{
-                    if(confirm(`确认禁用 ${name}？`)){
-                        const roomId = getRoomIdByUrl(url);
-                        if (ids.indexOf(roomId) === -1) {
-                            ids.push(roomId)
-                            addLocalStore(ids)
-                            ids = getLocalStore()
-                            resetTbody(ids)
-                            // 移除直播间
-                            removeDOM(room);
-                        }
-                        else {
-                            alert('该房间已存在！！！')
-                        }
 
-                    }
-                })
-            }catch(e){console.error(e)}
 
         }
     }
@@ -465,6 +521,7 @@
             hostName.addEventListener('click',()=>{
                 if(confirm(`确认禁用 ${hostName.textContent}？`)){
                     removeRoomClick()
+                    addUser(getRoomIdByUrl(hostName.baseURI), hostName.textContent)
                 }
             })
 
@@ -473,7 +530,6 @@
     }
 
     const indexHome = ()=>{
-       
         // 直播源
         const url = window.location.href
         if( url == baseUrl ){
@@ -521,7 +577,6 @@
             removeDOM(news)
             removeDOM(recommend)
             removeDOM(recommendBg)
-           
             // main
             const main = document.querySelector('.mod-index-main')
             removeDOM(main)
@@ -530,7 +585,7 @@
             const banner = document.querySelector('#banner')
             removeDOM(banner)
 
-             // list
+            // list
             const l = document.querySelector('.mod-index-list')
             l.style.marginTop = '100px';
 
@@ -547,10 +602,7 @@
 
     }
 
-
-
-
-
+    // 样式部分
     GM_addStyle(`
     .m-container {
       box-sizing: border-box;
@@ -612,6 +664,14 @@
       border-bottom: 1px solid rgba(0,0,0,0.4);
       margin:5px 0;
     }
+    .m-container .m-link,.m-container .m-link:visited{
+       color:blnk !important;
+    }
+
+    .m-container .m-link:hover{
+       color:blue !important;
+       text-decoration:underline !important;
+    }
     .m-container .btn {
       cursor: pointer;
       padding: 5px 10px;
@@ -621,33 +681,36 @@
       border-radius:20px;
       z-index:1000;
     }
-    .m-container .btn-warning{
-      position:fixed;
-      top:300px;
-      right:0;
-      background-color:rgb(255, 135, 0);
-    }
+
     .m-container .btn-teal{
-      background-color:teal;
+      background-color:rgba(0, 128, 64,1);
+    }
+   .m-container .btn-teal:hover{
+      background-color:rgba(0, 128, 64,0.6);
     }
     .m-container .btn-success{
-      background-color: #008040;
+      background-color: rgba(52, 108, 233,1);
+    }
+     .m-container .btn-success:hover{
+      background-color: rgba(52, 108, 233,0.6);
     }
     .m-container .btn-info{
-      background-color:#777777;
+      background-color:rgba(119, 119, 119,1);
+    }
+    .m-container .btn-info:hover{
+       background-color:rgba(119, 119, 119,0.6);
     }
     .m-container .btn-danger{
-      background-color:red;
+      background-color:rgba(255, 0, 0,1);
     }
-
-  
+     .m-container .btn-danger:hover{
+      background-color:rgba(255, 0, 0,0.6);
+    }
     .game-live-item i,.host-name {
         cursor:pointer;
     }
-
     .game-live-item .txt i:hover,.host-name:hover {
         color:rgb(255, 135, 0);
     }
-
       `)
 })();
