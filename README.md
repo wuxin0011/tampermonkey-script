@@ -32,7 +32,35 @@
 屏蔽之后
 ![屏蔽之后](https://img2022.cnblogs.com/blog/2360553/202210/2360553-20221029094854783-582545545.png)
 
+---
+
+## 最新版本
+
+### [v2.0](https://github.com/wuxin0011/huya-live/tree/v2.0)
+重大更新，删除多余代码
+- 支持斗鱼直播
+- 新增添加背景，自定义背景
+
+
+### [v1.0](https://github.com/wuxin0011/huya-live/tree/v1.0)
+大更新
+- 支持点击房间名称直接操作
+
+
+
+### [v0.4](https://github.com/wuxin0011/huya-live/tree/0.4)
+修复一些bug
+
+### [v0.3](https://github.com/wuxin0011/huya-live/tree/0.3)
 另外直播间屏蔽如下
  - 送礼物
  - 礼物排行榜
  - 直播间下方垃圾视频
+
+### [v0.1 ](https://github.com/wuxin0011/huya-live/tree/0.1)
+第一个版本，创建虎牙直播插件
+
+- 添加房间号屏蔽主播
+- 支持简单增删改查功能
+- 屏蔽轮播图、导航栏等
+
