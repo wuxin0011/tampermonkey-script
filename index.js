@@ -1306,7 +1306,7 @@ function douyuPlugin()
 
                                 // 判断该直播间列表窗口是否需要删除
                                 if(isRemove(url) || userIsExist(name)){
-                                    removeDOM(li)
+                                    removeDOM(li,true)
                                 }else{
 
                                     // 删除直播间多余标签
@@ -1373,71 +1373,69 @@ function douyuPlugin()
         }
 
         const removeRoomClick = () => {
-
             // 直播房间
             const room = document.querySelector('.layout-Player-main')
-            if(!room){
-                return;
-            }
-
-            // 直播源
-            var videos = null
-            // 循环处理直播源,防止直播源更新！
-            if(isRemove(window.location.href)){
-                videos = document.querySelectorAll('video')
-                if(videos){
-                    for(let v of videos){
-                        if(v && v.paused){
-                            v.pause()
-                        }
-                        removeDOM(v)
-                    }
-
-                }
-                setInterval(()=>{
+            if(room){
+                // 直播源
+                var videos = null
+                // 循环处理直播源,防止直播源更新！
+                if(isRemove(window.location.href)){
                     videos = document.querySelectorAll('video')
                     if(videos){
-
-                        try{
-                            for(let v of videos){
-                                if(v && v.paused){
-                                    v.pause()
-                                }
-                                removeDOM(v)
+                        for(let v of videos){
+                            if(v && v.paused){
+                                v.pause()
                             }
-                        }catch(e){ }
+                            removeDOM(v,true)
+                        }
 
                     }
-                },3000);
+                    setInterval(()=>{
+                        videos = document.querySelectorAll('video')
+                        if(videos){
+
+                            try{
+                                for(let v of videos){
+                                    if(v && v.paused){
+                                        v.pause()
+                                    }
+                                    removeDOM(v,true)
+                                }
+                            }catch(e){ }
+
+                        }
+},3000);
+                }
+
+
+                // 删除直播源和直播间
+                removeDOM(room,true)
+                // 删除页面内容
+                removeDOM(body,true)
+
+                const h2 = document.createElement('h2')
+                body = document.createElement('body')
+
+                body.style.display = 'flex'
+                body.style.justifyContent = 'center'
+                body.style.alignItems = 'center'
+
+                h2.textContent = '该主播已被你屏蔽！'
+                h2.style.fontSize = '50px'
+
+                document.querySelector('title').textContent = '该主播已被你屏蔽！'
+
+
+                html.appendChild(body)
+                body.appendChild(h2)
+
+                const core_container = document.querySelector('.m-container')
+                removeDOM(core_container)
+
+                // 创建操作面板
+                create_container()
             }
 
-
-            // 删除直播源和直播间
-            removeDOM(room)
-            // 删除页面内容
-            removeDOM(body)
-
-            const h2 = document.createElement('h2')
-            body = document.createElement('body')
-
-            body.style.display = 'flex'
-            body.style.justifyContent = 'center'
-            body.style.alignItems = 'center'
-
-            h2.textContent = '该主播已被你屏蔽！'
-            h2.style.fontSize = '50px'
-
-            document.querySelector('title').textContent = '该主播已被你屏蔽！'
-
-
-            html.appendChild(body)
-            body.appendChild(h2)
-
-            const core_container = document.querySelector('.m-container')
-            removeDOM(core_container)
-
-            // 创建操作面板
-            create_container()
         }
 
 
@@ -1498,11 +1496,13 @@ function douyuPlugin()
         }
 
         // 删除元素
-        const removeDOM = (element) => {
+        const removeDOM = (element,m = false) => {
             try {
                 if(element){
                     element.style.display = 'none'
-                    element.remove()
+                    if(m){
+                        element.remove()
+                    }
                 }
 
             } catch (e) {}// 防止element没有remove方法而抛出异常
@@ -1664,12 +1664,10 @@ function douyuPlugin()
                     if (video&&video.paused) {
                         video.pause()
                     }
-                    removeDOM(video)
-                    removeDOM(videoBox)
-                }catch(e){
+                    removeDOM(video,true)
+                    removeDOM(videoBox,true)
+                }catch(e){}
 
-                }
-   
                 setInterval(()=>{
                     // 移除首页直播间
                     try{
@@ -1678,11 +1676,9 @@ function douyuPlugin()
                         if (video&&video.paused) {
                             video.pause()
                         }
-                        removeDOM(video)
-                        removeDOM(videoBox)
-                    }catch(e){
-
-                    }
+                        removeDOM(video,true)
+                        removeDOM(videoBox,true)
+                    }catch(e){}
 
                 },10000)
 
