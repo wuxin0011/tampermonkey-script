@@ -865,7 +865,7 @@ function douyuPlugin()
         //延迟时间
         const time = 2000
         // 匹配地址
-        
+
         // 直播源
         const baseUrl = "https://www.douyu.com/"
         // 默认背景图
@@ -1656,15 +1656,19 @@ function douyuPlugin()
             // 直播源
             if( window.location.href == baseUrl ){
                 window.scroll(0,0)
-                // 设置首页背景图
-                settingBackgroundImage()
-                videoBox = document.querySelector('.layout-Slide-player')
-                const video = videoBox.querySelector('video')
-                if (video&&video.paused) {
-                    video.pause()
+                // 移除首页直播间
+                try{
+                    const videoBox = document.querySelector('.layout-Slide-player')
+                    const video = videoBox.querySelector('video')
+                    if (video&&video.paused) {
+                        video.pause()
+                    }
+                    removeDOM(video)
+                    removeDOM(videoBox)
+                }catch(e){
+
                 }
-                removeDOM(video)
-                removeDOM(videoBox)
+   
                 setInterval(()=>{
                     // 移除首页直播间
                     try{
