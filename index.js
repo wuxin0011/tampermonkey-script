@@ -1,6 +1,6 @@
 
 // ==UserScript==
-// @name         虎牙直播、斗鱼直播
+// @name         虎牙直播、斗鱼直播 页面简化，屏蔽主播直播间
 // @namespace    http://tampermonkey.net/
 // @version      2.0
 // @description  屏蔽、禁用不想看到主播直播间!
@@ -20,76 +20,77 @@ const local_url = window.location.href
 // 虎牙直播插件
 function huyaPlugin()
 {
-    (function () {
-        'use strict';
-        // key
-        const key = 'huyazhibo'
-        // 背景地址key
-        const bg_key = 'huyazhibo_bg'
-        // 是否显示背景key
-        const bg_show_key = 'huyazhibo_bg_show'
-        // 是否显示菜单
-        const menu_show_key= 'huyazhibo_menu_show_key'
-        // 匹配地址
-        const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg))$/;
-        const defaultBackgroundImage='https://a.msstatic.com/huya/main3/assets/img/index-bg_59f9c.jpg'
-        // 直播源
-        const baseUrl = "https://www.huya.com/"
-        // 存放屏蔽主播信息
-        let users = []
-        // 输入框
-        let inputValue = null
+    (
+        function () {
+            'use strict';
+            // key
+            const key = 'huyazhibo'
+            // 背景地址key
+            const bg_key = 'huyazhibo_bg'
+            // 是否显示背景key
+            const bg_show_key = 'huyazhibo_bg_show'
+            // 是否显示菜单
+            const menu_show_key= 'huyazhibo_menu_show_key'
+            // 匹配地址
+            const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg))$/;
+            const defaultBackgroundImage='https://a.msstatic.com/huya/main3/assets/img/index-bg_59f9c.jpg'
+            // 直播源
+            const baseUrl = "https://www.huya.com/"
+            // 存放屏蔽主播信息
+            let users = []
+            // 输入框
+            let inputValue = null
 
-        /*************容器*********/
-        let html = null
-        let body = null
-        let tbody = null
-        let m_container = null
-        window.onload = () => {
+            /*************容器*********/
+            let html = null
+            let body = null
+            let tbody = null
+            let m_container = null
+            window.onload = () => {
 
-            try{
-                console.log(
-                    ' %c  欢迎使用虎牙直播插件,下载地址： %c '
-                    .concat('https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD', ''), 'background: rgb(255, 135, 0); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
-                console.log(
-                    '%c 源码地址: %c '
-                    .concat('https://github.com/wuxin0011/huya-live', ''), 'background: rgb(255, 135, 0); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
-                html = document.querySelector('html')
-                body = document.querySelector('body')
+                try{
+                    console.log(
+                        ' %c  欢迎使用虎牙直播插件,下载地址： %c '
+                        .concat('https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD', ''), 'background: rgb(255, 135, 0); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
+                    console.log(
+                        '%c 源码地址: %c '
+                        .concat('https://github.com/wuxin0011/huya-live', ''), 'background: rgb(255, 135, 0); padding: 1px; border-radius: 3px 0 0 3px; color: #fff', 'border-radius: 0 3px 3px 0; color: #fff')
+                    html = document.querySelector('html')
+                    body = document.querySelector('body')
+                    // 初始化房间号
+                    users = getLocalStore()
+                    // 是否屏蔽直播间
+                    if (!removeRoom()) {
+                        // 添加容器
+                        create_container()
+                        // 移除 其他轮播图，导航栏等
+                        removeWall()
+                    }
+                    // 给直播间添加删除按钮
+                    addRemoveBtn();
+                    // home
+                    indexHome();
+                }catch(e){
+                    console.error(e)
+                }
+
+
+            }
+
+            // 定义主播类
+            class HostUser{
+                constructor(id,name){
+                    this.id = id;
+                    this.name = name;
+                }
+            }
+
+            const create_container = () => {
                 // 初始化房间号
                 users = getLocalStore()
-                // 是否屏蔽直播间
-                if (!removeRoom()) {
-                    // 添加容器
-                    create_container()
-                    // 移除 其他轮播图，导航栏等
-                    removeWall()
-                }
-                // 给直播间添加删除按钮
-                addRemoveBtn();
-                // home
-                indexHome();
-            }catch(e){
-                console.error(e)
-            }
-
-
-        }
-
-        // 定义主播类
-        class HostUser{
-            constructor(id,name){
-                this.id = id;
-                this.name = name;
-            }
-        }
-
-        const create_container = () => {
-            // 初始化房间号
-            users = getLocalStore()
-            let show1 = isSelect(bg_show_key)
-            let show2 = isSelect(menu_show_key)
-            m_container = s2d(`
+                let show1 = isSelect(bg_show_key)
+                let show2 = isSelect(menu_show_key)
+                m_container = s2d(`
                     <div class="m-container">
                     <div class="operation">
                           <input type="text" placeholder="房间号..."/>
@@ -115,569 +116,579 @@ function huyaPlugin()
                     </div>
 `)
 
-            if (!body) {
-                body = document.querySelector('body')
-            }
-            // 如果还是获取不到插件加载失败
-            if(!body){
-                return;
-            }
-            body.appendChild(m_container)
-            tbody = document.querySelector('.m-container table tbody')
-            inputValue = m_container.querySelector('.m-container .operation input')
+                if (!body) {
+                    body = document.querySelector('body')
+                }
+                // 如果还是获取不到插件加载失败
+                if(!body){
+                    return;
+                }
+                body.appendChild(m_container)
+                tbody = document.querySelector('.m-container table tbody')
+                inputValue = m_container.querySelector('.m-container .operation input')
 
-            // 搜索、刷新、添加
-            operationDOMButton()
+                // 搜索、刷新、添加
+                operationDOMButton()
 
-            // 添加直播房间号信息
-            createRoomItem(users)
-            // 右侧点击添加button
-            createButton()
-            if(inputValue){
-                inputValue.addEventListener('keyup', function (e) {
-                    if(e.key=='Enter'){
-                        let arr = users.filter(item=>{
-                            return item.id.indexOf(inputValue.value) !=-1 || item.name.indexOf(inputValue.value)!=-1
-                        })
-                        resetTbody(arr)
-                    }
-                })
+                // 添加直播房间号信息
+                createRoomItem(users)
+                // 右侧点击添加button
+                createButton()
+                if(inputValue){
+                    inputValue.addEventListener('keyup', function (e) {
+                        if(e.key=='Enter'){
+                            let arr = users.filter(item=>{
+                                return item.id.indexOf(inputValue.value) !=-1 || item.name.indexOf(inputValue.value)!=-1
+                            })
+                            resetTbody(arr)
+                        }
+                    })
+                }
             }
-        }
 
 
-        // 生成房间号item
-        const createRoomItem = (arr) => {
-            if(!Array.isArray(arr)){
-                return;
-            }
-            arr.forEach((item, index) => {
-                let tr = document.createElement('tr')
-                tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
-                tr.style.margin = '10px 0'
-                tr.style.padding = '20px 10px'
-                tr.innerHTML =
-                    `<td style="padding:10px;">${index+1}</td>
+            // 生成房间号item
+            const createRoomItem = (arr) => {
+                if(!Array.isArray(arr)){
+                    return;
+                }
+                arr.forEach((item, index) => {
+                    let tr = document.createElement('tr')
+                    tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
+                    tr.style.margin = '10px 0'
+                    tr.style.padding = '20px 10px'
+                    tr.innerHTML =
+                        `<td style="padding:10px;">${index+1}</td>
                     <td style="padding:10px;">${item.name}</td>
                     <td style="padding:10px;">${item.id}</td>
                     <td style="padding:10px;">
                     <button class="btn btn-danger" room-id="${item.id}">删除</button></td>`
                 tbody.appendChild(tr)
-                // 添加删除事件
-                const deleteBtn = tr.querySelector('button')
-                deleteBtn.addEventListener('click', function (e) {
-                    const id = e.target.getAttribute('room-id')
-                    removeDOM(tr)
-                    userDelete(id)
-                    // 如果是当前主播，需要刷新
-                    if(getRoomIdByUrl(window.location.href) == id){
-                        window.location.reload()
+                    // 添加删除事件
+                    const deleteBtn = tr.querySelector('button')
+                    deleteBtn.addEventListener('click', function (e) {
+                        const id = e.target.getAttribute('room-id')
+                        removeDOM(tr)
+                        userDelete(id)
+                        // 如果是当前主播，需要刷新
+                        if(getRoomIdByUrl(window.location.href) == id){
+                            window.location.reload()
+                        }
+                    })
+
+                })
+            }
+
+
+            // 生成字符串dom
+            const s2d = (string) => {
+                return new DOMParser().parseFromString(string, 'text/html').body.childNodes[0]
+            }
+
+            const operationDOMButton = () =>{
+
+
+                const searchRoomBtn = document.querySelector('body .m-container .operation .search-room')
+                searchRoomBtn.addEventListener('click', function () {
+                    let arr = users.filter(item=>{
+                        return item.id.indexOf(inputValue.value) !=-1 || item.name.indexOf(inputValue.value)!=-1
+                    })
+                    resetTbody(arr)
+                })
+
+
+                const addRoomBtn = document.querySelector('.m-container .operation  button.add-room')
+                addRoomBtn.addEventListener('click', function () {
+                    const keywords = inputValue.value.trim()
+                    if (!keywords) {
+                        return alert('请输入房间号！')
                     }
-                })
-
-            })
-        }
-
-
-        // 生成字符串dom
-        const s2d = (string) => {
-            return new DOMParser().parseFromString(string, 'text/html').body.childNodes[0]
-        }
-
-        const operationDOMButton = () =>{
-
-
-            const searchRoomBtn = document.querySelector('body .m-container .operation .search-room')
-            searchRoomBtn.addEventListener('click', function () {
-                let arr = users.filter(item=>{
-                    return item.id.indexOf(inputValue.value) !=-1 || item.name.indexOf(inputValue.value)!=-1
-                })
-                resetTbody(arr)
-            })
-
-
-            const addRoomBtn = document.querySelector('.m-container .operation  button.add-room')
-            addRoomBtn.addEventListener('click', function () {
-                const keywords = inputValue.value.trim()
-                if (!keywords) {
-                    return alert('请输入房间号！')
-                }
-                if (!userIsExist(keywords)) {
-                    const hostName = document.querySelector('.host-name')
-                    if(!hostName){
-                        const rooms = document.querySelectorAll('.game-live-item')
-                        if(rooms && rooms.length>0){
-                            for(let room of rooms){
-                                const id = getRoomIdByUrl(room.querySelector('a').href)
-                                const user = room.querySelector('.txt i')
-                                if( id === keywords){
-                                    hostName = user
+                    if (!userIsExist(keywords)) {
+                        const hostName = document.querySelector('.host-name')
+                        if(!hostName){
+                            const rooms = document.querySelectorAll('.game-live-item')
+                            if(rooms && rooms.length>0){
+                                for(let room of rooms){
+                                    const id = getRoomIdByUrl(room.querySelector('a').href)
+                                    const user = room.querySelector('.txt i')
+                                    if( id === keywords){
+                                        hostName = user
+                                    }
                                 }
                             }
                         }
-                    }
-                    const name = hostName && hostName.textContent?hostName.textContent:''
-                    if(name){
-                        addUser(hostName.textContent,keywords)
-                        inputValue.value = ''
-                    }else{
-                        if(confirm(`房间号为${inputValue.value}的主播不存在！确定添加？`)){
-                            addUser(keywords,keywords)
+                        const name = hostName && hostName.textContent?hostName.textContent:''
+                        if(name){
+                            addUser(hostName.textContent,keywords)
                             inputValue.value = ''
+                        }else{
+                            if(confirm(`房间号为${inputValue.value}的主播不存在！确定添加？`)){
+                                addUser(keywords,keywords)
+                                inputValue.value = ''
+                            }
                         }
+
+                    } else {
+                        alert('该主播已添加！')
                     }
+                })
 
-                } else {
-                    alert('该主播已添加！')
-                }
-            })
-
-            const flushRoomBtn = document.querySelector('.m-container button.flush-room')
-            flushRoomBtn.addEventListener('click', function () {
-                users = getLocalStore()
-                resetTbody(users)
-            })
-
-
-            const clearRoomBtn = document.querySelector('.m-container button.clear-room')
-            clearRoomBtn.addEventListener('click', function () {
-                if(confirm('确认清空？')){
-                    users = addLocalStore([])
+                const flushRoomBtn = document.querySelector('.m-container button.flush-room')
+                flushRoomBtn.addEventListener('click', function () {
+                    users = getLocalStore()
                     resetTbody(users)
-                    if(userIsExist(window.location.href)){
-                        window.location.reload();
-                    }
-                }
-            })
-
-
-            // 设置背景
-            const bgBtn = document.querySelector('.m-container button.bg-btn')
-            bgBtn.addEventListener('click', function () {
-                let result = prompt('请输入背景图地址')
-                if(!result){
-                    return;
-                }
-                if(!isImageUrl(result)){
-                    return alert('请输入一个图片地址');
-                }
-                fetch(result).then(res=>{
-                    if( res && res.status == 200 ){
-                        settingBackgroundImage(result)
-                    }else{
-                        alert('图片资源访问失败，可能存在跨域问题，请更换一张地址')
-                    }
-
-                }).catch(e=>{
-                    alert('图片资源访问失败，可能存在跨域问题，请更换一张地址')
                 })
 
 
-            })
-
-            // 是否开启背景
-            const checkbox = document.querySelector('.m-container #checkbox1')
-            checkbox.addEventListener('change', function (e) {
-                window.localStorage.setItem(bg_show_key,e.target.checked)
-                settingBackgroundImage()
-            })
-
-            // 是否关闭菜单
-            const menu = document.querySelector('.m-container #checkbox2')
-            menu.addEventListener('change', function (e) {
-                const d = document.querySelector('.mod-sidebar')
-                if(d){
-                    if(e.target.checked){
-                        d.style.display = 'block';
-                    }else{
-                        d.style.display = 'none'
+                const clearRoomBtn = document.querySelector('.m-container button.clear-room')
+                clearRoomBtn.addEventListener('click', function () {
+                    if(confirm('确认清空？')){
+                        users = addLocalStore([])
+                        resetTbody(users)
+                        if(userIsExist(window.location.href)){
+                            window.location.reload();
+                        }
                     }
-                    window.localStorage.setItem(menu_show_key,e.target.checked)
-                }
-
-            })
-
-        }
+                })
 
 
-
-        const resetTbody = (arr) => {
-            // 删除原来dom
-            let table = document.querySelector('body .m-container table')
-            removeDOM(tbody)
-            tbody = document.createElement('tbody')
-            let thead = document.createElement('thead')
-            let room_index = document.createElement('th')
-            let room_name = document.createElement('th')
-            let room_id = document.createElement('th')
-            let room_operation = document.createElement('th')
-            thead.appendChild(room_index)
-            thead.appendChild(room_name)
-            thead.appendChild(room_id)
-            thead.appendChild(room_operation)
-            table.appendChild(tbody)
-            // 添加操作窗口
-            createRoomItem(arr)
-
-        }
-
-
-        const removeWall = () => {
-            // 屏蔽轮播图
-            removeElement('.list-adx')
-            // 移除直播通知内容
-            removeElement('.liveList-header-r')
-            // 屏蔽左侧导航栏
-            removeElement('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
-            // 删除主播直播间底部信息
-            removeElement('.room-footer')
-            // 删除礼物 排行
-            removeElement('J_roomSideHd')
-            // 删除直播间礼物窗口
-            removeElement('#player-gift-wrap')
-            // 直播间左侧礼物排行1
-            removeElement('#match-cms-content')
-            // 直播间左侧礼物排行2
-            removeElement('#matchComponent2')
-            // 删除礼物活动
-            if(new RegExp(/https:\/\/.*(\d+)$/).test(window.location.href)){
-                //const root = document.querySelector('#root')
-                //removeDOM(root)
-            }
-
-
-            // 导航栏 游戏广告连接
-            removeElement('.hy-nav-item.hy-nav-item-game')
-            removeElement('.hy-nav-item.hy-nav-link-ext')
-            removeElement('.hy-nav-item.hy-nav-item-match')
-            removeElement('.hy-nav-item.hy-nav-item-video')
-
-            //分类页面菜单信息
-            const d = document.querySelector('.mod-sidebar')
-            let d_show = isSelect(menu_show_key)
-            if(d){
-                if(d_show){
-                    d.style.display = 'block';
-                }else{
-                    d.style.display = 'none';
-                }
-            }
-
-            settingBackgroundImage()
-
-            const rooms = document.querySelectorAll('.game-live-item')
-            if(rooms ){
-                for( let li of rooms){
-                    try{
-                        const a = li.querySelector('a')
-                        // 获取单个主播间房间地址
-                        const url = a.href
-                        // 获取房间i
-                        const user = li.querySelector('.txt i')
-                        const name = user.textContent || ''
-                        // 添加点击事件
-                        user.addEventListener('click',()=>{
-                            if(confirm(`确认禁用 ${name}？`)){
-                                addUser(getRoomIdByUrl(url),name);
-                                removeDOM(li);
-                            }
-                        })
-                        if (isRemove(url)) {
-                            removeDOM(li)
+                // 设置背景
+                const bgBtn = document.querySelector('.m-container button.bg-btn')
+                bgBtn.addEventListener('click', function () {
+                    let result = prompt('请输入背景图地址')
+                    if(!result){
+                        return;
+                    }
+                    if(!isImageUrl(result)){
+                        return alert('请输入一个图片地址');
+                    }
+                    fetch(result).then(res=>{
+                        if( res && res.status == 200 ){
+                            settingBackgroundImage(result)
+                        }else{
+                            alert('图片资源访问失败，可能存在跨域问题，请更换一张地址')
                         }
 
-                    }catch(e){}
+                    }).catch(e=>{
+                        alert('图片资源访问失败，可能存在跨域问题，请更换一张地址')
+                    })
 
+
+                })
+
+                // 是否开启背景
+                const checkbox = document.querySelector('.m-container #checkbox1')
+                checkbox.addEventListener('change', function (e) {
+                    window.localStorage.setItem(bg_show_key,e.target.checked)
+                    settingBackgroundImage()
+                })
+
+                // 是否关闭菜单
+                const menu = document.querySelector('.m-container #checkbox2')
+                menu.addEventListener('change', function (e) {
+                    const d = document.querySelector('.mod-sidebar')
+                    if(d){
+                        if(e.target.checked){
+                            d.style.display = 'block';
+                        }else{
+                            d.style.display = 'none'
+                        }
+                        window.localStorage.setItem(menu_show_key,e.target.checked)
+                    }
+
+                })
+
+            }
+
+
+
+            const resetTbody = (arr) => {
+                // 删除原来dom
+                let table = document.querySelector('body .m-container table')
+                removeDOM(tbody)
+                tbody = document.createElement('tbody')
+                let thead = document.createElement('thead')
+                let room_index = document.createElement('th')
+                let room_name = document.createElement('th')
+                let room_id = document.createElement('th')
+                let room_operation = document.createElement('th')
+                thead.appendChild(room_index)
+                thead.appendChild(room_name)
+                thead.appendChild(room_id)
+                thead.appendChild(room_operation)
+                table.appendChild(tbody)
+                // 添加操作窗口
+                createRoomItem(arr)
+
+            }
+
+
+            const removeWall = () => {
+                // 屏蔽轮播图
+                removeElement('.list-adx')
+                // 移除直播通知内容
+                removeElement('.liveList-header-r')
+                // 屏蔽左侧导航栏
+                removeElement('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
+                // 删除主播直播间底部信息
+                removeElement('.room-footer')
+                // 删除礼物 排行
+                removeElement('J_roomSideHd')
+                // 删除直播间礼物窗口
+                removeElement('#player-gift-wrap')
+                // 直播间左侧礼物排行1
+                removeElement('#match-cms-content')
+                // 直播间左侧礼物排行2
+                removeElement('#matchComponent2')
+                // 删除礼物活动
+                if(new RegExp(/https:\/\/.*(\d+)$/).test(window.location.href)){
+                    //const root = document.querySelector('#root')
+                    //removeDOM(root)
+                }
+
+
+                // 导航栏 游戏广告连接
+                removeElement('.hy-nav-item.hy-nav-item-game')
+                removeElement('.hy-nav-item.hy-nav-link-ext')
+                removeElement('.hy-nav-item.hy-nav-item-match')
+                removeElement('.hy-nav-item.hy-nav-item-video')
+
+                //分类页面菜单信息
+                const d = document.querySelector('.mod-sidebar')
+                let d_show = isSelect(menu_show_key)
+                if(d){
+                    if(d_show){
+                        d.style.display = 'block';
+                    }else{
+                        d.style.display = 'none';
+                    }
+                }
+
+                settingBackgroundImage()
+
+                const rooms = document.querySelectorAll('.game-live-item')
+                if(rooms ){
+                    for( let li of rooms){
+                        try{
+                            const a = li.querySelector('a')
+                            // 获取单个主播间房间地址
+                            const url = a.href
+                            // 获取房间i
+                            const user = li.querySelector('.txt i')
+                            const name = user.textContent || ''
+                            // 添加点击事件
+                            user.addEventListener('click',()=>{
+                                if(confirm(`确认禁用 ${name}？`)){
+                                    addUser(getRoomIdByUrl(url),name);
+                                    removeDOM(li);
+                                }
+                            })
+                            if (isRemove(url)) {
+                                removeDOM(li)
+                            }
+
+                        }catch(e){}
+
+                    }
                 }
             }
-        }
 
 
-        const removeRoom = () => {
-            const href = window.location.href
-            if (!isRemove(href)) {
+            const removeRoom = () => {
+                const href = window.location.href
+                if (!isRemove(href)) {
+                    return false
+                }
+                removeRoomClick();
+                return true
+            }
+
+            const removeRoomClick = () => {
+                // 直播房间
+                const room = body.querySelector('.room-core')
+                if(!room){
+                    return;
+                }
+                // 直播源
+                const video = room.querySelector('video')
+                if(!video){
+                    return;
+                }
+                // 点击播放按钮
+                const videoBtn = room.querySelector('.player-play-btn')
+                try{
+                    let ev = new Event("click", {"bubbles":true, "cancelable":false});
+                    // 自动触发点击暂停事件 停止播放
+                    videoBtn.dispatchEvent(ev)
+                }catch(e){
+                    // 如果失败 操作video源
+                    if (video&&video.paused) {
+                        // 暂停播放
+                        video.pause()
+                    }
+                }finally{
+                    // 删除直播源
+                    removeDOM(video)
+                }
+                // 删除直播源和直播间
+                removeDOM(room)
+                // 删除页面内容
+                removeDOM(body)
+
+                const h2 = document.createElement('h2')
+                body = document.createElement('body')
+
+                body.style.display = 'flex'
+                body.style.justifyContent = 'center'
+                body.style.alignItems = 'center'
+
+                h2.textContent = '该主播已被你屏蔽！'
+                h2.style.fontSize = '50px'
+
+
+                html.appendChild(body)
+                body.appendChild(h2)
+
+                const core_container = document.querySelector('.m-container')
+                removeDOM(core_container)
+
+                // 创建操作面板
+                create_container()
+            }
+
+
+            // 该链接是否应该被移除
+            const isRemove = (href) => {
+                return userIsExist(getRoomIdByUrl(href));
+            }
+
+            // 通过房间地址获取房间号
+            const getRoomIdByUrl = (url) => {
+                let arr = url.split('/')
+                let roomId = arr[arr.length - 1]
+                return roomId
+            }
+
+
+            // 添加右侧按钮
+            const createButton = () => {
+                if(!body){
+                    return;
+                }
+                const btn = document.createElement('button')
+                // btn.classList = 'btn'
+                btn.style.cursor = 'pointer'
+                btn.style.position = 'fixed'
+                btn.style.top = '300px'
+                btn.style.right = '0px'
+                btn.style.padding = '5px 10px'
+                btn.style.backgroundColor = 'rgb(255, 135, 0)'
+                btn.style.border = 'none'
+                btn.style.borderRadius = '20px'
+                btn.style.fontSize = '12px'
+                btn.style.color = '#fff'
+                btn.style.zIndex = 100000
+                btn.textContent = '小虎牙'
+                btn.addEventListener('click', function (e) {
+                    if (m_container.style.display === 'block') {
+                        m_container.style.display = 'none'
+                    } else {
+                        m_container.style.display = 'block'
+                    }
+                })
+                btn.addEventListener('mouseenter', function () {
+                    btn.style.backgroundColor = 'rgba(255, 135, 0,0.6)'
+                })
+                btn.addEventListener('mouseleave', function () {
+                    btn.style.backgroundColor = 'rgba(255, 135, 0,1)'
+                })
+                body.appendChild(btn)
+
+            }
+
+            // 删除元素
+            const removeDOM = (element) => {
+                try {
+                    if(element){
+                        element.style.display = 'none'
+                        element.remove()
+                    }
+                } catch (e) {} // 防止element没有remove方法
+            }
+
+            const removeElement = (selector) => {
+                removeDOM(window.document.querySelector(selector))
+            }
+
+
+            const userIsExist = (keywords)=>{
+                keywords = keywords.trim()
+                for(let i = 0; i < users.length; i++){
+                    if( users[i].name === keywords || users[i].id === keywords){
+                        return true
+                    }
+                }
                 return false
             }
-            removeRoomClick();
-            return true
-        }
 
-        const removeRoomClick = () => {
-            // 直播房间
-            const room = body.querySelector('.room-core')
-            if(!room){
-                return;
+
+            const userDelete = (keywords)=>{
+                users.forEach((item,index)=>{
+                    if( keywords == item.name || keywords == item.id){
+                        users.splice(index,1)
+                    }
+                })
+                addLocalStore(users)
             }
-            // 直播源
-            const video = room.querySelector('video')
-            if(!video){
-                return;
-            }
-            // 点击播放按钮
-            const videoBtn = room.querySelector('.player-play-btn')
-            try{
-                let ev = new Event("click", {"bubbles":true, "cancelable":false});
-                // 自动触发点击暂停事件 停止播放
-                videoBtn.dispatchEvent(ev)
-            }catch(e){
-                // 如果失败 操作video源
-                if (video&&video.paused) {
-                    // 暂停播放
-                    video.pause()
+
+            const addUser = (id,name)=>{
+                if (userIsExist(id)||userIsExist(name)) {
+                    return alert('该房间已存在！');
                 }
-            }finally{
-                // 删除直播源
-                removeDOM(video)
-            }
-            // 删除直播源和直播间
-            removeDOM(room)
-            // 删除页面内容
-            removeDOM(body)
-
-            const h2 = document.createElement('h2')
-            body = document.createElement('body')
-
-            body.style.display = 'flex'
-            body.style.justifyContent = 'center'
-            body.style.alignItems = 'center'
-
-            h2.textContent = '该主播已被你屏蔽！'
-            h2.style.fontSize = '50px'
-
-
-            html.appendChild(body)
-            body.appendChild(h2)
-
-            const core_container = document.querySelector('.m-container')
-            removeDOM(core_container)
-
-            // 创建操作面板
-            create_container()
-        }
-
-
-        // 该链接是否应该被移除
-        const isRemove = (href) => {
-            return userIsExist(getRoomIdByUrl(href));
-        }
-
-        // 通过房间地址获取房间号
-        const getRoomIdByUrl = (url) => {
-            let arr = url.split('/')
-            let roomId = arr[arr.length - 1]
-            return roomId
-        }
-
-
-        // 添加右侧按钮
-        const createButton = () => {
-            if(!body){
-                return;
-            }
-            const btn = document.createElement('button')
-            // btn.classList = 'btn'
-            btn.style.cursor = 'pointer'
-            btn.style.position = 'fixed'
-            btn.style.top = '300px'
-            btn.style.right = '0px'
-            btn.style.padding = '5px 10px'
-            btn.style.backgroundColor = 'rgb(255, 135, 0)'
-            btn.style.border = 'none'
-            btn.style.borderRadius = '20px'
-            btn.style.fontSize = '12px'
-            btn.style.color = '#fff'
-            btn.style.zIndex = 100000
-            btn.textContent = '小虎牙'
-            btn.addEventListener('click', function (e) {
-                if (m_container.style.display === 'block') {
-                    m_container.style.display = 'none'
-                } else {
-                    m_container.style.display = 'block'
+                const newUser = new HostUser(id,name);
+                users.unshift(newUser)
+                addLocalStore(users)
+                resetTbody(users)
+                if(id == getRoomIdByUrl(window.location.href)){
+                    removeRoomClick();
                 }
-            })
-            btn.addEventListener('mouseenter', function () {
-                btn.style.backgroundColor = 'rgba(255, 135, 0,0.6)'
-            })
-            btn.addEventListener('mouseleave', function () {
-                btn.style.backgroundColor = 'rgba(255, 135, 0,1)'
-            })
-            body.appendChild(btn)
 
-        }
-
-        // 删除元素
-        const removeDOM = (element) => {
-            try {
-                if(element){
-                    element.style.display = 'none'
-                    element.remove()
-                }
-            } catch (e) {} // 防止element没有remove方法
-        }
-
-        const removeElement = (selector) => {
-            removeDOM(window.document.querySelector(selector))
-        }
-
-
-        const userIsExist = (keywords)=>{
-            keywords = keywords.trim()
-            for(let i = 0; i < users.length; i++){
-                if( users[i].name === keywords || users[i].id === keywords){
-                    return true
-                }
-            }
-            return false
-        }
-
-
-        const userDelete = (keywords)=>{
-            users.forEach((item,index)=>{
-                if( keywords == item.name || keywords == item.id){
-                    users.splice(index,1)
-                }
-            })
-            addLocalStore(users)
-        }
-
-        const addUser = (id,name)=>{
-            if (userIsExist(id)||userIsExist(name)) {
-                return alert('该房间已存在！');
-            }
-            const newUser = new HostUser(id,name);
-            users.unshift(newUser)
-            addLocalStore(users)
-            resetTbody(users)
-            if(id == getRoomIdByUrl(window.location.href)){
-                removeRoomClick();
             }
 
-        }
-
-        const settingBackgroundImage = (url) => {
-            url = getImageUrl(url)
-            const body1 = document.querySelector('body')
-            if(isSelect(bg_show_key)){
-                body1.style.backgroundSize="cover"
-                body1.style.backgroundRepeat='no-repeat'
-                body1.style.backgroundAttachment='fixed'
-                body1.style.backgroundImage=`url(${url})`
+            const settingBackgroundImage = (url) => {
+                url = getImageUrl(url)
+                const body1 = document.querySelector('body')
+                if(isSelect(bg_show_key)){
+                    body1.style.backgroundSize="cover"
+                    body1.style.backgroundRepeat='no-repeat'
+                    body1.style.backgroundAttachment='fixed'
+                    body1.style.backgroundImage=`url(${url})`
              }else{
                  body1.style.backgroundImage='none'
              }
 
-        }
+            }
 
-        const getImageUrl = (url) => {
-            let localImageUrl = window.localStorage.getItem(bg_key)
-            return isImageUrl(url)?url:(isImageUrl(localImageUrl)?localImageUrl:defaultBackgroundImage);
-        }
+            const getImageUrl = (url) => {
+                let localImageUrl = window.localStorage.getItem(bg_key)
+                return isImageUrl(url)?url:(isImageUrl(localImageUrl)?localImageUrl:defaultBackgroundImage);
+            }
 
-        // 是否是一张图片地址
-        const isImageUrl = (url) => {
-            return bg_regx.test(url)
-        }
+            // 是否是一张图片地址
+            const isImageUrl = (url) => {
+                return bg_regx.test(url)
+            }
 
-        // 添加到本地
-        const addLocalStore = (obj) => {
-            // 本地获取
-            window.localStorage.setItem(key, JSON.stringify(obj))
-            // 保存首次加载能够移除直播间
-            removeRoom()
-        }
+            // 添加到本地
+            const addLocalStore = (obj) => {
+                // 本地获取
+                window.localStorage.setItem(key, JSON.stringify(obj))
+                // 保存首次加载能够移除直播间
+                removeRoom()
+            }
 
-        // 从本地获取存储信息
-        const getLocalStore = () => {
-            const obj = JSON.parse(window.localStorage.getItem(key))
-            return Array.isArray(obj) ? obj : []
-        }
+            // 从本地获取存储信息
+            const getLocalStore = () => {
+                const obj = JSON.parse(window.localStorage.getItem(key))
+                return Array.isArray(obj) ? obj : []
+            }
 
-        // 从本地获取缓存key 是否选择
-        const isSelect = (k)=>{
-            let show = window.localStorage.getItem(k)
-            return (show == 'true' || show == true )?true:false;
-        }
+            // 从本地获取缓存key 是否选择
+            const isSelect = (k)=>{
+                let show = window.localStorage.getItem(k)
+                return (show == 'true' || show == true )?true:false;
+            }
 
 
 
-        const addRemoveBtn = ()=>{
-            // 直播源
-            const hostName = document.querySelector('.host-name')
-            if(hostName){
-                hostName.addEventListener('click',()=>{
-                    if(confirm(`确认禁用 ${hostName.textContent}？`)){
-                        addUser(getRoomIdByUrl(window.location.href), hostName.textContent)
-                    }
-                })
+            const addRemoveBtn = ()=>{
+                // 直播源
+                const hostName = document.querySelector('.host-name')
+                if(hostName){
+                    hostName.addEventListener('click',()=>{
+                        if(confirm(`确认禁用 ${hostName.textContent}？`)){
+                            addUser(getRoomIdByUrl(window.location.href), hostName.textContent)
+                        }
+                    })
+
+                }
 
             }
 
-        }
 
+            const indexHome = ()=>{
+                // 直播源
+                const url = window.location.href
+                if( url == baseUrl ){
 
-        const indexHome = ()=>{
-            // 直播源
-            const url = window.location.href
-            if( url == baseUrl ){
-                // 循环删除播放
-                setInterval(()=>{
-                    const video = document.querySelector('.mod-index-main video')
                     try{
+                        const video = document.querySelector('.mod-index-main video')
                         if (video&&video.paused) {
                             video.pause()
                         }
+                        removeDOM(video)
                     }catch(e){
 
-                    }finally{
-                        removeDOM(video)
                     }
-                },10000)
+                    // 循环删除播放
+                    setInterval(()=>{
 
-                removeElement('.mod-index-main .main-bd')
-                removeElement('.mod-index-main .main-hd')
-                // huya-icon
-                removeElement('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
-                // type
-                removeElement('.mod-game-type')
-                // actlist
-                removeElement('.mod-actlist')
-                // livebox
-                removeElement('.mod-index-list .live-box')
-                // news
-                removeElement('.mod-news-section')
-                // recommend
-                removeElement('.recommend-wrap')
-                // recommendbg
-                removeElement('.mod-index-recommend')
+                        try{
+                            const video = document.querySelector('.mod-index-main video')
+                            if (video&&video.paused) {
+                                video.pause()
+                            }
+                            removeDOM(video)
+                        }catch(e){
 
-                // banner
-                const banner_close = document.querySelector('.mod-index-wrap #banner i')
-                if(banner_close){
-                    banner_close.click();
+                        }
+                    },10000)
+
+                    removeElement('.mod-index-main .main-bd')
+                    removeElement('.mod-index-main .main-hd')
+                    // huya-icon
+                    removeElement('.helperbar-root--12hgWk_4zOxrdJ73vtf1YI')
+                    // type
+                    removeElement('.mod-game-type')
+                    // actlist
+                    removeElement('.mod-actlist')
+                    // livebox
+                    removeElement('.mod-index-list .live-box')
+                    // news
+                    removeElement('.mod-news-section')
+                    // recommend
+                    removeElement('.recommend-wrap')
+                    // recommendbg
+                    removeElement('.mod-index-recommend')
+
+                    // banner
+                    const banner_close = document.querySelector('.mod-index-wrap #banner i')
+                    if(banner_close){
+                        banner_close.click();
+                    }
+                    // main
+                    removeElement('.mod-index-main')
+                    // banner
+                    removeElement('#banner')
+
+                    // list
+                    const l = document.querySelector('.mod-index-list')
+                    l.style.marginTop = '100px';
+
+                    //顶部
+                    const header = document.querySelector('#duya-header')
+                    header.style.backgroundColor = '#f4f5f8';
+                    header.style.color = 'rgb(79, 79, 79) !important';
+                    const headerLink = header.querySelectorAll('.hy-nav-item a')
+                    for(let a of headerLink){
+                        a.style.color = 'black'
+                    }
+
                 }
-                // main
-                removeElement('.mod-index-main')
-                // banner
-                removeElement('#banner')
-
-                // list
-                const l = document.querySelector('.mod-index-list')
-                l.style.marginTop = '100px';
-
-                //顶部
-                const header = document.querySelector('#duya-header')
-                header.style.backgroundColor = '#f4f5f8';
-                header.style.color = 'rgb(79, 79, 79) !important';
-                const headerLink = header.querySelectorAll('.hy-nav-item a')
-                for(let a of headerLink){
-                    a.style.color = 'black'
-                }
-
             }
-        }
 
-        // 样式部分
-        GM_addStyle(`
+            // 样式部分
+            GM_addStyle(`
    .m-container {
       box-sizing: border-box;
       position: fixed;
@@ -793,13 +804,15 @@ function huyaPlugin()
         color:rgb(255, 135, 0);
     }
       `)
-    })();
+        }
+    )();
 }
 
 // 斗鱼直播插件
 function douyuPlugin()
 {
-    (function () {
+    (function () 
+     {
         'use strict';
         // key
         const key = 'douyuzhibo'
@@ -810,7 +823,7 @@ function douyuPlugin()
         const menu_show_key= 'douyuzhibo_menu_show_key'
 
         //延迟时间
-        const time = 3000
+        const time = 2000
         // 匹配地址
         const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg))$/;
         // 直播源
@@ -849,9 +862,6 @@ function douyuPlugin()
                         // 移除 其他轮播图，导航栏等
                         removeWall()
                     }
-                    // 给直播间添加删除按钮
-                    addRemoveBtn();
-                    // home
                     indexHome();
                 }catch(e){
                     console.error(e)
@@ -1120,7 +1130,6 @@ function douyuPlugin()
 
         }
 
-
         const removeWall = () => {
 
             // 移除导航栏中游戏，视频等菜单链接
@@ -1161,20 +1170,47 @@ function douyuPlugin()
                 }
             }
 
-            // 主播直播间删除元素
-            if(new RegExp(/https:.*(\d+)$/).test(window.location.href)){
-                let palyer = document.querySelector('.layout-Player-main')
-                if(palyer && (document.querySelector('#bc2') || document.querySelector('#bc6') || document.querySelector('.wm-general'))){
-                    palyer.style.marginTop='60px'
-                }
-                removeElement('#bc6')
-                removeElement('#bc349')
-                removeElement('#bc2')
-                removeElement('#bc4')
-                removeElement('#soccer')
-                removeElement('#bc349')
-                removeElement('.wm-general')
+            // 匹配只有在播放直播间才会生效
+            if(new RegExp(/^https:.*.douyu\.com(\/((.*rid=\d+)|(\d+)))$/).test(window.location.href)){
 
+                addRemoveBtn(window.document)
+
+                // 删除直播间背景图
+                const divs = document.querySelectorAll('#root div')
+                if(divs){
+                    for(let d of divs){
+                        // 正则查找所有不包含video的背景 div标签
+                        if(d && d.id && new RegExp(/^bc.*$/g).test(d.id)){
+                            console.log('element',d)
+                            if(d.querySelector('video')){
+                                //to do
+                            }else{
+                                removeDOM(d)
+
+                            }
+                        }
+                    }
+                }
+
+                // 删除根标签下非video的标签
+                const divs2 = document.querySelectorAll('#root div.wm-general')
+                if(divs2){
+                    for(let d of divs2){
+                        if(d.querySelector('video')){
+                            //to do
+                        }else{
+                            removeDOM(d)
+
+                        }
+
+                    }
+                }
+
+                const player = document.querySelector('#root div.layout-Main')
+                player.style.marginTop='70px';
+                // 移除直播间提示登录
+                removeElement('.multiBitRate-da4b60')
+                //礼物
                 removeElement('#js-player-toolbar')
 
             }
@@ -1220,6 +1256,9 @@ function douyuPlugin()
                         if(li){
                             const link = li.querySelector('a.DyListCover-wrap')
                             if(link){
+                                link.addEventListener('click',(e)=>{
+                                    e.preventDefault()
+                                })
                                 const url =link.href
                                 const user = link.querySelector('div.DyListCover-userName')
                                 const name = user.textContent || ''
@@ -1228,9 +1267,7 @@ function douyuPlugin()
                                 if(isRemove(url) || userIsExist(name)){
                                     removeDOM(li)
                                 }else{
-                                    link.addEventListener('click',(e)=>{
-                                        e.preventDefault()
-                                    })
+
                                     // 删除直播间多余标签
                                     removeDOM(link.querySelector('.HeaderCell-label-wrap.is-od'))
                                     removeDOM(link.querySelector('.HeaderCell-label-wrap.is-live-empty'))
@@ -1249,9 +1286,7 @@ function douyuPlugin()
                                         e.preventDefault()
                                         const a = e.target.querySelector('a.DyListCover-wrap.is-hover')
                                         if(a){
-                                            a.addEventListener('click',(ez)=>{
-                                                ez.preventDefault()
-                                            })
+
                                             const url =a.href
                                             const user = a.querySelector('.DyListCover-userName')
                                             const name = user.textContent || ''
@@ -1268,6 +1303,9 @@ function douyuPlugin()
                                                     removeDOM(li);
                                                 }
 
+                                            })
+                                            a.addEventListener('click',(t)=>{
+                                                t.preventDefault()
                                             })
 
                                         }
@@ -1305,25 +1343,29 @@ function douyuPlugin()
             var videos = null
             // 循环处理直播源,防止直播源更新！
             if(isRemove(window.location.href)){
+                if(videos){
+                    for(let v of videos){
+                        if(v && v.paused){
+                            v.pause()
+                        }
+                        removeDOM(v)
+                    }
+
+                }
                 setInterval(()=>{
-                    try{
-                        videos = document.querySelectorAll('video')
-                        if(videos){
+                    videos = document.querySelectorAll('video')
+                    if(videos){
+
+                        try{
                             for(let v of videos){
                                 if(v && v.paused){
                                     v.pause()
                                 }
                                 removeDOM(v)
                             }
-                            /**
-                            // 点击播放按钮
-                            const videoBtn = document.querySelector('.player-play-btn')
-                            let ev = new Event("click", {"bubbles":true, "cancelable":false});
-                            // 自动触发点击暂停事件 停止播放
-                            videoBtn.dispatchEvent(ev)
-                            */
-                        }
-                    }catch(e){ }
+                        }catch(e){ }
+
+                    }
                 },3000);
             }
 
@@ -1447,175 +1489,195 @@ function douyuPlugin()
                  body1.style.backgroundImage='none'
              }
 
-        }
+            }
 
-        // 获取图片地址
-        const getImageUrl = (url) => {
-            let localImageUrl = window.localStorage.getItem(bg_key)
-            return isImageUrl(url)?url:(isImageUrl(localImageUrl)?localImageUrl:defaultBackgroundImage);
-        }
+            // 获取图片地址
+            const getImageUrl = (url) => {
+                let localImageUrl = window.localStorage.getItem(bg_key)
+                return isImageUrl(url)?url:(isImageUrl(localImageUrl)?localImageUrl:defaultBackgroundImage);
+            }
 
-        // 是否是一张图片地址
-        const isImageUrl = (url) => {
-            return bg_regx.test(url)
-        }
+            // 是否是一张图片地址
+            const isImageUrl = (url) => {
+                return bg_regx.test(url)
+            }
 
-        const userIsExist = (keywords)=>{
-            keywords = keywords.trim()
-            for(let i = 0; i < users.length; i++){
-                if( users[i].name == keywords || users[i].id == keywords){
-                    return true
+            const userIsExist = (keywords,list = users)=>{
+                keywords = keywords.trim()
+                for(let i = 0; i < list.length; i++){
+                    if( (list[i].name &&list[i].name == keywords) || (list[i].id &&list[i].id == keywords)){
+                        return true
+                    }
                 }
-            }
-            return false
-        }
-
-
-        const userDelete = (keywords)=>{
-            users.forEach((item,index)=>{
-                if( keywords == item.name || keywords == item.id){
-                    users.splice(index,1)
-                }
-            })
-            addLocalStore(users)
-        }
-
-        const addUser = (id,name)=>{
-            if (userIsExist(id)||userIsExist(name)) {
-                alert('该房间已存在！')
-                return;
-            }
-            const newUser = new HostUser(id,name);
-            // 添加
-            users.unshift(newUser)
-            // 保存到本地
-            addLocalStore(users)
-            // users = getLocalStore()
-            resetTbody(users)
-            // 如果是当前主播需要屏蔽
-            if(id == getRoomIdByUrl(window.location.href)){
-                removeRoomClick();
+                return false
             }
 
-        }
 
-
-        // 从本地获取存储信息
-        const getLocalStore = () => {
-            const obj = JSON.parse(window.localStorage.getItem(key))
-            return Array.isArray(obj) ? obj : []
-        }
-
-        // 从本地获取缓存key 是否选择
-        const isSelect = (k)=>{
-            let show = window.localStorage.getItem(k)
-            return (show == 'true' || show == true )?true:false;
-        }
-
-
-        const addRemoveBtn = ()=>{
-            // 直播源
-            const hostName = document.querySelector('.Title-blockInline .Title-anchorName h2')
-            if(hostName){
-                hostName.addEventListener('click',()=>{
-                    if(confirm(`确认禁用 ${hostName.textContent}？`)){
-                        addUser(getRoomIdByUrl(window.location.href), hostName.textContent)
+            const userDelete = (keywords)=>{
+                users.forEach((item,index)=>{
+                    if( keywords == item.name || keywords == item.id){
+                        users.splice(index,1)
                     }
                 })
+                addLocalStore(users)
             }
 
-        }
+            const addUser = (id,name)=>{
+                if (userIsExist(id)||userIsExist(name)) {
+                    alert('该房间已存在！')
+                    return;
+                }
+                const newUser = new HostUser(id,name);
+                // 添加
+                users.unshift(newUser)
+                // 保存到本地
+                addLocalStore(users)
+                // users = getLocalStore()
+                resetTbody(users)
+                // 如果是当前主播需要屏蔽
+                if(id == getRoomIdByUrl(window.location.href)){
+                    removeRoomClick();
+                }
+
+            }
 
 
-        const indexHome = ()=>{
-            // 直播源
-            if( window.location.href == baseUrl ){
-                // 移除首页直播间
-                const videoBox = document.querySelector('.layout-Slide-player')
-                const video = videoBox.querySelector('video')
-                try{
+            // 从本地获取存储信息
+            const getLocalStore = () => {
+                const obj = JSON.parse(window.localStorage.getItem(key))
+                return Array.isArray(obj) ? obj : []
+            }
+
+            // 从本地获取缓存key 是否选择
+            const isSelect = (k)=>{
+                let show = window.localStorage.getItem(k)
+                return (show == 'true' || show == true )?true:false;
+            }
+
+
+            const addRemoveBtn = ( element = window.document)=>{
+                // 直播源
+                if(element){
+                    const hostName = element.querySelector('.Title-roomInfo h2.Title-anchorNameH2')
+                    if(hostName){
+                        hostName.onclick = ()=>{
+                            if(confirm(`确认禁用 ${hostName.textContent}？`)){
+                                addUser(getRoomIdByUrl(window.location.href), hostName.textContent)
+                            }
+
+                        }
+                    }
+                }
+
+
+            }
+
+
+            const indexAddClick = (list)=>{
+                const rooms = document.querySelectorAll('.layout-Wrapper.layout-Module.RoomList .layout-List-item')
+                if(rooms){
+                    for( let li of rooms){
+                        try{
+                            // 获取单个主播间房间地址
+                            const a = li.querySelector('a')
+                            if(a){
+                                a.onclick = (e)=>{e.preventDefault()}
+                                const url = a.href
+                                const user = li.querySelector('.DyCover-user')
+                                const name = user.textContent || ''
+                                if(user && (!userIsExist(name,list) || !userIsExist(url,list))){
+                                    // 添加记录,下次不再添加！！！
+                                    list.unshift(new HostUser(url,name))
+                                    user.addEventListener('click',()=>{
+                                        if(confirm(`确认禁用 ${name}`)){
+                                            addUser(getRoomIdByUrl(url),name);
+                                            removeDOM(li);
+                                        }
+                                    },true)
+                                    //console.log(new HostUser(url,name))
+                                }
+
+                                if( isRemove(url) || userIsExist(name)){
+                                    removeDOM(li)
+                                }
+
+                            }
+
+                        }catch(e){}
+
+                    }
+                }
+            }
+
+
+            const indexHome = ()=>{
+                // 直播源
+                if( window.location.href == baseUrl ){
+                    window.scroll(0,0)
+                    // 设置首页背景图
+                    settingBackgroundImage()
+                    const videoBox = document.querySelector('.layout-Slide-player')
+                    const video = videoBox.querySelector('video')
                     if (video&&video.paused) {
                         video.pause()
                     }
-                }catch(e){
-
-                }finally{
                     removeDOM(video)
                     removeDOM(videoBox)
-                }
+                    setInterval(()=>{
+                        // 移除首页直播间
+                        try{
+                            const videoBox = document.querySelector('.layout-Slide-player')
+                            const video = videoBox.querySelector('video')
+                            if (video&&video.paused) {
+                                video.pause()
+                            }
+                            removeDOM(video)
+                            removeDOM(videoBox)
+                        }catch(e){
 
-                removeElement('.layout-Slide-bannerInner')
-                // 分类
-                removeElement('#lazyModule3')
-                // 推荐活动
-                removeElement('#lazyModule4')
-                // 精彩推荐
-                removeElement('#lazyModule5')
-                // 热门分类
-                removeElement('#lazyModule6')
-                // 精彩活动
-                removeElement('#lazyModule7')
-                // 官方活动
-                removeElement('#lazyModule23')
-                removeElement('#lazyModule24')
-                // livebox
-                removeElement('.mod-index-list .live-box')
+                        }
 
-                const banner_close = document.querySelector('.mod-index-wrap #banner i')
-                if(banner_close){
-                    banner_close.click();
-                }
-                // 设置首页背景图
-                settingBackgroundImage()
-
-                // 获取所有主播间
-                const rooms = document.querySelectorAll('.layout-List-item')
-                if(rooms){
-                    setTimeout(()=>{
-                        for( let li of rooms){
-                            try{
-                                // 获取单个主播间房间地址
-                                const a = li.querySelector('a')
-                                if(a){
-                                    a.addEventListener('click',(e)=>{
-                                        e.preventDefault()
-                                    })
-                                    const url = a.href
-                                    const user = li.querySelector('.DyCover-user')
-                                    const name = user.textContent || ''
-                                    if(user){
-                                        // 添加点击事件
-                                        user.addEventListener('click',(e)=>{
-                                            if(confirm(`确认禁用 ${name}？`)){
-                                                addUser(getRoomIdByUrl(url),name);
-                                                removeDOM(li);
-                                            }
-                                            e.preventDefault()
-                                        })
-                                        console.log('点击事件添加成功！！！')
-
-                                    }
+                    },10000)
 
 
-                                    if( isRemove(url) || userIsExist(name)){
-                                        removeDOM(li)
-                                    }
-                                }
+                    removeElement('.layout-Slide-bannerInner')
+                    // 分类
+                    removeElement('#lazyModule3')
+                    // 推荐活动
+                    removeElement('#lazyModule4')
+                    // 精彩推荐
+                    removeElement('#lazyModule5')
+                    // 热门分类
+                    removeElement('#lazyModule6')
+                    // 精彩活动
+                    removeElement('#lazyModule7')
+                    // 官方活动
+                    removeElement('#lazyModule23')
+                    removeElement('#lazyModule24')
 
-                            }catch(e){}
+                    // 初始化默认高度，默认浏览器可视化高度
+                    let init = window.innerHeight;
+                    // 初始化容器存放用户
+                    let init_users = []
+                    // 页面加载完毕
+                    setTimeout(()=>{ indexAddClick(init_users)},time)
+                    window.addEventListener('scroll',(e)=>{
+                        // 超过可视化高度，需要重新加载
+                        if(window.pageYOffset>init){
+                            init = init + 300;
+                            // 重新扫描点击事件
+                            indexAddClick(init_users)
+                        }
 
-                        }},time)
-
+                    })
 
                 }
 
             }
 
-        }
-
-        // 样式部分
-        GM_addStyle(`
-    .m-container {
+            // 样式部分
+            GM_addStyle(`
+ .m-container {
       box-sizing: border-box;
       position: fixed;
       display: none;
@@ -1732,6 +1794,7 @@ function douyuPlugin()
       `)
     })();
 }
+
 
 
 if(huya_address_pattern.test(local_url) || local_url == 'https://www.huya.com'){// 虎牙直播
