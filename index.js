@@ -15,6 +15,7 @@
 
 const huya_address_pattern=/https:\/\/www.huya.com\/*/
 const doyu_address_pattern=/https:\/\/www.douyu.com\/*/
+const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg).*)$/;
 const local_url = window.location.href
 
 // 虎牙直播插件
@@ -31,8 +32,6 @@ function huyaPlugin()
             const bg_show_key = 'huyazhibo_bg_show'
             // 是否显示菜单
             const menu_show_key= 'huyazhibo_menu_show_key'
-            // 匹配地址
-            const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg))$/;
             const defaultBackgroundImage='https://a.msstatic.com/huya/main3/assets/img/index-bg_59f9c.jpg'
             // 直播源
             const baseUrl = "https://www.huya.com/"
@@ -264,6 +263,7 @@ function huyaPlugin()
                     }
                     fetch(result).then(res=>{
                         if( res && res.status == 200 ){
+                            window.localStorage.setItem(bg_key,result)
                             settingBackgroundImage(result)
                         }else{
                             alert('图片资源访问失败，可能存在跨域问题，请更换一张地址')
@@ -280,7 +280,7 @@ function huyaPlugin()
                 const checkbox = document.querySelector('.m-container #checkbox1')
                 checkbox.addEventListener('change', function (e) {
                     window.localStorage.setItem(bg_show_key,e.target.checked)
-                    settingBackgroundImage()
+                    settingBackgroundImage(window.localStorage.getItem(bg_key))
                 })
 
                 // 是否关闭菜单
@@ -364,7 +364,7 @@ function huyaPlugin()
                     }
                 }
 
-                settingBackgroundImage()
+                settingBackgroundImage(window.localStorage.getItem(bg_key))
 
                 addRemoveButton()
                 const dd = document.querySelectorAll('.live-list-nav dd')
@@ -598,7 +598,6 @@ function huyaPlugin()
             }
 
             const settingBackgroundImage = (url) => {
-                url = getImageUrl(url)
                 const body1 = document.querySelector('body')
                 if(isSelect(bg_show_key)){
                     body1.style.backgroundSize="cover"
@@ -612,8 +611,7 @@ function huyaPlugin()
             }
 
             const getImageUrl = (url) => {
-                let localImageUrl = window.localStorage.getItem(bg_key)
-                return isImageUrl(url)?url:(isImageUrl(localImageUrl)?localImageUrl:defaultBackgroundImage);
+                return isImageUrl(url)?url:(isImageUrl(window.localStorage.getItem(bg_key))?window.localStorage.getItem(bg_key):defaultBackgroundImage);
             }
 
             // 是否是一张图片地址
@@ -846,8 +844,8 @@ function huyaPlugin()
         color:rgb(255, 135, 0);
     }
       `)
-}
-)();
+        }
+    )();
 }
 
 // 斗鱼直播插件
@@ -867,7 +865,7 @@ function douyuPlugin()
         //延迟时间
         const time = 2000
         // 匹配地址
-        const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg))$/;
+        
         // 直播源
         const baseUrl = "https://www.douyu.com/"
         // 默认背景图
@@ -1136,6 +1134,7 @@ function douyuPlugin()
                 fetch(result)
                     .then(res=>{
                     if(res && res.status && res.status == 200 ){
+                        window.localStorage.setItem(bg_key,result)
                         settingBackgroundImage(result)
                     }else{
                         alert('图片资源访问失败，可能存在跨域问题，请更换一张地址!')
@@ -1537,8 +1536,7 @@ function douyuPlugin()
 
         // 获取图片地址
         const getImageUrl = (url) => {
-            let localImageUrl = window.localStorage.getItem(bg_key)
-            return isImageUrl(url)?url:(isImageUrl(localImageUrl)?localImageUrl:defaultBackgroundImage);
+            return isImageUrl(url)?url:(isImageUrl(window.localStorage.getItem(bg_key))?window.localStorage.getItem(bg_key):defaultBackgroundImage);
         }
 
         // 是否是一张图片地址
@@ -1660,7 +1658,7 @@ function douyuPlugin()
                 window.scroll(0,0)
                 // 设置首页背景图
                 settingBackgroundImage()
-                const videoBox = document.querySelector('.layout-Slide-player')
+                videoBox = document.querySelector('.layout-Slide-player')
                 const video = videoBox.querySelector('video')
                 if (video&&video.paused) {
                     video.pause()
