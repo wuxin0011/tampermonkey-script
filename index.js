@@ -1384,6 +1384,7 @@ function douyuPlugin()
             var videos = null
             // 循环处理直播源,防止直播源更新！
             if(isRemove(window.location.href)){
+                videos = document.querySelectorAll('video')
                 if(videos){
                     for(let v of videos){
                         if(v && v.paused){
