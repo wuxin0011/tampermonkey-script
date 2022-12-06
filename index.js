@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.1
 // @description  虎牙直播、斗鱼直播 页面简化，屏蔽主播直播间
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -21,7 +21,7 @@
     const wd = window.document
     const wls = window.localStorage // 简化存储对象
     const download_plugin_url =
-        'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
+          'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
     const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
 
     const time = 2000 //延迟时间
@@ -53,10 +53,10 @@
                     // 执行斗鱼直播插件
                     new FishLive()
                 } else {
-                    log('插件地址不适配，请检查匹配地址！！！', 'warn')
+                    console.warn('插件地址不适配，请检查匹配地址！！！')
                 }
             } catch (e) {
-                log(e, 'error')
+
             }
 
         }, time)
@@ -260,7 +260,6 @@
                 })
 
             })
-            log('create room itme data success ……')
         }
 
 
@@ -313,7 +312,7 @@
                     if (e.key == 'Enter') {
                         let arr = that.users.filter(item => {
                             return (item.roomId && item.roomId.indexOf(inputValue.value) != -
-                                1) || (item.name && item.name.indexOf(inputValue.value) != -1)
+                                    1) || (item.name && item.name.indexOf(inputValue.value) != -1)
                         })
                         that.resetTbody(arr)
                     }
@@ -610,7 +609,7 @@
         getUser(keywords, list = this.users) {
             for (let i = 0; i < list.length; i++) {
                 if ((list[i].name && list[i].name == keywords) || (list[i].roomId && list[i].roomId ==
-                    keywords)) {
+                                                                   keywords)) {
                     return list[i]
                 }
             }
@@ -665,7 +664,6 @@
          *  @param {isparse}  = [是否需要解析]
          */
         addLocalStore(defaultKey = this.key, obj = this.users, type = Array.name, isParse = true) {
-            console.log(defaultKey, JSON.stringify(obj))
             try {
                 if (type == Object.name || type == Array.name) {
                     if (isParse) {
@@ -679,7 +677,6 @@
                     window.localStorage.setItem(defaultKey, obj)
                 }
             } catch (e) {
-                console.log(e)
             }
 
         }
@@ -703,9 +700,7 @@
                         }
 
                     } catch (e) {
-                        //TODO handle the exception
                         obj = []
-                        log(e, 'error')
                     }
 
                 }
@@ -979,16 +974,7 @@
 
 
         // 公共部分页面操作
-        common() {
-            let that = this
-            const videos = wd.querySelectorAll('video')
-            if (videos) {
-                for (let video of videos) {
-                    // video.pause()
-                }
-            }
-
-        }
+        common() {}
         //首页操作
         index() {
             let that = this
@@ -1070,7 +1056,7 @@
         detail() {
             let that = this
             // 匹配只有在播放直播间才会生效
-            if (new RegExp(/^https:.*.douyu\.com(\/((.*rid=\d+)|(\d+)))$/).test(local_url)) {
+            if (new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)))$/).test(local_url)) {
                 // 详情页名称操作
                 setTimeout(() => {
                     // 点击主播直播间名称进行操作
@@ -1079,48 +1065,58 @@
                         hostName.addEventListener('click', () => {
                             if (confirm(`确认禁用 ${hostName.textContent}？`)) {
                                 that.addUser(that.getRoomIdByUrl(local_url), hostName
-                                    .textContent)
+                                             .textContent)
                             }
                         })
 
                     }
 
-                    // 删除直播间背景图
-                    const divs = wd.querySelectorAll('#root div')
-                    // 删除直播间背景图
-                    if (divs) {
-                        for (let d of divs) {
-                            // 正则查找所有不包含video的背景 div标签
-                            if (d && d.id && new RegExp(/^bc.*$/g).test(d.id)) {
+                    // 带有轮播图 广告
+                    if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+))$/).test(local_url)) {
+                        // 删除直播间背景图
+                        const divs = wd.querySelectorAll('#root div')
+                        // 删除直播间背景图
+                        if (divs) {
+                            for (let d of divs) {
+                                // 正则查找所有不包含video的背景 div标签
+                                if (d && d.id && new RegExp(/^bc.*$/g).test(d.id)) {
+                                    if (d.querySelector('video')) {
+                                        d.style.background = 'none'
+                                    } else {
+                                        that.removeDOM(d, false)
+                                    }
+                                }
+                            }
+                        }
+
+                        // 删除根标签下非video的标签
+                        const divs2 = wd.querySelectorAll('#root div.wm-general')
+                        if (divs2) {
+                            for (let d of divs2) {
                                 if (d.querySelector('video')) {
                                     d.style.background = 'none'
                                 } else {
                                     that.removeDOM(d, false)
                                 }
+
                             }
                         }
+
                     }
 
-                    // 删除根标签下非video的标签
-                    const divs2 = wd.querySelectorAll('#root div.wm-general')
-                    if (divs2) {
-                        for (let d of divs2) {
-                            if (d.querySelector('video')) {
-                                //to do
-                                d.style.background = 'none'
-                            } else {
-                                that.removeDOM(d, false)
+                    // 不带有轮播图 广告
+                    if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
+                        // 如果是小窗口
+                        setTimeout(()=>{
+                            const closeBtn = document.querySelector('.roomSmallPlayerFloatLayout-closeBtn')
+                            if(closeBtn){
+                                closeBtn.click()
                             }
+                        },time*2)
 
-                        }
                     }
-
-                    const player = wd.querySelector('#root div.layout-Main')
-                    if (player) {
-                        player.style.marginTop = '70px';
-                    }
-
                 }, time)
+
             }
 
         }
@@ -1142,7 +1138,7 @@
                                 const user = li.querySelector('.DyCover-user')
                                 const name = user.textContent || ''
                                 if (user && (!that.userIsExist(name, list) || !that.userIsExist(
-                                        url, list))) {
+                                    url, list))) {
                                     // 添加记录,下次不再添加！！！
                                     list.unshift(new HostUser(url, name))
                                     user.addEventListener('click', () => {
@@ -1151,7 +1147,6 @@
                                             that.removeDOM(li);
                                         }
                                     }, true)
-                                    log(new HostUser(url, name))
                                 }
 
                                 if (that.isRemove(url) || that.userIsExist(name)) {
@@ -1484,10 +1479,6 @@
        .layout-Player-barrage{
            position: absolute !important;
            top: 0 !important;
-        }
-
-        body{
-         max-width:100vw !important;
         }
 
        /********************虎牙直播********************************/
