@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.1
+// @version      3.4
 // @description  虎牙直播、斗鱼直播 页面简化，屏蔽主播直播间
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -10,18 +10,18 @@
 // @grant        GM_addStyle
 // @license      MIT
 // ==/UserScript==
-(function() {
+(function () {
     'use strict';
     const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
     const doyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/
-    const bg_regx = /^http[s](.*)(\.(png|jpg|jpeg).*)$/;
+    const bg_regx = /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/; // 图片格式
     const local_url = window.location.href
     const is_huya = huya_address_pattern.test(local_url) // 是否是虎牙地址
     const is_douyu = doyu_address_pattern.test(local_url) // 是否是斗鱼地址
     const wd = window.document
     const wls = window.localStorage // 简化存储对象
     const download_plugin_url =
-          'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
+        'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
     const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
 
     const time = 2000 //延迟时间
@@ -59,7 +59,7 @@
 
             }
 
-        }, time)
+        }, 0)
     }
 
 
@@ -189,12 +189,13 @@
             that.m_container = that.s2d(`
                              <div class="m-container">
                              <div class="operation">
-                                  <input type="text" placeholder="房间号...">
+                                  <input type="text" placeholder="房间号或者名称...">
                                    <button class="btn btn-success search-room">搜索</button>
                                    <button class="btn btn-teal add-room">添加</button>
                                    <button class="btn btn-info flush-room">刷新</button>
                                    <button class="btn btn-danger clear-room">重置</button>
-                                   <button class="btn btn-success bg-btn">上传</button>
+                                   <button class="btn btn-warning bg-btn">上传</button>
+                                   <input type="file" id="file">
                                    <input type="checkbox" id="checkbox1" checked=${show1} class="checkbox"/>背景
                                    <input type="checkbox" id="checkbox2" checked=${show2} class="checkbox"/>菜单
                                    <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
@@ -249,7 +250,7 @@
                 that.tbody.appendChild(tr)
                 // 添加删除事件
                 const deleteBtn = tr.querySelector('button')
-                deleteBtn.addEventListener('click', function(e) {
+                deleteBtn.addEventListener('click', function (e) {
                     let roomId = e.target.getAttribute('room-id');
                     that.userDelete(roomId)
                     // 如果是当前主播，需要刷新
@@ -308,11 +309,11 @@
             const inputValue = that.m_container.querySelector('.m-container .operation input')
             if (inputValue) {
                 // 输入框
-                inputValue.addEventListener('keyup', function(e) {
+                inputValue.addEventListener('keyup', function (e) {
                     if (e.key == 'Enter') {
                         let arr = that.users.filter(item => {
                             return (item.roomId && item.roomId.indexOf(inputValue.value) != -
-                                    1) || (item.name && item.name.indexOf(inputValue.value) != -1)
+                                1) || (item.name && item.name.indexOf(inputValue.value) != -1)
                         })
                         that.resetTbody(arr)
                     }
@@ -322,7 +323,7 @@
             // 添加
             const addRoomBtn = that.m_container.querySelector('.m-container .operation  button.add-room')
             if (addRoomBtn) {
-                addRoomBtn.addEventListener('click', function() {
+                addRoomBtn.addEventListener('click', function () {
                     const keywords = inputValue.value.trim()
                     if (!keywords) {
                         return alert('请输入房间号！')
@@ -349,7 +350,7 @@
             // 刷新
             const flushRoomBtn = that.m_container.querySelector('.m-container button.flush-room')
             if (flushRoomBtn) {
-                flushRoomBtn.addEventListener('click', function() {
+                flushRoomBtn.addEventListener('click', function () {
                     that.users = that.getLocalStore()
                     that.resetTbody(that.users)
                 })
@@ -359,7 +360,7 @@
             // 搜索
             const searchRoomBtn = that.m_container.querySelector('.m-container .operation .search-room')
             if (searchRoomBtn) {
-                searchRoomBtn.addEventListener('click', function() {
+                searchRoomBtn.addEventListener('click', function () {
                     let arr = that.users.filter(item => {
                         return (item.roomId && item.roomId.indexOf(inputValue.value) != -1) || (
                             item.name && item.name.indexOf(inputValue.value) != -1)
@@ -371,7 +372,7 @@
             // 清空
             const clearRoomBtn = that.m_container.querySelector('.m-container button.clear-room')
             if (clearRoomBtn) {
-                clearRoomBtn.addEventListener('click', function() {
+                clearRoomBtn.addEventListener('click', function () {
                     if (confirm('确认重置？')) {
                         that.users = []
                         wls.removeItem(that.key)
@@ -382,36 +383,41 @@
                     }
                 })
             }
-            // 设置背景
-            const bgBtn = that.m_container.querySelector('.m-container button.bg-btn')
-            if (bgBtn) {
-                bgBtn.addEventListener('click', function() {
-                    let result = prompt('请输入背景图地址')
-                    if (!result) {
-                        return;
-                    }
-                    if (!that.isImageUrl(result)) {
-                        return alert('请输入一个图片地址');
-                    }
-                    fetch(result).then(res => {
-                        if (res && res.status && res.status == 200) {
-                            that.addLocalStore(that.bg_key, result, String.name, false)
-                            that.settingBackgroundImage(result)
-                        } else {
-                            alert('图片资源访问失败，可能存在跨域问题，请更换一张地址!')
+
+            // 文件上传
+            const uploadButton = that.m_container.querySelector('.m-container #file')
+            if (uploadButton) {
+                uploadButton.addEventListener('change', function (e) {
+                    const file = uploadButton.files[0] || null
+                    // 图片格式校验
+                    if(!bg_regx.test(file.name)){
+                        return alert("图片格式不正确！")
+                    }else{
+                        let fileReader = new FileReader()
+                        fileReader.onload = (e) => {
+                            // 保存到本地
+                            that.addLocalStore(that.bg_key, e.target.result, String.name, false)
+                            that.settingBackgroundImage(e.target.result)
                         }
-                    }).catch(e => {
-                        alert('图片资源访问失败，可能存在跨域问题，请更换一张地址!')
-                    })
-
-
+                        // 转码
+                        fileReader.readAsDataURL(file)
+                    }
                 })
             }
+
+            // 文件上传
+            const upload = that.m_container.querySelector('.m-container .bg-btn')
+            if (upload) {
+                upload.addEventListener('click', function (e) {
+                    uploadButton.click()
+                })
+            }
+
 
             // 选择背景
             const checkbox = that.m_container.querySelector('.m-container #checkbox1')
             if (checkbox) {
-                checkbox.addEventListener('change', function(e) {
+                checkbox.addEventListener('change', function (e) {
                     that.addLocalStore(that.bg_show_key, e.target.checked, Boolean.name)
                     that.settingBackgroundImage()
                 })
@@ -419,10 +425,12 @@
             // 是否关闭菜单
             const menu = that.m_container.querySelector('.m-container #checkbox2')
             if (menu) {
-                menu.addEventListener('change', function(e) {
+                menu.addEventListener('change', function (e) {
                     that.getLeftMenu(e.target.checked)
                 })
             }
+
+
 
 
         }
@@ -449,17 +457,17 @@
             btn.style.color = '#fff'
             btn.style.zIndex = 100000
             btn.textContent = text ? text : (is_huya ? '小虎牙' : '小鱼丸')
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 if (that.m_container.style.display === 'block') {
                     that.m_container.style.display = 'none'
                 } else {
                     that.m_container.style.display = 'block'
                 }
             })
-            btn.addEventListener('mouseenter', function() {
+            btn.addEventListener('mouseenter', function () {
                 btn.style.backgroundColor = 'rgba(255, 93, 35,0.6)'
             })
-            btn.addEventListener('mouseleave', function() {
+            btn.addEventListener('mouseleave', function () {
                 btn.style.backgroundColor = 'rgba(255, 93, 35,1)'
             })
             that.body.appendChild(btn)
@@ -563,7 +571,7 @@
                     url = this.getImageUrl(url)
                 }
                 this.body.style.backgroundSize = "cover"
-                this.body.style.backgroundRepeat = 'no-repeat'
+                this.body.style.backgroundRepeat = 'no-repeat '
                 this.body.style.backgroundAttachment = 'fixed'
                 this.body.style.backgroundImage = `url(${url})`
             } else {
@@ -580,15 +588,7 @@
             if (!url) {
                 url = wls.getItem(this.bg_key)
             }
-            return this.isImageUrl(url) ? url : this.defaultBackgroundImage;
-        }
-
-        /**
-         * 是否是一张图片地址
-         * @param url 背景图地址 默认当前壁纸
-         */
-        isImageUrl(url) {
-            return bg_regx.test(url)
+            return url ? url : this.defaultBackgroundImage;
         }
 
         /**
@@ -609,7 +609,7 @@
         getUser(keywords, list = this.users) {
             for (let i = 0; i < list.length; i++) {
                 if ((list[i].name && list[i].name == keywords) || (list[i].roomId && list[i].roomId ==
-                                                                   keywords)) {
+                        keywords)) {
                     return list[i]
                 }
             }
@@ -676,8 +676,7 @@
                 if (type == String.name || type == Boolean.name) {
                     window.localStorage.setItem(defaultKey, obj)
                 }
-            } catch (e) {
-            }
+            } catch (e) {}
 
         }
 
@@ -751,14 +750,20 @@
                 }
                 this.removeDOM(video, realyRemove)
             } catch (e) {}
-            // 循环执行该操作
-            setInterval(() => {
+            // 循环执行该操作]
+            let count = 0
+            let video_timer = setInterval(() => {
                 try {
                     const video = wd.querySelector(selector)
                     if (video) {
                         video.pause()
                     }
                     this.removeDOM(video, realyRemove)
+                    count = count + 1
+                    // 结束循环器
+                    if (count >= 10) {
+                        clearInterval(video_timer)
+                    }
                 } catch (e) {}
             }, time1)
         }
@@ -773,6 +778,8 @@
             this.removeVideo(selector, true)
             // 添加直播间删除禁言提示
             this.roomAlreadyRemove()
+            // 重新设置背景图
+            this.settingBackgroundImage()
         }
 
         /*
@@ -848,6 +855,23 @@
                 }
 
             }
+
+            // 暂停播放 立即执行
+            let pauseBtn = wd.querySelector('.player-pause-btn')
+            if (pauseBtn) {
+                pauseBtn.click()
+            }
+            let count = 0;
+            // 暂停播放 防止后续加载出现
+            let timer = setInterval(() => {
+                pauseBtn = wd.querySelector('.player-pause-btn')
+                if (pauseBtn) {
+                    pauseBtn.click()
+                }
+                if (count >= 3) {
+                    clearInterval(timer)
+                }
+            }, 1000)
 
         }
         // 分类页操作
@@ -1055,6 +1079,7 @@
         // 详情页操作
         detail() {
             let that = this
+            window.scroll(0, 0)
             // 匹配只有在播放直播间才会生效
             if (new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)))$/).test(local_url)) {
                 // 详情页名称操作
@@ -1065,7 +1090,7 @@
                         hostName.addEventListener('click', () => {
                             if (confirm(`确认禁用 ${hostName.textContent}？`)) {
                                 that.addUser(that.getRoomIdByUrl(local_url), hostName
-                                             .textContent)
+                                    .textContent)
                             }
                         })
 
@@ -1073,46 +1098,40 @@
 
                     // 带有轮播图 广告
                     if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+))$/).test(local_url)) {
-                        // 删除直播间背景图
-                        const divs = wd.querySelectorAll('#root div')
-                        // 删除直播间背景图
-                        if (divs) {
-                            for (let d of divs) {
-                                // 正则查找所有不包含video的背景 div标签
-                                if (d && d.id && new RegExp(/^bc.*$/g).test(d.id)) {
-                                    if (d.querySelector('video')) {
-                                        d.style.background = 'none'
-                                    } else {
-                                        that.removeDOM(d, false)
-                                    }
-                                }
-                            }
-                        }
 
-                        // 删除根标签下非video的标签
-                        const divs2 = wd.querySelectorAll('#root div.wm-general')
-                        if (divs2) {
-                            for (let d of divs2) {
-                                if (d.querySelector('video')) {
-                                    d.style.background = 'none'
-                                } else {
-                                    that.removeDOM(d, false)
-                                }
-
+                        // 移除直播间背景
+                        let count = 0;
+                        let timer = setInterval(() => {
+                            // 去掉默认样式
+                            const bgc = wd.querySelector('#bc3-bgblur')
+                            if (bgc) {
+                                bgc.style.background = 'none'
+                                bgc.style.backgroundImage = 'none'
                             }
-                        }
+                            const bg = wd.querySelector('#bc3')
+                            if (bg) {
+                                bg.style.background = 'none'
+                                bg.style.backgroundImage = 'none'
+                            }
+                            count = count + 1
+                            // 结束循环器
+                            if (count >= 4) {
+                                clearInterval(timer)
+                            }
+
+                        }, time)
 
                     }
 
                     // 不带有轮播图 广告
                     if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
                         // 如果是小窗口
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             const closeBtn = document.querySelector('.roomSmallPlayerFloatLayout-closeBtn')
-                            if(closeBtn){
+                            if (closeBtn) {
                                 closeBtn.click()
                             }
-                        },time*2)
+                        }, time)
 
                     }
                 }, time)
@@ -1138,7 +1157,7 @@
                                 const user = li.querySelector('.DyCover-user')
                                 const name = user.textContent || ''
                                 if (user && (!that.userIsExist(name, list) || !that.userIsExist(
-                                    url, list))) {
+                                        url, list))) {
                                     // 添加记录,下次不再添加！！！
                                     list.unshift(new HostUser(url, name))
                                     user.addEventListener('click', () => {
@@ -1294,7 +1313,7 @@
          box-sizing: border-box;
          position: fixed;
          display: none;
-         width: 550px;
+         width: 600px;
          height: 400px;
          top: 100px;
          left: 50%;
@@ -1314,17 +1333,20 @@
          text-align: center;
        }
         .m-container .operation input[type="text"] {
-         width:100px;
+         width:130px;
          box-sizing: border-box;
          outline: none;
          border: 1px solid teal;
          padding: 5px;
        }
        .m-container .operation input[type="text"]:focus {
-         border: 2px solid teal;
+         border: 2px solid teal !important;
        }
        .m-container .operation input[type="checkbox"] {
-         display:inline;
+         display:inline !important;
+       }
+        .m-container .operation input[type="file"] {
+         display:none !important;
        }
        .m-container table {
          position: relative;
@@ -1368,20 +1390,24 @@
          font-size:10px !important;
          border-radius:20px !important;
          max-width:50px  !important;
-         margin:0 0 !important;;
+         margin:0 0 !important;
+         background-color:rgba(166, 169, 173,1) !important;
          z-index:1000 !important;
        }
+        .m-container .btn:hover {
+           background-color:rgba(166, 169, 173,0.6) !important;
+       }
        .m-container .btn-teal{
-         background-color:rgba(0, 128, 64,1)  !important;
+         background-color:rgba(64, 158, 255,1)  !important;
        }
       .m-container .btn-teal:hover{
-         background-color:rgba(0, 128, 64,0.6) !important;
+         background-color:rgba(64, 158, 255,0.6) !important;
        }
        .m-container .btn-success{
-         background-color: rgba(52, 108, 233,1) !important;
+         background-color: rgba(103, 194, 58,1) !important;
        }
         .m-container .btn-success:hover{
-         background-color: rgba(52, 108, 233,0.6) !important;
+         background-color: rgba(103, 194, 58,0.6) !important;
        }
        .m-container .btn-info{
          background-color:rgba(119, 119, 119,1) !important;
@@ -1389,11 +1415,17 @@
        .m-container .btn-info:hover{
           background-color:rgba(119, 119, 119,0.6) !important;
        }
+       .m-container .btn-warning{
+         background-color:rgba(230, 162, 60,1) !important;
+       }
+       .m-container .btn-warning:hover{
+          background-color:rgba(230, 162, 60,0.6) !important;
+       }
        .m-container .btn-danger{
-         background-color:rgba(255, 0, 0,1) !important;
+         background-color:rgba(245, 108, 108,1) !important;
        }
         .m-container .btn-danger:hover{
-         background-color:rgba(255, 0, 0,0.6) !important;
+         background-color:rgba(245, 108, 108,0.6) !important;
        }
        .game-live-item i,.host-name {
            cursor:pointer;
@@ -1409,6 +1441,7 @@
         }
         /********************斗鱼直播********************************/
       .layout-Section.layout-Slide .layout-Slide-player,
+
       .layout-Slide-bannerInner,
        #lazyModule3,
        #lazyModule4,
@@ -1424,6 +1457,8 @@
        #js-header .Header .HeaderNav,
        #js-header .Header .HeaderGif-left,
        #js-header .Header .HeaderGif-right,
+       .Header-download-wrap,
+       .AnchorInterToolsUser,
        #js-room-activity,
        #js-right-nav,
        #js-bottom,
@@ -1436,6 +1471,8 @@
        .multiBitRate-da4b60{
            display:none !important;
        }
+
+
         li.Header-menu-link:nth-child(1),
         li.Header-menu-link:nth-child(2),
         li.Header-menu-link:nth-child(3),
@@ -1463,6 +1500,20 @@
        #root div.layout-Main{
            margin-top:70px !important;
        }
+
+       div#root div.wm-general {
+             display: none !important;
+             background: none !important;
+             background-image:none  !important;
+       }
+
+       div#root div.wm-general:nth-child(3) {
+             display: inline-block !important;
+       }
+        #bc3，#bc3-bgblur{
+           background:none !important;
+           background-image:none  !important;
+        }
 
        .Barrage-main .Barrage-content {
         color:#333 !important;
@@ -1503,6 +1554,7 @@
         #matchComponent2,
        .hy-nav-item,
        .list-adx,
+       .layout-Banner,
        .room-weeklyRankList{
            display:none !important;
         }
