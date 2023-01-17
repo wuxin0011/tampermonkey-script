@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.4
+// @version      3.6
 // @description  虎牙直播、斗鱼直播 页面简化，屏蔽主播直播间
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -111,6 +111,8 @@
             this.bg_show_key = 'bg_show_key'
             // 是否显示菜单
             this.menu_show_key = 'menu_show_key'
+            // 是否剧场模式
+            this.full_screen_key = 'full_screen_key'
             // 直播源
             this.baseUrl = "baseUrl"
             // 默认背景图
@@ -184,20 +186,22 @@
                 that.body = wd.createElement('body')
             }
             that.users = that.getLocalStore(that.key, Array.name)
-            let show1 = that.getLocalStore(that.bg_key, Boolean.name)
+            let show1 = that.getLocalStore(that.bg_show_key, Boolean.name)
             let show2 = that.getLocalStore(that.menu_show_key, Boolean.name)
+            let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
             that.m_container = that.s2d(`
                              <div class="m-container">
                              <div class="operation">
                                   <input type="text" placeholder="房间号或者名称...">
                                    <button class="btn btn-success search-room">搜索</button>
-                                   <button class="btn btn-teal add-room">添加</button>
-                                   <button class="btn btn-info flush-room">刷新</button>
-                                   <button class="btn btn-danger clear-room">重置</button>
-                                   <button class="btn btn-warning bg-btn">上传</button>
+                                   <button class="btn btn-teal add-room" title="复制地址栏房间号，手动添加房间">添加</button>
+                                   <button class="btn btn-info flush-room" title="刷新表格数据">刷新</button>
+                                   <button class="btn btn-danger clear-room" title="重置表格数据">重置</button>
+                                   <button class="btn btn-warning bg-btn" title="上传背景图">上传</button>
                                    <input type="file" id="file">
-                                   <input type="checkbox" id="checkbox1" checked=${show1} class="checkbox"/>背景
-                                   <input type="checkbox" id="checkbox2" checked=${show2} class="checkbox"/>菜单
+                                   <input type="checkbox" id="checkbox1" ${show1?'checked':''} class="checkbox" title="是否显示背景" />背景
+                                   <input type="checkbox" id="checkbox2" ${show2?'checked':''} class="checkbox" title="是否显示左侧菜单"/>菜单
+                                   <input type="checkbox" id="checkbox3" ${show3?'checked':''} class="checkbox" title="自动适应屏幕"/>剧场
                                    <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
                                </div>
                               <table >
@@ -427,6 +431,13 @@
             if (menu) {
                 menu.addEventListener('change', function (e) {
                     that.getLeftMenu(e.target.checked)
+                })
+            }
+            // 是否剧场模式
+            const full_screen_btn = that.m_container.querySelector('.m-container #checkbox3')
+            if (full_screen_btn) {
+                full_screen_btn.addEventListener('change', function (e) {
+                    that.addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
                 })
             }
 
@@ -761,7 +772,7 @@
                     this.removeDOM(video, realyRemove)
                     count = count + 1
                     // 结束循环器
-                    if (count >= 10) {
+                    if (count >= 1) {
                         clearInterval(video_timer)
                     }
                 } catch (e) {}
@@ -828,6 +839,7 @@
             this.bg_key = 'huyazhibo_bg'
             this.bg_show_key = 'huyazhibo_bg_show'
             this.menu_show_key = 'huyazhibo_menu_show_key'
+            this.full_screen_key='huyazhibo_full_screen_key'
             this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1664197944_content.jpg'
             this.baseUrl = "https://www.huya.com/"
             this.users = this.getLocalStore(this.key, Array.name, true)
@@ -854,24 +866,25 @@
                     banner_close.click();
                 }
 
-            }
-
-            // 暂停播放 立即执行
-            let pauseBtn = wd.querySelector('.player-pause-btn')
-            if (pauseBtn) {
-                pauseBtn.click()
-            }
-            let count = 0;
-            // 暂停播放 防止后续加载出现
-            let timer = setInterval(() => {
-                pauseBtn = wd.querySelector('.player-pause-btn')
+                // 暂停播放 立即执行
+                let pauseBtn = wd.querySelector('.player-pause-btn')
                 if (pauseBtn) {
                     pauseBtn.click()
                 }
-                if (count >= 3) {
-                    clearInterval(timer)
-                }
-            }, 1000)
+                let count = 0;
+                // 暂停播放 防止后续加载出现
+                let timer1 = setInterval(() => {
+                    pauseBtn = wd.querySelector('.player-pause-btn')
+                    if (pauseBtn) {
+                        pauseBtn.click()
+                    }
+                    count = count + 1
+                    if (count >= 3) {
+                        clearInterval(timer1)
+                    }
+                }, 1000)
+
+            }
 
         }
         // 分类页操作
@@ -909,6 +922,13 @@
                         }
                     })
 
+                }
+
+                // 自动剧场模式
+                let fullpageBtn = wd.querySelector('#player-fullpage-btn')
+                let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
+                if (fullpageBtn && show3) {
+                    setTimeout(()=>{fullpageBtn.click()},2000)
                 }
             }
         }
@@ -983,6 +1003,7 @@
             this.bg_key = 'douyuzhibo_bg'
             this.bg_show_key = 'douyuzhibo_show'
             this.menu_show_key = 'douyuzhibo_menu_show_key'
+            this.full_screen_key='douyuzhibo_full_screen_key'
             this.baseUrl = "https://www.douyu.com/"
             this.defaultBackgroundImage =
                 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
@@ -1332,7 +1353,7 @@
          padding: 20px 0 0 0;
          text-align: center;
        }
-        .m-container .operation input[type="text"] {
+       .m-container .operation input[type="text"] {
          width:130px;
          box-sizing: border-box;
          outline: none;
@@ -1345,7 +1366,7 @@
        .m-container .operation input[type="checkbox"] {
          display:inline !important;
        }
-        .m-container .operation input[type="file"] {
+       .m-container .operation input[type="file"] {
          display:none !important;
        }
        .m-container table {
@@ -1471,8 +1492,6 @@
        .multiBitRate-da4b60{
            display:none !important;
        }
-
-
         li.Header-menu-link:nth-child(1),
         li.Header-menu-link:nth-child(2),
         li.Header-menu-link:nth-child(3),
@@ -1521,12 +1540,10 @@
        .Barrage-main .Barrage-nickName{
         color:#2b94ff !important;
        }
-
        .Barrage-listItem{
          color: #333 !important;
          background-color: #f2f5f6 !important;
        }
-
        .layout-Player-barrage{
            position: absolute !important;
            top: 0 !important;
@@ -1555,13 +1572,14 @@
        .hy-nav-item,
        .list-adx,
        .layout-Banner,
+        #J_duyaHeaderRight>div>div>div,
        .room-weeklyRankList{
            display:none !important;
         }
         .hy-nav-item:nth-child(1),
         .hy-nav-item:nth-child(2),
-        .hy-nav-item:nth-child(3)
-        {
+        .hy-nav-item:nth-child(3),
+        #J_duyaHeaderRight>div>div>div:nth-child(3){
           display:inline-block !important;
         }
         .mod-index-wrap .mod-index-list{
@@ -1575,9 +1593,11 @@
         .duya-header a,.duya-header i{
          color:#000 !important;
         }
+        /*******直播间样式*****/
        .chat-room__list .msg-normal,.chat-room__list .msg-bubble{
           background:none !important;
         }
+        #wrap-ext,
        .chat-room__list .msg-normal-decorationPrefix,
        .chat-room__list .msg-normal-decorationSuffix,
        .chat-room__list .msg-bubble-decorationPrefix,
@@ -1587,19 +1607,25 @@
        .chat-room__list .msg-auditorSys,
        .J_box_msgOfKing,
        .chat-room__list .msg-onTVLottery{
-           display: none;
+           display: none !important;
         }
-       .chat-room__list .msg-bubble span.msg {
-           color: #333 !important:
-           background:none!important:
-         }
+       .chat-room__list .msg-bubble span.msg{
+           color: #333 !important;
+           background:none!important;
+        }
        .chat-room__list .msg-bubble .colon,
        .chat-room__list .msg-bubble .msg,
-       .chat-room__list .name
-        {
-           color #3c9cfe !important:
-           background:none!important:
+       .chat-room__list .name{
+           color: #3c9cfe !important;
+           background:none!important;
          }
+         /*****去掉直播间底部控制按钮动画样式防止来回滚动****/
+         div.player-ctrl-wrap{
+            bottom: 12px !important;
+        }
+         div.player-ctrl-wrap:hover{
+            bottom: 12px !important;
+        }
 
  `)
 
