@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.8
+// @version      3.8.1
 // @description  虎牙，斗鱼直播 简化页面，屏蔽主播
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -18,7 +18,7 @@
     const local_url = window.location.href
     const is_huya = huya_address_pattern.test(local_url) // 是否是虎牙地址
     const is_douyu = doyu_address_pattern.test(local_url) // 是否是斗鱼地址
-    const wd = window.document
+    const wd = window?.document
     const wls = window.localStorage // 简化存储对象
     const download_plugin_url ='https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
     const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
@@ -32,6 +32,7 @@
             try {
                 let text = is_huya ? '虎牙' : '斗鱼'
                 text = '%c欢迎使用' + text + '直播插件,下载地址%c'
+                console.clear()
                 console.log(
                     text
                     .concat(download_plugin_url, ''),
@@ -42,17 +43,22 @@
                     .concat(source_code_url, ''),
                     'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                     'border-radius: 0 3px 3px 0; color: #fff')
- 
-                //插件执行入口
-                if (is_huya) {
-                    // 执行虎牙直播插件
-                    new TriggerLive()
-                } else if (is_douyu) {
-                    // 执行斗鱼直播插件
-                    new FishLive()
-                } else {
-                    console.warn('插件地址不适配，请检查匹配地址！！！')
+                 if(wd.querySelector && wd.querySelectorAll){
+                     //插件执行入口
+                     if (is_huya) {
+                         // 执行虎牙直播插件
+                         new TriggerLive()
+                     } else if (is_douyu) {
+                         // 执行斗鱼直播插件
+                         new FishLive()
+                     } else {
+                         log('插件地址不适配，请检查匹配地址！！！','error')
+                     }
+                 }
+                else{
+                    log('请使用新版浏览器，该插件不支持！','error')
                 }
+ 
             } catch (e) {
                 log(e)
             }
@@ -354,16 +360,6 @@
                     that.resetTbody(that.users)
                 })
             }
-            // 移除手动搜索
-            // 搜索
-            /**
-            const searchRoomBtn = that.m_container.querySelector('.m-container .operation .search-room')
-            if (searchRoomBtn) {
-                searchRoomBtn.addEventListener('click', function () {
-                    that.getInputArr(inputValue.value)
-                })
-            }
-            */
  
             // 清空
             const clearRoomBtn = that.m_container.querySelector('.m-container button.clear-room')
@@ -423,7 +419,7 @@
                     that.getLeftMenu(e.target.checked)
                 })
             }
-            // 是否剧场模式
+            // 剧场模式
             const full_screen_btn = that.m_container.querySelector('.m-container #checkbox3')
             if (full_screen_btn) {
                 full_screen_btn.addEventListener('change', function (e) {
@@ -431,7 +427,7 @@
                 })
             }
  
-             // 是否剧场模式
+             // 隐藏操作栏
             const hide_btn = that.m_container.querySelector('.m-container .m-hide-btn')
             if (hide_btn) {
                 hide_btn.addEventListener('click', function (e) {
@@ -448,10 +444,7 @@
         }
  
         getInputArr(inputValue){
-            console.log('getInputArr=',inputValue)
-            let arr = this.users.filter(item => {
-                return (item.roomId && item.roomId.indexOf(inputValue) != -1) || (item.name && item.name.indexOf(inputValue) != -1)
-            })
+            let arr = this.users.filter(item => (item.roomId && item.roomId.indexOf(inputValue) != -1) || (item.name && item.name.indexOf(inputValue) != -1))
             this.resetTbody(arr)
         }
  
@@ -550,7 +543,7 @@
          */
         removeDOM(element, realRemove = false) {
             try {
-                if (element) {
+                if (element instanceof HTMLElement) {
                     element.style.display = 'none'
                     if (realRemove) {
                         element.remove()
@@ -916,14 +909,57 @@
          * @param args  = 参数
          */
        throttle(wait, func, ...args) {
-                let pre = Date.now();
-                return ()=>{
-                    if (Date.now() - pre > wait) {
-                        func(...args)
-                        pre = Date.now()
-                    }
-                }
+           let pre = Date.now();
+           return ()=>{
+               if (Date.now() - pre > wait) {
+                   func(...args)
+                   pre = Date.now()
+               }
+           }
+       }
+ 
+        /*
+         * 判断该节点是否汉含有直播间界面，
+         * @params element 元素
+         * @params selector 选择器 默认是斗鱼直播方式
+         */
+ 
+        hasVideo(element,selector='.layout-Main'){
+ 
+            if(element instanceof HTMLElement && element.querySelector){
+                return element.querySelector(selector) !== null
             }
+ 
+            return false
+ 
+        }
+ 
+ 
+         // 隐藏直播背景
+         backgroundNone(element,selector='.layout-Main',time=3000,maxCount = 10){
+             let timer
+            
+             let count = 0
+             timer = setInterval(()=>{
+                 let b = element.querySelector(selector)
+                 if(!(b instanceof HTMLElement )){
+                     return;
+                 }
+                 if(count<maxCount){
+                   count = count+1
+                    b.style.backgroundImage = 'none'
+                    console.log(count,b,b.style.backgroundImage)
+                 }
+                 // 结束计时器 减少浏览器性能开销
+                 else if(count >= maxCount && b.style.backgroundImage === 'none' ){
+                   clearInterval(timer)
+                   return;
+                 }
+ 
+             },time)
+ 
+        }
+ 
  
     }
  
@@ -1027,6 +1063,28 @@
                 if (fullpageBtn && show3) {
                     setTimeout(()=>{fullpageBtn.click()},2000)
                 }
+ 
+ 
+                setTimeout(()=>{
+                    // 视频区特效设置
+                    let lvs = wd.querySelector('.room-core #shielding-effect')
+                    console.log('div@@@@',lvs)
+                    if(lvs){
+ 
+                        let lis = lvs.querySelectorAll('.list li')
+                        console.log('li',lis)
+                        for(let li of lis){
+                            if(li && li.className!=='shield-cked'){
+                                console.log('divs',li)
+                                li.className='shield-cked'
+                            }
+                        }
+ 
+ 
+                    }
+                },100000)
+ 
+ 
             }
         }
         // 通过地址获取房间号
@@ -1111,6 +1169,7 @@
             this.m_container = null
             setTimeout(()=>{
                 this.init()
+ 
             },500)
         }
         // 公共部分页面操作
@@ -1136,9 +1195,7 @@
  
                     }
                 }
-                // 初始化容器存放用户
                 let init_users = []
-                // 页面加载完毕
                 setTimeout(() => {
                     that.removeRoomByClickRoomName(init_users)
                 }, 3000)
@@ -1185,6 +1242,8 @@
  
  
         }
+ 
+ 
         // 详情页操作
         detail() {
             let that = this
@@ -1193,56 +1252,50 @@
             if(!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)))$/).test(local_url)){
                 return;
             }
-            // if(true){return;}
-           setTimeout(()=>{
-               // 点击主播直播间名称进行操作
-               const hostName = wd.querySelector('.Title-roomInfo h2.Title-anchorNameH2')
-               if (hostName) {
-                   hostName.addEventListener('click', () => {
-                       if (confirm(`确认禁用 ${hostName.textContent}？`)) {
-                           that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
-                       }
-                   })
-               }
-           },3000)
+            setTimeout(()=>{
+                // 点击主播直播间名称进行操作
+                const hostName = wd.querySelector('.Title-roomInfo h2.Title-anchorNameH2')
+                if (hostName) {
+                    hostName.addEventListener('click', () => {
+                        if (confirm(`确认禁用 ${hostName.textContent}？`)) {
+                            that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+                        }
+                    })
+                }
  
-                // 带有轮播图 广告
-                if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+))$/).test(local_url)) {
-                    // 移除直播间背景
-                    let count = 0;
-                    let timer = setInterval(() => {
-                        // 去掉默认样式
-                        const bgc = wd.querySelector('#bc3-bgblur')
-                        if (bgc) {
-                            bgc.style.background = 'none'
-                            bgc.style.backgroundImage = 'none'
-                        }
-                        const bg = wd.querySelector('#bc3')
-                        if (bg) {
-                            bg.style.background = 'none'
-                            bg.style.backgroundImage = 'none'
-                        }
-                        count = count + 1
-                        // 结束循环器
-                        if (count >= 4) {
-                            clearInterval(timer)
-                            timer = null
-                        }
  
-                    }, 1000)
+ 
+ 
+            },3000)
+ 
+            // 带有轮播图 广告
+            if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+))$/).test(local_url)) {
+                let divs = wd.querySelectorAll('#root>div')
+                for(let element of divs){
+                    // 该div中是否有video
+                    if(this.hasVideo(element)){
+                        this.backgroundNone(element,'.wm-general-wrapper.bc-wrapper.bc-wrapper-player')
+                        this.backgroundNone(element,'.wm-general-bgblur')
+                    }else{
+                        // 移除出了显示直播div其他的div
+                        this.removeDOM(element,true)
+                    }
  
                 }
  
-                // 不带有轮播图 广告
-                if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
-                    // 如果是小窗口
-                    setTimeout(()=>{
-                        const closeBtn = document.querySelector('.roomSmallPlayerFloatLayout-closeBtn')
-                        if (closeBtn) {
-                            closeBtn.click()
-                        }
-                    },5000)
-                }
+            }
+ 
+ 
+            // 不带有轮播图 广告
+            if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
+                // 如果是小窗口 判断播放窗口是否存在
+                setTimeout(()=>{
+                    const closeBtn = document.querySelector('.roomSmallPlayerFloatLayout-closeBtn')
+                    if (closeBtn) {
+                        closeBtn.click()
+                    }
+                },5000)
+            }
  
         }
         // 通过点击直播间名称删除直播间
@@ -1343,6 +1396,8 @@
             }
  
         }
+ 
+ 
         // 通过房间号获取直播间name
         getNameByRoomId(keywords) {
             let that = this
@@ -1379,6 +1434,8 @@
             }
             return hostName?.textContent || ''
         }
+ 
+ 
         // 通过房间地址获取房间号
         getRoomIdByUrl(url) {
             try {
@@ -1558,15 +1615,19 @@
        .Title-AnchorLevel,.RoomVipSysTitle,
        .Aside-nav .Aside-nav-item,
        .Title-roomInfo .Title-row,
+       #js-player-toolbar,
+       #player-marvel-controller+div,
+       .layout-Player-main .GuessGameMiniPanelB-wrapper,
+       #js-player-asideMain #layout-Player-aside .FirePower,
+       .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
        .multiBitRate-da4b60{
            display:none !important;
        }
         li.Header-menu-link:nth-child(1),
         li.Header-menu-link:nth-child(2),
         li.Header-menu-link:nth-child(3),
-        .Aside-nav .Aside-nav-item:nth-child(1),
-        .Title-roomInfo .Title-row:nth-child(1),
-        .Title-roomInfo .Title-row:nth-child(2) {
+        .Aside-nav .Aside-nav-item:nth-child(1)
+       {
            display:inline-block !important;
        }
        .Barrage-main  .UserLevel,
@@ -1582,23 +1643,27 @@
        .layout-Player .layout-Player-rank,
         #js-player-toolbar,
        .MatchSystemTeamMedal,
-       #bc4,
-       #bc4-bgblur,
-       .wm-general,
+        #bc4,#bc4-bgblur,
+       .layout-Player-main #js-player-toolbar,
        .Barrage .Barrage-userEnter{
          display:none !important;
-       }
- 
-        #root .wm-general:nth-child(3)
-        {
-          display:block !important;
-          background:none !important;
        }
  
        #root div.layout-Main{
            margin-top:70px !important;
            display:block !important;
        }
+       // 直播背景
+       #root>div,
+       #root>div .wm-general-bgblur
+       {
+         background-image:none !important;
+       }
+ 
+        .Title-roomInfo .Title-row:nth-child(1),
+        .Title-roomInfo .Title-row:nth-child(2) {
+          display:block !important;
+        }
  
        .Barrage-main .Barrage-content {
         color:#333 !important;
@@ -1644,9 +1709,21 @@
         .player-recommend.recommend-ab-mode .end-ab-wrap,
         .chat-wrap-panel.wrap-income,
         .match-room .match-nav,
+        .host-detail.J_roomHdDetail span,
+        .host-detail.J_roomHdDetail .host-video,
+        .room-hd-r .jump-to-phone,
+        .room-hd-r #share-entrance,
+        .room-hd-r #J_illegalReport,
+        .room-hd-r .gamePromote.J_gamePromote,
        .room-weeklyRankList{
            display:none !important;
         }
+ 
+        // 左边导航菜单 默认关闭
+        .ssr-wrapper .mod-sidebar {
+          display:none;
+        }
+ 
         .hy-nav-item:nth-child(1),
         .hy-nav-item:nth-child(2),
         .hy-nav-item:nth-child(3),
@@ -1692,7 +1769,7 @@
          }
          /*****去掉直播间底部控制按钮动画样式防止来回滚动****/
          div.player-ctrl-wrap{
-            // bottom: 12px !important;
+             bottom: 15px ;
         }
          div.player-ctrl-wrap:hover{
             // bottom: 12px !important;
