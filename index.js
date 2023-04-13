@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.8.1
+// @version      3.8.2
 // @description  虎牙，斗鱼直播 简化页面，屏蔽主播
 // @author       wuxin001
 // @match        https://www.huya.com/*
 // @match        https://www.douyu.com/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
+// @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @grant        GM_addStyle
 // @license      MIT
 // ==/UserScript==
@@ -23,7 +23,7 @@
     const download_plugin_url ='https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
     const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
     const time = 2000 //延迟时间
- 
+
     /**
      * 页面加载完成
      */
@@ -58,16 +58,16 @@
                 else{
                     log('请使用新版浏览器，该插件不支持！','error')
                 }
- 
+
             } catch (e) {
                 log(e)
             }
- 
+
         }, 0)
     }
- 
- 
- 
+
+
+
     /**
      * 日志输出
      */
@@ -85,8 +85,8 @@
             console.error(new Date().toLocaleString(), msg);
         }
     }
- 
- 
+
+
     /**
      * 主播类
      */
@@ -96,8 +96,8 @@
             this.name = name;
         }
     }
- 
- 
+
+
     /**
      * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
      */
@@ -132,7 +132,7 @@
             // logo
             this.logo_btn = null
         }
- 
+
         // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
         init() {
             if (!this.removeRoom()) {
@@ -147,10 +147,10 @@
             // 设置菜单
             this.loadLeftMenu()
         }
- 
- 
+
+
         /*********************************建议下面操作方法必须重写的,并且参考此步骤*****************************/
- 
+
         // 公共部分页面操作
         common() {}
         //首页操作
@@ -170,10 +170,10 @@
         getRoomIdByUrl(url) {
             return null
         }
- 
+
         /*********************************下面方法不建议重写******************************/
- 
- 
+
+
         /**
          * 容器，所有操作容器均在此容器中，
          */
@@ -191,7 +191,6 @@
             let show1 = that.getLocalStore(that.bg_show_key, Boolean.name)
             let show2 = that.getLocalStore(that.menu_show_key, Boolean.name)
             let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
-            // <button class="btn btn-success search-room">搜索</button>
             that.m_container = that.s2d(`
                              <div class="m-container">
                              <div class="operation">
@@ -204,8 +203,9 @@
                                    <input type="checkbox" id="checkbox1" ${show1?'checked':''} class="checkbox" title="是否显示背景" />背景
                                    <input type="checkbox" id="checkbox2" ${show2?'checked':''} class="checkbox" title="是否显示左侧菜单"/>菜单
                                    <input type="checkbox" id="checkbox3" ${show3?'checked':''} class="checkbox" title="自动适应屏幕"/>剧场
-                                   <a class="m-link m-hide-btn" title="隐藏Logo，不再显示" style="cursor:pointer;">隐藏</a>
+                                   <a class="m-link m-hide-btn" title="隐藏Logo，不再显示,如果需要开启，点击直播间主播名称，禁用即可出现显示" style="cursor:pointer;">隐藏</a>
                                    <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
+                                   <a class="m-link close-btn" title="关闭弹窗，不再显示" style="cursor:pointer;">关闭</a>
                                </div>
                               <table >
                                    <thead>
@@ -217,11 +217,12 @@
                                    <tbody>
                                    </tbody>
                                </table>
+
                              </div>
          `)
- 
- 
- 
+
+
+
             that.body.appendChild(that.m_container)
             that.tbody = that.m_container.querySelector('.m-container table tbody')
             // 生成操作按钮
@@ -230,10 +231,10 @@
             that.createRoomItem(that.users)
             // 右侧点击添加button
             that.createButton()
- 
+
         }
- 
- 
+
+
         /**
          * 通过用户列表构建列表
          * @param {Object} arr  用户列表
@@ -266,11 +267,11 @@
                     }
                     that.removeDOM(tr)
                 })
- 
+
             })
         }
- 
- 
+
+
         /**
          * 解析DOM字符串
          * @param {Object} string DOM文档树
@@ -278,7 +279,7 @@
         s2d(string) {
             return new DOMParser().parseFromString(string, 'text/html').body.childNodes[0]
         }
- 
+
         /**
          * 绘制表格
          * @param {Object} arr 表格数据
@@ -300,10 +301,10 @@
             table.appendChild(this.tbody)
             // 添加操作窗口
             this.createRoomItem(arr)
- 
+
         }
- 
- 
+
+
         /**
          * 操作框容器
          */
@@ -324,7 +325,7 @@
                   that.getInputArr(inputValue.value)
                 }
             }
- 
+
             // 添加
             const addRoomBtn = that.m_container.querySelector('.m-container .operation  button.add-room')
             if (addRoomBtn) {
@@ -344,14 +345,14 @@
                                 inputValue.value = ''
                             }
                         }
- 
+
                     } else {
                         alert('该主播已添加！')
                     }
                 })
- 
+
             }
- 
+
             // 刷新
             const flushRoomBtn = that.m_container.querySelector('.m-container button.flush-room')
             if (flushRoomBtn) {
@@ -360,7 +361,7 @@
                     that.resetTbody(that.users)
                 })
             }
- 
+
             // 清空
             const clearRoomBtn = that.m_container.querySelector('.m-container button.clear-room')
             if (clearRoomBtn) {
@@ -375,28 +376,60 @@
                     }
                 })
             }
- 
+
             // 文件上传
             const uploadButton = that.m_container.querySelector('.m-container #file')
             if (uploadButton) {
                 uploadButton.addEventListener('change', function (e) {
                     const file = uploadButton.files[0] || null
                     // 图片格式校验
-                    if(!bg_regx.test(file.name)){
+                    if(!bg_regx.test(file?.name)){
                         return alert("图片格式不正确！")
                     }else{
-                        let fileReader = new FileReader()
-                        fileReader.onload = (e) => {
-                            // 保存到本地
-                            that.addLocalStore(that.bg_key, e.target.result, String.name, false)
-                            that.settingBackgroundImage(e.target.result)
+                        try{
+                            let fileReader = new FileReader()
+                            // 获取图片后缀
+
+                            fileReader.onload = (e) => {
+                                let base64 = e.target.result
+                                let str = base64.slice(base64.indexOf(",")+1);
+                                var strLength = str.length;
+                                if(atob){
+                                    str = atob(str);
+                                    let bytes = str.length;
+                                    var size = (bytes /(1024*1024)).toFixed(2);
+                                    if(size>5){
+                                        if(confirm('图片保存失败，浏览器最大只能保存5MB大小图片，确认查看原因？')){
+                                            // window.open('https://developer.mozilla.org/zh-CN/docs/Web/API/File_and_Directory_Entries_API/Introduction','_blank')
+                                            window.location.href = 'https://developer.mozilla.org/zh-CN/docs/Web/API/File_and_Directory_Entries_API/Introduction'
+                                        }
+                                        return;
+                                    }
+                                    // 保存到本地
+                                    that.addLocalStore(that.bg_key, base64, String.name, false)
+                                    that.settingBackgroundImage(e.target.result)
+
+                                }else{
+                                    alert('保存失败，当前浏览器不支持！')
+                                }
+
+                            }
+                            // 转码
+                            fileReader.readAsDataURL(file)
+
+                            fileReader.onerror = ()=>{
+                                console.log('onerror')
+
+                            }
+
+                        }catch(e){
+                            alert('图片解析失败！')
                         }
-                        // 转码
-                        fileReader.readAsDataURL(file)
                     }
+
                 })
             }
- 
+
             // 文件上传
             const upload = that.m_container.querySelector('.m-container .bg-btn')
             if (upload) {
@@ -426,7 +459,7 @@
                     that.addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
                 })
             }
- 
+
              // 隐藏操作栏
             const hide_btn = that.m_container.querySelector('.m-container .m-hide-btn')
             if (hide_btn) {
@@ -442,12 +475,12 @@
                 })
             }
         }
- 
+
         getInputArr(inputValue){
             let arr = this.users.filter(item => (item.roomId && item.roomId.indexOf(inputValue) != -1) || (item.name && item.name.indexOf(inputValue) != -1))
             this.resetTbody(arr)
         }
- 
+
         /**
          * 右侧操作按钮
          * @param text 指定按钮文本，默认是小虎牙或者是小鱼丸
@@ -460,7 +493,7 @@
                 return;
             }
             const btn = wd.createElement('button')
- 
+
             btn.style.cursor = 'pointer'
             btn.style.position = 'fixed'
             btn.style.top = '300px'
@@ -501,13 +534,13 @@
                 flag = true
                 wd.addEventListener('mousemove', move)
             })
- 
+
             btn.addEventListener('mouseup', () => {
                 flag = false
                 //wd.removeEventListener('mousemove',move)
                 wd.onmousemove = null
             })
- 
+
             btn.addEventListener('mouseleave', () => {
                 flag = false
                 btn.style.backgroundColor = 'rgba(255, 93, 35,1)'
@@ -522,20 +555,32 @@
                 // 计算位置信息
                 let btn_top = Math.min(Math.max(0, e.clientY - y), window.innerHeight - btn.offsetHeight)
                 let btn_left = Math.min(Math.max(0, e.clientX - x), window.innerWidth - btn.offsetWidth)
- 
+
                 btn.style.left = btn_left + 'px'
                 btn.style.top = btn_top + 'px'
                 btn.style.right = 'auto'
                 //保持到本地
                 that.addLocalStore(mouse_key,{'mouse_left':btn_left,'mouse_top':btn_top},Object.name)
- 
+
             }
             that.logo_btn = btn
             that.body.appendChild(btn)
- 
- 
+
+            //添加弹窗点击关闭
+            const closeBtn = that.m_container.querySelector('.m-container .close-btn')
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    if (that.m_container.style.display === 'block') {
+                        that.m_container.style.display = 'none'
+                    } else {
+                        that.m_container.style.display = 'block'
+                    }
+                })
+            }
+
+
         }
- 
+
         /**
          * 删除DOM
          * @param element 需要删除的元素
@@ -551,7 +596,7 @@
                 }
             } catch (e) {} // 防止element没有remove方法而抛出异常
         }
- 
+
         /**
          * 删除DOM
          * @param selector 选择器
@@ -561,7 +606,7 @@
         removeElement(selector, realRemove = false) {
             this.removeDOM(wd.querySelector(selector), realRemove)
         }
- 
+
         /**
          * 该房间是否已改被删除
          * @param url 房间链接地址 默认 window.location.href
@@ -573,7 +618,7 @@
             this.roomIsNeedRemove();
             return true
         }
- 
+
         /**
          * 房间已被删除之后操作
          * @param url 房间链接地址 默认 window.location.href
@@ -635,7 +680,7 @@
             // 创建操作面板
             this.create_container()
         }
- 
+
         /**
          * 判断链接是否应该被删除
          * @param href 房间链接地址 默认 window.location.href
@@ -643,8 +688,8 @@
         isRemove(href) {
             return this.userIsExist(this.getRoomIdByUrl(href));
         }
- 
- 
+
+
         /**
          * 设置背景图
          * @param url 背景图地址 默认 是默认地址
@@ -661,9 +706,9 @@
             } else {
                 this.body.style.backgroundImage = 'none'
             }
- 
+
         }
- 
+
         /**
          * 获取本地图片地址
          * @param url 背景图地址 默认 是默认地址
@@ -674,7 +719,7 @@
             }
             return url ? url : this.defaultBackgroundImage;
         }
- 
+
         /**
          * 通过房间名称或者id判断房间是否已经保存到本地
          * @param keywords 房间名或者id
@@ -683,8 +728,8 @@
         userIsExist(keywords, list = this.users) {
             return this.getUser(keywords, list) ? true : false
         }
- 
- 
+
+
         /**
          * 通过房间名称或者id判断房间是否已经保存到本地
          * @param keywords 房间名或者id
@@ -698,9 +743,9 @@
             }
             return null
         }
- 
- 
- 
+
+
+
         /**
          * 通过房间id或者房间名删除本地缓存的数据
          * @param keywords 房间名或者id
@@ -714,8 +759,8 @@
             })
             that.addLocalStore(this.key, this.users)
         }
- 
- 
+
+
         /**
          * 添加并保存直播间
          * @param id, 房间id
@@ -736,9 +781,9 @@
             if (id == this.getRoomIdByUrl(local_url)) {
                 this.roomIsNeedRemove(local_url);
             }
- 
+
         }
- 
+
         /**
          *  获取本地保存的直播数据
          *  @param {defaultKey}  = [存储key]
@@ -755,16 +800,16 @@
                         wls.setItem(defaultKey, obj)
                     }
                 }
- 
+
                 if (type == String.name || type == Boolean.name) {
                     wls.setItem(defaultKey, obj)
                 }
             } catch (e) {
             }
- 
+
         }
- 
- 
+
+
         /**
          * 获取本地保存的直播数据
          *  @param {key}  = [存储key]
@@ -781,15 +826,15 @@
                         } else {
                             obj = []
                         }
- 
+
                     } catch (e) {
                         obj = []
                     }
- 
+
                 }
                 return Array.isArray(obj) ? obj : []
             }
- 
+
             if (type == Object.name) {
                 if (isParse) {
                     try {
@@ -798,28 +843,28 @@
                         } else {
                             obj = {}
                         }
- 
+
                     } catch (e) {
                         obj = {}
                     }
- 
+
                 }
                 return obj ? obj : {}
             }
- 
+
             if (type == String.name) {
                 return obj ? obj : '';
             }
- 
+
             if (type == Boolean.name) {
                 return (obj == 'true' || obj == true) ? true : false;
             }
- 
+
             return obj;
- 
+
         }
- 
- 
+
+
         /**
          * @param {selector}  = 选择器
          * @param {selector}  = [是否真的删除，默认删除而不是display = 'none']
@@ -852,8 +897,8 @@
                 } catch (e) {}
             }, time1)
         }
- 
- 
+
+
         /**
          * @param {selector}  = [选择器]
          * @param {selector}  = [是否真的删除，默认删除而不是display = 'none']
@@ -866,7 +911,7 @@
             // 重新设置背景图
             this.settingBackgroundImage()
         }
- 
+
         /*
          * 操作左侧导航栏，需要传入选择器，和修改值 建议放到公共方法下执行！
          * @param {selector}  = [选择器]
@@ -882,9 +927,9 @@
                 this.menu.style.display = 'none'
             }
             this.addLocalStore(this.menu_show_key, value, Boolean.name, false)
- 
+
         }
- 
+
         /*
          * 操作左侧导航栏，需要传入选择器，和修改值 建议放到公共方法下执行！
          * @param {selector}  = [选择器]
@@ -900,8 +945,8 @@
                 }
             }
         }
- 
- 
+
+
         /*
          * 节流函数
          * @param wait  = 延迟执行时间
@@ -917,28 +962,28 @@
                }
            }
        }
- 
+
         /*
          * 判断该节点是否汉含有直播间界面，
          * @params element 元素
          * @params selector 选择器 默认是斗鱼直播方式
          */
- 
+
         hasVideo(element,selector='.layout-Main'){
- 
-            if(element instanceof HTMLElement && element.querySelector){
-                return element.querySelector(selector) !== null
+
+            if(element instanceof HTMLElement){
+                let result = element.querySelector(selector)
+                return result !== null && result != undefined
             }
- 
+
             return false
- 
+
         }
- 
- 
+
+
          // 隐藏直播背景
          backgroundNone(element,selector='.layout-Main',time=3000,maxCount = 10){
              let timer
-            
              let count = 0
              timer = setInterval(()=>{
                  let b = element.querySelector(selector)
@@ -948,21 +993,20 @@
                  if(count<maxCount){
                    count = count+1
                     b.style.backgroundImage = 'none'
-                    console.log(count,b,b.style.backgroundImage)
                  }
                  // 结束计时器 减少浏览器性能开销
                  else if(count >= maxCount && b.style.backgroundImage === 'none' ){
                    clearInterval(timer)
                    return;
                  }
- 
+
              },time)
- 
+
         }
- 
- 
+
+
     }
- 
+
     /**
      * 虎牙直播插件
      */
@@ -984,8 +1028,9 @@
             this.m_container = null
             this.init()
         }
- 
- 
+
+
+
         // 首页操作
         index() {
             // 直播源
@@ -998,7 +1043,7 @@
                 if (banner_close) {
                     banner_close.click();
                 }
- 
+
                 // 暂停播放 立即执行
                 let pauseBtn = wd.querySelector('.player-pause-btn')
                 if (pauseBtn) {
@@ -1016,9 +1061,9 @@
                         clearInterval(timer1)
                     }
                 }, 1000)
- 
+
             }
- 
+
         }
         // 分类页操作
         category() {
@@ -1031,9 +1076,9 @@
                             setTimeout(() => {
                                 that.removeRoomByClickRoomName()
                             }, 2000)
- 
+
                         })
- 
+
                     }
                 }
             }
@@ -1054,23 +1099,25 @@
                             that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
                         }
                     })
- 
+
                 }
- 
+
                 // 自动剧场模式
                 let fullpageBtn = wd.querySelector('#player-fullpage-btn')
                 let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
                 if (fullpageBtn && show3) {
                     setTimeout(()=>{fullpageBtn.click()},2000)
                 }
- 
- 
+
+                // todo 特效设置暂时未开启！
+
+                /*
                 setTimeout(()=>{
                     // 视频区特效设置
                     let lvs = wd.querySelector('.room-core #shielding-effect')
                     console.log('div@@@@',lvs)
                     if(lvs){
- 
+
                         let lis = lvs.querySelectorAll('.list li')
                         console.log('li',lis)
                         for(let li of lis){
@@ -1079,12 +1126,13 @@
                                 li.className='shield-cked'
                             }
                         }
- 
- 
+
+
                     }
                 },100000)
- 
- 
+                */
+
+
             }
         }
         // 通过地址获取房间号
@@ -1093,7 +1141,7 @@
             let roomId = arr[arr.length - 1]
             return roomId
         }
- 
+
         // 通过房间号查找名称
         getNameByRoomId(roomId) {
             let that = this
@@ -1110,13 +1158,13 @@
                                 hostName = user
                             }
                         }
- 
+
                     }
                 }
             }
             return hostName?.textContent || ''
         }
- 
+
         // 通过点击直播间名称删除直播间
         removeRoomByClickRoomName() {
             const that = this
@@ -1140,14 +1188,14 @@
                             that.removeDOM(li)
                         }
                     } catch (e) {}
- 
+
                 }
             }
- 
+
         }
- 
+
     }
- 
+
     /**
      * 斗鱼直播插件
      */
@@ -1169,7 +1217,7 @@
             this.m_container = null
             setTimeout(()=>{
                 this.init()
- 
+
             },500)
         }
         // 公共部分页面操作
@@ -1188,11 +1236,11 @@
                     const divs = vbox.querySelectorAll('div')
                     if (divs) {
                         divs.forEach(div => {
-                            if (div?.title && div.title == '暂停') {
+                            if (div?.title == '暂停') {
                                 div.click()
                             }
                         })
- 
+
                     }
                 }
                 let init_users = []
@@ -1230,20 +1278,20 @@
                                         /\w+/g))[0]
                                     window.location.href = result
                                 }
- 
+
                             })
- 
+
                         }
- 
+
                     }
                 }
- 
+
             }
- 
- 
+
+
         }
- 
- 
+
+
         // 详情页操作
         detail() {
             let that = this
@@ -1262,12 +1310,12 @@
                         }
                     })
                 }
- 
- 
- 
- 
+
+
+
+
             },3000)
- 
+
             // 带有轮播图 广告
             if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+))$/).test(local_url)) {
                 let divs = wd.querySelectorAll('#root>div')
@@ -1280,12 +1328,12 @@
                         // 移除出了显示直播div其他的div
                         this.removeDOM(element,true)
                     }
- 
+
                 }
- 
+
             }
- 
- 
+
+
             // 不带有轮播图 广告
             if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
                 // 如果是小窗口 判断播放窗口是否存在
@@ -1296,7 +1344,7 @@
                     }
                 },5000)
             }
- 
+
         }
         // 通过点击直播间名称删除直播间
         removeRoomByClickRoomName(list = []) {
@@ -1324,19 +1372,19 @@
                                         }
                                     }, false)
                                 }
- 
+
                                 if (that.isRemove(url) || that.userIsExist(name)) {
                                     that.removeDOM(li)
                                 }
- 
+
                             }
- 
+
                         } catch (e) {}
- 
+
                     }
                 }
             }
- 
+
             if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
                 const rooms = wd.querySelectorAll('.layout-Cover-item')
                 if (rooms) {
@@ -1378,26 +1426,26 @@
                                                             that.addUser(id, name);
                                                             that.removeDOM(li);
                                                         }
- 
+
                                                     },false)
                                                 }
                                             }
- 
+
                                         },false)
                                     }
- 
+
                                 }
                             }
- 
+
                         } catch (e) {}
                     }
                 }
- 
+
             }
- 
+
         }
- 
- 
+
+
         // 通过房间号获取直播间name
         getNameByRoomId(keywords) {
             let that = this
@@ -1429,13 +1477,13 @@
                         }
                     }
                 }
- 
- 
+
+
             }
             return hostName?.textContent || ''
         }
- 
- 
+
+
         // 通过房间地址获取房间号
         getRoomIdByUrl(url) {
             try {
@@ -1446,22 +1494,22 @@
                     let roomId = arr[arr.length - 1]
                     return roomId
                 }
- 
+
             } catch (e) {
                 return null
             }
         }
- 
+
     }
- 
- 
+
+
     // 样式部分
     GM_addStyle(`
     .m-container {
          box-sizing: border-box;
          position: fixed;
          display: none;
-         width: 600px;
+         width: 650px;
          height: 400px;
          top: 100px;
          left: 50%;
@@ -1481,11 +1529,11 @@
          text-align: center;
        }
        .m-container .operation input[type="text"] {
-         width:130px;
+         width:150px;
          box-sizing: border-box;
          outline: 1px solid teal;
          border:none;
-         padding: 5px;
+         padding: 4px 7px;
        }
        .m-container .operation input[type="text"]:focus {
          outline: 1px solid red !important;
@@ -1532,10 +1580,10 @@
        }
        .m-container .btn {
          cursor: pointer !important;
-         padding: 5px 7px !important;
+         padding: 5px 8px !important;
          border: none !important;
          color: #fff !important;
-         font-size:10px !important;
+         font-size: 1rem !important;
          border-radius:20px !important;
          max-width:50px  !important;
          margin:0 0 !important;
@@ -1572,9 +1620,20 @@
        .m-container .btn-danger{
          background-color:rgba(245, 108, 108,1) !important;
        }
-        .m-container .btn-danger:hover{
+       .m-container .btn-danger:hover{
          background-color:rgba(245, 108, 108,0.6) !important;
        }
+
+       .m-contaner .m-close-btn{
+         background:teal !important;
+
+       }
+
+       .m-contaner .m-close-btn:hover{
+         color:whtie !important;
+       }
+
+       /***************************************************斗鱼直播***************************************************************************/
        .game-live-item i,.host-name {
            cursor:pointer;
        }
@@ -1587,8 +1646,8 @@
        .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
            color:rgb(255, 135, 0) !important;
         }
-        /********************斗鱼直播********************************/
-      .layout-Section.layout-Slide .layout-Slide-player,
+
+        .layout-Section.layout-Slide .layout-Slide-player,
       .layout-Slide-bannerInner,
        #lazyModule3,
        #lazyModule4,
@@ -1620,6 +1679,7 @@
        .layout-Player-main .GuessGameMiniPanelB-wrapper,
        #js-player-asideMain #layout-Player-aside .FirePower,
        .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
+       #bc4,#bc4-bgblur,
        .multiBitRate-da4b60{
            display:none !important;
        }
@@ -1643,28 +1703,29 @@
        .layout-Player .layout-Player-rank,
         #js-player-toolbar,
        .MatchSystemTeamMedal,
-        #bc4,#bc4-bgblur,
        .layout-Player-main #js-player-toolbar,
+        #js-player-video .ScreenBannerAd,
+      .layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
+      .layout-Main #layout-Player-aside .SignBarrage,
        .Barrage .Barrage-userEnter{
          display:none !important;
        }
- 
+
        #root div.layout-Main{
            margin-top:70px !important;
            display:block !important;
        }
-       // 直播背景
        #root>div,
        #root>div .wm-general-bgblur
        {
          background-image:none !important;
        }
- 
+
         .Title-roomInfo .Title-row:nth-child(1),
         .Title-roomInfo .Title-row:nth-child(2) {
           display:block !important;
         }
- 
+
        .Barrage-main .Barrage-content {
         color:#333 !important;
        }
@@ -1679,9 +1740,10 @@
            position: absolute !important;
            top: 0 !important;
         }
- 
-       /********************虎牙直播********************************/
-       .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+
+
+     /***************************************************虎牙直播***************************************************************************/
+          .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
        .mod-index-wrap .mod-index-main .main-bd,
        .mod-index-wrap .mod-index-main .main-hd,
        .mod-index-wrap #js-main,
@@ -1718,12 +1780,11 @@
        .room-weeklyRankList{
            display:none !important;
         }
- 
-        // 左边导航菜单 默认关闭
+
         .ssr-wrapper .mod-sidebar {
           display:none;
         }
- 
+
         .hy-nav-item:nth-child(1),
         .hy-nav-item:nth-child(2),
         .hy-nav-item:nth-child(3),
@@ -1774,7 +1835,9 @@
          div.player-ctrl-wrap:hover{
             // bottom: 12px !important;
         }
- 
+
+
+
  `)
- 
+
 })()
