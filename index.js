@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.8.2
+// @version      3.8.4
 // @description  虎牙，斗鱼直播 简化页面，屏蔽主播
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -18,9 +18,11 @@
     const local_url = window.location.href
     const is_huya = huya_address_pattern.test(local_url) // 是否是虎牙地址
     const is_douyu = doyu_address_pattern.test(local_url) // 是否是斗鱼地址
-    const wd = window?.document
+    const wd = window.document
     const wls = window.localStorage // 简化存储对象
-    const download_plugin_url ='https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
+    const wdq = (selector) => window.document.querySelector(selector)
+    const wql = (selector) => window.document.querySelectorAll(selector)
+    const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
     const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
     const time = 2000 //延迟时间
 
@@ -35,28 +37,28 @@
                 console.clear()
                 console.log(
                     text
-                    .concat(download_plugin_url, ''),
+                        .concat(download_plugin_url, ''),
                     'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                     'border-radius: 0 3px 3px 0; color: #fff')
                 console.log(
                     '%c源码地址:%c '
-                    .concat(source_code_url, ''),
+                        .concat(source_code_url, ''),
                     'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                     'border-radius: 0 3px 3px 0; color: #fff')
-                 if(wd.querySelector && wd.querySelectorAll){
-                     //插件执行入口
-                     if (is_huya) {
-                         // 执行虎牙直播插件
-                         new TriggerLive()
-                     } else if (is_douyu) {
-                         // 执行斗鱼直播插件
-                         new FishLive()
-                     } else {
-                         log('插件地址不适配，请检查匹配地址！！！','error')
-                     }
-                 }
-                else{
-                    log('请使用新版浏览器，该插件不支持！','error')
+                if (wdq && wql) {
+                    //插件执行入口
+                    if (is_huya) {
+                        // 执行虎牙直播插件
+                        new TriggerLive()
+                    } else if (is_douyu) {
+                        // 执行斗鱼直播插件
+                        new FishLive()
+                    } else {
+                        log('插件地址不适配，请检查匹配地址！！！', 'error')
+                    }
+                }
+                else {
+                    log('请使用新版浏览器，该插件不支持！', 'error')
                 }
 
             } catch (e) {
@@ -131,6 +133,7 @@
             this.m_container = null
             // logo
             this.logo_btn = null
+            // index video
         }
 
         // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
@@ -152,15 +155,15 @@
         /*********************************建议下面操作方法必须重写的,并且参考此步骤*****************************/
 
         // 公共部分页面操作
-        common() {}
+        common() { }
         //首页操作
-        index() {}
+        index() { }
         // 分类页面操作
-        category() {}
+        category() { }
         // 详情页操作
-        detail() {}
+        detail() { }
         // 通过点击直播间名称删除直播间
-        removeRoomByClickRoomName() {}
+        removeRoomByClickRoomName() { }
         // 通过房间号获取直播间name
         getNameByRoomId(roomId) {
             alert('该操作未实现！');
@@ -181,8 +184,8 @@
             // 初始化房间号
             let that = this
             if (!that.body || !that.html) {
-                that.html = wd.querySelector('html')
-                that.body = wd.querySelector('body')
+                that.html = wdq('html')
+                that.body = wdq('body')
             }
             if (!that.body) {
                 that.body = wd.createElement('body')
@@ -200,9 +203,9 @@
                                    <button class="btn btn-danger clear-room" title="重置表格数据">重置</button>
                                    <button class="btn btn-warning bg-btn" title="上传背景图">上传</button>
                                    <input type="file" id="file">
-                                   <input type="checkbox" id="checkbox1" ${show1?'checked':''} class="checkbox" title="是否显示背景" />背景
-                                   <input type="checkbox" id="checkbox2" ${show2?'checked':''} class="checkbox" title="是否显示左侧菜单"/>菜单
-                                   <input type="checkbox" id="checkbox3" ${show3?'checked':''} class="checkbox" title="自动适应屏幕"/>剧场
+                                   <input type="checkbox" id="checkbox1" ${show1 ? 'checked' : ''} class="checkbox" title="是否显示背景" />背景
+                                   <input type="checkbox" id="checkbox2" ${show2 ? 'checked' : ''} class="checkbox" title="是否显示左侧菜单"/>菜单
+                                   <input type="checkbox" id="checkbox3" ${show3 ? 'checked' : ''} class="checkbox" title="自动适应屏幕"/>剧场
                                    <a class="m-link m-hide-btn" title="隐藏Logo，不再显示,如果需要开启，点击直播间主播名称，禁用即可出现显示" style="cursor:pointer;">隐藏</a>
                                    <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
                                    <a class="m-link close-btn" title="关闭弹窗，不再显示" style="cursor:pointer;">关闭</a>
@@ -250,7 +253,7 @@
                 tr.style.margin = '10px 0'
                 tr.style.padding = '20px 10px'
                 tr.innerHTML =
-                    `<td style="padding:10px;">${index+1}</td>
+                    `<td style="padding:10px;">${index + 1}</td>
                           <td style="padding:10px;">${item.name}</td>
                           <td style="padding:10px;">${item.roomId}</td>
                           <td style="padding:10px;">
@@ -317,12 +320,12 @@
             if (inputValue) {
                 // 输入框
                 inputValue.addEventListener('keyup', function (e) {
-                   if(e.keyCode == 13){
-                       that.getInputArr(inputValue.value)
-                   }
+                    if (e.keyCode == 13) {
+                        that.getInputArr(inputValue.value)
+                    }
                 })
-                inputValue.oninput=()=>{
-                  that.getInputArr(inputValue.value)
+                inputValue.oninput = () => {
+                    that.getInputArr(inputValue.value)
                 }
             }
 
@@ -383,48 +386,44 @@
                 uploadButton.addEventListener('change', function (e) {
                     const file = uploadButton.files[0] || null
                     // 图片格式校验
-                    if(!bg_regx.test(file?.name)){
+                    if (!bg_regx.test(file?.name)) {
                         return alert("图片格式不正确！")
-                    }else{
-                        try{
-                            let fileReader = new FileReader()
-                            // 获取图片后缀
+                    }
 
-                            fileReader.onload = (e) => {
-                                let base64 = e.target.result
-                                let str = base64.slice(base64.indexOf(",")+1);
-                                var strLength = str.length;
-                                if(atob){
-                                    str = atob(str);
-                                    let bytes = str.length;
-                                    var size = (bytes /(1024*1024)).toFixed(2);
-                                    if(size>5){
-                                        if(confirm('图片保存失败，浏览器最大只能保存5MB大小图片，确认查看原因？')){
-                                            // window.open('https://developer.mozilla.org/zh-CN/docs/Web/API/File_and_Directory_Entries_API/Introduction','_blank')
-                                            window.location.href = 'https://developer.mozilla.org/zh-CN/docs/Web/API/File_and_Directory_Entries_API/Introduction'
-                                        }
-                                        return;
-                                    }
-                                    // 保存到本地
-                                    that.addLocalStore(that.bg_key, base64, String.name, false)
-                                    that.settingBackgroundImage(e.target.result)
+                    try {
+                        let fileReader = new FileReader()
+                        // 转码
+                        fileReader.readAsDataURL(file)
+                        fileReader.onerror = (e) => {
+                            return alert('图片解析失败！' + JSON.stringify(e))
 
-                                }else{
-                                    alert('保存失败，当前浏览器不支持！')
-                                }
-
-                            }
-                            // 转码
-                            fileReader.readAsDataURL(file)
-
-                            fileReader.onerror = ()=>{
-                                console.log('onerror')
-
-                            }
-
-                        }catch(e){
-                            alert('图片解析失败！')
                         }
+                        fileReader.onload = (e) => {
+                            let base64 = e.target.result
+                            let str = base64.slice(base64.indexOf(",") + 1);
+                            if (atob) {
+                                str = atob(str);
+                                let bytes = str.length;
+                                var size = (bytes / (1024 * 1024)).toFixed(2);
+                                if (size > 5) {
+                                    if (confirm('图片保存失败，浏览器最大只能保存5MB大小图片，确认查看原因？')) {
+                                        // window.open('https://developer.mozilla.org/zh-CN/docs/Web/API/File_and_Directory_Entries_API/Introduction','_blank')
+                                        window.location.href = 'https://developer.mozilla.org/zh-CN/docs/Web/API/File_and_Directory_Entries_API/Introduction'
+                                    }
+                                    return;
+                                }
+                                // 保存到本地
+                                that.addLocalStore(that.bg_key, base64, String.name, false)
+                                that.settingBackgroundImage(e.target.result)
+
+                            } else {
+                                alert('保存失败，当前浏览器不支持！')
+                            }
+
+                        }
+
+                    } catch (e) {
+                        alert('图片解析失败！')
                     }
 
                 })
@@ -460,23 +459,23 @@
                 })
             }
 
-             // 隐藏操作栏
+            // 隐藏操作栏
             const hide_btn = that.m_container.querySelector('.m-container .m-hide-btn')
             if (hide_btn) {
                 hide_btn.addEventListener('click', function (e) {
                     e.preventDefault()
-                    if(confirm('确认隐藏Logo？隐藏之后不再显示哦!如需显示logo，点击直播间名称封禁主播之后可显示解锁按钮！')){
-                       that.addLocalStore(that.key+"_logo_show", true, Boolean.name)
-                       if(that.logo_btn){
-                          that.logo_btn.click() //关闭容器
-                          that.logo_btn.style.display = 'none'
-                       }
+                    if (confirm('确认隐藏Logo？隐藏之后不再显示哦!如需显示logo，点击直播间名称封禁主播之后可显示解锁按钮！')) {
+                        that.addLocalStore(that.key + "_logo_show", true, Boolean.name)
+                        if (that.logo_btn) {
+                            that.logo_btn.click() //关闭容器
+                            that.logo_btn.style.display = 'none'
+                        }
                     }
                 })
             }
         }
 
-        getInputArr(inputValue){
+        getInputArr(inputValue) {
             let arr = this.users.filter(item => (item.roomId && item.roomId.indexOf(inputValue) != -1) || (item.name && item.name.indexOf(inputValue) != -1))
             this.resetTbody(arr)
         }
@@ -487,9 +486,9 @@
          */
         createButton(text) {
             let that = this
-            let show = that.getLocalStore(that.key+"_logo_show",Boolean.name)
+            let show = that.getLocalStore(that.key + "_logo_show", Boolean.name)
             // 隐藏logo
-            if(show){
+            if (show) {
                 return;
             }
             const btn = wd.createElement('button')
@@ -501,6 +500,7 @@
             btn.style.padding = '5px 10px'
             btn.style.backgroundColor = 'rgb(255, 93, 35)'
             btn.style.border = 'none'
+            btn.style.outline = 'none'
             btn.style.borderRadius = '20px'
             btn.style.fontSize = '12px'
             btn.style.color = '#fff'
@@ -518,11 +518,11 @@
             })
             //添加拖拽事件
             let flag = false
-            let x,y,mouseLeft,mouseTop
-            const mouse_key = that.key+"_mouse_key"
+            let x, y, mouseLeft, mouseTop
+            const mouse_key = that.key + "_mouse_key"
             // 从浏览器本地中获取位置信息
-            let { mouse_left,mouse_top } = that.getLocalStore(mouse_key,Object.name)
-            if(mouse_left || mouse_top ){
+            let { mouse_left, mouse_top } = that.getLocalStore(mouse_key, Object.name)
+            if (mouse_left || mouse_top) {
                 btn.style.left = mouse_left + 'px'
                 btn.style.top = mouse_top + 'px'
                 btn.style.right = 'auto'
@@ -547,7 +547,7 @@
                 // wd.removeEventListener('mousemove',move)
                 wd.onmousemove = null
             })
-            function move(e){
+            function move(e) {
                 e.preventDefault()
                 if (!flag) {
                     return
@@ -560,7 +560,7 @@
                 btn.style.top = btn_top + 'px'
                 btn.style.right = 'auto'
                 //保持到本地
-                that.addLocalStore(mouse_key,{'mouse_left':btn_left,'mouse_top':btn_top},Object.name)
+                that.addLocalStore(mouse_key, { 'mouse_left': btn_left, 'mouse_top': btn_top }, Object.name)
 
             }
             that.logo_btn = btn
@@ -594,7 +594,7 @@
                         element.remove()
                     }
                 }
-            } catch (e) {} // 防止element没有remove方法而抛出异常
+            } catch (e) { } // 防止element没有remove方法而抛出异常
         }
 
         /**
@@ -604,7 +604,7 @@
          *
          */
         removeElement(selector, realRemove = false) {
-            this.removeDOM(wd.querySelector(selector), realRemove)
+            this.removeDOM(wdq(selector), realRemove)
         }
 
         /**
@@ -626,10 +626,11 @@
         roomAlreadyRemove() {
             let that = this
             this.removeDOM(this.body, true)
+            // this.removeDOM(this.body, true)
             this.body = null; //必须设置为空！否则无法设置新的button
             const h2 = wd.createElement('h3')
-            let html = wd.querySelector('html')
-            let body = wd.querySelector('body')
+            let html = wdq('html')
+            let body = wdq('body')
             if (!body) { // 如果原来的删除了，从新创建一个body存放内容
                 body = wd.createElement('body')
             }
@@ -645,14 +646,14 @@
             a.style.display = 'block'
             a.style.cursor = 'pointer'
             a.style.fontSize = '20px'
-            a.onclick=(e)=>{
+            a.onclick = (e) => {
                 e.preventDefault()
                 that.userDelete(that.getRoomIdByUrl(local_url))
                 window.location.reload()
             }
             h2.style.fontSize = '36px'
             h2.textContent = `主播【${name}】已被你屏蔽`
-            let title = wd.querySelector('title')
+            let title = wdq('title')
             if (!title) {
                 title = wd.createElement('title')
             }
@@ -660,17 +661,17 @@
             html.appendChild(body)
             body.appendChild(h2)
             body.appendChild(a)
-            let logo_show = that.getLocalStore(that.key+"_logo_show",Boolean.name)
-            if(logo_show){
+            let logo_show = that.getLocalStore(that.key + "_logo_show", Boolean.name)
+            if (logo_show) {
                 let logo = wd.createElement('a')
                 logo.textContent = '显示logo'
                 logo.style.display = 'block'
                 logo.style.cursor = 'pointer'
                 logo.style.fontSize = '20px'
-                logo.onclick=(e)=>{
+                logo.onclick = (e) => {
                     e.preventDefault()
                     logo.style.display = 'none'
-                    that.addLocalStore(that.key+"_logo_show",false,Boolean.name)
+                    that.addLocalStore(that.key + "_logo_show", false, Boolean.name)
                     that.createButton()
                 }
                 body.appendChild(logo)
@@ -696,9 +697,7 @@
          */
         settingBackgroundImage(url) {
             if (this.getLocalStore(this.bg_show_key, Boolean.name)) {
-                if (!url) {
-                    url = this.getImageUrl(url)
-                }
+                url = url || this.getImageUrl(url)
                 this.body.style.backgroundSize = "cover"
                 this.body.style.backgroundRepeat = 'no-repeat '
                 this.body.style.backgroundAttachment = 'fixed'
@@ -714,9 +713,7 @@
          * @param url 背景图地址 默认 是默认地址
          */
         getImageUrl(url) {
-            if (!url) {
-                url = wls.getItem(this.bg_key)
-            }
+            url = url || wls.getItem(this.bg_key)
             return url ? url : this.defaultBackgroundImage;
         }
 
@@ -771,6 +768,9 @@
                 alert('该房间已存在！')
                 return;
             }
+            if (!Array.isArray(this.users)) {
+                return;
+            }
             const newUser = new HostUser(id, name);
             // 添加
             this.users.unshift(newUser)
@@ -817,84 +817,50 @@
          *  @param {isparse}  = [是否需要解析]
          */
         getLocalStore(k = this.key, type = Array.name, isParse = true) {
-            let obj = window.localStorage.getItem(k)
+            let obj = window.localStorage.getItem(k);
             if (type == Array.name) {
-                if (isParse) {
-                    try {
-                        if (obj) {
-                            obj = JSON.parse(obj)
-                        } else {
-                            obj = []
-                        }
-
-                    } catch (e) {
-                        obj = []
-                    }
-
+                if (isParse && obj) {
+                    obj = JSON.parse(obj);
                 }
-                return Array.isArray(obj) ? obj : []
+                return Array.isArray(obj) ? obj : [];
             }
-
             if (type == Object.name) {
-                if (isParse) {
-                    try {
-                        if (obj) {
-                            obj = JSON.parse(obj)
-                        } else {
-                            obj = {}
-                        }
-
-                    } catch (e) {
-                        obj = {}
-                    }
-
+                if (isParse && obj) {
+                    obj = JSON.parse(obj);
                 }
-                return obj ? obj : {}
+                return obj ? obj : {};
             }
-
             if (type == String.name) {
-                return obj ? obj : '';
+                return obj ? obj : "";
             }
-
             if (type == Boolean.name) {
-                return (obj == 'true' || obj == true) ? true : false;
+                return obj == "true" || obj == true ? true : false;
             }
-
             return obj;
-
         }
-
 
         /**
          * @param {selector}  = 选择器
          * @param {selector}  = [是否真的删除，默认删除而不是display = 'none']
          * @param {time1} 循环执行时间 默认5000ms
          */
-        removeVideo(selector, realyRemove = true, time1 = 5000) {
-            // 第一次执行该操作
-            try {
-                const video = wd.querySelector(selector)
-                if (video && video instanceof HTMLVideoElement) {
-                    video.pause()
-                }
-                this.removeDOM(video, realyRemove)
-            } catch (e) {}
-            // 循环执行该操作]
+        removeVideo(selector, time1 = 1000, maxCount = 50) {
             let count = 0
             let video_timer = setInterval(() => {
                 try {
-                    const video = wd.querySelector(selector)
+                    const video = wdq(selector)
                     if (video && video instanceof HTMLVideoElement) {
                         video.pause()
                     }
-                    this.removeDOM(video, realyRemove)
-                    count = count + 1
+                    this.removeDOM(video, false)
                     // 结束循环器
-                    if (count >= 5) {
+                    if (count >= maxCount) {
+                        // 最后一次删除
+                        // this.removeDOM(video, true)
                         clearInterval(video_timer)
-                        video_timer = null
                     }
-                } catch (e) {}
+                    count = count + 1
+                } catch (e) { }
             }, time1)
         }
 
@@ -903,11 +869,11 @@
          * @param {selector}  = [选择器]
          * @param {selector}  = [是否真的删除，默认删除而不是display = 'none']
          */
-        roomIsNeedRemove(selector = wd.querySelector('video'), realyRemove = true) {
-            // 移除直播间视频
-            this.removeVideo(selector, true)
+        roomIsNeedRemove(selector = wdq('video')) {
             // 添加直播间删除禁言提示
             this.roomAlreadyRemove()
+            // 移除直播间视频
+            this.removeVideo(selector)
             // 重新设置背景图
             this.settingBackgroundImage()
         }
@@ -953,15 +919,15 @@
          * @param func  = 函数
          * @param args  = 参数
          */
-       throttle(wait, func, ...args) {
-           let pre = Date.now();
-           return ()=>{
-               if (Date.now() - pre > wait) {
-                   func(...args)
-                   pre = Date.now()
-               }
-           }
-       }
+        throttle(wait, func, ...args) {
+            let pre = Date.now();
+            return () => {
+                if (Date.now() - pre > wait) {
+                    func(...args)
+                    pre = Date.now()
+                }
+            }
+        }
 
         /*
          * 判断该节点是否汉含有直播间界面，
@@ -969,38 +935,57 @@
          * @params selector 选择器 默认是斗鱼直播方式
          */
 
-        hasVideo(element,selector='.layout-Main'){
-
-            if(element instanceof HTMLElement){
+        hasVideo(element, selector = '.layout-Main') {
+            if (element instanceof HTMLElement) {
                 let result = element.querySelector(selector)
                 return result !== null && result != undefined
             }
-
             return false
 
         }
 
 
-         // 隐藏直播背景
-         backgroundNone(element,selector='.layout-Main',time=3000,maxCount = 10){
-             let timer
-             let count = 0
-             timer = setInterval(()=>{
-                 let b = element.querySelector(selector)
-                 if(!(b instanceof HTMLElement )){
-                     return;
-                 }
-                 if(count<maxCount){
-                   count = count+1
+        // 隐藏直播背景
+        backgroundNone(element, selectors = ['.layout-Main'], time = 3000, maxCount = 10) {
+            if (!(element instanceof HTMLElement && Array.isArray(selectors) && selectors.length > 0)) {
+                return;
+            }
+            let count = 0
+            let timer = setInterval(() => {
+                selectors.forEach(selector => {
+                    let b = element.querySelector(selector)
+                    if (!(b instanceof HTMLElement)) {
+                        return;
+                    }
                     b.style.backgroundImage = 'none'
-                 }
-                 // 结束计时器 减少浏览器性能开销
-                 else if(count >= maxCount && b.style.backgroundImage === 'none' ){
-                   clearInterval(timer)
-                   return;
-                 }
+                })
+                // 结束计时器 减少浏览器性能开销
+                if (count >= maxCount) {
+                    clearInterval(timer)
+                    return;
+                }
+                count = count + 1
+            }, time)
 
-             },time)
+        }
+
+        // 循环删除元素
+        intervalRemoveElement(selectors, time = 500, maxCount = 10) {
+            if (!Array.isArray(selectors)) {
+                return;
+            }
+            let count = 0
+            let timer = setInterval(() => {
+                selectors.forEach(sel => {
+                    this.removeElement(sel, true)
+                })
+                if (count >= maxCount) {
+                    clearInterval(timer)
+                    return;
+                }
+                count = count + 1
+
+            }, time)
 
         }
 
@@ -1017,13 +1002,13 @@
             this.bg_key = 'huyazhibo_bg'
             this.bg_show_key = 'huyazhibo_bg_show'
             this.menu_show_key = 'huyazhibo_menu_show_key'
-            this.full_screen_key='huyazhibo_full_screen_key'
+            this.full_screen_key = 'huyazhibo_full_screen_key'
             this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1664197944_content.jpg'
             this.baseUrl = "https://www.huya.com/"
             this.users = this.getLocalStore(this.key, Array.name, true)
-            this.html = wd.querySelector('html')
-            this.body = wd.querySelector('body')
-            this.menu = wd.querySelector('.mod-sidebar')
+            this.html = wdq('html')
+            this.body = wdq('body')
+            this.menu = wdq('.mod-sidebar')
             this.tbody = null
             this.m_container = null
             this.init()
@@ -1037,30 +1022,24 @@
             const url = local_url
             if (url == this.baseUrl) {
                 // 操作视频
-                this.removeVideo('.mod-index-main video', true)
+                this.removeVideo('.mod-index-main video')
                 // 触发点击关闭广告
-                const banner_close = wd.querySelector('.mod-index-wrap #banner i')
+                const banner_close = wdq('.mod-index-wrap #banner i')
                 if (banner_close) {
                     banner_close.click();
                 }
-
-                // 暂停播放 立即执行
-                let pauseBtn = wd.querySelector('.player-pause-btn')
-                if (pauseBtn) {
-                    pauseBtn.click()
-                }
-                let count = 0;
-                // 暂停播放 防止后续加载出现
-                let timer1 = setInterval(() => {
-                    pauseBtn = wd.querySelector('.player-pause-btn')
-                    if (pauseBtn) {
-                        pauseBtn.click()
-                    }
-                    count = count + 1
-                    if (count >= 3) {
-                        clearInterval(timer1)
-                    }
-                }, 1000)
+                // let count = 0;
+                // // 暂停播放 防止后续加载出现
+                // let timer1 = setInterval(() => {
+                //     pauseBtn = wdq('.player-pause-btn')
+                //     if (pauseBtn) {
+                //         pauseBtn.click()
+                //     }
+                //     if (count >= 10) {
+                //         clearInterval(timer1)
+                //     }
+                //     count = count + 1
+                // }, 300)
 
             }
 
@@ -1069,8 +1048,8 @@
         category() {
             if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
                 let that = this
-                const dd = wd.querySelectorAll('.live-list-nav dd')
-                if (dd) {
+                const dd = wdq('.live-list-nav dd')
+                if (dd && dd.length > 0) {
                     for (let d of dd) {
                         d.addEventListener('click', () => {
                             setTimeout(() => {
@@ -1092,7 +1071,7 @@
             if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
                 let that = this
                 // 点击直播间移除直播间操作
-                const hostName = wd.querySelector('.host-name')
+                const hostName = wdq('.host-name')
                 if (hostName) {
                     hostName.addEventListener('click', () => {
                         if (confirm(`确认禁用 ${hostName.textContent}？`)) {
@@ -1103,18 +1082,26 @@
                 }
 
                 // 自动剧场模式
-                let fullpageBtn = wd.querySelector('#player-fullpage-btn')
+                let fullpageBtn = wdq('#player-fullpage-btn')
                 let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
                 if (fullpageBtn && show3) {
-                    setTimeout(()=>{fullpageBtn.click()},2000)
+                    setTimeout(() => { fullpageBtn.click() }, 2000)
                 }
 
+                let ads = [
+                    '.main-wrap .room-mod-ggTop',
+                    '#chatRoom .room-gg-chat',
+                    '#huya-ab'
+                ]
+
+                // 对于恶意广告要彻底清空
+                this.intervalRemoveElement(ads, 500, 20)
                 // todo 特效设置暂时未开启！
 
                 /*
                 setTimeout(()=>{
                     // 视频区特效设置
-                    let lvs = wd.querySelector('.room-core #shielding-effect')
+                    let lvs = wdq('.room-core #shielding-effect')
                     console.log('div@@@@',lvs)
                     if(lvs){
 
@@ -1145,10 +1132,10 @@
         // 通过房间号查找名称
         getNameByRoomId(roomId) {
             let that = this
-            const hostName = document.querySelector('.host-name')
+            const hostName = wdq('.host-name')
             if (!hostName) {
-                const rooms = document.querySelectorAll('.game-live-item')
-                if (rooms) {
+                const rooms = wql('.game-live-item')
+                if (rooms && rooms?.length > 0) {
                     for (let room of rooms) {
                         const a = room.querySelector('a')
                         if (a && a.href) {
@@ -1168,8 +1155,8 @@
         // 通过点击直播间名称删除直播间
         removeRoomByClickRoomName() {
             const that = this
-            const rooms = document.querySelectorAll('.game-live-item')
-            if (rooms) {
+            const rooms = wql('.game-live-item')
+            if (rooms && rooms?.length) {
                 for (let li of rooms) {
                     try {
                         const a = li.querySelector('a')
@@ -1187,7 +1174,7 @@
                         if (that.isRemove(url)) {
                             that.removeDOM(li)
                         }
-                    } catch (e) {}
+                    } catch (e) { }
 
                 }
             }
@@ -1206,22 +1193,21 @@
             this.bg_key = 'douyuzhibo_bg'
             this.bg_show_key = 'douyuzhibo_show'
             this.menu_show_key = 'douyuzhibo_menu_show_key'
-            this.full_screen_key='douyuzhibo_full_screen_key'
+            this.full_screen_key = 'douyuzhibo_full_screen_key'
             this.baseUrl = "https://www.douyu.com/"
-            this.defaultBackgroundImage ='https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
+            this.defaultBackgroundImage = 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
             this.users = this.getLocalStore(this.key, Array.name, true)
-            this.html = wd.querySelector('html')
-            this.body = wd.querySelector('body')
-            this.menu = wd.querySelector('#js-aside')
+            this.html = wdq('html')
+            this.body = wdq('body')
+            this.menu = wdq('#js-aside')
             this.tbody = null
             this.m_container = null
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.init()
-
-            },500)
+            }, 500)
         }
         // 公共部分页面操作
-        common() {}
+        common() { }
         //首页操作
         index() {
             let that = this
@@ -1229,18 +1215,17 @@
             if (window.location.href == that.baseUrl) {
                 window.scroll(0, 0)
                 // 移除直播
-                that.removeVideo('.layout-Slide-player video', true)
+                that.removeVideo('.layout-Slide-player video')
                 // 获取暂停button
-                const vbox = wd.querySelector('#room-html5-player');
-                if(vbox){
+                const vbox = wdq('#room-html5-player');
+                if (vbox) {
                     const divs = vbox.querySelectorAll('div')
-                    if (divs) {
-                        divs.forEach(div => {
+                    if (divs && divs?.length > 0) {
+                        for (let div of divs) {
                             if (div?.title == '暂停') {
                                 div.click()
                             }
-                        })
-
+                        }
                     }
                 }
                 let init_users = []
@@ -1250,8 +1235,8 @@
                 // 斗鱼直播使用节流方式加载,只有鼠标下滑,下方直播间才会加载,首次加载不会加载所有页面直播间列表
                 // 因此,添加滚动事件来添加
                 // 另外防止二次或者多次添加点击事件,将之前保存到init_users中来记录是否该添加
-                window.onscroll = this.throttle(500,()=>{
-                   that.removeRoomByClickRoomName(init_users)
+                window.onscroll = this.throttle(500, () => {
+                    that.removeRoomByClickRoomName(init_users)
                 })
             }
         }
@@ -1261,8 +1246,8 @@
             // 匹配分类页
             if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(window.location.href)) {
                 that.removeRoomByClickRoomName()
-                const labels = wd.querySelectorAll('.layout-Module-filter .layout-Module-label')
-                if (labels) {
+                const labels = wql('.layout-Module-filter .layout-Module-label')
+                if (labels && labels?.length) {
                     for (let label of labels) {
                         if (label) {
                             label.addEventListener('click', (e) => {
@@ -1275,7 +1260,7 @@
                                     // 获取全部地址
                                     var result = 'https://www.douyu.com/g_' + local_url.match(RegExp(
                                         /subCate\/.*/g))[0].replace('subCate', '').match(new RegExp(
-                                        /\w+/g))[0]
+                                            /\w+/g))[0]
                                     window.location.href = result
                                 }
 
@@ -1297,12 +1282,12 @@
             let that = this
             window.scroll(0, 0)
             // 匹配只有在播放直播间才会生效
-            if(!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)))$/).test(local_url)){
+            if (!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)))$/).test(local_url)) {
                 return;
             }
-            setTimeout(()=>{
+            setTimeout(() => {
                 // 点击主播直播间名称进行操作
-                const hostName = wd.querySelector('.Title-roomInfo h2.Title-anchorNameH2')
+                const hostName = wdq('.Title-roomInfo h2.Title-anchorNameH2')
                 if (hostName) {
                     hostName.addEventListener('click', () => {
                         if (confirm(`确认禁用 ${hostName.textContent}？`)) {
@@ -1310,47 +1295,58 @@
                         }
                     })
                 }
+            }, 4000)
 
-
-
-
-            },3000)
-
-            // 带有轮播图 广告
+            // 带有轮播图
             if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+))$/).test(local_url)) {
-                let divs = wd.querySelectorAll('#root>div')
-                for(let element of divs){
-                    // 该div中是否有video
-                    if(this.hasVideo(element)){
-                        this.backgroundNone(element,'.wm-general-wrapper.bc-wrapper.bc-wrapper-player')
-                        this.backgroundNone(element,'.wm-general-bgblur')
-                    }else{
-                        // 移除出了显示直播div其他的div
-                        this.removeDOM(element,true)
-                    }
+                let divs = wql('#root>div')
+                if ((divs && divs?.length > 0)) {
+                    for (let element of divs) {
+                        // 该div中是否有video
+                        if (this.hasVideo(element)) {
+                            this.backgroundNone(element, '.wm-general-wrapper.bc-wrapper.bc-wrapper-player')
+                            this.backgroundNone(element, '.wm-general-bgblur')
+                        } else {
+                            // 移除出了显示直播div其他的div
+                            this.removeDOM(element, true)
+                        }
 
+                    }
                 }
+
 
             }
 
 
-            // 不带有轮播图 广告
+            // 不带有轮播图
             if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
                 // 如果是小窗口 判断播放窗口是否存在
-                setTimeout(()=>{
-                    const closeBtn = document.querySelector('.roomSmallPlayerFloatLayout-closeBtn')
+                let times = 10000
+                let count = 0
+                let timer = setInterval(() => {
+                    const closeBtn = wdq('.roomSmallPlayerFloatLayout-closeBtn')
                     if (closeBtn) {
                         closeBtn.click()
                     }
-                },5000)
+                    if (count > times) {
+                        clearInterval(timer)
+                    }
+                    count = count + 1
+                }, 16)
             }
+
+            // 对于恶意广告要彻底清除！！！
+            let ads = [
+                "#player-above-controller+div"
+            ]
+            //this.intervalRemoveElement(ads, 500, 20)
 
         }
         // 通过点击直播间名称删除直播间
         removeRoomByClickRoomName(list = []) {
             let that = this
             if (this.baseUrl == local_url) {
-                const room = wd.querySelectorAll('.layout-Wrapper.layout-Module.RoomList .layout-List-item')
+                const room = wdq('.layout-Wrapper.layout-Module.RoomList .layout-List-item')
                 if (room) {
                     for (let li of room) {
                         try {
@@ -1379,19 +1375,19 @@
 
                             }
 
-                        } catch (e) {}
+                        } catch (e) { }
 
                     }
                 }
             }
 
             if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
-                const rooms = wd.querySelectorAll('.layout-Cover-item')
-                if (rooms) {
+                const rooms = wql('.layout-Cover-item')
+                if (rooms && rooms?.length) {
                     for (let li of rooms) {
                         try {
                             if (li) {
-                                const link = li?.querySelector('a.DyListCover-wrap')
+                                const link = li.querySelector('a.DyListCover-wrap')
                                 if (link) {
                                     // link.onclick = ()=>false
                                     const url = link?.href || ''
@@ -1409,7 +1405,7 @@
                                                     that.removeDOM(li);
                                                 }
                                                 e.preventDefault()
-                                            },false)
+                                            }, false)
                                         }
                                         // 监听鼠标移入事件
                                         li.addEventListener('mouseenter', (e) => {
@@ -1427,17 +1423,17 @@
                                                             that.removeDOM(li);
                                                         }
 
-                                                    },false)
+                                                    }, false)
                                                 }
                                             }
 
-                                        },false)
+                                        }, false)
                                     }
 
                                 }
                             }
 
-                        } catch (e) {}
+                        } catch (e) { }
                     }
                 }
 
@@ -1450,12 +1446,12 @@
         getNameByRoomId(keywords) {
             let that = this
             // 从详情页获取
-            const hostName = document.querySelector('.Title-blockInline .Title-anchorName h2')
+            let hostName = wdq('.Title-blockInline .Title-anchorName h2')
             let rooms = null;
             if (!hostName) {
-                rooms = document.querySelectorAll('.layout-List-item')
+                rooms = wql('.layout-List-item')
                 // index
-                if (rooms) {
+                if (rooms && rooms?.length) {
                     for (let room of rooms) {
                         const id = that.getRoomIdByUrl(room.querySelector('a').href)
                         const user = room.querySelector('.DyCover-user')
@@ -1466,8 +1462,8 @@
                 }
                 // 如果还是获取不到从分类页面获取
                 if (!hostName) {
-                    rooms = document.querySelectorAll('.layout-Cover-item')
-                    if (rooms) {
+                    rooms = wql('.layout-Cover-item')
+                    if (rooms && rooms?.length > 0) {
                         for (let room of rooms) {
                             const id = that.getRoomIdByUrl(room.querySelector('a').href)
                             const user = room.querySelector('.DyListCover-userName')
@@ -1624,14 +1620,6 @@
          background-color:rgba(245, 108, 108,0.6) !important;
        }
 
-       .m-contaner .m-close-btn{
-         background:teal !important;
-
-       }
-
-       .m-contaner .m-close-btn:hover{
-         color:whtie !important;
-       }
 
        /***************************************************斗鱼直播***************************************************************************/
        .game-live-item i,.host-name {
@@ -1707,6 +1695,13 @@
         #js-player-video .ScreenBannerAd,
       .layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
       .layout-Main #layout-Player-aside .SignBarrage,
+       #js-player-video-case .VRTips~div,
+       .layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
+       .Header-right .public-DropMenu-drop .DropPane-ad,
+       .Header-right .CloudGameLink,
+       .Header-menu-wrap .DropMenuList-ad,
+       .public-DropMenu-drop-main div.Header-UserPane-top~div,
+       #js-player-dialog .LiveRoomLoopVideo,
        .Barrage .Barrage-userEnter{
          display:none !important;
        }
@@ -1743,7 +1738,7 @@
 
 
      /***************************************************虎牙直播***************************************************************************/
-          .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+       .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
        .mod-index-wrap .mod-index-main .main-bd,
        .mod-index-wrap .mod-index-main .main-hd,
        .mod-index-wrap #js-main,
@@ -1755,6 +1750,8 @@
        .mod-index-wrap .mod-index-recommend,
        .mod-index-wrap .mod-news-section,
        .mod-index-wrap .recommend-wrap,
+       #huya-ab-fixed,
+       #huya-ab,
        .liveList-header-r,
        .room-footer,
        .J_roomSideHd,
@@ -1777,6 +1774,9 @@
         .room-hd-r #share-entrance,
         .room-hd-r #J_illegalReport,
         .room-hd-r .gamePromote.J_gamePromote,
+        .main-wrap .room-mod-ggTop，
+        #chatRoom .room-gg-chat,
+        .room-core .room-business-game,
        .room-weeklyRankList{
            display:none !important;
         }
@@ -1832,11 +1832,6 @@
          div.player-ctrl-wrap{
              bottom: 15px ;
         }
-         div.player-ctrl-wrap:hover{
-            // bottom: 12px !important;
-        }
-
-
 
  `)
 
