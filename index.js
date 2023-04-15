@@ -1048,7 +1048,7 @@
         category() {
             if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
                 let that = this
-                const dd = wdq('.live-list-nav dd')
+                const dd = wql('.live-list-nav dd')
                 if (dd && dd.length > 0) {
                     for (let d of dd) {
                         d.addEventListener('click', () => {
@@ -1585,6 +1585,7 @@
          margin:0 0 !important;
          background-color:rgba(166, 169, 173,1) !important;
          z-index:1000 !important;
+         outline:none !important;
        }
         .m-container .btn:hover {
            background-color:rgba(166, 169, 173,0.6) !important;
