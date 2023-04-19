@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.8.4
+// @version      3.8.5
 // @description  虎牙，斗鱼直播 简化页面，屏蔽主播
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -844,12 +844,15 @@
          * @param {selector}  = [是否真的删除，默认删除而不是display = 'none']
          * @param {time1} 循环执行时间 默认5000ms
          */
-        removeVideo(selector, time1 = 1000, maxCount = 50) {
+        removeVideo(selector, time1 = 100, maxCount = 1000) {
             let count = 0
             let video_timer = setInterval(() => {
                 try {
                     const video = wdq(selector)
                     if (video && video instanceof HTMLVideoElement) {
+                        // 禁止自动播放
+                        video.autoplay = false
+                        // 暂停播放
                         video.pause()
                     }
                     this.removeDOM(video, false)
@@ -946,7 +949,7 @@
 
 
         // 隐藏直播背景
-        backgroundNone(element, selectors = ['.layout-Main'], time = 3000, maxCount = 10) {
+        backgroundNone(element, selectors = ['.layout-Main'], time = 100, maxCount = 500) {
             if (!(element instanceof HTMLElement && Array.isArray(selectors) && selectors.length > 0)) {
                 return;
             }
@@ -970,7 +973,7 @@
         }
 
         // 循环删除元素
-        intervalRemoveElement(selectors, time = 500, maxCount = 10) {
+        intervalRemoveElement(selectors, time = 160, maxCount = 1000) {
             if (!Array.isArray(selectors)) {
                 return;
             }
@@ -1238,6 +1241,13 @@
                 window.onscroll = this.throttle(500, () => {
                     that.removeRoomByClickRoomName(init_users)
                 })
+
+
+                // btn
+                let topBtn = wdq('.layout-Main .ToTopBtn')
+                if(topBtn){
+                    topBtn.style.display = 'block'
+                }
             }
         }
         // 分类页面操作
@@ -1340,6 +1350,28 @@
                 "#player-above-controller+div"
             ]
             //this.intervalRemoveElement(ads, 500, 20)
+
+
+
+            // TODO 新增功能，大屏小屏幕
+            /*
+            let vs = wql('.wm-general')
+            if(vs && vs?.length>0){
+                for(let v of vs){
+                    v.style.width = (window.innerWidth - 200 ) + 'px'
+                    v.style.height = (window.innerHeight - 100 ) + 'px'
+                    console.log('resize',v.style.width,v.style.height)
+                    window.addEventListener('resize',()=>{
+                        v.style.width = (window.innerWidth - 200 ) + 'px'
+                        v.style.height = (window.innerHeight - 100 ) + 'px'
+                        console.log('resize',v.style.width,v.style.height)
+                    })
+
+                }
+            }
+            */
+
+
 
         }
         // 通过点击直播间名称删除直播间
@@ -1698,6 +1730,7 @@
       .layout-Main #layout-Player-aside .SignBarrage,
        #js-player-video-case .VRTips~div,
        .layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
+       .layout-Main .ToTopBtn,
        .Header-right .public-DropMenu-drop .DropPane-ad,
        .Header-right .CloudGameLink,
        .Header-menu-wrap .DropMenuList-ad,
@@ -1721,6 +1754,7 @@
         .Title-roomInfo .Title-row:nth-child(2) {
           display:block !important;
         }
+
 
        .Barrage-main .Barrage-content {
         color:#333 !important;
