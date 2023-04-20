@@ -1,0 +1,384 @@
+.m-container {
+    box-sizing: border-box;
+    position: fixed;
+    display: none;
+    width: 650px;
+    height: 400px;
+    top: 100px;
+    left: 50%;
+    border-radius: 0;
+    overflow: hidden scroll;
+    background-color: white;
+    transform: translateX(-50%);
+    z-index: 1000;
+    transition: display linear 1s;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2),
+      -2px -2px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .m-container .operation {
+    box-sizing: border-box;
+    height: 80px;
+    padding: 20px 0 0 0;
+    text-align: center;
+  }
+  
+  .m-container .operation input[type="text"] {
+    width: 150px;
+    box-sizing: border-box;
+    outline: 1px solid teal;
+    border: none;
+    padding: 4px 7px;
+  }
+  
+  .m-container .operation input[type="text"]:focus {
+    outline: 1px solid red !important;
+  }
+  
+  .m-container .operation input[type="checkbox"] {
+    display: inline !important;
+  }
+  
+  .m-container .operation input[type="file"] {
+    display: none !important;
+  }
+  
+  .m-container table {
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: block;
+    padding: 10px;
+    text-align: left !important;
+    margin: 0 auto;
+    max-height: 200px;
+    width: 90%;
+  }
+  
+  .m-container table tbody {
+    max-height: 200px;
+  }
+  
+  .m-container table thead {
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    text-align: left !important;
+    padding: 10px;
+  }
+  
+  .m-container table th,
+  m-container table td {
+    padding: 10px;
+  }
+  
+  .m-container table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    margin: 5px 0;
+  }
+  
+  .m-container .m-link,
+  .m-container .m-link:visited {
+    color: blnk !important;
+  }
+  
+  .m-container .m-link:hover {
+    color: blue !important;
+    text-decoration: underline !important;
+  }
+  
+  .m-container .btn {
+    cursor: pointer !important;
+    padding: 5px 8px !important;
+    border: none !important;
+    color: #fff !important;
+    font-size: 1rem !important;
+    border-radius: 20px !important;
+    max-width: 50px !important;
+    margin: 0 0 !important;
+    background-color: rgba(166, 169, 173, 1) !important;
+    z-index: 1000 !important;
+    outline: none !important;
+  }
+  
+  .m-container .btn:hover {
+    background-color: rgba(166, 169, 173, 0.6) !important;
+  }
+  
+  .m-container .btn-teal {
+    background-color: rgba(64, 158, 255, 1) !important;
+  }
+  
+  .m-container .btn-teal:hover {
+    background-color: rgba(64, 158, 255, 0.6) !important;
+  }
+  
+  .m-container .btn-success {
+    background-color: rgba(103, 194, 58, 1) !important;
+  }
+  
+  .m-container .btn-success:hover {
+    background-color: rgba(103, 194, 58, 0.6) !important;
+  }
+  
+  .m-container .btn-info {
+    background-color: rgba(119, 119, 119, 1) !important;
+  }
+  
+  .m-container .btn-info:hover {
+    background-color: rgba(119, 119, 119, 0.6) !important;
+  }
+  
+  .m-container .btn-warning {
+    background-color: rgba(230, 162, 60, 1) !important;
+  }
+  
+  .m-container .btn-warning:hover {
+    background-color: rgba(230, 162, 60, 0.6) !important;
+  }
+  
+  .m-container .btn-danger {
+    background-color: rgba(245, 108, 108, 1) !important;
+  }
+  
+  .m-container .btn-danger:hover {
+    background-color: rgba(245, 108, 108, 0.6) !important;
+  }
+  
+  
+  /***************************************************斗鱼直播***************************************************************************/
+  .game-live-item i,
+  .host-name {
+    cursor: pointer;
+  }
+  
+  .game-live-item .txt i:hover,
+  .host-name:hover {
+    color: rgb(255, 135, 0);
+  }
+  
+  .layout-List-item .DyCover-content .DyCover-user,
+  .layout-Cover-item .DyListCover-userName,
+  .Title-blockInline .Title-anchorName h2 {
+    cursor: pointer !important;
+  }
+  
+  .layout-List-item .DyCover-content .DyCover-user:hover,
+  .layout-Cover-item .DyListCover-userName:hover,
+  .Title-blockInline .Title-anchorName h2:hover {
+    color: rgb(255, 135, 0) !important;
+  }
+  
+  .layout-Section.layout-Slide .layout-Slide-player,
+  .layout-Slide-bannerInner,
+  #lazyModule3,
+  #lazyModule4,
+  #lazyModule5,
+  #lazyModule6,
+  #lazyModule7,
+  #lazyModule8,
+  #lazyModule23,
+  #lazyModule24,
+  #js-room-activity,
+  #js-right-nav,
+  #js-bottom,
+  #js-header .Header .HeaderNav,
+  #js-header .Header .HeaderGif-left,
+  #js-header .Header .HeaderGif-right,
+  .Header-download-wrap,
+  .AnchorInterToolsUser,
+  #js-room-activity,
+  #js-right-nav,
+  #js-bottom,
+  li.Header-menu-link,
+  .layout-Main .layout-Customize,
+  .HeaderCell-label-wrap,
+  .Title-AnchorLevel,
+  .RoomVipSysTitle,
+  .Aside-nav .Aside-nav-item,
+  .Title-roomInfo .Title-row,
+  #js-player-toolbar,
+  #player-marvel-controller+div,
+  .layout-Player-main .GuessGameMiniPanelB-wrapper,
+  #js-player-asideMain #layout-Player-aside .FirePower,
+  .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
+  #bc4,
+  #bc4-bgblur,
+  .multiBitRate-da4b60 {
+    display: none !important;
+  }
+  
+  li.Header-menu-link:nth-child(1),
+  li.Header-menu-link:nth-child(2),
+  li.Header-menu-link:nth-child(3),
+  .Aside-nav .Aside-nav-item:nth-child(1) {
+    display: inline-block !important;
+  }
+  
+  .Barrage-main .UserLevel,
+  .Barrage-main .js-user-level,
+  .Barrage-main .Barrage-icon,
+  .Barrage-main .Motor,
+  .Barrage-main .Motor-flag,
+  .Barrage-main .Barrage-hiIcon,
+  .Barrage-main .UserGameDataMedal,
+  .Barrage-main .ChatAchievement,
+  .Barrage-main .Barrage-notice,
+  .layout-Player .layout-Player-announce,
+  .layout-Player .layout-Player-rank,
+  #js-player-toolbar,
+  .MatchSystemTeamMedal,
+  .layout-Player-main #js-player-toolbar,
+  #js-player-video .ScreenBannerAd,
+  .layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
+  .layout-Main #layout-Player-aside .SignBarrage,
+  #js-player-video-case .VRTips~div,
+  .layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
+  .layout-Main .ToTopBtn,
+  .Header-right .public-DropMenu-drop .DropPane-ad,
+  .Header-right .CloudGameLink,
+  .Header-menu-wrap .DropMenuList-ad,
+  .public-DropMenu-drop-main div.Header-UserPane-top~div,
+  #js-player-dialog .LiveRoomLoopVideo,
+  .Barrage .Barrage-userEnter {
+    display: none !important;
+  }
+  
+  #root div.layout-Main {
+    margin-top: 70px !important;
+    display: block !important;
+  }
+  
+  #root>div,
+  #root>div .wm-general-bgblur {
+    background-image: none !important;
+  }
+  
+  .Title-roomInfo .Title-row:nth-child(1),
+  .Title-roomInfo .Title-row:nth-child(2) {
+    display: block !important;
+  }
+  
+  
+  .Barrage-main .Barrage-content {
+    color: #333 !important;
+  }
+  
+  .Barrage-main .Barrage-nickName {
+    color: #2b94ff !important;
+  }
+  
+  .Barrage-listItem {
+    color: #333 !important;
+    background-color: #f2f5f6 !important;
+  }
+  
+  .layout-Player-barrage {
+    position: absolute !important;
+    top: 0 !important;
+  }
+  
+  
+  /***************************************************虎牙直播***************************************************************************/
+  .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+  .mod-index-wrap .mod-index-main .main-bd,
+  .mod-index-wrap .mod-index-main .main-hd,
+  .mod-index-wrap #js-main,
+  .mod-index-wrap #banner,
+  .mod-index-wrap .mod-game-type,
+  .mod-index-wrap .mod-actlist,
+  .mod-index-wrap .mod-news-section,
+  .mod-index-wrap .mod-index-list .live-box #J_adBnM,
+  .mod-index-wrap .mod-index-recommend,
+  .mod-index-wrap .mod-news-section,
+  .mod-index-wrap .recommend-wrap,
+  #huya-ab-fixed,
+  #huya-ab,
+  .liveList-header-r,
+  .room-footer,
+  .J_roomSideHd,
+  #J_roomSideHd,
+  #player-gift-wrap,
+  #match-cms-content,
+  #matchComponent2,
+  .hy-nav-item,
+  .list-adx,
+  .layout-Banner,
+  #J_duyaHeaderRight>div>div>div,
+  .nav-expand-list .third-clickstat,
+  #main_col .special-bg,
+  .player-recommend.recommend-ab-mode .end-ab-wrap,
+  .chat-wrap-panel.wrap-income,
+  .match-room .match-nav,
+  .host-detail.J_roomHdDetail span,
+  .host-detail.J_roomHdDetail .host-video,
+  .room-hd-r .jump-to-phone,
+  .room-hd-r #share-entrance,
+  .room-hd-r #J_illegalReport,
+  .room-hd-r .gamePromote.J_gamePromote,
+  .main-wrap .room-mod-ggTop， #chatRoom .room-gg-chat,
+  .room-core .room-business-game,
+  .room-weeklyRankList {
+    display: none !important;
+  }
+  
+  .ssr-wrapper .mod-sidebar {
+    display: none;
+  }
+  
+  .hy-nav-item:nth-child(1),
+  .hy-nav-item:nth-child(2),
+  .hy-nav-item:nth-child(3),
+  #J_duyaHeaderRight>div>div>div:nth-child(3) {
+    display: inline-block !important;
+  }
+  
+  .mod-index-wrap .mod-index-list {
+    margin-top: 80px !important;
+  }
+  
+  .duya-header {
+    background: hsla(0, 0%, 100%, .95) !important;
+    border-bottom: 1px solid #e2e2e2 !important;
+    box-shadow: 0 0 6px rgb(0 0 0 / 6%) !important;
+  }
+  
+  .duya-header a,
+  .duya-header i {
+    color: #000 !important;
+  }
+  
+  /*******直播间样式*****/
+  .chat-room__list .msg-normal,
+  .chat-room__list .msg-bubble,
+  #J_mainRoom {
+    background: none !important;
+  }
+  
+  #wrap-ext,
+  .chat-room__list .msg-normal-decorationPrefix,
+  .chat-room__list .msg-normal-decorationSuffix,
+  .chat-room__list .msg-bubble-decorationPrefix,
+  .chat-room__list img,
+  .chat-room__list .msg-noble,
+  .chat-room__list .msg-sys,
+  .chat-room__list .msg-auditorSys,
+  .J_box_msgOfKing,
+  .chat-room__list .msg-onTVLottery {
+    display: none !important;
+  }
+  
+  .chat-room__list .msg-bubble span.msg {
+    color: #333 !important;
+    background: none !important;
+  }
+  
+  .chat-room__list .msg-bubble .colon,
+  .chat-room__list .msg-bubble .msg,
+  .chat-room__list .name {
+    color: #3c9cfe !important;
+    background: none !important;
+  }
+  
+  div.player-ctrl-wrap {
+    bottom: 15px;
+  }
