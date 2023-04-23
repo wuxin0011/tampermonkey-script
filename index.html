@@ -109,9 +109,6 @@
             text-overflow: ellipsis !important;
 
         }
-
-
-
         .m-container table tbody {
             flex: 1 !important;
             overflow: auto !important;
@@ -201,7 +198,7 @@
     </style>
 
     <style>
-        .m-btn,
+        #open,
         #refesh {
             position: fixed;
             padding: 10px 20px;
@@ -261,7 +258,7 @@
 
     </div>
 
-    <button class="m-btn">打开</button>
+    <button id="open">打开</button>
     <button id="refesh">刷新</button>
 
     <script>
@@ -282,7 +279,7 @@
 
 
         let container = document.querySelector('.m-container')
-        let mBtn = document.querySelector('.m-btn')
+        let mBtn = document.querySelector('#open')
         let refesh = document.querySelector('#refesh')
 
         let flag = false

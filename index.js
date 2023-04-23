@@ -196,10 +196,11 @@
             let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
             that.m_container = that.s2d(`
 		                     <div class="m-container">
-                             <div class="m-container-box">
+                              <div class="m-container-box">
 		                     <div class="operation">
 		                          <input type="text" placeholder="房间号或者名称...">
 		                           <button class="btn btn-teal add-room" title="复制地址栏房间号，手动添加房间">添加</button>
+		                           <button class="btn btn-info flush-room" title="刷新表格数据">刷新</button>
 		                           <button class="btn btn-danger clear-room" title="重置表格数据">重置</button>
                                    <button class="btn btn-warning bg-btn" title="上传背景图">上传</button>
 		                           <input type="file" id="file">
@@ -220,7 +221,7 @@
 		                           <tbody>
 		                           </tbody>
 		                       </table>
-                               </div>
+                                </div>
 
 		                     </div>
 		 `)
@@ -305,6 +306,8 @@
             table.appendChild(this.tbody)
             // 添加操作窗口
             this.createRoomItem(arr)
+            //this.tbody.querySelectorAll('tr').forEach(item=>this.removeDOM(item, true))
+            //this.createRoomItem(arr)
 
         }
 
@@ -357,6 +360,14 @@
 
             }
 
+            // 刷新
+            const flushRoomBtn = that.m_container.querySelector('.m-container button.flush-room')
+            if (flushRoomBtn) {
+                flushRoomBtn.addEventListener('click', function () {
+                    that.users = that.getLocalStore()
+                    that.resetTbody(that.users)
+                })
+            }
 
             // 清空
             const clearRoomBtn = that.m_container.querySelector('.m-container button.clear-room')
@@ -1092,6 +1103,8 @@
 
                 // 对于恶意广告要彻底清空
                 this.intervalRemoveElement(ads, 500, 20)
+                
+              
                 // todo 特效设置暂时未开启！
 
                 /*
@@ -1339,41 +1352,11 @@
             }
 
             // 对于恶意广告要彻底清除！！！
-            //let ads = [
-            //    "#player-above-controller+div"
-           // ]
+            let ads = [
+                "#player-above-controller+div"
+            ]
             //this.intervalRemoveElement(ads, 500, 20)
             this.removeElement('.layout-Main .ToTopBtn',true)
-
-
-            let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
-            console.log('剧场模式',window.location.href,show3)
-            if (show3) {
-
-                setTimeout(()=>{
-                    // 剧场模式
-                    let controller = wdq('.layout-Main #player-above-controller+div')
-                    if (controller && show3) {
-                        let divs = controller.querySelectorAll("div")
-                        for(let div of divs){
-                            if(div.title === '全屏'){
-                                console.log('剧场模式')
-                                div.click()
-                            }
-                        }
-                    }
-
-
-                },3000)
-            }
-
-
-
-
-
-
-
-
 
 
 
@@ -1557,7 +1540,7 @@
 
     // 样式部分
     GM_addStyle(`
-        .m-container,
+	.m-container,
         .m-container .btn,
         .m-container table,
         .m-container table tbody,
@@ -1659,9 +1642,6 @@
             text-overflow: ellipsis !important;
 
         }
-
-
-
         .m-container table tbody {
             flex: 1 !important;
             overflow: auto !important;
@@ -1795,7 +1775,6 @@
        #js-player-asideMain #layout-Player-aside .FirePower,
        .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
        #bc4,#bc4-bgblur,
-       #js-header .MatchFocusFullPic,
        .multiBitRate-da4b60{
            display:none !important;
        }
