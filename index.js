@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.8.5
+// @version      3.8.6
 // @description  虎牙，斗鱼直播 简化页面，屏蔽主播
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -195,34 +195,35 @@
             let show2 = that.getLocalStore(that.menu_show_key, Boolean.name)
             let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
             that.m_container = that.s2d(`
-                             <div class="m-container">
-                             <div class="operation">
-                                  <input type="text" placeholder="房间号或者名称...">
-                                   <button class="btn btn-teal add-room" title="复制地址栏房间号，手动添加房间">添加</button>
-                                   <button class="btn btn-info flush-room" title="刷新表格数据">刷新</button>
-                                   <button class="btn btn-danger clear-room" title="重置表格数据">重置</button>
+		                     <div class="m-container">
+                             <div class="m-container-box">
+		                     <div class="operation">
+		                          <input type="text" placeholder="房间号或者名称...">
+		                           <button class="btn btn-teal add-room" title="复制地址栏房间号，手动添加房间">添加</button>
+		                           <button class="btn btn-danger clear-room" title="重置表格数据">重置</button>
                                    <button class="btn btn-warning bg-btn" title="上传背景图">上传</button>
-                                   <input type="file" id="file">
-                                   <input type="checkbox" id="checkbox1" ${show1 ? 'checked' : ''} class="checkbox" title="是否显示背景" />背景
-                                   <input type="checkbox" id="checkbox2" ${show2 ? 'checked' : ''} class="checkbox" title="是否显示左侧菜单"/>菜单
+		                           <input type="file" id="file">
+		                           <input type="checkbox" id="checkbox1" ${show1 ? 'checked' : ''} class="checkbox" title="是否显示背景" />背景
+		                           <input type="checkbox" id="checkbox2" ${show2 ? 'checked' : ''} class="checkbox" title="是否显示左侧菜单"/>菜单
                                    <input type="checkbox" id="checkbox3" ${show3 ? 'checked' : ''} class="checkbox" title="自动适应屏幕"/>剧场
                                    <a class="m-link m-hide-btn" title="隐藏Logo，不再显示,如果需要开启，点击直播间主播名称，禁用即可出现显示" style="cursor:pointer;">隐藏</a>
                                    <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
                                    <a class="m-link close-btn" title="关闭弹窗，不再显示" style="cursor:pointer;">关闭</a>
                                </div>
-                              <table >
-                                   <thead>
-                                     <th>序号</th>
-                                     <th>名称</th>
-                                     <th>房间号</th>
-                                     <th>操作</th>
-                                   </thead>
-                                   <tbody>
-                                   </tbody>
-                               </table>
+		                      <table >
+		                           <thead>
+		                             <th>序号</th>
+		                             <th>名称</th>
+		                             <th>房间号</th>
+		                             <th>操作</th>
+		                           </thead>
+		                           <tbody>
+		                           </tbody>
+		                       </table>
+                               </div>
 
-                             </div>
-         `)
+		                     </div>
+		 `)
 
 
 
@@ -254,10 +255,10 @@
                 tr.style.padding = '20px 10px'
                 tr.innerHTML =
                     `<td style="padding:10px;">${index + 1}</td>
-                          <td style="padding:10px;">${item.name}</td>
-                          <td style="padding:10px;">${item.roomId}</td>
-                          <td style="padding:10px;">
-                          <button class="btn btn-danger" room-id="${item.roomId}">删除</button></td>`
+		                  <td style="padding:10px;">${item.name}</td>
+		                  <td style="padding:10px;">${item.roomId}</td>
+		                  <td style="padding:10px;">
+		                  <button class="btn btn-danger" room-id="${item.roomId}">删除</button></td>`
                 that.tbody.appendChild(tr)
                 // 添加删除事件
                 const deleteBtn = tr.querySelector('button')
@@ -356,14 +357,6 @@
 
             }
 
-            // 刷新
-            const flushRoomBtn = that.m_container.querySelector('.m-container button.flush-room')
-            if (flushRoomBtn) {
-                flushRoomBtn.addEventListener('click', function () {
-                    that.users = that.getLocalStore()
-                    that.resetTbody(that.users)
-                })
-            }
 
             // 清空
             const clearRoomBtn = that.m_container.querySelector('.m-container button.clear-room')
@@ -1346,10 +1339,41 @@
             }
 
             // 对于恶意广告要彻底清除！！！
-            let ads = [
-                "#player-above-controller+div"
-            ]
+            //let ads = [
+            //    "#player-above-controller+div"
+           // ]
             //this.intervalRemoveElement(ads, 500, 20)
+            this.removeElement('.layout-Main .ToTopBtn',true)
+
+
+            let show3 = that.getLocalStore(that.full_screen_key, Boolean.name)
+            console.log('剧场模式',window.location.href,show3)
+            if (show3) {
+
+                setTimeout(()=>{
+                    // 剧场模式
+                    let controller = wdq('.layout-Main #player-above-controller+div')
+                    if (controller && show3) {
+                        let divs = controller.querySelectorAll("div")
+                        for(let div of divs){
+                            if(div.title === '全屏'){
+                                console.log('剧场模式')
+                                div.click()
+                            }
+                        }
+                    }
+
+
+                },3000)
+            }
+
+
+
+
+
+
+
+
 
 
 
@@ -1529,141 +1553,213 @@
         }
 
     }
+
+
     // 样式部分
     GM_addStyle(`
-    .m-container {
-         box-sizing: border-box;
-         position: fixed;
-         display: none;
-         width: 650px;
-         height: 400px;
-         top: 100px;
-         left: 50%;
-         border-radius: 0;
-         overflow: hidden scroll;
-         background-color: white;
-         transform: translateX(-50%);
-         z-index:1000;
-         transition: display linear 1s;
-         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2),
-         -2px -2px 2px rgba(0, 0, 0, 0.2);
-       }
-       .m-container .operation {
-         box-sizing: border-box;
-         height: 80px;
-         padding: 20px 0 0 0;
-         text-align: center;
-       }
-       .m-container .operation input[type="text"] {
-         width:150px;
-         box-sizing: border-box;
-         outline: 1px solid teal;
-         border:none;
-         padding: 4px 7px;
-       }
-       .m-container .operation input[type="text"]:focus {
-         outline: 1px solid red !important;
-       }
-       .m-container .operation input[type="checkbox"] {
-         display:inline !important;
-       }
-       .m-container .operation input[type="file"] {
-         display:none !important;
-       }
-       .m-container table {
-         position: relative;
-         box-sizing: border-box;
-         overflow: hidden;
-         diplay:block;
-         padding: 10px;
-         text-align: left !important;
-         margin: 0 auto;
-         max-height:200px;
-         width: 90%;
-       }
-       .m-container  table tbody {
-          max-height:200px;
-       }
-       .m-container table thead{
-         border-top: 1px solid rgba(0,0,0,0.4);
-         border-bottom: 1px solid rgba(0,0,0,0.4);
-         text-align: left !important;
-         padding: 10px;
-       }
-       .m-container table th, m-container table td {
-         padding: 10px;
-       }
-       .m-container table tr {
-         border-bottom: 1px solid rgba(0,0,0,0.4);
-         margin:5px 0;
-       }
-       .m-container .m-link,.m-container .m-link:visited{
-          color:blnk !important;
-       }
-       .m-container .m-link:hover{
-          color:blue !important;
-          text-decoration:underline !important;
-       }
-       .m-container .btn {
-         cursor: pointer !important;
-         padding: 5px 8px !important;
-         border: none !important;
-         color: #fff !important;
-         font-size: 1rem !important;
-         border-radius:20px !important;
-         max-width:50px  !important;
-         margin:0 0 !important;
-         background-color:rgba(166, 169, 173,1) !important;
-         z-index:1000 !important;
-         outline:none !important;
-       }
+        .m-container,
+        .m-container .btn,
+        .m-container table,
+        .m-container table tbody,
+        .m-container table thead,
+        .m-container table tr {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none;
+            outline: none;
+        }
+
+        .m-container {
+            box-sizing: border-box !important;
+            position: fixed !important;
+            display: none;
+            flex-direction: column !important;
+            width: 650px !important;
+            height: 400px !important;
+            top: 100px !important;
+            left: 50% !important;
+            border-radius: 10px !important;
+            overflow: hidden !important;
+            background-color: #fff !important;
+            transform: translateX(-50%) !important;
+            z-index: 1000 !important;
+            padding: 15px !important;
+            transition: display linear 1s !important;
+            box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
+                -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .m-container-box {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .m-container .operation {
+            box-sizing: border-box !important;
+            height: auto !important;
+        }
+
+        .m-container .operation input[type="text"] {
+            width: 150px !important;
+            box-sizing: border-box !important;
+            outline: 1px solid rgba(8, 235, 46, 0.6) !important;
+            border: none !important;
+            padding: 5px 10px !important;
+            border-radius: 20px !important;
+        }
+
+        .m-container .operation input[type="text"]:focus {
+            outline: 1px solid rgba(8, 235, 46, 1) !important;
+        }
+
+        .m-container .operation input[type="checkbox"] {
+            display: inline !important;
+        }
+
+        .m-container .operation input[type="file"] {
+            display: none !important;
+        }
+
+
+        .m-container table {
+            position: relative !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            text-align: left !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .m-container table tr {
+            margin: 5px 0 !important;
+            display: flex !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
+            justify-content: space-between;
+        }
+
+        .m-container table tr td:nth-child(1),
+        .m-container table thead th:nth-child(1) {
+            width: 50px;
+            text-align: center !important;
+        }
+
+        .m-container table tr td:nth-child(2),
+        .m-container table tr td:nth-child(3),
+        .m-container table tr td:nth-child(4),
+        .m-container table thead th:nth-child(2),
+        .m-container table thead th:nth-child(3),
+        .m-container table thead th:nth-child(4) {
+            flex: 1 !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+
+        }
+
+
+
+        .m-container table tbody {
+            flex: 1 !important;
+            overflow: auto !important;
+        }
+
+        .m-container table th,
+        .m-container table td {
+            padding: 10px !important;
+        }
+
+        .m-container table tbody tr:nth-child(1) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
+        }
+
+        .m-container .m-link,
+        .m-container .m-link:visited {
+            color: blnk !important;
+        }
+
+        .m-container .m-link:hover {
+            color: blue !important;
+            text-decoration: underline !important;
+        }
+
+        .m-container .btn {
+            cursor: pointer !important;
+            padding: 5px 8px !important;
+            border: none !important;
+            color: #fff !important;
+            font-size: 1rem !important;
+            border-radius: 20px !important;
+            max-width: 50px !important;
+            margin: 0 0 !important;
+            background-color: rgba(166, 169, 173, 1) !important;
+            z-index: 1000 !important;
+            outline: none !important;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
+        }
+
         .m-container .btn:hover {
-           background-color:rgba(166, 169, 173,0.6) !important;
-       }
-       .m-container .btn-teal{
-         background-color:rgba(64, 158, 255,1)  !important;
-       }
-      .m-container .btn-teal:hover{
-         background-color:rgba(64, 158, 255,0.6) !important;
-       }
-       .m-container .btn-success{
-         background-color: rgba(103, 194, 58,1) !important;
-       }
-        .m-container .btn-success:hover{
-         background-color: rgba(103, 194, 58,0.6) !important;
-       }
-       .m-container .btn-info{
-         background-color:rgba(119, 119, 119,1) !important;
-       }
-       .m-container .btn-info:hover{
-          background-color:rgba(119, 119, 119,0.6) !important;
-       }
-       .m-container .btn-warning{
-         background-color:rgba(230, 162, 60,1) !important;
-       }
-       .m-container .btn-warning:hover{
-          background-color:rgba(230, 162, 60,0.6) !important;
-       }
-       .m-container .btn-danger{
-         background-color:rgba(245, 108, 108,1) !important;
-       }
-       .m-container .btn-danger:hover{
-         background-color:rgba(245, 108, 108,0.6) !important;
-       }
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) !important;
+        }
 
+        .m-container .btn:hover {
+            background-color: rgba(166, 169, 173, 0.6) !important;
+        }
 
+        .m-container .btn-teal {
+            background-color: rgba(64, 158, 255, 1) !important;
+        }
+
+        .m-container .btn-teal:hover {
+            background-color: rgba(64, 158, 255, 0.6) !important;
+        }
+
+        .m-container .btn-success {
+            background-color: rgba(103, 194, 58, 1) !important;
+        }
+
+        .m-container .btn-success:hover {
+            background-color: rgba(103, 194, 58, 0.6) !important;
+        }
+
+        .m-container .btn-info {
+            background-color: rgba(119, 119, 119, 1) !important;
+        }
+
+        .m-container .btn-info:hover {
+            background-color: rgba(119, 119, 119, 0.6) !important;
+        }
+
+        .m-container .btn-warning {
+            background-color: rgba(230, 162, 60, 1) !important;
+        }
+
+        .m-container .btn-warning:hover {
+            background-color: rgba(230, 162, 60, 0.6) !important;
+        }
+
+        .m-container .btn-danger {
+            background-color: rgba(245, 108, 108, 1) !important;
+        }
+
+        .m-container .btn-danger:hover {
+            background-color: rgba(245, 108, 108, 0.6) !important;
+        }
        /***************************************************斗鱼直播***************************************************************************/
-       .game-live-item i,.host-name {
-           cursor:pointer;
-       }
-       .game-live-item .txt i:hover,.host-name:hover {
-           color:rgb(255, 135, 0);
-       }
-       .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
-           cursor:pointer !important;
-       }
-       .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
-           color:rgb(255, 135, 0) !important;
+	   .game-live-item i,.host-name {
+	       cursor:pointer;
+	   }
+	   .game-live-item .txt i:hover,.host-name:hover {
+	       color:rgb(255, 135, 0);
+	   }
+	   .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
+	       cursor:pointer !important;
+	   }
+	   .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
+	       color:rgb(255, 135, 0) !important;
         }
 
         .layout-Section.layout-Slide .layout-Slide-player,
@@ -1699,6 +1795,7 @@
        #js-player-asideMain #layout-Player-aside .FirePower,
        .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
        #bc4,#bc4-bgblur,
+       #js-header .MatchFocusFullPic,
        .multiBitRate-da4b60{
            display:none !important;
        }
