@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    http://tampermonkey.net/
-// @version      3.8.6
+// @version      3.8.7
 // @description  虎牙，斗鱼直播 简化页面，屏蔽主播
 // @author       wuxin001
 // @match        https://www.huya.com/*
@@ -326,27 +326,9 @@
         }
 
 
-        clickLogoShowContainer() {
-            if (this.header_logo === 'none') {
-                return
-            }
-            let that = this
-            console.log('logo链接修改中...')
-            setTimeout(() => {
-                let a = querySelector(that.header_logo)
-                a.href = 'javascript:;void(0)';
-                a.title = '点击Logo，显示插件配置'
-                console.log('logo链接修改完成中...')
-                addEventListener(a, 'click', (e) => {
-                    that.isShowContainer()
-                    return false
-                })
-            }, 5000);
 
 
-        }
-
-        /*********************************下面方法不建议重写******************************/
+        /*********************************子类继承无需修改的方法******************************/
 
 
         /**
@@ -370,33 +352,32 @@
             let show5 = getLocalStore(that.logo_show_key, Boolean.name)
             that.m_container = s2d(`
 		                     <div class="m-container">
-                              <div class="m-container-box">
-		                     <div class="operation">
-		                          <input type="text" placeholder="房间号或者名称...">
-		                           <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
-		                           <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
-                                   <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
-		                           <input type="file" id="file">
-		                           <input type="checkbox" id="checkbox1" ${show1 ? 'checked' : ''} class="checkbox" title="是否显示背景" />背景
-		                           <input type="checkbox" id="checkbox2" ${show2 ? 'checked' : ''} class="checkbox" title="是否显示左侧菜单"/>菜单
-                                   <input type="checkbox" id="checkbox3" ${show3 ? 'checked' : ''} class="checkbox" title="自动适应屏幕"/>剧场
-                                   <input type="checkbox" id="checkbox4" ${show4 ? 'checked' : ''} class="checkbox" title="是否开启礼物"/>礼物
-                                   <input type="checkbox" id="checkbox5" ${show5 ? 'checked' : ''} class="checkbox" title="关闭或者显示插件Logo"/>logo
-                                   <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
-                                   <button class="btn btn-info btn-close-container" title="关闭" style="float:right;">关闭</button>
-                               </div>
-		                      <table >
-		                           <thead>
-		                             <th>序号</th>
-		                             <th>名称</th>
-		                             <th>房间号</th>
-		                             <th>操作</th>
-		                           </thead>
-		                           <tbody>
-		                           </tbody>
-		                       </table>
-                                </div>
-
+                                <div class="m-container-box">
+                                    <div class="operation">
+                                        <input type="text" placeholder="房间号或者名称...">
+                                        <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
+                                        <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
+                                        <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
+                                        <input type="file" id="file">
+                                        <input type="checkbox" id="checkbox1" ${show1 ? 'checked' : ''} class="checkbox" title="是否显示背景" />背景
+                                        <input type="checkbox" id="checkbox2" ${show2 ? 'checked' : ''} class="checkbox" title="是否显示左侧菜单"/>菜单
+                                        <input type="checkbox" id="checkbox3" ${show3 ? 'checked' : ''} class="checkbox" title="自动适应屏幕"/>剧场
+                                        <input type="checkbox" id="checkbox4" ${show4 ? 'checked' : ''} class="checkbox" title="是否开启礼物"/>礼物
+                                        <input type="checkbox" id="checkbox5" ${show5 ? 'checked' : ''} class="checkbox" title="关闭或者显示插件Logo"/>logo
+                                        <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
+                                        <button class="btn btn-info btn-close-container" title="关闭" style="float:right;">关闭</button>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <th>序号</th>
+                                            <th>名称</th>
+                                            <th>房间号</th>
+                                            <th>操作</th>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    </div>
 		                     </div>
 		 `)
 
@@ -919,9 +900,24 @@
             }
         }
 
-
-
-
+        /**
+         *  点击 直播平台 Logo 显示 操作面板
+         */
+        clickLogoShowContainer() {
+            if (this.header_logo === 'none') {
+                return
+            }
+            let that = this
+            setTimeout(() => {
+                let a = querySelector(that.header_logo)
+                a.href = 'javascript:;void(0)';
+                a.title = '点击Logo，显示插件配置'
+                addEventListener(a, 'click', (e) => {
+                    that.isShowContainer()
+                    return false
+                })
+            }, 5000);
+        }
     }
 
     /**
@@ -1247,7 +1243,6 @@
                 if (isArray(divs)) {
                     for (let element of divs) {
                         if (hasVideo(element, '.layout-Main')) {
-                            console.log('element', element)
                             backgroundNone(element, backgroundNones)
                             // let videoContainer = querySelector(element, '.layout-Main')
                             // videoContainer.style.width = '100% !important;'
@@ -1266,18 +1261,22 @@
             // 不带有轮播图
             if (new RegExp(/.*douyu.*(\/(\d+))$/).test(local_url)) {
                 // 如果是小窗口 判断播放窗口是否存在
-                let times = 10000
+                let times = 20
                 let count = 0
                 let timer = setInterval(() => {
                     const closeBtn = querySelector('.roomSmallPlayerFloatLayout-closeBtn')
                     if (closeBtn) {
                         closeBtn.click()
+                        // 如果成功点击了需要清除循环计时器，否则无法点击礼物等弹窗
+                        clearInterval(timer)
+                        return;
                     }
                     if (count > times) {
                         clearInterval(timer)
+                        return;
                     }
                     count = count + 1
-                }, 16)
+                }, 500)
             }
 
             // 对于恶意广告要彻底清除！！！
@@ -1368,8 +1367,6 @@
                 }
             }
 
-
-
             if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
                 const rooms = querySelectorAll('.layout-Cover-item')
                 if (isArray(rooms)) {
@@ -1380,7 +1377,7 @@
                                 if (link) {
                                     // link.onclick = ()=>false
                                     const url = link?.href || ''
-                                    link.href = 'javascript:void(0)'
+                                    link.href = 'javascript:;void(0)'
                                     const user = querySelector(link, 'div.DyListCover-userName')
                                     const name = user.textContent || ''
                                     // 判断该直播间列表窗口是否需要删除
@@ -1402,7 +1399,7 @@
                                                 return;
                                             }
                                             const url = a.href
-                                            a.href = 'javascript:void(0)'
+                                            a.href = 'javascript:;void(0)'
                                             const user = querySelector(a, '.DyListCover-userName')
                                             const name = user.textContent || ''
                                             addEventListener(user, 'click', (a) => {
@@ -1691,8 +1688,7 @@
 	       color:rgb(255, 135, 0) !important;
         }
 
-        /* 严格禁用模式 */
-        .layout-Section.layout-Slide .layout-Slide-player,
+       .layout-Section.layout-Slide .layout-Slide-player,
       .layout-Slide-bannerInner,
        #lazyModule3,
        #lazyModule4,
@@ -1739,6 +1735,10 @@
            display:inline-block !important;
        }
 
+       .layout-Player-aside .layout-Player-chat,.layout-Player-aside .layout-Player-chat .ChatToolBar {
+         display:block !important;
+       }
+
        
        .Barrage-main  .UserLevel,
        .Barrage-main  .js-user-level,
@@ -1769,10 +1769,8 @@
 
        /* 一般禁用模式 */
        .layout-Player-main #js-player-toolbar{
-         display:none;
+         display:block;
        }
-       /* *********** */
-
        #root div.layout-Main{
            margin-top:70px !important;
            display:block !important;
