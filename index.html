@@ -49,19 +49,20 @@
         .m-container .operation {
             box-sizing: border-box !important;
             height: auto !important;
+            justify-content: start !important;
         }
 
         .m-container .operation input[type="text"] {
             width: 150px !important;
             box-sizing: border-box !important;
-            outline: 1px solid rgba(8, 235, 46, 0.6) !important;
+            outline: 1px solid rgba(8, 125, 235, 0.6) !important;
             border: none !important;
             padding: 5px 10px !important;
             border-radius: 20px !important;
         }
 
         .m-container .operation input[type="text"]:focus {
-            outline: 1px solid rgba(8, 235, 46, 1) !important;
+            outline: 1px solid rgba(8, 125, 235, 1) !important;
         }
 
         .m-container .operation input[type="checkbox"] {
@@ -109,6 +110,7 @@
             text-overflow: ellipsis !important;
 
         }
+
         .m-container table tbody {
             flex: 1 !important;
             overflow: auto !important;
@@ -141,7 +143,7 @@
             font-size: 1rem !important;
             border-radius: 20px !important;
             max-width: 50px !important;
-            margin: 0 0 !important;
+            margin: 0  !important;
             background-color: rgba(166, 169, 173, 1) !important;
             z-index: 1000 !important;
             outline: none !important;
@@ -224,42 +226,11 @@
 
 <body>
 
-    <div class="m-container">
-        <div class="m-container-box">
-            <div class="operation">
-                <input type="text" placeholder="房间号或者名称...">
-                <button class="btn btn-teal add-room" title="复制地址栏房间号，手动添加房间">添加</button>
-                <button class="btn btn-danger clear-room" title="重置表格数据">重置</button>
-                <button class="btn btn-warning bg-btn" title="上传背景图">上传</button>
-                <input type="file" id="file">
-                <input type="checkbox" id="checkbox1" class="checkbox" title="是否显示背景" />背景
-                <input type="checkbox" id="checkbox2" class="checkbox" title="是否显示左侧菜单" />菜单
-                <input type="checkbox" id="checkbox3" class="checkbox" title="自动适应屏幕" />剧场
-                <a class="m-link m-hide-btn" title="隐藏Logo，不再显示,如果需要开启，点击直播间主播名称，禁用即可出现显示"
-                    style="cursor:pointer;">隐藏</a>
-                <a class="m-link"
-                    href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD"
-                    target="_blank" title="更新、反馈">更新</a>
-                <a class="m-link close-btn" title="关闭弹窗，不再显示" style="cursor:pointer;">关闭</a>
-            </div>
-            <table>
-                <thead>
-                    <th>序号</th>
-                    <th>名称</th>
-                    <th>房间号</th>
-                    <th>操作</th>
-                </thead>
-                <tbody>
 
-                </tbody>
-            </table>
-        </div>
-
-
-    </div>
 
     <button id="open">打开</button>
     <button id="refesh">刷新</button>
+    <script src="./index.js"></script>
 
     <script>
         function random(x) {
@@ -277,46 +248,52 @@
             return str
         }
 
+        setTimeout(() => {
 
-        let container = document.querySelector('.m-container')
-        let mBtn = document.querySelector('#open')
-        let refesh = document.querySelector('#refesh')
+            let container = document.querySelector('.m-container')
+            let mBtn = document.querySelector('#open')
+            let refesh = document.querySelector('#refesh')
 
-        let flag = false
-        mBtn.addEventListener('click', (e) => {
-            flag = !flag
-            container.style.display = flag ? 'block' : 'none'
-            e.target.textContent = flag ? '关闭' : '打开'
-            console.log('con', container.style.display)
-        })
+            let flag = false
+            mBtn.addEventListener('click', (e) => {
+                flag = !flag
+                container.style.display = flag ? 'block' : 'none'
+                e.target.textContent = flag ? '关闭' : '打开'
+            })
 
-        
-        refesh.addEventListener('click', () => {
-            addContent()
-        })
+            refesh.addEventListener('click', () => {
+                addContent()
+            })
 
-        let max = 100
-        let maxContentLen = 10
-        let tbody = document.querySelector('tbody')
+            let max = 100
+            let maxContentLen = 10
+            let tbody = document.querySelector('tbody')
 
-        function addContent() {
-            tbody.querySelectorAll('tr').forEach(tr => tr.remove())
-            let arr = Array.from({ length: random(max) }, () => Object.assign({}, { roomId: randomContent(maxContentLen), name: randomContent(maxContentLen) }))
-            arr.forEach((item, index) => {
-                let tr = document.createElement('tr')
-                tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
-                tr.innerHTML =
-                    `<td >${index + 1}</td>
+            function addContent() {
+                tbody.querySelectorAll('tr').forEach(tr => tr.remove())
+                let arr = Array.from({ length: random(max) }, () => Object.assign({}, { roomId: randomContent(maxContentLen), name: randomContent(maxContentLen) }))
+                arr.forEach((item, index) => {
+                    let tr = document.createElement('tr')
+                    tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
+                    tr.innerHTML =
+                        `<td >${index + 1}</td>
 		                  <td >${item.name}</td>
 		                  <td >${item.roomId}</td>
 		                  <td><button class="btn btn-danger" room-id="${item.roomId}">删除</button></td>
 		                  `
-                tbody.appendChild(tr)
-            })
+                    let btn = tr.querySelector('button')
+                    btn.addEventListener('click', () => {
+                        tr.remove()
+                    })
+                    tbody.appendChild(tr)
+                })
 
-        }
+            }
 
-        addContent()
+            addContent()
+        }, 3000);
+
+
 
 
 
