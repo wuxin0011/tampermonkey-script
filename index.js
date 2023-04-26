@@ -1246,13 +1246,13 @@
                 let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
                 if (isArray(divs)) {
                     for (let element of divs) {
-                        // console.log(element,hasVideo(element))
-                        // 该div中是否有video
                         if (hasVideo(element, '.layout-Main')) {
-                            console.log('element',element)
+                            console.log('element', element)
                             backgroundNone(element, backgroundNones)
+                            // let videoContainer = querySelector(element, '.layout-Main')
+                            // videoContainer.style.width = '100% !important;'
+                            // videoContainer.style.maxWidth = '100vw !important;'
                         } else {
-                            // 移除出了显示直播div其他的div
                             removeDOM(element, true)
                         }
 
@@ -1288,6 +1288,22 @@
             removeDOM('.layout-Main .ToTopBtn', true)
 
 
+            // 是否全屏
+            // setTimeout(()=>{
+            //     let tool_controller = querySelector('#player-above-controller')
+            //     console.log('tool', tool_controller)
+            //     if (tool_controller) {
+            //         let divs = querySelectorAll(tool_controller, 'div')
+            //         if (isArray(divs)) {
+            //             for (let div of divs) {
+            //                 console.log('div', div.title === '全屏')
+            //                 if (div.title === "全屏") {
+            //                     div.click()
+            //                 }
+            //             }
+            //         }
+            //     }
+            // },5000)
 
             // TODO 新增功能，大屏小屏幕
             /*
@@ -1722,6 +1738,8 @@
        {
            display:inline-block !important;
        }
+
+       
        .Barrage-main  .UserLevel,
        .Barrage-main  .js-user-level,
        .Barrage-main  .Barrage-icon,
@@ -1751,13 +1769,15 @@
 
        /* 一般禁用模式 */
        .layout-Player-main #js-player-toolbar{
-
+         display:none;
        }
        /* *********** */
 
        #root div.layout-Main{
            margin-top:70px !important;
            display:block !important;
+           width:auto !important;
+           max-width:auto !important;
        }
        #root>div,
        #root>div .wm-general-bgblur
