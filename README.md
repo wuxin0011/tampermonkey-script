@@ -6,7 +6,7 @@
 
 本人使用了edge浏览器的广告插件,这个插件非常好用，点击前往安装 [adguard](https://microsoftedge.microsoft.com/addons/detail/adguard-%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/pdffkfellgipmhklpdmokmckkkfcopbh?hl=zh-CN)，所以可能和大家直播界面有些不一样，如果暂时还是有广告欢迎反馈，有时间第一时间更新!
 
-# 内容
+# 内容【功能】
 
 **目前支持操作:**
 
@@ -57,13 +57,12 @@
        
 
 
-# ❤地址:
 
-- [插件地址](https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
-- [源码地址](https://github.com/wuxin0011/huya-live)
 
 
 # 效果预览
+
+
 
 ## 虎牙直播
 
@@ -88,3 +87,23 @@
 ![斗鱼直播屏蔽效果](https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/live-plugin/8.png)
 
 ![斗鱼直播自定义背景](https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/live-plugin/9.png)
+
+
+
+
+
+## 哔哩哔哩
+
+
+![bilibili-1](https://github.com/wuxin0011/huya-live/assets/65836396/06bfe0ff-3eea-4dfd-a68c-a18146a57a1b)
+![bilibili-0](https://github.com/wuxin0011/huya-live/assets/65836396/b33b5982-b8de-4d95-aed0-b8e9a445bf9c)
+![bilibili-2](https://github.com/wuxin0011/huya-live/assets/65836396/0348973c-fd88-4340-a95f-a8bca919a906)
+![bilibili-3](https://github.com/wuxin0011/huya-live/assets/65836396/2cdf8aba-3784-492d-8d4d-55add06cf846)
+![bilibili-4](https://github.com/wuxin0011/huya-live/assets/65836396/4fcb5e85-aab0-4b57-a67a-2334da4b788b)
+
+
+
+# 相关链接
+
+- [插件地址](https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
+- [源码地址](https://github.com/wuxin0011/huya-live)
