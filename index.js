@@ -1984,6 +1984,7 @@
        .Header-menu-wrap .DropMenuList-ad,
        .public-DropMenu-drop-main div.Header-UserPane-top~div,
        #js-player-dialog .LiveRoomLoopVideo,
+       .Header-search-wrap .Search  label,
        .Barrage .Barrage-userEnter{
          display:none !important;
        }
@@ -2023,6 +2024,11 @@
        .layout-Player-barrage{
            position: absolute !important;
            top: 0 !important;
+        }
+
+        .Header-search-wrap input#header-search-input::placeholder {
+            color: transparent !important;
+            opacity:0 !important;
         }
 
 
@@ -2116,6 +2122,11 @@
        .chat-room__list .name{
            color: #3c9cfe !important;
            background:none!important;
+         }
+
+         #search-bar-input::placeholder{
+            color: transparent !important;
+            opacity:0 !important;
          }
 
 
