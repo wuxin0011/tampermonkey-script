@@ -973,7 +973,7 @@
             this.bg_show_key = 'huyazhibo_bg_show'
             this.menu_show_key = 'huyazhibo_menu_show_key'
             this.full_screen_key = 'huyazhibo_full_screen_key'
-            this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1664197944_content.jpg'
+            this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
             this.baseUrl = "https://www.huya.com/"
             this.users = getLocalStore(this.key, Array.name, true)
             this.html = querySelector('html')
@@ -1003,7 +1003,7 @@
                 let count = 0;
                 // 暂停播放 防止后续加载出现
                 let timer1 = setInterval(() => {
-                    pauseBtn = querySelector('.player-pause-btn')
+                    let pauseBtn = querySelector('.player-pause-btn')
                     if (pauseBtn) {
                         pauseBtn.click()
                     }
@@ -1170,7 +1170,7 @@
         index() {
             let that = this
             // 直播源
-            if (window.location.href == that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test('https://www.douyu.com/?')) {
+            if (window.location.href == that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
                 window.scroll(0, 0)
                 // 移除直播
                 removeVideo('.layout-Slide-player video')
@@ -1205,7 +1205,7 @@
         category() {
             let that = this
             // 匹配分类页
-            if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(window.location.href)) {
+            if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
                 that.removeRoomByClickRoomName()
                 const labels = querySelectorAll('.layout-Module-filter .layout-Module-label')
                 if (isArray(labels)) {
@@ -1256,6 +1256,7 @@
 
             // 带有轮播图
             if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
+                log('直播间带有录播图 ……')
                 let divs = querySelectorAll('#root>div')
                 let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
                 if (isArray(divs)) {
@@ -1271,10 +1272,9 @@
 
 
             }
-
-
             // 不带有轮播图
             if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
+                log('直播间不带有录播图 ……')
                 let count = 20;
                 let timer = setInterval(() => {
                     const closeBtn = querySelector('.roomSmallPlayerFloatLayout-closeBtn')
@@ -1303,22 +1303,18 @@
             let that = this
 
             // 首页
-            if (this.baseUrl == local_url || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test('https://www.douyu.com/?')) {
+            if (this.baseUrl == local_url || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
                 timeoutSelectorAll('.layout-List-item', (rooms) => {
                     for (let li of rooms) {
                         setTimeout(() => {
                             let isMark = li.getAttribute('mark')
                             if (!isMark) {
                                 try {
-                                    // 是否标记了
                                     li.setAttribute('mark', true);
-                                    // 获取单个主播间房间地址
                                     const a = querySelector(li, '.DyCover')
                                     const url = a.href || ''
-                                    // 获取属性
                                     const user = querySelector(li, '.DyCover-user')
                                     const name = user?.textContent || ''
-
                                     a.setAttribute('href', 'javascript:;void(0)');
                                     addEventListener(user, 'click', (e) => {
                                         if (confirm(`确认禁用 ${name}`)) {
@@ -1350,12 +1346,10 @@
                                 li.setAttribute('mark', true);
                                 const link = querySelector(li, 'a.DyListCover-wrap')
                                 if (link) {
-                                    // link.onclick = ()=>false
                                     const url = link?.href || ''
                                     link.setAttribute('href', 'javascript:;void(0)');
                                     const user = querySelector(link, 'div.DyListCover-userName')
                                     const name = user.textContent || ''
-                                    // 判断该直播间列表窗口是否需要删除
                                     if (that.isRemove(url) || that.userIsExist(name)) {
                                         removeDOM(li, true)
                                     } else {
@@ -1437,13 +1431,13 @@
 
 
         // 通过房间地址获取房间号
-        getRoomIdByUrl(url) {
+        getRoomIdByUrl(url = local_url) {
             try {
-                if (new RegExp(/.*rid=(\d+).*/).test(local_url)) {
-                    return local_url.match(new RegExp(/rid=(\d+)/))[1]
+                if (new RegExp(/.*rid=(\d+).*/).test(url)) {
+                    return url.match(new RegExp(/rid=(\d+)/))[1]
                 }
-                if (/https:\/\/www\.douyu\.com\/(\d+).*/.test(local_url)) {
-                    return local_url.match(new RegExp(/https:\/\/www\.douyu\.com\/(\d+)/))[1]
+                if (/https:\/\/www\.douyu\.com\/(\d+).*/.test(url)) {
+                    return url.match(new RegExp(/https:\/\/www\.douyu\.com\/(\d+)/))[1]
                 }
                 return null
 
@@ -1540,7 +1534,7 @@
         addDeleteRoomButton(time = 1000) {
             timeoutSelectorAll('.feed-card', (divs) => {
                 for (let feed of divs) {
-                    const isMark = !!feed.querySelector('.m-span-text')
+                    const isMark = !!querySelector(feed, '.m-span-text')
                     if (!isMark) {
                         let item = querySelector(feed, 'div.bili-video-card__info--bottom')
                         const name = querySelector(item, 'span.bili-video-card__info--author')?.textContent
@@ -1560,7 +1554,7 @@
             window.onscroll = throttle(500, () => {
                 timeoutSelectorAll('.bili-video-card', (divs) => {
                     for (let feed of divs) {
-                        const isMark = !!feed.querySelector('.m-span-text')
+                        const isMark = !!querySelector(feed, '.m-span-text')
                         if (!isMark) {
                             let item = querySelector(feed, 'div.bili-video-card__info--bottom')
                             let isLive = false;
@@ -1613,7 +1607,7 @@
 
         detail() {
 
-            if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
+            if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url) && false) { // 该功能暂时有bug 不需要 直接 false吧
                 const userContainer = querySelector('.right-container-inner .up-info-container')
                 const place = querySelector(userContainer, '.up-detail-top')
                 const link = querySelector(userContainer, '.up-detail-top>a')
