@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<body>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>测试页面</title>
+        <style>
+            #open,
+            #refesh,
+            #test {
+                position: fixed;
+                padding: 10px 20px;
+                background-color: teal !important;
+                color: #fff;
+                display: block;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                top: 200px;
+                right: 0;
+            }
+
+            #refesh {
+                top: 250px;
+                background-color: red !important;
+            }
+
+            #test {
+                top: 300px;
+                background-color: pink !important;
+                color: teal !important;
+            }
+
+            body {
+                height: 100vh;
+            }
+        </style>
+    </head>
+
+    <body>
+
+
+
+        <button id="open">打开</button>
+        <button id="refesh">刷新</button>
+        <button id="test">默认页面</button>
+        <script src="../dist/live-plugin.js"></script>
+
+        <script>
+            function random(x) {
+                return Math.floor(Math.random() * x + 1)
+            }
+
+            function randomContent(x) {
+                let str = ''
+                // 随机长度
+                let len = random(x)
+                while (len > 0) {
+                    str += random(x)
+                    len--;
+                }
+                return str
+            }
+
+            function check(dom) {
+                return !!dom
+            }
+
+            setTimeout(() => {
+
+                let container = document.querySelector('.m-container')
+
+                let mBtn = document.querySelector('#open')
+                let refesh = document.querySelector('#refesh')
+                let testPage = document.querySelector('#test')
+                testPage.addEventListener('click', () => {
+                    location.href = '../index.html'
+                })
+
+                let flag = false
+                mBtn.addEventListener('click', (e) => {
+                    flag = !flag
+                    check(container)
+                    if (!container) {
+                        alert('获取容器失败！请检查 dist/live-plugin.js 文件是否存在！')
+                        return;
+                    }
+                    if (container.classList.contains('m-container-is-active')) {
+                        container.classList.remove(
+                            'm-container-is-active')
+                    } else {
+                        container.classList.add('m-container-is-active')
+                    }
+                    e.target.textContent = flag ? '关闭' : '打开'
+                })
+
+                refesh.addEventListener('click', () => {
+                    addContent()
+                })
+
+                let max = 100
+                let maxContentLen = 10
+                let tbody = document.querySelector('tbody')
+
+                function addContent() {
+                    tbody.querySelectorAll('tr').forEach(tr => tr.remove())
+                    let arr = Array.from({
+                        length: random(max)
+                    }, () => Object.assign({}, {
+                        roomId: randomContent(maxContentLen),
+                        name: randomContent(maxContentLen)
+                    }))
+                    arr.forEach((item, index) => {
+                        let tr = document.createElement('tr')
+                        tr.style.borderBottom = '1px solid rgba(0,0,0,0.4)'
+                        tr.innerHTML =
+                            `<td >${index + 1}</td>
+		                  <td >${item.name}</td>
+		                  <td >${item.roomId}</td>
+		                  <td><button class="btn btn-danger" room-id="${item.roomId}">删除</button></td>
+		                  `
+                        let btn = tr.querySelector('button')
+                        btn.addEventListener('click', () => {
+                            tr.remove()
+                        })
+                        tbody.appendChild(tr)
+                    })
+
+                }
+
+                addContent()
+
+                tbody = document.querySelector('#m-container-box2 tbody')
+                addContent()
+            }, 3000);
+        </script>
+
+    </body>
+
+    </html>
