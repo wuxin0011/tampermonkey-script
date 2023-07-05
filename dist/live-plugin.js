@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         live-plugin
+// @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
 // @version      4.0.1
 // @author       wuxin0011
@@ -8,8 +8,8 @@
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
 // @supportURL   https://github.com/wuxin0011/huya-live/issues
-// @match         https://www.huya.com/*
-// @match        https://www.huya.com/*
+// @match        https://*.douyu.com/*
+// @match        https://*.huya.com/*
 // @match        https://*.bilibili.com/*
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -278,7 +278,7 @@
                 </div>
               </div>
               <div class="m-type-item-right">
-                <button class="btn btn-danger" id="m-change-box1">房间号操作</button>
+                <button class="btn btn-danger" id="m-change-box1">房间</button>
               </div>
             </div>
             <div class="m-search-result">
@@ -300,7 +300,7 @@
         <div class="m-container-box m-ani-right-is-close" id="m-container-box2">
           <div class="operation">
             <input type="text" placeholder="房间号或者名称...">
-            <button class="btn btn-danger" id="m-change-box2">视频分类操作</button>
+            <button class="btn btn-danger" id="m-change-box2">分类</button>
             <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
             <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
             <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
@@ -1232,7 +1232,7 @@
           if (isClick) {
             clearInterval(timer);
           }
-        }, 30, 200);
+        }, 30, 500);
         removeDOM(".layout-Main .ToTopBtn", true);
       }
     }
@@ -1745,6 +1745,7 @@
   cursor: pointer !important;
   padding: 5px 8px !important;
   border: none !important;
+  max-width:50px !important;
   color: var(--m-font-color) !important;
   font-size: 1rem !important;
   border-radius: 20px !important;
@@ -2220,12 +2221,12 @@
         color:orange;
     }
 `);
-  window.onload = () => {
-    (function() {
-      if (typeof window === void 0) {
-        log("插件不支持！");
-        return;
-      }
+  (function() {
+    if (typeof window === void 0) {
+      log("插件不支持！");
+      return;
+    }
+    window.onload = () => {
       try {
         let text = "%c欢迎使用直播插件,下载地址%c";
         if (!is_localhost) {
@@ -2241,25 +2242,21 @@
           "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
           "border-radius: 0 3px 3px 0; color: #fff"
         );
-        if (querySelector && querySelectorAll) {
-          if (is_huya) {
-            new TriggerLive();
-          } else if (is_douyu) {
-            new FishLive();
-          } else if (is_bilibili) {
-            new BiliBili();
-          } else if (is_localhost) {
-            new LivePlugin();
-          } else {
-            log("插件地址不适配，请检查匹配地址！！！", "error");
-          }
+        if (is_huya) {
+          new TriggerLive();
+        } else if (is_douyu) {
+          new FishLive();
+        } else if (is_bilibili) {
+          new BiliBili();
+        } else if (is_localhost) {
+          new LivePlugin();
         } else {
-          log("请使用新版浏览器，该插件不支持！", "error");
+          log("插件地址不适配，请检查匹配地址！！！", "error");
         }
       } catch (e) {
         log(e, "error");
       }
-    })();
-  };
+    };
+  })();
 
 })();

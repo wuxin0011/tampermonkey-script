@@ -55,7 +55,7 @@ const getHtmlStr = (show1, show2, show3, show4, show5) => {
                 </div>
               </div>
               <div class="m-type-item-right">
-                <button class="btn btn-danger" id="m-change-box1">房间号操作</button>
+                <button class="btn btn-danger" id="m-change-box1">房间</button>
               </div>
             </div>
             <div class="m-search-result">
@@ -77,7 +77,7 @@ const getHtmlStr = (show1, show2, show3, show4, show5) => {
         <div class="m-container-box m-ani-right-is-close" id="m-container-box2">
           <div class="operation">
             <input type="text" placeholder="房间号或者名称...">
-            <button class="btn btn-danger" id="m-change-box2">视频分类操作</button>
+            <button class="btn btn-danger" id="m-change-box2">分类</button>
             <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
             <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
             <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>

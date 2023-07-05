@@ -153,6 +153,7 @@ addStyle(`
   cursor: pointer !important;
   padding: 5px 8px !important;
   border: none !important;
+  max-width:50px !important;
   color: var(--m-font-color) !important;
   font-size: 1rem !important;
   border-radius: 20px !important;

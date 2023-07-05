@@ -158,7 +158,7 @@ export default class FishLive extends LivePlugin {
                 if (isClick) {
                     clearInterval(timer)
                 }
-            }, 30, 200)
+            }, 30, 500)
 
             // 对于恶意广告要彻底清除！！！
             let ads = [
