@@ -17,7 +17,7 @@ import {
     querySelectorAll,
     removeDOM,
     HostUser,
-    uploadImage, timeoutSelector, removeVideo, onload, s2d
+    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo
 } from '../../utils'
 import getHtmlStr from "./html.js";
 
@@ -31,11 +31,10 @@ export default class LivePlugin {
         this.bg_show_key = 'bg_show_key'  // 是否显示背景key
         this.menu_show_key = 'menu_show_key' // 是否显示菜单
         this.full_screen_key = 'full_screen_key' // 是否剧场模式
+        this.full_screen_button = '.room-player-wrap #player-fullscreen-btn'
         this.baseUrl = "http://127.0.0.1:8080"  // 直播源
         this.defaultBackgroundImage = 'https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/bg5.jpg' // 默认背景图
-        this.users = [] // 存放屏蔽主播信息
-        this.html = querySelector('html') // html
-        this.body = querySelector('body') // body
+        this.users = getLocalStore(this.key, Array.name, true)
         this.menu = null  // 菜单
         this.tbody = null // 操作数据
         this.m_container = null   // 操作容器
@@ -59,6 +58,7 @@ export default class LivePlugin {
             this.index()
             this.category()
             this.create_container()
+            this.isFullScreen()
             this.isShowLeftMenu()
             this.isShowGift()
         }
@@ -125,23 +125,15 @@ export default class LivePlugin {
     create_container() {
         // 初始化房间号
         let that = this
-        if (!that.body || !that.html) {
-            that.html = querySelector('html')
-            that.body = querySelector('body')
-        }
-        if (!that.body) {
-            that.body = createElement('body')
-        }
+        let body = querySelector('body') ?? createElement('body')
         that.users = getLocalStore(that.key, Array.name)
         let show1 = getLocalStore(that.bg_show_key, Boolean.name)
         let show2 = getLocalStore(that.menu_show_key, Boolean.name)
         let show3 = getLocalStore(that.full_screen_key, Boolean.name)
         let show4 = getLocalStore(that.gift_key, Boolean.name)
         let show5 = getLocalStore(that.logo_show_key, Boolean.name)
-
         that.m_container = s2d(getHtmlStr(show1, show2, show3, show4, show5))
-
-        appendChild(that.body, that.m_container)
+        appendChild(body, that.m_container)
         that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
         // 生成操作按钮
         that.operationDOMButton()
@@ -204,14 +196,14 @@ export default class LivePlugin {
             return;
         }
         const container = that.m_container
-        const inputValue = querySelector(container, '.m-container .operation input')
+        const inputValue = querySelector(container, '.operation input')
         addEventListener(inputValue, 'input', () => {
             let arr = that.users.filter(item => (item.roomId && item.roomId.indexOf(inputValue.value) != -1) || (item.name && item.name.indexOf(inputValue.value) != -1))
             that.resetTbody(arr)
         })
 
         // 添加
-        const addRoomBtn = querySelector(container, '.m-container .operation  button.add-room')
+        const addRoomBtn = querySelector(container, '.operation button.add-room')
         addEventListener(addRoomBtn, 'click', function () {
             const keywords = inputValue.value.trim()
             if (!keywords) {
@@ -236,7 +228,7 @@ export default class LivePlugin {
 
 
         // 清空
-        const clearRoomBtn = querySelector(container, '.m-container button.clear-room')
+        const clearRoomBtn = querySelector(container, '.operation button.clear-room')
         addEventListener(clearRoomBtn, 'click', function () {
             if (confirm('确认重置？')) {
                 that.users = []
@@ -248,7 +240,7 @@ export default class LivePlugin {
             }
         })
         // 文件上传
-        const uploadButton = querySelector(container, '.m-container #file')
+        const uploadButton = querySelector(container, '.operation #file')
         addEventListener(uploadButton, 'change', function (e) {
             const file = uploadButton.files[0] || null
             uploadImage(file, (base64) => {
@@ -260,42 +252,51 @@ export default class LivePlugin {
         })
 
         // 文件上传
-        const upload = querySelector(container, '.m-container .bg-btn')
+        const upload = querySelector(container, '.operation .bg-btn')
         addEventListener(upload, 'click', function (e) {
             uploadButton.click()
         })
 
         // 显示关闭
-        const close_container = querySelector(container, '.m-container .btn-close-container')
+        const close_container = querySelector(container, '.operation .btn-close-container')
         addEventListener(close_container, 'click', function (e) {
             that.isShowContainer()
         })
+
+        // 关闭
+        const close_container2 = querySelector(container, '.operation #m-close-button1')
+        addEventListener(close_container2, 'click', function (e) {
+            that.isShowContainer()
+        })
+
+
         // 选择背景
-        const checkbox = querySelector(container, '.m-container #checkbox1')
+        const checkbox = querySelector(container, '.operation #checkbox1')
         addEventListener(checkbox, 'change', function (e) {
             addLocalStore(that.bg_show_key, e.target.checked, Boolean.name)
             that.settingBackgroundImage()
         })
         // 是否关闭菜单
-        const menu = querySelector(container, '.m-container #checkbox2')
+        const menu = querySelector(container, '.operation #checkbox2')
         addEventListener(menu, 'change', function (e) {
             that.getLeftMenu(e.target.checked)
         })
 
         // 剧场模式
-        const full_screen_btn = querySelector(container, '.m-container #checkbox3')
+        const full_screen_btn = querySelector(container, '.operation #checkbox3')
         addEventListener(full_screen_btn, 'change', function (e) {
             addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
+            that.isFullScreen(true)
         })
 
         // 礼物模式
-        const show_gitf = querySelector(container, '.m-container #checkbox4')
+        const show_gitf = querySelector(container, '.operation #checkbox4')
         addEventListener(show_gitf, 'change', function (e) {
             addLocalStore(that.gift_key, e.target.checked, Boolean.name)
             that.isShowGift()
         })
 
-        const show_logo_btn = querySelector(container, '.m-container #checkbox5')
+        const show_logo_btn = querySelector(container, '.operation #checkbox5')
         addEventListener(show_logo_btn, 'change', function (e) {
             e.preventDefault()
             if (!that.logo_btn) {
@@ -314,20 +315,20 @@ export default class LivePlugin {
         })
 
 
-        let box1 = querySelector(that.m_container, '#m-container-box1')
-        let box2 = querySelector(that.m_container, '#m-container-box2')
+        let box1 = querySelector(container, '#m-container-box1')
+        let box2 = querySelector(container, '#m-container-box2')
 
-        let change1 = querySelector(that.m_container, '#m-change-box1')
-        let change2 = querySelector(that.m_container, '#m-change-box2')
+        let change1 = querySelector(container, '#m-change-box1')
+        let change2 = querySelector(container, '#m-change-box2')
 
 
-        let select1 = querySelector(that.m_container,
+        let select1 = querySelector(container,
             '.m-type-item-left .m-select-option-container #m-select-input-address')
         let select2 = querySelector(
             '.m-type-item-left .m-select-input-container #m-select-input-select')
 
-        let select1_box1 = querySelector(that.m_container, '.m-type-item-left #m-select-option')
-        let select2_box2 = querySelector(that.m_container, '.m-type-item-left #m-select-input')
+        let select1_box1 = querySelector(container, '.m-type-item-left #m-select-option')
+        let select2_box2 = querySelector(container, '.m-type-item-left #m-select-input')
 
         addEventListener(change1, 'click', () => {
             box1.classList.add('m-ani-left-is-close')
@@ -437,7 +438,7 @@ export default class LivePlugin {
 
         btn.style.display = is_bilibili || getLocalStore(that.logo_show_key, Boolean.name) ? 'block' : 'none'
         that.logo_btn = btn
-        appendChild(that.body, that.logo_btn)
+        appendChild(querySelector('body'), that.logo_btn)
     }
 
     /**
@@ -458,15 +459,10 @@ export default class LivePlugin {
      */
     roomAlreadyRemove() {
         let that = this
-        removeDOM(this.body, true)
-        // removeDOM(this.body, true)
-        this.body = null; //必须设置为空！否则无法设置新的button
+        removeDOM(querySelector('body'), true)
         const h2 = createElement('h3')
         let html = querySelector('html')
-        let body = querySelector('body')
-        if (!body) { // 如果原来的删除了，从新创建一个body存放内容
-            body = createElement('body')
-        }
+        let body = querySelector('body') ?? createElement('body')
         body.style.display = 'flex'
         body.style.flexDirection = 'column'
         body.style.justifyContent = 'center'
@@ -528,18 +524,23 @@ export default class LivePlugin {
      * 设置背景图
      * @param url 背景图地址 默认 是默认地址
      */
-    settingBackgroundImage(url) {
-        if (!this.body) {
+    settingBackgroundImage(url, container) {
+        if (is_bilibili) {
+            container = querySelector('#app')
+        } else {
+            container = querySelector('body')
+        }
+        if (!container) {
             return;
         }
         if (getLocalStore(this.bg_show_key, Boolean.name)) {
             url = !!url ? url : (wls.getItem(this.bg_key) ? wls.getItem(this.bg_key) : this.defaultBackgroundImage)
-            this.body.style.backgroundSize = "cover"
-            this.body.style.backgroundRepeat = 'no-repeat '
-            this.body.style.backgroundAttachment = 'fixed'
-            this.body.style.backgroundImage = `url(${url})`
+            container.style.backgroundSize = "cover"
+            container.style.backgroundRepeat = 'no-repeat '
+            container.style.backgroundAttachment = 'fixed'
+            container.style.backgroundImage = `url(${url})`
         } else {
-            this.body.style.backgroundImage = 'none'
+            container.style.backgroundImage = 'none'
         }
 
     }
@@ -632,28 +633,67 @@ export default class LivePlugin {
      * @param {value}  = [要修改的值]
      */
     getLeftMenu(value = false) {
-        if (!this.menu) {
+        let menu = querySelector(this.menu)
+        if (!menu) {
             return alert('获取不到导航菜单，操作失败！')
         }
         addLocalStore(this.menu_show_key, value, Boolean.name, false)
-        this.menu.style.display = value ? 'block' : 'none'
+        menu.style.display = value ? 'block' : 'none'
     }
 
     /*
      * 操作左侧导航栏，需要传入选择器，和修改值 建议放到公共方法下执行！
      */
     isShowLeftMenu() {
-        if (this.menu) {
-            this.menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? 'block' : 'none'
+        let menu = querySelector(this.menu)
+        if (menu) {
+            menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? 'block' : 'none'
         }
+    }
+
+    /*
+    * 是否全屏
+    */
+    isFullScreen(isClickFull = false, fullScreenText = '全屏', cancelFullText = '退出全屏') {
+        let show3 = getLocalStore(this.full_screen_key, Boolean.name)
+        let fullScreen = querySelector(this.full_screen_button)
+        let isClick = fullScreen.isClick
+        console.log('[]', fullScreen)
+        // 是否需要全屏
+        if (isClickFull && fullScreen?.title === fullScreenText) {
+            this.isShowContainer()
+            fullScreen.click()
+        } else {
+            loopDo((timer) => {
+                fullScreen = querySelector(this.full_screen_button)
+                isClick = fullScreen?.isClick
+                if (isClick) {
+                    clearInterval(timer)
+                    return;
+                }
+                // 如果没有点击 但是需要全屏
+                if (!isClick && show3 && fullScreen?.title === fullScreenText) {
+                    fullScreen.isClick = true
+                    fullScreen.click()
+                }
+                // 如果是退出全屏 点击下回退到前坪
+                else if (fullScreen?.title === cancelFullText) {
+                    fullScreen.click()
+                }
+
+            }, 30, 500)
+
+        }
+
     }
 
     /**
      * 是否显示礼物
      */
     isShowGift() {
-        if (this.giftTool) {
-            this.giftTool.style.display = getLocalStore(this.gift_key, Boolean.name) ? 'inline-block' : 'none'
+        let gift = querySelector(this.giftTool)
+        if (gift) {
+            gift.style.display = getLocalStore(this.gift_key, Boolean.name) ? 'inline-block' : 'none'
         }
     }
 

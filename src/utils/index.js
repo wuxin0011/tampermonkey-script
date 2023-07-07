@@ -9,7 +9,7 @@ export const is_douyu = douyu_address_pattern.test(local_url) // 是否是斗鱼
 export const is_bilibili = bilibili_address_pattern.test(local_url) // 是否是bilibili
 export const is_localhost = localhost.test(local_url) // 本地环境
 export const wd = window.document
-export const wls = window.localStorage 
+export const wls = window.localStorage
 export const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
 export const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
 // common method
@@ -42,7 +42,8 @@ export const removeDOM = (element, realRemove = false) => {
             }
         }
     } catch (e) {
-    } // 防止element没有remove方法而抛出异常
+        log(e, 'error')
+    }
 }
 export const s2d = (string) => new DOMParser().parseFromString(string, 'text/html').body.childNodes[0]
 
@@ -144,8 +145,9 @@ export const loopDo = (callback, count = 100, time = 100) => {
         count--
         if (count === 0) {
             clearInterval(timer)
+        } else {
+            callback(timer)
         }
-        callback(timer)
     })
 }
 
@@ -214,7 +216,7 @@ export const uploadImage = (file, callback) => {
 
 
 export const log = (msg, level = 'log') => {
-    const pre = '[ live-plugin ] :'
+    const pre = '[ live-plugin tips ] :'
     msg = pre + msg
     if (level === 'info') {
         console.info(msg);

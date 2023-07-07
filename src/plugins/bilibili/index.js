@@ -248,7 +248,7 @@ export default class BiliBili extends LivePlugin {
         // TODO MORE
         if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
             let result = await getBiliBiliInfoByVideoID(local_url)
-            console.log('result detail', result)
+            console.log('视频查询结果详情:', result)
             if (result.code === 0 && this.userIsExist(result?.owner?.mid) || this.userIsExist(result?.owner?.name)) {
                 this.roomIsNeedRemove()
             }

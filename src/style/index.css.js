@@ -38,19 +38,20 @@ addStyle(`
   border-radius: 10px !important;
   overflow: hidden !important;
   background-color: var(--m-container-backgournd-color) !important;
-  z-index: 999999999 !important;
+  z-index: 100000000 !important;
   padding: 15px !important;
   transition: var(--m-container-box-transition) !important;
   box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
     -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
 
   opacity: 0;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -150%);
 }
 
 .m-container-is-active {
   opacity: 1;
   transform: translate(-50%, 0%);
+  z-index:100000000 !important;
 }
 
 .m-container-box {
@@ -496,6 +497,7 @@ addStyle(`
    .mod-index-wrap .mod-index-recommend,
    .mod-index-wrap .mod-news-section,
    .mod-index-wrap .recommend-wrap,
+   .RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
    #huya-ab-fixed,
    #huya-ab,
    .liveList-header-r,

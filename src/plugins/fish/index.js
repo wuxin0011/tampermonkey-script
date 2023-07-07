@@ -26,11 +26,8 @@ export default class FishLive extends LivePlugin {
         this.full_screen_key = 'douyuzhibo_full_screen_key'
         this.baseUrl = "https://www.douyu.com/"
         this.defaultBackgroundImage = 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
-        this.users = getLocalStore(this.key, Array.name, true)
-        this.html = querySelector('html')
-        this.body = querySelector('body')
-        this.menu = querySelector('#js-aside')
-        this.giftTool = querySelector('.layout-Player-main #js-player-toolbar')
+        this.menu = '#js-aside'
+        this.giftTool = '.layout-Player-main #js-player-toolbar'
         this.header_logo = '#js-header .Header-left .Header-logo'
         this.tbody = null
         this.m_container = null
@@ -130,7 +127,6 @@ export default class FishLive extends LivePlugin {
 
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
-            log('直播间带有录播图 ……')
             let divs = querySelectorAll('#root>div')
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
             if (isArray(divs)) {
@@ -158,13 +154,13 @@ export default class FishLive extends LivePlugin {
                 if (isClick) {
                     clearInterval(timer)
                 }
-            }, 30, 500)
+            }, 100, 500)
 
             // 对于恶意广告要彻底清除！！！
             let ads = [
                 "#player-above-controller+div"
             ]
-            //intervalRemoveElement(ads, 500, 20)
+            // intervalRemoveElement(ads, 500, 20)
             removeDOM('.layout-Main .ToTopBtn', true)
 
         }

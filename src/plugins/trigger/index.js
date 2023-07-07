@@ -23,14 +23,12 @@ export default class TriggerLive extends LivePlugin {
         this.bg_show_key = 'huyazhibo_bg_show'
         this.menu_show_key = 'huyazhibo_menu_show_key'
         this.full_screen_key = 'huyazhibo_full_screen_key'
+        this.full_screen_button = '.room-player-wrap #player-fullscreen-btn'
         this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
         this.baseUrl = "https://www.huya.com/"
-        this.users = getLocalStore(this.key, Array.name, true)
-        this.html = querySelector('html')
-        this.body = querySelector('body')
-        this.menu = querySelector('.mod-sidebar')
+        this.menu = '.mod-sidebar'
         this.header_logo = '#duya-header #duya-header-logo a'
-        this.giftTool = querySelector('.room-core .player-gift-wrap')
+        this.giftTool = '.room-core .player-gift-wrap'
         this.tbody = null
         this.m_container = null
         this.init()
@@ -105,7 +103,7 @@ export default class TriggerLive extends LivePlugin {
             let count = 20
             let timer = setInterval(() => {
                 count = count - 1
-                let clickFullButton = querySelector('#player-fullpage-btn')
+                let clickFullButton = querySelector('.room-player-wrap #player-fullscreen-btn')
                 let show3 = getLocalStore(that.full_screen_key, Boolean.name)
                 let isClick = clickFullButton?.getAttribute('isClick')
                 if (clickFullButton && show3 && !isClick) {
@@ -123,9 +121,7 @@ export default class TriggerLive extends LivePlugin {
                 '#huya-ab'
             ]
 
-            // 对于恶意广告要彻底清空
             intervalRemoveElement(ads, 500, 20)
-            // TODO 特效设置暂时未开启！
         }
     }
 

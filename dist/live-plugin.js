@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         直播插件
-// @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.0.1
-// @author       wuxin0011
 // @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播
+// @namespace    https://github.com/wuxin0011/huya-live
+// @version      4.0.2
+// @author       wuxin0011
 // @license      MIT
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
@@ -149,8 +149,9 @@
       count--;
       if (count === 0) {
         clearInterval(timer);
+      } else {
+        callback(timer);
       }
-      callback(timer);
     });
   };
   const backgroundNone = (element, selectors = [".layout-Main"], time = 100, maxCount = 500) => {
@@ -279,6 +280,7 @@
               </div>
               <div class="m-type-item-right">
                 <button class="btn btn-danger" id="m-change-box1">房间</button>
+                <button class="btn btn-info" id="m-close-button1">关闭</button>
               </div>
             </div>
             <div class="m-search-result">
@@ -307,7 +309,7 @@
             <input type="file" id="file">
             <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
             <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单" />菜单
-            <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动适应屏幕" />剧场
+            <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏" />全屏
             <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="是否开启礼物" />礼物
             <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo" />logo
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD"
@@ -337,8 +339,8 @@
                 <input type="file" id="file">
                 <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
                 <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单
-                <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动适应屏幕"/>剧场
-                <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="是否开启礼物"/>礼物
+                <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏
+                <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物
                 <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
                 <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
                 <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
@@ -364,11 +366,10 @@
       this.bg_show_key = "bg_show_key";
       this.menu_show_key = "menu_show_key";
       this.full_screen_key = "full_screen_key";
+      this.full_screen_button = ".room-player-wrap #player-fullscreen-btn";
       this.baseUrl = "http://127.0.0.1:8080";
       this.defaultBackgroundImage = "https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/bg5.jpg";
-      this.users = [];
-      this.html = querySelector("html");
-      this.body = querySelector("body");
+      this.users = getLocalStore(this.key, Array.name, true);
       this.menu = null;
       this.tbody = null;
       this.m_container = null;
@@ -390,6 +391,7 @@
         this.index();
         this.category();
         this.create_container();
+        this.isFullScreen();
         this.isShowLeftMenu();
         this.isShowGift();
       }
@@ -444,13 +446,7 @@
      */
     create_container() {
       let that = this;
-      if (!that.body || !that.html) {
-        that.html = querySelector("html");
-        that.body = querySelector("body");
-      }
-      if (!that.body) {
-        that.body = createElement("body");
-      }
+      let body = querySelector("body") ?? createElement("body");
       that.users = getLocalStore(that.key, Array.name);
       let show1 = getLocalStore(that.bg_show_key, Boolean.name);
       let show2 = getLocalStore(that.menu_show_key, Boolean.name);
@@ -458,7 +454,7 @@
       let show4 = getLocalStore(that.gift_key, Boolean.name);
       let show5 = getLocalStore(that.logo_show_key, Boolean.name);
       that.m_container = s2d(getHtmlStr(show1, show2, show3, show4, show5));
-      appendChild(that.body, that.m_container);
+      appendChild(body, that.m_container);
       that.tbody = querySelector(that.m_container, "#m-container-box2 table tbody");
       that.operationDOMButton();
       that.createRoomItem(that.users);
@@ -512,12 +508,12 @@
         return;
       }
       const container = that.m_container;
-      const inputValue = querySelector(container, ".m-container .operation input");
+      const inputValue = querySelector(container, ".operation input");
       addEventListener(inputValue, "input", () => {
         let arr = that.users.filter((item) => item.roomId && item.roomId.indexOf(inputValue.value) != -1 || item.name && item.name.indexOf(inputValue.value) != -1);
         that.resetTbody(arr);
       });
-      const addRoomBtn = querySelector(container, ".m-container .operation  button.add-room");
+      const addRoomBtn = querySelector(container, ".operation button.add-room");
       addEventListener(addRoomBtn, "click", function() {
         const keywords = inputValue.value.trim();
         if (!keywords) {
@@ -538,7 +534,7 @@
           alert("该主播已添加！");
         }
       });
-      const clearRoomBtn = querySelector(container, ".m-container button.clear-room");
+      const clearRoomBtn = querySelector(container, ".operation button.clear-room");
       addEventListener(clearRoomBtn, "click", function() {
         if (confirm("确认重置？")) {
           that.users = [];
@@ -549,7 +545,7 @@
           window.location.reload();
         }
       });
-      const uploadButton = querySelector(container, ".m-container #file");
+      const uploadButton = querySelector(container, ".operation #file");
       addEventListener(uploadButton, "change", function(e) {
         const file = uploadButton.files[0] || null;
         uploadImage(file, (base64) => {
@@ -557,33 +553,38 @@
           that.settingBackgroundImage(e.target.result);
         });
       });
-      const upload = querySelector(container, ".m-container .bg-btn");
+      const upload = querySelector(container, ".operation .bg-btn");
       addEventListener(upload, "click", function(e) {
         uploadButton.click();
       });
-      const close_container = querySelector(container, ".m-container .btn-close-container");
+      const close_container = querySelector(container, ".operation .btn-close-container");
       addEventListener(close_container, "click", function(e) {
         that.isShowContainer();
       });
-      const checkbox = querySelector(container, ".m-container #checkbox1");
+      const close_container2 = querySelector(container, ".operation #m-close-button1");
+      addEventListener(close_container2, "click", function(e) {
+        that.isShowContainer();
+      });
+      const checkbox = querySelector(container, ".operation #checkbox1");
       addEventListener(checkbox, "change", function(e) {
         addLocalStore(that.bg_show_key, e.target.checked, Boolean.name);
         that.settingBackgroundImage();
       });
-      const menu = querySelector(container, ".m-container #checkbox2");
+      const menu = querySelector(container, ".operation #checkbox2");
       addEventListener(menu, "change", function(e) {
         that.getLeftMenu(e.target.checked);
       });
-      const full_screen_btn = querySelector(container, ".m-container #checkbox3");
+      const full_screen_btn = querySelector(container, ".operation #checkbox3");
       addEventListener(full_screen_btn, "change", function(e) {
         addLocalStore(that.full_screen_key, e.target.checked, Boolean.name);
+        that.isFullScreen(true);
       });
-      const show_gitf = querySelector(container, ".m-container #checkbox4");
+      const show_gitf = querySelector(container, ".operation #checkbox4");
       addEventListener(show_gitf, "change", function(e) {
         addLocalStore(that.gift_key, e.target.checked, Boolean.name);
         that.isShowGift();
       });
-      const show_logo_btn = querySelector(container, ".m-container #checkbox5");
+      const show_logo_btn = querySelector(container, ".operation #checkbox5");
       addEventListener(show_logo_btn, "change", function(e) {
         e.preventDefault();
         if (!that.logo_btn) {
@@ -599,19 +600,19 @@
           addLocalStore(that.logo_show_key, true, Boolean.name);
         }
       });
-      let box1 = querySelector(that.m_container, "#m-container-box1");
-      let box2 = querySelector(that.m_container, "#m-container-box2");
-      let change1 = querySelector(that.m_container, "#m-change-box1");
-      let change2 = querySelector(that.m_container, "#m-change-box2");
+      let box1 = querySelector(container, "#m-container-box1");
+      let box2 = querySelector(container, "#m-container-box2");
+      let change1 = querySelector(container, "#m-change-box1");
+      let change2 = querySelector(container, "#m-change-box2");
       let select1 = querySelector(
-        that.m_container,
+        container,
         ".m-type-item-left .m-select-option-container #m-select-input-address"
       );
       let select2 = querySelector(
         ".m-type-item-left .m-select-input-container #m-select-input-select"
       );
-      let select1_box1 = querySelector(that.m_container, ".m-type-item-left #m-select-option");
-      let select2_box2 = querySelector(that.m_container, ".m-type-item-left #m-select-input");
+      let select1_box1 = querySelector(container, ".m-type-item-left #m-select-option");
+      let select2_box2 = querySelector(container, ".m-type-item-left #m-select-input");
       addEventListener(change1, "click", () => {
         box1.classList.add("m-ani-left-is-close");
         box1.classList.remove("m-ani-left-is-active");
@@ -706,7 +707,7 @@
       }
       btn.style.display = is_bilibili || getLocalStore(that.logo_show_key, Boolean.name) ? "block" : "none";
       that.logo_btn = btn;
-      appendChild(that.body, that.logo_btn);
+      appendChild(querySelector("body"), that.logo_btn);
     }
     /**
      * 该房间是否已改被删除
@@ -725,14 +726,10 @@
      */
     roomAlreadyRemove() {
       let that = this;
-      removeDOM(this.body, true);
-      this.body = null;
+      removeDOM(querySelector("body"), true);
       const h2 = createElement("h3");
       let html = querySelector("html");
-      let body = querySelector("body");
-      if (!body) {
-        body = createElement("body");
-      }
+      let body = querySelector("body") ?? createElement("body");
       body.style.display = "flex";
       body.style.flexDirection = "column";
       body.style.justifyContent = "center";
@@ -790,18 +787,23 @@
      * 设置背景图
      * @param url 背景图地址 默认 是默认地址
      */
-    settingBackgroundImage(url) {
-      if (!this.body) {
+    settingBackgroundImage(url, container) {
+      if (is_bilibili) {
+        container = querySelector("#app");
+      } else {
+        container = querySelector("body");
+      }
+      if (!container) {
         return;
       }
       if (getLocalStore(this.bg_show_key, Boolean.name)) {
         url = !!url ? url : wls.getItem(this.bg_key) ? wls.getItem(this.bg_key) : this.defaultBackgroundImage;
-        this.body.style.backgroundSize = "cover";
-        this.body.style.backgroundRepeat = "no-repeat ";
-        this.body.style.backgroundAttachment = "fixed";
-        this.body.style.backgroundImage = `url(${url})`;
+        container.style.backgroundSize = "cover";
+        container.style.backgroundRepeat = "no-repeat ";
+        container.style.backgroundAttachment = "fixed";
+        container.style.backgroundImage = `url(${url})`;
       } else {
-        this.body.style.backgroundImage = "none";
+        container.style.backgroundImage = "none";
       }
     }
     /**
@@ -879,26 +881,56 @@
      * @param {value}  = [要修改的值]
      */
     getLeftMenu(value = false) {
-      if (!this.menu) {
+      let menu = querySelector(this.menu);
+      if (!menu) {
         return alert("获取不到导航菜单，操作失败！");
       }
       addLocalStore(this.menu_show_key, value, Boolean.name, false);
-      this.menu.style.display = value ? "block" : "none";
+      menu.style.display = value ? "block" : "none";
     }
     /*
      * 操作左侧导航栏，需要传入选择器，和修改值 建议放到公共方法下执行！
      */
     isShowLeftMenu() {
-      if (this.menu) {
-        this.menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? "block" : "none";
+      let menu = querySelector(this.menu);
+      if (menu) {
+        menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? "block" : "none";
+      }
+    }
+    /*
+    * 是否全屏
+    */
+    isFullScreen(isClickFull = false, fullScreenText = "全屏", cancelFullText = "退出全屏") {
+      let show3 = getLocalStore(this.full_screen_key, Boolean.name);
+      let fullScreen = querySelector(this.full_screen_button);
+      let isClick = fullScreen.isClick;
+      console.log("[]", fullScreen);
+      if (isClickFull && (fullScreen == null ? void 0 : fullScreen.title) === fullScreenText) {
+        fullScreen.click();
+      } else {
+        loopDo((timer) => {
+          fullScreen = querySelector(this.full_screen_button);
+          isClick = fullScreen == null ? void 0 : fullScreen.isClick;
+          if (isClick) {
+            clearInterval(timer);
+            return;
+          }
+          if (!isClick && show3 && (fullScreen == null ? void 0 : fullScreen.title) === fullScreenText) {
+            fullScreen.isClick = true;
+            fullScreen.click();
+          } else if ((fullScreen == null ? void 0 : fullScreen.title) === cancelFullText) {
+            fullScreen.click();
+          }
+        }, 30, 500);
       }
     }
     /**
      * 是否显示礼物
      */
     isShowGift() {
-      if (this.giftTool) {
-        this.giftTool.style.display = getLocalStore(this.gift_key, Boolean.name) ? "inline-block" : "none";
+      let gift = querySelector(this.giftTool);
+      if (gift) {
+        gift.style.display = getLocalStore(this.gift_key, Boolean.name) ? "inline-block" : "none";
       }
     }
     /**
@@ -965,14 +997,12 @@
       this.bg_show_key = "huyazhibo_bg_show";
       this.menu_show_key = "huyazhibo_menu_show_key";
       this.full_screen_key = "huyazhibo_full_screen_key";
+      this.full_screen_button = ".room-player-wrap #player-fullscreen-btn";
       this.defaultBackgroundImage = "https://livewebbs2.msstatic.com/huya_1682329462_content.jpg";
       this.baseUrl = "https://www.huya.com/";
-      this.users = getLocalStore(this.key, Array.name, true);
-      this.html = querySelector("html");
-      this.body = querySelector("body");
-      this.menu = querySelector(".mod-sidebar");
+      this.menu = ".mod-sidebar";
       this.header_logo = "#duya-header #duya-header-logo a";
-      this.giftTool = querySelector(".room-core .player-gift-wrap");
+      this.giftTool = ".room-core .player-gift-wrap";
       this.tbody = null;
       this.m_container = null;
       this.init();
@@ -1029,20 +1059,6 @@
             that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
           }
         });
-        let count = 20;
-        let timer = setInterval(() => {
-          count = count - 1;
-          let clickFullButton = querySelector("#player-fullpage-btn");
-          let show3 = getLocalStore(that.full_screen_key, Boolean.name);
-          let isClick = clickFullButton == null ? void 0 : clickFullButton.getAttribute("isClick");
-          if (clickFullButton && show3 && !isClick) {
-            clickFullButton.click();
-            clickFullButton.setAttribute("isClick", true);
-          }
-          if (count === 0) {
-            clearInterval(timer);
-          }
-        }, 100);
         let ads = [
           ".main-wrap .room-mod-ggTop",
           "#chatRoom .room-gg-chat",
@@ -1124,11 +1140,8 @@
       this.full_screen_key = "douyuzhibo_full_screen_key";
       this.baseUrl = "https://www.douyu.com/";
       this.defaultBackgroundImage = "https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg";
-      this.users = getLocalStore(this.key, Array.name, true);
-      this.html = querySelector("html");
-      this.body = querySelector("body");
-      this.menu = querySelector("#js-aside");
-      this.giftTool = querySelector(".layout-Player-main #js-player-toolbar");
+      this.menu = "#js-aside";
+      this.giftTool = ".layout-Player-main #js-player-toolbar";
       this.header_logo = "#js-header .Header-left .Header-logo";
       this.tbody = null;
       this.m_container = null;
@@ -1208,7 +1221,6 @@
         });
       }, 4e3);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
-        log("直播间带有录播图 ……");
         let divs = querySelectorAll("#root>div");
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         if (isArray(divs)) {
@@ -1222,17 +1234,6 @@
         }
       }
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
-        loopDo((timer) => {
-          const closeBtn = querySelector(".roomSmallPlayerFloatLayout-closeBtn");
-          const isClick = closeBtn.getAttribute("isClick");
-          if (closeBtn && !isClick) {
-            closeBtn.click();
-            closeBtn.setAttribute("isClick", true);
-          }
-          if (isClick) {
-            clearInterval(timer);
-          }
-        }, 30, 500);
         removeDOM(".layout-Main .ToTopBtn", true);
       }
     }
@@ -1630,19 +1631,20 @@
   border-radius: 10px !important;
   overflow: hidden !important;
   background-color: var(--m-container-backgournd-color) !important;
-  z-index: 999999999 !important;
+  z-index: 100000000 !important;
   padding: 15px !important;
   transition: var(--m-container-box-transition) !important;
   box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
     -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
 
   opacity: 0;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -150%);
 }
 
 .m-container-is-active {
   opacity: 1;
   transform: translate(-50%, 0%);
+  z-index:100000000 !important;
 }
 
 .m-container-box {
@@ -2088,6 +2090,7 @@
    .mod-index-wrap .mod-index-recommend,
    .mod-index-wrap .mod-news-section,
    .mod-index-wrap .recommend-wrap,
+   .RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
    #huya-ab-fixed,
    #huya-ab,
    .liveList-header-r,
