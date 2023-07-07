@@ -16,7 +16,7 @@ export const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源�
 export const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file)
 export const querySelector = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelector(sel) : wd.querySelector(el)
 export const querySelectorAll = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelectorAll(sel) : wd.querySelectorAll(el)
-export const addEventListener = (el, type, callback) => el && type && callback && el.addEventListener(type, callback, false)
+export const addEventListener = (el, type, callback) => !!el && el instanceof HTMLElement && type && typeof callback === 'function' && el.addEventListener(type, callback, false)
 export const createElement = (tag) => !!tag && wd.createElement(tag)
 export const appendChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.appendChild(el2)
 export const insertChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.insertBefore(el2, el1.firstChild)
@@ -125,6 +125,7 @@ export const throttle = (wait, func, ...args) => {
 
 export const intervalRemoveElement = (selectors, time = 160, maxCount = 1000) => {
     if (!isArray(selectors)) {
+        log(`selectors 必须是数组 : ${selectors}`, 'warn')
         return;
     }
     let count = 0
@@ -140,7 +141,7 @@ export const intervalRemoveElement = (selectors, time = 160, maxCount = 1000) =>
     }, time)
 }
 
-export const loopDo = (callback, count = 100, time = 100) => {
+export const loopDo = (callback, count = 100, wait = 100) => {
     let timer = setInterval(() => {
         count--
         if (count === 0) {
@@ -148,7 +149,7 @@ export const loopDo = (callback, count = 100, time = 100) => {
         } else {
             callback(timer)
         }
-    })
+    }, wait)
 }
 
 

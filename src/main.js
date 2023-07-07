@@ -21,7 +21,7 @@ import './style/index.css.js';
 (function () {
     'use strict';
     if (typeof window === undefined) {
-        log("插件不支持！")
+        log("插件不支持！", 'warn')
         return;
     }
     window.onload = () => {
@@ -35,7 +35,7 @@ import './style/index.css.js';
                 'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                 'border-radius: 0 3px 3px 0; color: #fff')
             console.log(
-                '%c源码地址:%c '.concat(source_code_url, ''),
+                '%c地址:%c '.concat(source_code_url, ''),
                 'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                 'border-radius: 0 3px 3px 0; color: #fff')
             //插件执行入口
