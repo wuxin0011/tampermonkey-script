@@ -19,6 +19,8 @@ export default class BiliBili extends LivePlugin {
     constructor() {
         super()
         this.header_logo = '.bili-header .bili-header__bar ul>li>a'
+        this.video_player_container = '#bilibili-player'
+        this.fullScreenText = '进入全屏 (f)'
         this.init()
     }
 

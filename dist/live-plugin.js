@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         直播插件
-// @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播
 // @namespace    https://github.com/wuxin0011/huya-live
 // @version      4.0.2
 // @author       wuxin0011
+// @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播
 // @license      MIT
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
@@ -33,7 +33,7 @@
   const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file);
   const querySelector = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelector(sel) : wd.querySelector(el);
   const querySelectorAll = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelectorAll(sel) : wd.querySelectorAll(el);
-  const addEventListener = (el, type, callback) => el && type && callback && el.addEventListener(type, callback, false);
+  const addEventListener = (el, type, callback) => !!el && el instanceof HTMLElement && type && typeof callback === "function" && el.addEventListener(type, callback, false);
   const createElement = (tag) => !!tag && wd.createElement(tag);
   const appendChild = (el1, el2) => !!el1 && !!el2 && el1 instanceof HTMLElement && el2 instanceof HTMLElement && el1.appendChild(el2);
   const insertChild = (el1, el2) => !!el1 && !!el2 && el1 instanceof HTMLElement && el2 instanceof HTMLElement && el1.insertBefore(el2, el1.firstChild);
@@ -59,6 +59,7 @@
         }
       }
     } catch (e) {
+      log(e, "error");
     }
   };
   const s2d = (string) => new DOMParser().parseFromString(string, "text/html").body.childNodes[0];
@@ -130,6 +131,7 @@
   };
   const intervalRemoveElement = (selectors, time = 160, maxCount = 1e3) => {
     if (!isArray(selectors)) {
+      log(`selectors 必须是数组 : ${selectors}`, "warn");
       return;
     }
     let count = 0;
@@ -144,7 +146,7 @@
       count = count + 1;
     }, time);
   };
-  const loopDo = (callback, count = 100, time = 100) => {
+  const loopDo = (callback, count = 100, wait = 100) => {
     let timer = setInterval(() => {
       count--;
       if (count === 0) {
@@ -152,7 +154,7 @@
       } else {
         callback(timer);
       }
-    });
+    }, wait);
   };
   const backgroundNone = (element, selectors = [".layout-Main"], time = 100, maxCount = 500) => {
     if (!(element instanceof HTMLElement) || !isArray(selectors)) {
@@ -207,8 +209,25 @@
       alert("图片解析失败！");
     }
   };
+  const findFullSreenButton = (sel = "body", key = "full_screen_button_class_or_id", text = "全屏", tagName = "div") => {
+    var _a, _b;
+    const container = querySelector(sel);
+    if (container) {
+      const nodes = querySelectorAll(container, tagName);
+      if (isArray(nodes)) {
+        for (let i = 0; i < nodes.length; i++) {
+          if (((_a = nodes[i]) == null ? void 0 : _a.title) === text || ((_b = nodes[i]) == null ? void 0 : _b.textContent) === text) {
+            let classId = `${sel} ${nodes[i].id ? nodes[i].id : nodes[i].class}`;
+            addLocalStore(key, classId, String.name, false);
+            return classId;
+          }
+        }
+      }
+    }
+    return null;
+  };
   const log = (msg, level = "log") => {
-    const pre = "[ live-plugin ] :";
+    const pre = "[ live-plugin tips ] :";
     msg = pre + msg;
     if (level === "info") {
       console.info(msg);
@@ -363,10 +382,15 @@
     constructor() {
       this.key = "key";
       this.bg_key = "bg_key";
+      this.video_player_container = ".room-player-wrap";
       this.bg_show_key = "bg_show_key";
       this.menu_show_key = "menu_show_key";
       this.full_screen_key = "full_screen_key";
-      this.full_screen_button = ".room-player-wrap #player-fullscreen-btn";
+      this.full_screen_class_or_id = "full_screen_button_class_or_id";
+      this.full_button_tag_name = "div";
+      this.full_screen_button = getLocalStore(this.full_screen_class_or_id, String.name, false);
+      this.fullScreenText = "全屏";
+      this.cancelFullText = "退出全屏";
       this.baseUrl = "http://127.0.0.1:8080";
       this.defaultBackgroundImage = "https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/bg5.jpg";
       this.users = getLocalStore(this.key, Array.name, true);
@@ -897,29 +921,49 @@
         menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? "block" : "none";
       }
     }
+    /**
+     * 检查是否能找到全屏按钮
+     * @param {全屏} fullScreenText 
+     * @returns 
+     */
+    checkFullScreenButton(fullScreen) {
+      if (!fullScreen) {
+        let classId = findFullSreenButton(this.video_player_container, this.full_screen_class_or_id, this.fullScreenText, this.full_button_tag_name);
+        if (!classId) {
+          return;
+        }
+        this.full_screen_button = classId;
+      }
+    }
     /*
     * 是否全屏
     */
-    isFullScreen(isClickFull = false, fullScreenText = "全屏", cancelFullText = "退出全屏") {
+    isFullScreen(isClickFull = false) {
+      let fullScreenText = this.fullScreenText;
+      let cancelFullText = this.cancelFullText;
       let show3 = getLocalStore(this.full_screen_key, Boolean.name);
       let fullScreen = querySelector(this.full_screen_button);
+      this.checkFullScreenButton(fullScreen);
       let isClick = fullScreen.isClick;
-      console.log("[]", fullScreen);
       if (isClickFull && (fullScreen == null ? void 0 : fullScreen.title) === fullScreenText) {
+        this.isShowContainer();
         fullScreen.click();
       } else {
         loopDo((timer) => {
           fullScreen = querySelector(this.full_screen_button);
+          this.checkFullScreenButton(fullScreen);
           isClick = fullScreen == null ? void 0 : fullScreen.isClick;
-          if (isClick) {
-            clearInterval(timer);
-            return;
-          }
-          if (!isClick && show3 && (fullScreen == null ? void 0 : fullScreen.title) === fullScreenText) {
-            fullScreen.isClick = true;
-            fullScreen.click();
-          } else if ((fullScreen == null ? void 0 : fullScreen.title) === cancelFullText) {
-            fullScreen.click();
+          if (fullScreen) {
+            if (isClick) {
+              clearInterval(timer);
+              return;
+            }
+            if (!isClick && show3 && ((fullScreen == null ? void 0 : fullScreen.title) === fullScreenText || fullScreen.textContent === fullScreenText)) {
+              fullScreen.isClick = true;
+              fullScreen.click();
+            } else if ((fullScreen == null ? void 0 : fullScreen.title) === cancelFullText || (fullScreen == null ? void 0 : fullScreen.textContent) === cancelFullText) {
+              fullScreen.click();
+            }
           }
         }, 30, 500);
       }
@@ -997,7 +1041,9 @@
       this.bg_show_key = "huyazhibo_bg_show";
       this.menu_show_key = "huyazhibo_menu_show_key";
       this.full_screen_key = "huyazhibo_full_screen_key";
-      this.full_screen_button = ".room-player-wrap #player-fullscreen-btn";
+      this.video_player_container = ".room-player-wrap";
+      this.full_screen_button = ".room-player-wrap .player-fullscreen-btn";
+      this.full_button_tag_name = "span";
       this.defaultBackgroundImage = "https://livewebbs2.msstatic.com/huya_1682329462_content.jpg";
       this.baseUrl = "https://www.huya.com/";
       this.menu = ".mod-sidebar";
@@ -1009,23 +1055,18 @@
     }
     // 首页操作
     index() {
-      if (local_url === this.baseUrl) {
+      if (local_url === this.baseUrl || /https:\/\/.*\.huya\.*\/\?/.test(local_url)) {
         removeVideo(".mod-index-main video");
         const banner_close = querySelector(".mod-index-wrap #banner i");
         if (banner_close) {
           banner_close.click();
         }
-        let count = 0;
-        let timer1 = setInterval(() => {
+        loopDo((timer) => {
           let pauseBtn = querySelector(".player-pause-btn");
           if (pauseBtn) {
             pauseBtn.click();
           }
-          if (count >= 10) {
-            clearInterval(timer1);
-          }
-          count = count + 1;
-        }, 300);
+        }, 10, 300);
       }
     }
     // 分类页操作
@@ -1138,6 +1179,7 @@
       this.bg_show_key = "douyuzhibo_show";
       this.menu_show_key = "douyuzhibo_menu_show_key";
       this.full_screen_key = "douyuzhibo_full_screen_key";
+      this.video_player_container = "#room-html5-player";
       this.baseUrl = "https://www.douyu.com/";
       this.defaultBackgroundImage = "https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg";
       this.menu = "#js-aside";
@@ -1234,6 +1276,17 @@
         }
       }
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
+        loopDo((timer) => {
+          const closeBtn = querySelector(".roomSmallPlayerFloatLayout-closeBtn");
+          const isClick = closeBtn.getAttribute("isClick");
+          if (closeBtn && !isClick) {
+            closeBtn.click();
+            closeBtn.setAttribute("isClick", true);
+          }
+          if (isClick) {
+            clearInterval(timer);
+          }
+        }, 100, 500);
         removeDOM(".layout-Main .ToTopBtn", true);
       }
     }
@@ -1386,6 +1439,8 @@
     constructor() {
       super();
       this.header_logo = ".bili-header .bili-header__bar ul>li>a";
+      this.video_player_container = "#bilibili-player";
+      this.fullScreenText = "进入全屏 (f)";
       this.init();
     }
     /**
@@ -1581,7 +1636,7 @@
       }
       if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
         let result = await getBiliBiliInfoByVideoID(local_url);
-        console.log("result detail", result);
+        console.log("视频查询结果详情:", result);
         if (result.code === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
           this.roomIsNeedRemove();
         }
@@ -2226,7 +2281,7 @@
 `);
   (function() {
     if (typeof window === void 0) {
-      log("插件不支持！");
+      log("插件不支持！", "warn");
       return;
     }
     window.onload = () => {
@@ -2241,7 +2296,7 @@
           "border-radius: 0 3px 3px 0; color: #fff"
         );
         console.log(
-          "%c源码地址:%c ".concat(source_code_url, ""),
+          "%c地址:%c ".concat(source_code_url, ""),
           "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
           "border-radius: 0 3px 3px 0; color: #fff"
         );

@@ -17,7 +17,7 @@ import {
     querySelectorAll,
     removeDOM,
     HostUser,
-    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo
+    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton
 } from '../../utils'
 import getHtmlStr from "./html.js";
 
@@ -28,10 +28,15 @@ export default class LivePlugin {
     constructor() {
         this.key = 'key'  // 存放内容信息
         this.bg_key = 'bg_key' // 存放背景图
+        this.video_player_container = '.room-player-wrap'
         this.bg_show_key = 'bg_show_key'  // 是否显示背景key
         this.menu_show_key = 'menu_show_key' // 是否显示菜单
         this.full_screen_key = 'full_screen_key' // 是否剧场模式
-        this.full_screen_button = '.room-player-wrap #player-fullscreen-btn'
+        this.full_screen_class_or_id = 'full_screen_button_class_or_id'
+        this.full_button_tag_name = 'div'
+        this.full_screen_button = getLocalStore(this.full_screen_class_or_id, String.name, false)
+        this.fullScreenText = '全屏'
+        this.cancelFullText = '退出全屏'
         this.baseUrl = "http://127.0.0.1:8080"  // 直播源
         this.defaultBackgroundImage = 'https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/bg5.jpg' // 默认背景图
         this.users = getLocalStore(this.key, Array.name, true)
@@ -651,34 +656,54 @@ export default class LivePlugin {
         }
     }
 
+
+    /**
+     * 检查是否能找到全屏按钮
+     * @param {全屏} fullScreenText 
+     * @returns 
+     */
+    checkFullScreenButton(fullScreen) {
+        if (!fullScreen) {
+            let classId = findFullSreenButton(this.video_player_container, this.full_screen_class_or_id, this.fullScreenText, this.full_button_tag_name)
+            if (!classId) {
+                return;
+            }
+            this.full_screen_button = classId
+        }
+
+    }
+
     /*
     * 是否全屏
     */
-    isFullScreen(isClickFull = false, fullScreenText = '全屏', cancelFullText = '退出全屏') {
+    isFullScreen(isClickFull = false) {
+        let fullScreenText = this.fullScreenText
+        let cancelFullText = this.cancelFullText
         let show3 = getLocalStore(this.full_screen_key, Boolean.name)
         let fullScreen = querySelector(this.full_screen_button)
+        this.checkFullScreenButton(fullScreen)
         let isClick = fullScreen.isClick
-        console.log('[]', fullScreen)
-        // 是否需要全屏
         if (isClickFull && fullScreen?.title === fullScreenText) {
             this.isShowContainer()
             fullScreen.click()
         } else {
             loopDo((timer) => {
                 fullScreen = querySelector(this.full_screen_button)
+                this.checkFullScreenButton(fullScreen)
                 isClick = fullScreen?.isClick
-                if (isClick) {
-                    clearInterval(timer)
-                    return;
-                }
-                // 如果没有点击 但是需要全屏
-                if (!isClick && show3 && fullScreen?.title === fullScreenText) {
-                    fullScreen.isClick = true
-                    fullScreen.click()
-                }
-                // 如果是退出全屏 点击下回退到前坪
-                else if (fullScreen?.title === cancelFullText) {
-                    fullScreen.click()
+                if (fullScreen) {
+                    if (isClick) {
+                        clearInterval(timer)
+                        return;
+                    }
+                    if (!isClick && show3 && (fullScreen?.title === fullScreenText || fullScreen.textContent === fullScreenText)) {
+                        fullScreen.isClick = true
+                        fullScreen.click()
+                    }
+                    else if (fullScreen?.title === cancelFullText || fullScreen?.textContent === cancelFullText) {
+                        fullScreen.click()
+                    }
+
                 }
 
             }, 30, 500)

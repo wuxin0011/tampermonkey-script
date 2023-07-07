@@ -24,6 +24,7 @@ export default class FishLive extends LivePlugin {
         this.bg_show_key = 'douyuzhibo_show'
         this.menu_show_key = 'douyuzhibo_menu_show_key'
         this.full_screen_key = 'douyuzhibo_full_screen_key'
+        this.video_player_container = '#room-html5-player'
         this.baseUrl = "https://www.douyu.com/"
         this.defaultBackgroundImage = 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
         this.menu = '#js-aside'

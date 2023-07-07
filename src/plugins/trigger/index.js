@@ -3,6 +3,7 @@ import {
     getLocalStore, intervalRemoveElement,
     isArray,
     local_url,
+    loopDo,
     querySelector,
     querySelectorAll,
     removeDOM,
@@ -23,7 +24,9 @@ export default class TriggerLive extends LivePlugin {
         this.bg_show_key = 'huyazhibo_bg_show'
         this.menu_show_key = 'huyazhibo_menu_show_key'
         this.full_screen_key = 'huyazhibo_full_screen_key'
-        this.full_screen_button = '.room-player-wrap #player-fullscreen-btn'
+        this.video_player_container = '.room-player-wrap'
+        this.full_screen_button = '.room-player-wrap .player-fullscreen-btn'
+        this.full_button_tag_name = 'span'
         this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
         this.baseUrl = "https://www.huya.com/"
         this.menu = '.mod-sidebar'
@@ -38,25 +41,19 @@ export default class TriggerLive extends LivePlugin {
     // 首页操作
     index() {
         // 直播源
-        if (local_url === this.baseUrl) {
-            // 操作视频
+        if (local_url === this.baseUrl || /https:\/\/.*\.huya\.*\/\?/.test(local_url)) {
             removeVideo('.mod-index-main video')
             // 触发点击关闭广告
             const banner_close = querySelector('.mod-index-wrap #banner i')
             if (banner_close) {
                 banner_close.click();
             }
-            let count = 0;
-            let timer1 = setInterval(() => {
+            loopDo((timer) => {
                 let pauseBtn = querySelector('.player-pause-btn')
                 if (pauseBtn) {
                     pauseBtn.click()
                 }
-                if (count >= 10) {
-                    clearInterval(timer1)
-                }
-                count = count + 1
-            }, 300)
+            }, 10, 300)
 
         }
 
@@ -100,20 +97,20 @@ export default class TriggerLive extends LivePlugin {
             })
 
             // 自动剧场模式
-            let count = 20
-            let timer = setInterval(() => {
-                count = count - 1
-                let clickFullButton = querySelector('.room-player-wrap #player-fullscreen-btn')
-                let show3 = getLocalStore(that.full_screen_key, Boolean.name)
-                let isClick = clickFullButton?.getAttribute('isClick')
-                if (clickFullButton && show3 && !isClick) {
-                    clickFullButton.click()
-                    clickFullButton.setAttribute('isClick', true)
-                }
-                if (count === 0) {
-                    clearInterval(timer)
-                }
-            }, 100)
+            // let count = 20
+            // let timer = setInterval(() => {
+            //     count = count - 1
+            //     let clickFullButton = querySelector('.room-player-wrap #player-fullscreen-btn')
+            //     let show3 = getLocalStore(that.full_screen_key, Boolean.name)
+            //     let isClick = clickFullButton?.getAttribute('isClick')
+            //     if (clickFullButton && show3 && !isClick) {
+            //         clickFullButton.click()
+            //         clickFullButton.setAttribute('isClick', true)
+            //     }
+            //     if (count === 0) {
+            //         clearInterval(timer)
+            //     }
+            // }, 100)
 
             let ads = [
                 '.main-wrap .room-mod-ggTop',

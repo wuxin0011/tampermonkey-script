@@ -216,6 +216,25 @@ export const uploadImage = (file, callback) => {
 }
 
 
+export const findFullSreenButton = (sel = 'body', key = 'full_screen_button_class_or_id', text = '全屏', tagName = 'div') => {
+    const container = querySelector(sel)
+    if (container) {
+        const nodes = querySelectorAll(container, tagName)
+        if (isArray(nodes)) {
+            for (let i = 0; i < nodes.length; i++) {
+                if (nodes[i]?.title === text || nodes[i]?.textContent === text) {
+                    let classId = `${sel} ${nodes[i].id ? nodes[i].id : nodes[i].class}`
+                    addLocalStore(key, classId, String.name, false)
+                    return classId
+
+                }
+            }
+        }
+    }
+    return null
+}
+
+
 export const log = (msg, level = 'log') => {
     const pre = '[ live-plugin tips ] :'
     msg = pre + msg
