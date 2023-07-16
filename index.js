@@ -1,15 +1,18 @@
 // ==UserScript==
 // @name         直播插件
-// @namespace    http://tampermonkey.net/
-// @version      4.0.0
-// @description  虎牙、斗鱼、bilibili  房间屏蔽，首页不显示
-// @author       wuxin001
-// @match        https://www.huya.com/*
-// @match        https://www.douyu.com/*
-// @match        https://*.bilibili.com/*
-// @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
-// @grant        GM_addStyle
+// @namespace    https://github.com/wuxin0011/huya-live
+// @version      4.0.2
+// @author       wuxin0011
+// @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播，抖音关闭登录提示
 // @license      MIT
+// @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
+// @source       https://github.com/wuxin0011/huya-live
+// @supportURL   https://github.com/wuxin0011/huya-live/issues
+// @match        https://*.douyu.com/*
+// @match        https://*.huya.com/*
+// @match        https://*.bilibili.com/*
+// @match        https://*.douyin.com/*
+// @grant        GM_addStyle
 // ==/UserScript==
 (function () {
     'use strict';
@@ -19,12 +22,14 @@
     // const
     const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
     const doyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/
+    const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/
     const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/
     const localhost = /^http:\/\/127.0.0.1.*|^http:\/\/localhost.*/
     const local_url = window.location.href
     const is_huya = huya_address_pattern.test(local_url) // 是否是虎牙地址
     const is_douyu = doyu_address_pattern.test(local_url) // 是否是斗鱼地址
     const is_bilibili = bilibili_address_pattern.test(local_url) // 是否是bilibili
+    const is_douyin = douyin_address_pattern.test(local_url) // 是否是bilibili
     const is_localhost = localhost.test(local_url) // 本地环境
     const wd = window.document
     const wls = window.localStorage // 简化存储对象
@@ -168,7 +173,6 @@
                 }
                 b.style.backgroundImage = 'none'
             })
-            // 结束计时器 减少浏览器性能开销
             if (count >= maxCount) {
                 clearInterval(timer)
                 return;
@@ -179,6 +183,26 @@
     }
 
     const hasVideo = (element, selector = '.layout-Main') => !!querySelector(element, selector)
+
+
+
+    // request api
+    const getBilibiliInfoByVideoID = async (local = window.location.href) => {
+        if (!/https:\/\/www\.bilibili\.com\/video\/BV(.*)/.test(local)) {
+            log(`请求地址错误${local} 应该是 https://www.bilibili.com/video/  下的地址`, 'error')
+            return {
+                code: 404,
+                message: '请求地址错误！'
+            };
+        }
+        let videoBVId = "BV"
+        videoBVId += /https:\/\/www\.bilibili\.com\/video\/BV(.*)\/.*/.test(local) ? local.match(/https:\/\/www\.bilibili\.com\/video\/BV(.*)/)[1].match(/(.*)\/{1}.*/)[1] : local.match(/https:\/\/www\.bilibili\.com\/video\/BV(.*)/)[1]
+        const result = await fetch(`https://api.bilibili.com/x/web-interface/wbi/view?bvid=${videoBVId}`, {
+            method: 'get',
+            mode: 'cors'
+        }).then(res => res.json())
+        return result
+    }
 
 
 
@@ -214,6 +238,9 @@
                     } else if (is_bilibili) {
                         // 执行bilibili直播插件
                         new Bilibili()
+                    }else if (is_douyin) {
+                        // 执行bilibili直播插件
+                        new DouYin()
                     }
                     else if (is_localhost) {
                         // 本地测试使用
@@ -1510,11 +1537,14 @@
 
 
 
-        getRoomIdByUrl(href) {
+        async getRoomIdByUrl(href) {
             try {
-                if (/https:\/\/www.bilibili.com\/video\/.*/.test(href)) {
-                    let url = querySelector('.up-info-container .up-info--left .up-avatar-wrap>a').href
-                    return this.getBilibiliRoomId(url)
+                if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
+                    let result = await getBilibiliInfoByVideoID(local_url)
+                    console.log('result', result)
+                    if (result.code == 0) {
+                        return result.owner.mid
+                    }
                 }
                 if (/https:\/\/space\.bilibili\.com\/(\d+).*/.test(href)) {
                     return href.match(/https:\/\/space\.bilibili\.com\/(\d+)/)[1]
@@ -1605,26 +1635,6 @@
             // TODO index
         }
 
-        detail() {
-
-            if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url) && false) { // 该功能暂时有bug 不需要 直接 false吧
-                const userContainer = querySelector('.right-container-inner .up-info-container')
-                const place = querySelector(userContainer, '.up-detail-top')
-                const link = querySelector(userContainer, '.up-detail-top>a')
-                const name = link.textContent
-                const id = this.getRoomIdByUrl(link.href)
-                const span = createElement('span')
-                span.classList = 'm-span-text'
-                appendChild(place, span)
-                addEventListener(span, 'click', () => {
-                    if (confirm('确认屏蔽up主' + name + ' ?')) {
-                        this.addUser(id, name)
-                    }
-                })
-            }
-            // TODO more
-
-        }
 
 
         detailLeftVideoList(time = 1000, sel = '.video-page-card-small') {
@@ -1665,7 +1675,7 @@
 
 
         // video 播放详情页
-        detail() {
+        async detail() {
             // 播放详情页
             if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
                 this.detailLeftVideoList(100, '.video-page-operator-card-small')
@@ -1676,9 +1686,59 @@
                 })
             }
 
+            if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url) && false) { // 该功能暂时有bug 不需要 直接 false吧
+                const userContainer = querySelector('.right-container-inner .up-info-container')
+                const place = querySelector(userContainer, '.up-detail-top')
+                const link = querySelector(userContainer, '.up-detail-top>a')
+                const name = link.textContent
+                const id = this.getRoomIdByUrl(link.href)
+                const span = createElement('span')
+                span.classList = 'm-span-text'
+                appendChild(place, span)
+                addEventListener(span, 'click', () => {
+                    if (confirm('确认屏蔽up主' + name + ' ?')) {
+                        this.addUser(id, name)
+                    }
+                })
+            }
+            // TODO more
+            if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
+                let result = await getBilibiliInfoByVideoID(local_url)
+                console.log('result detail', result)
+                if (result.code == 0 && this.userIsExist(result.owner.mid) || this.userIsExist(result.owner.name)) {
+                    this.roomIsNeedRemove()
+                }
+            }
+
         }
 
     }
+
+
+    /**
+     * DouYin
+     */
+    class DouYin extends LivePlugin {
+        constructor() {
+          super();
+          this.init();
+        }
+        // 覆盖默认方法
+        init() {
+          this.common();
+        }
+        // 公共部分页面操作
+        common() {
+          this.audoFullScreen();
+        }
+        // 自动全屏
+        audoFullScreen() {
+          let fullButton = querySelector(".xgplayer-page-full-screen .xgplayer-icon");
+          if (fullButton) {
+            fullButton.click()
+          }
+        }
+      }
 
 
     // 样式部分
@@ -2176,6 +2236,13 @@
             opacity: 1;
             transform: scale(1.1);
             color:orange;
+        }
+
+        /******************************************抖音*****************************************************/
+        #related-video-card-login-guide,
+        #captcha_container,
+        #login-full-panel{
+        display:none !important;
         }
  `)
 
