@@ -18,6 +18,13 @@
 (function () {
   'use strict';
 
+  const prefix = "[live-plugin]:";
+  const msg = (...args) => `${prefix} ${args}`;
+  const emptyMehtod = (...args) => {
+  };
+  const log = (...args) => console.log(msg(args));
+  const warn = (...args) => console.warn(msg(args));
+  const error = (...args) => console.error(msg(args));
   const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/;
   const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
   const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/;
@@ -34,8 +41,8 @@
   const download_plugin_url = "https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD";
   const source_code_url = "https://github.com/wuxin0011/huya-live";
   const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file);
-  const querySelector = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelector(sel) : wd.querySelector(el);
-  const querySelectorAll = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelectorAll(sel) : wd.querySelectorAll(el);
+  const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : wd && el ? wd.querySelector(el) : emptyMehtod;
+  const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : el ? wd.querySelectorAll(el) : emptyMehtod;
   const addEventListener = (el, type, callback) => !!el && el instanceof HTMLElement && type && typeof callback === "function" && el.addEventListener(type, callback, false);
   const createElement = (tag) => !!tag && wd.createElement(tag);
   const appendChild = (el1, el2) => !!el1 && !!el2 && el1 instanceof HTMLElement && el2 instanceof HTMLElement && el1.appendChild(el2);
@@ -62,7 +69,7 @@
         }
       }
     } catch (e) {
-      log(e, "error");
+      error(e);
     }
   };
   const s2d = (string) => new DOMParser().parseFromString(string, "text/html").body.childNodes[0];
@@ -228,157 +235,41 @@
     }
     return null;
   };
-  const log = (msg, level = "log") => {
-    const pre = "[ live-plugin tips ] :";
-    msg = pre + msg;
-    if (level === "info") {
-      console.info(msg);
-    } else if (level === "warn") {
-      console.warn(msg);
-    } else if (level === "error") {
-      console.error(msg);
-    } else {
-      console.log(msg);
-    }
-  };
   class HostUser {
     constructor(roomId, name) {
       this.roomId = roomId;
       this.name = name;
     }
   }
-  const getHtmlStr = (show1, show2, show3, show4, show5) => {
-    if (is_localhost) {
-      return `<div class="m-container">
-        <div class="m-container-box  m-type-container m-ani-left-is-active" id="m-container-box1">
-          <div class="m-type-operation">
-            <div class="m-type-item">
-              <div class="m-type-item-left">
-                <div class="m-select-option-container m-ani-left-is-active" id="m-select-option">
-                  <div class="m-select">
-                    <div class="m-select-item">
-                      <input type="text" class="" placeholder="输入关键词过滤">
-                    </div>
-                    <div class="m-select-item">
-                      <select class="m-tag-select">
-                        <option value="" class="m-option-default">选择分类</option>
-                        <option value="option1">选项1</option>
-                      </select>
-                    </div>
-                    <div class="m-select-item">
-                      <button class="btn btn-primary">
-                        &check;
-                      </button>
-                    </div>
-                    <div class="m-select-item">
-                      <select class="m-tag-select" id="select-video-tag">
-                        <option value="" class="m-option-default">选择标签</option>
-                        <option value="option1">选项1</option>
-                      </select>
-                    </div>
-                    <div class="m-select-item">
-                      <button class="btn btn-primary">
-                        &check;
-                      </button>
-                    </div>
-                    <div class="m-select-item">
-                      <button class="btn btn-warning" id="m-select-input-address">
-                        &rightarrow;
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="m-select-input-container m-ani-right-is-close" id="m-select-input">
-                  <div class="m-category-input-item">
-                    <input type="text" class="m-category-input" placeholder="输入视频地址或者自定义类型">
-                    <button class="btn btn-success">
-                      搜索
-                    </button>
-                    <button class="btn btn-primary"> &check;</button>
-                    <button class="btn btn-warning" id="m-select-input-select"> &leftarrow;</button>
-                  </div>
-                </div>
-              </div>
-              <div class="m-type-item-right">
-                <button class="btn btn-danger" id="m-change-box1">房间</button>
-                <button class="btn btn-info" id="m-close-button1">关闭</button>
-              </div>
-            </div>
-            <div class="m-search-result">
-              <!-- <span class="m-search-msg">分类:游戏 视频标签: 二次元 、原神</span> -->
-            </div>
-          </div>
-          <table>
-            <thead>
-              <th>序号</th>
-              <th>分类</th>
-              <th>标签</th>
-              <th>操作</th>
-            </thead>
-            <tbody>
-  
-            </tbody>
-          </table>
-        </div>
-        <div class="m-container-box m-ani-right-is-close" id="m-container-box2">
-          <div class="operation">
-            <input type="text" placeholder="房间号或者名称...">
-            <button class="btn btn-danger" id="m-change-box2">分类</button>
-            <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
-            <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
-            <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
-            <input type="file" id="file">
-            <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
-            <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单" />菜单
-            <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏" />全屏
-            <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="是否开启礼物" />礼物
-            <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo" />logo
-            <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD"
-              target="_blank" title="更新、反馈">更新</a>
-            <button class="btn btn-info btn-close-container" title="点击关闭">关闭</button>
-          </div>
-          <table>
-            <thead>
-              <th>序号</th>
-              <th>名称</th>
-              <th>房间号</th>
-              <th>操作</th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>`;
-    } else {
-      return `<div class="m-container">
-        <div class="m-container-box" id="m-container-box2">
-            <div class="operation">
-                <input type="text" placeholder="房间号或者名称...">
-                <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
-                <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
-                <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
-                <input type="file" id="file">
-                <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
-                <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单
-                <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏
-                <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物
-                <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
-                <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
-                <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
-            </div>
-            <table>
-                <thead>
-                    <th>序号</th>
-                    <th>名称</th>
-                    <th>房间号</th>
-                    <th>操作</th>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            </div>
-     </div>`;
-    }
+  const htmlTemplate = (show1, show2, show3, show4, show5) => {
+    return `<div class="m-container">
+<div class="m-container-box" id="m-container-box2">
+    <div class="operation">
+        <input type="text" placeholder="房间号或者名称...">
+        <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
+        <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
+        <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
+        <input type="file" id="file">
+        <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
+        <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单
+        <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏
+        <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物
+        <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
+        <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
+        <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
+    </div>
+    <table>
+        <thead>
+            <th>序号</th>
+            <th>名称</th>
+            <th>房间号</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </div>
+</div>`;
   };
   class LivePlugin {
     constructor() {
@@ -479,7 +370,7 @@
       let show3 = getLocalStore(that.full_screen_key, Boolean.name);
       let show4 = getLocalStore(that.gift_key, Boolean.name);
       let show5 = getLocalStore(that.logo_show_key, Boolean.name);
-      that.m_container = s2d(getHtmlStr(show1, show2, show3, show4, show5));
+      that.m_container = s2d(htmlTemplate(show1, show2, show3, show4, show5));
       appendChild(body, that.m_container);
       that.tbody = querySelector(that.m_container, "#m-container-box2 table tbody");
       that.operationDOMButton();
@@ -614,6 +505,7 @@
       addEventListener(show_logo_btn, "change", function(e) {
         e.preventDefault();
         if (!that.logo_btn) {
+          warn("获取不到Logo哦！");
           return alert("获取不到logo");
         }
         if (that.logo_btn.style.display === "block") {
@@ -626,6 +518,9 @@
           addLocalStore(that.logo_show_key, true, Boolean.name);
         }
       });
+      this.initAnimation(container);
+    }
+    initAnimation(container) {
       let box1 = querySelector(container, "#m-container-box1");
       let box2 = querySelector(container, "#m-container-box2");
       let change1 = querySelector(container, "#m-change-box1");
@@ -640,28 +535,36 @@
       let select1_box1 = querySelector(container, ".m-type-item-left #m-select-option");
       let select2_box2 = querySelector(container, ".m-type-item-left #m-select-input");
       addEventListener(change1, "click", () => {
-        box1.classList.add("m-ani-left-is-close");
-        box1.classList.remove("m-ani-left-is-active");
-        box2.classList.add("m-ani-right-is-active");
-        box2.classList.remove("m-ani-right-is-close");
+        if (box1 && box2) {
+          box1.classList.add("m-ani-left-is-close");
+          box1.classList.remove("m-ani-left-is-active");
+          box2.classList.add("m-ani-right-is-active");
+          box2.classList.remove("m-ani-right-is-close");
+        }
       });
       addEventListener(change2, "click", () => {
-        box1.classList.add("m-ani-left-is-active");
-        box1.classList.remove("m-ani-left-is-close");
-        box2.classList.add("m-ani-right-is-close");
-        box2.classList.remove("m-ani-right-is-active");
+        if (box1 && box2) {
+          box1.classList.add("m-ani-left-is-active");
+          box1.classList.remove("m-ani-left-is-close");
+          box2.classList.add("m-ani-right-is-close");
+          box2.classList.remove("m-ani-right-is-active");
+        }
       });
       addEventListener(select1, "click", () => {
-        select1_box1.classList.remove("m-ani-left-is-active");
-        select1_box1.classList.add("m-ani-left-is-close");
-        select2_box2.classList.remove("m-ani-right-is-close");
-        select2_box2.classList.add("m-ani-right-is-active");
+        if (select1_box1 && select2_box2) {
+          select1_box1.classList.remove("m-ani-left-is-active");
+          select1_box1.classList.add("m-ani-left-is-close");
+          select2_box2.classList.remove("m-ani-right-is-close");
+          select2_box2.classList.add("m-ani-right-is-active");
+        }
       });
       addEventListener(select2, "click", () => {
-        select1_box1.classList.add("m-ani-left-is-active");
-        select1_box1.classList.remove("m-ani-left-is-close");
-        select2_box2.classList.add("m-ani-right-is-close");
-        select2_box2.classList.remove("m-ani-right-is-active");
+        if (select1_box1 && select2_box2) {
+          select1_box1.classList.add("m-ani-left-is-active");
+          select1_box1.classList.remove("m-ani-left-is-close");
+          select2_box2.classList.add("m-ani-right-is-close");
+          select2_box2.classList.remove("m-ani-right-is-active");
+        }
       });
     }
     /**
@@ -944,9 +847,13 @@
       let fullScreenText = this.fullScreenText;
       let cancelFullText = this.cancelFullText;
       let show3 = getLocalStore(this.full_screen_key, Boolean.name);
+      if (!this.full_screen_button) {
+        warn("full_screen_button key 为空！");
+        return;
+      }
       let fullScreen = querySelector(this.full_screen_button);
       this.checkFullScreenButton(fullScreen);
-      let isClick = fullScreen.isClick;
+      let isClick = fullScreen == null ? void 0 : fullScreen.isClick;
       if (isClickFull && (fullScreen == null ? void 0 : fullScreen.title) === fullScreenText) {
         this.isShowContainer();
         fullScreen.click();
@@ -1495,7 +1402,7 @@
         if (/https:\/\/space\.bilibili\.com\/(\d+).*/.test(href)) {
           return href.match(/https:\/\/space\.bilibili\.com\/(\d+)/)[1];
         }
-      } catch (error) {
+      } catch (error2) {
       }
       return this.getBilibiliRoomId(href);
     }
@@ -1673,127 +1580,96 @@
       }
     }
   }
-  addStyle(`
+  const css$3 = `
+
 .m-container,
 .m-container .btn,
 .m-container table,
 .m-container table tbody,
 .m-container table thead,
 .m-container table tr {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none;
-  outline: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none;
+    outline: none;
 }
 
 .m-container {
-  --m-font-color: #fff;
-  --m-container-backgournd-color: #fff;
-  --m-container-width: 700px;
-  --m-container-width-close: -700px;
-  --m-container-height: 410px;
-  --m-container-operation-right-width: 150px;
-  --m-container-input-width: 150px;
-  --m-container-box-transition: all 0.4s ease-in-out;
-  --m-container-select-width: var(--m-container-input-width);
-  --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) !important;
+    box-sizing: border-box !important;
+    position: fixed !important;
+    display: none;
+    flex-direction: column !important;
+    width: 650px !important;
+    height: 400px !important;
+    top: 100px !important;
+    left: 50% !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    background-color: #fff !important;
+    transform: translateX(-50%) !important;
+    z-index: 1000 !important;
+    padding: 15px !important;
+    transition: display linear 1s !important;
+    box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
+        -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
 }
 
-.m-container {
-  box-sizing: border-box !important;
-  position: fixed !important;
-  flex-direction: column !important;
-  width: var(--m-container-width) !important;
-  height: var(--m-container-height) !important;
-  top: 100px !important;
-  left: 50% !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-  background-color: var(--m-container-backgournd-color) !important;
-  z-index: 999999999 !important;
-  padding: 15px !important;
-  transition: var(--m-container-box-transition) !important;
-  box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
-    -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
-
-  opacity: 0;
-  transform: translate(-50%, -100%);
-}
-
-
-.m-container-is-active {
-  opacity: 1;
-  transform: translate(-50%, 0%);
-}
 .m-container-box {
-  display: flex !important;
-  flex-direction: column !important;
-  transition: var(--m-container-box-transition) !important;
-}
-
-.m-container-main {
-  position: relative !important;
-  background-color: #ddd !important;
-}
-
-#m-container-box1,
-#m-container-box2 {
-  position: absolute !important;
-  transition: var(--m-container-box-transition) !important;
-  width: var(--m-container-width);
-  overflow: hidden scroll;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .m-container .operation {
-  box-sizing: border-box !important;
-  height: auto !important;
-  justify-content: start !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    justify-content: start !important;
 }
 
-
-.m-container input[type="text"] {
-  width: var(--m-container-input-width) !important;
-  box-sizing: border-box !important;
-  border: 1px solid rgba(8, 125, 235, 0.6) !important;
-  outline: none !important;
-  padding: 5px 10px !important;
-  border-radius: 20px !important;
-  transition: var(--m-container-box-transition);
+.m-container .operation input[type="text"] {
+    width: 150px !important;
+    box-sizing: border-box !important;
+    outline: 1px solid rgba(8, 125, 235, 0.6) !important;
+    border: none !important;
+    padding: 5px 10px !important;
+    border-radius: 20px !important;
 }
 
-.m-container input:focus {
-  border: 1px solid rgba(8, 125, 235, 1) !important;
+.m-container .operation input[type="text"]:focus {
+    outline: 1px solid rgba(8, 125, 235, 1) !important;
 }
 
 .m-container .operation input[type="checkbox"] {
-  display: inline !important;
+    display: inline !important;
 }
 
 .m-container .operation input[type="file"] {
-  display: none !important;
+    display: none !important;
 }
 
+
 .m-container table {
-  position: relative !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  text-align: left !important;
-  flex: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    text-align: left !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 .m-container table tr {
-  margin: 5px 0 !important;
-  display: flex !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
-  justify-content: space-between;
+    margin: 5px 0 !important;
+    display: flex !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
+    justify-content: space-between;
 }
 
 .m-container table tr td:nth-child(1),
 .m-container table thead th:nth-child(1) {
-  width: 50px;
-  text-align: center !important;
+    width: 50px;
+    text-align: center !important;
 }
 
 .m-container table tr td:nth-child(2),
@@ -1802,116 +1678,100 @@
 .m-container table thead th:nth-child(2),
 .m-container table thead th:nth-child(3),
 .m-container table thead th:nth-child(4) {
-  flex: 1 !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+    flex: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+
 }
 
 .m-container table tbody {
-  flex: 1 !important;
-  max-height: 280px !important;
-  overflow: auto !important;
+    flex: 1 !important;
+    overflow: auto !important;
 }
-
-/* 滚动条 */
-.m-container table tbody::-webkit-scrollbar {
-  width: 7px;
-  background-color: transparent;
-}
-
-.m-container table tbody::-webkit-scrollbar-thumb {
-  /* min-width: 12px; */
-  min-height: 200px;
-  background-color: #888;
-  border-radius: 8px;
-}
-
-
 
 .m-container table th,
 .m-container table td {
-  padding: 10px !important;
+    padding: 10px !important;
 }
 
 .m-container table tbody tr:nth-child(1) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
 }
 
 .m-container .m-link,
 .m-container .m-link:visited {
-  color: black !important;
+    color: blnk !important;
 }
 
 .m-container .m-link:hover {
-  color: blue !important;
-  text-decoration: underline !important;
+    color: blue !important;
+    text-decoration: underline !important;
 }
 
 .m-container .btn {
-  cursor: pointer !important;
-  padding: 5px 12px !important;
-  border: none !important;
-  color: var(--m-font-color) !important;
-  font-size: 1rem !important;
-  border-radius: 20px !important;
-  margin: 0 !important;
-  background-color: rgba(166, 169, 173, 1) !important;
-  z-index: 1000 !important;
-  outline: none !important;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
+    cursor: pointer !important;
+    padding: 5px 8px !important;
+    border: none !important;
+    color: #fff !important;
+    font-size: 1rem !important;
+    border-radius: 20px !important;
+    max-width: 50px !important;
+    margin: 0  !important;
+    background-color: rgba(166, 169, 173, 1) !important;
+    z-index: 1000 !important;
+    outline: none !important;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
 }
 
 .m-container .btn:hover {
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) !important;
 }
 
 .m-container .btn:hover {
-  background-color: rgba(166, 169, 173, 0.6) !important;
+    background-color: rgba(166, 169, 173, 0.6) !important;
 }
 
-.m-container .btn-primary {
-  background-color: rgba(64, 158, 255, 1) !important;
+.m-container .btn-teal {
+    background-color: rgba(64, 158, 255, 1) !important;
 }
 
-.m-container .btn-primary:hover {
-  background-color: rgba(64, 158, 255, 0.6) !important;
+.m-container .btn-teal:hover {
+    background-color: rgba(64, 158, 255, 0.6) !important;
 }
 
 .m-container .btn-success {
-  background-color: rgba(103, 194, 58, 1) !important;
+    background-color: rgba(103, 194, 58, 1) !important;
 }
 
 .m-container .btn-success:hover {
-  background-color: rgba(103, 194, 58, 0.6) !important;
+    background-color: rgba(103, 194, 58, 0.6) !important;
 }
 
 .m-container .btn-info {
-  background-color: rgba(119, 119, 119, 1) !important;
+    background-color: rgba(119, 119, 119, 1) !important;
 }
 
 .m-container .btn-info:hover {
-  background-color: rgba(119, 119, 119, 0.6) !important;
+    background-color: rgba(119, 119, 119, 0.6) !important;
 }
 
 .m-container .btn-warning {
-  background-color: rgba(230, 162, 60, 1) !important;
+    background-color: rgba(230, 162, 60, 1) !important;
 }
 
 .m-container .btn-warning:hover {
-  background-color: rgba(230, 162, 60, 0.6) !important;
+    background-color: rgba(230, 162, 60, 0.6) !important;
 }
 
 .m-container .btn-danger {
-  background-color: rgba(245, 108, 108, 1) !important;
+    background-color: rgba(245, 108, 108, 1) !important;
 }
 
 .m-container .btn-danger:hover {
-  background-color: rgba(245, 108, 108, 0.6) !important;
+    background-color: rgba(245, 108, 108, 0.6) !important;
 }
-
-
 
 .m-ani-left-is-active {
   transform: translateX(0) !important;
@@ -2029,299 +1889,311 @@
   }
 
 
-   /***************************************************斗鱼直播***************************************************************************/
-   .game-live-item i,.host-name {
-       cursor:pointer;
-   }
-   .game-live-item .txt i:hover,.host-name:hover {
-       color:rgb(255, 135, 0);
-   }
-   .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
-       cursor:pointer !important;
-   }
-   .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
-       color:rgb(255, 135, 0) !important;
-    }
+`;
+  const css$2 = `
+.game-live-item i,.host-name {
+  cursor:pointer;
+}
+.game-live-item .txt i:hover,.host-name:hover {
+  color:rgb(255, 135, 0);
+}
+.layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
+  cursor:pointer !important;
+}
+.layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
+  color:rgb(255, 135, 0) !important;
+}
 
-   .layout-Section.layout-Slide .layout-Slide-player,
-  .layout-Slide-bannerInner,
-   #lazyModule3,
-   #lazyModule4,
-   #lazyModule5,
-   #lazyModule6,
-   #lazyModule7,
-   #lazyModule8,
-   #lazyModule23,
-   #lazyModule24,
-   #js-room-activity,
-   #js-right-nav,
-   #js-bottom,
-   #js-header .Header .HeaderNav,
-   #js-header .Header .HeaderGif-left,
-   #js-header .Header .HeaderGif-right,
-   .Header-download-wrap,
-   .AnchorInterToolsUser,
-   .RechangeJulyPopups,
-   #js-room-activity,
-   #js-right-nav,
-   #js-bottom,
-   li.Header-menu-link,
-   .layout-Main .layout-Customize,
-   .HeaderCell-label-wrap,
-   .Title-AnchorLevel,.RoomVipSysTitle,
-   .Aside-nav .Aside-nav-item,
-   .Title-roomInfo .Title-row,
-   #player-marvel-controller+div,
-   .layout-Player-main .GuessGameMiniPanelB-wrapper,
-   #js-player-asideMain #layout-Player-aside .FirePower,
-   .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
-    #bc4-bgblur,
-   .Baby-image.is-achievement,
-   .multiBitRate-da4b60{
-       display:none !important;
-   }
-
-
-    li.Header-menu-link:nth-child(1),
-    li.Header-menu-link:nth-child(2),
-    li.Header-menu-link:nth-child(3),
-    .Aside-nav .Aside-nav-item:nth-child(1)
-   {
-       display:inline-block !important;
-   }
-
-   .layout-Player-aside .layout-Player-chat,.layout-Player-aside .layout-Player-chat .ChatToolBar {
-     display:block !important;
-   }
+.layout-Section.layout-Slide .layout-Slide-player,
+.layout-Slide-bannerInner,
+#lazyModule3,
+#lazyModule4,
+#lazyModule5,
+#lazyModule6,
+#lazyModule7,
+#lazyModule8,
+#lazyModule23,
+#lazyModule24,
+#js-room-activity,
+#js-right-nav,
+#js-bottom,
+#js-header .Header .HeaderNav,
+#js-header .Header .HeaderGif-left,
+#js-header .Header .HeaderGif-right,
+.Header-download-wrap,
+.AnchorInterToolsUser,
+.RechangeJulyPopups,
+#js-room-activity,
+#js-right-nav,
+#js-bottom,
+li.Header-menu-link,
+.layout-Main .layout-Customize,
+.HeaderCell-label-wrap,
+.Title-AnchorLevel,.RoomVipSysTitle,
+.Aside-nav .Aside-nav-item,
+.Title-roomInfo .Title-row,
+#player-marvel-controller+div,
+.layout-Player-main .GuessGameMiniPanelB-wrapper,
+#js-player-asideMain #layout-Player-aside .FirePower,
+.layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
+#bc4-bgblur,
+.Baby-image.is-achievement,
+.multiBitRate-da4b60{
+  display:none !important;
+}
 
 
-   .Barrage-main  .UserLevel,
-   .Barrage-main  .js-user-level,
-   .Barrage-main  .Barrage-icon,
-   .Barrage-main  .Motor,
-   .Barrage-main  .Motor-flag,
-   .Barrage-main  .Barrage-hiIcon,
-   .Barrage-main  .UserGameDataMedal,
-   .Barrage-main  .ChatAchievement,
-   .Barrage-main  .Barrage-notice,
-   .layout-Player .layout-Player-announce,
-   .layout-Player .layout-Player-rank,
-   .MatchSystemTeamMedal,
-    #js-player-video .ScreenBannerAd,
-  .layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
-  .layout-Main #layout-Player-aside .SignBarrage,
-   #js-player-video-case .VRTips~div,
-   .layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
-   .layout-Main .ToTopBtn,
-   .Header-right .public-DropMenu-drop .DropPane-ad,
-   .Header-right .CloudGameLink,
-   .Header-menu-wrap .DropMenuList-ad,
-   .public-DropMenu-drop-main div.Header-UserPane-top~div,
-   #js-player-dialog .LiveRoomLoopVideo,
-   .Header-search-wrap .Search  label,
-    .Barrage .Barrage-userEnter{
-     display:none !important;
-   }
-   [class*="AnchorLevel-\\d+"] {
+li.Header-menu-link:nth-child(1),
+li.Header-menu-link:nth-child(2),
+li.Header-menu-link:nth-child(3),
+.Aside-nav .Aside-nav-item:nth-child(1)
+{
+  display:inline-block !important;
+}
+
+.layout-Player-aside .layout-Player-chat,.layout-Player-aside .layout-Player-chat .ChatToolBar {
+display:block !important;
+}
+
+
+.Barrage-main  .UserLevel,
+.Barrage-main  .js-user-level,
+.Barrage-main  .Barrage-icon,
+.Barrage-main  .Motor,
+.Barrage-main  .Motor-flag,
+.Barrage-main  .Barrage-hiIcon,
+.Barrage-main  .UserGameDataMedal,
+.Barrage-main  .ChatAchievement,
+.Barrage-main  .Barrage-notice,
+.layout-Player .layout-Player-announce,
+.layout-Player .layout-Player-rank,
+.MatchSystemTeamMedal,
+#js-player-video .ScreenBannerAd,
+.layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
+.layout-Main #layout-Player-aside .SignBarrage,
+#js-player-video-case .VRTips~div,
+.layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
+.layout-Main .ToTopBtn,
+.Header-right .public-DropMenu-drop .DropPane-ad,
+.Header-right .CloudGameLink,
+.Header-menu-wrap .DropMenuList-ad,
+.public-DropMenu-drop-main div.Header-UserPane-top~div,
+#js-player-dialog .LiveRoomLoopVideo,
+.Header-search-wrap .Search  label,
+.Barrage .Barrage-userEnter{
+display:none !important;
+}
+[class*="AnchorLevel-\\d+"] {
+display:none !important;
+}
+
+
+/* 一般禁用模式 */
+.layout-Player-main #js-player-toolbar{
+display:block;
+}
+#root div.layout-Main{
+  margin-top:70px !important;
+  display:block !important;
+  width:auto !important;
+  max-width:auto !important;
+}
+#root>div,
+#root>div .wm-general-bgblur
+{
+background-image:none !important;
+}
+
+.Title-roomInfo .Title-row:nth-child(1),
+.Title-roomInfo .Title-row:nth-child(2) {
+ display:block !important;
+}
+
+
+.Barrage-main .Barrage-content {
+color:#333 !important;
+}
+.Barrage-main .Barrage-nickName{
+color:#2b94ff !important;
+}
+.Barrage-listItem{
+color: #333 !important;
+background-color: #f2f5f6 !important;
+}
+.layout-Player-barrage{
+  position: absolute !important;
+  top: 0 !important;
+}
+
+.Header-search-wrap input#header-search-input::placeholder {
+   color: transparent !important;
+   opacity:0 !important;
+}`;
+  const css$1 = ` .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+.mod-index-wrap .mod-index-main .main-bd,
+.mod-index-wrap .mod-index-main .main-hd,
+.mod-index-wrap #js-main,
+.mod-index-wrap #banner,
+.mod-index-wrap .mod-game-type,
+.mod-index-wrap .mod-actlist,
+.mod-index-wrap .mod-news-section,
+.mod-index-wrap .mod-index-list .live-box #J_adBnM,
+.mod-index-wrap .mod-index-recommend,
+.mod-index-wrap .mod-news-section,
+.mod-index-wrap .recommend-wrap,
+.RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
+#huya-ab-fixed,
+#huya-ab,
+.liveList-header-r,
+.room-footer,
+.J_roomSideHd,
+ #J_roomSideHd,
+ #match-cms-content,
+ #matchComponent2,
+.hy-nav-item,
+.list-adx,
+.layout-Banner,
+ #J_duyaHeaderRight>div>div>div,
+ .nav-expand-list .third-clickstat,
+ #main_col .special-bg,
+ .player-recommend.recommend-ab-mode .end-ab-wrap,
+ .chat-wrap-panel.wrap-income,
+ .match-room .match-nav,
+ .host-detail.J_roomHdDetail span,
+ .host-detail.J_roomHdDetail .host-video,
+ .room-hd-r .jump-to-phone,
+ .room-hd-r #share-entrance,
+ .room-hd-r #J_illegalReport,
+ .room-hd-r .gamePromote.J_gamePromote,
+ .main-wrap .room-mod-ggTop,
+ #chatRoom .room-gg-chat,
+ .room-core .room-business-game,
+ .room-backToTop.j_room-backToTop,
+.room-weeklyRankList{
     display:none !important;
+ }
+
+ .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap, {
+   display:none;
+ }
+
+ .hy-nav-item:nth-child(1),
+ .hy-nav-item:nth-child(2),
+ .hy-nav-item:nth-child(3),
+ #J_duyaHeaderRight>div>div>div:nth-child(3){
+   display:inline-block !important;
+ }
+ .mod-index-wrap .mod-index-list{
+   margin-top:80px !important;
+ }
+ .duya-header{
+   background: hsla(0,0%,100%,.95)  !important;
+   border-bottom: 1px solid #e2e2e2 !important;
+   box-shadow: 0 0 6px rgb(0 0 0 / 6%) !important;
+ }
+ .duya-header a,.duya-header i{
+  color:#000 !important;
+ }
+ /*******直播间样式*****/
+.chat-room__list .msg-normal,.chat-room__list .msg-bubble,#J_mainRoom{
+   background:none !important;
+ }
+ #wrap-ext,
+.chat-room__list .msg-normal-decorationPrefix,
+.chat-room__list .msg-normal-decorationSuffix,
+.chat-room__list .msg-bubble-decorationPrefix,
+.chat-room__list img,
+.chat-room__list .msg-noble,
+.chat-room__list .msg-sys,
+.chat-room__list .msg-auditorSys,
+.J_box_msgOfKing,
+.chat-room__list .msg-onTVLottery{
+    display: none !important;
+ }
+.chat-room__list .msg-bubble span.msg{
+    color: #333 !important;
+    background:none!important;
+ }
+.chat-room__list .msg-bubble .colon,
+.chat-room__list .msg-bubble .msg,
+.chat-room__list .name{
+    color: #3c9cfe !important;
+    background:none!important;
   }
-  
 
-   /* 一般禁用模式 */
-   .layout-Player-main #js-player-toolbar{
-     display:block;
-   }
-   #root div.layout-Main{
-       margin-top:70px !important;
-       display:block !important;
-       width:auto !important;
-       max-width:auto !important;
-   }
-   #root>div,
-   #root>div .wm-general-bgblur
-   {
-     background-image:none !important;
-   }
-
-    .Title-roomInfo .Title-row:nth-child(1),
-    .Title-roomInfo .Title-row:nth-child(2) {
-      display:block !important;
-    }
+  #search-bar-input::placeholder{
+     color: transparent !important;
+     opacity:0 !important;
+  }
 
 
-   .Barrage-main .Barrage-content {
-    color:#333 !important;
-   }
-   .Barrage-main .Barrage-nickName{
-    color:#2b94ff !important;
-   }
-   .Barrage-listItem{
-     color: #333 !important;
-     background-color: #f2f5f6 !important;
-   }
-   .layout-Player-barrage{
-       position: absolute !important;
-       top: 0 !important;
-    }
 
-    .Header-search-wrap input#header-search-input::placeholder {
-        color: transparent !important;
-        opacity:0 !important;
-    }
+  /********************************Bilibili********************************** */
+  div#i_cecream .floor-single-card,
+  div#i_cecream .bili-live-card.is-rcmd,
+  div#i_cecream .adblock-tips,
+  div.video-container-v1 div.pop-live-small-mode.part-undefined,
+  .recommended-swipe.grid-anchor,
+  .video-page-special-card-small
+  {
+     display:none !important;
+  }
 
+ /* 输入框*/
+ .nav-search-content>input::placeholder {
+     color: transparent;
+     opacity:0 !important;
+ }
+
+ .m-bilibili-btn {
+     cursor: pointer !important;
+     background: #FFFFFF !important;
+     background: var(--bg1_float) !important;
+     border: 1px solid #E3E5E7 !important;
+     border: 1px solid var(--line_regular) !important;
+     border-radius: 8px !important;
+     box-sizing: border-box !important;
+     padding: 6px !important;
+     margin-bottom: 6px !important;
+     color: #18191C !important;
+     color: var(--text1) !important;
+     line-height: 14px;
+     font-size: 12px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 40px;
+ }
+
+ .bili-video-card__info--bottom:hover .m-span-text,
+ .video-page-card-small:hover .m-span-text,
+ .up-info-container:hover .m-span-text,
+ .video-page-operator-card-small:hover .m-span-text{
+     opacity: 1;
+     transform: scale(1.1);
+     color:orange;
+ }`;
+  const css = `
+#related-video-card-login-guide,
+#captcha_container,
+.JsAsIOEV,
+#login-full-panel{
+    display:none !important;
+}`;
+  addStyle(`
+
+   /***************************************************默认样式***************************************************************************/
+  ${css$3}
+
+/***************************************************斗鱼直播***************************************************************************/
+   
+   ${css$2}
 
  /***************************************************虎牙直播***************************************************************************/
-   .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
-   .mod-index-wrap .mod-index-main .main-bd,
-   .mod-index-wrap .mod-index-main .main-hd,
-   .mod-index-wrap #js-main,
-   .mod-index-wrap #banner,
-   .mod-index-wrap .mod-game-type,
-   .mod-index-wrap .mod-actlist,
-   .mod-index-wrap .mod-news-section,
-   .mod-index-wrap .mod-index-list .live-box #J_adBnM,
-   .mod-index-wrap .mod-index-recommend,
-   .mod-index-wrap .mod-news-section,
-   .mod-index-wrap .recommend-wrap,
-   .RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
-   #huya-ab-fixed,
-   #huya-ab,
-   .liveList-header-r,
-   .room-footer,
-   .J_roomSideHd,
-    #J_roomSideHd,
-    #match-cms-content,
-    #matchComponent2,
-   .hy-nav-item,
-   .list-adx,
-   .layout-Banner,
-    #J_duyaHeaderRight>div>div>div,
-    .nav-expand-list .third-clickstat,
-    #main_col .special-bg,
-    .player-recommend.recommend-ab-mode .end-ab-wrap,
-    .chat-wrap-panel.wrap-income,
-    .match-room .match-nav,
-    .host-detail.J_roomHdDetail span,
-    .host-detail.J_roomHdDetail .host-video,
-    .room-hd-r .jump-to-phone,
-    .room-hd-r #share-entrance,
-    .room-hd-r #J_illegalReport,
-    .room-hd-r .gamePromote.J_gamePromote,
-    .main-wrap .room-mod-ggTop,
-    #chatRoom .room-gg-chat,
-    .room-core .room-business-game,
-    .room-backToTop.j_room-backToTop,
-   .room-weeklyRankList{
-       display:none !important;
-    }
-
-    .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap, {
-      display:none;
-    }
-
-    .hy-nav-item:nth-child(1),
-    .hy-nav-item:nth-child(2),
-    .hy-nav-item:nth-child(3),
-    #J_duyaHeaderRight>div>div>div:nth-child(3){
-      display:inline-block !important;
-    }
-    .mod-index-wrap .mod-index-list{
-      margin-top:80px !important;
-    }
-    .duya-header{
-      background: hsla(0,0%,100%,.95)  !important;
-      border-bottom: 1px solid #e2e2e2 !important;
-      box-shadow: 0 0 6px rgb(0 0 0 / 6%) !important;
-    }
-    .duya-header a,.duya-header i{
-     color:#000 !important;
-    }
-    /*******直播间样式*****/
-   .chat-room__list .msg-normal,.chat-room__list .msg-bubble,#J_mainRoom{
-      background:none !important;
-    }
-    #wrap-ext,
-   .chat-room__list .msg-normal-decorationPrefix,
-   .chat-room__list .msg-normal-decorationSuffix,
-   .chat-room__list .msg-bubble-decorationPrefix,
-   .chat-room__list img,
-   .chat-room__list .msg-noble,
-   .chat-room__list .msg-sys,
-   .chat-room__list .msg-auditorSys,
-   .J_box_msgOfKing,
-   .chat-room__list .msg-onTVLottery{
-       display: none !important;
-    }
-   .chat-room__list .msg-bubble span.msg{
-       color: #333 !important;
-       background:none!important;
-    }
-   .chat-room__list .msg-bubble .colon,
-   .chat-room__list .msg-bubble .msg,
-   .chat-room__list .name{
-       color: #3c9cfe !important;
-       background:none!important;
-     }
-
-     #search-bar-input::placeholder{
-        color: transparent !important;
-        opacity:0 !important;
-     }
-
-
-
-     /********************************Bilibili********************************** */
-     div#i_cecream .floor-single-card,
-     div#i_cecream .bili-live-card.is-rcmd,
-     div#i_cecream .adblock-tips,
-     div.video-container-v1 div.pop-live-small-mode.part-undefined,
-     .recommended-swipe.grid-anchor,
-     .video-page-special-card-small
-     {
-        display:none !important;
-     }
-
-    /* 输入框*/
-    .nav-search-content>input::placeholder {
-        color: transparent;
-        opacity:0 !important;
-    }
-
-    .m-bilibili-btn {
-        cursor: pointer !important;
-        background: #FFFFFF !important;
-        background: var(--bg1_float) !important;
-        border: 1px solid #E3E5E7 !important;
-        border: 1px solid var(--line_regular) !important;
-        border-radius: 8px !important;
-        box-sizing: border-box !important;
-        padding: 6px !important;
-        margin-bottom: 6px !important;
-        color: #18191C !important;
-        color: var(--text1) !important;
-        line-height: 14px;
-        font-size: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 40px;
-    }
-
-    .bili-video-card__info--bottom:hover .m-span-text,
-    .video-page-card-small:hover .m-span-text,
-    .up-info-container:hover .m-span-text,
-    .video-page-operator-card-small:hover .m-span-text{
-        opacity: 1;
-        transform: scale(1.1);
-        color:orange;
-    }
+  
+   ${css$1}
     /******************************************抖音*****************************************************/
-    #related-video-card-login-guide,
-    #captcha_container,
-    #login-full-panel{
-        display:none !important;
-    }
-
+    ${css}
 `);
   (function() {
     if (typeof window === void 0) {

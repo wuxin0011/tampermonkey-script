@@ -17,7 +17,7 @@ import {
     querySelectorAll,
     removeDOM,
     HostUser,
-    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton
+    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton, warn
 } from '../../utils'
 import getHtmlStr from "./html.js";
 
@@ -305,6 +305,7 @@ export default class LivePlugin {
         addEventListener(show_logo_btn, 'change', function (e) {
             e.preventDefault()
             if (!that.logo_btn) {
+                warn('获取不到Logo哦！')
                 return alert('获取不到logo');
             }
             if (that.logo_btn.style.display === 'block') {
@@ -320,6 +321,14 @@ export default class LivePlugin {
         })
 
 
+        // 初始化动画效果
+        this.initAnimation(container)
+
+        
+    }
+
+
+    initAnimation(container){
         let box1 = querySelector(container, '#m-container-box1')
         let box2 = querySelector(container, '#m-container-box2')
 
@@ -336,29 +345,40 @@ export default class LivePlugin {
         let select2_box2 = querySelector(container, '.m-type-item-left #m-select-input')
 
         addEventListener(change1, 'click', () => {
-            box1.classList.add('m-ani-left-is-close')
-            box1.classList.remove('m-ani-left-is-active')
-            box2.classList.add('m-ani-right-is-active')
-            box2.classList.remove('m-ani-right-is-close')
+            if(box1 && box2){
+                box1.classList.add('m-ani-left-is-close')
+                box1.classList.remove('m-ani-left-is-active')
+                box2.classList.add('m-ani-right-is-active')
+                box2.classList.remove('m-ani-right-is-close')
+            }
+           
         })
         addEventListener(change2, 'click', () => {
-            box1.classList.add('m-ani-left-is-active')
-            box1.classList.remove('m-ani-left-is-close')
-            box2.classList.add('m-ani-right-is-close')
-            box2.classList.remove('m-ani-right-is-active')
+            if(box1 && box2){
+                box1.classList.add('m-ani-left-is-active')
+                box1.classList.remove('m-ani-left-is-close')
+                box2.classList.add('m-ani-right-is-close')
+                box2.classList.remove('m-ani-right-is-active')
+            }
+           
         })
 
         addEventListener(select1, 'click', () => {
-            select1_box1.classList.remove('m-ani-left-is-active')
-            select1_box1.classList.add('m-ani-left-is-close')
-            select2_box2.classList.remove('m-ani-right-is-close')
-            select2_box2.classList.add('m-ani-right-is-active')
+            if(select1_box1 && select2_box2){
+                select1_box1.classList.remove('m-ani-left-is-active')
+                select1_box1.classList.add('m-ani-left-is-close')
+                select2_box2.classList.remove('m-ani-right-is-close')
+                select2_box2.classList.add('m-ani-right-is-active')
+            }
+            
         })
         addEventListener(select2, 'click', () => {
-            select1_box1.classList.add('m-ani-left-is-active')
-            select1_box1.classList.remove('m-ani-left-is-close')
-            select2_box2.classList.add('m-ani-right-is-close')
-            select2_box2.classList.remove('m-ani-right-is-active')
+            if(select1_box1 && select2_box2){
+                select1_box1.classList.add('m-ani-left-is-active')
+                select1_box1.classList.remove('m-ani-left-is-close')
+                select2_box2.classList.add('m-ani-right-is-close')
+                select2_box2.classList.remove('m-ani-right-is-active')
+            }
         })
     }
 
@@ -681,9 +701,13 @@ export default class LivePlugin {
         let fullScreenText = this.fullScreenText
         let cancelFullText = this.cancelFullText
         let show3 = getLocalStore(this.full_screen_key, Boolean.name)
+        if( !this.full_screen_button ){
+            warn('full_screen_button key 为空！')
+            return;
+        }
         let fullScreen = querySelector(this.full_screen_button)
         this.checkFullScreenButton(fullScreen)
-        let isClick = fullScreen.isClick
+        let isClick = fullScreen?.isClick
         if (isClickFull && fullScreen?.title === fullScreenText) {
             this.isShowContainer()
             fullScreen.click()

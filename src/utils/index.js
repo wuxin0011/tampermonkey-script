@@ -1,4 +1,12 @@
 // const
+const prefix = '[live-plugin]:'
+const msg = (...args) => `${prefix} ${args}`
+const emptyMehtod = (...args) => { }
+// export methods
+export const log = (...args) => console.log(msg(args))
+export const warn = (...args) => console.warn(msg(args))
+export const error = (...args) => console.error(msg(args))
+export const info = (...args) => console.info(msg(args))
 export const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/
 export const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/
 export const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
@@ -15,8 +23,8 @@ export const wls = window.localStorage
 export const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
 export const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
 export const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file)
-export const querySelector = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelector(sel) : wd.querySelector(el)
-export const querySelectorAll = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelectorAll(sel) : wd.querySelectorAll(el)
+export const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : wd && el ? wd.querySelector(el) : emptyMehtod
+export const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : el ? wd.querySelectorAll(el) : emptyMehtod
 export const addEventListener = (el, type, callback) => !!el && el instanceof HTMLElement && type && typeof callback === 'function' && el.addEventListener(type, callback, false)
 export const createElement = (tag) => !!tag && wd.createElement(tag)
 export const appendChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.appendChild(el2)
@@ -43,7 +51,7 @@ export const removeDOM = (element, realRemove = false) => {
             }
         }
     } catch (e) {
-        log(e, 'error')
+        error(e)
     }
 }
 export const s2d = (string) => new DOMParser().parseFromString(string, 'text/html').body.childNodes[0]
@@ -235,19 +243,7 @@ export const findFullSreenButton = (sel = 'body', key = 'full_screen_button_clas
 }
 
 
-export const log = (msg, level = 'log') => {
-    const pre = '[ live-plugin tips ] :'
-    msg = pre + msg
-    if (level === 'info') {
-        console.info(msg);
-    } else if (level === 'warn') {
-        console.warn(msg);
-    } else if (level === 'error') {
-        console.error(msg);
-    } else {
-        console.log(msg);
-    }
-}
+
 
 
 export class HostUser {
@@ -256,5 +252,6 @@ export class HostUser {
         this.name = name;
     }
 }
+
 
 
