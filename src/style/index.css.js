@@ -19,7 +19,8 @@ addStyle(`
   --m-font-color: #fff;
   --m-container-backgournd-color: #fff;
   --m-container-width: 700px;
-  --m-container-height: 400px;
+  --m-container-width-close: -700px;
+  --m-container-height: 410px;
   --m-container-operation-right-width: 150px;
   --m-container-input-width: 150px;
   --m-container-box-transition: all 0.4s ease-in-out;
@@ -38,27 +39,38 @@ addStyle(`
   border-radius: 10px !important;
   overflow: hidden !important;
   background-color: var(--m-container-backgournd-color) !important;
-  z-index: 100000000 !important;
+  z-index: 999999999 !important;
   padding: 15px !important;
   transition: var(--m-container-box-transition) !important;
   box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
     -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
 
   opacity: 0;
-  transform: translate(-50%, -150%);
+  transform: translate(-50%, -100%);
 }
+
 
 .m-container-is-active {
   opacity: 1;
   transform: translate(-50%, 0%);
-  z-index:100000000 !important;
 }
-
 .m-container-box {
   display: flex !important;
   flex-direction: column !important;
-  width: 100% !important;
-  height: 100% !important;
+  transition: var(--m-container-box-transition) !important;
+}
+
+.m-container-main {
+  position: relative !important;
+  background-color: #ddd !important;
+}
+
+#m-container-box1,
+#m-container-box2 {
+  position: absolute !important;
+  transition: var(--m-container-box-transition) !important;
+  width: var(--m-container-width);
+  overflow: hidden scroll;
 }
 
 .m-container .operation {
@@ -128,8 +140,24 @@ addStyle(`
 
 .m-container table tbody {
   flex: 1 !important;
+  max-height: 280px !important;
   overflow: auto !important;
 }
+
+/* 滚动条 */
+.m-container table tbody::-webkit-scrollbar {
+  width: 7px;
+  background-color: transparent;
+}
+
+.m-container table tbody::-webkit-scrollbar-thumb {
+  /* min-width: 12px; */
+  min-height: 200px;
+  background-color: #888;
+  border-radius: 8px;
+}
+
+
 
 .m-container table th,
 .m-container table td {
@@ -142,7 +170,7 @@ addStyle(`
 
 .m-container .m-link,
 .m-container .m-link:visited {
-  color: blnk !important;
+  color: black !important;
 }
 
 .m-container .m-link:hover {
@@ -152,9 +180,8 @@ addStyle(`
 
 .m-container .btn {
   cursor: pointer !important;
-  padding: 5px 8px !important;
+  padding: 5px 12px !important;
   border: none !important;
-  max-width:50px !important;
   color: var(--m-font-color) !important;
   font-size: 1rem !important;
   border-radius: 20px !important;
@@ -213,22 +240,7 @@ addStyle(`
   background-color: rgba(245, 108, 108, 0.6) !important;
 }
 
-#m-container-box1 {
-  position: absolute !important;
-  z-index: 10000000 !important;
-  transition: var(--m-container-box-transition) !important;
-  width: 100% !important;
-  height: 100% !important;
-}
 
-#m-container-box2 {
-  position: absolute !important;
-  z-index: 9999 !important;
-  transition: var(--m-container-box-transition) !important;
-  ;
-  width: 100% !important;
-  height: 100% !important;
-}
 
 .m-ani-left-is-active {
   transform: translateX(0) !important;
@@ -237,7 +249,7 @@ addStyle(`
 }
 
 .m-ani-left-is-close {
-  transform: translateX(-100%) !important;
+  transform: translateX(var(--m-container-width-close)) !important;
   visibility: hidden !important;
   opacity: 0 !important;
 }
@@ -249,14 +261,14 @@ addStyle(`
 }
 
 .m-ani-right-is-close {
-  transform: translateX(100%) !important;
+  transform: translateX(var(--m-container-width)) !important;
   visibility: hidden !important;
   opacity: 0 !important;
 }
 
 .m-type-container .m-type-item {
   display: flex !important;
-  height: 30px !important;
+  height: 40px !important;
 }
 
 .m-type-container .m-type-item .m-type-item-left {
@@ -301,7 +313,6 @@ addStyle(`
 
 .m-type-container .m-tag-select {
   width: calc(var(--m-container-select-width)/2) !important;
-  ;
   outline: none !important;
   border: 1px solid rgba(8, 125, 235, 0.6) !important;
   padding: 5px 8px !important;
@@ -329,22 +340,22 @@ addStyle(`
   color: red !important;
 }
 
-    .m-span-text {
-        transition: all 0.3s ease;
-        cursor: pointer !important;
-        opacity: 0;
-        float:right;
-        display:inline-block;
-        margin:0 10px;
-        transform: scale(0.5);
-        font-size:20px;
-        position:relative;
-    }
+  .m-span-text {
+      transition: all 0.3s ease;
+      cursor: pointer !important;
+      opacity: 0;
+      float:right;
+      display:inline-block;
+      margin:0 10px;
+      transform: scale(0.5);
+      font-size:20px;
+      position:relative;
+  }
 
-    .m-span-text::before{
-        content:"🧹";
-        cursor: pointer !important;
-    }
+  .m-span-text::before{
+      content:"🧹";
+      cursor: pointer !important;
+  }
 
 
    /***************************************************斗鱼直播***************************************************************************/
@@ -437,9 +448,13 @@ addStyle(`
    .public-DropMenu-drop-main div.Header-UserPane-top~div,
    #js-player-dialog .LiveRoomLoopVideo,
    .Header-search-wrap .Search  label,
-   .Barrage .Barrage-userEnter{
+    .Barrage .Barrage-userEnter{
      display:none !important;
    }
+   [class*="AnchorLevel-\\d+"] {
+    display:none !important;
+  }
+  
 
    /* 一般禁用模式 */
    .layout-Player-main #js-player-toolbar{
@@ -624,10 +639,16 @@ addStyle(`
     .bili-video-card__info--bottom:hover .m-span-text,
     .video-page-card-small:hover .m-span-text,
     .up-info-container:hover .m-span-text,
-    .video-page-operator-card-small:hover .m-span-text
-     {
+    .video-page-operator-card-small:hover .m-span-text{
         opacity: 1;
         transform: scale(1.1);
         color:orange;
     }
+    /******************************************抖音*****************************************************/
+    #related-video-card-login-guide,
+    #captcha_container,
+    #login-full-panel{
+        display:none !important;
+    }
+
 `)

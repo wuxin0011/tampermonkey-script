@@ -1,6 +1,7 @@
 import {
     download_plugin_url,
     is_bilibili,
+    is_douyin,
     is_douyu,
     is_huya,
     is_localhost,
@@ -14,6 +15,7 @@ import {
     FishLive,
     LivePlugin,
     TriggerLive,
+    DouYin
 } from './plugins';
 
 import './style/index.css.js';
@@ -48,6 +50,9 @@ import './style/index.css.js';
             } else if (is_bilibili) {
                 // 执行bilibili直播插件
                 new BiliBili()
+            } else if (is_douyin) {
+                // douyin
+                new DouYin()
             } else if (is_localhost) {
                 // 本地测试使用
                 new LivePlugin()

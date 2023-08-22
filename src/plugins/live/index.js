@@ -399,9 +399,10 @@ export default class LivePlugin {
         let flag = false
         let x, y
         const mouse_key = that.key + "_mouse_key"
-        // 从浏览器本地中获取位置信息
+
+        // 获取位置信息
         let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name)
-        if (mouse_left || mouse_top) {
+        if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
             btn.style.left = mouse_left + 'px'
             btn.style.top = mouse_top + 'px'
             btn.style.right = 'auto'

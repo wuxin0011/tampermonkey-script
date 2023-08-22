@@ -26,7 +26,7 @@
         --m-container-backgournd-color: #fff;
         --m-container-width: 700px;
         --m-container-width-close: -700px;
-        --m-container-height: 400px;
+        --m-container-height: 410px;
         --m-container-operation-right-width: 150px;
         --m-container-input-width: 150px;
         --m-container-box-transition: all 0.4s ease-in-out;
@@ -38,7 +38,7 @@
         box-sizing: border-box !important;
         position: fixed !important;
         flex-direction: column !important;
-        width: var(--m-container-width) !important; 
+        width: var(--m-container-width) !important;
         height: var(--m-container-height) !important;
         top: 100px !important;
         left: 50% !important;
@@ -149,8 +149,24 @@
 
       .m-container table tbody {
         flex: 1 !important;
+        max-height: 280px !important;
         overflow: auto !important;
       }
+
+      /* 滚动条 */
+      .m-container table tbody::-webkit-scrollbar {
+        width: 7px;
+        background-color: transparent;
+      }
+
+      .m-container table tbody::-webkit-scrollbar-thumb {
+        /* min-width: 12px; */
+        min-height: 200px;
+        background-color: #888;
+        border-radius: 8px;
+      }
+
+
 
       .m-container table th,
       .m-container table td {
@@ -173,7 +189,7 @@
 
       .m-container .btn {
         cursor: pointer !important;
-        padding: 5px 8px !important;
+        padding: 5px 12px !important;
         border: none !important;
         color: var(--m-font-color) !important;
         font-size: 1rem !important;
@@ -261,7 +277,7 @@
 
       .m-type-container .m-type-item {
         display: flex !important;
-        height: 30px !important;
+        height: 40px !important;
       }
 
       .m-type-container .m-type-item .m-type-item-left {
@@ -362,7 +378,11 @@
       }
 
       body {
-        height: 100vh;
+        /* height: 100vh; */
+      }
+
+      table .mt-0 tr {
+        margin-bottom: 0 !important;
       }
     </style>
 
@@ -370,7 +390,7 @@
 
   <body>
 
-    <div class="m-container">
+    <div class="m-container m-container-is-active">
       <div class="m-container-main">
         <div class="m-container-box  m-type-container m-ani-left-is-active" id="m-container-box1">
           <div class="m-type-operation">
@@ -443,7 +463,7 @@
             </div>
           </div>
           <table>
-            <thead>
+            <thead class="mt-0">
               <th>序号</th>
               <th>分类</th>
               <th>标签</th>
@@ -473,7 +493,7 @@
             <button class="btn btn-info btn-close-container" title="点击关闭">关闭</button>
           </div>
           <table>
-            <thead>
+            <thead class="mt-0">
               <th>序号</th>
               <th>名称</th>
               <th>房间号</th>
@@ -484,9 +504,7 @@
           </table>
         </div>
       </div>
-
     </div>
-
     <button id="open">打开</button>
     <button id="refesh">刷新</button>
     <button id="test">测试页</button>

@@ -1,9 +1,10 @@
-import { is_bilibili, is_localhost } from "../../utils/index.js";
+import { is_localhost } from "../../utils/index.js";
 
 
 
 const getHtmlStr = (show1, show2, show3, show4, show5) => {
-  if (is_bilibili || is_localhost) {
+  // 目前仅支持本地操作
+  if (is_localhost) {
     return `<div class="m-container">
         <div class="m-container-box  m-type-container m-ani-left-is-active" id="m-container-box1">
           <div class="m-type-operation">

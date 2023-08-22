@@ -1,0 +1,112 @@
+
+
+1、首页获取直播页面接口信息
+
+使用请求:
+let url = "https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd?web_location=1430650&y_num=4&fresh_type=3&feed_version=V8&fresh_idx_1h=3&fetch_row=1&fresh_idx=3&brush=1&homepage_ver=1&ps=10&last_y_num=4&screen=493-625&outside_trigger=&last_showlist=av_700259435,av_230340550,av_572864556,av_530342256,av_445474310,ad_5614,av_360327568,av_n_870478650,av_n_657889963,av_n_955277058%3Bav_n_360299159,av_n_572866987,av_n_487726960,av_n_657692392,av_n_315180956,ad_n_5637,av_n_230309255,av_n_272781497,av_n_615294347,av_n_487965023,av_n_785337006,av_n_742798870%3Blogin_card_n_undefined,av_230312998,av_n_657826439,av_785497540,av_n_360286862,ad_n_5614,av_n_272821838,av_n_230495037,av_n_402892598,av_n_615303356&uniq_id=483132916198&w_rid=e4d6f9907095c0a6c4487a1bd21fae84&wts=1688345010%E3%80%81"
+
+
+let url="https://api.bilibili.com/x/web-interface/wbi/index/top/feed/rcmd?web_location=1430650&y_num=3&fresh_type=4&feed_version=V8&fresh_idx_1h=2&fetch_row=7&fresh_idx=2&brush=2&homepage_ver=1&ps=12&last_y_num=4&screen=577-625&outside_trigger=&last_showlist=av_529956631,av_n_912305559,av_572042691,av_657875847,av_n_529969727,ad_5614,av_402225413,av_615053990,av_n_572172717,av_n_445302022%3Bav_n_572782897,av_911432926,live_n_26127970,av_785279214,ad_n_5637,av_n_870381395,av_271848008,av_954846577,av_n_954844035,av_n_742061021,av_n_783344875,av_n_571884845&uniq_id=1202933442754&w_rid=1068e65767b5d23ca11e1c7eea09a48b&wts=1688349143"
+
+fetch(url,{
+	mode:'cors',
+	method:"GET",
+	credentials:'include',
+	cache:'default'
+}).then(res=>res.json()).then(result=>{
+	console.log('result',result)
+}).catch(e=>{
+	console.log(e)
+})
+
+
+
+
+// detail
+fetch('https://api.live.bilibili.com/xlive/web-interface/v1/webMain/getMoreRecList?platform=web').then(res=>res.json()).then(res=>{
+    console.log(res)
+}).catch(e=>{
+
+    console.log(e)
+})
+
+// result
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": {
+        "recommend_room_list": [
+            {
+                "head_box": {
+                    "name": "林荫之舞",
+                    "value": "https://i0.hdslb.com/bfs/live/94048442a30a549ccf93fb6a3d220e92ab78a275.png",
+                    "desc": ""
+                },
+                "area_v2_id": 86,
+                "area_v2_parent_id": 2,
+                "area_v2_name": "英雄联盟",
+                "area_v2_parent_name": "网游",
+                "broadcast_type": 0,
+                "cover": "http://i0.hdslb.com/bfs/live/new_room_cover/0cd4f87affd0738c572e8c201beb7e660d344bcf.jpg",
+                "link": "/35926?hotRank=0",
+                "online": 13731,
+                "pendant_Info": {},
+                "roomid": 35926,
+                "title": "这新模式也太好玩了！新英雄！吃鸡lol~",
+                "uname": "Zz金牌小土豆",
+                "face": "https://i1.hdslb.com/bfs/face/82e601e0f94e298ae7bf8acc0842be02ac01983b.jpg",
+                "verify": {
+                    "role": 7,
+                    "desc": "bilibili 直播高能主播",
+                    "type": 0
+                },
+                "uid": 8443852,
+                "keyframe": "http://i0.hdslb.com/bfs/live-key-frame/keyframe070309420000000359263i1oz9.jpg",
+                "is_auto_play": 1,
+                "head_box_type": 1,
+                "flag": 0,
+                "session_id": "1d0001f39c6e59253a1aafaddf64a228_C66B4D6C-F6C0-40CA-A16C-6C8420C8C6CA",
+                "group_id": 1000217,
+                "show_callback": "https://live-trace.bilibili.com/xlive/data-interface/v1/index/log?sessionID=1d0001f39c6e59253a1aafaddf64a228_C66B4D6C-F6C0-40CA-A16C-6C8420C8C6CA&group_id=1000217&biz=live&event_id=live_card_show&rule_key=&special_id=0&roomid=35926&parent_id=2&area_id=86&page=0&position=1&platform=web",
+                "click_callback": "https://live-trace.bilibili.com/xlive/data-interface/v1/index/log?sessionID=1d0001f39c6e59253a1aafaddf64a228_C66B4D6C-F6C0-40CA-A16C-6C8420C8C6CA&group_id=1000217&biz=live&event_id=live_card_click&rule_key=&special_id=0&roomid=35926&parent_id=2&area_id=86&page=0&position=1&platform=web",
+                "special_id": 0,
+                "watched_show": {
+                    "switch": true,
+                    "num": 5824,
+                    "text_small": "5824",
+                    "text_large": "5824人看过",
+                    "icon": "https://i0.hdslb.com/bfs/live/a725a9e61242ef44d764ac911691a7ce07f36c1d.png",
+                    "icon_location": 0,
+                    "icon_web": "https://i0.hdslb.com/bfs/live/8d9d0f33ef8bf6f308742752d13dd0df731df19c.png"
+                },
+                "is_nft": 0,
+                "nft_dmark": "",
+                "is_ad": false,
+                "ad_transparent_content": null,
+                "show_ad_icon": false,
+                "status": false,
+                "followers": 0
+            },
+
+            // ...
+        ]
+    }
+}
+
+
+// icon
+https://static.hdslb.com/images/base/icons.png
+// all icon
+https://api.bilibili.com/x/emote/user/panel/web?business=reply&csrf=59059b1c465b379b8a4352fd23d4bc7a
+
+
+
+# 通过bvid获取用户房间号信息
+https://api.bilibili.com/x/web-interface/wbi/view?aid=657970695&w_rid=94b61ed69ec4a0dba1c95a48c6a85ffa&wts=1688354579
+
+=> aid = 657970695
+
+BV1Th411N7ys
+https://api.bilibili.com/x/web-interface/wbi/view?bvid=BV1La4y1w7rj
+https://api.bilibili.com/x/web-interface/wbi/view?aid=657970695

@@ -2,17 +2,18 @@
 export const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/
 export const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/
 export const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
+export const douyin_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
 export const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/
 export const local_url = window.location.href
 export const is_huya = huya_address_pattern.test(local_url) // 是否是虎牙地址
 export const is_douyu = douyu_address_pattern.test(local_url) // 是否是斗鱼地址
-export const is_bilibili = bilibili_address_pattern.test(local_url) // 是否是bilibili
+export const is_bilibili = bilibili_address_pattern.test(local_url) // bilibili
+export const is_douyin = douyin_address_pattern.test(local_url) // douyin
 export const is_localhost = localhost.test(local_url) // 本地环境
 export const wd = window.document
 export const wls = window.localStorage
 export const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
 export const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
-// common method
 export const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file)
 export const querySelector = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelector(sel) : wd.querySelector(el)
 export const querySelectorAll = (el, sel) => !!el && el instanceof HTMLElement ? el.querySelectorAll(sel) : wd.querySelectorAll(el)
@@ -176,7 +177,6 @@ export const backgroundNone = (element, selectors = ['.layout-Main'], time = 100
 
 }
 
-export const hasVideo = (element, selector = '.layout-Main') => !!querySelector(element, selector)
 
 export const uploadImage = (file, callback) => {
     try {
@@ -257,33 +257,4 @@ export class HostUser {
     }
 }
 
-
-const request = (url, options) => {
-    if (window.fetch) {
-        return fetch(url, options).then(response => response.json())
-    } else {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open(options.method || 'GET', url);
-
-            if (options.headers) {
-                for (let header in options.headers) {
-                    xhr.setRequestHeader(header, options.headers[header]);
-                }
-            }
-
-            xhr.onload = () => {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    resolve(JSON.parse(xhr.responseText));
-                } else {
-                    reject(xhr.statusText);
-                }
-            };
-
-            xhr.onerror = () => reject(xhr.statusText);
-
-            xhr.send(options.body);
-        });
-    }
-}
 

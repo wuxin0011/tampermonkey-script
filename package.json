@@ -5,7 +5,7 @@
   "version": "4.0.2",
   "type": "module",
   "license": "MIT",
-  "description": "虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播",
+  "description": "虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录",
   "keywords": [
     "直播插件",
     "油猴插件",

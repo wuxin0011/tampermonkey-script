@@ -3,7 +3,7 @@
 // @namespace    https://github.com/wuxin0011/huya-live
 // @version      4.0.2
 // @author       wuxin0011
-// @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播
+// @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录
 // @license      MIT
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
@@ -11,6 +11,7 @@
 // @match        https://*.douyu.com/*
 // @match        https://*.huya.com/*
 // @match        https://*.bilibili.com/*
+// @match        https://*.douyin.com/*
 // @grant        GM_addStyle
 // ==/UserScript==
 
@@ -20,11 +21,13 @@
   const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/;
   const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
   const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/;
+  const douyin_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/;
   const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/;
   const local_url = window.location.href;
   const is_huya = huya_address_pattern.test(local_url);
   const is_douyu = douyu_address_pattern.test(local_url);
   const is_bilibili = bilibili_address_pattern.test(local_url);
+  const is_douyin = douyin_address_pattern.test(local_url);
   const is_localhost = localhost.test(local_url);
   const wd = window.document;
   const wls = window.localStorage;
@@ -176,7 +179,6 @@
       count = count + 1;
     }, time);
   };
-  const hasVideo = (element, selector = ".layout-Main") => !!querySelector(element, selector);
   const uploadImage = (file, callback) => {
     try {
       if (!isImage(file == null ? void 0 : file.name)) {
@@ -246,7 +248,7 @@
     }
   }
   const getHtmlStr = (show1, show2, show3, show4, show5) => {
-    if (is_bilibili || is_localhost) {
+    if (is_localhost) {
       return `<div class="m-container">
         <div class="m-container-box  m-type-container m-ani-left-is-active" id="m-container-box1">
           <div class="m-type-operation">
@@ -697,7 +699,7 @@
       let x, y;
       const mouse_key = that.key + "_mouse_key";
       let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name);
-      if (mouse_left || mouse_top) {
+      if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
         btn.style.left = mouse_left + "px";
         btn.style.top = mouse_top + "px";
         btn.style.right = "auto";
@@ -1267,7 +1269,7 @@
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         if (isArray(divs)) {
           for (let element of divs) {
-            if (hasVideo(element, ".layout-Main")) {
+            if (!!querySelector(element, ".layout-Main")) {
               backgroundNone(element, backgroundNones);
             } else {
               removeDOM(element, true);
@@ -1650,6 +1652,27 @@
       }
     }
   }
+  class DouYin extends LivePlugin {
+    constructor() {
+      super();
+      this.init();
+    }
+    // 覆盖默认方法
+    init() {
+      this.common();
+    }
+    // 公共部分页面操作
+    common() {
+      this.audoFullScreen();
+    }
+    // 自动全屏
+    audoFullScreen() {
+      let fullButton = querySelector(".xgplayer-page-full-screen .xgplayer-icon");
+      if (fullButton) {
+        fullButton.click();
+      }
+    }
+  }
   addStyle(`
 .m-container,
 .m-container .btn,
@@ -1667,7 +1690,8 @@
   --m-font-color: #fff;
   --m-container-backgournd-color: #fff;
   --m-container-width: 700px;
-  --m-container-height: 400px;
+  --m-container-width-close: -700px;
+  --m-container-height: 410px;
   --m-container-operation-right-width: 150px;
   --m-container-input-width: 150px;
   --m-container-box-transition: all 0.4s ease-in-out;
@@ -1686,27 +1710,38 @@
   border-radius: 10px !important;
   overflow: hidden !important;
   background-color: var(--m-container-backgournd-color) !important;
-  z-index: 100000000 !important;
+  z-index: 999999999 !important;
   padding: 15px !important;
   transition: var(--m-container-box-transition) !important;
   box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
     -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
 
   opacity: 0;
-  transform: translate(-50%, -150%);
+  transform: translate(-50%, -100%);
 }
+
 
 .m-container-is-active {
   opacity: 1;
   transform: translate(-50%, 0%);
-  z-index:100000000 !important;
 }
-
 .m-container-box {
   display: flex !important;
   flex-direction: column !important;
-  width: 100% !important;
-  height: 100% !important;
+  transition: var(--m-container-box-transition) !important;
+}
+
+.m-container-main {
+  position: relative !important;
+  background-color: #ddd !important;
+}
+
+#m-container-box1,
+#m-container-box2 {
+  position: absolute !important;
+  transition: var(--m-container-box-transition) !important;
+  width: var(--m-container-width);
+  overflow: hidden scroll;
 }
 
 .m-container .operation {
@@ -1776,8 +1811,24 @@
 
 .m-container table tbody {
   flex: 1 !important;
+  max-height: 280px !important;
   overflow: auto !important;
 }
+
+/* 滚动条 */
+.m-container table tbody::-webkit-scrollbar {
+  width: 7px;
+  background-color: transparent;
+}
+
+.m-container table tbody::-webkit-scrollbar-thumb {
+  /* min-width: 12px; */
+  min-height: 200px;
+  background-color: #888;
+  border-radius: 8px;
+}
+
+
 
 .m-container table th,
 .m-container table td {
@@ -1790,7 +1841,7 @@
 
 .m-container .m-link,
 .m-container .m-link:visited {
-  color: blnk !important;
+  color: black !important;
 }
 
 .m-container .m-link:hover {
@@ -1800,9 +1851,8 @@
 
 .m-container .btn {
   cursor: pointer !important;
-  padding: 5px 8px !important;
+  padding: 5px 12px !important;
   border: none !important;
-  max-width:50px !important;
   color: var(--m-font-color) !important;
   font-size: 1rem !important;
   border-radius: 20px !important;
@@ -1861,22 +1911,7 @@
   background-color: rgba(245, 108, 108, 0.6) !important;
 }
 
-#m-container-box1 {
-  position: absolute !important;
-  z-index: 10000000 !important;
-  transition: var(--m-container-box-transition) !important;
-  width: 100% !important;
-  height: 100% !important;
-}
 
-#m-container-box2 {
-  position: absolute !important;
-  z-index: 9999 !important;
-  transition: var(--m-container-box-transition) !important;
-  ;
-  width: 100% !important;
-  height: 100% !important;
-}
 
 .m-ani-left-is-active {
   transform: translateX(0) !important;
@@ -1885,7 +1920,7 @@
 }
 
 .m-ani-left-is-close {
-  transform: translateX(-100%) !important;
+  transform: translateX(var(--m-container-width-close)) !important;
   visibility: hidden !important;
   opacity: 0 !important;
 }
@@ -1897,14 +1932,14 @@
 }
 
 .m-ani-right-is-close {
-  transform: translateX(100%) !important;
+  transform: translateX(var(--m-container-width)) !important;
   visibility: hidden !important;
   opacity: 0 !important;
 }
 
 .m-type-container .m-type-item {
   display: flex !important;
-  height: 30px !important;
+  height: 40px !important;
 }
 
 .m-type-container .m-type-item .m-type-item-left {
@@ -1949,7 +1984,6 @@
 
 .m-type-container .m-tag-select {
   width: calc(var(--m-container-select-width)/2) !important;
-  ;
   outline: none !important;
   border: 1px solid rgba(8, 125, 235, 0.6) !important;
   padding: 5px 8px !important;
@@ -1977,22 +2011,22 @@
   color: red !important;
 }
 
-    .m-span-text {
-        transition: all 0.3s ease;
-        cursor: pointer !important;
-        opacity: 0;
-        float:right;
-        display:inline-block;
-        margin:0 10px;
-        transform: scale(0.5);
-        font-size:20px;
-        position:relative;
-    }
+  .m-span-text {
+      transition: all 0.3s ease;
+      cursor: pointer !important;
+      opacity: 0;
+      float:right;
+      display:inline-block;
+      margin:0 10px;
+      transform: scale(0.5);
+      font-size:20px;
+      position:relative;
+  }
 
-    .m-span-text::before{
-        content:"🧹";
-        cursor: pointer !important;
-    }
+  .m-span-text::before{
+      content:"🧹";
+      cursor: pointer !important;
+  }
 
 
    /***************************************************斗鱼直播***************************************************************************/
@@ -2085,9 +2119,13 @@
    .public-DropMenu-drop-main div.Header-UserPane-top~div,
    #js-player-dialog .LiveRoomLoopVideo,
    .Header-search-wrap .Search  label,
-   .Barrage .Barrage-userEnter{
+    .Barrage .Barrage-userEnter{
      display:none !important;
    }
+   [class*="AnchorLevel-\\d+"] {
+    display:none !important;
+  }
+  
 
    /* 一般禁用模式 */
    .layout-Player-main #js-player-toolbar{
@@ -2272,12 +2310,18 @@
     .bili-video-card__info--bottom:hover .m-span-text,
     .video-page-card-small:hover .m-span-text,
     .up-info-container:hover .m-span-text,
-    .video-page-operator-card-small:hover .m-span-text
-     {
+    .video-page-operator-card-small:hover .m-span-text{
         opacity: 1;
         transform: scale(1.1);
         color:orange;
     }
+    /******************************************抖音*****************************************************/
+    #related-video-card-login-guide,
+    #captcha_container,
+    #login-full-panel{
+        display:none !important;
+    }
+
 `);
   (function() {
     if (typeof window === void 0) {
@@ -2306,6 +2350,8 @@
           new FishLive();
         } else if (is_bilibili) {
           new BiliBili();
+        } else if (is_douyin) {
+          new DouYin();
         } else if (is_localhost) {
           new LivePlugin();
         } else {

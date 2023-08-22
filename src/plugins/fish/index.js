@@ -1,17 +1,17 @@
 import {
     addEventListener, backgroundNone,
-    getLocalStore, hasVideo, intervalRemoveElement,
     isArray,
-    local_url, log, loopDo,
+    local_url,
+    loopDo,
     querySelector,
     querySelectorAll,
     removeDOM,
     removeVideo,
     throttle, timeoutSelectorAll
-} from '../../utils'
+} from '../../utils';
 
+import { getInfo } from "../../api/fish/index.js";
 import LivePlugin from "../live/index.js";
-import {getInfo} from "../../api/fish/index.js";
 
 /**
  * 斗鱼直播插件
@@ -93,7 +93,7 @@ export default class FishLive extends LivePlugin {
                             // 获取全部地址
                             window.location.href = 'https://www.douyu.com/g_' + local_url.match(RegExp(
                                 /subCate\/.*/g))[0].replace('subCate', '').match(new RegExp(
-                                /\w+/g))[0]
+                                    /\w+/g))[0]
                         }
 
                     })
@@ -132,7 +132,7 @@ export default class FishLive extends LivePlugin {
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
             if (isArray(divs)) {
                 for (let element of divs) {
-                    if (hasVideo(element, '.layout-Main')) {
+                    if (!!querySelector(element, '.layout-Main')) {
                         backgroundNone(element, backgroundNones)
                     } else {
                         removeDOM(element, true)
