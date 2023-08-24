@@ -1003,11 +1003,11 @@
             this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
             this.baseUrl = "https://www.huya.com/"
             this.users = getLocalStore(this.key, Array.name, true)
-            this.html = querySelector('html')
-            this.body = querySelector('body')
             this.menu = querySelector('.mod-sidebar')
             this.header_logo = '#duya-header #duya-header-logo a'
             this.giftTool = querySelector('.room-core .player-gift-wrap')
+            this.html = querySelector('html')
+            this.body = querySelector('body')
             this.tbody = null
             this.m_container = null
             this.init()
@@ -1062,9 +1062,6 @@
         }
         // 公共部分操作
         common() {
-            // window.onscroll = throttle(500, () => {
-            //     this.removeRoomByClickRoomName()
-            // })
             this.removeRoomByClickRoomName()
             this.clickLogoShowContainer()
         }
@@ -2081,10 +2078,6 @@
          color: #333 !important;
          background-color: #f2f5f6 !important;
        }
-       .layout-Player-barrage{
-           position: absolute !important;
-           top: 0 !important;
-        }
 
         .Header-search-wrap input#header-search-input::placeholder {
             color: transparent !important;
