@@ -8,13 +8,14 @@
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
 // @supportURL   https://github.com/wuxin0011/huya-live/issues
+// @match        https://*.douyin.com/*
+// @match        https://*.douyu.com/*
+// @match        https://*.huya.com/*
+// @match        https://*.bilibili.com/*
 // @match        https://www.douyu.com/*
 // @match        https://www.huya.com/*
 // @match        https://www.bilibili.com/*
-// @match        https://*.douyin.com/*,https://*.douyu.com/*
-// @match        https://*.huya.com/*
-// @match        https://*.bilibili.com/*
-// @match        https://*.douyin.com/*
+// @match        https://www.douyin.com/*
 // @grant        GM_addStyle
 // ==/UserScript==
 
