@@ -1273,17 +1273,14 @@
       if (!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url)) {
         return;
       }
-      setTimeout(() => {
-        const hostName = querySelector(".Title-roomInfo h2.Title-anchorNameH2");
-        if (hostName) {
-          hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
-          addEventListener(hostName, "click", () => {
-            if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
-              that2.addUser(that2.getRoomIdByUrl(local_url), hostName.textContent);
-            }
-          });
-        }
-      }, 4e3);
+      findMark(".Title-roomInfo h2.Title-anchorNameH2", (hostName) => {
+        hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
+        addEventListener(hostName, "click", () => {
+          if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
+            that2.addUser(that2.getRoomIdByUrl(local_url), hostName.textContent);
+          }
+        });
+      });
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let divs = querySelectorAll("#root>div");
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
@@ -1311,7 +1308,7 @@
         timeoutSelectorAllOne(".layout-List-item", (li) => {
           setTimeoutMark(li, () => {
             const a = querySelector(li, ".DyCover");
-            const url = a.href || "";
+            const url = (a == null ? void 0 : a.href) || "";
             const user = querySelector(li, ".DyCover-user");
             const name = (user == null ? void 0 : user.textContent) || "";
             a.setAttribute("href", "javascript:;void(0)");
@@ -1349,7 +1346,7 @@
                 });
                 addEventListener(li, "mouseenter", (e) => {
                   const a = querySelector(e.target, "a.DyListCover-wrap.is-hover");
-                  const url2 = a.href;
+                  const url2 = a == null ? void 0 : a.href;
                   a.setAttribute("href", "javascript:;void(0)");
                   const user2 = querySelector(a, ".DyListCover-userName");
                   const name2 = user2.textContent || "";
@@ -2090,7 +2087,7 @@ display:block !important;
 .layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
 .layout-Main #layout-Player-aside .SignBarrage,
 #js-player-video-case .VRTips~div,
-.layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
+.layout-Main .Title-roomInfo .Title-row,
 .layout-Main .ToTopBtn,
 .Header-right .public-DropMenu-drop .DropPane-ad,
 .Header-right .CloudGameLink,
@@ -2123,6 +2120,19 @@ background-image:none !important;
  display:block !important;
 }
 
+ .layout-Player-main .Title-roomInfo .is-normal .Title-blockInline,
+ .layout-Player-main .Title-roomInfo .is-normal:nth-child(2)
+
+  {
+  display:none !important;
+}
+
+.layout-Player-main .Title-roomInfo .is-normal .Title-blockInline:nth-child(0),
+.layout-Player-main .Title-roomInfo .is-normal .Title-blockInline:nth-child(1),
+.layout-Player-main .Title-roomInfo .is-normal .Title-blockInline:nth-child(2)
+ {
+  display:inline-block !important;
+ }
 
 .Barrage-main .Barrage-content {
 color:#333 !important;

@@ -75,7 +75,7 @@ display:block !important;
 .layout-Main #layout-Player-aside .BarrageSuspendedBallAd,
 .layout-Main #layout-Player-aside .SignBarrage,
 #js-player-video-case .VRTips~div,
-.layout-Main .Title-roomInfo .Title-row:nth-child(2) .Title-col.is-normal:last-child,
+.layout-Main .Title-roomInfo .Title-row,
 .layout-Main .ToTopBtn,
 .Header-right .public-DropMenu-drop .DropPane-ad,
 .Header-right .CloudGameLink,
@@ -108,6 +108,19 @@ background-image:none !important;
  display:block !important;
 }
 
+ .layout-Player-main .Title-roomInfo .is-normal .Title-blockInline,
+ .layout-Player-main .Title-roomInfo .is-normal:nth-child(2)
+
+  {
+  display:none !important;
+}
+
+.layout-Player-main .Title-roomInfo .is-normal .Title-blockInline:nth-child(0),
+.layout-Player-main .Title-roomInfo .is-normal .Title-blockInline:nth-child(1),
+.layout-Player-main .Title-roomInfo .is-normal .Title-blockInline:nth-child(2)
+ {
+  display:inline-block !important;
+ }
 
 .Barrage-main .Barrage-content {
 color:#333 !important;

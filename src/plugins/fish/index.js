@@ -111,18 +111,15 @@ export default class FishLive extends LivePlugin {
         if (!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url)) {
             return;
         }
-        setTimeout(() => {
-            const hostName = querySelector('.Title-roomInfo h2.Title-anchorNameH2')
-            if(hostName){
-                hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
-                addEventListener(hostName, 'click', () => {
-                    if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
-                        that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
-                    }
-                })
-            }
-           
-        }, 4000);
+
+        findMark('.Title-roomInfo h2.Title-anchorNameH2',(hostName)=>{
+            hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
+            addEventListener(hostName, 'click', () => {
+                if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
+                    that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+                }
+            })
+        })
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
             let divs = querySelectorAll('#root>div')
@@ -163,7 +160,7 @@ export default class FishLive extends LivePlugin {
             timeoutSelectorAllOne('.layout-List-item', (li) => {
                 setTimeoutMark(li, () => {
                     const a = querySelector(li, '.DyCover')
-                    const url = a.href || ''
+                    const url = a?.href || ''
                     const user = querySelector(li, '.DyCover-user')
                     const name = user?.textContent || ''
                     a.setAttribute('href', 'javascript:;void(0)');
@@ -203,7 +200,7 @@ export default class FishLive extends LivePlugin {
                             // 监听鼠标移入事件
                             addEventListener(li, 'mouseenter', (e) => {
                                 const a = querySelector(e.target, 'a.DyListCover-wrap.is-hover')
-                                const url = a.href
+                                const url = a?.href
                                 a.setAttribute('href', 'javascript:;void(0)');
                                 const user = querySelector(a, '.DyListCover-userName')
                                 const name = user.textContent || ''
