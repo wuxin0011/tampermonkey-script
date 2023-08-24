@@ -2,12 +2,11 @@ import {defineConfig} from 'vite';
 import monkey from 'vite-plugin-monkey';
 import config from './package.json' assert {type: 'json'}
 
-// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [monkey({
         entry: 'src/main.js', userscript: {
             icon: 'https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png',
-            match: ['https://*.douyu.com/*', 'https://*.huya.com/*', 'https://*.bilibili.com/*','https://*.douyin.com/*'],
+            match: ['https://www.douyu.com/*', 'https://www.huya.com/*', 'https://www.bilibili.com/*','https://*.douyin.com/*,https://*.douyu.com/*', 'https://*.huya.com/*', 'https://*.bilibili.com/*','https://*.douyin.com/*'],
             namespace: config.repository.url,
             version: config.version,
             description: config.description,

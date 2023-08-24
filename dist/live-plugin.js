@@ -1,14 +1,17 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.0.2
+// @version      4.0.3
 // @author       wuxin0011
 // @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录
 // @license      MIT
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
 // @supportURL   https://github.com/wuxin0011/huya-live/issues
-// @match        https://*.douyu.com/*
+// @match        https://www.douyu.com/*
+// @match        https://www.huya.com/*
+// @match        https://www.bilibili.com/*
+// @match        https://*.douyin.com/*,https://*.douyu.com/*
 // @match        https://*.huya.com/*
 // @match        https://*.bilibili.com/*
 // @match        https://*.douyin.com/*
@@ -41,9 +44,9 @@
   const download_plugin_url = "https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD";
   const source_code_url = "https://github.com/wuxin0011/huya-live";
   const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file);
-  const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : wd && el ? wd.querySelector(el) : emptyMehtod;
+  const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : el ? wd.querySelector(el) : emptyMehtod;
   const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : el ? wd.querySelectorAll(el) : emptyMehtod;
-  const addEventListener = (el, type, callback) => !!el && el instanceof HTMLElement && type && typeof callback === "function" && el.addEventListener(type, callback, false);
+  const addEventListener = (el, type, callback) => !!el && type && typeof callback === "function" ? el === wd || el instanceof HTMLElement ? el.addEventListener(type, callback, false) : false : false;
   const createElement = (tag) => !!tag && wd.createElement(tag);
   const appendChild = (el1, el2) => !!el1 && !!el2 && el1 instanceof HTMLElement && el2 instanceof HTMLElement && el1.appendChild(el2);
   const insertChild = (el1, el2) => !!el1 && !!el2 && el1 instanceof HTMLElement && el2 instanceof HTMLElement && el1.insertBefore(el2, el1.firstChild);
@@ -75,18 +78,28 @@
   const s2d = (string) => new DOMParser().parseFromString(string, "text/html").body.childNodes[0];
   const isArray = (a) => a && (a == null ? void 0 : a.length) > 0;
   const timeoutSelectorAll = (selector, callback, time = 0) => {
+    if (typeof callback != "function") {
+      warn("callback should is a function!");
+      return;
+    }
     setTimeout(() => {
       const nodes = querySelectorAll(selector);
-      if (isArray(nodes) && typeof callback === "function") {
+      if (isArray(nodes)) {
         callback(nodes);
       }
     }, time);
   };
-  const timeoutSelector = (selector, callback, time = 0) => {
+  const timeoutSelectorAllOne = (selector, callback, time = 0) => {
+    if (typeof callback != "function") {
+      warn("callback should is a function!");
+      return;
+    }
     setTimeout(() => {
-      const logoNode = querySelector(selector);
-      if (logoNode && typeof callback === "function") {
-        callback(logoNode);
+      const nodes = querySelectorAll(selector);
+      if (isArray(nodes)) {
+        for (let node of nodes) {
+          callback(node);
+        }
       }
     }, time);
   };
@@ -141,7 +154,7 @@
   };
   const intervalRemoveElement = (selectors, time = 160, maxCount = 1e3) => {
     if (!isArray(selectors)) {
-      log(`selectors 必须是数组 : ${selectors}`, "warn");
+      warn(`selectors 必须是数组 : ${selectors}`);
       return;
     }
     let count = 0;
@@ -157,6 +170,10 @@
     }, time);
   };
   const loopDo = (callback, count = 100, wait = 100) => {
+    if (typeof callback != "function") {
+      warn("callback is a function!");
+      return;
+    }
     let timer = setInterval(() => {
       count--;
       if (count === 0) {
@@ -166,8 +183,73 @@
       }
     }, wait);
   };
+  const findMark = (selector, callback, count = 100, wait = 100) => {
+    if (!selector) {
+      warn("selector not allow  or null !");
+      return;
+    }
+    if (typeof callback != "function") {
+      warn("callback is a function!");
+      return;
+    }
+    loopDo((timer) => {
+      try {
+        let element = selector instanceof HTMLElement ? selector : querySelector(selector);
+        if (element) {
+          let isMark = element.getAttribute("mark");
+          if (!isMark) {
+            element.setAttribute("mark", true);
+            callback(element);
+          } else {
+            clearInterval(timer);
+          }
+        }
+      } catch (e) {
+        clearInterval(timer);
+        error(e);
+      }
+    }, 100, 100);
+    setTimeout(() => {
+      let element = selector instanceof HTMLElement ? selector : querySelector(selector);
+      if (element) {
+        let isMark = element.getAttribute("mark");
+        if (!isMark) {
+          element.setAttribute("mark", true);
+          callback(element);
+        }
+      }
+    }, 5e3);
+  };
+  const setTimeoutMark = (selector, callback, wait = 0) => {
+    if (!selector) {
+      warn("selector not allow  or null !");
+      return;
+    }
+    if (typeof callback != "function") {
+      warn("callback is a function!");
+      return;
+    }
+    let timer = setTimeout(() => {
+      try {
+        let element = selector instanceof HTMLElement ? selector : querySelector(selector);
+        if (element) {
+          let isMark = element.getAttribute("mark");
+          if (!isMark) {
+            element.setAttribute("mark", true);
+            callback(element);
+          } else {
+            clearInterval(timer);
+          }
+        }
+      } catch (e) {
+        clearInterval(timer);
+        error(e);
+      }
+    }, wait);
+  };
   const backgroundNone = (element, selectors = [".layout-Main"], time = 100, maxCount = 500) => {
     if (!(element instanceof HTMLElement) || !isArray(selectors)) {
+      warn(`element 参数应是 元素， selector 应该是元素选择器集合`);
       return;
     }
     let count = 0;
@@ -243,33 +325,33 @@
   }
   const htmlTemplate = (show1, show2, show3, show4, show5) => {
     return `<div class="m-container">
-<div class="m-container-box" id="m-container-box2">
-    <div class="operation">
-        <input type="text" placeholder="房间号或者名称...">
-        <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
-        <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
-        <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
-        <input type="file" id="file">
-        <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
-        <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单
-        <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏
-        <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物
-        <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
-        <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
-        <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
-    </div>
-    <table>
-        <thead>
-            <th>序号</th>
-            <th>名称</th>
-            <th>房间号</th>
-            <th>操作</th>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    </div>
-</div>`;
+    <div class="m-container-box" id="m-container-box2">
+        <div class="operation">
+            <input type="text" placeholder="房间号或者名称...">
+            <button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间">添加</button>
+            <button class="btn btn-success clear-room" title="重置表格数据">重置</button>
+            <button class="btn btn-warning bg-btn" title="上传背景图">背景</button>
+            <input type="file" id="file">
+            <input type="checkbox" id="checkbox1" ${show1 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景
+            <input type="checkbox" id="checkbox2" ${show2 ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单
+            <input type="checkbox" id="checkbox3" ${show3 ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏
+            <input type="checkbox" id="checkbox4" ${show4 ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物
+            <input type="checkbox" id="checkbox5" ${show5 ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
+            <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
+            <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
+        </div>
+        <table>
+            <thead>
+                <th>序号</th>
+                <th>名称</th>
+                <th>房间号</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
+ </div>`;
   };
   class LivePlugin {
     constructor() {
@@ -296,6 +378,7 @@
       this.logo_show_key = this.key + "_logo_show";
       this.header_logo = "none";
       this.buttonName = "";
+      this.isNew = false;
       if (is_localhost) {
         this.init();
       }
@@ -346,8 +429,7 @@
      * @returns {null} name
      */
     getNameByRoomId(roomId) {
-      alert("该操作未实现！");
-      return null;
+      throw new Error("请自定义实现通过名称获取房间号方法！");
     }
     /**
      * 通过一个地址获取房间号
@@ -355,27 +437,34 @@
      * @returns {null} 房间号
      */
     getRoomIdByUrl(url) {
-      return null;
+      throw new Error("请自定义实现通过url获取房间号方法！");
     }
     /*********************************子类继承无需修改的方法******************************/
     /**
      * 容器，所有操作容器均在此容器中，
      */
     create_container() {
-      let that = this;
+      let that2 = this;
       let body = querySelector("body") ?? createElement("body");
-      that.users = getLocalStore(that.key, Array.name);
-      let show1 = getLocalStore(that.bg_show_key, Boolean.name);
-      let show2 = getLocalStore(that.menu_show_key, Boolean.name);
-      let show3 = getLocalStore(that.full_screen_key, Boolean.name);
-      let show4 = getLocalStore(that.gift_key, Boolean.name);
-      let show5 = getLocalStore(that.logo_show_key, Boolean.name);
-      that.m_container = s2d(htmlTemplate(show1, show2, show3, show4, show5));
-      appendChild(body, that.m_container);
-      that.tbody = querySelector(that.m_container, "#m-container-box2 table tbody");
-      that.operationDOMButton();
-      that.createRoomItem(that.users);
-      that.createButton();
+      that2.users = getLocalStore(that2.key, Array.name);
+      let show1 = getLocalStore(that2.bg_show_key, Boolean.name);
+      let show2 = getLocalStore(that2.menu_show_key, Boolean.name);
+      let show3 = getLocalStore(that2.full_screen_key, Boolean.name);
+      let show4 = getLocalStore(that2.gift_key, Boolean.name);
+      let show5 = getLocalStore(that2.logo_show_key, Boolean.name);
+      that2.m_container = s2d(htmlTemplate(show1, show2, show3, show4, show5));
+      appendChild(body, that2.m_container);
+      if (querySelector(that2.m_container, "#m-container-box2 table tbody")) {
+        that2.tbody = querySelector(that2.m_container, "#m-container-box2 table tbody");
+        this.isNew = true;
+      } else {
+        that2.tbody = querySelector(that2.m_container, ".m-container table tbody");
+        this.isNew = false;
+      }
+      that2.operationDOMButton();
+      that2.createRoomItem(that2.users);
+      that2.createButton();
+      log("操作面板初始化完毕！");
     }
     /**
      * 通过用户列表构建列表
@@ -385,7 +474,7 @@
       if (!isArray(arr)) {
         return;
       }
-      let that = this;
+      let that2 = this;
       arr.forEach((item, index) => {
         let tr = createElement("tr");
         tr.innerHTML = `
@@ -394,11 +483,11 @@
                 <td>${item.roomId}</td>
                 <td><button class="btn btn-danger" room-id="${item.roomId}">删除</button></td>
                 `;
-        appendChild(that.tbody, tr);
+        appendChild(that2.tbody, tr);
         addEventListener(querySelector(tr, "button"), "click", function(e) {
           let roomId = e.target.getAttribute("room-id");
-          that.userDelete(roomId);
-          if (that.getRoomIdByUrl(local_url) === roomId) {
+          that2.userDelete(roomId);
+          if (that2.getRoomIdByUrl(local_url) === roomId) {
             window.location.reload();
           }
           removeDOM(tr, true);
@@ -411,6 +500,7 @@
      */
     resetTbody(arr) {
       if (!this.tbody) {
+        error("tbody 为 null ！");
         return;
       }
       querySelectorAll(this.tbody, "tr").forEach((item) => removeDOM(item, true));
@@ -420,15 +510,15 @@
      * 操作框容器
      */
     operationDOMButton() {
-      let that = this;
-      if (!that.m_container) {
+      let that2 = this;
+      if (!that2.m_container) {
         return;
       }
-      const container = that.m_container;
+      const container = that2.m_container;
       const inputValue = querySelector(container, ".operation input");
       addEventListener(inputValue, "input", () => {
-        let arr = that.users.filter((item) => item.roomId && item.roomId.indexOf(inputValue.value) != -1 || item.name && item.name.indexOf(inputValue.value) != -1);
-        that.resetTbody(arr);
+        let arr = that2.users.filter((item) => item && item.roomId && item.roomId.indexOf(inputValue.value) != -1 || item.name && item.name.indexOf(inputValue.value) != -1);
+        that2.resetTbody(arr);
       });
       const addRoomBtn = querySelector(container, ".operation button.add-room");
       addEventListener(addRoomBtn, "click", function() {
@@ -436,16 +526,14 @@
         if (!keywords) {
           return alert("请输入房间号！");
         }
-        if (!that.userIsExist(keywords)) {
-          const name = that.getNameByRoomId(keywords);
-          if (name) {
-            that.addUser(keywords, name);
-            inputValue.value = "";
+        if (!that2.userIsExist(keywords)) {
+          const name = that2.getNameByRoomId(keywords);
+          if (name instanceof Promise) {
+            name.then((res) => {
+              that2.searchUserByRoomId(res, keywords, inputValue);
+            });
           } else {
-            if (confirm(`房间号为${keywords}的主播不存在！确定添加？`)) {
-              that.addUser(keywords, keywords);
-              inputValue.value = "";
-            }
+            that2.searchUserByRoomId(name, keywords, inputValue);
           }
         } else {
           alert("该主播已添加！");
@@ -454,11 +542,11 @@
       const clearRoomBtn = querySelector(container, ".operation button.clear-room");
       addEventListener(clearRoomBtn, "click", function() {
         if (confirm("确认重置？")) {
-          that.users = [];
-          for (let item of [that.key, that.bg_key, that.menu_show_key, that.gift_key, that.logo_show_key, that.full_screen_key]) {
+          that2.users = [];
+          for (let item of [that2.key, that2.bg_key, that2.menu_show_key, that2.gift_key, that2.logo_show_key, that2.full_screen_key]) {
             wls.removeItem(item);
           }
-          that.resetTbody(that.users);
+          that2.resetTbody(that2.users);
           window.location.reload();
         }
       });
@@ -466,8 +554,8 @@
       addEventListener(uploadButton, "change", function(e) {
         const file = uploadButton.files[0] || null;
         uploadImage(file, (base64) => {
-          addLocalStore(that.bg_key, base64, String.name, false);
-          that.settingBackgroundImage(e.target.result);
+          addLocalStore(that2.bg_key, base64, String.name, false);
+          that2.settingBackgroundImage(e.target.result);
         });
       });
       const upload = querySelector(container, ".operation .bg-btn");
@@ -476,49 +564,50 @@
       });
       const close_container = querySelector(container, ".operation .btn-close-container");
       addEventListener(close_container, "click", function(e) {
-        that.isShowContainer();
+        that2.isShowContainer();
       });
       const close_container2 = querySelector(container, ".operation #m-close-button1");
       addEventListener(close_container2, "click", function(e) {
-        that.isShowContainer();
+        that2.isShowContainer();
       });
       const checkbox = querySelector(container, ".operation #checkbox1");
       addEventListener(checkbox, "change", function(e) {
-        addLocalStore(that.bg_show_key, e.target.checked, Boolean.name);
-        that.settingBackgroundImage();
+        addLocalStore(that2.bg_show_key, e.target.checked, Boolean.name);
+        that2.settingBackgroundImage();
       });
       const menu = querySelector(container, ".operation #checkbox2");
       addEventListener(menu, "change", function(e) {
-        that.getLeftMenu(e.target.checked);
+        that2.getLeftMenu(e.target.checked);
       });
       const full_screen_btn = querySelector(container, ".operation #checkbox3");
       addEventListener(full_screen_btn, "change", function(e) {
-        addLocalStore(that.full_screen_key, e.target.checked, Boolean.name);
-        that.isFullScreen(true);
+        addLocalStore(that2.full_screen_key, e.target.checked, Boolean.name);
+        that2.isFullScreen(true);
       });
       const show_gitf = querySelector(container, ".operation #checkbox4");
       addEventListener(show_gitf, "change", function(e) {
-        addLocalStore(that.gift_key, e.target.checked, Boolean.name);
-        that.isShowGift();
+        addLocalStore(that2.gift_key, e.target.checked, Boolean.name);
+        that2.isShowGift();
       });
       const show_logo_btn = querySelector(container, ".operation #checkbox5");
       addEventListener(show_logo_btn, "change", function(e) {
         e.preventDefault();
-        if (!that.logo_btn) {
+        if (!that2.logo_btn) {
           warn("获取不到Logo哦！");
           return alert("获取不到logo");
         }
-        if (that.logo_btn.style.display === "block") {
+        if (that2.logo_btn.style.display === "block") {
           if (confirm("确认隐藏Logo？隐藏之后不再显示哦!如需显示logo，点击直播头部Logo即可显示")) {
-            that.logo_btn.style.display = "none";
-            addLocalStore(that.logo_show_key, false, Boolean.name);
+            that2.logo_btn.style.display = "none";
+            addLocalStore(that2.logo_show_key, false, Boolean.name);
           }
         } else {
-          that.logo_btn.style.display = "block";
-          addLocalStore(that.logo_show_key, true, Boolean.name);
+          that2.logo_btn.style.display = "block";
+          addLocalStore(that2.logo_show_key, true, Boolean.name);
         }
       });
       this.initAnimation(container);
+      log("操作按钮添加成功！");
     }
     initAnimation(container) {
       let box1 = querySelector(container, "#m-container-box1");
@@ -566,14 +655,33 @@
           select2_box2.classList.remove("m-ani-right-is-active");
         }
       });
+      log("动画初始化完毕！");
+    }
+    searchUserByRoomId(name, roomId, inputValue) {
+      let that2 = this;
+      if (name) {
+        that2.addUser(roomId, name);
+        inputValue.value = "";
+      } else {
+        if (confirm(`房间号为${roomId}的主播不存在！确定添加？`)) {
+          that2.addUser(roomId, roomId);
+          inputValue.value = "";
+        }
+      }
     }
     /**
      * 右侧操作按钮
      * @param text 指定按钮文本，默认是小虎牙或者是小鱼丸
      */
     createButton() {
-      let that = this;
-      if (!!that.logo_btn) {
+      let that2 = this;
+      let body = querySelector("body");
+      if (!body) {
+        error("获取不到 body ");
+        return;
+      }
+      if (!!that2.logo_btn) {
+        warn("button已经添加了！不能重复添加！");
         return;
       }
       let text = this.buttonName;
@@ -593,15 +701,16 @@
       btn.style.zIndex = 999999999999;
       btn.textContent = text ? text : is_huya ? "小虎牙" : is_douyu ? "小鱼丸" : is_bilibili ? "小B" : "默认";
       addEventListener(btn, "click", function() {
-        that.isShowContainer();
+        that2.isShowContainer();
       });
       addEventListener(btn, "mouseenter", function() {
         btn.style.backgroundColor = `rgba(${backgroundColor},0.6)`;
       });
       let flag = false;
       let x, y;
-      const mouse_key = that.key + "_mouse_key";
+      const mouse_key = that2.key + "_mouse_key";
       let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name);
+      log(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`);
       if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
         btn.style.left = mouse_left + "px";
         btn.style.top = mouse_top + "px";
@@ -610,16 +719,19 @@
       addEventListener(btn, "mousedown", (event) => {
         x = event.offsetX;
         y = event.offsetY;
+        log("mouseDown", x, y);
         flag = true;
         addEventListener(wd, "mousemove", move);
       });
       addEventListener(btn, "mouseup", () => {
         flag = false;
+        wd.removeEventListener("mousemove", move);
         wd.onmousemove = null;
       });
       addEventListener(btn, "mouseleave", () => {
         flag = false;
         btn.style.backgroundColor = `rgba(${backgroundColor},1)`;
+        wd.removeEventListener("mousemove", move);
         wd.onmousemove = null;
       });
       function move(e) {
@@ -629,14 +741,15 @@
         }
         let btn_top = Math.min(Math.max(0, e.clientY - y), window.innerHeight - btn.offsetHeight);
         let btn_left = Math.min(Math.max(0, e.clientX - x), window.innerWidth - btn.offsetWidth);
-        btn.style.left = btn_left + "px";
-        btn.style.top = btn_top + "px";
+        btn.style.left = `${btn_left}px`;
+        btn.style.top = `${btn_top}px`;
         btn.style.right = "auto";
         addLocalStore(mouse_key, { "mouse_left": btn_left, "mouse_top": btn_top }, Object.name);
       }
-      btn.style.display = is_bilibili || getLocalStore(that.logo_show_key, Boolean.name) ? "block" : "none";
-      that.logo_btn = btn;
-      appendChild(querySelector("body"), that.logo_btn);
+      btn.style.display = is_bilibili || getLocalStore(that2.logo_show_key, Boolean.name) ? "block" : "none";
+      that2.logo_btn = btn;
+      appendChild(body, that2.logo_btn);
+      log("button 添加完毕！");
     }
     /**
      * 该房间是否已改被删除
@@ -654,7 +767,7 @@
      * @param url 房间链接地址 默认 window.location.href
      */
     roomAlreadyRemove() {
-      let that = this;
+      let that2 = this;
       removeDOM(querySelector("body"), true);
       const h2 = createElement("h3");
       let html = querySelector("html");
@@ -673,7 +786,7 @@
       a.style.fontSize = "20px";
       a.onclick = (e) => {
         e.preventDefault();
-        that.userDelete(that.getRoomIdByUrl(local_url));
+        that2.userDelete(that2.getRoomIdByUrl(local_url));
         window.location.reload();
       };
       h2.style.fontSize = "36px";
@@ -686,7 +799,7 @@
       html.appendChild(body);
       body.appendChild(h2);
       body.appendChild(a);
-      let logo_show = getLocalStore(that.logo_show_key, Boolean.name);
+      let logo_show = getLocalStore(that2.logo_show_key, Boolean.name);
       if (logo_show) {
         let logo = createElement("a");
         logo.textContent = "显示logo";
@@ -696,8 +809,8 @@
         logo.onclick = (e) => {
           e.preventDefault();
           logo.style.display = "none";
-          addLocalStore(that.logo_show_key, false, Boolean.name);
-          that.createButton();
+          addLocalStore(that2.logo_show_key, false, Boolean.name);
+          that2.createButton();
         };
         body.appendChild(logo);
       }
@@ -723,6 +836,7 @@
         container = querySelector("body");
       }
       if (!container) {
+        warn("壁纸设置失败 获取不到 container ！");
         return;
       }
       if (getLocalStore(this.bg_show_key, Boolean.name)) {
@@ -731,6 +845,7 @@
         container.style.backgroundRepeat = "no-repeat ";
         container.style.backgroundAttachment = "fixed";
         container.style.backgroundImage = `url(${url})`;
+        log("背景图添加完毕！");
       } else {
         container.style.backgroundImage = "none";
       }
@@ -764,13 +879,13 @@
      * @param keywords 房间名或者id
      */
     userDelete(keywords) {
-      let that = this;
-      if (!isArray(that.users)) {
+      let that2 = this;
+      if (!isArray(that2.users)) {
         return;
       }
-      that.users.forEach((item, index) => {
+      that2.users.forEach((item, index) => {
         if (keywords == item.name || keywords == item.roomId) {
-          that.users.splice(index, 1);
+          that2.users.splice(index, 1);
         }
       });
       addLocalStore(this.key, this.users);
@@ -823,6 +938,7 @@
     isShowLeftMenu() {
       let menu = querySelector(this.menu);
       if (menu) {
+        log("menu change ....");
         menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? "block" : "none";
       }
     }
@@ -848,7 +964,7 @@
       let cancelFullText = this.cancelFullText;
       let show3 = getLocalStore(this.full_screen_key, Boolean.name);
       if (!this.full_screen_button) {
-        warn("full_screen_button key 为空！");
+        warn("点击全屏按钮获取失败！");
         return;
       }
       let fullScreen = querySelector(this.full_screen_button);
@@ -883,6 +999,7 @@
     isShowGift() {
       let gift = querySelector(this.giftTool);
       if (gift) {
+        log("gift change ....");
         gift.style.display = getLocalStore(this.gift_key, Boolean.name) ? "inline-block" : "none";
       }
     }
@@ -891,41 +1008,40 @@
      */
     isShowContainer() {
       if (this.m_container) {
-        if (this.m_container.classList.contains("m-container-is-active")) {
-          this.m_container.classList.remove("m-container-is-active");
+        log("container change ....");
+        if (this.isNew) {
+          if (this.m_container.classList.contains("m-container-is-active")) {
+            this.m_container.classList.remove("m-container-is-active");
+          } else {
+            this.m_container.classList.add("m-container-is-active");
+          }
         } else {
-          this.m_container.classList.add("m-container-is-active");
+          this.m_container.style.display = this.m_container.style.display === "block" ? "none" : "block";
         }
       }
     }
     /**
-     *  点击 直播平台 Logo 显示 操作面板
+     *  点击 直播平台 Logo 
      */
     clickLogoShowContainer() {
       if (this.header_logo === "none") {
+        warn("Logo选择器不能为 none ！");
         return;
       }
-      let that = this;
-      timeoutSelector(that.header_logo, (a) => {
+      let that2 = this;
+      findMark(that2.header_logo, (a) => {
         a.href = "javascript:;void(0)";
         a.title = "点击Logo，显示插件配置";
-        addEventListener(a, "click", (e) => {
-          that.isShowContainer();
+        addEventListener(a, "click", () => {
+          log("click header logo !");
+          that2.isShowContainer();
         });
-      }, 5e3);
+        log("logo点击按钮装置完毕！");
+      });
     }
-    /**
-     * 创建一个占位符显示可以操作按钮
-     * @param {*} container 房间容器ID
-     * @param {*} place 需要添加文本地方
-     * @param {*} id 房间号ID
-     * @param {*} name 房间名或者up名
-     * @param message 消息内容
-     * @param remove 是确认移除
-     * @returns
-     */
     createSpan(container, place, id, name = id, message = "确认屏蔽up主 ", remove = true) {
       if (!container || !place || !id || !name) {
+        error("createSpan 参数不全！");
         return;
       }
       const span = createElement("span");
@@ -981,15 +1097,12 @@
     // 分类页操作
     category() {
       if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
-        let that = this;
-        timeoutSelectorAll(".live-list-nav dd", (nodes) => {
-          for (let node of nodes) {
-            addEventListener(node, "click", () => {
-              setTimeout(() => {
-                that.removeRoomByClickRoomName();
-              }, 2e3);
-            });
-          }
+        timeoutSelectorAllOne(".live-list-nav dd", (node) => {
+          addEventListener(node, "click", () => {
+            setTimeout(() => {
+              that.removeRoomByClickRoomName();
+            }, 2e3);
+          });
         });
       }
     }
@@ -1001,13 +1114,14 @@
     // 详情操作
     detail() {
       if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
-        let that = this;
-        const hostName = querySelector(".host-name");
-        hostName.title = `点击屏蔽主播【${hostName.textContent}】`;
-        addEventListener(hostName, "click", () => {
-          if (confirm(`确认屏蔽主播 ${hostName.textContent}？`)) {
-            that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
-          }
+        let that2 = this;
+        findMark(".host-name", (hostName) => {
+          hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
+          addEventListener(hostName, "click", () => {
+            if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
+              that2.addUser(that2.getRoomIdByUrl(local_url), hostName.textContent);
+            }
+          });
         });
         let ads = [
           ".main-wrap .room-mod-ggTop",
@@ -1019,11 +1133,16 @@
     }
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
-      return url.match(/https:\/\/www\.huya\.com\/(.*)/)[1];
+      try {
+        return url && url.match(/https:\/\/www\.huya\.com\/(.*)/) ? url.match(/https:\/\/www\.huya\.com\/(.*)/)[1] : "";
+      } catch (error2) {
+        warn("url 匹配失败 请检查" + url);
+        return "";
+      }
     }
     // 通过房间号查找名称
     getNameByRoomId(roomId) {
-      let that = this;
+      let that2 = this;
       let hostName = querySelector(".host-name");
       if (!hostName) {
         return "";
@@ -1035,7 +1154,7 @@
       for (let room of rooms) {
         const a = querySelector(room, "a");
         if (a && a.href) {
-          const id = that.getRoomIdByUrl(a.href);
+          const id = that2.getRoomIdByUrl(a.href);
           const user = querySelector(room, ".txt i");
           if (id === roomId) {
             hostName = user;
@@ -1046,27 +1165,23 @@
     }
     // 通过点击直播间名称删除直播间
     removeRoomByClickRoomName() {
-      const that = this;
-      timeoutSelectorAll(".game-live-item", (rooms) => {
-        for (let li of rooms) {
-          let isMark = li.getAttribute("mark");
-          if (!isMark) {
-            li.setAttribute("mark", true);
-            const a = querySelector(li, "a");
-            const url = a.href;
-            const user = querySelector(li, ".txt i");
-            const name = user.textContent || "";
-            addEventListener(user, "click", () => {
-              if (confirm(`确认禁用 ${name}？`)) {
-                that.addUser(that.getRoomIdByUrl(url), name);
-                removeDOM(li);
-              }
-            });
-            if (that.isRemove(url)) {
+      const that2 = this;
+      timeoutSelectorAllOne(".game-live-item", (li) => {
+        setTimeoutMark(li, () => {
+          const a = querySelector(li, "a");
+          const url = a.href;
+          const user = querySelector(li, ".txt i");
+          const name = user.textContent || "";
+          addEventListener(user, "click", () => {
+            if (confirm(`确认禁用 ${name}？`)) {
+              that2.addUser(that2.getRoomIdByUrl(url), name);
               removeDOM(li);
             }
+          });
+          if (that2.isRemove(url)) {
+            removeDOM(li);
           }
-        }
+        }, 0);
       }, 500);
     }
   }
@@ -1096,9 +1211,7 @@
       this.header_logo = "#js-header .Header-left .Header-logo";
       this.tbody = null;
       this.m_container = null;
-      setTimeout(() => {
-        this.init();
-      }, 500);
+      this.init();
     }
     // 公共部分页面操作
     common() {
@@ -1106,8 +1219,8 @@
     }
     //首页操作
     index() {
-      let that = this;
-      if (window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
+      let that2 = this;
+      if (window.location.href === that2.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
         window.scroll(0, 0);
         removeVideo(".layout-Slide-player video");
         const vbox = querySelector("#room-html5-player");
@@ -1121,9 +1234,9 @@
             }
           }
         }
-        that.removeRoomByClickRoomName();
+        that2.removeRoomByClickRoomName();
         window.onscroll = throttle(500, () => {
-          that.removeRoomByClickRoomName();
+          that2.removeRoomByClickRoomName();
         });
         let topBtn = querySelector(".layout-Main .ToTopBtn");
         if (topBtn) {
@@ -1133,43 +1246,43 @@
     }
     // 分类页面操作
     category() {
-      let that = this;
+      let that2 = this;
       if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
-        that.removeRoomByClickRoomName();
-        const labels = querySelectorAll(".layout-Module-filter .layout-Module-label");
-        if (isArray(labels)) {
-          for (let label of labels) {
-            addEventListener(label, "click", (e) => {
-              e.preventDefault();
-              let to_link = label && label.href ? label.href : null;
-              if (to_link) {
-                window.location.href = to_link;
-              } else {
-                window.location.href = "https://www.douyu.com/g_" + local_url.match(RegExp(
-                  /subCate\/.*/g
-                ))[0].replace("subCate", "").match(new RegExp(
-                  /\w+/g
-                ))[0];
-              }
-            });
-          }
-        }
+        that2.removeRoomByClickRoomName();
+        querySelectorAll(".layout-Module-filter .layout-Module-label");
+        timeoutSelectorAllOne(".layout-Module-filter .layout-Module-label", (label) => {
+          addEventListener(label, "click", (e) => {
+            e.preventDefault();
+            let to_link = label && label.href ? label.href : null;
+            if (to_link) {
+              window.location.href = to_link;
+            } else {
+              window.location.href = "https://www.douyu.com/g_" + local_url.match(RegExp(
+                /subCate\/.*/g
+              ))[0].replace("subCate", "").match(new RegExp(
+                /\w+/g
+              ))[0];
+            }
+          });
+        });
       }
     }
     // 详情页操作
     detail() {
-      let that = this;
+      let that2 = this;
       if (!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url)) {
         return;
       }
       setTimeout(() => {
         const hostName = querySelector(".Title-roomInfo h2.Title-anchorNameH2");
-        hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
-        addEventListener(hostName, "click", () => {
-          if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
-            that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
-          }
-        });
+        if (hostName) {
+          hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
+          addEventListener(hostName, "click", () => {
+            if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
+              that2.addUser(that2.getRoomIdByUrl(local_url), hostName.textContent);
+            }
+          });
+        }
       }, 4e3);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let divs = querySelectorAll("#root>div");
@@ -1185,106 +1298,83 @@
         }
       }
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
-        loopDo((timer) => {
-          const closeBtn = querySelector(".roomSmallPlayerFloatLayout-closeBtn");
-          const isClick = closeBtn.getAttribute("isClick");
-          if (closeBtn && !isClick) {
-            closeBtn.click();
-            closeBtn.setAttribute("isClick", true);
-          }
-          if (isClick) {
-            clearInterval(timer);
-          }
-        }, 100, 500);
+        findMark(".roomSmallPlayerFloatLayout-closeBtn", (closeBtn) => {
+          closeBtn.click();
+        });
         removeDOM(".layout-Main .ToTopBtn", true);
       }
     }
     // 通过点击直播间名称删除直播间
     removeRoomByClickRoomName() {
-      let that = this;
+      let that2 = this;
       if (this.baseUrl === local_url || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
-        timeoutSelectorAll(".layout-List-item", (rooms) => {
-          for (let li of rooms) {
-            setTimeout(() => {
-              let isMark = li.getAttribute("mark");
-              if (!isMark) {
-                try {
-                  li.setAttribute("mark", true);
-                  const a = querySelector(li, ".DyCover");
-                  const url = a.href || "";
-                  const user = querySelector(li, ".DyCover-user");
-                  const name = (user == null ? void 0 : user.textContent) || "";
-                  a.setAttribute("href", "javascript:;void(0)");
-                  addEventListener(user, "click", () => {
-                    if (confirm(`确认禁用 ${name}`)) {
-                      that.addUser(that.getRoomIdByUrl(url), name);
-                      removeDOM(li);
-                    }
-                  });
-                  if (that.isRemove(url) || that.userIsExist(name)) {
-                    removeDOM(li);
-                  }
-                } catch (e) {
-                }
+        timeoutSelectorAllOne(".layout-List-item", (li) => {
+          setTimeoutMark(li, () => {
+            const a = querySelector(li, ".DyCover");
+            const url = a.href || "";
+            const user = querySelector(li, ".DyCover-user");
+            const name = (user == null ? void 0 : user.textContent) || "";
+            a.setAttribute("href", "javascript:;void(0)");
+            addEventListener(user, "click", () => {
+              if (confirm(`确认禁用 ${name}`)) {
+                that2.addUser(that2.getRoomIdByUrl(url), name);
+                removeDOM(li);
               }
-            }, 100);
-          }
+            });
+            if (that2.isRemove(url) || that2.userIsExist(name)) {
+              removeDOM(li);
+            }
+          }, 100);
         }, 100);
       }
       if (new RegExp(/https:\/\/www.douyu.com(\/((directory)|(g_)).*)/).test(local_url)) {
-        timeoutSelectorAll(".layout-Cover-item", (rooms) => {
-          for (let li of rooms) {
-            try {
-              let isMark = li.getAttribute("mark");
-              if (!isMark) {
-                li.setAttribute("mark", true);
-                const link = querySelector(li, "a.DyListCover-wrap");
-                if (link) {
-                  const url = (link == null ? void 0 : link.href) || "";
-                  link.setAttribute("href", "javascript:;void(0)");
-                  const user = querySelector(link, "div.DyListCover-userName");
-                  const name = user.textContent || "";
-                  if (that.isRemove(url) || that.userIsExist(name)) {
-                    removeDOM(li, true);
-                  } else {
-                    addEventListener(user, "click", (e) => {
-                      if (confirm(`确认禁用 ${name}？`)) {
-                        const id = that.getRoomIdByUrl(url);
-                        that.addUser(id, name);
-                        removeDOM(li);
-                      }
-                      e.preventDefault();
-                    });
-                    addEventListener(li, "mouseenter", (e) => {
-                      const a = querySelector(e.target, "a.DyListCover-wrap.is-hover");
-                      const url2 = a.href;
-                      a.setAttribute("href", "javascript:;void(0)");
-                      const user2 = querySelector(a, ".DyListCover-userName");
-                      const name2 = user2.textContent || "";
-                      addEventListener(user2, "click", () => {
-                        if (confirm(`确认禁用 ${name2}？`)) {
-                          const id = that.getRoomIdByUrl(url2);
-                          that.addUser(id, name2);
-                          removeDOM(li);
-                        }
-                      });
-                    });
+        timeoutSelectorAllOne(".layout-Cover-item", (li) => {
+          setTimeoutMark(li, () => {
+            const link = querySelector(li, "a.DyListCover-wrap");
+            if (link) {
+              const url = (link == null ? void 0 : link.href) || "";
+              link.setAttribute("href", "javascript:;void(0)");
+              const user = querySelector(link, "div.DyListCover-userName");
+              const name = user.textContent || "";
+              if (that2.isRemove(url) || that2.userIsExist(name)) {
+                removeDOM(li, true);
+              } else {
+                addEventListener(user, "click", (e) => {
+                  if (confirm(`确认禁用 ${name}？`)) {
+                    const id = that2.getRoomIdByUrl(url);
+                    that2.addUser(id, name);
+                    removeDOM(li);
                   }
-                }
+                  e.preventDefault();
+                });
+                addEventListener(li, "mouseenter", (e) => {
+                  const a = querySelector(e.target, "a.DyListCover-wrap.is-hover");
+                  const url2 = a.href;
+                  a.setAttribute("href", "javascript:;void(0)");
+                  const user2 = querySelector(a, ".DyListCover-userName");
+                  const name2 = user2.textContent || "";
+                  addEventListener(user2, "click", () => {
+                    if (confirm(`确认禁用 ${name2}？`)) {
+                      const id = that2.getRoomIdByUrl(url2);
+                      that2.addUser(id, name2);
+                      removeDOM(li);
+                    }
+                  });
+                });
               }
-            } catch (e) {
             }
-          }
+          }, 100);
         }, 0);
       }
     }
     // 通过房间号获取直播间name
     async getNameByRoomId(keywords) {
       var _a;
-      let that = this;
-      var result = await getInfo(keywords);
-      if ((result == null ? void 0 : result.room) && ((_a = result == null ? void 0 : result.room) == null ? void 0 : _a.nickname)) {
-        return result.room.nickname;
+      let that2 = this;
+      let searchResult = await getInfo(keywords);
+      if ((searchResult == null ? void 0 : searchResult.room) && ((_a = searchResult == null ? void 0 : searchResult.room) == null ? void 0 : _a.nickname)) {
+        log(`搜索到主播 ${searchResult.room.nickname}`);
+        return searchResult.room.nickname;
       }
       let hostName = querySelector(".Title-blockInline .Title-anchorName h2");
       let rooms = null;
@@ -1292,7 +1382,7 @@
         rooms = querySelectorAll(".layout-List-item");
         if (isArray(rooms)) {
           for (let room of rooms) {
-            const id = that.getRoomIdByUrl(querySelector(room, "a").href);
+            const id = that2.getRoomIdByUrl(querySelector(room, "a").href);
             const user = querySelector(room, ".DyCover-user");
             if (id === keywords) {
               hostName = user;
@@ -1303,7 +1393,7 @@
           rooms = querySelectorAll(".layout-Cover-item");
           if (isArray(rooms)) {
             for (let room of rooms) {
-              const id = that.getRoomIdByUrl(querySelector(room, "a").href);
+              const id = that2.getRoomIdByUrl(querySelector(room, "a").href);
               const user = querySelector(room, ".DyListCover-userName");
               if (id === keywords) {
                 hostName = user;
@@ -1357,8 +1447,8 @@
      * @returns
      */
     createButton() {
-      let that = this;
-      if (!!that.logo_btn) {
+      let that2 = this;
+      if (!!that2.logo_btn) {
         return;
       }
       let buttonBoxs = querySelector(".palette-button-wrap .storage-box .storable-items");
@@ -1384,11 +1474,11 @@
       }
       btn.title = "点击显示";
       btn.innerHTML = `<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2753" width="24" height="24"><path d="M306.005333 117.632L444.330667 256h135.296l138.368-138.325333a42.666667 42.666667 0 0 1 60.373333 60.373333L700.330667 256H789.333333A149.333333 149.333333 0 0 1 938.666667 405.333333v341.333334a149.333333 149.333333 0 0 1-149.333334 149.333333h-554.666666A149.333333 149.333333 0 0 1 85.333333 746.666667v-341.333334A149.333333 149.333333 0 0 1 234.666667 256h88.96L245.632 177.962667a42.666667 42.666667 0 0 1 60.373333-60.373334zM789.333333 341.333333h-554.666666a64 64 0 0 0-63.701334 57.856L170.666667 405.333333v341.333334a64 64 0 0 0 57.856 63.701333L234.666667 810.666667h554.666666a64 64 0 0 0 63.701334-57.856L853.333333 746.666667v-341.333334A64 64 0 0 0 789.333333 341.333333zM341.333333 469.333333a42.666667 42.666667 0 0 1 42.666667 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666666-42.666667z m341.333334 0a42.666667 42.666667 0 0 1 42.666666 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666667-42.666667z" p-id="2754" fill="currentColor"></path></svg>`;
-      that.logo_btn = btn;
+      that2.logo_btn = btn;
       addEventListener(btn, "click", function() {
-        that.isShowContainer();
+        that2.isShowContainer();
       });
-      insertChild(buttonBoxs, that.logo_btn);
+      insertChild(buttonBoxs, that2.logo_btn);
     }
     async getRoomIdByUrl(href) {
       var _a, _b;
@@ -1454,7 +1544,7 @@
       });
     }
     clickLogoShowContainer() {
-      let that = this;
+      let that2 = this;
       super.clickLogoShowContainer();
       window.onscroll = () => {
         if (parseInt(window.scrollY) > 90) {
@@ -1465,27 +1555,27 @@
       };
       function operationLogo() {
         log("logo");
-        that = this;
-        let logo = querySelector(that.header_logo);
+        that2 = this;
+        let logo = querySelector(that2.header_logo);
         let isMark = logo.getAttribute("isMark");
         if (!isMark) {
           logo.setAttribute("isMark", "true");
           logo.setAttribute("href", "javascript:;void(0)");
           logo.setAttribute("title", "点击Logo，显示插件配置");
           addEventListener(logo, "click", (e) => {
-            that.isShowContainer();
+            that2.isShowContainer();
           });
         }
       }
     }
     common() {
       this.clickLogoShowContainer();
-      let that = this;
-      that.addDeleteRoomButton(1e3);
+      let that2 = this;
+      that2.addDeleteRoomButton(1e3);
       setTimeout(() => {
         const refreshButton = querySelector(".feed-roll-btn .primary-btn");
         addEventListener(refreshButton, "click", () => {
-          that.addDeleteRoomButton(200);
+          that2.addDeleteRoomButton(200);
         });
       }, 3e3);
     }
@@ -1580,76 +1670,95 @@
       }
     }
   }
-  const css$3 = `
-
+  const css$4 = `
 .m-container,
-.m-container .btn,
-.m-container table,
-.m-container table tbody,
-.m-container table thead,
-.m-container table tr {
+  .m-container .btn,
+  .m-container table,
+  .m-container table tbody,
+  .m-container table thead,
+  .m-container table tr {
     margin: 0 !important;
     padding: 0 !important;
     border: none;
     outline: none;
-}
-
-.m-container {
+  }
+  
+  .m-container {
+    --m-font-color: #fff;
+    --m-container-backgournd-color: #fff;
+    --m-container-width: 700px;
+    --m-container-height: 400px;
+    --m-container-operation-right-width: 150px;
+    --m-container-input-width: 150px;
+    --m-container-box-transition: all 0.4s ease-in-out;
+    --m-container-select-width: var(--m-container-input-width);
+    --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) !important;
+  }
+  
+  .m-container {
     box-sizing: border-box !important;
     position: fixed !important;
-    display: none;
     flex-direction: column !important;
-    width: 650px !important;
-    height: 400px !important;
+    width: var(--m-container-width) !important;
+    height: var(--m-container-height) !important;
     top: 100px !important;
     left: 50% !important;
     border-radius: 10px !important;
     overflow: hidden !important;
-    background-color: #fff !important;
-    transform: translateX(-50%) !important;
-    z-index: 1000 !important;
+    background-color: var(--m-container-backgournd-color) !important;
+    z-index: 100000000 !important;
     padding: 15px !important;
-    transition: display linear 1s !important;
+    transition: var(--m-container-box-transition) !important;
     box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
-        -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
-}
-
-.m-container-box {
+      -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
+  
+    opacity: 0;
+    transform: translate(-50%, -150%);
+  }
+  
+  .m-container-is-active {
+    opacity: 1;
+    transform: translate(-50%, 0%);
+    z-index:100000000 !important;
+  }
+  
+  .m-container-box {
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
     height: 100% !important;
-}
-
-.m-container .operation {
+  }
+  
+  .m-container .operation {
     box-sizing: border-box !important;
     height: auto !important;
     justify-content: start !important;
-}
-
-.m-container .operation input[type="text"] {
-    width: 150px !important;
+  }
+  
+  
+  .m-container input[type="text"] {
+    width: var(--m-container-input-width) !important;
     box-sizing: border-box !important;
-    outline: 1px solid rgba(8, 125, 235, 0.6) !important;
-    border: none !important;
+    border: 1px solid rgba(8, 125, 235, 0.6) !important;
+    outline: none !important;
     padding: 5px 10px !important;
     border-radius: 20px !important;
-}
-
-.m-container .operation input[type="text"]:focus {
-    outline: 1px solid rgba(8, 125, 235, 1) !important;
-}
-
-.m-container .operation input[type="checkbox"] {
+    transition: var(--m-container-box-transition);
+  }
+  
+  .m-container input:focus {
+    border: 1px solid rgba(8, 125, 235, 1) !important;
+  }
+  
+  .m-container .operation input[type="checkbox"] {
     display: inline !important;
-}
-
-.m-container .operation input[type="file"] {
+  }
+  
+  .m-container .operation input[type="file"] {
     display: none !important;
-}
-
-
-.m-container table {
+  }
+  
+  .m-container table {
     position: relative !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
@@ -1657,246 +1766,258 @@
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-}
-
-.m-container table tr {
+  }
+  
+  .m-container table tr {
     margin: 5px 0 !important;
     display: flex !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
     justify-content: space-between;
-}
-
-.m-container table tr td:nth-child(1),
-.m-container table thead th:nth-child(1) {
+  }
+  
+  .m-container table tr td:nth-child(1),
+  .m-container table thead th:nth-child(1) {
     width: 50px;
     text-align: center !important;
-}
-
-.m-container table tr td:nth-child(2),
-.m-container table tr td:nth-child(3),
-.m-container table tr td:nth-child(4),
-.m-container table thead th:nth-child(2),
-.m-container table thead th:nth-child(3),
-.m-container table thead th:nth-child(4) {
+  }
+  
+  .m-container table tr td:nth-child(2),
+  .m-container table tr td:nth-child(3),
+  .m-container table tr td:nth-child(4),
+  .m-container table thead th:nth-child(2),
+  .m-container table thead th:nth-child(3),
+  .m-container table thead th:nth-child(4) {
     flex: 1 !important;
     text-align: center !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-
-}
-
-.m-container table tbody {
+  }
+  
+  .m-container table tbody {
     flex: 1 !important;
     overflow: auto !important;
-}
-
-.m-container table th,
-.m-container table td {
+  }
+  
+  .m-container table th,
+  .m-container table td {
     padding: 10px !important;
-}
-
-.m-container table tbody tr:nth-child(1) {
+  }
+  
+  .m-container table tbody tr:nth-child(1) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
-}
-
-.m-container .m-link,
-.m-container .m-link:visited {
+  }
+  
+  .m-container .m-link,
+  .m-container .m-link:visited {
     color: blnk !important;
-}
-
-.m-container .m-link:hover {
+  }
+  
+  .m-container .m-link:hover {
     color: blue !important;
     text-decoration: underline !important;
-}
-
-.m-container .btn {
+  }
+  
+  .m-container .btn {
     cursor: pointer !important;
     padding: 5px 8px !important;
     border: none !important;
-    color: #fff !important;
+    max-width:50px !important;
+    color: var(--m-font-color) !important;
     font-size: 1rem !important;
     border-radius: 20px !important;
-    max-width: 50px !important;
-    margin: 0  !important;
+    margin: 0 !important;
     background-color: rgba(166, 169, 173, 1) !important;
     z-index: 1000 !important;
     outline: none !important;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
-}
-
-.m-container .btn:hover {
+  }
+  
+  .m-container .btn:hover {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) !important;
-}
-
-.m-container .btn:hover {
+  }
+  
+  .m-container .btn:hover {
     background-color: rgba(166, 169, 173, 0.6) !important;
-}
-
-.m-container .btn-teal {
+  }
+  
+  .m-container .btn-primary {
     background-color: rgba(64, 158, 255, 1) !important;
-}
-
-.m-container .btn-teal:hover {
+  }
+  
+  .m-container .btn-primary:hover {
     background-color: rgba(64, 158, 255, 0.6) !important;
-}
-
-.m-container .btn-success {
+  }
+  
+  .m-container .btn-success {
     background-color: rgba(103, 194, 58, 1) !important;
-}
-
-.m-container .btn-success:hover {
+  }
+  
+  .m-container .btn-success:hover {
     background-color: rgba(103, 194, 58, 0.6) !important;
-}
-
-.m-container .btn-info {
+  }
+  
+  .m-container .btn-info {
     background-color: rgba(119, 119, 119, 1) !important;
-}
-
-.m-container .btn-info:hover {
+  }
+  
+  .m-container .btn-info:hover {
     background-color: rgba(119, 119, 119, 0.6) !important;
-}
-
-.m-container .btn-warning {
+  }
+  
+  .m-container .btn-warning {
     background-color: rgba(230, 162, 60, 1) !important;
-}
-
-.m-container .btn-warning:hover {
+  }
+  
+  .m-container .btn-warning:hover {
     background-color: rgba(230, 162, 60, 0.6) !important;
-}
-
-.m-container .btn-danger {
+  }
+  
+  .m-container .btn-danger {
     background-color: rgba(245, 108, 108, 1) !important;
-}
-
-.m-container .btn-danger:hover {
+  }
+  
+  .m-container .btn-danger:hover {
     background-color: rgba(245, 108, 108, 0.6) !important;
-}
-
-.m-ani-left-is-active {
-  transform: translateX(0) !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-.m-ani-left-is-close {
-  transform: translateX(var(--m-container-width-close)) !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-.m-ani-right-is-active {
-  transform: translateX(0) !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-.m-ani-right-is-close {
-  transform: translateX(var(--m-container-width)) !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-.m-type-container .m-type-item {
-  display: flex !important;
-  height: 40px !important;
-}
-
-.m-type-container .m-type-item .m-type-item-left {
-  flex: 1 !important;
-  position: relative !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-}
-
-.m-type-container .m-type-item .m-type-item-right {
-  width: var(--m-container-operation-right-width);
-  text-align: center !important;
-}
-
-.m-type-container .m-type-item .m-type-item-left .m-select-option-container,
-.m-type-container .m-type-item .m-type-item-left .m-select-input-container {
-  transition: var(--m-container-box-transition) !important;
-  position: absolute !important;
-  width: 100% !important;
-}
-
-.m-type-container .m-select {
-  display: flex !important;
-}
-
-.m-type-container .m-select .m-select-item {
-  margin-right: 10px !important;
-}
-
-.m-type-container .m-select .m-select-item:last-child {
-  margin-right: 0 !important;
-}
-
-.m-type-container .m-select select {
-  width: 100px !important;
-  color: rgba(119, 119, 119, 0.9) !important;
-}
-
-.m-type-container .m-select select::placeholder {
-  color: rgba(119, 119, 119, 0.9) !important;
-}
-
-.m-type-container .m-tag-select {
-  width: calc(var(--m-container-select-width)/2) !important;
-  outline: none !important;
-  border: 1px solid rgba(8, 125, 235, 0.6) !important;
-  padding: 5px 8px !important;
-  padding: 5px 10px !important;
-}
-
-.m-container select {
-  border: 1px solid rgba(8, 125, 235, 1) !important;
-}
-
-
-.m-type-container .m-select .m-option-default {
-  color: rgba(119, 119, 119, 0.6) !important;
-}
-
-.m-type-container input[type="text"] {
-  width: 350px !important;
-}
-
-.m-type-container .m-select input {
-  width: var(--m-container-input-width) !important;
-}
-
-.m-type-container .m-search-msg {
-  color: red !important;
-}
-
-  .m-span-text {
-      transition: all 0.3s ease;
-      cursor: pointer !important;
-      opacity: 0;
-      float:right;
-      display:inline-block;
-      margin:0 10px;
-      transform: scale(0.5);
-      font-size:20px;
-      position:relative;
   }
-
-  .m-span-text::before{
-      content:"🧹";
-      cursor: pointer !important;
+  
+  #m-container-box1 {
+    position: absolute !important;
+    z-index: 10000000 !important;
+    transition: var(--m-container-box-transition) !important;
+    width: 100% !important;
+    height: 100% !important;
   }
+  
+  #m-container-box2 {
+    position: absolute !important;
+    z-index: 9999 !important;
+    transition: var(--m-container-box-transition) !important;
+    ;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .m-ani-left-is-active {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .m-ani-left-is-close {
+    transform: translateX(-100%) !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  
+  .m-ani-right-is-active {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .m-ani-right-is-close {
+    transform: translateX(100%) !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  
+  .m-type-container .m-type-item {
+    display: flex !important;
+    height: 30px !important;
+  }
+  
+  .m-type-container .m-type-item .m-type-item-left {
+    flex: 1 !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  
+  .m-type-container .m-type-item .m-type-item-right {
+    width: var(--m-container-operation-right-width);
+    text-align: center !important;
+  }
+  
+  .m-type-container .m-type-item .m-type-item-left .m-select-option-container,
+  .m-type-container .m-type-item .m-type-item-left .m-select-input-container {
+    transition: var(--m-container-box-transition) !important;
+    position: absolute !important;
+    width: 100% !important;
+  }
+  
+  .m-type-container .m-select {
+    display: flex !important;
+  }
+  
+  .m-type-container .m-select .m-select-item {
+    margin-right: 10px !important;
+  }
+  
+  .m-type-container .m-select .m-select-item:last-child {
+    margin-right: 0 !important;
+  }
+  
+  .m-type-container .m-select select {
+    width: 100px !important;
+    color: rgba(119, 119, 119, 0.9) !important;
+  }
+  
+  .m-type-container .m-select select::placeholder {
+    color: rgba(119, 119, 119, 0.9) !important;
+  }
+  
+  .m-type-container .m-tag-select {
+    width: calc(var(--m-container-select-width)/2) !important;
+    ;
+    outline: none !important;
+    border: 1px solid rgba(8, 125, 235, 0.6) !important;
+    padding: 5px 8px !important;
+    padding: 5px 10px !important;
+  }
+  
+  .m-container select {
+    border: 1px solid rgba(8, 125, 235, 1) !important;
+  }
+  
+  
+  .m-type-container .m-select .m-option-default {
+    color: rgba(119, 119, 119, 0.6) !important;
+  }
+  
+  .m-type-container input[type="text"] {
+    width: 350px !important;
+  }
+  
+  .m-type-container .m-select input {
+    width: var(--m-container-input-width) !important;
+  }
+  
+  .m-type-container .m-search-msg {
+    color: red !important;
+  }
+  
+      .m-span-text {
+          transition: all 0.3s ease;
+          cursor: pointer !important;
+          opacity: 0;
+          float:right;
+          display:inline-block;
+          margin:0 10px;
+          transform: scale(0.5);
+          font-size:20px;
+          position:relative;
+      }
+  
+      .m-span-text::before{
+          content:"🧹";
+          cursor: pointer !important;
+      }
 
 
 `;
-  const css$2 = `
-.game-live-item i,.host-name {
-  cursor:pointer;
-}
-.game-live-item .txt i:hover,.host-name:hover {
-  color:rgb(255, 135, 0);
-}
+  const css$3 = is_douyu ? `
+
 .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
   cursor:pointer !important;
 }
@@ -1923,9 +2044,6 @@
 .Header-download-wrap,
 .AnchorInterToolsUser,
 .RechangeJulyPopups,
-#js-room-activity,
-#js-right-nav,
-#js-bottom,
 li.Header-menu-link,
 .layout-Main .layout-Customize,
 .HeaderCell-label-wrap,
@@ -1983,10 +2101,6 @@ display:block !important;
 .Barrage .Barrage-userEnter{
 display:none !important;
 }
-[class*="AnchorLevel-\\d+"] {
-display:none !important;
-}
-
 
 /* 一般禁用模式 */
 .layout-Player-main #js-player-toolbar{
@@ -2020,16 +2134,21 @@ color:#2b94ff !important;
 color: #333 !important;
 background-color: #f2f5f6 !important;
 }
-.layout-Player-barrage{
-  position: absolute !important;
-  top: 0 !important;
-}
 
 .Header-search-wrap input#header-search-input::placeholder {
    color: transparent !important;
    opacity:0 !important;
-}`;
-  const css$1 = ` .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+}
+` : "";
+  const css$2 = is_huya ? `
+
+.game-live-item i,.host-name {
+  cursor:pointer;
+}
+.game-live-item .txt i:hover,.host-name:hover {
+  color:rgb(255, 135, 0);
+}
+.helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
 .mod-index-wrap #js-main,
@@ -2127,77 +2246,72 @@ background-color: #f2f5f6 !important;
   }
 
 
-
-  /********************************Bilibili********************************** */
-  div#i_cecream .floor-single-card,
-  div#i_cecream .bili-live-card.is-rcmd,
-  div#i_cecream .adblock-tips,
-  div.video-container-v1 div.pop-live-small-mode.part-undefined,
-  .recommended-swipe.grid-anchor,
-  .video-page-special-card-small
-  {
-     display:none !important;
-  }
-
- /* 输入框*/
- .nav-search-content>input::placeholder {
-     color: transparent;
-     opacity:0 !important;
- }
-
- .m-bilibili-btn {
-     cursor: pointer !important;
-     background: #FFFFFF !important;
-     background: var(--bg1_float) !important;
-     border: 1px solid #E3E5E7 !important;
-     border: 1px solid var(--line_regular) !important;
-     border-radius: 8px !important;
-     box-sizing: border-box !important;
-     padding: 6px !important;
-     margin-bottom: 6px !important;
-     color: #18191C !important;
-     color: var(--text1) !important;
-     line-height: 14px;
-     font-size: 12px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 40px;
- }
-
- .bili-video-card__info--bottom:hover .m-span-text,
- .video-page-card-small:hover .m-span-text,
- .up-info-container:hover .m-span-text,
- .video-page-operator-card-small:hover .m-span-text{
-     opacity: 1;
-     transform: scale(1.1);
-     color:orange;
- }`;
-  const css = `
+` : "";
+  const css$1 = is_douyin ? `
 #related-video-card-login-guide,
 #captcha_container,
-.JsAsIOEV,
 #login-full-panel{
-    display:none !important;
-}`;
-  addStyle(`
+display:none !important;
+}
+` : "";
+  const css = is_bilibili ? `
+div#i_cecream .floor-single-card,
+div#i_cecream .bili-live-card.is-rcmd,
+div#i_cecream .adblock-tips,
+div.video-container-v1 div.pop-live-small-mode.part-undefined,
+.recommended-swipe.grid-anchor,
+.video-page-special-card-small
+{
+   display:none !important;
+}
 
-   /***************************************************默认样式***************************************************************************/
-  ${css$3}
+/* 输入框*/
+.nav-search-content>input::placeholder {
+   color: transparent;
+   opacity:0 !important;
+}
 
-/***************************************************斗鱼直播***************************************************************************/
-   
-   ${css$2}
+.m-bilibili-btn {
+   cursor: pointer !important;
+   background: #FFFFFF !important;
+   background: var(--bg1_float) !important;
+   border: 1px solid #E3E5E7 !important;
+   border: 1px solid var(--line_regular) !important;
+   border-radius: 8px !important;
+   box-sizing: border-box !important;
+   padding: 6px !important;
+   margin-bottom: 6px !important;
+   color: #18191C !important;
+   color: var(--text1) !important;
+   line-height: 14px;
+   font-size: 12px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 40px;
+}
 
- /***************************************************虎牙直播***************************************************************************/
-  
-   ${css$1}
-    /******************************************抖音*****************************************************/
-    ${css}
-`);
+.bili-video-card__info--bottom:hover .m-span-text,
+.video-page-card-small:hover .m-span-text,
+.up-info-container:hover .m-span-text,
+.video-page-operator-card-small:hover .m-span-text
+{
+   opacity: 1;
+   transform: scale(1.1);
+   color:orange;
+}
+` : "";
+  addStyle(
+    `
+${css$4}
+${css$3}
+${css$2}
+${css}
+${css$1}
+`
+  );
   (function() {
-    if (typeof window === void 0) {
-      log("插件不支持！", "warn");
+    if (typeof window == "undefined") {
       return;
     }
     window.onload = () => {
@@ -2227,10 +2341,10 @@ background-color: #f2f5f6 !important;
         } else if (is_localhost) {
           new LivePlugin();
         } else {
-          log("插件地址不适配，请检查匹配地址！！！", "error");
+          error("插件地址不适配，请检查匹配地址！！！");
         }
       } catch (e) {
-        log(e, "error");
+        error(e);
       }
     };
   })();

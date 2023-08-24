@@ -12,7 +12,7 @@ import {getBiliBiliInfoByVideoID} from "../../api/bilibili/index.js";
 
 
 /**
- * bilibili插件 阿B还是良心 广告很少 首页有一些原神和不想看到的直播间播放详细页有一个小姐姐 ……
+ * bilibili
  */
 export default class BiliBili extends LivePlugin {
 

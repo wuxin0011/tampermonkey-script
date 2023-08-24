@@ -17,7 +17,7 @@ import {
     querySelectorAll,
     removeDOM,
     HostUser,
-    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton, warn
+    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton, warn, findMark, error
 } from '../../utils'
 import getHtmlStr from "./html.js";
 
@@ -49,6 +49,7 @@ export default class LivePlugin {
         this.logo_show_key = this.key + "_logo_show" // logo key
         this.header_logo = 'none' // logo 是否显示
         this.buttonName = '' // button name
+        this.isNew = false
         if (is_localhost) { // 本地测试允许加载
             this.init()
         }
@@ -109,8 +110,7 @@ export default class LivePlugin {
      * @returns {null} name
      */
     getNameByRoomId(roomId) {
-        alert('该操作未实现！');
-        return null
+        throw new Error('请自定义实现通过名称获取房间号方法！')
     }
 
 
@@ -120,7 +120,7 @@ export default class LivePlugin {
      * @returns {null} 房间号
      */
     getRoomIdByUrl(url) {
-        return null
+        throw new Error('请自定义实现通过url获取房间号方法！')
     }
 
     /*********************************子类继承无需修改的方法******************************/
@@ -139,13 +139,22 @@ export default class LivePlugin {
         let show5 = getLocalStore(that.logo_show_key, Boolean.name)
         that.m_container = s2d(getHtmlStr(show1, show2, show3, show4, show5))
         appendChild(body, that.m_container)
-        that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
+
+        if (querySelector(that.m_container, '#m-container-box2 table tbody')) {
+            that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
+            this.isNew = true
+        } else {
+            that.tbody = querySelector(that.m_container, '.m-container table tbody')
+            this.isNew = false
+        }
+
         // 生成操作按钮
         that.operationDOMButton()
         // 添加直播房间号信息
         that.createRoomItem(that.users)
         // 右侧点击添加button
         that.createButton()
+        log('操作面板初始化完毕！')
 
     }
 
@@ -186,6 +195,7 @@ export default class LivePlugin {
      */
     resetTbody(arr) {
         if (!this.tbody) {
+            error('tbody 为 null ！')
             return;
         }
         querySelectorAll(this.tbody, 'tr').forEach(item => removeDOM(item, true))
@@ -203,7 +213,7 @@ export default class LivePlugin {
         const container = that.m_container
         const inputValue = querySelector(container, '.operation input')
         addEventListener(inputValue, 'input', () => {
-            let arr = that.users.filter(item => (item.roomId && item.roomId.indexOf(inputValue.value) != -1) || (item.name && item.name.indexOf(inputValue.value) != -1))
+            let arr = that.users.filter(item => (item && item.roomId && item.roomId.indexOf(inputValue.value) != -1) || (item.name && item.name.indexOf(inputValue.value) != -1))
             that.resetTbody(arr)
         })
 
@@ -216,16 +226,13 @@ export default class LivePlugin {
             }
             if (!that.userIsExist(keywords)) {
                 const name = that.getNameByRoomId(keywords)
-                if (name) {
-                    that.addUser(keywords, name)
-                    inputValue.value = ''
+                if (name instanceof Promise) {
+                    name.then(res => {
+                        that.searchUserByRoomId(res, keywords, inputValue)
+                    })
                 } else {
-                    if (confirm(`房间号为${keywords}的主播不存在！确定添加？`)) {
-                        that.addUser(keywords, keywords)
-                        inputValue.value = ''
-                    }
+                    that.searchUserByRoomId(name, keywords, inputValue)
                 }
-
             } else {
                 alert('该主播已添加！')
             }
@@ -249,10 +256,8 @@ export default class LivePlugin {
         addEventListener(uploadButton, 'change', function (e) {
             const file = uploadButton.files[0] || null
             uploadImage(file, (base64) => {
-                // 保存到本地
                 addLocalStore(that.bg_key, base64, String.name, false)
                 that.settingBackgroundImage(e.target.result)
-
             })
         })
 
@@ -322,13 +327,13 @@ export default class LivePlugin {
 
 
         // 初始化动画效果
+        // 该功能暂时不添加了
         this.initAnimation(container)
-
-        
+        log('操作按钮添加成功！')
     }
 
 
-    initAnimation(container){
+    initAnimation(container) {
         let box1 = querySelector(container, '#m-container-box1')
         let box2 = querySelector(container, '#m-container-box2')
 
@@ -344,43 +349,62 @@ export default class LivePlugin {
         let select1_box1 = querySelector(container, '.m-type-item-left #m-select-option')
         let select2_box2 = querySelector(container, '.m-type-item-left #m-select-input')
 
+
+
         addEventListener(change1, 'click', () => {
-            if(box1 && box2){
+            if (box1 && box2) {
                 box1.classList.add('m-ani-left-is-close')
                 box1.classList.remove('m-ani-left-is-active')
                 box2.classList.add('m-ani-right-is-active')
                 box2.classList.remove('m-ani-right-is-close')
             }
-           
+
         })
         addEventListener(change2, 'click', () => {
-            if(box1 && box2){
+            if (box1 && box2) {
                 box1.classList.add('m-ani-left-is-active')
                 box1.classList.remove('m-ani-left-is-close')
                 box2.classList.add('m-ani-right-is-close')
                 box2.classList.remove('m-ani-right-is-active')
             }
-           
+
         })
 
         addEventListener(select1, 'click', () => {
-            if(select1_box1 && select2_box2){
+            if (select1_box1 && select2_box2) {
                 select1_box1.classList.remove('m-ani-left-is-active')
                 select1_box1.classList.add('m-ani-left-is-close')
                 select2_box2.classList.remove('m-ani-right-is-close')
                 select2_box2.classList.add('m-ani-right-is-active')
             }
-            
+
         })
         addEventListener(select2, 'click', () => {
-            if(select1_box1 && select2_box2){
+            if (select1_box1 && select2_box2) {
                 select1_box1.classList.add('m-ani-left-is-active')
                 select1_box1.classList.remove('m-ani-left-is-close')
                 select2_box2.classList.add('m-ani-right-is-close')
                 select2_box2.classList.remove('m-ani-right-is-active')
             }
         })
+        log('动画初始化完毕！')
     }
+
+
+
+    searchUserByRoomId(name, roomId, inputValue) {
+        let that = this
+        if (name) {
+            that.addUser(roomId, name)
+            inputValue.value = ''
+        } else {
+            if (confirm(`房间号为${roomId}的主播不存在！确定添加？`)) {
+                that.addUser(roomId, roomId)
+                inputValue.value = ''
+            }
+        }
+    }
+
 
     /**
      * 右侧操作按钮
@@ -388,13 +412,19 @@ export default class LivePlugin {
      */
     createButton() {
         let that = this
+
+        let body = querySelector('body')
+        if (!body) {
+            error('获取不到 body ')
+            return;
+        }
         if (!!that.logo_btn) {
+            warn('button已经添加了！不能重复添加！')
             return;
         }
 
         let text = this.buttonName
         let backgroundColor = is_bilibili ? '255,102,102' : '255, 93, 35'
-
         const btn = createElement('button')
         btn.style.cursor = 'pointer'
         btn.style.position = 'fixed'
@@ -422,29 +452,35 @@ export default class LivePlugin {
 
         // 获取位置信息
         let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name)
+        log(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`)
         if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
             btn.style.left = mouse_left + 'px'
             btn.style.top = mouse_top + 'px'
             btn.style.right = 'auto'
         }
+
+
         addEventListener(btn, 'mousedown', (event) => {
-            // 鼠标距离顶部距离
             x = event.offsetX
             y = event.offsetY
+            log('mouseDown', x, y)
             flag = true
             addEventListener(wd, 'mousemove', move)
         })
 
         addEventListener(btn, 'mouseup', () => {
             flag = false
+            wd.removeEventListener('mousemove',move)
             wd.onmousemove = null
         })
 
         addEventListener(btn, 'mouseleave', () => {
             flag = false
             btn.style.backgroundColor = `rgba(${backgroundColor},1)`
+            wd.removeEventListener('mousemove',move)
             wd.onmousemove = null
         })
+
 
         function move(e) {
             e.preventDefault()
@@ -455,8 +491,8 @@ export default class LivePlugin {
             let btn_top = Math.min(Math.max(0, e.clientY - y), window.innerHeight - btn.offsetHeight)
             let btn_left = Math.min(Math.max(0, e.clientX - x), window.innerWidth - btn.offsetWidth)
 
-            btn.style.left = btn_left + 'px'
-            btn.style.top = btn_top + 'px'
+            btn.style.left = `${btn_left}px`
+            btn.style.top = `${btn_top}px`
             btn.style.right = 'auto'
             addLocalStore(mouse_key, { 'mouse_left': btn_left, 'mouse_top': btn_top }, Object.name)
 
@@ -464,7 +500,8 @@ export default class LivePlugin {
 
         btn.style.display = is_bilibili || getLocalStore(that.logo_show_key, Boolean.name) ? 'block' : 'none'
         that.logo_btn = btn
-        appendChild(querySelector('body'), that.logo_btn)
+        appendChild(body, that.logo_btn)
+        log('button 添加完毕！')
     }
 
     /**
@@ -533,7 +570,7 @@ export default class LivePlugin {
         }
         removeDOM(this.m_container, true)
         this.m_container = null
-        // 创建操作面板
+        // 初始化操作面板
         this.create_container()
     }
 
@@ -557,6 +594,7 @@ export default class LivePlugin {
             container = querySelector('body')
         }
         if (!container) {
+            warn('壁纸设置失败 获取不到 container ！')
             return;
         }
         if (getLocalStore(this.bg_show_key, Boolean.name)) {
@@ -565,6 +603,7 @@ export default class LivePlugin {
             container.style.backgroundRepeat = 'no-repeat '
             container.style.backgroundAttachment = 'fixed'
             container.style.backgroundImage = `url(${url})`
+            log('背景图添加完毕！')
         } else {
             container.style.backgroundImage = 'none'
         }
@@ -632,12 +671,9 @@ export default class LivePlugin {
             this.users = []
         }
         const newUser = new HostUser(id, name);
-        // 添加
         this.users.unshift(newUser)
-        // 保存到本地
         addLocalStore(this.key, this.users)
         this.resetTbody(this.users)
-        // 如果是当前主播需要屏蔽
         if (id === this.getRoomIdByUrl(local_url)) {
             this.roomIsNeedRemove(local_url);
         }
@@ -673,6 +709,7 @@ export default class LivePlugin {
     isShowLeftMenu() {
         let menu = querySelector(this.menu)
         if (menu) {
+            log('menu change ....')
             menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? 'block' : 'none'
         }
     }
@@ -701,8 +738,8 @@ export default class LivePlugin {
         let fullScreenText = this.fullScreenText
         let cancelFullText = this.cancelFullText
         let show3 = getLocalStore(this.full_screen_key, Boolean.name)
-        if( !this.full_screen_button ){
-            warn('full_screen_button key 为空！')
+        if (!this.full_screen_button) {
+            warn('点击全屏按钮获取失败！')
             return;
         }
         let fullScreen = querySelector(this.full_screen_button)
@@ -743,6 +780,7 @@ export default class LivePlugin {
     isShowGift() {
         let gift = querySelector(this.giftTool)
         if (gift) {
+            log('gift change ....')
             gift.style.display = getLocalStore(this.gift_key, Boolean.name) ? 'inline-block' : 'none'
         }
     }
@@ -752,45 +790,45 @@ export default class LivePlugin {
      */
     isShowContainer() {
         if (this.m_container) {
-            if (this.m_container.classList.contains('m-container-is-active')) {
-                this.m_container.classList.remove('m-container-is-active')
+            log('container change ....')
+            if (this.isNew) {
+                if (this.m_container.classList.contains('m-container-is-active')) {
+                    this.m_container.classList.remove('m-container-is-active')
+                } else {
+                    this.m_container.classList.add('m-container-is-active')
+                }
             } else {
-                this.m_container.classList.add('m-container-is-active')
+                this.m_container.style.display = this.m_container.style.display === 'block' ? 'none' : 'block'
             }
-            // this.m_container.style.display = this.m_container.style.display === 'block' ? 'none' : 'block'
+
         }
     }
 
     /**
-     *  点击 直播平台 Logo 显示 操作面板
+     *  点击 直播平台 Logo 
      */
     clickLogoShowContainer() {
         if (this.header_logo === 'none') {
+            warn('Logo选择器不能为 none ！')
             return
         }
         let that = this
-        timeoutSelector(that.header_logo, (a) => {
+        findMark(that.header_logo, (a) => {
             a.href = 'javascript:;void(0)';
             a.title = '点击Logo，显示插件配置'
-            addEventListener(a, 'click', (e) => {
+            addEventListener(a, 'click', () => {
+                log('click header logo !')
                 that.isShowContainer()
             })
-        }, 5000)
+            log('logo点击按钮装置完毕！')
+        })
     }
 
 
-    /**
-     * 创建一个占位符显示可以操作按钮
-     * @param {*} container 房间容器ID
-     * @param {*} place 需要添加文本地方
-     * @param {*} id 房间号ID
-     * @param {*} name 房间名或者up名
-     * @param message 消息内容
-     * @param remove 是确认移除
-     * @returns
-     */
+
     createSpan(container, place, id, name = id, message = '确认屏蔽up主 ', remove = true) {
         if (!container || !place || !id || !name) {
+            error('createSpan 参数不全！')
             return;
         }
         const span = createElement('span')

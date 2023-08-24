@@ -1,6 +1,6 @@
 import {
     addEventListener,
-    getLocalStore, intervalRemoveElement,
+    intervalRemoveElement,
     isArray,
     local_url,
     loopDo,
@@ -8,8 +8,11 @@ import {
     querySelectorAll,
     removeDOM,
     removeVideo,
-    timeoutSelectorAll
-} from '../../utils'
+    setTimeoutMark,
+    findMark,
+    timeoutSelectorAllOne,
+    warn
+} from '../../utils';
 
 import LivePlugin from "../live";
 
@@ -62,16 +65,12 @@ export default class TriggerLive extends LivePlugin {
     // 分类页操作
     category() {
         if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
-            let that = this
-            timeoutSelectorAll('.live-list-nav dd', (nodes) => {
-                for (let node of nodes) {
-                    addEventListener(node, 'click', () => {
-                        setTimeout(() => {
-                            that.removeRoomByClickRoomName()
-                        }, 2000)
-                    })
-
-                }
+            timeoutSelectorAllOne('.live-list-nav dd', (node) => {
+                addEventListener(node, 'click', () => {
+                    setTimeout(() => {
+                        that.removeRoomByClickRoomName()
+                    }, 2000)
+                })
             })
 
         }
@@ -87,30 +86,15 @@ export default class TriggerLive extends LivePlugin {
     detail() {
         if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
             let that = this
-            // 点击直播间移除直播间操作
-            const hostName = querySelector('.host-name')
-            hostName.title = `点击屏蔽主播【${hostName.textContent}】`
-            addEventListener(hostName, 'click', () => {
-                if (confirm(`确认屏蔽主播 ${hostName.textContent}？`)) {
-                    that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
-                }
+            findMark('.host-name', (hostName) => {
+                hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
+                addEventListener(hostName, 'click', () => {
+                    if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
+                        that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+                    }
+                })
             })
 
-            // 自动剧场模式
-            // let count = 20
-            // let timer = setInterval(() => {
-            //     count = count - 1
-            //     let clickFullButton = querySelector('.room-player-wrap #player-fullscreen-btn')
-            //     let show3 = getLocalStore(that.full_screen_key, Boolean.name)
-            //     let isClick = clickFullButton?.getAttribute('isClick')
-            //     if (clickFullButton && show3 && !isClick) {
-            //         clickFullButton.click()
-            //         clickFullButton.setAttribute('isClick', true)
-            //     }
-            //     if (count === 0) {
-            //         clearInterval(timer)
-            //     }
-            // }, 100)
 
             let ads = [
                 '.main-wrap .room-mod-ggTop',
@@ -124,7 +108,13 @@ export default class TriggerLive extends LivePlugin {
 
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
-        return url.match(/https:\/\/www\.huya\.com\/(.*)/)[1]
+        try {
+            return url && url.match(/https:\/\/www\.huya\.com\/(.*)/) ? url.match(/https:\/\/www\.huya\.com\/(.*)/)[1] : ''
+        } catch (error) {
+            warn('url 匹配失败 请检查' + url)
+            return ''
+        }
+
     }
 
     // 通过房间号查找名称
@@ -155,28 +145,22 @@ export default class TriggerLive extends LivePlugin {
     // 通过点击直播间名称删除直播间
     removeRoomByClickRoomName() {
         const that = this
-        timeoutSelectorAll('.game-live-item', (rooms) => {
-            for (let li of rooms) {
-                let isMark = li.getAttribute('mark')
-                if (!isMark) {
-                    li.setAttribute('mark', true)
-                    const a = querySelector(li, 'a')
-                    const url = a.href
-                    const user = querySelector(li, '.txt i')
-                    const name = user.textContent || ''
-                    addEventListener(user, 'click', () => {
-                        if (confirm(`确认禁用 ${name}？`)) {
-                            that.addUser(that.getRoomIdByUrl(url), name);
-                            removeDOM(li);
-                        }
-                    })
-                    if (that.isRemove(url)) {
-                        removeDOM(li)
+        timeoutSelectorAllOne('.game-live-item', (li) => {
+            setTimeoutMark(li, () => {
+                const a = querySelector(li, 'a')
+                const url = a.href
+                const user = querySelector(li, '.txt i')
+                const name = user.textContent || ''
+                addEventListener(user, 'click', () => {
+                    if (confirm(`确认禁用 ${name}？`)) {
+                        that.addUser(that.getRoomIdByUrl(url), name);
+                        removeDOM(li);
                     }
+                })
+                if (that.isRemove(url)) {
+                    removeDOM(li)
                 }
-
-            }
-
+            }, 0)
         }, 500)
 
     }

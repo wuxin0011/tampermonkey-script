@@ -23,9 +23,9 @@ export const wls = window.localStorage
 export const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
 export const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
 export const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file)
-export const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : wd && el ? wd.querySelector(el) : emptyMehtod
-export const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : el ? wd.querySelectorAll(el) : emptyMehtod
-export const addEventListener = (el, type, callback) => !!el && el instanceof HTMLElement && type && typeof callback === 'function' && el.addEventListener(type, callback, false)
+export const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : (el ? wd.querySelector(el) : emptyMehtod)
+export const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : (el ? wd.querySelectorAll(el) : emptyMehtod)
+export const addEventListener = (el, type, callback) => !!el && type && typeof callback === 'function' ? el === wd || el instanceof HTMLElement ? el.addEventListener(type, callback, false) : false : false
 export const createElement = (tag) => !!tag && wd.createElement(tag)
 export const appendChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.appendChild(el2)
 export const insertChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.insertBefore(el2, el1.firstChild)
@@ -60,18 +60,41 @@ export const isArray = (a) => a && a?.length > 0
 
 
 export const timeoutSelectorAll = (selector, callback, time = 0) => {
+    if (typeof callback != 'function') {
+        warn('callback should is a function!')
+        return;
+    }
     setTimeout(() => {
         const nodes = querySelectorAll(selector)
-        if (isArray(nodes) && typeof callback === 'function') {
+        if (isArray(nodes)) {
             callback(nodes)
         }
     }, time)
 }
 
+export const timeoutSelectorAllOne = (selector, callback, time = 0) => {
+    if (typeof callback != 'function') {
+        warn('callback should is a function!')
+        return;
+    }
+    setTimeout(() => {
+        const nodes = querySelectorAll(selector)
+        if (isArray(nodes)) {
+            for (let node of nodes) {
+                callback(node)
+            }
+        }
+    }, time)
+}
+
 export const timeoutSelector = (selector, callback, time = 0) => {
+    if (typeof callback != 'function') {
+        warn('callback should is a function!')
+        return;
+    }
     setTimeout(() => {
         const logoNode = querySelector(selector)
-        if (logoNode && typeof callback === 'function') {
+        if (logoNode) {
             callback(logoNode)
         }
     }, time)
@@ -134,7 +157,7 @@ export const throttle = (wait, func, ...args) => {
 
 export const intervalRemoveElement = (selectors, time = 160, maxCount = 1000) => {
     if (!isArray(selectors)) {
-        log(`selectors 必须是数组 : ${selectors}`, 'warn')
+        warn(`selectors 必须是数组 : ${selectors}`)
         return;
     }
     let count = 0
@@ -151,6 +174,10 @@ export const intervalRemoveElement = (selectors, time = 160, maxCount = 1000) =>
 }
 
 export const loopDo = (callback, count = 100, wait = 100) => {
+    if (typeof callback != 'function') {
+        warn('callback is a function!')
+        return;
+    }
     let timer = setInterval(() => {
         count--
         if (count === 0) {
@@ -162,8 +189,81 @@ export const loopDo = (callback, count = 100, wait = 100) => {
 }
 
 
+export const findMark = (selector, callback, count = 100, wait = 100) => {
+    if (!selector) {
+        warn('selector not allow  or null !')
+        return;
+    }
+    if (typeof callback != 'function') {
+        warn('callback is a function!')
+        return;
+    }
+    loopDo((timer) => {
+        try {
+            let element = selector instanceof HTMLElement ? selector : querySelector(selector)
+            if (element) {
+                let isMark = element.getAttribute('mark')
+                if (!isMark) {
+                    element.setAttribute('mark', true)
+                    callback(element)
+                } else {
+                    clearInterval(timer)
+                }
+            }
+        } catch (e) {
+            clearInterval(timer)
+            error(e)
+        }
+
+    }, 100, 100)
+
+    setTimeout(() => {
+        let element = selector instanceof HTMLElement ? selector : querySelector(selector)
+        if (element) {
+            let isMark = element.getAttribute('mark')
+            if (!isMark) {
+                element.setAttribute('mark', true)
+                callback(element)
+            }
+        }
+    }, 5000);
+}
+
+
+export const setTimeoutMark = (selector, callback, wait = 0) => {
+    if (!selector) {
+        warn('selector not allow  or null !')
+        return;
+    }
+    if (typeof callback != 'function') {
+        warn('callback is a function!')
+        return;
+    }
+    let timer = setTimeout(() => {
+        try {
+            let element = selector instanceof HTMLElement ? selector : querySelector(selector)
+            if (element) {
+                let isMark = element.getAttribute('mark')
+                if (!isMark) {
+                    element.setAttribute('mark', true)
+                    callback(element)
+                } else {
+                    clearInterval(timer)
+                }
+            }
+        } catch (e) {
+            clearInterval(timer)
+            error(e)
+        }
+    }, wait);
+
+}
+
+
+
 export const backgroundNone = (element, selectors = ['.layout-Main'], time = 100, maxCount = 500) => {
     if (!(element instanceof HTMLElement) || !isArray(selectors)) {
+        warn(`element 参数应是 元素， selector 应该是元素选择器集合`)
         return;
     }
     let count = 0

@@ -5,7 +5,7 @@ import {
     is_douyu,
     is_huya,
     is_localhost,
-    log,
+    log,error,info,warn,
     source_code_url
 } from './utils';
 
@@ -22,10 +22,11 @@ import './style/index.css.js';
 
 (function () {
     'use strict';
-    if (typeof window === undefined) {
-        log("插件不支持！", 'warn')
+
+    if( typeof window == 'undefined'){
         return;
     }
+   
     window.onload = () => {
         try {
             let text = '%c欢迎使用直播插件,下载地址%c'
@@ -36,7 +37,7 @@ import './style/index.css.js';
                 text.concat(download_plugin_url, ''),
                 'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                 'border-radius: 0 3px 3px 0; color: #fff')
-            console.log(
+                console.log(
                 '%c地址:%c '.concat(source_code_url, ''),
                 'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
                 'border-radius: 0 3px 3px 0; color: #fff')
@@ -57,10 +58,10 @@ import './style/index.css.js';
                 // 本地测试使用
                 new LivePlugin()
             } else {
-                log('插件地址不适配，请检查匹配地址！！！', 'error')
+                error('插件地址不适配，请检查匹配地址！！！')
             }
         } catch (e) {
-            log(e, 'error')
+            error(e)
         }
     }
 

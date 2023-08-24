@@ -2,7 +2,7 @@
   "name": "huya-live",
   "private": true,
   "author": "wuxin0011",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "type": "module",
   "license": "MIT",
   "description": "虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录",
