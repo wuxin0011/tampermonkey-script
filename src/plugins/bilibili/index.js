@@ -5,7 +5,7 @@ import {
     throttle,
     addEventListener,
     insertChild,
-    timeoutSelectorAll, removeDOM, appendChild, local_url, log
+    timeoutSelectorAll, removeDOM, appendChild, local_url, log, findMark
 } from '../../utils'
 import LivePlugin from '../live'
 import {getBiliBiliInfoByVideoID} from "../../api/bilibili/index.js";
@@ -157,18 +157,14 @@ export default class BiliBili extends LivePlugin {
         }
 
         function operationLogo() {
-            log('logo')
             that = this
-            let logo = querySelector(that.header_logo)
-            let isMark = logo.getAttribute('isMark')
-            if (!isMark) {
-                logo.setAttribute('isMark', 'true')
+            findMark(that.header_logo,(logo)=>{
                 logo.setAttribute('href', "javascript:;void(0)")
                 logo.setAttribute('title', '点击Logo，显示插件配置')
                 addEventListener(logo, 'click', (e) => {
                     that.isShowContainer()
                 })
-            }
+            })
         }
 
     }
@@ -232,21 +228,6 @@ export default class BiliBili extends LivePlugin {
             })
         }
 
-        if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url) && false) { // 该功能暂时有bug 不需要 直接 false吧
-            const userContainer = querySelector('.right-container-inner .up-info-container')
-            const place = querySelector(userContainer, '.up-detail-top')
-            const link = querySelector(userContainer, '.up-detail-top>a')
-            const name = link.textContent
-            const id = this.getRoomIdByUrl(link.href)
-            const span = createElement('span')
-            span.classList = 'm-span-text'
-            appendChild(place, span)
-            addEventListener(span, 'click', () => {
-                if (confirm('确认屏蔽up主' + name + ' ?')) {
-                    this.addUser(id, name)
-                }
-            })
-        }
         // TODO MORE
         if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
             let result = await getBiliBiliInfoByVideoID(local_url)

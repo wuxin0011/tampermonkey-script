@@ -10,7 +10,7 @@ export const info = (...args) => console.info(msg(args))
 export const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/
 export const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/
 export const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
-export const douyin_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/
+export const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/
 export const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/
 export const local_url = window.location.href
 export const is_huya = huya_address_pattern.test(local_url) // 是否是虎牙地址
@@ -340,6 +340,34 @@ export const findFullSreenButton = (sel = 'body', key = 'full_screen_button_clas
         }
     }
     return null
+}
+
+
+
+
+export const handlerPromise = (result, callback) => {
+
+    if (typeof callback !== 'function') {
+        warn('回调函数不能为空！')
+        return
+    }
+
+    if (!result) {
+        warn('请求结果为空！')
+        callback(result)
+        return;
+    }
+
+    // 处理 promise 逻辑
+    if (result instanceof Promise) {
+        result.then(res => {
+            callback(res)
+        }).catch(e => {
+            error(e)
+        })
+    } else {
+        callback(result)
+    }
 }
 
 

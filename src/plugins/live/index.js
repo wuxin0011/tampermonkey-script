@@ -17,6 +17,7 @@ import {
     querySelectorAll,
     removeDOM,
     HostUser,
+    handlerPromise,
     uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton, warn, findMark, error
 } from '../../utils'
 import getHtmlStr from "./html.js";
@@ -180,9 +181,11 @@ export default class LivePlugin {
                 let roomId = e.target.getAttribute('room-id');
                 that.userDelete(roomId)
                 // 如果是当前主播，需要刷新
-                if (that.getRoomIdByUrl(local_url) === roomId) {
-                    window.location.reload()
-                }
+                handlerPromise(that.getRoomIdByUrl(local_url), (result) => {
+                    if (result === roomId) {
+                        window.location.reload()
+                    }
+                })
                 removeDOM(tr, true)
             })
 
@@ -225,14 +228,9 @@ export default class LivePlugin {
                 return alert('请输入房间号！')
             }
             if (!that.userIsExist(keywords)) {
-                const name = that.getNameByRoomId(keywords)
-                if (name instanceof Promise) {
-                    name.then(res => {
-                        that.searchUserByRoomId(res, keywords, inputValue)
-                    })
-                } else {
-                    that.searchUserByRoomId(name, keywords, inputValue)
-                }
+                handlerPromise(that.getNameByRoomId(keywords), (res) => {
+                    that.searchUserByRoomId(res, keywords, inputValue)
+                })
             } else {
                 alert('该主播已添加！')
             }
@@ -470,14 +468,14 @@ export default class LivePlugin {
 
         addEventListener(btn, 'mouseup', () => {
             flag = false
-            wd.removeEventListener('mousemove',move)
+            wd.removeEventListener('mousemove', move)
             wd.onmousemove = null
         })
 
         addEventListener(btn, 'mouseleave', () => {
             flag = false
             btn.style.backgroundColor = `rgba(${backgroundColor},1)`
-            wd.removeEventListener('mousemove',move)
+            wd.removeEventListener('mousemove', move)
             wd.onmousemove = null
         })
 
@@ -530,48 +528,50 @@ export default class LivePlugin {
         body.style.flexDirection = 'column'
         body.style.justifyContent = 'center'
         body.style.alignItems = 'center'
-        // 获取主播名称
-        let name = this.getUser(this.getRoomIdByUrl(local_url)) ? this.getUser(this.getRoomIdByUrl(
-            local_url)).name : ''
-        const a = createElement('a')
-        a.textContent = '点击解锁'
-        a.style.display = 'block'
-        a.style.cursor = 'pointer'
-        a.style.fontSize = '20px'
-        a.onclick = (e) => {
-            e.preventDefault()
-            that.userDelete(that.getRoomIdByUrl(local_url))
-            window.location.reload()
-        }
-        h2.style.fontSize = '36px'
-        h2.textContent = `主播【${name}】已被你屏蔽`
-        let title = querySelector('title')
-        if (!title) {
-            title = createElement('title')
-        }
-        title.textContent = `主播【${name}】已被你屏蔽`
-        html.appendChild(body)
-        body.appendChild(h2)
-        body.appendChild(a)
-        let logo_show = getLocalStore(that.logo_show_key, Boolean.name)
-        if (logo_show) {
-            let logo = createElement('a')
-            logo.textContent = '显示logo'
-            logo.style.display = 'block'
-            logo.style.cursor = 'pointer'
-            logo.style.fontSize = '20px'
-            logo.onclick = (e) => {
+        handlerPromise(this.getRoomIdByUrl(local_url), (roomId) => {
+            // 获取主播名称
+            let name = this.getUser(roomId) ? this.getUser(roomId).name : ''
+            const a = createElement('a')
+            a.textContent = '点击解锁'
+            a.style.display = 'block'
+            a.style.cursor = 'pointer'
+            a.style.fontSize = '20px'
+            a.onclick = (e) => {
                 e.preventDefault()
-                logo.style.display = 'none'
-                addLocalStore(that.logo_show_key, false, Boolean.name)
-                that.createButton()
+                that.userDelete(roomId)
+                window.location.reload()
             }
-            body.appendChild(logo)
-        }
-        removeDOM(this.m_container, true)
-        this.m_container = null
-        // 初始化操作面板
-        this.create_container()
+            h2.style.fontSize = '36px'
+            h2.textContent = `主播【${name}】已被你屏蔽`
+            let title = querySelector('title')
+            if (!title) {
+                title = createElement('title')
+            }
+            title.textContent = `主播【${name}】已被你屏蔽`
+            html.appendChild(body)
+            body.appendChild(h2)
+            body.appendChild(a)
+            let logo_show = getLocalStore(that.logo_show_key, Boolean.name)
+            if (logo_show) {
+                let logo = createElement('a')
+                logo.textContent = '显示logo'
+                logo.style.display = 'block'
+                logo.style.cursor = 'pointer'
+                logo.style.fontSize = '20px'
+                logo.onclick = (e) => {
+                    e.preventDefault()
+                    logo.style.display = 'none'
+                    addLocalStore(that.logo_show_key, false, Boolean.name)
+                    that.createButton()
+                }
+                body.appendChild(logo)
+            }
+            removeDOM(this.m_container, true)
+            this.m_container = null
+            // 初始化操作面板
+            this.create_container()
+        })
+
     }
 
     /**
@@ -579,7 +579,11 @@ export default class LivePlugin {
      * @param href 房间链接地址 默认 window.location.href
      */
     isRemove(href) {
-        return this.userIsExist(this.getRoomIdByUrl(href));
+        let res = this.getRoomIdByUrl(href)
+        if (res instanceof Promise) {
+            return false
+        }
+        return this.userIsExist(res);
     }
 
 
@@ -674,9 +678,12 @@ export default class LivePlugin {
         this.users.unshift(newUser)
         addLocalStore(this.key, this.users)
         this.resetTbody(this.users)
-        if (id === this.getRoomIdByUrl(local_url)) {
-            this.roomIsNeedRemove(local_url);
-        }
+        handlerPromise(this.getRoomIdByUrl(local_url), (res) => {
+            if (id === res) {
+                this.roomIsNeedRemove(local_url);
+            }
+        })
+
 
     }
 

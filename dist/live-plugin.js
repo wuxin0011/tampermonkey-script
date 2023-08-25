@@ -32,7 +32,7 @@
   const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/;
   const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
   const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/;
-  const douyin_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/;
+  const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/;
   const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/;
   const local_url = window.location.href;
   const is_huya = huya_address_pattern.test(local_url);
@@ -318,6 +318,26 @@
     }
     return null;
   };
+  const handlerPromise = (result, callback) => {
+    if (typeof callback !== "function") {
+      warn("回调函数不能为空！");
+      return;
+    }
+    if (!result) {
+      warn("请求结果为空！");
+      callback(result);
+      return;
+    }
+    if (result instanceof Promise) {
+      result.then((res) => {
+        callback(res);
+      }).catch((e) => {
+        error(e);
+      });
+    } else {
+      callback(result);
+    }
+  };
   class HostUser {
     constructor(roomId, name) {
       this.roomId = roomId;
@@ -488,9 +508,11 @@
         addEventListener(querySelector(tr, "button"), "click", function(e) {
           let roomId = e.target.getAttribute("room-id");
           that2.userDelete(roomId);
-          if (that2.getRoomIdByUrl(local_url) === roomId) {
-            window.location.reload();
-          }
+          handlerPromise(that2.getRoomIdByUrl(local_url), (result) => {
+            if (result === roomId) {
+              window.location.reload();
+            }
+          });
           removeDOM(tr, true);
         });
       });
@@ -528,14 +550,9 @@
           return alert("请输入房间号！");
         }
         if (!that2.userIsExist(keywords)) {
-          const name = that2.getNameByRoomId(keywords);
-          if (name instanceof Promise) {
-            name.then((res) => {
-              that2.searchUserByRoomId(res, keywords, inputValue);
-            });
-          } else {
-            that2.searchUserByRoomId(name, keywords, inputValue);
-          }
+          handlerPromise(that2.getNameByRoomId(keywords), (res) => {
+            that2.searchUserByRoomId(res, keywords, inputValue);
+          });
         } else {
           alert("该主播已添加！");
         }
@@ -777,54 +794,58 @@
       body.style.flexDirection = "column";
       body.style.justifyContent = "center";
       body.style.alignItems = "center";
-      let name = this.getUser(this.getRoomIdByUrl(local_url)) ? this.getUser(this.getRoomIdByUrl(
-        local_url
-      )).name : "";
-      const a = createElement("a");
-      a.textContent = "点击解锁";
-      a.style.display = "block";
-      a.style.cursor = "pointer";
-      a.style.fontSize = "20px";
-      a.onclick = (e) => {
-        e.preventDefault();
-        that2.userDelete(that2.getRoomIdByUrl(local_url));
-        window.location.reload();
-      };
-      h2.style.fontSize = "36px";
-      h2.textContent = `主播【${name}】已被你屏蔽`;
-      let title = querySelector("title");
-      if (!title) {
-        title = createElement("title");
-      }
-      title.textContent = `主播【${name}】已被你屏蔽`;
-      html.appendChild(body);
-      body.appendChild(h2);
-      body.appendChild(a);
-      let logo_show = getLocalStore(that2.logo_show_key, Boolean.name);
-      if (logo_show) {
-        let logo = createElement("a");
-        logo.textContent = "显示logo";
-        logo.style.display = "block";
-        logo.style.cursor = "pointer";
-        logo.style.fontSize = "20px";
-        logo.onclick = (e) => {
+      handlerPromise(this.getRoomIdByUrl(local_url), (roomId) => {
+        let name = this.getUser(roomId) ? this.getUser(roomId).name : "";
+        const a = createElement("a");
+        a.textContent = "点击解锁";
+        a.style.display = "block";
+        a.style.cursor = "pointer";
+        a.style.fontSize = "20px";
+        a.onclick = (e) => {
           e.preventDefault();
-          logo.style.display = "none";
-          addLocalStore(that2.logo_show_key, false, Boolean.name);
-          that2.createButton();
+          that2.userDelete(roomId);
+          window.location.reload();
         };
-        body.appendChild(logo);
-      }
-      removeDOM(this.m_container, true);
-      this.m_container = null;
-      this.create_container();
+        h2.style.fontSize = "36px";
+        h2.textContent = `主播【${name}】已被你屏蔽`;
+        let title = querySelector("title");
+        if (!title) {
+          title = createElement("title");
+        }
+        title.textContent = `主播【${name}】已被你屏蔽`;
+        html.appendChild(body);
+        body.appendChild(h2);
+        body.appendChild(a);
+        let logo_show = getLocalStore(that2.logo_show_key, Boolean.name);
+        if (logo_show) {
+          let logo = createElement("a");
+          logo.textContent = "显示logo";
+          logo.style.display = "block";
+          logo.style.cursor = "pointer";
+          logo.style.fontSize = "20px";
+          logo.onclick = (e) => {
+            e.preventDefault();
+            logo.style.display = "none";
+            addLocalStore(that2.logo_show_key, false, Boolean.name);
+            that2.createButton();
+          };
+          body.appendChild(logo);
+        }
+        removeDOM(this.m_container, true);
+        this.m_container = null;
+        this.create_container();
+      });
     }
     /**
      * 判断链接是否应该被删除
      * @param href 房间链接地址 默认 window.location.href
      */
     isRemove(href) {
-      return this.userIsExist(this.getRoomIdByUrl(href));
+      let res = this.getRoomIdByUrl(href);
+      if (res instanceof Promise) {
+        return false;
+      }
+      return this.userIsExist(res);
     }
     /**
      * 设置背景图
@@ -908,9 +929,11 @@
       this.users.unshift(newUser);
       addLocalStore(this.key, this.users);
       this.resetTbody(this.users);
-      if (id === this.getRoomIdByUrl(local_url)) {
-        this.roomIsNeedRemove(local_url);
-      }
+      handlerPromise(this.getRoomIdByUrl(local_url), (res) => {
+        if (id === res) {
+          this.roomIsNeedRemove(local_url);
+        }
+      });
     }
     /**
      * @param selector video
@@ -1552,18 +1575,14 @@
         }
       };
       function operationLogo() {
-        log("logo");
         that2 = this;
-        let logo = querySelector(that2.header_logo);
-        let isMark = logo.getAttribute("isMark");
-        if (!isMark) {
-          logo.setAttribute("isMark", "true");
+        findMark(that2.header_logo, (logo) => {
           logo.setAttribute("href", "javascript:;void(0)");
           logo.setAttribute("title", "点击Logo，显示插件配置");
           addEventListener(logo, "click", (e) => {
             that2.isShowContainer();
           });
-        }
+        });
       }
     }
     common() {
@@ -1614,21 +1633,6 @@
         const nextBtn = querySelector(".rec-footer");
         addEventListener(nextBtn, "click", () => {
           this.detailLeftVideoList(0);
-        });
-      }
-      if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url) && false) {
-        const userContainer = querySelector(".right-container-inner .up-info-container");
-        const place = querySelector(userContainer, ".up-detail-top");
-        const link = querySelector(userContainer, ".up-detail-top>a");
-        const name = link.textContent;
-        const id = this.getRoomIdByUrl(link.href);
-        const span = createElement("span");
-        span.classList = "m-span-text";
-        appendChild(place, span);
-        addEventListener(span, "click", () => {
-          if (confirm("确认屏蔽up主" + name + " ?")) {
-            this.addUser(id, name);
-          }
         });
       }
       if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
@@ -2261,6 +2265,7 @@ background-color: #f2f5f6 !important;
   const css$1 = is_douyin ? `
 #related-video-card-login-guide,
 #captcha_container,
+.JsAsIOEV,
 #login-full-panel{
 display:none !important;
 }
