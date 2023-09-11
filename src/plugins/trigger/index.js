@@ -76,7 +76,6 @@ export default class TriggerLive extends LivePlugin {
     // 公共部分操作
     common() {
         this.removeRoomByClickRoomName()
-        this.addEventListenerEscEvent()
     }
 
     // 详情操作
@@ -164,25 +163,6 @@ export default class TriggerLive extends LivePlugin {
         }, 500)
 
     }
-
-
-    /**
-     * 监听esc事件
-     */
-    addEventListenerEscEvent() {
-        let that = this
-        wd.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' || event.key === 'Esc') {
-                that.isShowGift()
-            }
-        });
-
-        const full_screen_button = querySelector(that.full_screen_button)
-        addEventListener(full_screen_button, 'click', () => {
-            that.isShowGift()
-        })
-    }
-
 
 
 
