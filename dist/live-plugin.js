@@ -578,7 +578,7 @@
       let that = this;
       let body = querySelector("body") ?? createElement("body");
       that.users = getLocalStore(that.key, Array.name) || [];
-      let isShowBg = wls.getItem(this.btn_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name);
+      let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name);
       let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name);
       let isShowFullScreen = wls.getItem(this.full_screen_is_first_key) === null ? false : getLocalStore(that.full_screen_key, Boolean.name);
       let isShowGift = wls.getItem(this.gift_is_first_key) === null ? false : getLocalStore(that.gift_key, Boolean.name);
@@ -717,9 +717,10 @@
       });
       const checkbox = querySelector(container, ".operation #checkbox1");
       addEventListener(checkbox, "change", function(e) {
-        that.settingBackgroundImage();
+        log("背景是否开启", e.target.checked ? "开启" : "关闭");
         addLocalStore(that.bg_show_key, e.target.checked, Boolean.name);
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
+        that.settingBackgroundImage();
       });
       const menu = querySelector(container, ".operation #checkbox2");
       addEventListener(menu, "change", function(e) {
@@ -1009,8 +1010,10 @@
         warn("壁纸设置失败 获取不到 container ！");
         return;
       }
-      if (getLocalStore(this.bg_show_key, Boolean.name) || wls.getItem(this.bg_is_first_key) == null) {
-        url = !!url ? url : wls.getItem(this.bg_key) ? wls.getItem(this.bg_key) : this.default_background_image;
+      let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name);
+      log("是否添加背景=>", isShowBg ? "显示" : "关闭", wls.getItem(this.bg_is_first_key) === null ? "null" : wls.getItem(this.bg_is_first_key));
+      if (isShowBg) {
+        url = !!url ? url : wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image;
         container.style.backgroundSize = "cover";
         container.style.backgroundRepeat = "no-repeat ";
         container.style.backgroundAttachment = "fixed";
@@ -1018,6 +1021,7 @@
         log("背景图添加完毕！");
       } else {
         container.style.backgroundImage = "none";
+        log("背景图已关闭！");
       }
     }
     /**
