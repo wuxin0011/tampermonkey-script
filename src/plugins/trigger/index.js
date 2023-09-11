@@ -1,17 +1,18 @@
 import {
     addEventListener,
+    findMark, getLocalStore,
     intervalRemoveElement,
     isArray,
-    local_url,
+    local_url, log,
     loopDo,
     querySelector,
     querySelectorAll,
     removeDOM,
     removeVideo,
     setTimeoutMark,
-    findMark,
     timeoutSelectorAllOne,
-    warn
+    warn,
+    wd, wls
 } from '../../utils';
 
 import LivePlugin from "../live";
@@ -22,21 +23,15 @@ import LivePlugin from "../live";
 export default class TriggerLive extends LivePlugin {
     constructor() {
         super()
-        this.key = 'huyazhibo'
-        this.bg_key = 'huyazhibo_bg'
-        this.bg_show_key = 'huyazhibo_bg_show'
-        this.menu_show_key = 'huyazhibo_menu_show_key'
-        this.full_screen_key = 'huyazhibo_full_screen_key'
         this.video_player_container = '.room-player-wrap'
         this.full_screen_button = '.room-player-wrap .player-fullscreen-btn'
         this.full_button_tag_name = 'span'
-        this.defaultBackgroundImage = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
+        this.default_background_image = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
         this.baseUrl = "https://www.huya.com/"
         this.menu = '.mod-sidebar'
         this.header_logo = '#duya-header #duya-header-logo a'
-        this.giftTool = '.room-core .player-gift-wrap'
-        this.tbody = null
-        this.m_container = null
+        this.gift_tool = '.room-core #player-gift-wrap'
+        this.auto_max_pro_class_or_id_list = '.player-videoline-videotype .player-videotype-list li'
         this.init()
     }
 
@@ -55,6 +50,7 @@ export default class TriggerLive extends LivePlugin {
                 let pauseBtn = querySelector('.player-pause-btn')
                 if (pauseBtn) {
                     pauseBtn.click()
+                    clearInterval(timer)
                 }
             }, 10, 300)
 
@@ -64,6 +60,7 @@ export default class TriggerLive extends LivePlugin {
 
     // 分类页操作
     category() {
+        let that = this
         if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
             timeoutSelectorAllOne('.live-list-nav dd', (node) => {
                 addEventListener(node, 'click', () => {
@@ -79,13 +76,13 @@ export default class TriggerLive extends LivePlugin {
     // 公共部分操作
     common() {
         this.removeRoomByClickRoomName()
-        this.clickLogoShowContainer()
+        this.addEventListenerEscEvent()
     }
 
     // 详情操作
     detail() {
+        let that = this
         if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
-            let that = this
             findMark('.host-name', (hostName) => {
                 hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
                 addEventListener(hostName, 'click', () => {
@@ -101,8 +98,10 @@ export default class TriggerLive extends LivePlugin {
                 '#chatRoom .room-gg-chat',
                 '#huya-ab'
             ]
-
+            // 移除视频播放器区域广告
             intervalRemoveElement(ads, 500, 20)
+            this.isFullScreen()
+            this.isAutoMaxVideoPro()
         }
     }
 
@@ -122,6 +121,7 @@ export default class TriggerLive extends LivePlugin {
         let that = this
         let hostName = querySelector('.host-name')
         if (!hostName) {
+            warn(`获取不到hostname`)
             return ''
         }
         const rooms = querySelectorAll('.game-live-item')
@@ -164,5 +164,27 @@ export default class TriggerLive extends LivePlugin {
         }, 500)
 
     }
+
+
+    /**
+     * 监听esc事件
+     */
+    addEventListenerEscEvent() {
+        let that = this
+        wd.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' || event.key === 'Esc') {
+                that.isShowGift()
+            }
+        });
+
+        const full_screen_button = querySelector(that.full_screen_button)
+        addEventListener(full_screen_button, 'click', () => {
+            that.isShowGift()
+        })
+    }
+
+
+
+
 
 }

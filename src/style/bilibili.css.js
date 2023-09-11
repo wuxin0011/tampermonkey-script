@@ -1,5 +1,5 @@
 
-import { is_bilibili } from '../utils/index.js'
+import { is_bilibili } from '../utils'
 const css = is_bilibili ? `
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,

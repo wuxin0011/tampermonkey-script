@@ -104,7 +104,20 @@ const css = is_huya ? `
      color: transparent !important;
      opacity:0 !important;
   }
+  
+ .mod-sidebar,
+.room-core #player-gift-wrap{
+  display:none ;
+}
 
+ #player-ctrl-wrap {
+  opacity: 0;
+  transition: all 500ms ease-in 0s !important;
+  bottom: 16px;
+ }
+#J_playerMain:hover #player-ctrl-wrap{
+   opacity: 1;
+}
 
 `: ''
 export default css

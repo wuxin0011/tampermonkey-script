@@ -1,7 +1,8 @@
 // const
 const prefix = '[live-plugin]:'
 const msg = (...args) => `${prefix} ${args}`
-const emptyMehtod = (...args) => { }
+const emptyMethod = (...args) => {
+}
 // export methods
 export const log = (...args) => console.log(msg(args))
 export const warn = (...args) => console.warn(msg(args))
@@ -18,13 +19,14 @@ export const is_douyu = douyu_address_pattern.test(local_url) // 是否是斗鱼
 export const is_bilibili = bilibili_address_pattern.test(local_url) // bilibili
 export const is_douyin = douyin_address_pattern.test(local_url) // douyin
 export const is_localhost = localhost.test(local_url) // 本地环境
+export const isSupport = () => !is_douyin
 export const wd = window.document
 export const wls = window.localStorage
 export const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
 export const source_code_url = 'https://github.com/wuxin0011/huya-live' // 源码地址
 export const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file)
-export const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : (el ? wd.querySelector(el) : emptyMehtod)
-export const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : (el ? wd.querySelectorAll(el) : emptyMehtod)
+export const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : (el ? wd.querySelector(el) : emptyMethod)
+export const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : (el ? wd.querySelectorAll(el) : emptyMethod)
 export const addEventListener = (el, type, callback) => !!el && type && typeof callback === 'function' ? el === wd || el instanceof HTMLElement ? el.addEventListener(type, callback, false) : false : false
 export const createElement = (tag) => !!tag && wd.createElement(tag)
 export const appendChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.appendChild(el2)
@@ -126,7 +128,7 @@ export const getLocalStore = (k, type = Array.name, isParse = true) => {
     return obj;
 }
 
-export const addLocalStore = (k, v = [], type = Array.name, isParse = true) => (type == Object.name || type == Array.name) && isParse ? wls.setItem(k, JSON.stringify(v)) : wls.setItem(k, v)
+export const addLocalStore = (k, v = [], type = Array.name, isParse = true) => (type === Object.name || type === Array.name) && isParse ? wls.setItem(k, JSON.stringify(v)) : wls.setItem(k, v)
 export const removeVideo = (selector, time1 = 100, maxCount = 1000) => {
     let count = 0
     let video_timer = setInterval(() => {
@@ -201,7 +203,7 @@ export const findMark = (selector, callback, count = 100, wait = 100) => {
     loopDo((timer) => {
         try {
             let element = selector instanceof HTMLElement ? selector : querySelector(selector)
-            if (element) {
+            if (element && element instanceof HTMLElement) {
                 let isMark = element.getAttribute('mark')
                 if (!isMark) {
                     element.setAttribute('mark', true)
@@ -219,7 +221,7 @@ export const findMark = (selector, callback, count = 100, wait = 100) => {
 
     setTimeout(() => {
         let element = selector instanceof HTMLElement ? selector : querySelector(selector)
-        if (element) {
+        if (element && element instanceof HTMLElement) {
             let isMark = element.getAttribute('mark')
             if (!isMark) {
                 element.setAttribute('mark', true)
@@ -242,7 +244,7 @@ export const setTimeoutMark = (selector, callback, wait = 0) => {
     let timer = setTimeout(() => {
         try {
             let element = selector instanceof HTMLElement ? selector : querySelector(selector)
-            if (element) {
+            if (element && element instanceof HTMLElement) {
                 let isMark = element.getAttribute('mark')
                 if (!isMark) {
                     element.setAttribute('mark', true)
@@ -258,7 +260,6 @@ export const setTimeoutMark = (selector, callback, wait = 0) => {
     }, wait);
 
 }
-
 
 
 export const backgroundNone = (element, selectors = ['.layout-Main'], time = 100, maxCount = 500) => {
@@ -323,26 +324,42 @@ export const uploadImage = (file, callback) => {
     }
 }
 
-
-export const findFullSreenButton = (sel = 'body', key = 'full_screen_button_class_or_id', text = '全屏', tagName = 'div') => {
+/**
+ *
+ * @param {容器} sel
+ * @param {类名或者ID} key
+ * @param {全屏按钮文字内容} text
+ * @param {全屏文字标签类型名} tagName
+ * @returns
+ */
+export const findButton = (sel = 'body', key = 'full_screen_button_class_or_id', text = '全屏', tagName = 'div') => {
     const container = querySelector(sel)
+    let classId = ''
     if (container) {
-        const nodes = querySelectorAll(container, tagName)
-        if (isArray(nodes)) {
-            for (let i = 0; i < nodes.length; i++) {
-                if (nodes[i]?.title === text || nodes[i]?.textContent === text) {
-                    let classId = `${sel} ${nodes[i].id ? nodes[i].id : nodes[i].class}`
-                    addLocalStore(key, classId, String.name, false)
-                    return classId
-
+        // 先根据className 或者 id查找
+        const fullButton = querySelector(container, key)
+        if (fullButton && fullButton instanceof HTMLElement && (fullButton?.textContent === text || fullButton?.title === text)) {
+            classId = `${sel} ${fullButton.id ? fullButton.id : fullButton.className}`
+        }
+        if (!classId) {
+            // 没找到
+            // 从 video中遍历更加tagName查找
+            const nodes = querySelectorAll(container, tagName)
+            if (isArray(nodes)) {
+                for (let i = 0; i < nodes.length; i++) {
+                    if (nodes[i] && nodes[i] instanceof HTMLElement && (nodes[i]?.title === text || nodes[i]?.textContent === text)) {
+                        // 保存本次id
+                        classId = `${sel} ${nodes[i].id ? nodes[i].id : nodes[i].className}`
+                    }
                 }
             }
         }
     }
-    return null
+    if (key && classId) {
+        addLocalStore(key, classId, String.name, false)
+    }
+    return classId || key
 }
-
-
 
 
 export const handlerPromise = (result, callback) => {
@@ -370,8 +387,57 @@ export const handlerPromise = (result, callback) => {
     }
 }
 
+export const handlerDisplay = (element, isBlock) => {
+    if (!(element && element instanceof HTMLElement)) {
+        return;
+    }
+    if (isBlock) {
+        if (!element.classList.contains('m-container-display-block')) {
+            element.classList.add('m-container-display-block')
+        }
+        if (element.classList.contains('m-container-display-none')) {
+            element.classList.remove('m-container-display-none')
+        }
+    } else {
+        if (element.classList.contains('m-container-display-block')) {
+            element.classList.remove('m-container-display-block')
+        }
+        if (!element.classList.contains('m-container-display-none')) {
+            element.classList.add('m-container-display-none')
+        }
+    }
+}
 
 
+export const support = {
+    supportSearch() {
+        return !is_douyin
+    },
+    supportAdd() {
+        return !is_douyin
+    },
+    supportReset() {
+        return !is_douyin
+    },
+    supportBg() {
+        return !is_douyin && !is_bilibili
+    },
+    supportMenu() {
+        return !is_douyin && !is_bilibili
+    },
+    supportGift() {
+        return !is_douyin && !is_bilibili
+    },
+    supportAutoFullScreen() {
+        return true
+    },
+    supportAutoViewMaxPro() {
+        return true
+    },
+    supportTable() {
+        return !is_douyin
+    }
+}
 
 
 export class HostUser {

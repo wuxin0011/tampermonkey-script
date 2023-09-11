@@ -1,6 +1,5 @@
+import {is_douyu} from "../utils"
 
-
-import { is_douyu } from "../utils"
 const css = is_douyu ? `
 
 .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
@@ -83,6 +82,7 @@ display:block !important;
 .public-DropMenu-drop-main div.Header-UserPane-top~div,
 #js-player-dialog .LiveRoomLoopVideo,
 .Header-search-wrap .Search  label,
+.RedEnvelopAd.RedEnvelopAdMouseDisable,
 .Barrage .Barrage-userEnter{
 display:none !important;
 }
@@ -137,5 +137,10 @@ background-color: #f2f5f6 !important;
    color: transparent !important;
    opacity:0 !important;
 }
-`: ''
+
+#js-aside,
+.layout-Player-main #js-player-toolbar {
+   display:none;
+}
+` : ''
 export default css

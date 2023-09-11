@@ -1,3 +1,5 @@
+import {is_douyin} from "../utils/index.js";
+
 
 const css = `
 .m-container,
@@ -14,7 +16,7 @@ const css = `
   
   .m-container {
     --m-font-color: #fff;
-    --m-container-backgournd-color: #fff;
+    --m-container-background-color: #fff;
     --m-container-width: 700px;
     --m-container-height: 400px;
     --m-container-operation-right-width: 150px;
@@ -34,7 +36,7 @@ const css = `
     left: 50% !important;
     border-radius: 10px !important;
     overflow: hidden !important;
-    background-color: var(--m-container-backgournd-color) !important;
+    background-color: var(--m-container-background-color) !important;
     z-index: 100000000 !important;
     padding: 15px !important;
     transition: var(--m-container-box-transition) !important;
@@ -298,7 +300,6 @@ const css = `
   
   .m-type-container .m-tag-select {
     width: calc(var(--m-container-select-width)/2) !important;
-    ;
     outline: none !important;
     border: 1px solid rgba(8, 125, 235, 0.6) !important;
     padding: 5px 8px !important;
@@ -326,22 +327,29 @@ const css = `
     color: red !important;
   }
   
-      .m-span-text {
-          transition: all 0.3s ease;
-          cursor: pointer !important;
-          opacity: 0;
-          float:right;
-          display:inline-block;
-          margin:0 10px;
-          transform: scale(0.5);
-          font-size:20px;
-          position:relative;
-      }
+  .m-span-text {
+      transition: all 0.3s ease;
+      cursor: pointer !important;
+      opacity: 0;
+      float:right;
+      display:inline-block;
+      margin:0 10px;
+      transform: scale(0.5);
+      font-size:20px;
+      position:relative;
+  }
+
+  .m-span-text::before{
+      content:"🧹";
+      cursor: pointer !important;
+  }
   
-      .m-span-text::before{
-          content:"🧹";
-          cursor: pointer !important;
-      }
+  .m-container-display-block{
+     display:block !important;
+  }
+  .m-container-display-none{
+     display:none !important;
+  }
 
 
 `

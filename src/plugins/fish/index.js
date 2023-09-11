@@ -1,6 +1,9 @@
 import {
-    addEventListener, backgroundNone,
+    addEventListener,
+    backgroundNone,
+    findButton,
     findMark,
+    getLocalStore,
     isArray,
     local_url,
     log,
@@ -10,11 +13,13 @@ import {
     removeDOM,
     removeVideo,
     setTimeoutMark,
-    throttle, timeoutSelectorAll, timeoutSelectorAllOne
+    throttle,
+    timeoutSelectorAllOne,
+    wls
 } from '../../utils';
 
-import { getInfo } from "../../api/fish/index.js";
-import LivePlugin from "../live/index.js";
+import {getInfo} from "../../api/fish";
+import LivePlugin from "../live";
 
 /**
  * 斗鱼直播插件
@@ -22,25 +27,18 @@ import LivePlugin from "../live/index.js";
 export default class FishLive extends LivePlugin {
     constructor() {
         super()
-        this.key = 'douyuzhibo'
-        this.bg_key = 'douyuzhibo_bg'
-        this.bg_show_key = 'douyuzhibo_show'
-        this.menu_show_key = 'douyuzhibo_menu_show_key'
-        this.full_screen_key = 'douyuzhibo_full_screen_key'
         this.video_player_container = '#room-html5-player'
         this.baseUrl = "https://www.douyu.com/"
-        this.defaultBackgroundImage = 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
+        this.default_background_image = 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
         this.menu = '#js-aside'
-        this.giftTool = '.layout-Player-main #js-player-toolbar'
+        this.gift_tool = '.layout-Player-main #js-player-toolbar'
         this.header_logo = '#js-header .Header-left .Header-logo'
-        this.tbody = null
-        this.m_container = null
+        this.auto_max_pro_class_or_id_list = '#js-player-video .room-Player-Box .rate-5c068c ul>li'
         this.init()
     }
 
     // 公共部分页面操作
     common() {
-        this.clickLogoShowContainer()
     }
 
     //首页操作
@@ -93,7 +91,7 @@ export default class FishLive extends LivePlugin {
                         // 获取全部地址
                         window.location.href = 'https://www.douyu.com/g_' + local_url.match(RegExp(
                             /subCate\/.*/g))[0].replace('subCate', '').match(new RegExp(
-                                /\w+/g))[0]
+                            /\w+/g))[0]
                     }
 
                 })
@@ -111,8 +109,7 @@ export default class FishLive extends LivePlugin {
         if (!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url)) {
             return;
         }
-
-        findMark('.Title-roomInfo h2.Title-anchorNameH2',(hostName)=>{
+        findMark('.Title-roomInfo h2.Title-anchorNameH2', (hostName) => {
             hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
             addEventListener(hostName, 'click', () => {
                 if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
@@ -150,6 +147,8 @@ export default class FishLive extends LivePlugin {
             removeDOM('.layout-Main .ToTopBtn', true)
 
         }
+        this.isFullScreen()
+        this.isAutoMaxVideoPro()
     }
 
     // 通过点击直播间名称删除直播间
@@ -164,7 +163,11 @@ export default class FishLive extends LivePlugin {
                     const user = querySelector(li, '.DyCover-user')
                     const name = user?.textContent || ''
                     a.setAttribute('href', 'javascript:;void(0)');
-                    addEventListener(user, 'click', () => {
+                    addEventListener(a, 'click', (e) => {
+                        e.preventDefault()
+                    })
+                    addEventListener(user, 'click', (e) => {
+                        e.preventDefault()
                         if (confirm(`确认禁用 ${name}`)) {
                             that.addUser(that.getRoomIdByUrl(url), name);
                             removeDOM(li);
@@ -184,6 +187,9 @@ export default class FishLive extends LivePlugin {
                     if (link) {
                         const url = link?.href || ''
                         link.setAttribute('href', 'javascript:;void(0)');
+                        addEventListener(link, 'click', (e) => {
+                            e.preventDefault()
+                        })
                         const user = querySelector(link, 'div.DyListCover-userName')
                         const name = user.textContent || ''
                         if (that.isRemove(url) || that.userIsExist(name)) {
@@ -202,9 +208,13 @@ export default class FishLive extends LivePlugin {
                                 const a = querySelector(e.target, 'a.DyListCover-wrap.is-hover')
                                 const url = a?.href
                                 a.setAttribute('href', 'javascript:;void(0)');
+                                addEventListener(a, 'click', (e) => {
+                                    e.preventDefault()
+                                })
                                 const user = querySelector(a, '.DyListCover-userName')
                                 const name = user.textContent || ''
-                                addEventListener(user, 'click', () => {
+                                addEventListener(user, 'click', (e) => {
+                                    e.preventDefault()
                                     if (confirm(`确认禁用 ${name}？`)) {
                                         const id = that.getRoomIdByUrl(url);
                                         that.addUser(id, name);
@@ -281,6 +291,33 @@ export default class FishLive extends LivePlugin {
             return null
         }
     }
+
+
+    // isAutoMaxVideoPro() {
+    //     if (!(wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(this.auto_max_pro_key, Boolean.name))) {
+    //         return;
+    //     }
+    //     log('自动全屏查找中...')
+    //     const parent_container = `#js-player-video .room-Player-Box`
+    //     let default_class = '.rate-5c068c'
+    //
+    //     const check = () => {
+    //         return findButton(parent_container, default_class, "清晰度", "div")
+    //     }
+    //     loopDo((timer) => {
+    //         const nodes = querySelectorAll(`${parent_container} ${default_class} ul li`)
+    //         log('查找结果',nodes)
+    //         if (isArray(nodes)) {
+    //             nodes[0].click()
+    //             clearInterval(timer)
+    //         } else {
+    //             default_class = check()
+    //         }
+    //
+    //     }, 20, 1000)
+    //
+    //
+    // }
 
 
 }

@@ -1,56 +1,76 @@
 import {
-    is_bilibili,
-    is_douyu,
-    is_huya,
-    wls,
-    wd,
-    is_localhost,
-    local_url,
     addEventListener,
     addLocalStore,
     appendChild,
     createElement,
+    error,
+    findButton,
+    findMark,
     getLocalStore,
+    handlerPromise,
+    HostUser,
+    is_bilibili,
+    is_douyu,
+    is_huya,
+    is_localhost,
     isArray,
+    local_url,
+    support,
     log,
+    loopDo,
     querySelector,
     querySelectorAll,
     removeDOM,
-    HostUser,
-    handlerPromise,
-    uploadImage, timeoutSelector, removeVideo, onload, s2d, loopDo, findFullSreenButton, warn, findMark, error
+    removeVideo,
+    s2d,
+    uploadImage,
+    warn,
+    wd,
+    wls, handlerDisplay
 } from '../../utils'
-import getHtmlStr from "./html.js";
+
+import iconLogo from '../../utils/logo'
+import getHtmlStr from "./html";
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
  */
 export default class LivePlugin {
     constructor() {
+        this.baseUrl = "/"  // 首页
         this.key = 'key'  // 存放内容信息
         this.bg_key = 'bg_key' // 存放背景图
-        this.video_player_container = '.room-player-wrap'
         this.bg_show_key = 'bg_show_key'  // 是否显示背景key
-        this.menu_show_key = 'menu_show_key' // 是否显示菜单
-        this.full_screen_key = 'full_screen_key' // 是否剧场模式
-        this.full_screen_class_or_id = 'full_screen_button_class_or_id'
-        this.full_button_tag_name = 'div'
-        this.full_screen_button = getLocalStore(this.full_screen_class_or_id, String.name, false)
-        this.fullScreenText = '全屏'
-        this.cancelFullText = '退出全屏'
-        this.baseUrl = "http://127.0.0.1:8080"  // 直播源
-        this.defaultBackgroundImage = 'https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/bg5.jpg' // 默认背景图
-        this.users = getLocalStore(this.key, Array.name, true)
+        this.bg_is_first_key = "bg_is_first_key"
+        this.full_screen_key = 'full_screen_key' // 是否全屏
+        this.full_screen_class_or_id = 'full_screen_button_class_or_id' // 全屏按钮的class或者id，如果提供了将直接从这里获取
+        this.full_button_tag_name = 'div' // 全屏按钮默认标签命名 span div button ...
+        this.full_screen_button = getLocalStore(this.full_screen_class_or_id, String.name, false) || this.full_screen_class_or_id
+        this.full_screen_text = '全屏'  // 默认退出全屏文字内容 如果没有提供class获取id将从video中获取，通过文字查找
+        this.full_cancel_text = '退出全屏'
+        this.full_screen_is_first_key = "full_screen_is_first_key"
+        this.default_background_image = 'https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/bg5.jpg' // 默认背景图
+        this.users = []
         this.menu = null  // 菜单
+        this.menu_show_key = 'menu_show_key' // 是否显示菜单
+        this.menu_is_first_key = 'menu_is_first_key'
         this.tbody = null // 操作数据
         this.m_container = null   // 操作容器
-        this.gift_key = this.key + '_gift' // 礼物
-        this.giftTool = null  // 礼物栏
+        this.gift_key = `${this.key}_gift` // 礼物
+        this.gift_tool = null  // 礼物栏
+        this.gift_is_first_key = "gift_is_first_key" // 礼物是否是第一次 默认不显示
         this.logo_btn = null // button
-        this.logo_show_key = this.key + "_logo_show" // logo key
+        this.btn_logo_svg = iconLogo()
+        this.logo_show_key = `${this.key}_logo_show`
         this.header_logo = 'none' // logo 是否显示
-        this.buttonName = '' // button name
-        this.isNew = false
+        this.button_name = '' // button name
+        this.is_new = false // 容器样式面板版本
+        this.btn_is_first_key = 'btn_is_first_key' // 是否是第一次操作
+        this.video_player_container = '.room-player-wrap' // video container
+        this.auto_max_pro_key = "auto_max_pro_key" // 自动最高画质
+        this.is_first_auto_max_pro_key = "is_first_auto_max_pro_key" // 自动最高画质
+        this.auto_max_pro_class_or_id_list = 'auto_max_pro_class_or_id_list'
+        this.auto_max_pro_keywords = ['登录', '会员', '大会员']
         if (is_localhost) { // 本地测试允许加载
             this.init()
         }
@@ -60,16 +80,15 @@ export default class LivePlugin {
     // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
     init() {
         if (!this.removeRoom()) {
-            this.detail()
             this.common()
+            this.detail()
             this.index()
             this.category()
             this.create_container()
-            this.isFullScreen()
             this.isShowLeftMenu()
             this.isShowGift()
+            this.clickLogoShowContainer()
         }
-        // 设置壁纸
         this.settingBackgroundImage()
     }
 
@@ -111,7 +130,8 @@ export default class LivePlugin {
      * @returns {null} name
      */
     getNameByRoomId(roomId) {
-        throw new Error('请自定义实现通过名称获取房间号方法！')
+        warn('请自定义实现通过名称获取房间号方法')
+        return null
     }
 
 
@@ -121,8 +141,46 @@ export default class LivePlugin {
      * @returns {null} 房间号
      */
     getRoomIdByUrl(url) {
-        throw new Error('请自定义实现通过url获取房间号方法！')
+        warn('请自定义实现通过名称获取房间号方法')
+        return null
     }
+
+    /**
+     * 自动最高画质！
+     */
+    isAutoMaxVideoPro() {
+        let that = this
+        if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
+            return;
+        }
+
+        const check = () => {
+            // TODO 实现随着版本更新获取list
+            // this.auto_max_pro_class_or_id_list = this.auto_max_pro_class_or_id_list
+        }
+        log('查找播放视频画质列表', that.auto_max_pro_class_or_id_list)
+        loopDo((timer) => {
+            let items = querySelectorAll(that.auto_max_pro_class_or_id_list);
+            if (isArray(items)) {
+                for (let item of items) {
+                    let result = that.auto_max_pro_keywords.findIndex(key => item.innerText.indexOf(key) !== -1)
+                    if (result === -1) {
+                        log('当前最高画质', item.innerText)
+                        if (is_huya) {
+                            item = querySelector(item, "span");
+                        }
+                        item.click()
+                        clearInterval(timer)
+                        return;
+                    }
+
+                }
+            } else {
+                check()
+            }
+        }, 100, 500)
+    }
+
 
     /*********************************子类继承无需修改的方法******************************/
     /**
@@ -132,21 +190,22 @@ export default class LivePlugin {
         // 初始化房间号
         let that = this
         let body = querySelector('body') ?? createElement('body')
-        that.users = getLocalStore(that.key, Array.name)
-        let show1 = getLocalStore(that.bg_show_key, Boolean.name)
-        let show2 = getLocalStore(that.menu_show_key, Boolean.name)
-        let show3 = getLocalStore(that.full_screen_key, Boolean.name)
-        let show4 = getLocalStore(that.gift_key, Boolean.name)
-        let show5 = getLocalStore(that.logo_show_key, Boolean.name)
-        that.m_container = s2d(getHtmlStr(show1, show2, show3, show4, show5))
+        that.users = getLocalStore(that.key, Array.name) || []
+        let isShowBg = wls.getItem(this.btn_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name) // 是否显示背景 默认显示
+        let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name) // 左侧菜单默认不显示
+        let isShowFullScreen = wls.getItem(this.full_screen_is_first_key) === null ? false : getLocalStore(that.full_screen_key, Boolean.name) // 是否自动全屏 默认不自动
+        let isShowGift = wls.getItem(this.gift_is_first_key) === null ? false : getLocalStore(that.gift_key, Boolean.name) // 礼物默认不显示
+        let isShowLogo = wls.getItem(this.btn_is_first_key) === null ? true : getLocalStore(that.logo_show_key, Boolean.name) // logo 默认显示
+        let isAutoMaxPro = wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name) // logo 默认显示
+        that.m_container = s2d(getHtmlStr(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro))
         appendChild(body, that.m_container)
 
         if (querySelector(that.m_container, '#m-container-box2 table tbody')) {
             that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
-            this.isNew = true
+            this.is_new = true
         } else {
             that.tbody = querySelector(that.m_container, '.m-container table tbody')
-            this.isNew = false
+            this.is_new = false
         }
 
         // 生成操作按钮
@@ -216,7 +275,7 @@ export default class LivePlugin {
         const container = that.m_container
         const inputValue = querySelector(container, '.operation input')
         addEventListener(inputValue, 'input', () => {
-            let arr = that.users.filter(item => (item && item.roomId && item.roomId.indexOf(inputValue.value) != -1) || (item.name && item.name.indexOf(inputValue.value) != -1))
+            let arr = that.users.filter(item => (item && item.roomId && item.roomId.indexOf(inputValue.value) !== -1) || (item.name && item.name.indexOf(inputValue.value) !== -1))
             that.resetTbody(arr)
         })
 
@@ -242,7 +301,21 @@ export default class LivePlugin {
         addEventListener(clearRoomBtn, 'click', function () {
             if (confirm('确认重置？')) {
                 that.users = []
-                for (let item of [that.key, that.bg_key, that.menu_show_key, that.gift_key, that.logo_show_key, that.full_screen_key]) {
+                let deleteKeyList = [
+                    that.key,
+                    that.bg_key,
+                    that.menu_show_key,
+                    that.gift_key,
+                    that.logo_show_key,
+                    that.full_screen_key,
+                    that.bg_is_first_key,
+                    that.btn_is_first_key,
+                    that.full_screen_is_first_key,
+                    that.menu_is_first_key,
+                    that.gift_is_first_key,
+                    that.is_first_auto_max_pro_key,
+                ]
+                for (let item of deleteKeyList) {
                     wls.removeItem(item)
                 }
                 that.resetTbody(that.users)
@@ -257,12 +330,14 @@ export default class LivePlugin {
                 addLocalStore(that.bg_key, base64, String.name, false)
                 that.settingBackgroundImage(e.target.result)
             })
+            addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
 
         // 文件上传
         const upload = querySelector(container, '.operation .bg-btn')
         addEventListener(upload, 'click', function (e) {
             uploadButton.click()
+            addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
 
         // 显示关闭
@@ -276,18 +351,18 @@ export default class LivePlugin {
         addEventListener(close_container2, 'click', function (e) {
             that.isShowContainer()
         })
-
-
         // 选择背景
         const checkbox = querySelector(container, '.operation #checkbox1')
         addEventListener(checkbox, 'change', function (e) {
-            addLocalStore(that.bg_show_key, e.target.checked, Boolean.name)
             that.settingBackgroundImage()
+            addLocalStore(that.bg_show_key, e.target.checked, Boolean.name)
+            addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
         // 是否关闭菜单
         const menu = querySelector(container, '.operation #checkbox2')
         addEventListener(menu, 'change', function (e) {
             that.getLeftMenu(e.target.checked)
+            addLocalStore(that.menu_is_first_key, false, Boolean.name)
         })
 
         // 剧场模式
@@ -295,13 +370,15 @@ export default class LivePlugin {
         addEventListener(full_screen_btn, 'change', function (e) {
             addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
             that.isFullScreen(true)
+            addLocalStore(that.full_screen_is_first_key, false, Boolean.name)
         })
 
         // 礼物模式
-        const show_gitf = querySelector(container, '.operation #checkbox4')
-        addEventListener(show_gitf, 'change', function (e) {
+        const show_gift = querySelector(container, '.operation #checkbox4')
+        addEventListener(show_gift, 'change', function (e) {
             addLocalStore(that.gift_key, e.target.checked, Boolean.name)
             that.isShowGift()
+            addLocalStore(that.gift_is_first_key, false, Boolean.name)
         })
 
         const show_logo_btn = querySelector(container, '.operation #checkbox5')
@@ -320,12 +397,20 @@ export default class LivePlugin {
                 that.logo_btn.style.display = 'block'
                 addLocalStore(that.logo_show_key, true, Boolean.name)
             }
+            addLocalStore(that.btn_is_first_key, false, Boolean.name)
+        })
 
+
+        // 最高画质
+        const auto_max_pro = querySelector(container, '.operation #checkbox6')
+        addEventListener(auto_max_pro, 'change', function (e) {
+            addLocalStore(that.auto_max_pro_key, e.target.checked, Boolean.name)
+            addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name)
+            that.isAutoMaxVideoPro()
         })
 
 
         // 初始化动画效果
-        // 该功能暂时不添加了
         this.initAnimation(container)
         log('操作按钮添加成功！')
     }
@@ -339,14 +424,11 @@ export default class LivePlugin {
         let change2 = querySelector(container, '#m-change-box2')
 
 
-        let select1 = querySelector(container,
-            '.m-type-item-left .m-select-option-container #m-select-input-address')
-        let select2 = querySelector(
-            '.m-type-item-left .m-select-input-container #m-select-input-select')
+        let select1 = querySelector(container, '.m-type-item-left .m-select-option-container #m-select-input-address')
+        let select2 = querySelector('.m-type-item-left .m-select-input-container #m-select-input-select')
 
         let select1_box1 = querySelector(container, '.m-type-item-left #m-select-option')
         let select2_box2 = querySelector(container, '.m-type-item-left #m-select-input')
-
 
 
         addEventListener(change1, 'click', () => {
@@ -389,7 +471,6 @@ export default class LivePlugin {
     }
 
 
-
     searchUserByRoomId(name, roomId, inputValue) {
         let that = this
         if (name) {
@@ -421,22 +502,29 @@ export default class LivePlugin {
             return;
         }
 
-        let text = this.buttonName
-        let backgroundColor = is_bilibili ? '255,102,102' : '255, 93, 35'
+        let text = this.button_name
+
         const btn = createElement('button')
         btn.style.cursor = 'pointer'
         btn.style.position = 'fixed'
         btn.style.top = '300px'
         btn.style.right = '0px'
-        btn.style.padding = '5px 10px'
-        btn.style.backgroundColor = `rgb(${backgroundColor})`
+        btn.style.zIndex = 999999999999
+        let backgroundColor = ''
+        if (that.btn_logo_svg !== 'none') {
+            btn.innerHTML = that.btn_logo_svg
+            btn.style.backgroundColor = 'transparent'
+        } else {
+            backgroundColor = is_bilibili ? '255,102,102' : '255, 93, 35'
+            btn.style.padding = '5px 10px'
+            btn.style.backgroundColor = `rgb(${backgroundColor})`
+            btn.style.borderRadius = '20px'
+            btn.style.fontSize = '12px'
+            btn.style.color = '#fff'
+            btn.textContent = text ? text : (is_huya ? '小虎牙' : (is_douyu ? '小鱼丸' : is_bilibili ? '小B' : '默认'))
+        }
         btn.style.border = 'none'
         btn.style.outline = 'none'
-        btn.style.borderRadius = '20px'
-        btn.style.fontSize = '12px'
-        btn.style.color = '#fff'
-        btn.style.zIndex = 999999999999
-        btn.textContent = text ? text : (is_huya ? '小虎牙' : (is_douyu ? '小鱼丸' : is_bilibili ? '小B' : '默认'))
         addEventListener(btn, 'click', function () {
             that.isShowContainer()
         })
@@ -449,7 +537,7 @@ export default class LivePlugin {
         const mouse_key = that.key + "_mouse_key"
 
         // 获取位置信息
-        let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name)
+        let {mouse_left, mouse_top} = getLocalStore(mouse_key, Object.name)
         log(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`)
         if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
             btn.style.left = mouse_left + 'px'
@@ -492,11 +580,11 @@ export default class LivePlugin {
             btn.style.left = `${btn_left}px`
             btn.style.top = `${btn_top}px`
             btn.style.right = 'auto'
-            addLocalStore(mouse_key, { 'mouse_left': btn_left, 'mouse_top': btn_top }, Object.name)
+            addLocalStore(mouse_key, {'mouse_left': btn_left, 'mouse_top': btn_top}, Object.name)
 
         }
 
-        btn.style.display = is_bilibili || getLocalStore(that.logo_show_key, Boolean.name) ? 'block' : 'none'
+        btn.style.display = wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name) ? 'block' : 'none'
         that.logo_btn = btn
         appendChild(body, that.logo_btn)
         log('button 添加完毕！')
@@ -507,11 +595,15 @@ export default class LivePlugin {
      * @param url 房间链接地址 默认 window.location.href
      */
     removeRoom(url = local_url) {
-        if (!this.isRemove(url)) {
+        try {
+            if (!this.isRemove(url)) {
+                return false
+            }
+            this.roomIsNeedRemove();
+            return true
+        } catch (error) {
             return false
         }
-        this.roomIsNeedRemove();
-        return true
     }
 
     /**
@@ -579,30 +671,35 @@ export default class LivePlugin {
      * @param href 房间链接地址 默认 window.location.href
      */
     isRemove(href) {
-        let res = this.getRoomIdByUrl(href)
-        if (res instanceof Promise) {
+        try {
+            let res = this.getRoomIdByUrl(href)
+            if (res instanceof Promise) {
+                return false
+            }
+            return this.userIsExist(res);
+        } catch (error) {
             return false
         }
-        return this.userIsExist(res);
     }
 
 
     /**
      * 设置背景图
      * @param url 背景图地址 默认 是默认地址
+     * @param container 修改背景容器 默认是body
      */
     settingBackgroundImage(url, container) {
-        if (is_bilibili) {
-            container = querySelector('#app')
-        } else {
-            container = querySelector('body')
+        if (!support.supportBg()) {
+            log('当前平台不支持背景')
+            return;
         }
-        if (!container) {
+        container = querySelector('body')
+        if (!container || !(container instanceof HTMLElement)) {
             warn('壁纸设置失败 获取不到 container ！')
             return;
         }
-        if (getLocalStore(this.bg_show_key, Boolean.name)) {
-            url = !!url ? url : (wls.getItem(this.bg_key) ? wls.getItem(this.bg_key) : this.defaultBackgroundImage)
+        if (getLocalStore(this.bg_show_key, Boolean.name) || wls.getItem(this.bg_is_first_key) == null) {
+            url = !!url ? url : (wls.getItem(this.bg_key) ? wls.getItem(this.bg_key) : this.default_background_image)
             container.style.backgroundSize = "cover"
             container.style.backgroundRepeat = 'no-repeat '
             container.style.backgroundAttachment = 'fixed'
@@ -653,7 +750,7 @@ export default class LivePlugin {
             return;
         }
         that.users.forEach((item, index) => {
-            if (keywords == item.name || keywords == item.roomId) {
+            if (keywords === item.name || keywords === item.roomId) {
                 that.users.splice(index, 1)
             }
         })
@@ -706,76 +803,67 @@ export default class LivePlugin {
         if (!menu) {
             return alert('获取不到导航菜单，操作失败！')
         }
+        handlerDisplay(menu, value, Boolean.name)
         addLocalStore(this.menu_show_key, value, Boolean.name, false)
-        menu.style.display = value ? 'block' : 'none'
     }
 
     /*
      * 操作左侧导航栏，需要传入选择器，和修改值 建议放到公共方法下执行！
      */
     isShowLeftMenu() {
-        let menu = querySelector(this.menu)
-        if (menu) {
-            log('menu change ....')
-            menu.style.display = getLocalStore(this.menu_show_key, Boolean.name, false) ? 'block' : 'none'
-        }
+        let menu = this.menu ? querySelector(this.menu) : ''
+        handlerDisplay(menu, wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name))
     }
 
 
     /**
      * 检查是否能找到全屏按钮
-     * @param {全屏} fullScreenText 
-     * @returns 
+     * @returns
      */
-    checkFullScreenButton(fullScreen) {
-        if (!fullScreen) {
-            let classId = findFullSreenButton(this.video_player_container, this.full_screen_class_or_id, this.fullScreenText, this.full_button_tag_name)
-            if (!classId) {
-                return;
-            }
-            this.full_screen_button = classId
-        }
-
+    checkFullScreenButton() {
+        this.full_screen_button = findButton(this.video_player_container, this.full_screen_class_or_id, this.full_screen_text, this.full_button_tag_name)
     }
 
-    /*
-    * 是否全屏
-    */
+    /**
+     * 自动全屏
+     * @param isClickFull 是否是通过点击方式触发
+     */
     isFullScreen(isClickFull = false) {
-        let fullScreenText = this.fullScreenText
-        let cancelFullText = this.cancelFullText
-        let show3 = getLocalStore(this.full_screen_key, Boolean.name)
-        if (!this.full_screen_button) {
-            warn('点击全屏按钮获取失败！')
-            return;
-        }
-        let fullScreen = querySelector(this.full_screen_button)
-        this.checkFullScreenButton(fullScreen)
-        let isClick = fullScreen?.isClick
-        if (isClickFull && fullScreen?.title === fullScreenText) {
-            this.isShowContainer()
-            fullScreen.click()
+        let full_screen_text = this.full_screen_text
+        let full_cancel_text = this.full_cancel_text
+        let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
+        let button = null
+        if (isClickFull) {
+            button = querySelector(this.full_screen_button)
+            if (button && button instanceof HTMLElement) {
+                button.click()
+                this.isShowContainer()
+            } else {
+                this.checkFullScreenButton(button)
+            }
         } else {
             loopDo((timer) => {
-                fullScreen = querySelector(this.full_screen_button)
-                this.checkFullScreenButton(fullScreen)
-                isClick = fullScreen?.isClick
-                if (fullScreen) {
+                button = querySelector(this.full_screen_button)
+                log("fullScreen button", !!button ? '找到button了' : "未找到全屏button")
+                if (button && button instanceof HTMLElement) {
+                    let isClick = button?.isClick
                     if (isClick) {
                         clearInterval(timer)
                         return;
                     }
-                    if (!isClick && show3 && (fullScreen?.title === fullScreenText || fullScreen.textContent === fullScreenText)) {
-                        fullScreen.isClick = true
-                        fullScreen.click()
-                    }
-                    else if (fullScreen?.title === cancelFullText || fullScreen?.textContent === cancelFullText) {
-                        fullScreen.click()
+                    if (!isClick && is_should_full_screen && (button?.title === full_screen_text || button.textContent === full_screen_text)) {
+                        log("全屏按钮自动触发了!")
+                        button.isClick = true
+                        button.click()
+                    } else if (button?.title === full_cancel_text || button?.textContent === full_cancel_text) {
+                        button.click()
                     }
 
+                } else {
+                    this.checkFullScreenButton(button)
                 }
 
-            }, 30, 500)
+            }, 3, 500)
 
         }
 
@@ -785,20 +873,17 @@ export default class LivePlugin {
      * 是否显示礼物
      */
     isShowGift() {
-        let gift = querySelector(this.giftTool)
-        if (gift) {
-            log('gift change ....')
-            gift.style.display = getLocalStore(this.gift_key, Boolean.name) ? 'inline-block' : 'none'
-        }
+        let gift = this.gift_tool ? querySelector(this.gift_tool) : ''
+        handlerDisplay(gift, wls.getItem(this.gift_is_first_key) != null && getLocalStore(this.gift_key, Boolean.name))
     }
 
     /**
      * 是否显示容器
      */
     isShowContainer() {
-        if (this.m_container) {
+        if (this.m_container && this.m_container instanceof HTMLElement) {
             log('container change ....')
-            if (this.isNew) {
+            if (this.is_new) {
                 if (this.m_container.classList.contains('m-container-is-active')) {
                     this.m_container.classList.remove('m-container-is-active')
                 } else {
@@ -812,25 +897,32 @@ export default class LivePlugin {
     }
 
     /**
-     *  点击 直播平台 Logo 
+     *  点击 直播平台 Logo
      */
     clickLogoShowContainer() {
-        if (this.header_logo === 'none') {
+        if (this.header_logo === 'none' || !this.header_logo) {
             warn('Logo选择器不能为 none ！')
             return
         }
         let that = this
         findMark(that.header_logo, (a) => {
+            if (!(a instanceof HTMLAnchorElement)) {
+                return;
+            }
             a.href = 'javascript:;void(0)';
-            a.title = '点击Logo，显示插件配置'
-            addEventListener(a, 'click', () => {
+            a.title = '点击Logo,显示插件配置'
+            addEventListener(a, 'click', (e) => {
+                e.preventDefault()
                 log('click header logo !')
                 that.isShowContainer()
             })
+            loopDo(() => {
+                a = querySelector(that.header_logo)
+                a.href = 'javascript:;void(0)';
+            }, 5, 1000)
             log('logo点击按钮装置完毕！')
-        })
+        }, 5, 500)
     }
-
 
 
     createSpan(container, place, id, name = id, message = '确认屏蔽up主 ', remove = true) {
@@ -842,7 +934,7 @@ export default class LivePlugin {
         span.classList = 'm-span-text'
         appendChild(place, span)
         addEventListener(span, 'click', () => {
-            if (confirm(message + name + ' ?')) {
+            if (confirm(`${message}${name} ?`)) {
                 if (remove) {
                     removeDOM(container, true)
                 }
@@ -851,6 +943,7 @@ export default class LivePlugin {
             }
         })
     }
+
 
 }
 
