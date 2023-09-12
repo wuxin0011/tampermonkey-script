@@ -9,6 +9,7 @@ const css = is_douyin ? `
     }
   .m-container {
     --m-container-height: 56px;
+    z-index: 10 !important;
   }
 
   .m-container table {

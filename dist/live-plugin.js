@@ -2485,6 +2485,7 @@ background-color: #f2f5f6 !important;
     }
   .m-container {
     --m-container-height: 56px;
+    z-index: 10 !important;
   }
 
   .m-container table {
