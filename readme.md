@@ -83,7 +83,12 @@
 
 
 
-## 虎牙直播
+
+## 演示平台
+
+
+
+### 虎牙直播
 
 ![虎牙直播屏蔽1](https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/live-plugin/1.png)
 
@@ -97,7 +102,7 @@
 
 ![点击logo可以显示操作框](https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/bem/huya-logo-click.png)
 
-## 斗鱼直播
+### 斗鱼直播
 
 ![斗鱼直播分类页](https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/live-plugin/6.png)
 
@@ -111,7 +116,7 @@
 
 
 
-## 哔哩哔哩
+### 哔哩哔哩
 
 
 ![bilibili-1](https://github.com/wuxin0011/huya-live/assets/65836396/06bfe0ff-3eea-4dfd-a68c-a18146a57a1b)

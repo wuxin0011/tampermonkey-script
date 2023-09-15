@@ -9,7 +9,7 @@ export const warn = (...args) => console.warn(msg(args))
 export const error = (...args) => console.error(msg(args))
 export const info = (...args) => console.info(msg(args))
 export const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/
-export const bilibili_address_pattern = /^https:\/\/www\.bilibili\..*/
+export const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/
 export const huya_address_pattern = /^https:\/\/www\.huya\.((com)|(cn)).*/
 export const douyin_address_pattern = /^https:\/\/www\.douyin\.((com)|(cn)).*/
 export const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/
@@ -454,7 +454,7 @@ export const support = {
         return !is_douyin
     },
     supportTheme() {
-        return is_huya || is_douyu
+        return is_huya || is_douyu || is_bilibili
     }
 }
 

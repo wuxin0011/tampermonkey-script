@@ -1,9 +1,11 @@
 
 import { is_bilibili } from '../utils'
+import dark from './dark/bilibili.css.dark'
 const css = is_bilibili ? `
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
 div#i_cecream .adblock-tips,
+.activity-m-v1,
 div.video-container-v1 div.pop-live-small-mode.part-undefined,
 .recommended-swipe.grid-anchor,
 .video-page-special-card-small
@@ -46,6 +48,9 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
    transform: scale(1.1);
    color:orange;
 }
+
+
+${dark}
 `: ''
 
 export default css

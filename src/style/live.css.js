@@ -19,6 +19,8 @@ html {
   --w-text-lightest: #8094a8;
   --w-border: #3e4c5a;
   --w-border-dark: #34404c;
+  --w-blue-link-hover:#00aeec;
+  --w-skeleton:#494f57;
 }
 
 ::view-transition-old(root),
