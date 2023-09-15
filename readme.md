@@ -30,8 +30,15 @@
 
      - 删除了画面中其他无关紧要的链接等，让用户只关心主播直播内容
 
-4. 😁其他
+
+4. 🧱黑夜主题模式
+
+      - 目前增加了护眼模式（黑色主题），适配平台为虎牙，斗鱼！
+
+5. 😁其他
      - logo按钮支持拖拽，隐藏
+
+
 
 
 **目前问题:**
@@ -60,7 +67,19 @@
 
 
 
+
+
+
+
 # 效果预览
+
+
+## 新增效果 2023-09-15
+
+ - 虎牙、斗鱼支持黑夜模式
+
+ ![黑色主题1](https://cdn.staticaly.com/gh/wuxin0011/huya-live@main/local/huya-dark-1.png)
+ ![黑色主题2](https://cdn.staticaly.com/gh/wuxin0011/huya-live@main/local/huya-dark-2.png)
 
 
 

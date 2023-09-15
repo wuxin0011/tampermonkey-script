@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.0.4
+// @version      4.0.5
 // @author       wuxin0011
 // @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录
 // @license      MIT
