@@ -1,4 +1,5 @@
 import {is_douyu} from "../utils"
+import dark from './dark/fish.css.dark'
 
 const css = is_douyu ? `
 
@@ -142,5 +143,13 @@ background-color: #f2f5f6 !important;
 .layout-Player-main #js-player-toolbar {
    display:none;
 }
+
+.m-container {
+  --m-container-input-width: 120px;
+}
+
+${dark}
+
+
 ` : ''
 export default css

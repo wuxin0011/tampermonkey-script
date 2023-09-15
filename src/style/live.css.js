@@ -1,7 +1,44 @@
-import {is_douyin} from "../utils/index.js";
+import dark from './dark/live.css.dark'
+
 
 
 const css = `
+html {
+  --w-brand: #3aa675;
+  --w-light: #e5e7eb;
+  --w-brand-light: #349469;
+  --w-bg: #22272e;
+  --w-bg-light: #2b313a;
+  --w-bg-lighter: #262c34;
+  --w-bg-dark: #343b44;
+  --w-bg-darker: #37404c;
+  --w-bg-darker: var(--w-bg-dark);
+  --w-text: #adbac7;
+  --w-text-light: #cbd4dc;
+  --w-text-lighter: #cdd6dd;
+  --w-text-lightest: #8094a8;
+  --w-border: #3e4c5a;
+  --w-border-dark: #34404c;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 10;
+}
+::view-transition-new(root) {
+  z-index: 10000;
+}
+.dark::view-transition-old(root) {
+  z-index: 10000;
+}
+.dark::view-transition-new(root) {
+  z-index: 10;
+}
+
 .m-container,
   .m-container .btn,
   .m-container table,
@@ -141,11 +178,11 @@ const css = `
   
   .m-container .m-link,
   .m-container .m-link:visited {
-    color: blnk !important;
+    color: teal !important;
   }
   
   .m-container .m-link:hover {
-    color: blue !important;
+    color: teal !important;
     text-decoration: underline !important;
   }
   
@@ -351,6 +388,7 @@ const css = `
      display:none !important;
   }
 
+  ${dark}
 
 `
 export default css

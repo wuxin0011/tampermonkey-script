@@ -29,10 +29,10 @@
   const log = (...args) => console.log(msg(args));
   const warn = (...args) => console.warn(msg(args));
   const error = (...args) => console.error(msg(args));
-  const douyu_address_pattern = /^https:\/\/.*\.douyu\.((com)|(cn)).*/;
-  const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
-  const huya_address_pattern = /^https:\/\/.*\.huya\.((com)|(cn)).*/;
-  const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/;
+  const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/;
+  const bilibili_address_pattern = /^https:\/\/www\.bilibili\..*/;
+  const huya_address_pattern = /^https:\/\/www\.huya\.((com)|(cn)).*/;
+  const douyin_address_pattern = /^https:\/\/www\.douyin\.((com)|(cn)).*/;
   const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/;
   const local_url = window.location.href;
   const is_huya = huya_address_pattern.test(local_url);
@@ -366,6 +366,12 @@
       }
     }
   };
+  const exculues = [
+    "https://i.huya.com/.*",
+    "https://www.douyu.com/member/.*",
+    "https://yuba.douyu.com/.*"
+  ];
+  const isExculues = exculues.find((r) => new RegExp(r).test(local_url));
   const support = {
     supportSearch() {
       return !is_douyin;
@@ -393,6 +399,9 @@
     },
     supportTable() {
       return !is_douyin;
+    },
+    supportTheme() {
+      return is_huya || is_douyu;
     }
   };
   class HostUser {
@@ -414,6 +423,71 @@
     }
     return logo;
   };
+  const DARK_THEME_KEY = "DARK_THEME_KEY";
+  const theme = {
+    dark: "dark",
+    light: "light"
+  };
+  const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark || wls.getItem(DARK_THEME_KEY) === null;
+  const toggleColorMode = (event) => {
+    if (!event) {
+      warn("event is not allow null !");
+      return;
+    }
+    try {
+      const isAppearanceTransition = (document == null ? void 0 : document.startViewTransition) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!isAppearanceTransition) {
+        log("不支持快照切换...,将使用普通方式切换主题");
+        themeUpdate();
+        return;
+      }
+    } catch (error2) {
+      themeUpdate();
+      return;
+    }
+    const x = event.clientX;
+    const y = event.clientY;
+    const endRadius = Math.hypot(
+      Math.max(x, innerWidth - x),
+      Math.max(y, innerHeight - y)
+    );
+    const transition = document.startViewTransition(async () => {
+      log("支持快照切换...");
+      await themeUpdate();
+    });
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
+      ];
+      document.documentElement.animate(
+        {
+          clipPath: isDark() ? [...clipPath].reverse() : clipPath
+        },
+        {
+          duration: 400,
+          easing: "ease-out",
+          pseudoElement: isDark() ? "::view-transition-old(root)" : "::view-transition-new(root)"
+        }
+      );
+    });
+  };
+  const updateDarkClass = () => {
+    if (!support.supportTheme()) {
+      return;
+    }
+    const classList = document.documentElement.classList;
+    if (!classList.contains("dark") && isDark()) {
+      document.documentElement.classList.add("dark");
+    } else if (classList.contains("dark") && !isDark()) {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+  const themeUpdate = async () => {
+    log(isDark() ? "切换到白天" : "切换到黑夜");
+    wls.setItem(DARK_THEME_KEY, isDark() ? theme.light : theme.dark);
+    updateDarkClass();
+  };
   const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
     return `<div class="m-container">
     <div class="m-container-box" id="m-container-box2">
@@ -421,6 +495,7 @@
             ${support.supportSearch() ? `<input type="text" placeholder="房间号或者名称...">` : ``}
             ${support.supportAdd() ? `<button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间,也可以通过点击房间名称添加">添加</button>` : ``}
             ${support.supportReset() ? `<button class="btn btn-success clear-room" title="重置表格数据">重置</button>` : ``}
+            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isDark() ? "切换到白天模式" : "切换到黑夜模式"}">${isDark() ? "白天" : "黑夜"}</button>` : ``}
             ${support.supportBg() ? `<button class="btn btn-warning bg-btn" title="上传背景图">背景</button>` : ``}
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
             ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
@@ -762,6 +837,13 @@
         addLocalStore(that.auto_max_pro_key, e.target.checked, Boolean.name);
         addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name);
         that.isAutoMaxVideoPro();
+      });
+      const theme_btn = querySelector(container, ".operation .room-theme");
+      addEventListener(theme_btn, "click", function(e) {
+        toggleColorMode(e);
+        log("主题切换中");
+        theme_btn.innerText = isDark() ? "黑夜" : "白天";
+        theme_btn.title = isDark() ? "点击切换到黑夜" : "点击切换到白天";
       });
       this.initAnimation(container);
       log("操作按钮添加成功！");
@@ -1861,7 +1943,75 @@
       this.isAutoMaxVideoPro();
     }
   }
+  const css$5 = `
+  .dark .m-container {
+    --m-container-background-color: var(--w-bg-darker);
+  }
+  
+  .dark .m-container {
+    background-color: var(--m-container-background-color) !important;
+    color:var(--w-text-light) !important;
+  }
+
+
+  .dark .m-container .m-link,
+  .dark .m-container .m-link:visited {
+    color: var(--w-text) !important;
+  }
+  
+  .m-container .m-link:hover {
+    color: var(--w-text-light) !important;
+    text-decoration: underline !important;
+  }
+  
+  
+
+  .dark .m-container table tr,
+  .dark .m-container table tbody tr:nth-child(1) 
+   {
+    border-color: var(--w-text-light) !important;
+   }
+
+
+
+`;
   const css$4 = `
+html {
+  --w-brand: #3aa675;
+  --w-light: #e5e7eb;
+  --w-brand-light: #349469;
+  --w-bg: #22272e;
+  --w-bg-light: #2b313a;
+  --w-bg-lighter: #262c34;
+  --w-bg-dark: #343b44;
+  --w-bg-darker: #37404c;
+  --w-bg-darker: var(--w-bg-dark);
+  --w-text: #adbac7;
+  --w-text-light: #cbd4dc;
+  --w-text-lighter: #cdd6dd;
+  --w-text-lightest: #8094a8;
+  --w-border: #3e4c5a;
+  --w-border-dark: #34404c;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 10;
+}
+::view-transition-new(root) {
+  z-index: 10000;
+}
+.dark::view-transition-old(root) {
+  z-index: 10000;
+}
+.dark::view-transition-new(root) {
+  z-index: 10;
+}
+
 .m-container,
   .m-container .btn,
   .m-container table,
@@ -2001,11 +2151,11 @@
   
   .m-container .m-link,
   .m-container .m-link:visited {
-    color: blnk !important;
+    color: teal !important;
   }
   
   .m-container .m-link:hover {
-    color: blue !important;
+    color: teal !important;
     text-decoration: underline !important;
   }
   
@@ -2211,6 +2361,205 @@
      display:none !important;
   }
 
+  ${css$5}
+
+`;
+  const darkCss$1 = `
+
+.dark .layout-Module-head.is-fixed
+ {
+  background: var(--w-bg) !important;
+}
+
+.dark  .Horn4Category-popWrap 
+ {
+  background: var(--w-bg) !important;
+  background-image:none !important;
+  border:1px solid var(--w-text-light) !important;
+}
+
+.dark  body,
+.dark .layout-List-item,.dark .layout-List-item .DyCover,
+.dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
+.dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
+.dark .Category-item,.dark .DropMenuList-linkAll,
+.dark .Header-menu-wrap,.dark .DyListCover-wrap,
+.dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
+.dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,.dark .ListFooter .ListFooter-btn-wrap,
+.dark .layout-Player-title,.dark .layout-Player-aside,
+.dark .layout-Player-asideMain,.dark .layout-Player-barrage,.dark .layout-Player-toolbar,
+.dark .Barrage-listItem,.dark .Barrage-EntranceIntroduce, .dark .Barrage-roomVip--super,
+.dark .DiamondsFansBarrage, .dark #js-floatingbarrage-container li, .dark #js-fansflating-barrage,
+.dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame, .dark .FollowGuide,
+.dark .ChatSend-button,.dark .BarrageBuffer,
+.dark .Barrage-FansHome-content,.dark .Barrage-FansHome,
+.dark .ChatSend-txt,.dark .layout-Classify-card,.dark .cate2TagB-item,
+.dark .PlayerToolbar-signCont,.dark .dy-Modal-content,.dark .CustomGroupCommon .dy-Modal-title,
+.dark .CustomGroupManager-title,.dark .FilterKeywords,
+.dark .Barrage-toolbarClear .Barrage-toolbarText,.dark .Barrage-toolbarLock:hover .Barrage-toolbarText,
+.dark .dy-ModalRadius-content, .dark .categoryTab-item, .dark customizeModal-submit, .dark .customizeModal-cancel, .dark .search-ipt,
+.dark .addedCategory-item, .dark .Search, .dark .Header-wrap.is-start .Search, .dark .Search-historyList>li, .dark .Search-text,
+.dark .ListHeader-hero-header,.dark .layout-Module-label--hasList,.dark .ListHeader-pop,.dark .layout-Module-filter-more,
+.dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,.dark .AssembleExpressHeader-head, .dark .Emotion, .dark .ShieldTool-list,.dark .BarrageTips,
+.dark .BarrageTips .BarrageTips--active,.dark .FansMedalDialog-normal, .dark .ChatBarrageCollect .ChatBarrageCollect-tip,.dark .AssembleExpressHeader,
+.dark .TagItem,.dark .ChatBarrageCollectPop , .dark .Horn4Category-popWrap,.dark .Horn4Category-inputor,.dark .ChatFansBarragePop,
+.dark .PopularBarrage .PopularBarragePanel-foot, .dark .PopularBarrage .PopularBarragePanelStyle, .dark .BarrageWordPanel-card,
+.dark .BarrageWordPanel-btn,.dark .BarrageWordPanel-header h2,.dark .BarrageWordPanel-header,.dark .CustomGroupManager-saveBtn,
+.dark .DyRecCover-wrap,.dark .CustomGroupCommon .dy-Modal-header,.dark .CustomGroupCommon .dy-Modal-close-x,
+.dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
+.dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
+.dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
+.dark #js-footer
+{
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text-light) !important;
+}
+
+
+
+
+.dark .Elevator-item.is-active>span,
+.dark .Elevator-item:nth-child(odd)
+ {
+  background-color: rgba(var(--w-bg-darker),0.7) !important;
+}
+
+.dark .dy-ModalRadius-header, .dark .addedCategory-count,
+.dark .RoomList .layout-Module-title, .dark .RoomList .layout-Module-title a,.dark layout-Module-title span,
+.dark .AnchorRank .layout-Module-title,.dark  .AnchorRank .layout-Module-title a,
+.dark .DyCover-intro,.dark .DyCover-user,.dark .DyCover-zone,.dark a, .dark .layout-Module-title a,
+.dark .DyRecCover-zone,.dark .DyRecCover-intro,.dark .DyRecCover-userName,.dark .DyRecCover-tag,
+.dark .Category-item,.dark .DropMenuList-name, .dark .DropMenuList-linkAll,.dark .ListHeader-title,
+.dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label.is-active,
+.dark .DyListCover-intro,.dark .DyListCover-zone,.dark .DyListCover-hot,.dark .DyListCover-userName,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item-active a,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,
+.dark .ListFooter .ListFooter-btn-input,.dark .ListFooter-btn,.dark .ListFooter-btn-label,
+.dark .Title-header,.dark .Title-report,.dark .Title-anchorName,
+.dark .Barrage-main .Barrage-content,.dark .Barrage-roomVip--super,
+.dark .PlayerToolbar span,.dark .Title-followNum, .dark .PlayerToolbar-signCont,
+.dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame ,.dark .Barrage-EntranceIntroduce-Content,
+.dark .SwipeTabsContent .tabItem ,.dark .layout-Classify-card>strong ,.dark .secondCateCard-hot,
+.dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,.dark .customizeModal-title>h3,.dark .Search-label, .dark .Search-historyList>li,
+.dakr .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
+.dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,.dark .Barrage-toolbarText,.dark .ShieldTool-listItem,.dark .BarrageTips,.dark .ChatBarrageCollectPop-title,
+.dark .FansBarrageColor-item-txt,.dark .ChatFansBarragePop-txt,
+.dark .PopularBarrage .PopularBarragePanel-descFansPrivilege,
+.dark .PopularBarrage .PopularBarragePanel-descFansRenew,
+.dark .PopularBarrage .PopularBarragePanel-descLock,.dark .dy-Modal-close,
+.dark .ChatFansBarragePop-diamondsTxt,.dark .BarrageWordPanel-example,.dark .BarrageWordPanel-feedbackTips,
+.dark .BarrageWordPanel-block h3,.dark .BarrageWordPanel-reward,.dark .BarrageWordPanel-tips,
+.dark .CustomGroupManager-title strong,.dark .CustomGroupManager-groupItem,.dark .CustomGroupManager-checkItem>span,
+.dark .CustomGroupManager,.dark .LevelFilKeyTab .tab,
+.dark .FKNokeywords-title,
+.dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText
+{
+  color: var(--w-text-light) !important;
+}
+
+.dark .Header-menu-link.active a:hover,
+.dark .RoomList .layout-Module-title:hover,
+.dark .RoomList .layout-Module-title a:hover,
+.dark .DyCover-intro:hover,
+.dark .DyCover-user:hover,
+.dark .DyCover-zone:hover,
+.dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
+.dark .layout-Module-title a:hover,
+.dark .Category-item:hover,
+.dark .DropMenuList-name:hover,
+.dark .DropMenuList-linkAll:hover,
+.dark .ListHeader-title,
+.dark .layout-Module-label--hasList.is-active:hover, 
+.dark .layout-Module-label.is-active:hover,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item-active a:hover,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item:hover,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item-active:hover,
+.dark .Title-anchorName:hover,.dark .Title-row-text,
+.dark .SwipeTabsContent .tabItem:hover,.dark .SwipeTabsContent .tabItem.active,
+.dark .layout-Classify-card>strong:hover,.dark .secondCateCard-hot:hover,
+.dark .Barrage-toolbarClear:hover, .dark .Barrage-toolbarLock:hover,
+.dark .ShieldTool-listItem.is-checked .ShieldTool-checkText,.dark .BarrageTips .BarrageTips--active,
+.dark .ChatFansBarragePop-txt span,.dark .dark .ChatFansBarragePop-diamondsTxt span,.dark .ChatFansBarragePop-diamondsTxt span,
+.dark .PopularBarrage .PopularBarragePanel-descFansPrivilege:hover,
+.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,
+.dark .PopularBarrage .PopularBarragePanel-descLock:hover,
+.dark .FilKeyTab .tab.active
+{
+  color: var(--w-text) !important;
+}
+
+
+
+
+.dark .dark .CustomGroupManager-saveBtn,.dark .CustomGroupCommon .dy-Modal-header,
+.dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,.dark .layout-Module-container,
+.dark .ListFooter .dy-Pagination-item,.dark .ListFooter .dy-Pagination-next,.dark .ListFooter .dy-Pagination-prev,
+.dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,
+.dark .layout-Player-aside,.dark .layout-Player-asideMain, .dark .layout-Player-barrage,
+.dark .PopularBarrage .PopularBarragePanel-foot,.dark .BarrageWordPanel-card,.dark .BarrageWordPanel-btn,
+.dark .dy-Modal-footer button,.dark .LevelFilterLimit-input,
+.dark .layout-Classify-card, .dark customizeModal-submit,
+.dark .customizeModal-cancel,.dark .ChatBarrageCollect .ChatBarrageCollect-tip
+{
+  border: 1px solid var(--w-border) !important;
+}
+
+
+
+
+.dark .Header-wrap,.dark .layout-Player-title,
+.dark .public-DropMenu-drop-main:before,
+.dark .categoryTab-head,.dark .ListHeader-hero-header,.dark .ListHeader-hero-content-icon,
+.dark .EmotionTab,.dark .ChatFansBarragePop-describe,.dark .FansMedalPanel-container,
+.dark .LevelFilterLimit,.dark .FKNokeywords-title
+{
+  border-color:var(--w-border) !important;
+}
+
+
+
+.dark .Category-item,
+.dark .layout-Module-label--hasList.is-active, 
+.dark .layout-Module-label,
+.dark .DropMenuList-linkAll,
+.dark .ListFooter .ListFooter-btn-wrap,
+.dark .cate2TagB-item,
+.dark .ChatSend-button,.dark .ChatSend-txt,
+.dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,
+.dark .categoryTab-item,.dark .Header-wrap.is-start .Search ,.dark .addedCategory-item .dark .search-ipt,
+.dark .layout-Module-filter-more,.dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,
+.dark .ShieldTool-list,.dark .BarrageTips,.dark .ChatBarrageCollect .ChatBarrageCollect-tip:hover,
+.dark .AssembleExpressHeader,.dark .TagItem,
+.dark .dy-Modal-footer button:hover,.dark .FilterSwitchStatus-switch,
+.dark .BarrageWordPanel-btn,.dark .LevelFilterLimit-input:focus,
+.dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,
+.dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus
+{
+  border: 1px solid var(--w-text-light) !important;
+}
+
+
+.dark .Category-item:hover,
+.dark .layout-Module-label--hasList.is-active:hover, 
+.dark .layout-Module-label:hover,
+.dark .DropMenuList-linkAll:hover,
+.dark .categoryTab-item:hover,
+.dark .addedCategory-item:hover,
+.dark .Barrage-toolbarClear:hover, .dark .Barrage-toolbarLock:hover,
+.dark .ChatBarrageCollect .ChatBarrageCollect-tip:hover,.dark .TagItem:hover,
+.dark .BarrageWordPanel-btn:hover
+{
+  border: 1px solid var(--w-text) !important;
+}
+
+
+.dark .Barrage-roomVip--super,
+.dark .Barrage {
+  border: none !important;
+}
+
 
 `;
   const css$3 = is_douyu ? `
@@ -2355,7 +2704,273 @@ background-color: #f2f5f6 !important;
 .layout-Player-main #js-player-toolbar {
    display:none;
 }
+
+.m-container {
+  --m-container-input-width: 120px;
+}
+
+${darkCss$1}
+
+
 ` : "";
+  const darkCss = `
+
+/* 修改背景和字体颜色 */
+.dark body,
+.dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
+.dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,.dark #J_liveListNav dl dd span ,
+.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165,
+.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
+.dark #J_liveListNav dl dd div li,.dark #J_duyaHeaderRight ul li a,
+.dark .js-responded-list,.dark .program-preview-box .preview-bd,
+.dark .game-live-item,.dark .game-live-item .txt .num,
+.dark .game-live-item .txt .game-type a,.dark .game-live-item .txt .game-type ,
+.dark .live-box .box-hd .more-list li,.dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
+.dark .nav-expand-list,.dark .nav-expand-list-more ,
+.dark #js-game-list li,.dark .mod-list .box-hd .filter dd .tag-layer,.dark #J_mainWrap,
+.dark .room-hd,.dark .room-core-r,
+.dark .room-sidebar,.dark .room-player-gift-placeholder,
+.dark #chat-room__wrap #chat-room__list div,.dark #chat-room__wrap #chat-room__list div a,
+.dark #js-preview-box,.dark #recom-banners,.dark #tipsOrchat,
+.dark .banners-box,.dark .box-recom .recom-banners,.dark .box-recom .recom-moments,
+.dark .hotMoment-box .moment-item .moment-comment .comment-item,.dark #J_RoomChatSpeaker textarea,
+.dark .chat-room__input,.dark .chat-room__ft,
+.dark .room-panel,.dark .Panel--8WJ1xUECB7O5tfnF11lg,
+.dark .subscribe-live-item,.dark .list-hd .follow-ctrl,
+.dark .btn-more,.dark #js-search-main .host-item,.dark #js-search-main .host-item .desc,
+.dark .search-left .superStar-item,.dark .chat-room__input .btn-sendMsg ,
+.dark .nav-expand-list.nav-expand-game span a,.dark .chat-room__ft .chat-emot div,
+.dark #tipsOrchat ._PortalChatPanelRoot div, .dark .ddJUGO,
+.dark .laypageskin_default a,.dark .laypage_main button,.dark .laypage_main input,
+.dark .player-gift-wrap,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M.checked--2qEbUox3t-pKVluoe87qMG i,
+.dark .chat-room__bd .chat-room__scroll .clearBtn,
+.dark .chat-room__bd .chat-room__scroll .lockBtn,
+.dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeziQOTXN_KaP20,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
+.dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark .listItem--2DQMeljGuIpJJbgUmLePE3 span,
+.dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejSSMCTSLSPah47f_19h-,
+.dark .duya-header-search input,.dark .inpage-advice-list li:hover,
+.dark #play2 .content .content-aside>div,.dark #play2 .content .content-aside>div h2,
+.dark #play2 .content .content-aside>div .more,.dark .main-info,
+.dark .comment-container textarea, .dark .main-vplayer .vplayer-wrap .video_embed .video_embed_flash,
+.dark .loGrI3HWkrL4-I82d11qx,
+.dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE,
+.dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE .MuTvmvGkEFS9kogNu9hjs, 
+.dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE .MuTvmvGkEFS9kogNu9hjs:focus,
+.dark #play2, .dark .duya-header-bd,.dark .aside-danmulist .danmulist-header,
+.dark .search-suggest, .dark .search-suggest ,
+.dark .search-suggest .search-item:hover,
+.dark .search-suggest .search-item.current,
+.dark .huya-footer{
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text-light) !important;
+}
+
+
+/* 修改字体颜色 */
+.dark .hy-nav-item-on .hy-nav-link,
+.dark .hy-nav-link:hover {
+  background: none !important;
+  color: #fff !important;
+}
+
+
+/* 修改border */
+
+.dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE,
+.dark .search-suggest .search-item:hover,
+.dark .search-suggest .search-item.current,
+.dark .hy-nav-item-on .hy-nav-link {
+  border:1px solid var(--w-text-light) !important;
+}
+
+/* 修改字体颜色 */
+.dark .duya-header a, .dark p,.dark span,
+.dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6
+.dark .duya-header-nav .hy-nav-item a,
+.dark .duya-header-right a,
+.dark .liveList-title a,
+.dark .game-live-item .title,
+.dark .game-live-item .txt,
+.dark  .duya-header i,
+.dark .video-funny .title span,
+.dark .live-box .box-hd .title a,
+.dark .hy-header-style-skr .hy-nav-link,
+.dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a,
+.dark #js-game-list li a .g-gameCard-fullName,
+.dark .box-hd .title,
+.dark .mod-list .box-hd .filter dd .tag-layer,
+.dark .room-hd .host-info .host-title,
+.dark .room-hd .host-name,
+.dark .recom-title,
+.dark .page-ctrl,
+.dark .page-ctrl .ctrl-left,
+.dark .page-ctrl .ctrl-right,
+.dark .page-ctrl .ctrl-page,
+.dark #chat-room__wrap #chat-room__list div a,
+.dark #chat-room__wrap #chat-room__list div a span,
+.dark .program-preview-box .preview-list .preview-item .preview-link,
+.dark .program-preview-box .preview-hd .title,
+.dark .program-preview-box .preview-list .preview-item .preview-line,
+.dark .chat-room__list .msg-bubble span.msg,
+.dark .subscribe-live-item .txt .msg-row .nick,
+.dark .subscribe-live-item .txt .msg-row .intro,
+.dark .subscribe-live-item .txt .msg-row .num,
+.dark .list-hd .title,
+.dark .list-hd .follow-ctrl .icon,
+.dark .search-left .superStar-item .nick,
+.dark .search-left .superStar-item .recommend,
+.dark .search-left .superStar-item .room,
+.dark .chat-room__list .msg-bubble .colon,
+.dark .chat-room__list .msg-bubble .msg,
+.dark .chat-room__input .btn-sendMsg,
+.dark #tipsOrchat .live-tips,
+.dark #tipsOrchat ._PortalChatPanelRoot div p,
+.dark #tipsOrchat ._PortalChatPanelRoot div span,
+.dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,
+.dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,
+.dark .listItem--2DQMeljGuIpJJbgUmLePE3, .dark barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,
+.dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeZiQOtXN_KaP20,
+.dark .chat-room__ft span,.dark .chat-room__ft p,
+.dark .duya-header-right a i,
+.dark .duya-header-right a span,
+.dark .chat-room__bd .chat-room__scroll .clearBtn,
+.dark .chat-room__bd .chat-room__scroll .lockBtn,
+.dark .search-advice-list li a,.dark .search-header .find-result,
+.dark #play2 .crumb,.dark #play2 .crumb a,
+.dark .aside-videolist .video-item .item-detail .detail-nick span, dark .aside-videolist .video-item .item-detail .detail-playcount span
+.dark .live-box .box-hd .more-list li a{
+  color: var(--w-text-light) !important;
+}
+
+
+/* 修改字体颜色 hover */
+.dark .liveList-title a:hover,
+.dark .game-live-item .title:hover,
+.dark .game-live-item .txt:hover,
+.dark .live-box .box-hd .title a:hover,
+.dark .live-box .box-hd .more-list li a:hover,
+.dark #js-game-list li a .g-gameCard-fullName:hover,
+.dark .box-hd .title:hover,
+.dark .game-live-item .txt i:hover,
+.dark .host-name:hover,
+.dark .mod-list .box-hd .filter dd .tag-layer:hover,
+.dark .subscribe-live-item .txt .msg-row .nick:hover,
+.dark .subscribe-live-item .txt .msg-row .intro:hover,
+.dark .list-hd .title:hover,
+.dark  #js-search-main .host-item .nick,
+.dark .search-main .type-keyword,
+.dark #tipsOrchat .live-tips i,
+.dark .duya-header-right a:hover,
+.dark .duya-header-right a i:hover,
+.dark .duya-header-right a span:hover,
+.dark .chat-room__bd .chat-room__scroll .clearBtn:hover,
+.dark .chat-room__bd .chat-room__scroll .lockBtn:hover,
+.dark .main-info .info-video .video-detail .video-title,
+.dark .main-info .info-video .video-author h3,
+.dark .search-header .find-result em,.dark .aside-videolist .video-item:hover .item-detail h3,
+.dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a:hover{
+  color: var(--w-text) !important;
+}
+
+
+
+/* 修改border */
+.dark .program-preview-box,
+.dark .recom-banners,
+.dark .recom-moments,
+.dark .game-live-item,
+.dark .nav-expand-list,
+.dark #js-game-list li,
+.dark .g-gameCard-item,
+.dark .room-sidebar,
+.dark .list-hd .follow-ctrl,
+.dark .btn-more,
+.dark #js-search-main .host-item,
+.dark .subscribe-live-item,
+.dark .chat-room__input .btn-sendMsg,
+.dark .laypageskin_default a,
+.dark .chat-room__bd .chat-room__scroll .clearBtn,
+.dark .chat-room__bd .chat-room__scroll .lockBtn,
+.dark .main-info .info-draw,.dark .main-info .info-comment,.dark .main-info .info-comment h2,
+.dark #chat-room__wrap #chat-room__list .RoomMessageRichText--2Y0TYze1NxfsGAbfcA8jGV{
+  border:1px solid var(--w-border) !important;
+}
+
+
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover,
+.dark .nav-expand-list.nav-expand-game span:hover {
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text-light) !important;
+}
+
+
+.dark .hy-header-style-normal .duya-header-wrap,
+.dark .duya-header,
+.dark .chat-room__input,
+.dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
+{
+  background: var(--w-bg-dark) !important;
+  border-color:var(--w-border) !important;
+}
+
+
+/* 只修改border-color */
+.dark .chat-room__input,
+.dark .chat-room__ft .chat-room__ft__chat,
+.dark ._2uc0_gzwdW4cbL_UOgWDJd,
+.dark #tipsOrchat{
+  border-color:var(--w-border) !important;
+}
+
+.dark #duya-header,
+.dark #chat-room__wrap #chat-room__list div a,
+.dark #chat-room__wrap #chat-room__list div a span {
+  border:none !important;
+}
+
+.dark .laypageskin_default a:hover,
+.dark .comment-container textarea,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off .subscribe-count,
+.dark .nav-expand-list.nav-expand-game span a:hover{
+  border-color:var(--w-text-light) !important;
+}
+
+
+/* 修改border color background */
+.dark .laypage_main button:hover,
+.dark .laypageskin_default .laypage_curr,
+.dark #J_duyaHeaderRight ul li a,
+.dark .laypageskin_default a:hover {
+  color: var(--w-text);
+  border-color:var(--w-text) !important;
+  background-color: var(--w-bg-darker) !important;
+}
+
+.dark .chat-room__bd .chat-room__scroll .clearBtn,
+.dark .chat-room__bd .chat-room__scroll .lockBtn,
+.dark .hy-header-style-normal .duya-header-search input,
+.dark .comment-container textarea:focus,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
+{
+  border:1px solid var(--w-text-light) !important;
+}
+
+.dark .hy-header-style-normal .duya-header-search input:focus {
+  border:1px solid var(--w-text) !important;
+}
+
+
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover
+{
+  border:1px solid var(--w-light) !important;
+  background: var(--w-light) !important;
+  color: var(--w-bg) !important;
+}
+
+
+
+`;
   const css$2 = is_huya ? `
 
 .game-live-item i,.host-name {
@@ -2404,6 +3019,10 @@ background-color: #f2f5f6 !important;
  #chatRoom .room-gg-chat,
  .room-core .room-business-game,
  .room-backToTop.j_room-backToTop,
+ .end-ab-banner,
+ .player-app-qrcode,
+ .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix,
+ #main_col #matchComponent2,
 .room-weeklyRankList{
     display:none !important;
  }
@@ -2415,7 +3034,9 @@ background-color: #f2f5f6 !important;
  .hy-nav-item:nth-child(1),
  .hy-nav-item:nth-child(2),
  .hy-nav-item:nth-child(3),
- #J_duyaHeaderRight>div>div>div:nth-child(3){
+ #J_duyaHeaderRight>div>div>div:nth-child(3),
+ #J_duyaHeaderRight>div>div>div:nth-child(4)
+ {
    display:inline-block !important;
  }
  .mod-index-wrap .mod-index-list{
@@ -2474,6 +3095,8 @@ background-color: #f2f5f6 !important;
 #J_playerMain:hover #player-ctrl-wrap{
    opacity: 1;
 }
+
+${darkCss}
 
 ` : "";
   const css$1 = is_douyin ? `
@@ -2553,39 +3176,42 @@ ${css$1}
     if (typeof window == "undefined") {
       return;
     }
-    window.onload = () => {
-      try {
-        let text = "%c欢迎使用直播插件,下载地址%c";
-        if (!is_localhost) {
-          console.clear();
-        }
-        console.log(
-          text.concat(download_plugin_url, ""),
-          "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
-          "border-radius: 0 3px 3px 0; color: #fff"
-        );
-        console.log(
-          "%c地址:%c ".concat(source_code_url, ""),
-          "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
-          "border-radius: 0 3px 3px 0; color: #fff"
-        );
-        if (is_huya) {
-          new TriggerLive();
-        } else if (is_douyu) {
-          new FishLive();
-        } else if (is_bilibili) {
-          new BiliBili();
-        } else if (is_douyin) {
-          new DouYin();
-        } else if (is_localhost) {
-          new LivePlugin();
-        } else {
-          error("插件地址不适配，请检查匹配地址！！！");
-        }
-      } catch (e) {
-        error(e);
+    if (isExculues) {
+      console.warn("当前地址不支持！");
+      return;
+    }
+    try {
+      let text = "%c欢迎使用直播插件,下载地址%c";
+      if (!is_localhost) {
+        console.clear();
       }
-    };
+      console.log(
+        text.concat(download_plugin_url, ""),
+        "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
+        "border-radius: 0 3px 3px 0; color: #fff"
+      );
+      console.log(
+        "%c地址:%c ".concat(source_code_url, ""),
+        "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
+        "border-radius: 0 3px 3px 0; color: #fff"
+      );
+      updateDarkClass();
+      if (is_huya) {
+        new TriggerLive();
+      } else if (is_douyu) {
+        new FishLive();
+      } else if (is_bilibili) {
+        new BiliBili();
+      } else if (is_douyin) {
+        new DouYin();
+      } else if (is_localhost) {
+        new LivePlugin();
+      } else {
+        error("插件地址不适配，请检查匹配地址！！！");
+      }
+    } catch (e) {
+      error(e);
+    }
   })();
 
 })();

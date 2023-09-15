@@ -31,6 +31,7 @@ import {
 
 import iconLogo from '../../utils/logo'
 import getHtmlStr from "./html";
+import { isDark, toggleColorMode } from '../../hook/useTheme'
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
@@ -411,6 +412,17 @@ export default class LivePlugin {
         })
 
 
+        // 主题切换
+        const theme_btn = querySelector(container, '.operation .room-theme')
+        addEventListener(theme_btn, 'click', function (e) {
+            toggleColorMode(e)
+            log('主题切换中')
+            theme_btn.innerText = isDark() ? '黑夜':'白天'
+            theme_btn.title = isDark() ? '点击切换到黑夜':'点击切换到白天'
+        })
+
+
+
         // 初始化动画效果
         this.initAnimation(container)
         log('操作按钮添加成功！')
@@ -538,7 +550,7 @@ export default class LivePlugin {
         const mouse_key = that.key + "_mouse_key"
 
         // 获取位置信息
-        let {mouse_left, mouse_top} = getLocalStore(mouse_key, Object.name)
+        let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name)
         log(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`)
         if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
             btn.style.left = mouse_left + 'px'
@@ -581,7 +593,7 @@ export default class LivePlugin {
             btn.style.left = `${btn_left}px`
             btn.style.top = `${btn_top}px`
             btn.style.right = 'auto'
-            addLocalStore(mouse_key, {'mouse_left': btn_left, 'mouse_top': btn_top}, Object.name)
+            addLocalStore(mouse_key, { 'mouse_left': btn_left, 'mouse_top': btn_top }, Object.name)
 
         }
 
@@ -700,7 +712,7 @@ export default class LivePlugin {
             return;
         }
         let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name) // 是否显示背景 默认显示
-        log('是否添加背景=>', isShowBg ? '显示' : "关闭",wls.getItem(this.bg_is_first_key) === null ?'null':wls.getItem(this.bg_is_first_key))
+        log('是否添加背景=>', isShowBg ? '显示' : "关闭", wls.getItem(this.bg_is_first_key) === null ? 'null' : wls.getItem(this.bg_is_first_key))
         if (isShowBg) {
             url = !!url ? url : (wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image)
             container.style.backgroundSize = "cover"

@@ -1,5 +1,6 @@
 
 import { is_huya } from "../utils"
+import dark from './dark/trigger.css.dark'
 const css = is_huya ? `
 
 .game-live-item i,.host-name {
@@ -48,6 +49,10 @@ const css = is_huya ? `
  #chatRoom .room-gg-chat,
  .room-core .room-business-game,
  .room-backToTop.j_room-backToTop,
+ .end-ab-banner,
+ .player-app-qrcode,
+ .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix,
+ #main_col #matchComponent2,
 .room-weeklyRankList{
     display:none !important;
  }
@@ -59,7 +64,9 @@ const css = is_huya ? `
  .hy-nav-item:nth-child(1),
  .hy-nav-item:nth-child(2),
  .hy-nav-item:nth-child(3),
- #J_duyaHeaderRight>div>div>div:nth-child(3){
+ #J_duyaHeaderRight>div>div>div:nth-child(3),
+ #J_duyaHeaderRight>div>div>div:nth-child(4)
+ {
    display:inline-block !important;
  }
  .mod-index-wrap .mod-index-list{
@@ -118,6 +125,8 @@ const css = is_huya ? `
 #J_playerMain:hover #player-ctrl-wrap{
    opacity: 1;
 }
+
+${dark}
 
 `: ''
 export default css
