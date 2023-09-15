@@ -3,7 +3,7 @@
 // @namespace    https://github.com/wuxin0011/huya-live
 // @version      4.0.5
 // @author       wuxin0011
-// @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录
+// @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面🧱，新增虎牙、斗鱼的护眼主题🚀
 // @license      MIT
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
