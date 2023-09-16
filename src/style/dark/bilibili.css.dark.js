@@ -1,1 +1,1 @@
-export { default as dark } from './bilibili'
+export { default } from './bilibili'

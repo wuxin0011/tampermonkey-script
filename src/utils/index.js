@@ -1,9 +1,7 @@
-// const
+const exculues = ['https://i.huya.com/', 'https://www.douyu.com/member/', 'https://yuba.douyu.com/', 'https://manga.bilibili.com/', 'https://show.bilibili.com/']
 const prefix = '[live-plugin]:'
 const msg = (...args) => `${prefix} ${args}`
-const emptyMethod = (...args) => {
-}
-// export methods
+const emptyMethod = (...args) => {console.warn(`${prefix} run empty method...`)}
 export const log = (...args) => console.log(msg(args))
 export const warn = (...args) => console.warn(msg(args))
 export const error = (...args) => console.error(msg(args))
@@ -31,6 +29,8 @@ export const addEventListener = (el, type, callback) => !!el && type && typeof c
 export const createElement = (tag) => !!tag && wd.createElement(tag)
 export const appendChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.appendChild(el2)
 export const insertChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTMLElement) && (el2 instanceof HTMLElement)) && el1.insertBefore(el2, el1.firstChild)
+export const is_exculues = exculues.filter(url => local_url.indexOf(url) !== -1).length !== 0
+
 export const addStyle = (str) => {
     if (window?.GM_addStyle && typeof window.GM_addStyle == 'function') {
         window.GM_addStyle(str)
@@ -415,15 +415,7 @@ export const handlerDisplay = (element, isBlock) => {
     }
 }
 
-// 需要排除的连接
-const exculues = [
-    'https:\/\/i\.huya\.com\/.*',
-    'https:\/\/www\.douyu\.com\/member\/.*',
-    'https:\/\/yuba\.douyu\.com\/.*'
-]
 
-
-export const isExculues = exculues.find(r => new RegExp(r).test(local_url))
 
 export const support = {
     supportSearch() {

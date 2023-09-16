@@ -74,12 +74,15 @@
 # 效果预览
 
 
+
 ## 新增效果 2023-09-15
 
  - 虎牙、斗鱼支持黑夜模式
 
  ![黑色主题1](https://cdn.staticaly.com/gh/wuxin0011/huya-live@main/local/huya-dark-1.png)
  ![黑色主题2](https://cdn.staticaly.com/gh/wuxin0011/huya-live@main/local/huya-dark-2.png)
+ ![黑色主题-bilibili-1](https://cdn.staticaly.com/gh/wuxin0011/huya-live@main/local/bilibili-dark-1.png)
+ ![黑色主题-bilibili-2](https://cdn.staticaly.com/gh/wuxin0011/huya-live@main/local/bilibili-dark-1.png)
 
 
 

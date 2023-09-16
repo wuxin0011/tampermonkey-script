@@ -25,8 +25,7 @@ const home = `
 
 
 .dark body,.dark #header-v3,.dark .app-v1,.dark .app-v2,.dark .app-v3,.dark .app-v4,.dark .app-v5,
-.dark #app,
-.dark .v-img,
+.dark #app,.dark .v-img,
 .dark .header-channel,.dark .header-channel-fixed-right-item,
 .dark .bili-video-card__wrap,.dark .bili-header .game,
 .dark .large-header,
@@ -218,9 +217,9 @@ const home = `
 .dark .bili-header .histories .history-item:hover,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-btn:hover,
 .dark .feed-roll-btn .primary-btn:hover{
-  color:var(--w-blue-link-hover) !important;
+ color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background:var(--w-bg-darker) !important; 
 }
 /******************************************************************/
 

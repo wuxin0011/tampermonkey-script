@@ -21,6 +21,7 @@ html {
   --w-border-dark: #34404c;
   --w-blue-link-hover:#00aeec;
   --w-skeleton:#494f57;
+  --w-white: #fff;
 }
 
 ::view-transition-old(root),

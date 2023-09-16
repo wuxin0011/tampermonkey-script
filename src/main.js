@@ -1,7 +1,7 @@
 import {
     download_plugin_url,
     error,
-    isExculues,
+    is_exculues,
     is_bilibili,
     is_douyin,
     is_douyu,
@@ -33,7 +33,7 @@ import './style/index.css.js';
         return;
     }
 
-    if (isExculues) {
+    if (is_exculues) {
         console.warn('当前地址不支持！')
         return;
     }
