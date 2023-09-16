@@ -2717,6 +2717,7 @@ ${darkCss$1}
 
 /* 修改背景和字体颜色 */
 .dark body,
+.dark #main_col,.dark .room-core,
 .dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
 .dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,.dark #J_liveListNav dl dd span ,
 .dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165,
@@ -2963,9 +2964,9 @@ ${darkCss$1}
 
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover
 {
-  border:1px solid var(--w-light) !important;
-  background: var(--w-light) !important;
-  color: var(--w-bg) !important;
+  border:1px solid var(--w-bg) !important;
+  background: var(--bg) !important;
+  color: var(--w-text-light) !important;
 }
 
 
