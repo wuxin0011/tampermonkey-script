@@ -197,6 +197,7 @@ const home = `
 .dark .bili-header .avatar-panel-popover .links-item .link-beta-tip,
 .dark .vip-entry-containter,.dark vip-entry-btn,
 .dark .vip-entry-btn[data-v-ae740c54],
+.dark .bili-header .center-search-container .center-search__bar #nav-searchform,
 .dark .feed-roll-btn .primary-btn{
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;

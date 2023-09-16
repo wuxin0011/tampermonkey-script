@@ -3,7 +3,7 @@
 // @namespace    https://github.com/wuxin0011/huya-live
 // @version      4.0.6
 // @author       wuxin0011
-// @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼,哔哩哔哩的护眼主题🚀
+// @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
 // @license      MIT
 // @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
 // @source       https://github.com/wuxin0011/huya-live
@@ -22,7 +22,19 @@
 (function () {
   'use strict';
 
-  const exculues = ["https://i.huya.com/", "https://www.douyu.com/member/", "https://yuba.douyu.com/", "https://manga.bilibili.com/", "https://show.bilibili.com/"];
+  const exculues = [
+    "https://i.huya.com/",
+    "https://www.douyu.com/member/",
+    "https://yuba.douyu.com/",
+    "https://manga.bilibili.com/",
+    "https://account.bilibili.com/",
+    "https://member.bilibili.com/",
+    "https://show.bilibili.com/",
+    "https://www.bilibili.com/cheese",
+    "https://pay.bilibili.com/",
+    "https://show.bilibili.com/",
+    "https://link.bilibili.com/"
+  ];
   const prefix = "[live-plugin]:";
   const msg = (...args) => `${prefix} ${args}`;
   const emptyMethod = (...args) => {
@@ -3117,10 +3129,267 @@ ${darkCss}
   }
   
 ` : "";
+  const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ? `
+.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
+.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
+ {
+  color:var(--w-text-light) !important;
+}
+
+
+.dark .nav-tool-container .section,
+.dark .nav-tool-container .section[data-v-3b26ecb6] {
+  border: 1px solid var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+
+
+.dark .nav-tool-container .section:hover,
+.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+
+
+
+
+
+
+` : ``;
+  const blackboard = `
+
+.dark .q-textarea {
+  background-color : var(--w-bg-darker) !important;
+  color : var(--w-text-light) !important;
+  border :1px solid var(--w-text-light) !important;
+}
+.dark .activity-questions-list-wrap .activity-questions-item .activity-questions-item-title .title,
+.dark .activity-questions-list-wrap .activity-questions-item .activity-questions-item-required,
+.dark .activity-questions-item-index,
+.dark .activity-questions-list-wrap .activity-questions-item {
+  color : var(--w-text-light) !important;
+}
+
+
+`;
+  const comment = `
+ .dark .bb-comment, .comment-bilibili-fold,
+ .dark .bb-comment .comment-send-lite .comment-emoji,
+ .dark .bb-comment .comment-send.comment-send-lite,
+ .dark .bb-comment .comment-send-lite.comment-send-lite,
+ .dark .comment-bilibili-fold .comment-send .comment-emoji,
+ .dark .comment-bilibili-fold .comment-send-lite .comment-emoji,
+ .dark .comment-bilibili-fold .comment-send.comment-send-lite,
+ .dark .comment-bilibili-fold .comment-send-lite.comment-send-lite,
+ .dark .bili-rich-textarea__inner,.dark .bili-emoji__footer,
+ .dark .bili-emoji__pkg,.dark .bili-emoji,.dark .emoji-box
+ {
+  background:var(--w-bg-darker) !important;
+  color:var(--w-text) !important;
+}
+
+
+
+.dark .bili-emoji,.dark .emoji-box .emoji-title,
+.dark .bb-comment,
+.dark .bb-comment .comment-header,
+.dark .bb-comment .comment-header .tabs-order,
+.dark .bb-comment .comment-header .tabs-order li,
+.dark .bb-comment .comment-send .dynamic-repost, 
+.dark .bb-comment .comment-send-lite .dynamic-repost, 
+.dark .comment-bilibili-fold .comment-header .tabs-order li,
+.dark .comment-bilibili-fold .comment-send .dynamic-repost, 
+.dark .comment-bilibili-fold .comment-send-lite .dynamic-repost {
+  color:var(--w-text-light) !important;
+}
+
+
+
+
+.dark .bb-comment .comment-send-lite .comment-emoji,
+.dark .bb-comment .comment-header, 
+.dark .bb-comment .comment-list .list-item .con,
+.dark .bb-comment .bottom-page.center,
+.dark .comment-bilibili-fold .comment-header,
+.dark .comment-bilibili-fold .comment-send .comment-emoji,
+.dark .comment-bilibili-fold .comment-send-lite .comment-emoji,
+.dark .comment-bilibili-fold .comment-list .list-item .con{
+  border-color: var(--w-border) !important;
+}
+
+
+
+.dark .emoji-box,.dark .emoji-box .emoji-tabs,.dark .bili-emoji__pkg.active,
+.dark .bb-comment .operation .opera-list,
+.dark .bb-comment .comment-send .comment-emoji, 
+.dark .bb-comment .comment-send .textarea-container .ipt-txt, 
+.dark .bb-comment .comment-send-lite .textarea-container .ipt-txt, 
+.dark .bb-comment .comment-list .list-item .info .reply-tags span, 
+.dark .comment-bilibili-fold .comment-send .textarea-container .ipt-txt,
+.dark .comment-bilibili-fold .comment-list .list-item .info .reply-tags span,
+.dark .comment-bilibili-fold .comment-send-lite .textarea-container .ipt-txt,
+.dark .comment-bilibili-fold .operation .opera-list{
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+  border-color: var(--w-text) !important;
+}
+
+
+.dark .bb-comment .comment-list .list-item .reply-box .view-more .btn-more:hover, .comment-bilibili-fold .comment-list .list-item .reply-box .view-more .btn-more:hover,
+.dark .btn.idc-btn.primary:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .btn.idc-btn.default:hover,.dark .bili-emoji__list__item:hover,
+.dark .emoji-box .emoji-wrap .emoji-pic:hover,
+.dark .emoji-list.emoji-text.emoji-pic:hover,
+.dark .emoji-box .emoji-tabs .tab-link:hover,
+.dark .emoji-box .emoji-tabs .tab-link.on {
+  color:var(--w-blue-link-hover) !important;
+  border:1px solid var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+`;
+  const dialog = `
+.dark .bili-dialog-bomb,.dark .bili-dialog-bomb .appeal-box,
+.dark .bili-dialog-bomb .appeal-box .header,
+.dark .bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap textarea,
+.dark .bili-dialog-bomb .appeal-box .submit
+ {
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .bili-dialog-bomb .appeal-box .wrap .container .question {
+  color:var(--w-text-light) !important;
+}
+
+
+
+`;
+  const footer = `
+.bili-footer {
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .bili-footer p {
+  color:var(--w-text-light) !important;
+}
+
+`;
+  const header = `
+.bb-comment, .comment-bilibili-fold {
+  
+}
+
+`;
+  const login = `
+
+.dark .tab__form,
+.dark .tab__form .form__item input ,
+.dark .tab__form .form__item input::placeholder,
+.dark .tab__form .form__item input:focus,
+.dark .bili-mini-content-wp {
+  background:var(--w-bg-darker) !important;
+  color:var(--w-text) !important;
+}
+
+
+.dark .tab__form {
+  border:1px solid var(--w-text) !important;
+}
+
+
+.dark .bili-mini-customer-title,
+.dark .bili-mini-content-wp .login-scan-title,
+.dark .bili-mini-content-wp .login-scan-desc p,
+.dark .login-tab-item[data-v-35ff7abe],
+.dark .login-tab-item, .dark .login-sns-name,
+.dark .login-agreement-wp p,
+.dark .tab__form .form__item .form_info {
+  color:var(--w-text) !important;
+}
+
+.dark .btn_primary.disabled[data-v-327e145a],
+.dark .btn_primary.disabled,
+.dark .btn_primary,
+.dark .btn_primary[data-v-327e145a],
+.dark .btn_other,
+.dark .btn_other[data-v-327e145a] {
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+  border:1px solid var(--w-text-light) !important;
+}
+
+.dark .btn_other:hover,
+.dark .btn_primary:hover,
+.dark .btn_primary[data-v-327e145a]:hover,
+.dark .btn_other[data-v-327e145a]:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+
+.dark .tab__form .form__item input ,
+.dark .tab__form .form__item input::placeholder,
+.dark .tab__form .form__item input:focus {
+  border:none !important;
+}
+
+
+
+`;
+  const page_num = `
+
+
+.dark .be-pager-options-elevator {
+  color:var(--w-text-light) !important;
+}
+
+.dark .be-pager-item-active,
+.dark .be-pager-options-elevator input {
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .be-pager-next, 
+.dark .be-pager-prev,
+.dark .be-pager-item {
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+  border:1px solid var(--w-text-light) !important;
+}
+
+
+.dark .be-pager-next:hover,
+.dark .be-pager-prev:hover,
+.dark .be-pager-item:hover
+{
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .be-pager-item .be-pager-item-active,
+.dark .be-pager-item-active {
+  color :var(--w-blue-link-hover) !important;
+  border-color :var(--w-blue-link-hover) !important;
+}
+
+`;
   const root = `
 :root {
   --w-brand: #3aa675;
   --w-light: #e5e7eb;
+  --w-white: #fff;
   --w-brand-light: #349469;
   --w-bg: #22272e;
   --w-bg-light: #2b313a;
@@ -3149,71 +3418,171 @@ ${darkCss}
   --v_text2: var(--w-text-light);
   --v_text3: var(--w-text-lighter);
   --v_text4: var(--w-text-lightest);
-  --v_line_light: var(--line_light, #F1F2F3);
-  --v_line_regular: var(--line_regular, #E3E5E7);
-  --v_line_bold: var(--line_bold, #C9CCD0);
-  --v_graph_white: var(--graph_white, #FFFFFF);
+  --v_line_light:  var(--w-text-lighter);
+  --v_line_regular: var(--w-text-lighter);
+  --v_line_bold:  var(--w-text-lightest);
+  --v_graph_white:var(--w-text);
   --v_graph_bg_thin: var(--w-bg-darker);
   --v_graph_bg_regular: var(--w-bg-darker);
-  --v_graph_bg_thick: var(--graph_bg_thick, #E3E5E7);
-  --v_graph_weak: var(--graph_weak, #C9CCD0);
-  --v_graph_medium: var(--graph_medium, #9499A0);
-  --v_graph_icon: var(--graph_icon, #61666D);
-  --v_shadow: var(--shadow, #000000);
+  --v_graph_bg_thick: var(--w-bg);
+  --v_graph_weak:  var(--w-text);
+  --v_graph_medium:  var(--w-text-light);
+  --v_graph_icon: var(--w-text-lightest);
+  --v_shadow: var(--w-text);
   --v_text_hover: var(--w-blue-link-hover);
   --v_text_active:var(--w-blue-link-hover);
   --v_text_disabled: #C9CCD0 ;
-  --v_line_border: var(--w-border-dark);
-  --v_line_bolder_hover: var(--w-border);
-  --v_line_bolder_active: var(--w-border-dark);
-  --v_line_bolder_disabled: var(--w-border);
-  --text_hover:  var(--w-blue-link-hover);
-  --text_active:  var(--w-blue-link-hover);
-  --text_disabled: var(--Ga3);
-  --line_border: var(--w-border);
-  --line_bolder_hover: var(--w-border-dark);
-  --line_bolder_active:  var(--w-border-dark);
-  --line_bolder_disabled:var(--w-border);
+  --v_line_border: var(--w-text-lighter);
+  --v_line_bolder_hover:  var(--w-text-lightest);
+  --v_line_bolder_active: var(--w-text-lightest);
+  --v_line_bolder_disabled: var(--w-text);
+ 
+
 }
 
 .dark body,
 .dark #app {
-  --text1: var(--w-text);
-  --text2: var(--w-text-light);
-  --text3: var(--w-text-lighter);
-  --bg1: var(--w-bg-darker);
-  --bg2: var(--w-bg-darker);
-  --bg3: var(--w-bg-darker);
-  --bg1_float: var(--w-bg-darker);
-  --bg2_float: var(--w-bg-darker);
-  --text_white: var(--w-white);
-  --text1: var(--w-text);
-  --text2: var(--w-text-light);
-  --text3: var(--w-text-lighter);
-  --text4: var(--w-text-lightest);
-  --line_light: var(--line_light, #F1F2F3);
-  --line_regular: var(--line_regular, #E3E5E7);
-  --line_bold: var(--line_bold, #C9CCD0);
-  --graph_white: var(--graph_white, #FFFFFF);
-  --graph_bg_thin: var(--w-bg-darker);
-  --graph_bg_regular: var(--w-bg-darker);
-  --graph_bg_thick: var(--graph_bg_thick, #E3E5E7);
-  --graph_weak: var(--graph_weak, #C9CCD0);
-  --graph_medium: var(--graph_medium, #9499A0);
-  --graph_icon: var(--graph_icon, #61666D);
-  --shadow: var(--shadow, #000000);
-  --text_hover: var(--w-blue-link-hover);
-  --text_active:var(--w-blue-link-hover);
-  --text_disabled: #C9CCD0 ;
-  --line_border: var(--w-border-dark);
-  --line_bolder_hover: var(--w-border);
-  --line_bolder_active: var(--w-border-dark);
-  --line_bolder_disabled: var(--w-border);
-  --text_hover:  var(--w-blue-link-hover);
-  --text_active:  var(--w-blue-link-hover);
-  --text_disabled: var(--Ga3);
+  --bg1:  var(--v_bg1);
+  --bg2:  var(--v_bg2);
+  --bg3:  var(--v_bg3);
+  --bg1_float: var(--v_bg1_float);
+  --bg2_float: var(--v_bg2_float);
+  --text_white: var(--v_text_white);
+  --text1:  var(--v_text1);
+  --text2: var(--v_text2);
+  --text3:  var(--v_text3);
+  --text4:  var(--v_text4);
+  --line_light:  var(--v_line_light);
+  --line_regular: var(--v_line_regular);
+  --line_bold: var(--v_line_bold);
+  --graph_white: var(--v_graph_white);
+  --graph_bg_thin: var(--v_graph_bg_thin);
+  --graph_bg_regular: var(--v_graph_bg_regular);
+  --graph_bg_thick: var(--v_graph_bg_thick);
+  --graph_weak: var(--w-text);
+  --graph_medium: var(--w-text-light);
+  --graph_icon: var(--w-text-lightest);
+  --shadow: var(--w-text);
+  --text_hover: var(--v_text_hover);
+  --text_active: var(--v_text_active);
+  --text_disabled:  var(--v_text_disabled);
+  --line_border: var(--v_line_border);
+  --line_bolder_hover: var(--v_line_bolder_hover);
+  --line_bolder_active: var(--v_line_bolder_active);
+  --line_bolder_disabled:  var(--v_line_bolder_disabled);
+  --b_text1: var(--text1);
+  --b_text2: var(--text2);
+  --b_text3: var(--text3);
+  --b_text4: var(--text4);
 }
 `;
+  const common = `
+${root}
+${header}
+${footer}
+${login}
+${page_num}
+${comment}
+${dialog}
+`;
+  const douga = /.*:\/\/www\.bilibili\.com\/v\/douga\/.*/.test(local_url) ? `
+
+
+.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
+.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
+ {
+  color:var(--w-text-light) !important;
+}
+
+
+.dark .channel-layout,
+.dark channel-nav{
+  border: 1px solid var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+
+
+.dark .nav-tool-container .section:hover,
+.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .channel-layout,
+.dark channel-nav,
+.dark .bili-rank-list-video .bili-rank-list-video__item:nth-of-type(2n) {
+   background:var(--w-bg-darker) !important;
+}
+
+
+.dark .bili-rank-list-video .bili-rank-list-video__item:nth-of-type(2n + 1) {
+  background-color:var(--w-bg) !important;
+}
+
+
+
+
+
+` : ``;
+  const guochuang = /.*:\/\/www\.bilibili\.com\/guochuang\/.*/.test(local_url) ? `
+.dark .spread-module .t,.dark .spread-module,
+.dark .pgc-rank-list .rank-item .ri-detail .ri-title,.dark .pgc-rank-list .rank-item .ri-detail .ri-point,
+.dark .name, .dark .new-stat-module .zone-title .headline .name,.dark .headline .name, 
+.dark .index-entry-wrapper .filter-block-title span,
+.dark .block-area,.dark .block-area .timeline-title .headline .name,
+.dark .block-area .block-left .block-header .block-title,
+.dark .video-item-biref .biref-info .biref-title,
+.dark .handpick-right-module .block-header .block-title {
+  color:var(--w-text-light) !important;
+}
+
+.dark .video-item-biref .biref-info .biref-title:hover {
+  color:var(--w-blue-link-hover) !important;
+}
+
+.dark .spread-module .num {
+  background:var(--w-bg-darker) !important;
+  color:var(--w-text-light) !important;
+}
+
+.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+  background: none !important;
+}
+
+
+
+.dark .timeline-box .timeline-item .item-right p.num a, 
+.dark .timeline-box .timeline-item .item-right p.num span,
+.dark .new-stat-module .zone-title .headline .new-stat-more,
+.dark .back-top-tools .tool-item,.dakr .block-area .timeline-toggle-block .timeline-toggle-btn,
+.dark .sec-rank .more-link,.dark .pgc-rank-dropdown,.dark .pgc-rank-dropdown .dropdown-list,
+.dark .random-change {
+  border: 1px solid var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dakr .block-area .timeline-toggle-block .timeline-toggle-btn:hover,
+.dark .new-stat-module .zone-title .headline .new-stat-more:hover,
+.dark .timeline-box .timeline-item .item-right p.num a:hover, 
+.dark .timeline-box .timeline-item .item-right p.num span:hover,
+.dark .sec-rank .more-link:hover,.dark .back-top-tools .tool-item:hover,
+.dark .random-change:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+
+
+
+
+
+
+` : ``;
   const home = `
 
 /* 黑色主题模式下骨架屏 */
@@ -3408,6 +3777,7 @@ ${darkCss}
 .dark .bili-header .avatar-panel-popover .links-item .link-beta-tip,
 .dark .vip-entry-containter,.dark vip-entry-btn,
 .dark .vip-entry-btn[data-v-ae740c54],
+.dark .bili-header .center-search-container .center-search__bar #nav-searchform,
 .dark .feed-roll-btn .primary-btn{
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
@@ -3469,6 +3839,431 @@ ${darkCss}
 .dark .bili-header .avatar-panel-popover .level-item .level-item__bar--next svg .level-bg {
   fill: var(--w-text); !important;
 }
+
+`;
+  const is_account = local_url.indexOf("https://account.bilibili.com/") !== -1;
+  const account_css = is_account ? `
+
+
+` : ``;
+  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `
+.dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
+.dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
+.dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
+.dark .contactUs-content-info-item_3hznU .text_NvNTR,.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-type_2qxNK,
+.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-num_13v1B,
+.dark .gameSns-content-other-account_9YJ6O .wechat-text_2GmEa, .dark .gameSns-content-other-account_9YJ6O .weibo-text_35duF,
+.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,.dark .game-item-footer-score_2F75T .gameScoreNum_EuGJV,
+.dark .Card-header_1BQ_x .card-title_HKAAg,.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-name_c4Qj2,
+.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-count_SEbUq,
+.dark .game-item-footer-name_2wzwp,.dark .game-item-footer-type_wMU_g,.dark .game-item-footer-no_269PI,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore-no_UmJz1,
+.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record,
+.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record p,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore_OHEKi .gameScoreNum_2smPo,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc,
+.dark .Card-header_3tA8E .card-title_3s7_S, .dark .hotActivity-item-time_h-F8o,
+.dark .list-item-title_IY-UG .date_cylZ8, .dark .list-item-title_IY-UG .games-num_2LlQZ,
+.dark .list-item-cont_1zPV3 .hotGameItem_EJS60 .gameDes_2fvpP .gameName_2u5sS,
+.dark .loadComplete-txt_2z5n_,.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-title_370f1>div,
+.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-name_2y0cn,
+.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-des_27h0g,
+.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-tag_3lnOf,
+.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-name_1X85G,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-degree_DnAAx,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-comment_3P3Er,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-des_1sNxd{
+  color:var(--w-text-light) !important;
+}
+
+
+.dark .game-item-footer-name_2wzwp:hover,
+.dark .game-item-footer-type_wMU_g:hover,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc:hover,
+.dark .video-item-biref .biref-info .biref-title:hover {
+  color:var(--w-blue-link-hover) !important;
+}
+
+
+.dark .bili-game-footer,.dark .list_item_1gw1l,.dark .scroll-wrap_1vXo6 ,
+.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
+.dark .bili-game-header-nav .bili-game-header-nav-bar {
+  background:var(--w-bg-darker) !important;
+  color:var(--w-text-light) !important;
+}
+
+
+.dark .Home_1ebVE,
+.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+  background: none !important;
+}
+
+
+.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A,.dark .body_RAI9S .aside_17bL3,
+.dark .category-item_3tacB,.dark .collection-wrap_19zMo .collection-item_1UBgM,
+.dark .tag_2uAvO{
+  border: 1px solid var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .category-item_3tacB:hover,.dark .Card-header_1BQ_x .btn-more_1RGB7 a:hover,
+.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A:hover,
+.dark .tag_2uAvO:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+` : ``;
+  const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) ? `
+.dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
+.dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
+.dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
+.dark .contactUs-content-info-item_3hznU .text_NvNTR,.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-type_2qxNK,
+.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-num_13v1B,
+.dark .gameSns-content-other-account_9YJ6O .wechat-text_2GmEa, .dark .gameSns-content-other-account_9YJ6O .weibo-text_35duF,
+.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,.dark .game-item-footer-score_2F75T .gameScoreNum_EuGJV,
+.dark .Card-header_1BQ_x .card-title_HKAAg,.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-name_c4Qj2,
+.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-count_SEbUq,
+.dark .game-item-footer-name_2wzwp,.dark .game-item-footer-type_wMU_g,.dark .game-item-footer-no_269PI,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore-no_UmJz1,
+.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record,
+.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record p,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore_OHEKi .gameScoreNum_2smPo,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc,
+.dark .Card-header_3tA8E .card-title_3s7_S, .dark .hotActivity-item-time_h-F8o,
+.dark .list-item-title_IY-UG .date_cylZ8, .dark .list-item-title_IY-UG .games-num_2LlQZ,
+.dark .list-item-cont_1zPV3 .hotGameItem_EJS60 .gameDes_2fvpP .gameName_2u5sS,
+.dark .loadComplete-txt_2z5n_,.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-title_370f1>div,
+.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-name_2y0cn,
+.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-des_27h0g,
+.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-tag_3lnOf,
+.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-name_1X85G,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-degree_DnAAx,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-comment_3P3Er,
+.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-des_1sNxd{
+  color:var(--w-text-light) !important;
+}
+
+
+.dark .game-item-footer-name_2wzwp:hover,
+.dark .game-item-footer-type_wMU_g:hover,
+.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc:hover,
+.dark .video-item-biref .biref-info .biref-title:hover {
+  color:var(--w-blue-link-hover) !important;
+}
+
+
+.dark .bili-game-footer,.dark .list_item_1gw1l,.dark .scroll-wrap_1vXo6 ,
+.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
+.dark .bili-game-header-nav .bili-game-header-nav-bar {
+  background:var(--w-bg-darker) !important;
+  color:var(--w-text-light) !important;
+}
+
+
+.dark .Home_1ebVE,
+.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+  background: none !important;
+}
+
+
+.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A,.dark .body_RAI9S .aside_17bL3,
+.dark .category-item_3tacB,.dark .collection-wrap_19zMo .collection-item_1UBgM,
+.dark .tag_2uAvO{
+  border: 1px solid var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .category-item_3tacB:hover,.dark .Card-header_1BQ_x .btn-more_1RGB7 a:hover,
+.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A:hover,
+.dark .tag_2uAvO:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+` : ``;
+  const is_link = local_url.indexOf("https://link.bilibili.com/") !== -1;
+  const link_css = is_link ? `
+
+
+` : ``;
+  const other = `
+${account_css}
+${app_bilibili}
+${game_bilibili}
+${link_css}
+`;
+  const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ? `
+.dark p,.dark a,.dark span,
+.dark  h1,.dark  h2,.dark  h3,.dark  h4,.dark  h5,.dark  h6,
+.dark .iconfont,
+.dark #article-content,.dark .interaction-info,.dark .interaction-info .toolbar .share-box,
+.dark .normal-article-holder,
+.dark .normal-article-holder h1,
+.dark .normal-article-holder h2,
+.dark .normal-article-holder h3,
+.dark .normal-article-holder h4,
+.dark .normal-article-holder h5,
+.dark .normal-article-holder h6,
+.dark .article-container .title-container .title,
+.dark .article-breadcrumb .breadcrumb-title,
+.dark .article-read-info>span[data-v-36aefa22],.dark .article-read-info>span,
+.dark .right-side-bar .to-top .iconfont[data-v-38a9fd1d],.dark .right-side-bar .to-top .iconfont,
+.dark .right-side-bar .side-toolbar .toolbar-item[data-v-38a9fd1d],.dark .right-side-bar .side-toolbar .toolbar-item,
+.dark .coin-dialog-wrapper .coin-title,.dark .coin-dialog-wrapper .van-icon-guanbi,
+.dark .right-side-bar .side-toolbar .toolbar-item .iconfont[data-v-38a9fd1d],.dark .right-side-bar .side-toolbar .toolbar-item .iconfont
+ {
+  color:var(--w-text-light) !important;
+}
+
+.dark .right-side-bar .to-top[data-v-38a9fd1d],.dark .right-side-bar .to-top,
+.dark .right-side-bar .side-toolbar[data-v-38a9fd1d],.dark .right-side-bar .side-toolbar,
+.dark .follow-btn[data-v-2847c980],.dark .follow-btn,
+.dark .coin-dialog-wrapper .confirm-btn,
+.dark .van-popover.van-followed,
+.dark .coin-dialog-wrapper,
+.dark .article-container {
+  border: 1px solid var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .article-container ,
+.dark .comment-wrapper .comment-m,
+.dark .followed[data-v-2847c980],.dark .followed,
+.dark .article-up-info[data-v-904253a6],.dark .article-up-info,
+.dark .fixed-top-header {
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .nav-tool-container .section:hover,
+.dark .right-side-bar .to-top .iconfont[data-v-38a9fd1d]:hover,.dark .right-side-bar .to-top .iconfont:hover,
+.dark .right-side-bar .to-top[data-v-38a9fd1d]:hover,.dark .right-side-bar .to-top:hover,
+.dark .coin-dialog-wrapper .confirm-btn:hover,
+
+.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+
+.dark .coin-dialog-wrapper .van-icon-guanbi:hover {
+  color:var(--w-blue-link-hover) !important;
+}
+
+
+.dark .van-popover.van-followed .follow_dropdown li:hover {
+  background:var(--w-bg) !important;
+  color:var(--w-blue-link-hover) !important;
+}
+
+
+
+
+
+` : ``;
+  const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ? `
+.dark .list-create {
+  background:var(--w-bg) !important;
+}
+
+.dark .elec .elec-status-bg-grey,
+.dark #page-index #i-ann-content textarea,
+.dark .bili-dyn-item,
+.dark .bili-dyn-card-video__body,
+.dark .bili-rich-text__content,
+.dark .bili-dyn-card-video__desc,
+.dark .bili-dyn-card-video__title,
+.dark .series-item .item-title .qipapnum[data-v-40b5e135],
+.dark .series-item .item-title .qipapnum,
+.dark .contribution-sidenav .contribution-item,
+.dark .album-list__tabs,
+.dark #page-series-index .channel-option.no-channel[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel,
+.dark #page-series-index .channel-option,
+.dark .bili-rich-textarea__inner.empty,
+.dark .n .n-inner {
+  background:var(--w-bg-darker) !important;
+  color:var(--w-text) !important;
+}
+
+.dark .n .n-cursor {
+  background:var(--w-text-light) !important;
+}
+
+
+.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel p,
+.dark .album-list__title,.dark .album-list__tab-name,
+.dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
+.dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
+.dark #page-index .channel.guest .channel-item .channel-title .channel-name, .dark #page-index .channel.guest .channel-name, .dark #page-index .channel-name,
+.dark #page-index .col-2 .section-title,
+.dark #page-index .col-2 .section .user-auth .auth-description,
+.dark .user-info .user-info-title .info-title[data-v-31d5659a],
+.dark .user-info .user-info-title .info-title,
+.dark .user-info .info-content .info-command[data-v-31d5659a],
+.dark .user-info .info-content .info-command,
+.dark .user-info .info-content .info-value[data-v-31d5659a],
+.dark .user-info .info-content .info-value,
+.dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
+.dark .idc-meta-item,
+.dark .elec .elec-count,.dark .elec,
+.dark .elec .elec-setting, .elec .elec-total-c-num,
+.dark .elec-total-c,
+.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .icon-tag,
+.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .tag-content,
+.dark #page-video #submit-video-type-filter a .count,
+.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30], .dark #page-series-index .channel-index .breadcrumb, 
+.dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
+.dark #page-series-index .channel-index .breadcrumb .item.cur,
+.dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
+.dark #page-setting .setting-privacy-item .setting-privacy-name,
+.dark #page-setting .setting-privacy-item,
+.dark #page-fav .fav-sidenav .nav-title .text,.dark #page-fav .fav-main .filter-item .text,.dark #page-fav .fav-main .filter-item,.dark #page-fav .fav-main,
+.dark #page-index .channel .empty-state p,.dark #page-index .channel,.dark #page-index p,.dark .private-hint,.dark .section-title,
+.dark #page-fav .fav-main .filter-item,.dark .be-dropdown-item, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item i, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item span, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item p,.dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item a,
+.dark .favInfo-box .favInfo-details .fav-options .meta,.dark .favInfo-box .favInfo-details .fav-options,
+.dark span,.dark .sub-tabs span, .dark .sub-tabs .filter-content,.dark .sub-tabs,.dark .sub-tab,
+.dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
+.dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
+.dark .bili-popover, .dark .bili-popover__arrow,
+.dark .game-card__info-title[data-v-7c9854da],.dark .game-card__info-title,
+.dark .section-title {
+  color:var(--w-text-light) !important;
+}
+
+
+.dark #page-setting .setting-tag-list a,
+.dark #page-fav .fav-sidenav .nav-title .text:hover{
+  color:var(--w-text-light) !important;
+}
+
+
+
+
+.dark .bili-rich-textarea__inner,
+.dark .bili-popover, .dark .bili-popover__arrow,
+.dark .section {
+  border-color: var(--w-border) !important;
+}
+
+
+
+
+/* border-color color background */
+.dark .section .count,
+.dark .g-search input,
+.dark #id-card,
+.dark #page-index .col-1,
+.dark #page-fav .fav-main .search-input input,
+.dark .bili-topic-search__popover,
+.dark #page-video #submit-video-type-filter,
+.dark #page-dynamic .col-2 .section,
+
+.dark #page-index .col-2 .section  {
+  border-color: var(--w-border) !important;
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark #page-index,.dark #page-index .col-1, .dark #page-index .col-2,
+.dark #page-index .channel, .dark #page-index .channel .channel-item,
+.dark #page-index .col-1 .section-title,.dark #page-index .col-2 .section-title,
+.dark .series-item .split-line[data-v-40b5e135],.dark .series-item .split-line,
+.dark .g-search input:focus {
+  border-color: var(--w-text) !important;
+}
+
+.dark .n .n-inner {
+  box-shadow:none !important;
+}
+
+
+.dark .col-full,
+
+
+.dark .btn
+.dark .new-elec-trigger,
+.dark .btn.idc-btn.default,
+.dark .elec-status,
+.dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel .create-channel,
+.dark .btn,.dark .btn.btn-large, .dark .btn.btn-large .btn-content[data-v-53027a10],
+.dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
+.dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
+.reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,.reply-box .box-normal .reply-box-send::after,
+.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send,
+.dark .be-dropdown-item:hover,
+.dark .btn.idc-btn.primary {
+  color:var(--w-text-light) !important;
+  background:var(--w-bg-darker) !important;
+  border-color: var(--w-text) !important;
+}
+
+
+
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,.dark #page-series-index .channel-option.no-channel .create-channel:hover,
+.dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
+.dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
+.dark .btn.primary.btn-large:hover,
+.dark .btn:hover,.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,.dark .btn.btn-large:hover,
+.dark .bili-dyn-more__menu:hover,
+.dark .contribution-sidenav .contribution-item:hover,
+.dark .btn:hover,
+.reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,.reply-box .box-normal .reply-box-send:hover::after,
+.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send:hover,
+.dark .new-elec-trigger:hover,
+.dark .elec-status:hover,
+.dark .btn.idc-btn.primary:hover {
+  color:var(--w-blue-link-hover) !important;
+  border-color: var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark .btn.idc-btn.default:hover {
+  color:var(--w-blue-link-hover) !important;
+  border:1px solid var(--w-blue-link-hover) !important;
+  background:var(--w-bg-darker) !important;
+}
+
+.dark #page-setting #setting-new-tag-btn,
+.dark #page-setting .setting-tag-list a,
+.dark #page-setting #setting-new-tag {
+  background:var(--w-bg) !important;
+  border-color: var(--w-text) !important;
+}
+
+.dark #page-fav .fav-sidenav .fav-item.cur ,
+.dark #page-fav .fav-sidenav .fav-item:hover  {
+  background:var(--w-bg) !important;
+}
+
+
+.dark .h .h-v-host {
+  color:  var(--w-white) !important;
+  background: var(--w-blue-link-hove) !important;
+}
+
+
+` : ``;
+  const t = `
+.dark #app {
+  --bg1: var(--w-bg-darker);
+  --text1: var(--w-text-light);
+  --text3: var(--w-text);
+  --v_bg1_float: var(--bg1);
+  --v_bg2_float: var(--bg1);
+}
+
+
 
 `;
   const video = `
@@ -3753,561 +4548,22 @@ html {
   box-shadow: none !important;
 }
 `;
-  const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ? `
-
-
-
-.dark .list-create {
-  background:var(--w-bg) !important;
-}
-
-.dark .elec .elec-status-bg-grey,
-.dark #page-index #i-ann-content textarea,
-.dark .bili-dyn-item,
-.dark .bili-dyn-card-video__body,
-.dark .bili-rich-text__content,
-.dark .bili-dyn-card-video__desc,
-.dark .bili-dyn-card-video__title,
-.dark .bb-comment, .comment-bilibili-fold,
-.dark .comment-bilibili-fold .comment-send .comment-emoji,
-.dark .bb-comment .comment-send-lite .comment-emoji,
-.dark .comment-bilibili-fold .comment-send-lite .comment-emoji,
-.dark .series-item .item-title .qipapnum[data-v-40b5e135],
-.dark .series-item .item-title .qipapnum,
-.dark .contribution-sidenav .contribution-item,
-.dark .album-list__tabs,
-.dark #page-series-index .channel-option.no-channel[data-v-9e6dac30],
-.dark #page-series-index .channel-option.no-channel,
-.dark #page-series-index .channel-option,
-.dark .bili-rich-textarea__inner.empty,
-.dark .bili-rich-textarea__inner,.dark .bili-emoji__footer,
-.dark .bili-emoji__pkg,.dark .bili-emoji,
-.dark .emoji-box,
-.dark .n .n-inner {
-  background:var(--w-bg-darker) !important;
-  color:var(--w-text) !important;
-}
-
-.dark .n .n-cursor {
-  background:var(--w-text-light) !important;
-}
-
-
-.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel p,
-.dark .album-list__title,.dark .album-list__tab-name,
-.dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
-.dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
-.dark #page-index .channel.guest .channel-item .channel-title .channel-name, .dark #page-index .channel.guest .channel-name, .dark #page-index .channel-name,
-.dark #page-index .col-2 .section-title,
-.dark #page-index .col-2 .section .user-auth .auth-description,
-.dark .user-info .user-info-title .info-title[data-v-31d5659a],
-.dark .user-info .user-info-title .info-title,
-.dark .user-info .info-content .info-command[data-v-31d5659a],
-.dark .user-info .info-content .info-command,
-.dark .user-info .info-content .info-value[data-v-31d5659a],
-.dark .user-info .info-content .info-value,
-.dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
-.dark .idc-meta-item,
-.dark .elec .elec-count,.dark .elec,
-.dark .elec .elec-setting, .elec .elec-total-c-num,
-.dark .elec-total-c,
-.dark .bb-comment,
-.dark .bb-comment .comment-header,
-.dark .bb-comment .comment-header .tabs-order,
-.dark .bb-comment .comment-header .tabs-order li,
-.dark .bb-comment .comment-send .dynamic-repost, 
-.dark .bb-comment .comment-send-lite .dynamic-repost, 
-.dark .comment-bilibili-fold .comment-header .tabs-order li,
-.dark .comment-bilibili-fold .comment-send .dynamic-repost, 
-.dark .comment-bilibili-fold .comment-send-lite .dynamic-repost,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .icon-tag,
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .tag-content,
-.dark #page-video #submit-video-type-filter a .count,
-.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30], .dark #page-series-index .channel-index .breadcrumb, 
-.dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
-.dark #page-series-index .channel-index .breadcrumb .item.cur,
-.dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
-.dark #page-setting .setting-privacy-item .setting-privacy-name,
-.dark #page-setting .setting-privacy-item,
-.dark #page-fav .fav-sidenav .nav-title .text,.dark #page-fav .fav-main .filter-item .text,.dark #page-fav .fav-main .filter-item,.dark #page-fav .fav-main,
-.dark #page-index .channel .empty-state p,.dark #page-index .channel,.dark #page-index p,.dark .private-hint,.dark .section-title,
-.dark #page-fav .fav-main .filter-item,.dark .be-dropdown-item, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item i, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item span, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item p,.dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item a,
-.dark .favInfo-box .favInfo-details .fav-options .meta,.dark .favInfo-box .favInfo-details .fav-options,
-.dark span,.dark .sub-tabs span, .dark .sub-tabs .filter-content,.dark .sub-tabs,.dark .sub-tab,
-.dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
-.dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
-.dark .bili-popover, .dark .bili-popover__arrow,
-.dark .section-title {
-  color:var(--w-text-light) !important;
-}
-
-
-
-.dark .bili-emoji,.dark .emoji-box .emoji-title,
-.dark #page-fav .fav-sidenav .nav-title .text:hover{
-  color:var(--w-text-light) !important;
-}
-
-
-
-.dark .comment-bilibili-fold .comment-header,
-.dark .comment-bilibili-fold .comment-send .comment-emoji,
-.dark .comment-bilibili-fold .comment-send-lite .comment-emoji,
-.dark .bb-comment .comment-send-lite .comment-emoji,
-.dark .bb-comment .comment-header, 
-.dark .bb-comment .comment-list .list-item .con,
-.dark .bb-comment .bottom-page.center,
-.dark .comment-bilibili-fold .comment-list .list-item .con,
-.dark .bili-rich-textarea__inner,
-.dark .bili-popover, .dark .bili-popover__arrow,
-.dark .section {
-  border-color: var(--w-border) !important;
-}
-
-
-
-/* border-color color background */
-.dark .section .count,
-.dark .g-search input,
-.dark #id-card,
-.dark #page-index .col-1,
-.dark #page-fav .fav-main .search-input input,
-.dark .bili-topic-search__popover,
-.dark #page-video #submit-video-type-filter,
-.dark #page-dynamic .col-2 .section,
-.dark #page-index .col-2 .section  {
-  border-color: var(--w-border) !important;
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark #page-index,.dark #page-index .col-1, .dark #page-index .col-2,
-.dark #page-index .channel, .dark #page-index .channel .channel-item,
-.dark #page-index .col-1 .section-title,.dark #page-index .col-2 .section-title,
-.dark .series-item .split-line[data-v-40b5e135],.dark .series-item .split-line,
-.dark .g-search input:focus {
-  border-color: var(--w-text) !important;
-}
-
-.dark .n .n-inner {
-  box-shadow:none !important;
-}
-
-
-.dark .col-full,
-
-
-.dark .btn
-.dark .new-elec-trigger,
-.dark .btn.idc-btn.default,
-.dark .elec-status,
-.dark .bb-comment .comment-send .comment-emoji, 
-.dark .bb-comment .comment-send .textarea-container .ipt-txt, 
-.dark .bb-comment .comment-send-lite .textarea-container .ipt-txt, 
-.dark .bb-comment .comment-list .list-item .info .reply-tags span, 
-.dark .comment-bilibili-fold .comment-send .textarea-container .ipt-txt,
-.dark .comment-bilibili-fold .comment-list .list-item .info .reply-tags span,
-.dark .comment-bilibili-fold .comment-send-lite .textarea-container .ipt-txt,
-.dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel .create-channel,
-.dark .btn,.dark .btn.btn-large, .dark .btn.btn-large .btn-content[data-v-53027a10],
-.dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
-.dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
-.dark .bb-comment .operation .opera-list,
-.dark  .comment-bilibili-fold .operation .opera-list,
-.dark .be-dropdown-item:hover,
-.dark .bili-emoji__pkg.active,
-.dark .emoji-box,
-.dark .emoji-box .emoji-tabs,
-.dark .btn.idc-btn.primary {
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-
-  border-color: var(--w-text) !important;
-}
-/* border:1px solid var(--w-text-light) !important; */
-
-
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,.dark #page-series-index .channel-option.no-channel .create-channel:hover,
-.dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
-.dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
-.dark .btn.primary.btn-large:hover,
-.dark .btn:hover,.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,.dark .btn.btn-large:hover,
-.dark .bili-dyn-more__menu:hover,
-.dark .contribution-sidenav .contribution-item:hover,
-.dark .btn:hover
-.dark .new-elec-trigger:hover,
-.dark .elec-status:hover,
-
-
-.dark .bb-comment .comment-list .list-item .reply-box .view-more .btn-more:hover, .comment-bilibili-fold .comment-list .list-item .reply-box .view-more .btn-more:hover,
-.dark .btn.idc-btn.primary:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .btn.idc-btn.default:hover,.dark .bili-emoji__list__item:hover,
-.dark .emoji-box .emoji-wrap .emoji-pic:hover,
-.dark .emoji-list.emoji-text.emoji-pic:hover,
-.dark .emoji-box .emoji-tabs .tab-link:hover,
-.dark .emoji-box .emoji-tabs .tab-link.on {
-  color:var(--w-blue-link-hover) !important;
-  border:1px solid var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-` : ``;
-  const login = `
-
-.dark .tab__form,
-.dark .tab__form .form__item input ,
-.dark .tab__form .form__item input::placeholder,
-.dark .tab__form .form__item input:focus,
-.dark .bili-mini-content-wp {
-  background:var(--w-bg-darker) !important;
-  color:var(--w-text) !important;
-}
-
-
-.dark .tab__form {
-  border:1px solid var(--w-text) !important;
-}
-
-
-.dark .bili-mini-customer-title,
-.dark .bili-mini-content-wp .login-scan-title,
-.dark .bili-mini-content-wp .login-scan-desc p,
-.dark .login-tab-item[data-v-35ff7abe],
-.dark .login-tab-item, .dark .login-sns-name,
-.dark .login-agreement-wp p,
-.dark .tab__form .form__item .form_info {
-  color:var(--w-text) !important;
-}
-
-.dark .btn_primary.disabled[data-v-327e145a],
-.dark .btn_primary.disabled,
-.dark .btn_primary,
-.dark .btn_primary[data-v-327e145a],
-.dark .btn_other,
-.dark .btn_other[data-v-327e145a] {
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-  border:1px solid var(--w-text-light) !important;
-}
-
-.dark .btn_other:hover,
-.dark .btn_primary:hover,
-.dark .btn_primary[data-v-327e145a]:hover,
-.dark .btn_other[data-v-327e145a]:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-
-.dark .tab__form .form__item input ,
-.dark .tab__form .form__item input::placeholder,
-.dark .tab__form .form__item input:focus {
-  border:none !important;
-}
-
-
-
-`;
-  const blackboard = `
-
-.dark .q-textarea {
-  background-color : var(--w-bg-darker) !important;
-  color : var(--w-text-light) !important;
-  border :1px solid var(--w-text-light) !important;
-}
-.dark .activity-questions-list-wrap .activity-questions-item .activity-questions-item-title .title,
-.dark .activity-questions-list-wrap .activity-questions-item .activity-questions-item-required,
-.dark .activity-questions-item-index,
-.dark .activity-questions-list-wrap .activity-questions-item {
-  color : var(--w-text-light) !important;
-}
-
-
-`;
-  const footer = `
-.bili-footer {
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .bili-footer p {
-  color:var(--w-text-light) !important;
-}
-
-`;
-  const page_num = `
-
-
-.dark .be-pager-options-elevator {
-  color:var(--w-text-light) !important;
-}
-
-.dark .be-pager-item-active,
-.dark .be-pager-options-elevator input {
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .be-pager-next, 
-.dark .be-pager-prev,
-.dark .be-pager-item {
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-  border:1px solid var(--w-text-light) !important;
-}
-
-
-.dark .be-pager-next:hover,
-.dark .be-pager-prev:hover,
-.dark .be-pager-item:hover
-{
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .be-pager-item .be-pager-item-active,
-.dark .be-pager-item-active {
-  color :var(--w-blue-link-hover) !important;
-  border-color :var(--w-blue-link-hover) !important;
-}
-
-`;
-  const t = `
-.dark #app {
-  --bg1: var(--w-bg-darker);
-  --text1: var(--w-text-light);
-  --text3: var(--w-text);
-  --v_bg1_float: var(--bg1);
-  --v_bg2_float: var(--bg1);
-}
-
-
-
-`;
-  const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ? `
-
-
-.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
-.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
- {
-  color:var(--w-text-light) !important;
-}
-
-
-.dark .nav-tool-container .section,
-.dark .nav-tool-container .section[data-v-3b26ecb6] {
-  border: 1px solid var(--w-border) !important;
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-
-
-.dark .nav-tool-container .section:hover,
-.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-
-
-
-
-
-
-` : ``;
-  const guochuang = /.*:\/\/www\.bilibili\.com\/guochuang\/.*/.test(local_url) ? `
-.dark .spread-module .t,.dark .spread-module,
-.dark .pgc-rank-list .rank-item .ri-detail .ri-title,.dark .pgc-rank-list .rank-item .ri-detail .ri-point,
-.dark .name, .dark .new-stat-module .zone-title .headline .name,.dark .headline .name, 
-.dark .index-entry-wrapper .filter-block-title span,
-.dark .block-area,.dark .block-area .timeline-title .headline .name,
-.dark .block-area .block-left .block-header .block-title,
-.dark .video-item-biref .biref-info .biref-title,
-.dark .handpick-right-module .block-header .block-title {
-  color:var(--w-text-light) !important;
-}
-
-.dark .video-item-biref .biref-info .biref-title:hover {
-  color:var(--w-blue-link-hover) !important;
-}
-
-.dark .spread-module .num {
-  background:var(--w-bg-darker) !important;
-  color:var(--w-text-light) !important;
-}
-
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
-  background: none !important;
-}
-
-
-
-.dark .timeline-box .timeline-item .item-right p.num a, 
-.dark .timeline-box .timeline-item .item-right p.num span,
-.dark .new-stat-module .zone-title .headline .new-stat-more,
-.dark .back-top-tools .tool-item,.dakr .block-area .timeline-toggle-block .timeline-toggle-btn,
-.dark .sec-rank .more-link,.dark .pgc-rank-dropdown,.dark .pgc-rank-dropdown .dropdown-list,
-.dark .random-change {
-  border: 1px solid var(--w-border) !important;
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn:hover,
-.dark .new-stat-module .zone-title .headline .new-stat-more:hover,
-.dark .timeline-box .timeline-item .item-right p.num a:hover, 
-.dark .timeline-box .timeline-item .item-right p.num span:hover,
-.dark .sec-rank .more-link:hover,.dark .back-top-tools .tool-item:hover,
-.dark .random-change:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-
-
-
-
-
-
-` : ``;
-  const douga = /.*:\/\/www\.bilibili\.com\/v\/douga\/.*/.test(local_url) ? `
-
-
-.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
-.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
- {
-  color:var(--w-text-light) !important;
-}
-
-
-.dark .channel-layout,
-.dark channel-nav{
-  border: 1px solid var(--w-border) !important;
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-
-
-.dark .nav-tool-container .section:hover,
-.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .channel-layout,
-.dark channel-nav,
-.dark .bili-rank-list-video .bili-rank-list-video__item:nth-of-type(2n) {
-   background:var(--w-bg-darker) !important;
-}
-
-
-.dark .bili-rank-list-video .bili-rank-list-video__item:nth-of-type(2n + 1) {
-  background-color:var(--w-bg) !important;
-}
-
-
-
-
-
-` : ``;
-  const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) ? `
-.dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
-.dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
-.dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
-.dark .contactUs-content-info-item_3hznU .text_NvNTR,.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-type_2qxNK,
-.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-num_13v1B,
-.dark .gameSns-content-other-account_9YJ6O .wechat-text_2GmEa, .dark .gameSns-content-other-account_9YJ6O .weibo-text_35duF,
-.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,.dark .game-item-footer-score_2F75T .gameScoreNum_EuGJV,
-.dark .Card-header_1BQ_x .card-title_HKAAg,.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-name_c4Qj2,
-.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-count_SEbUq,
-.dark .game-item-footer-name_2wzwp,.dark .game-item-footer-type_wMU_g,.dark .game-item-footer-no_269PI,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore-no_UmJz1,
-.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record,
-.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record p,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore_OHEKi .gameScoreNum_2smPo,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc,
-.dark .Card-header_3tA8E .card-title_3s7_S, .dark .hotActivity-item-time_h-F8o,
-.dark .list-item-title_IY-UG .date_cylZ8, .dark .list-item-title_IY-UG .games-num_2LlQZ,
-.dark .list-item-cont_1zPV3 .hotGameItem_EJS60 .gameDes_2fvpP .gameName_2u5sS,
-.dark .loadComplete-txt_2z5n_,.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-title_370f1>div,
-.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-name_2y0cn,
-.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-des_27h0g,
-.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-tag_3lnOf,
-.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-name_1X85G,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-degree_DnAAx,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-comment_3P3Er,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-des_1sNxd{
-  color:var(--w-text-light) !important;
-}
-
-
-.dark .game-item-footer-name_2wzwp:hover,
-.dark .game-item-footer-type_wMU_g:hover,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc:hover,
-.dark .video-item-biref .biref-info .biref-title:hover {
-  color:var(--w-blue-link-hover) !important;
-}
-
-
-.dark .bili-game-footer,.dark .list_item_1gw1l,.dark .scroll-wrap_1vXo6 ,
-.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
-.dark .bili-game-header-nav .bili-game-header-nav-bar {
-  background:var(--w-bg-darker) !important;
-  color:var(--w-text-light) !important;
-}
-
-
-.dark .Home_1ebVE,
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
-  background: none !important;
-}
-
-
-.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A,.dark .body_RAI9S .aside_17bL3,
-.dark .category-item_3tacB,.dark .collection-wrap_19zMo .collection-item_1UBgM,
-.dark .tag_2uAvO{
-  border: 1px solid var(--w-border) !important;
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .category-item_3tacB:hover,.dark .Card-header_1BQ_x .btn-more_1RGB7 a:hover,
-.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A:hover,
-.dark .tag_2uAvO:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-
-
-` : ``;
-  const dark = `
-${root}
+  const router = `
 ${home}
 ${video}
 ${space}
-${login}
 ${blackboard}
-${footer}
-${page_num}
 ${t}
 ${anime}
 ${guochuang}
 ${douga}
-${game_bilibili}
+${read}
+`;
+  const dark = `
+${common}
+${router}
+${other}
+
 `;
   const css = is_bilibili ? `
 div#i_cecream .floor-single-card,

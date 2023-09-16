@@ -1,4 +1,16 @@
-const exculues = ['https://i.huya.com/', 'https://www.douyu.com/member/', 'https://yuba.douyu.com/', 'https://manga.bilibili.com/', 'https://show.bilibili.com/']
+const exculues = [
+'https://i.huya.com/',
+'https://www.douyu.com/member/',
+'https://yuba.douyu.com/', 
+'https://manga.bilibili.com/',
+'https://account.bilibili.com/',
+'https://member.bilibili.com/',
+'https://show.bilibili.com/',
+'https://www.bilibili.com/cheese',
+'https://pay.bilibili.com/',
+'https://show.bilibili.com/',
+'https://link.bilibili.com/'
+    ]
 const prefix = '[live-plugin]:'
 const msg = (...args) => `${prefix} ${args}`
 const emptyMethod = (...args) => {console.warn(`${prefix} run empty method...`)}

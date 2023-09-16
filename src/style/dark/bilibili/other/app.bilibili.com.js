@@ -1,10 +1,10 @@
 
 
-import { local_url } from "../../../utils"
+import { local_url } from "../../../../utils"
 
-const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) 
-? 
-`
+const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url)
+  ?
+  `
 .dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
 .dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
 .dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
@@ -74,11 +74,9 @@ const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url)
   background:var(--w-bg-darker) !important;
 }
 
+`
+  :
+  ``
 
 
-` 
-: 
-``
-
-
-export default game_bilibili
+export default app_bilibili

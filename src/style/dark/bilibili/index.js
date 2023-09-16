@@ -1,36 +1,35 @@
-import root from './root'
-import home from './home'
-import video from './video'
-import space from './space'
-import login from './login'
-import blackboard from './blackboard'
-import footer from './footer'
-import page_num from './page-num'
-import t from './t'
 import anime from './anime'
-import guochuang from './guochuang'
+import blackboard from './blackboard'
+import common from './common'
 import douga from './douga'
-import game_bilibili from './game.bilibili.com'
+import guochuang from './guochuang'
+import home from './home'
+import other from './other'
+import read from './read'
+import space from './space'
+import t from './t'
+import video from './video'
 
 
-
-
-
-const dark =
+const router =
   `
-${root}
 ${home}
 ${video}
 ${space}
-${login}
 ${blackboard}
-${footer}
-${page_num}
 ${t}
 ${anime}
 ${guochuang}
 ${douga}
-${game_bilibili}
+${read}
+`
+
+const dark =
+  `
+${common}
+${router}
+${other}
+
 `
 
 
