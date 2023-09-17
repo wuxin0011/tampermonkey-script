@@ -474,7 +474,7 @@
       "color": "#121212"
     }
   };
-  const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark || wls.getItem(DARK_THEME_KEY) === null;
+  const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark;
   const isAutoDark = () => getLocalStore(THEME_IS_AUTO, Boolean.name, false) || wls.getItem(THEME_IS_AUTO) === null;
   const LOCAL_THEME_TYPE = wls.getItem(THEME_TYPE_KEY) === null ? DARK_THEME_TYPE.DEFAULT : wls.getItem(THEME_TYPE_KEY);
   const darkColor = () => {

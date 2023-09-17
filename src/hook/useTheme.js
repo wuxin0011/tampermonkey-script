@@ -87,7 +87,7 @@ export const DARK_TYPE = {
  * 是否是黑色主题 默认为黑色主题
  * @returns boolean
  */
-export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark || wls.getItem(DARK_THEME_KEY) === null
+export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark 
 
 
 
