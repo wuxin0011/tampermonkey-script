@@ -6,6 +6,9 @@ const css = `
     --m-container-background-color: var(--w-bg-darker);
   }
   
+
+  .dark .m-select-dark-option,
+  .dark .m-select-dark, .dark .m-dark-type-select,
   .dark .m-container {
     background-color: var(--m-container-background-color) !important;
     color:var(--w-text-light) !important;
