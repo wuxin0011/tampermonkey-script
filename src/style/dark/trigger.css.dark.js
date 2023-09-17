@@ -6,10 +6,9 @@ const darkCss = `
 .dark body,
 .dark #main_col,.dark .room-core,
 .dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
-.dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,.dark #J_liveListNav dl dd span ,
-.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165,
-.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
-.dark #J_liveListNav dl dd div li,.dark #J_duyaHeaderRight ul li a,
+.dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,
+.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165, .dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
+.dark #J_liveListNav dl dd div li,.dark #J_liveListNav dl dd div li:hover,
 .dark .js-responded-list,.dark .program-preview-box .preview-bd,
 .dark .game-live-item,.dark .game-live-item .txt .num,
 .dark .game-live-item .txt .game-type a,.dark .game-live-item .txt .game-type ,
@@ -49,6 +48,7 @@ const darkCss = `
 .dark .search-suggest, .dark .search-suggest ,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
+.dark #J_liveListNav dl dd span,
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -125,7 +125,7 @@ const darkCss = `
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .search-advice-list li a,.dark .search-header .find-result,
-.dark #play2 .crumb,.dark #play2 .crumb a,
+.dark #play2 .crumb,.dark #play2 .crumb a,.dark .live-box .box-hd .more-list li a,
 .dark .aside-videolist .video-item .item-detail .detail-nick span, dark .aside-videolist .video-item .item-detail .detail-playcount span
 .dark .live-box .box-hd .more-list li a{
   color: var(--w-text-light) !important;
@@ -155,7 +155,7 @@ const darkCss = `
 .dark .chat-room__bd .chat-room__scroll .clearBtn:hover,
 .dark .chat-room__bd .chat-room__scroll .lockBtn:hover,
 .dark .main-info .info-video .video-detail .video-title,
-.dark .main-info .info-video .video-author h3,
+.dark .main-info .info-video .video-author h3,.dark .FavoritePresenter--MMD7zrcd7sYoYy4-nf4LW .subscribe-hd--24Dtf1lXtfSas6Og00JGh .subscribe-tit--27roiaLDJp7Mr5zcqn8qjy,
 .dark .search-header .find-result em,.dark .aside-videolist .video-item:hover .item-detail h3,
 .dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a:hover{
   color: var(--w-text) !important;
@@ -249,16 +249,45 @@ const darkCss = `
 }
 
 
-.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover
-{
-  border:1px solid var(--w-bg) !important;
-  background: var(--bg) !important;
+
+.dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span,
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
+ {
+  background: var(--w-bg-dark) !important;
+  border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
+}
+
+
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span:hover,
+
+.dark #J_liveListNav dl dd ul li ul li:hover,
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span:hover,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on:hover,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover{
+  background: var(--w-bg) !important;
+  border:1px solid var(--w-text-light) !important;
+  color: var(--w-text) !important;
+}
+
+
+
+
+.dark #J_liveListNav dl dd span:hover,
+.dark #J_duyaHeaderRight ul li a,
+.dark #J_duyaHeaderRight ul li a:hover,
+.dark .g-gameCard-link:hover{
+  background: var(--w-bg) !important;
+  color: var(--w-text) !important;
 }
 
 
 
 `
+// .dark .cate-nav--3mpGt9Jpr_LIsYfxzXv0uV .role-box--CmncxF51UUP9Y9q3Gf4Tt .item-tag--3PujWUW7b2DGla1AemwXqz:hover,
 
 export default darkCss
 

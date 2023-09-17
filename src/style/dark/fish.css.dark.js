@@ -7,6 +7,9 @@ const darkCss = `
   background: var(--w-bg) !important;
 }
 
+
+
+
 .dark  .Horn4Category-popWrap 
  {
   background: var(--w-bg) !important;
@@ -46,6 +49,7 @@ const darkCss = `
 .dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
+.dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark #js-footer
 {
   background: var(--w-bg-darker) !important;
@@ -88,13 +92,16 @@ const darkCss = `
 .dark .ChatFansBarragePop-diamondsTxt,.dark .BarrageWordPanel-example,.dark .BarrageWordPanel-feedbackTips,
 .dark .BarrageWordPanel-block h3,.dark .BarrageWordPanel-reward,.dark .BarrageWordPanel-tips,
 .dark .CustomGroupManager-title strong,.dark .CustomGroupManager-groupItem,.dark .CustomGroupManager-checkItem>span,
-.dark .CustomGroupManager,.dark .LevelFilKeyTab .tab,
-.dark .FKNokeywords-title,
+.dark .CustomGroupManager,.dark .LevelFilKeyTab .tab, .dark .layout-Result,
+.dark .FKNokeywords-title, .dark .Search-recommend-info p,.dark .layout-Module-title,
+.dark .DropPaneList-live.is-live,.dark .Search-category h3,.dark .Search-category p,.dark .Search-category p span,
 .dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText
 {
   color: var(--w-text-light) !important;
 }
 
+
+.dark .Search-recommend-info h3,.dark .Search-feedback-section,.dark .Search-feedback-section,
 .dark .Header-menu-link.active a:hover,
 .dark .RoomList .layout-Module-title:hover,
 .dark .RoomList .layout-Module-title a:hover,
@@ -103,7 +110,6 @@ const darkCss = `
 .dark .DyCover-zone:hover,
 .dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
 .dark .layout-Module-title a:hover,
-.dark .Category-item:hover,
 .dark .DropMenuList-name:hover,
 .dark .DropMenuList-linkAll:hover,
 .dark .ListHeader-title,
@@ -112,15 +118,16 @@ const darkCss = `
 .dark .ListFooter .dy-Pagination .dy-Pagination-item-active a:hover,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item:hover,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item-active:hover,
-.dark .Title-anchorName:hover,.dark .Title-row-text,
+.dark .Title-anchorName:hover,.dark .Title-row-icon,.dark .Title-row-text,
 .dark .SwipeTabsContent .tabItem:hover,.dark .SwipeTabsContent .tabItem.active,
 .dark .layout-Classify-card>strong:hover,.dark .secondCateCard-hot:hover,
 .dark .Barrage-toolbarClear:hover, .dark .Barrage-toolbarLock:hover,
 .dark .ShieldTool-listItem.is-checked .ShieldTool-checkText,.dark .BarrageTips .BarrageTips--active,
 .dark .ChatFansBarragePop-txt span,.dark .dark .ChatFansBarragePop-diamondsTxt span,.dark .ChatFansBarragePop-diamondsTxt span,
 .dark .PopularBarrage .PopularBarragePanel-descFansPrivilege:hover,
-.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,
-.dark .PopularBarrage .PopularBarragePanel-descLock:hover,
+.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,
+.dark .PopularBarrage .PopularBarragePanel-descLock:hover,.dark .DropPaneList span,
+.dark .Search-content-title, .dark .Search-default-title, .dark .Search-history-title, .dark .Search-hot-title,
 .dark .FilKeyTab .tab.active
 {
   color: var(--w-text) !important;
@@ -196,6 +203,54 @@ const darkCss = `
   border: none !important;
 }
 
+
+.dark .DyCover,.dark .Search-yuba,
+.dark .layout-Card-history, .dark .layout-Card-rank,
+.dark .layout-Cover-item,.dark .Search-input-pane,
+.dark .ListRecommend-refresh,.dark .ListHeader-pop-label,
+.dark layout-Module-label,.dark .Search-default-item,
+.dark .Search-recommend .Search-direct,.dark Search-category,
+.dark .layout-Search-input,.dark .layout-Search-btn,
+.dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
+.dark .categoryBoxB-editB .edit,
+.dakr .Search-direct {
+  background: var(--w-bg-dark) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+}
+
+
+.dark .DyCover:hover,.dark .layout-Search-btn:hover,
+.dark .dark Search-category:hover,.dark .categoryBoxB-editB .edit:hover,
+.dark .Search-default-item:hover,.dark .Search-recommend .Search-direct:hover,
+.dark .Category-item:hover,.dark .ListRecommend-refresh:hover,
+.dakr .Search-direct:hover,.dark .ListHeader-pop-label:hover,
+.dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
+.dark .Search-recommend:hover {
+  background: var(--w-bg) !important;
+  border:1px solid var(--w-text-light) !important;
+  color: var(--w-text) !important;
+}
+
+.dark .layout-Tab-container.is-fixed,
+.dark .dy-ModalRadius-footer button,
+.dark .layout-Tab-item,.dark .dy-ModalRadius-close,
+.dark .DropPaneList>a{
+  background: var(--w-bg-dark) !important;
+  border: none !important;
+  color: var(--w-text-light) !important;
+}
+
+.dark .dy-ModalRadius-close:hover,.dy-ModalRadius-footer button:hover,
+.dark .layout-Tab-item.is-active,.dark .layout-Tab-item:hover,
+.dark .Search-rank-wrapper:hover .Search-rank,
+.dark .YubaMessage-link:hover,
+.dark .layout-Tab-item:hover,
+.dark .Search-hotList li:hover,
+.dark .DropPaneList>a:hover {
+  background: var(--w-bg) !important;
+  color: var(--w-text) !important;
+}
 
 `
 

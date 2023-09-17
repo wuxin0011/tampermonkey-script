@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.0.6
+// @version      4.0.7
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
 // @license      MIT
@@ -2383,6 +2383,9 @@ html {
   background: var(--w-bg) !important;
 }
 
+
+
+
 .dark  .Horn4Category-popWrap 
  {
   background: var(--w-bg) !important;
@@ -2422,6 +2425,7 @@ html {
 .dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
+.dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark #js-footer
 {
   background: var(--w-bg-darker) !important;
@@ -2464,13 +2468,16 @@ html {
 .dark .ChatFansBarragePop-diamondsTxt,.dark .BarrageWordPanel-example,.dark .BarrageWordPanel-feedbackTips,
 .dark .BarrageWordPanel-block h3,.dark .BarrageWordPanel-reward,.dark .BarrageWordPanel-tips,
 .dark .CustomGroupManager-title strong,.dark .CustomGroupManager-groupItem,.dark .CustomGroupManager-checkItem>span,
-.dark .CustomGroupManager,.dark .LevelFilKeyTab .tab,
-.dark .FKNokeywords-title,
+.dark .CustomGroupManager,.dark .LevelFilKeyTab .tab, .dark .layout-Result,
+.dark .FKNokeywords-title, .dark .Search-recommend-info p,.dark .layout-Module-title,
+.dark .DropPaneList-live.is-live,.dark .Search-category h3,.dark .Search-category p,.dark .Search-category p span,
 .dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText
 {
   color: var(--w-text-light) !important;
 }
 
+
+.dark .Search-recommend-info h3,.dark .Search-feedback-section,.dark .Search-feedback-section,
 .dark .Header-menu-link.active a:hover,
 .dark .RoomList .layout-Module-title:hover,
 .dark .RoomList .layout-Module-title a:hover,
@@ -2479,7 +2486,6 @@ html {
 .dark .DyCover-zone:hover,
 .dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
 .dark .layout-Module-title a:hover,
-.dark .Category-item:hover,
 .dark .DropMenuList-name:hover,
 .dark .DropMenuList-linkAll:hover,
 .dark .ListHeader-title,
@@ -2488,15 +2494,16 @@ html {
 .dark .ListFooter .dy-Pagination .dy-Pagination-item-active a:hover,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item:hover,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item-active:hover,
-.dark .Title-anchorName:hover,.dark .Title-row-text,
+.dark .Title-anchorName:hover,.dark .Title-row-icon,.dark .Title-row-text,
 .dark .SwipeTabsContent .tabItem:hover,.dark .SwipeTabsContent .tabItem.active,
 .dark .layout-Classify-card>strong:hover,.dark .secondCateCard-hot:hover,
 .dark .Barrage-toolbarClear:hover, .dark .Barrage-toolbarLock:hover,
 .dark .ShieldTool-listItem.is-checked .ShieldTool-checkText,.dark .BarrageTips .BarrageTips--active,
 .dark .ChatFansBarragePop-txt span,.dark .dark .ChatFansBarragePop-diamondsTxt span,.dark .ChatFansBarragePop-diamondsTxt span,
 .dark .PopularBarrage .PopularBarragePanel-descFansPrivilege:hover,
-.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,
-.dark .PopularBarrage .PopularBarragePanel-descLock:hover,
+.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,
+.dark .PopularBarrage .PopularBarragePanel-descLock:hover,.dark .DropPaneList span,
+.dark .Search-content-title, .dark .Search-default-title, .dark .Search-history-title, .dark .Search-hot-title,
 .dark .FilKeyTab .tab.active
 {
   color: var(--w-text) !important;
@@ -2573,6 +2580,54 @@ html {
 }
 
 
+.dark .DyCover,.dark .Search-yuba,
+.dark .layout-Card-history, .dark .layout-Card-rank,
+.dark .layout-Cover-item,.dark .Search-input-pane,
+.dark .ListRecommend-refresh,.dark .ListHeader-pop-label,
+.dark layout-Module-label,.dark .Search-default-item,
+.dark .Search-recommend .Search-direct,.dark Search-category,
+.dark .layout-Search-input,.dark .layout-Search-btn,
+.dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
+.dark .categoryBoxB-editB .edit,
+.dakr .Search-direct {
+  background: var(--w-bg-dark) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+}
+
+
+.dark .DyCover:hover,.dark .layout-Search-btn:hover,
+.dark .dark Search-category:hover,.dark .categoryBoxB-editB .edit:hover,
+.dark .Search-default-item:hover,.dark .Search-recommend .Search-direct:hover,
+.dark .Category-item:hover,.dark .ListRecommend-refresh:hover,
+.dakr .Search-direct:hover,.dark .ListHeader-pop-label:hover,
+.dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
+.dark .Search-recommend:hover {
+  background: var(--w-bg) !important;
+  border:1px solid var(--w-text-light) !important;
+  color: var(--w-text) !important;
+}
+
+.dark .layout-Tab-container.is-fixed,
+.dark .dy-ModalRadius-footer button,
+.dark .layout-Tab-item,.dark .dy-ModalRadius-close,
+.dark .DropPaneList>a{
+  background: var(--w-bg-dark) !important;
+  border: none !important;
+  color: var(--w-text-light) !important;
+}
+
+.dark .dy-ModalRadius-close:hover,.dy-ModalRadius-footer button:hover,
+.dark .layout-Tab-item.is-active,.dark .layout-Tab-item:hover,
+.dark .Search-rank-wrapper:hover .Search-rank,
+.dark .YubaMessage-link:hover,
+.dark .layout-Tab-item:hover,
+.dark .Search-hotList li:hover,
+.dark .DropPaneList>a:hover {
+  background: var(--w-bg) !important;
+  color: var(--w-text) !important;
+}
+
 `;
   const css$3 = is_douyu ? `
 
@@ -2612,7 +2667,7 @@ li.Header-menu-link,
 .layout-Player-main .GuessGameMiniPanelB-wrapper,
 #js-player-asideMain #layout-Player-aside .FirePower,
 .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
-#bc4-bgblur,
+#bc4-bgblur,.Search-ad,
 .Baby-image.is-achievement,
 .multiBitRate-da4b60{
   display:none !important;
@@ -2731,10 +2786,9 @@ ${darkCss$1}
 .dark body,
 .dark #main_col,.dark .room-core,
 .dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
-.dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,.dark #J_liveListNav dl dd span ,
-.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165,
-.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
-.dark #J_liveListNav dl dd div li,.dark #J_duyaHeaderRight ul li a,
+.dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,
+.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165, .dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
+.dark #J_liveListNav dl dd div li,.dark #J_liveListNav dl dd div li:hover,
 .dark .js-responded-list,.dark .program-preview-box .preview-bd,
 .dark .game-live-item,.dark .game-live-item .txt .num,
 .dark .game-live-item .txt .game-type a,.dark .game-live-item .txt .game-type ,
@@ -2774,6 +2828,7 @@ ${darkCss$1}
 .dark .search-suggest, .dark .search-suggest ,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
+.dark #J_liveListNav dl dd span,
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -2850,7 +2905,7 @@ ${darkCss$1}
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .search-advice-list li a,.dark .search-header .find-result,
-.dark #play2 .crumb,.dark #play2 .crumb a,
+.dark #play2 .crumb,.dark #play2 .crumb a,.dark .live-box .box-hd .more-list li a,
 .dark .aside-videolist .video-item .item-detail .detail-nick span, dark .aside-videolist .video-item .item-detail .detail-playcount span
 .dark .live-box .box-hd .more-list li a{
   color: var(--w-text-light) !important;
@@ -2880,7 +2935,7 @@ ${darkCss$1}
 .dark .chat-room__bd .chat-room__scroll .clearBtn:hover,
 .dark .chat-room__bd .chat-room__scroll .lockBtn:hover,
 .dark .main-info .info-video .video-detail .video-title,
-.dark .main-info .info-video .video-author h3,
+.dark .main-info .info-video .video-author h3,.dark .FavoritePresenter--MMD7zrcd7sYoYy4-nf4LW .subscribe-hd--24Dtf1lXtfSas6Og00JGh .subscribe-tit--27roiaLDJp7Mr5zcqn8qjy,
 .dark .search-header .find-result em,.dark .aside-videolist .video-item:hover .item-detail h3,
 .dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a:hover{
   color: var(--w-text) !important;
@@ -2974,11 +3029,39 @@ ${darkCss$1}
 }
 
 
-.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover
-{
-  border:1px solid var(--w-bg) !important;
-  background: var(--bg) !important;
+
+.dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span,
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
+ {
+  background: var(--w-bg-dark) !important;
+  border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
+}
+
+
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span:hover,
+
+.dark #J_liveListNav dl dd ul li ul li:hover,
+.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span:hover,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on:hover,
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover{
+  background: var(--w-bg) !important;
+  border:1px solid var(--w-text-light) !important;
+  color: var(--w-text) !important;
+}
+
+
+
+
+.dark #J_liveListNav dl dd span:hover,
+.dark #J_duyaHeaderRight ul li a,
+.dark #J_duyaHeaderRight ul li a:hover,
+.dark .g-gameCard-link:hover{
+  background: var(--w-bg) !important;
+  color: var(--w-text) !important;
 }
 
 
