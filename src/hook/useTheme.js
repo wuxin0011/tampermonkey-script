@@ -1,12 +1,39 @@
 
-import { wls, warn, log, support } from '../utils'
-
+import { wls, warn, log, support, getLocalStore } from '../utils'
+// 主题key
 const DARK_THEME_KEY = "DARK_THEME_KEY"
+// 是否自动
+export const THEME_IS_AUTO = "THEME_IS_AUTO"
+// 保存主题类型
+export const THEME_TYPE = "THEME_TYPE"
 
 const theme = {
   dark: 'dark',
   light: 'light',
 }
+
+export const DARK_THEME_TYPE = {
+  'DEFAULT': 'DEFAULT',
+  'ORDINARY': 'ORDINARY',
+  'BLACK': 'BLACK',
+}
+
+// 黑色主题类型
+export const DARK_TYPE = {
+  [DARK_THEME_TYPE.DEFAULT]: {
+    'name': '默认',
+    'color': '#343b44'
+  },
+  [DARK_THEME_TYPE.ORDINARY]: {
+    'name': '普通',
+    'color': '#37404c'
+  },
+  [DARK_THEME_TYPE.BLACK]: {
+    'name': '深黑',
+    'color': '#22272e'
+  },
+}
+
 
 
 
@@ -14,8 +41,26 @@ const theme = {
  * 是否是黑色主题 默认为黑色主题
  * @returns boolean
  */
-export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark || wls.getItem(DARK_THEME_KEY) === null
+export const isDark = () => wls.getItem(THEME_TYPE) === theme.dark || wls.getItem(DARK_THEME_KEY) === null
 
+
+
+/**
+ * 是否自动 默认根据时间自动
+ */
+export const isAutoDark = () => getLocalStore(THEME_IS_AUTO, Boolean.name, false) || wls.getItem(THEME_IS_AUTO) === null
+
+
+/**
+ * 保存主题类型 默认为 DARK_THEME_TYPE.DEFAULT
+ */
+export const local_theme_type = wls.getItem(THEME_TYPE) === null ? DARK_THEME_TYPE.DEFAULT : wls.getItem(THEME_TYPE)
+
+
+/**
+ * color
+ */
+export const dark_color = DARK_TYPE[local_theme_type].color
 
 
 

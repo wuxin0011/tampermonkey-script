@@ -1,5 +1,5 @@
 import dark from './dark/live.css.dark'
-
+import { dark_color } from '../hook/useTheme'
 
 
 const css = `
@@ -12,7 +12,7 @@ html {
   --w-bg-lighter: #262c34;
   --w-bg-dark: #343b44;
   --w-bg-darker: #37404c;
-  --w-bg-darker: var(--w-bg-dark);
+  --w-bg-darker: ${dark_color};
   --w-text: #adbac7;
   --w-text-light: #cbd4dc;
   --w-text-lighter: #cdd6dd;
