@@ -438,6 +438,12 @@ export default class LivePlugin {
         const theme_select = querySelector(container, '.operation #m-dark-select')
         addEventListener(theme_select, 'change', function (e) {
             log('主题选择中...', e.target.value);
+            theme_change.checked = false
+            addLocalStore(THEME_IS_AUTO, false, Boolean.name, false)
+            if (theme_btn) {
+                theme_btn.innerText = isNeedDark() ? '黑夜' : '白天'
+                theme_btn.title = isNeedDark() ? '点击切换到黑夜' : '点击切换到白天'
+            }
             updateDarkStyleType(e.target.value)
         })
 
