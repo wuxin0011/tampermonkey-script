@@ -1,5 +1,4 @@
 import dark from './dark/live.css.dark'
-import { dark_color } from '../hook/useTheme'
 
 
 const css = `
@@ -12,7 +11,7 @@ html {
   --w-bg-lighter: #262c34;
   --w-bg-dark: #343b44;
   --w-bg-darker: #37404c;
-  --w-bg-darker: ${dark_color};
+  --w-bg-darker: var(--w-bg-dark);
   --w-text: #adbac7;
   --w-text-light: #cbd4dc;
   --w-text-lighter: #cdd6dd;
@@ -57,10 +56,10 @@ html {
   .m-container {
     --m-font-color: #fff;
     --m-container-background-color: #fff;
-    --m-container-width: 700px;
+    --m-container-width: 800px;
     --m-container-height: 400px;
     --m-container-operation-right-width: 150px;
-    --m-container-input-width: 150px;
+    --m-container-input-width: 100px;
     --m-container-box-transition: all 0.4s ease-in-out;
     --m-container-select-width: var(--m-container-input-width);
     --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) !important;

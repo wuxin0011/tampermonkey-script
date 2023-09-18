@@ -1,5 +1,5 @@
-import {support} from "../../utils";
-import { isDark } from '../../hook/useTheme'
+import { support } from "@/utils";
+import { isDark, isAutoDark, themeOptions } from '@/hook/useTheme'
 
 
 /**
@@ -19,7 +19,7 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
             ${support.supportSearch() ? `<input type="text" placeholder="房间号或者名称...">` : ``}
             ${support.supportAdd() ? `<button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间,也可以通过点击房间名称添加">添加</button>` : ``}
             ${support.supportReset() ? `<button class="btn btn-success clear-room" title="重置表格数据">重置</button>` : ``}
-            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isDark() ?'切换到白天模式':'切换到黑夜模式'}">${isDark() ?'白天':'黑夜'}</button>` : ``}
+            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isDark() ? '切换到白天模式' : '切换到黑夜模式'}">${isDark() ? '白天' : '黑夜'}</button>` : ``}
             ${support.supportBg() ? `<button class="btn btn-warning bg-btn" title="上传背景图">背景</button>` : ``}
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
             ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
@@ -28,6 +28,10 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
             ${support.supportGift() ? `<input type="checkbox" id="checkbox4" ${isShowGift ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物` : ``}
             <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
             ${support.supportAutoViewMaxPro() ? `<input type="checkbox" id="checkbox6" ${isMaxPro ? "checked" : ""} class="checkbox" title="自动最高画质"/>画质` : ``}
+            ${support.supportTheme() ? `<input type="checkbox" id="m-dark-is-auto" ${isAutoDark() ? "checked" : ""} class="checkbox" title="自动调整主题,根据时间段改变"/>自动` : ``}
+            ${support.supportTheme() ? `<select class="m-dark-type-select" id="m-dark-select">
+                                            ${themeOptions()}
+                                        </select>` : ``}
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
             <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
         </div>
@@ -47,3 +51,5 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
 
 
 export default htmlTemplate
+{/* <option value="${DARK_THEME_TYPE.ORDINARY}" ${LOCAL_THEME_TYPE == DARK_THEME_TYPE.ORDINARY ? "selected " : ""}>${DARK_TYPE[DARK_THEME_TYPE.ORDINARY].name}</option>
+<option value="${DARK_THEME_TYPE.BLACK}" ${LOCAL_THEME_TYPE == DARK_THEME_TYPE.BLACK ? "selected " : ""}>${DARK_TYPE[DARK_THEME_TYPE.BLACK].name}</option> */}

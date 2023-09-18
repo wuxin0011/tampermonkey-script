@@ -1,5 +1,5 @@
 /*************************************https://www.bilibili.com/space/* ************************ */
-import { local_url } from '../../../utils';
+import { local_url } from '@/utils';
 
 
 const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?

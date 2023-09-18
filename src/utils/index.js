@@ -1,19 +1,19 @@
 const exculues = [
-'https://i.huya.com/',
-'https://www.douyu.com/member/',
-'https://yuba.douyu.com/', 
-'https://manga.bilibili.com/',
-'https://account.bilibili.com/',
-'https://member.bilibili.com/',
-'https://show.bilibili.com/',
-'https://www.bilibili.com/cheese',
-'https://pay.bilibili.com/',
-'https://show.bilibili.com/',
-'https://link.bilibili.com/'
-    ]
+    'https://i.huya.com/',
+    'https://www.douyu.com/member/',
+    'https://yuba.douyu.com/',
+    'https://manga.bilibili.com/',
+    'https://account.bilibili.com/',
+    'https://member.bilibili.com/',
+    'https://show.bilibili.com/',
+    'https://www.bilibili.com/cheese',
+    'https://pay.bilibili.com/',
+    'https://show.bilibili.com/',
+    'https://link.bilibili.com/'
+]
 const prefix = '[live-plugin]:'
 const msg = (...args) => `${prefix} ${args}`
-const emptyMethod = (...args) => {console.warn(`${prefix} run empty method...`)}
+const emptyMethod = (...args) => { console.warn(`${prefix} run empty method...`) }
 export const log = (...args) => console.log(msg(args))
 export const warn = (...args) => console.warn(msg(args))
 export const error = (...args) => console.error(msg(args))
@@ -29,7 +29,6 @@ export const is_douyu = douyu_address_pattern.test(local_url) // 是否是斗鱼
 export const is_bilibili = bilibili_address_pattern.test(local_url) // bilibili
 export const is_douyin = douyin_address_pattern.test(local_url) // douyin
 export const is_localhost = localhost.test(local_url) // 本地环境
-export const isSupport = () => !is_douyin
 export const wd = window.document
 export const wls = window.localStorage
 export const download_plugin_url = 'https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
@@ -458,7 +457,7 @@ export const support = {
         return !is_douyin
     },
     supportTheme() {
-        return is_huya || is_douyu || is_bilibili
+        return !is_douyin
     }
 }
 

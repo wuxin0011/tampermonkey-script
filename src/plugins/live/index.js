@@ -30,8 +30,8 @@ import {
 } from '../../utils'
 
 import iconLogo from '../../utils/logo'
-import getHtmlStr from "./html";
-import { isDark, toggleColorMode } from '../../hook/useTheme'
+import getHtmlStr from "@/ui";
+import { themeUpdate, toggleColorMode, updateDarkStyleType, THEME_IS_AUTO, isNeedDark } from '@/hook/useTheme'
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
@@ -415,10 +415,30 @@ export default class LivePlugin {
         // 主题切换
         const theme_btn = querySelector(container, '.operation .room-theme')
         addEventListener(theme_btn, 'click', function (e) {
-            toggleColorMode(e)
             log('主题切换中')
-            theme_btn.innerText = isDark() ? '黑夜':'白天'
-            theme_btn.title = isDark() ? '点击切换到黑夜':'点击切换到白天'
+            toggleColorMode(e)
+            theme_btn.innerText = isNeedDark() ? '黑夜' : '白天'
+            theme_btn.title = isNeedDark() ? '点击切换到黑夜' : '点击切换到白天'
+        })
+
+        // 自适应主题
+        const theme_change = querySelector(container, '.operation #m-dark-is-auto')
+        addEventListener(theme_change, 'change', function (e) {
+            log('主题自适应切换中。。。', e.target.checked);
+            addLocalStore(THEME_IS_AUTO, e.target.checked, Boolean.name, false)
+            if (theme_btn) {
+                theme_btn.innerText = isNeedDark() ? '黑夜' : '白天'
+                theme_btn.title = isNeedDark() ? '点击切换到黑夜' : '点击切换到白天'
+            }
+            themeUpdate()
+        })
+
+
+        // 主题类型选择
+        const theme_select = querySelector(container, '.operation #m-dark-select')
+        addEventListener(theme_select, 'change', function (e) {
+            log('主题选择中...', e.target.value);
+            updateDarkStyleType(e.target.value)
         })
 
 

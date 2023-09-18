@@ -1,5 +1,5 @@
 
-import { local_url } from "../../../utils"
+import { local_url } from "@/utils"
 
 const douga = /.*:\/\/www\.bilibili\.com\/v\/douga\/.*/.test(local_url) ?
 

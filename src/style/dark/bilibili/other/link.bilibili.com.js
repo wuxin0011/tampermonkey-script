@@ -1,4 +1,4 @@
-import { local_url } from '../../../../utils'
+import { local_url } from '@/utils'
 
 const is_link = local_url.indexOf('https://link.bilibili.com/') !== -1
 

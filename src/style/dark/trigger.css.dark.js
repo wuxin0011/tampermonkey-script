@@ -198,7 +198,7 @@ const darkCss = `
 .dark .chat-room__input,
 .dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
 {
-  background: var(--w-bg-dark) !important;
+  background: var(--w-bg-darker) !important;
   border-color:var(--w-border) !important;
 }
 
@@ -256,7 +256,7 @@ const darkCss = `
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
-  background: var(--w-bg-dark) !important;
+  background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }

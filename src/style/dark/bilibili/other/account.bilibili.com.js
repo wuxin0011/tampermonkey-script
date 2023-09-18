@@ -1,4 +1,4 @@
-import { local_url } from '../../../../utils'
+import { local_url } from '@/utils'
 
 const is_account = local_url.indexOf('https://account.bilibili.com/') !== -1
 

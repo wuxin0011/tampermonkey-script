@@ -214,7 +214,7 @@ const darkCss = `
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
 .dark .categoryBoxB-editB .edit,
 .dakr .Search-direct {
-  background: var(--w-bg-dark) !important;
+  background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }

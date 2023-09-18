@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.0.8
+// @version      4.0.9
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
 // @license      MIT
@@ -410,7 +410,7 @@
       return !is_douyin;
     },
     supportTheme() {
-      return is_huya || is_douyu || is_bilibili;
+      return !is_douyin;
     }
   };
   class HostUser {
@@ -432,12 +432,62 @@
     }
     return logo;
   };
-  const DARK_THEME_KEY = "DARK_THEME_KEY";
+  const DARK_THEME_KEY = "wx_dark_theme_key";
+  const THEME_IS_AUTO = "wx_dark_theme_is_auto";
+  const THEME_TYPE_KEY = "wx_dark_theme_type_key";
+  const DARK_COLOR_VARIABLE = "--w-bg-darker";
   const theme = {
     dark: "dark",
     light: "light"
   };
+  const DARK_THEME_TYPE = {
+    "DEFAULT": "DEFAULT",
+    "ORDINARY": "ORDINARY",
+    "BLACK0": "BLACK0",
+    "BLACK1": "BLACK1",
+    "BLACK2": "BLACK2",
+    "BLACK3": "BLACK3"
+  };
+  const DARK_TYPE = {
+    [DARK_THEME_TYPE.DEFAULT]: {
+      "name": "默认",
+      "color": "#343b44"
+    },
+    [DARK_THEME_TYPE.ORDINARY]: {
+      "name": "普通",
+      "color": "#37404c"
+    },
+    [DARK_THEME_TYPE.BLACK0]: {
+      "name": "深黑1",
+      "color": "#22272e"
+    },
+    [DARK_THEME_TYPE.BLACK1]: {
+      "name": "深黑2",
+      "color": "#232222"
+    },
+    [DARK_THEME_TYPE.BLACK2]: {
+      "name": "深黑2",
+      "color": "#171514"
+    },
+    [DARK_THEME_TYPE.BLACK3]: {
+      "name": "深黑3",
+      "color": "#121212"
+    }
+  };
   const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark || wls.getItem(DARK_THEME_KEY) === null;
+  const isAutoDark = () => getLocalStore(THEME_IS_AUTO, Boolean.name, false) || wls.getItem(THEME_IS_AUTO) === null;
+  const LOCAL_THEME_TYPE = wls.getItem(THEME_TYPE_KEY) === null ? DARK_THEME_TYPE.DEFAULT : wls.getItem(THEME_TYPE_KEY);
+  const darkColor = () => {
+    let type = wls.getItem(THEME_TYPE_KEY) === null ? DARK_THEME_TYPE.DEFAULT : wls.getItem(THEME_TYPE_KEY);
+    let l1 = DARK_TYPE[type];
+    return (l1 == null ? void 0 : l1.color) ?? "#121212";
+  };
+  const updateStyleColor = (key, value) => document.documentElement.style.setProperty(key, value);
+  const updateDarkStyleType = (type) => {
+    addLocalStore(THEME_TYPE_KEY, type, String.name, false);
+    updateStyleColor(DARK_COLOR_VARIABLE, DARK_TYPE[type].color);
+    log("主题切换成功！", "你选择主题是", DARK_TYPE[type].name, "颜色是", DARK_TYPE[type].color, "darkColor", darkColor());
+  };
   const toggleColorMode = (event) => {
     if (!event) {
       warn("event is not allow null !");
@@ -460,9 +510,9 @@
       Math.max(x, innerWidth - x),
       Math.max(y, innerHeight - y)
     );
-    const transition = document.startViewTransition(async () => {
+    const transition = document.startViewTransition(() => {
       log("支持快照切换...");
-      await themeUpdate();
+      themeUpdate();
     });
     transition.ready.then(() => {
       const clipPath = [
@@ -481,21 +531,61 @@
       );
     });
   };
+  const autoDarkType = () => {
+    let hour = (/* @__PURE__ */ new Date()).getHours();
+    let type = DARK_THEME_TYPE.DEFAULT;
+    if (isAutoDark()) {
+      if (hour >= 0 && hour <= 7)
+        ;
+      else if (hour > 7 && hour <= 17)
+        ;
+      else if (hour > 17 && hour < 18) {
+        type = DARK_THEME_TYPE.ORDINARY;
+      } else if (hour > 18 && hour <= 20) {
+        type = DARK_THEME_TYPE.BLACK;
+      } else if (hour > 20 && hour <= 23) {
+        type = DARK_THEME_TYPE.BLACK1;
+      }
+    }
+    return type;
+  };
+  const autoDarkColor = () => {
+    let color = "";
+    if (isAutoDark()) {
+      let type = autoDarkType();
+      color = DARK_TYPE[type].color;
+    } else {
+      color = darkColor();
+    }
+    return color;
+  };
+  const isNeedDark = () => ((/* @__PURE__ */ new Date()).getHours() < 7 || (/* @__PURE__ */ new Date()).getHours() >= 17) && isAutoDark() || isDark();
   const updateDarkClass = () => {
     if (!support.supportTheme()) {
       return;
     }
+    if (isNeedDark()) {
+      updateStyleColor(DARK_COLOR_VARIABLE, autoDarkColor());
+    }
     const classList = document.documentElement.classList;
-    if (!classList.contains("dark") && isDark()) {
+    if (!classList.contains("dark") && isNeedDark()) {
       document.documentElement.classList.add("dark");
-    } else if (classList.contains("dark") && !isDark()) {
+    } else if (classList.contains("dark") && !isNeedDark()) {
       document.documentElement.classList.remove("dark");
     }
   };
-  const themeUpdate = async () => {
-    log(isDark() ? "切换到白天" : "切换到黑夜");
-    wls.setItem(DARK_THEME_KEY, isDark() ? theme.light : theme.dark);
+  const themeUpdate = () => {
+    log(isNeedDark() ? "切换到白天" : "切换到黑夜");
+    wls.setItem(DARK_THEME_KEY, isNeedDark() ? theme.light : theme.dark);
     updateDarkClass();
+  };
+  const themeOptions = () => {
+    let str = "";
+    let local_theme = isNeedDark() ? autoDarkType() : LOCAL_THEME_TYPE;
+    for (let [k, v] of Object.entries(DARK_TYPE)) {
+      str += `<option value="${k}" ${local_theme == k ? "selected " : ""}>${v.name}</option>`;
+    }
+    return str;
   };
   const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
     return `<div class="m-container">
@@ -513,6 +603,10 @@
             ${support.supportGift() ? `<input type="checkbox" id="checkbox4" ${isShowGift ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物` : ``}
             <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
             ${`<input type="checkbox" id="checkbox6" ${isMaxPro ? "checked" : ""} class="checkbox" title="自动最高画质"/>画质`}
+            ${support.supportTheme() ? `<input type="checkbox" id="m-dark-is-auto" ${isAutoDark() ? "checked" : ""} class="checkbox" title="自动调整主题,根据时间段改变"/>自动` : ``}
+            ${support.supportTheme() ? `<select class="m-dark-type-select" id="m-dark-select">
+                                            ${themeOptions()}
+                                        </select>` : ``}
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
             <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
         </div>
@@ -849,10 +943,25 @@
       });
       const theme_btn = querySelector(container, ".operation .room-theme");
       addEventListener(theme_btn, "click", function(e) {
-        toggleColorMode(e);
         log("主题切换中");
-        theme_btn.innerText = isDark() ? "黑夜" : "白天";
-        theme_btn.title = isDark() ? "点击切换到黑夜" : "点击切换到白天";
+        toggleColorMode(e);
+        theme_btn.innerText = isNeedDark() ? "黑夜" : "白天";
+        theme_btn.title = isNeedDark() ? "点击切换到黑夜" : "点击切换到白天";
+      });
+      const theme_change = querySelector(container, ".operation #m-dark-is-auto");
+      addEventListener(theme_change, "change", function(e) {
+        log("主题自适应切换中。。。", e.target.checked);
+        addLocalStore(THEME_IS_AUTO, e.target.checked, Boolean.name, false);
+        if (theme_btn) {
+          theme_btn.innerText = isNeedDark() ? "黑夜" : "白天";
+          theme_btn.title = isNeedDark() ? "点击切换到黑夜" : "点击切换到白天";
+        }
+        themeUpdate();
+      });
+      const theme_select = querySelector(container, ".operation #m-dark-select");
+      addEventListener(theme_select, "change", function(e) {
+        log("主题选择中...", e.target.value);
+        updateDarkStyleType(e.target.value);
       });
       this.initAnimation(container);
       log("操作按钮添加成功！");
@@ -2039,10 +2148,10 @@ html {
   .m-container {
     --m-font-color: #fff;
     --m-container-background-color: #fff;
-    --m-container-width: 700px;
+    --m-container-width: 800px;
     --m-container-height: 400px;
     --m-container-operation-right-width: 150px;
-    --m-container-input-width: 150px;
+    --m-container-input-width: 100px;
     --m-container-box-transition: all 0.4s ease-in-out;
     --m-container-select-width: var(--m-container-input-width);
     --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) !important;
@@ -2590,7 +2699,7 @@ html {
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
 .dark .categoryBoxB-editB .edit,
 .dakr .Search-direct {
-  background: var(--w-bg-dark) !important;
+  background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
@@ -2978,7 +3087,7 @@ ${darkCss$1}
 .dark .chat-room__input,
 .dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
 {
-  background: var(--w-bg-dark) !important;
+  background: var(--w-bg-darker) !important;
   border-color:var(--w-border) !important;
 }
 
@@ -3036,7 +3145,7 @@ ${darkCss$1}
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
-  background: var(--w-bg-dark) !important;
+  background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }

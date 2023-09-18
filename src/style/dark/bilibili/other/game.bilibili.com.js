@@ -1,6 +1,6 @@
 
 
-import { local_url } from "../../../../utils"
+import { local_url } from "@/utils"
 
 const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url)
   ?
