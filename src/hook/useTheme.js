@@ -258,7 +258,7 @@ export const themeUpdate = () => {
 
 export const themeOptions = () => {
   let str = ''
-  let local_theme = isNeedDark() ? autoDarkType() : LOCAL_THEME_TYPE
+  let local_theme = LOCAL_THEME_TYPE
   for (let [k, v] of Object.entries(DARK_TYPE)) {
     str += `<option value="${k}" ${local_theme == k ? "selected " : ""}>${v.name}</option>`
   }
