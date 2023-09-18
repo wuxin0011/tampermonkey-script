@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.0.9
+// @version      4.1.0
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
 // @license      MIT
@@ -485,8 +485,9 @@
   const updateStyleColor = (key, value) => document.documentElement.style.setProperty(key, value);
   const updateDarkStyleType = (type) => {
     addLocalStore(THEME_TYPE_KEY, type, String.name, false);
-    updateStyleColor(DARK_COLOR_VARIABLE, DARK_TYPE[type].color);
-    log("主题切换成功！", "你选择主题是", DARK_TYPE[type].name, "颜色是", DARK_TYPE[type].color, "darkColor", darkColor());
+    wls.setItem(DARK_THEME_KEY, theme.dark);
+    updateDarkClass();
+    log("主题切换成功！", "你选择主题是", DARK_TYPE[type].name, "颜色是", darkColor() === DARK_TYPE[type].color ? "ok" : "fail");
   };
   const toggleColorMode = (event) => {
     if (!event) {
@@ -558,8 +559,10 @@
     if (isAutoDark()) {
       let type = autoDarkType();
       color = DARK_TYPE[type].color;
+      log("autoDarkColor=", color, "type=", type);
     } else {
       color = darkColor();
+      log("darkColor=", color, "type=");
     }
     return color;
   };

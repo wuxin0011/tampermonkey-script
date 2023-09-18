@@ -87,7 +87,7 @@ export const DARK_TYPE = {
  * 是否是黑色主题 默认为黑色主题
  * @returns boolean
  */
-export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark 
+export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark
 
 
 
@@ -128,9 +128,13 @@ export const updateStyleColor = (key, value) => document.documentElement.style.s
  * @param {主题类型} type 
  */
 export const updateDarkStyleType = (type) => {
+  // 类型保存到本地
   addLocalStore(THEME_TYPE_KEY, type, String.name, false)
-  updateStyleColor(DARK_COLOR_VARIABLE, DARK_TYPE[type].color)
-  log('主题切换成功！', '你选择主题是', DARK_TYPE[type].name, '颜色是', DARK_TYPE[type].color, 'darkColor', darkColor())
+  // 修改类型，自动更换为黑色主题
+  wls.setItem(DARK_THEME_KEY, theme.dark)
+  // 切换主题类型
+  updateDarkClass()
+  log('主题切换成功！', '你选择主题是', DARK_TYPE[type].name, '颜色是', darkColor() === DARK_TYPE[type].color ? 'ok' : 'fail')
 }
 
 
@@ -218,9 +222,12 @@ const autoDarkColor = () => {
   if (isAutoDark()) {
     let type = autoDarkType()
     color = DARK_TYPE[type].color
+    log('autoDarkColor=', color, 'type=', type)
   } else {
     color = darkColor()
+    log('darkColor=', color, 'type=')
   }
+
   return color
 }
 
