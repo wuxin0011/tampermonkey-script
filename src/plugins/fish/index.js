@@ -18,7 +18,7 @@ import {
     wls
 } from '../../utils';
 
-import {getInfo} from "../../api/fish";
+import { getInfo } from "../../api/fish";
 import LivePlugin from "../live";
 
 /**
@@ -91,7 +91,7 @@ export default class FishLive extends LivePlugin {
                         // 获取全部地址
                         window.location.href = 'https://www.douyu.com/g_' + local_url.match(RegExp(
                             /subCate\/.*/g))[0].replace('subCate', '').match(new RegExp(
-                            /\w+/g))[0]
+                                /\w+/g))[0]
                     }
 
                 })
@@ -291,33 +291,5 @@ export default class FishLive extends LivePlugin {
             return null
         }
     }
-
-
-    // isAutoMaxVideoPro() {
-    //     if (!(wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(this.auto_max_pro_key, Boolean.name))) {
-    //         return;
-    //     }
-    //     log('自动全屏查找中...')
-    //     const parent_container = `#js-player-video .room-Player-Box`
-    //     let default_class = '.rate-5c068c'
-    //
-    //     const check = () => {
-    //         return findButton(parent_container, default_class, "清晰度", "div")
-    //     }
-    //     loopDo((timer) => {
-    //         const nodes = querySelectorAll(`${parent_container} ${default_class} ul li`)
-    //         log('查找结果',nodes)
-    //         if (isArray(nodes)) {
-    //             nodes[0].click()
-    //             clearInterval(timer)
-    //         } else {
-    //             default_class = check()
-    //         }
-    //
-    //     }, 20, 1000)
-    //
-    //
-    // }
-
 
 }

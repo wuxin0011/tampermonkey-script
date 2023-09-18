@@ -601,7 +601,7 @@
             ${support.supportSearch() ? `<input type="text" placeholder="房间号或者名称...">` : ``}
             ${support.supportAdd() ? `<button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间,也可以通过点击房间名称添加">添加</button>` : ``}
             ${support.supportReset() ? `<button class="btn btn-success clear-room" title="重置表格数据">重置</button>` : ``}
-            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isDark() ? "切换到白天模式" : "切换到黑夜模式"}">${isDark() ? "白天" : "黑夜"}</button>` : ``}
+            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isNeedDark() ? "点击切换到白天模式" : "点击切换到黑夜模式"}">${isNeedDark() ? "白天" : "黑夜"}</button>` : ``}
             ${support.supportBg() ? `<button class="btn btn-warning bg-btn" title="上传背景图">背景</button>` : ``}
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
             ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
@@ -948,36 +948,41 @@
         addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name);
         that.isAutoMaxVideoPro();
       });
-      const theme_btn = querySelector(container, ".operation .room-theme");
-      addEventListener(theme_btn, "click", function(e) {
-        log("主题切换中");
-        toggleColorMode(e);
-        theme_btn.innerText = isNeedDark() ? "黑夜" : "白天";
-        theme_btn.title = isNeedDark() ? "点击切换到黑夜" : "点击切换到白天";
-      });
-      const theme_change = querySelector(container, ".operation #m-dark-is-auto");
-      addEventListener(theme_change, "change", function(e) {
-        log("主题自适应切换中。。。", e.target.checked);
-        addLocalStore(THEME_IS_AUTO, e.target.checked, Boolean.name, false);
-        if (theme_btn) {
-          theme_btn.innerText = isNeedDark() ? "黑夜" : "白天";
-          theme_btn.title = isNeedDark() ? "点击切换到黑夜" : "点击切换到白天";
-        }
-        themeUpdate();
-      });
-      const theme_select = querySelector(container, ".operation #m-dark-select");
-      addEventListener(theme_select, "change", function(e) {
-        log("主题选择中...", e.target.value);
-        theme_change.checked = false;
-        addLocalStore(THEME_IS_AUTO, false, Boolean.name, false);
-        if (theme_btn) {
-          theme_btn.innerText = isNeedDark() ? "黑夜" : "白天";
-          theme_btn.title = isNeedDark() ? "点击切换到黑夜" : "点击切换到白天";
-        }
-        updateDarkStyleType(e.target.value);
-      });
+      this.themeContr(container);
       this.initAnimation(container);
       log("操作按钮添加成功！");
+    }
+    themeContr(container) {
+      const theme_is_auto_box = querySelector(container, ".operation #m-dark-is-auto");
+      const theme_btn = querySelector(container, ".operation .room-theme");
+      const theme_select = querySelector(container, ".operation #m-dark-select");
+      const cancelAutoTheme = (result = false) => {
+        if (theme_is_auto_box) {
+          theme_is_auto_box.checked = result;
+          addLocalStore(THEME_IS_AUTO, result, Boolean.name, false);
+        }
+      };
+      const updateThemeBtnContent = () => {
+        if (theme_btn) {
+          theme_btn.innerText = isNeedDark() ? "白天" : "黑夜";
+          theme_btn.title = isNeedDark() ? "点击切换到白天模式" : "点击切换到黑夜模式";
+        }
+      };
+      addEventListener(theme_btn, "click", function(e) {
+        toggleColorMode(e);
+        cancelAutoTheme();
+        updateThemeBtnContent();
+      });
+      addEventListener(theme_is_auto_box, "change", function(e) {
+        toggleColorMode(e);
+        cancelAutoTheme(e.target.checked);
+        updateThemeBtnContent();
+      });
+      addEventListener(theme_select, "change", function(e) {
+        cancelAutoTheme(false);
+        updateThemeBtnContent();
+        updateDarkStyleType(e.target.value);
+      });
     }
     initAnimation(container) {
       let box1 = querySelector(container, "#m-container-box1");
@@ -1806,31 +1811,6 @@
         return null;
       }
     }
-    // isAutoMaxVideoPro() {
-    //     if (!(wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(this.auto_max_pro_key, Boolean.name))) {
-    //         return;
-    //     }
-    //     log('自动全屏查找中...')
-    //     const parent_container = `#js-player-video .room-Player-Box`
-    //     let default_class = '.rate-5c068c'
-    //
-    //     const check = () => {
-    //         return findButton(parent_container, default_class, "清晰度", "div")
-    //     }
-    //     loopDo((timer) => {
-    //         const nodes = querySelectorAll(`${parent_container} ${default_class} ul li`)
-    //         log('查找结果',nodes)
-    //         if (isArray(nodes)) {
-    //             nodes[0].click()
-    //             clearInterval(timer)
-    //         } else {
-    //             default_class = check()
-    //         }
-    //
-    //     }, 20, 1000)
-    //
-    //
-    // }
   }
   const getBiliBiliInfoByVideoID = async (url = window.location.href) => {
     if (!url) {

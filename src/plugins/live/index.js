@@ -411,47 +411,55 @@ export default class LivePlugin {
             that.isAutoMaxVideoPro()
         })
 
+        // 主题切换操作
+        this.themeContr(container)
+        // 初始化动画效果
+        this.initAnimation(container)
+        log('操作按钮添加成功！')
+    }
 
-        // 主题切换
+
+
+    themeContr(container) {
+        const theme_is_auto_box = querySelector(container, '.operation #m-dark-is-auto')
         const theme_btn = querySelector(container, '.operation .room-theme')
-        addEventListener(theme_btn, 'click', function (e) {
-            log('主题切换中')
-            toggleColorMode(e)
-            theme_btn.innerText = isNeedDark() ? '黑夜' : '白天'
-            theme_btn.title = isNeedDark() ? '点击切换到黑夜' : '点击切换到白天'
-        })
-
-        // 自适应主题
-        const theme_change = querySelector(container, '.operation #m-dark-is-auto')
-        addEventListener(theme_change, 'change', function (e) {
-            log('主题自适应切换中。。。', e.target.checked);
-            addLocalStore(THEME_IS_AUTO, e.target.checked, Boolean.name, false)
-            if (theme_btn) {
-                theme_btn.innerText = isNeedDark() ? '黑夜' : '白天'
-                theme_btn.title = isNeedDark() ? '点击切换到黑夜' : '点击切换到白天'
-            }
-            themeUpdate()
-        })
-
-
-        // 主题类型选择
         const theme_select = querySelector(container, '.operation #m-dark-select')
-        addEventListener(theme_select, 'change', function (e) {
-            log('主题选择中...', e.target.value);
-            theme_change.checked = false
-            addLocalStore(THEME_IS_AUTO, false, Boolean.name, false)
-            if (theme_btn) {
-                theme_btn.innerText = isNeedDark() ? '黑夜' : '白天'
-                theme_btn.title = isNeedDark() ? '点击切换到黑夜' : '点击切换到白天'
+
+
+        const cancelAutoTheme = (result = false) => {
+            if (theme_is_auto_box) {
+                theme_is_auto_box.checked = result
+                addLocalStore(THEME_IS_AUTO, result, Boolean.name, false)
             }
+        }
+
+        const updateThemeBtnContent = () => {
+            if (theme_btn) {
+                theme_btn.innerText = isNeedDark() ? '白天' : '黑夜'
+                theme_btn.title = isNeedDark() ? '点击切换到白天模式' : '点击切换到黑夜模式'
+            }
+        }
+
+        addEventListener(theme_btn, 'click', function (e) {
+            toggleColorMode(e)
+            cancelAutoTheme()
+            updateThemeBtnContent()
+        })
+
+
+        addEventListener(theme_is_auto_box, 'change', function (e) {
+            toggleColorMode(e)
+            cancelAutoTheme(e.target.checked)
+            updateThemeBtnContent()
+        })
+
+        addEventListener(theme_select, 'change', function (e) {
+            cancelAutoTheme(false)
+            updateThemeBtnContent()
             updateDarkStyleType(e.target.value)
         })
 
 
-
-        // 初始化动画效果
-        this.initAnimation(container)
-        log('操作按钮添加成功！')
     }
 
 

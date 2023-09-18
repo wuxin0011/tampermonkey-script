@@ -1,5 +1,5 @@
 import { support } from "@/utils";
-import { isDark, isAutoDark, themeOptions } from '@/hook/useTheme'
+import { isNeedDark, isAutoDark, themeOptions } from '@/hook/useTheme'
 
 
 /**
@@ -19,7 +19,7 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
             ${support.supportSearch() ? `<input type="text" placeholder="房间号或者名称...">` : ``}
             ${support.supportAdd() ? `<button class="btn btn-primary add-room" title="复制地址栏房间号，手动添加房间,也可以通过点击房间名称添加">添加</button>` : ``}
             ${support.supportReset() ? `<button class="btn btn-success clear-room" title="重置表格数据">重置</button>` : ``}
-            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isDark() ? '切换到白天模式' : '切换到黑夜模式'}">${isDark() ? '白天' : '黑夜'}</button>` : ``}
+            ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isNeedDark() ? '点击切换到白天模式' : '点击切换到黑夜模式'}">${isNeedDark() ? '白天' : '黑夜'}</button>` : ``}
             ${support.supportBg() ? `<button class="btn btn-warning bg-btn" title="上传背景图">背景</button>` : ``}
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
             ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
@@ -51,5 +51,3 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
 
 
 export default htmlTemplate
-{/* <option value="${DARK_THEME_TYPE.ORDINARY}" ${LOCAL_THEME_TYPE == DARK_THEME_TYPE.ORDINARY ? "selected " : ""}>${DARK_TYPE[DARK_THEME_TYPE.ORDINARY].name}</option>
-<option value="${DARK_THEME_TYPE.BLACK}" ${LOCAL_THEME_TYPE == DARK_THEME_TYPE.BLACK ? "selected " : ""}>${DARK_TYPE[DARK_THEME_TYPE.BLACK].name}</option> */}

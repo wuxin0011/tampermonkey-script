@@ -149,6 +149,7 @@ export const toggleColorMode = (event) => {
     warn('event is not allow null !')
     return;
   }
+  
   try {
     const isAppearanceTransition = document?.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!isAppearanceTransition) {
