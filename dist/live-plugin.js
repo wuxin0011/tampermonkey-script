@@ -466,11 +466,11 @@
       "color": "#232222"
     },
     [DARK_THEME_TYPE.BLACK2]: {
-      "name": "深黑2",
+      "name": "深黑3",
       "color": "#171514"
     },
     [DARK_THEME_TYPE.BLACK3]: {
-      "name": "深黑3",
+      "name": "深黑4",
       "color": "#121212"
     }
   };
@@ -535,16 +535,20 @@
     let hour = (/* @__PURE__ */ new Date()).getHours();
     let type = DARK_THEME_TYPE.DEFAULT;
     if (isAutoDark()) {
-      if (hour >= 0 && hour <= 7)
-        ;
-      else if (hour > 7 && hour <= 17)
+      if (hour >= 0 && hour <= 7) {
+        type = DARK_THEME_TYPE.BLACK3;
+      } else if (hour > 7 && hour <= 17)
         ;
       else if (hour > 17 && hour < 18) {
         type = DARK_THEME_TYPE.ORDINARY;
-      } else if (hour > 18 && hour <= 20) {
-        type = DARK_THEME_TYPE.BLACK;
-      } else if (hour > 20 && hour <= 23) {
+      } else if (hour >= 18 && hour < 19) {
+        type = DARK_THEME_TYPE.BLACK0;
+      } else if (hour >= 19 && hour < 20) {
         type = DARK_THEME_TYPE.BLACK1;
+      } else if (hour >= 21 && hour < 22) {
+        type = DARK_THEME_TYPE.BLACK2;
+      } else if (hour >= 22 && hour <= 23) {
+        type = DARK_THEME_TYPE.BLACK3;
       }
     }
     return type;
