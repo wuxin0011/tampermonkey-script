@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.1.0
+// @version      4.1.1
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
 // @license      MIT
@@ -630,6 +630,65 @@
         </div>
  </div>`;
   };
+  const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf("非法访问") : false;
+  const isBVId = (keywords) => /.*\/BV(.*)/.test(keywords);
+  const getBVId = (url) => {
+    try {
+      let videoBVId = "BV";
+      if (/.*\/BV(.*)/.test(url)) {
+        videoBVId += /.*\/BV(.*)\/.*/.test(url) ? url.match(/.*\/BV(.*)/)[1].match(/(.*)\/{1}.*/)[1] : url.match(/.*\/BV(.*)/)[1];
+      }
+      return videoBVId;
+    } catch (error2) {
+      warn("通过房间号获取up信息失败！，请检查是否 https://www.bilibili.com/video/xxxxxxx 空间地址...");
+      return null;
+    }
+  };
+  const isUserId = (keywords) => /https:\/\/space\.bilibili\.com\/\d+.*/.test(keywords) || /\d+/.test(keywords);
+  const getUserId = (keywords) => {
+    let isMatch = keywords.match(/https:\/\/space\.bilibili\.com.*\/(\d+).*/);
+    if (isMatch) {
+      try {
+        return isMatch[1];
+      } catch (error2) {
+        warn("通过房间号获取up信息失败！，请检查是否 https://space.bilibili.com 空间地址...");
+        return null;
+      }
+    }
+    return keywords;
+  };
+  const getBiliBiliInfoByVideoID = async (url = window.location.href) => {
+    if (!url) {
+      return null;
+    }
+    let videoBVId = null;
+    if (isBVId(url)) {
+      videoBVId = getBVId(url);
+    } else {
+      videoBVId = url;
+    }
+    if (!videoBVId) {
+      return null;
+    }
+    return await fetch(`https://api.bilibili.com/x/web-interface/wbi/view?bvid=${videoBVId}`, {
+      method: "get",
+      mode: "cors"
+    }).then((res) => res.json());
+  };
+  const getBiliBiliInfoByUserId = async (userId) => {
+    if (!isUserId(userId)) {
+      return null;
+    }
+    userId = getUserId(userId);
+    if (!userId) {
+      return null;
+    }
+    log("user Id", userId);
+    return await fetch(`https://api.bilibili.com/x/space/wbi/acc/info?mid=${userId}`, {
+      method: "get",
+      mode: "cors"
+    }).then((res) => res.json());
+  };
   class LivePlugin {
     constructor() {
       this.baseUrl = "/";
@@ -836,7 +895,15 @@
       const container = that.m_container;
       const inputValue = querySelector(container, ".operation input");
       addEventListener(inputValue, "input", () => {
-        let arr = that.users.filter((item) => item && item.roomId && item.roomId.indexOf(inputValue.value) !== -1 || item.name && item.name.indexOf(inputValue.value) !== -1);
+        let arr = [];
+        try {
+          arr = that.users.filter((item) => {
+            var _a, _b;
+            return item && (item == null ? void 0 : item.roomId) && ((_a = item == null ? void 0 : item.roomId) == null ? void 0 : _a.indexOf(inputValue.value)) !== -1 || item && (item == null ? void 0 : item.name) && ((_b = item == null ? void 0 : item.name) == null ? void 0 : _b.indexOf(inputValue.value)) !== -1;
+          });
+        } catch (error2) {
+          arr = [...that.users];
+        }
         that.resetTbody(arr);
       });
       const addRoomBtn = querySelector(container, ".operation button.add-room");
@@ -846,9 +913,13 @@
           return alert("请输入房间号！");
         }
         if (!that.userIsExist(keywords)) {
-          handlerPromise(that.getNameByRoomId(keywords), (res) => {
-            that.searchUserByRoomId(res, keywords, inputValue);
-          });
+          if (is_bilibili) {
+            that.handlerBiliBiliKeywords(keywords, inputValue);
+          } else {
+            handlerPromise(that.getNameByRoomId(keywords), (res) => {
+              that.searchUserByRoomId(res, keywords, inputValue);
+            });
+          }
         } else {
           alert("该主播已添加！");
         }
@@ -951,6 +1022,34 @@
       this.themeContr(container);
       this.initAnimation(container);
       log("操作按钮添加成功！");
+    }
+    handlerBiliBiliKeywords(keywords, inputValue) {
+      let that = this;
+      if (isBVId(keywords)) {
+        handlerPromise(getBiliBiliInfoByVideoID(keywords), (result) => {
+          var _a, _b, _c, _d;
+          if (result && (result == null ? void 0 : result.code) == 0) {
+            that.searchUserByRoomId((_b = (_a = result == null ? void 0 : result.data) == null ? void 0 : _a.owner) == null ? void 0 : _b.name, (_d = (_c = result == null ? void 0 : result.data) == null ? void 0 : _c.owner) == null ? void 0 : _d.mid, inputValue);
+          } else if (isRisk(result)) {
+            alert("服务不可用，该操作已被官方禁止，请待会再尝试吧！");
+          } else {
+            alert("搜索失败！请复制 https://www.bilibili.com/video/xxxxxx 地址尝试");
+          }
+        });
+      } else if (isUserId(keywords)) {
+        handlerPromise(getBiliBiliInfoByUserId(keywords), (result) => {
+          var _a, _b;
+          if (result && (result == null ? void 0 : result.code) == 0) {
+            that.searchUserByRoomId((_a = result == null ? void 0 : result.data) == null ? void 0 : _a.name, (_b = result == null ? void 0 : result.data) == null ? void 0 : _b.mid, inputValue);
+          } else if (isRisk(result)) {
+            alert("服务不可用，该操作已被官方禁止，请待会再尝试吧！");
+          } else {
+            alert("搜索失败！请复制 https://space.bilibili.com/xxxxxxxx 地址尝试");
+          }
+        });
+      } else {
+        alert("搜索失败！请复制 https://space.bilibili.com/xxxxxxxx  或者 https://www.bilibili.com/video/xxxxxx  地址尝试");
+      }
     }
     themeContr(container) {
       const theme_is_auto_box = querySelector(container, ".operation #m-dark-is-auto");
@@ -1812,21 +1911,6 @@
       }
     }
   }
-  const getBiliBiliInfoByVideoID = async (url = window.location.href) => {
-    if (!url) {
-      return;
-    }
-    let videoBVId = "BV";
-    if (/.*\/BV(.*)/.test(url)) {
-      videoBVId += /.*\/BV(.*)\/.*/.test(url) ? url.match(/.*\/BV(.*)/)[1].match(/(.*)\/{1}.*/)[1] : url.match(/.*\/BV(.*)/)[1];
-    } else {
-      videoBVId = url;
-    }
-    return await fetch(`https://api.bilibili.com/x/web-interface/wbi/view?bvid=${videoBVId}`, {
-      method: "get",
-      mode: "cors"
-    }).then((res) => res.json());
-  };
   class BiliBili extends LivePlugin {
     constructor() {
       super();
@@ -1842,51 +1926,58 @@
      */
     createButton() {
       let that = this;
-      if (!!that.logo_btn) {
-        return;
-      }
-      let buttonBoxs = querySelector(".palette-button-wrap .storage-box .storable-items");
-      let btn = createElement("button");
-      btn.className = "primary-btn";
-      btn.style.fontSize = "16px";
-      if (!buttonBoxs) {
-        buttonBoxs = querySelector("div.fixed-sidenav-storage");
-        if (!buttonBoxs) {
-          console.log("暂不支持...");
+      loopDo(() => {
+        log("createbutton ...", that.logo_btn);
+        if (!!that.logo_btn) {
           return;
         }
-        btn = createElement("div");
-        btn.style.display = "none";
-        btn.className = "m-bilibili-btn";
-        window.onscroll = () => {
-          if (window.scrollY >= 500) {
-            btn.style.display = "block";
-          } else {
-            btn.style.display = "none";
-          }
-        };
-      }
-      btn.title = "点击显示";
-      btn.innerHTML = iconLogo();
-      that.logo_btn = btn;
-      addEventListener(btn, "click", function() {
-        that.isShowContainer();
-      });
-      insertChild(buttonBoxs, that.logo_btn);
+        let buttonBoxs = querySelector(".palette-button-wrap .storage-box .storable-items");
+        let btn = createElement("button");
+        btn.className = "primary-btn";
+        btn.style.fontSize = "16px";
+        if (!buttonBoxs) {
+          buttonBoxs = document.querySelector("body");
+          btn = createElement("div");
+          btn.style.display = "none";
+          btn.className = "m-bilibili-btn";
+          btn.style.cursor = "pointer";
+          btn.style.position = "fixed";
+          btn.style.bottom = "220px";
+          btn.style.right = "10px";
+          btn.style.display = "block";
+          btn.style.zIndex = 9999999;
+          window.onscroll = () => {
+            log("hello ....");
+            if (window.scrollY >= 500) {
+              btn.style.display = "block";
+            } else {
+              btn.style.display = "none";
+            }
+          };
+        }
+        btn.title = "点击显示";
+        btn.innerHTML = iconLogo();
+        that.logo_btn = btn;
+        addEventListener(btn, "click", function() {
+          that.isShowContainer();
+        });
+        insertChild(buttonBoxs, that.logo_btn);
+      }, 20, 500);
     }
     async getRoomIdByUrl(href) {
       var _a, _b;
       try {
-        if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
+        if (isBVId(href)) {
           let result = await getBiliBiliInfoByVideoID(local_url);
           if (result.code === 0 && ((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid)) {
             return (_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.mid;
           }
         }
-        if (/https:\/\/space\.bilibili\.com\/(\d+).*/.test(href)) {
-          return href.match(/https:\/\/space\.bilibili\.com\/(\d+)/)[1];
+        if (isUserId(href)) {
+          return href.match(/https:\/\/space\.bilibili\.com\/(\d+).*/)[1];
         }
       } catch (error2) {
+        console.log("error", "获取房间号失败！");
       }
       return this.getBilibiliRoomId(href);
     }
@@ -1895,24 +1986,26 @@
     }
     // 添加删除按钮
     addDeleteRoomButton(time = 1e3) {
-      timeoutSelectorAll(".feed-card", (divs) => {
-        var _a, _b;
-        for (let feed of divs) {
-          const isMark = !!querySelector(feed, ".m-span-text");
-          if (!isMark) {
-            let item = querySelector(feed, "div.bili-video-card__info--bottom");
-            const name = (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent;
-            const href = (_b = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _b.href;
-            const id = this.getBilibiliRoomId(href);
-            if (this.userIsExist(id) || this.userIsExist(name)) {
-              removeDOM(feed, true);
-            } else if (id && name) {
-              this.createSpan(feed, item, id, name);
+      loopDo(() => {
+        timeoutSelectorAll(".feed-card", (divs) => {
+          var _a, _b;
+          for (let feed of divs) {
+            const isMark = !!querySelector(feed, ".m-span-text");
+            if (!isMark) {
+              let item = querySelector(feed, "div.bili-video-card__info--bottom");
+              const name = (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent;
+              const href = (_b = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _b.href;
+              const id = this.getBilibiliRoomId(href);
+              if (this.userIsExist(id) || this.userIsExist(name)) {
+                removeDOM(feed, true);
+              } else if (id && name) {
+                this.createSpan(feed, item, id, name);
+              }
             }
           }
-        }
-      }, time);
-      window.onscroll = throttle(500, () => {
+        }, time);
+      }, 10, 500);
+      loopDo(() => {
         timeoutSelectorAll(".bili-video-card", (divs) => {
           var _a, _b, _c, _d;
           for (let feed of divs) {
@@ -1934,8 +2027,8 @@
               }
             }
           }
-        }, time);
-      });
+        }, 0);
+      }, 1e5, 500);
     }
     clickLogoShowContainer() {
       let that = this;
@@ -1971,31 +2064,33 @@
     index() {
     }
     detailLeftVideoList(time = 1e3, sel = ".video-page-card-small") {
-      timeoutSelectorAll(sel, (videoList) => {
-        var _a;
-        for (let videoDom of videoList) {
-          const isMark = !!videoDom.getAttribute("mark");
-          videoDom.setAttribute("mark", true);
-          const playinfo = querySelector(videoDom, ".playinfo");
-          const link = querySelector(videoDom, ".upname a");
-          const id = !!link && (link == null ? void 0 : link.href) && this.getBilibiliRoomId(link.href);
-          const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
-          if (this.userIsExist(id) || this.userIsExist(name)) {
-            removeDOM(videoDom, true);
-          } else if (!isMark && id && name) {
-            const span = createElement("span");
-            span.classList = "m-span-text";
-            addEventListener(span, "click", () => {
-              if (confirm("确认删除up主 " + name + " ?")) {
-                removeDOM(videoDom, true);
-                this.addUser(id, name);
-                this.detailLeftVideoList(0);
-              }
-            });
-            appendChild(playinfo, span);
+      loopDo(() => {
+        timeoutSelectorAll(sel, (videoList) => {
+          var _a;
+          for (let videoDom of videoList) {
+            const isMark = !!videoDom.getAttribute("mark");
+            videoDom.setAttribute("mark", true);
+            const playinfo = querySelector(videoDom, ".playinfo");
+            const link = querySelector(videoDom, ".upname a");
+            const id = !!link && (link == null ? void 0 : link.href) && this.getBilibiliRoomId(link.href);
+            const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
+            if (this.userIsExist(id) || this.userIsExist(name)) {
+              removeDOM(videoDom, true);
+            } else if (!isMark && id && name) {
+              const span = createElement("span");
+              span.classList = "m-span-text";
+              addEventListener(span, "click", () => {
+                if (confirm("确认删除up主 " + name + " ?")) {
+                  removeDOM(videoDom, true);
+                  this.addUser(id, name);
+                  this.detailLeftVideoList(0);
+                }
+              });
+              appendChild(playinfo, span);
+            }
           }
-        }
-      }, time);
+        }, time);
+      }, 1e4, 1e3);
     }
     async detail() {
       var _a, _b;
@@ -2012,16 +2107,28 @@
         this.isAutoMaxVideoPro();
         let result = await getBiliBiliInfoByVideoID(local_url);
         console.log("视频查询结果详情:", result);
-        if (result.code === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
+        if (result && (result == null ? void 0 : result.code) === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
+          console.log("房间需要屏蔽....");
           this.roomIsNeedRemove();
         }
       }
     }
-    async getNameByRoomId(bvId) {
-      var _a, _b;
-      let result = await getBiliBiliInfoByVideoID(bvId);
-      if (result.code === 0) {
-        return (_b = (_a = result == null ? void 0 : result.data) == null ? void 0 : _a.owner) == null ? void 0 : _b.name;
+    async getNameByRoomId(keywords) {
+      var _a, _b, _c;
+      log("getNameByRoomId 查询中...", keywords);
+      if (isBVId(keywords)) {
+        let result = await getBiliBiliInfoByVideoID(keywords);
+        if (result && (result == null ? void 0 : result.code) === 0) {
+          return (_b = (_a = result == null ? void 0 : result.data) == null ? void 0 : _a.owner) == null ? void 0 : _b.name;
+        }
+      } else if (isUserId(keywords)) {
+        let result = await getBiliBiliInfoByUserId(keywords);
+        if (result && (result == null ? void 0 : result.code) === 0) {
+          return (_c = result == null ? void 0 : result.data) == null ? void 0 : _c.name;
+        }
+      } else {
+        warn(" getNameByRoomId can not find result ！");
+        return null;
       }
     }
   }
@@ -3252,6 +3359,7 @@ ${darkCss$1}
   color:#000 !important;
  }
  /*******直播间样式*****/
+ #main_col,
 .chat-room__list .msg-normal,.chat-room__list .msg-bubble,#J_mainRoom{
    background:none !important;
  }

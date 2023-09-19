@@ -81,6 +81,7 @@ const css = is_huya ? `
   color:#000 !important;
  }
  /*******直播间样式*****/
+ #main_col,
 .chat-room__list .msg-normal,.chat-room__list .msg-bubble,#J_mainRoom{
    background:none !important;
  }

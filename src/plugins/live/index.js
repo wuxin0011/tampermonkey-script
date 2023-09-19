@@ -29,9 +29,11 @@ import {
     wls, handlerDisplay
 } from '../../utils'
 
-import iconLogo from '../../utils/logo'
+import iconLogo from '@/utils/logo'
 import getHtmlStr from "@/ui";
+import { isBVId, isUserId, getBiliBiliInfoByVideoID, getBiliBiliInfoByUserId } from '@/api/bilibili';
 import { themeUpdate, toggleColorMode, updateDarkStyleType, THEME_IS_AUTO, isNeedDark } from '@/hook/useTheme'
+import { isRisk } from '../../api/bilibili';
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
@@ -276,7 +278,12 @@ export default class LivePlugin {
         const container = that.m_container
         const inputValue = querySelector(container, '.operation input')
         addEventListener(inputValue, 'input', () => {
-            let arr = that.users.filter(item => (item && item.roomId && item.roomId.indexOf(inputValue.value) !== -1) || (item.name && item.name.indexOf(inputValue.value) !== -1))
+            let arr = []
+            try {
+                arr = that.users.filter(item => (item && item?.roomId && item?.roomId?.indexOf(inputValue.value) !== -1) || (item && item?.name && item?.name?.indexOf(inputValue.value) !== -1))
+            } catch (error) {
+                arr = [...that.users]
+            }
             that.resetTbody(arr)
         })
 
@@ -288,9 +295,14 @@ export default class LivePlugin {
                 return alert('请输入房间号！')
             }
             if (!that.userIsExist(keywords)) {
-                handlerPromise(that.getNameByRoomId(keywords), (res) => {
-                    that.searchUserByRoomId(res, keywords, inputValue)
-                })
+                if (is_bilibili) {
+                    that.handlerBiliBiliKeywords(keywords, inputValue)
+                } else {
+                    handlerPromise(that.getNameByRoomId(keywords), (res) => {
+                        that.searchUserByRoomId(res, keywords, inputValue)
+                    })
+                }
+
             } else {
                 alert('该主播已添加！')
             }
@@ -416,6 +428,38 @@ export default class LivePlugin {
         // 初始化动画效果
         this.initAnimation(container)
         log('操作按钮添加成功！')
+    }
+
+
+    handlerBiliBiliKeywords(keywords, inputValue) {
+        let that = this
+        // log('bilib keywords handlerBiliBiliKeywords', keywords)
+        if (isBVId(keywords)) {
+            handlerPromise(getBiliBiliInfoByVideoID(keywords), (result) => {
+                // log('isBVId result', result)
+                if (result && result?.code == 0) {
+                    that.searchUserByRoomId(result?.data?.owner?.name, result?.data?.owner?.mid, inputValue)
+                } else if (isRisk(result)) {
+                    alert('服务不可用，该操作已被官方禁止，请待会再尝试吧！')
+                } else {
+                    alert('搜索失败！请复制 https://www.bilibili.com/video/xxxxxx 地址尝试')
+                }
+
+            })
+        } else if (isUserId(keywords)) {
+            handlerPromise(getBiliBiliInfoByUserId(keywords), (result) => {
+                if (result && result?.code == 0) {
+                    that.searchUserByRoomId(result?.data?.name, result?.data?.mid, inputValue)
+                } else if (isRisk(result)) {
+                    alert('服务不可用，该操作已被官方禁止，请待会再尝试吧！')
+                }
+                else {
+                    alert('搜索失败！请复制 https://space.bilibili.com/xxxxxxxx 地址尝试')
+                }
+            })
+        } else {
+            alert('搜索失败！请复制 https://space.bilibili.com/xxxxxxxx  或者 https://www.bilibili.com/video/xxxxxx  地址尝试')
+        }
     }
 
 
