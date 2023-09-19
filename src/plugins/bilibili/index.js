@@ -207,44 +207,48 @@ export default class BiliBili extends LivePlugin {
     }
 
     detailLeftVideoList(time = 1000, sel = '.video-page-card-small') {
-
-        loopDo(() => {
-            timeoutSelectorAll(sel, (videoList) => {
-                for (let videoDom of videoList) {
-                    const isMark = !!videoDom.getAttribute('mark')
-                    // 添加标记 下次不用添加了
-                    videoDom.setAttribute('mark', true)
-                    const playinfo = querySelector(videoDom, '.playinfo')
-                    const link = querySelector(videoDom, '.upname a')
-                    const id = !!link && link?.href && this.getBilibiliRoomId(link.href)
-                    const name = querySelector(videoDom, '.upname .name')?.textContent
-                    if (this.userIsExist(id) || this.userIsExist(name)) {
-                        removeDOM(videoDom, true)
-                    } else if (!isMark && id && name) {
-                        const span = createElement('span')
-                        span.classList = 'm-span-text'
-                        addEventListener(span, 'click', () => {
-                            if (confirm('确认删除up主 ' + name + ' ?')) {
-                                removeDOM(videoDom, true)
-                                this.addUser(id, name)
-                                // 遍历一遍 删除所有相关视频
-                                this.detailLeftVideoList(0)
-                            }
-                        })
-                        appendChild(playinfo, span)
-                    }
+        timeoutSelectorAll(sel, (videoList) => {
+            for (let videoDom of videoList) {
+                const isMark = !!videoDom.getAttribute('mark')
+                // 添加标记 下次不用添加了
+                videoDom.setAttribute('mark', true)
+                const playinfo = querySelector(videoDom, '.playinfo')
+                const link = querySelector(videoDom, '.upname a')
+                const id = !!link && link?.href && this.getBilibiliRoomId(link.href)
+                const name = querySelector(videoDom, '.upname .name')?.textContent
+                if (this.userIsExist(id) || this.userIsExist(name)) {
+                    removeDOM(videoDom, true)
+                } else if (!isMark && id && name) {
+                    const span = createElement('span')
+                    span.classList = 'm-span-text'
+                    addEventListener(span, 'click', () => {
+                        if (confirm('确认删除up主 ' + name + ' ?')) {
+                            removeDOM(videoDom, true)
+                            this.addUser(id, name)
+                            // 遍历一遍 删除所有相关视频
+                            this.detailLeftVideoList(0)
+                        }
+                    })
+                    appendChild(playinfo, span)
                 }
-            }, time)
-        }, 10000, 1000)
+            }
+        }, time)
     }
 
     async detail() {
         if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
-            this.detailLeftVideoList(100, '.video-page-operator-card-small')
-            this.detailLeftVideoList()
+            loopDo(() => {
+                this.detailLeftVideoList(100, '.video-page-operator-card-small')
+                this.detailLeftVideoList()
+            }, 100, 1000)
+
+
             const nextBtn = querySelector('.rec-footer')
             addEventListener(nextBtn, 'click', () => {
-                this.detailLeftVideoList(0)
+                loopDo(() => {
+                    this.detailLeftVideoList(0)
+                }, 100, 1000)
+
             })
         }
 

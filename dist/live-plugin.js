@@ -2064,42 +2064,44 @@
     index() {
     }
     detailLeftVideoList(time = 1e3, sel = ".video-page-card-small") {
-      loopDo(() => {
-        timeoutSelectorAll(sel, (videoList) => {
-          var _a;
-          for (let videoDom of videoList) {
-            const isMark = !!videoDom.getAttribute("mark");
-            videoDom.setAttribute("mark", true);
-            const playinfo = querySelector(videoDom, ".playinfo");
-            const link = querySelector(videoDom, ".upname a");
-            const id = !!link && (link == null ? void 0 : link.href) && this.getBilibiliRoomId(link.href);
-            const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
-            if (this.userIsExist(id) || this.userIsExist(name)) {
-              removeDOM(videoDom, true);
-            } else if (!isMark && id && name) {
-              const span = createElement("span");
-              span.classList = "m-span-text";
-              addEventListener(span, "click", () => {
-                if (confirm("确认删除up主 " + name + " ?")) {
-                  removeDOM(videoDom, true);
-                  this.addUser(id, name);
-                  this.detailLeftVideoList(0);
-                }
-              });
-              appendChild(playinfo, span);
-            }
+      timeoutSelectorAll(sel, (videoList) => {
+        var _a;
+        for (let videoDom of videoList) {
+          const isMark = !!videoDom.getAttribute("mark");
+          videoDom.setAttribute("mark", true);
+          const playinfo = querySelector(videoDom, ".playinfo");
+          const link = querySelector(videoDom, ".upname a");
+          const id = !!link && (link == null ? void 0 : link.href) && this.getBilibiliRoomId(link.href);
+          const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
+          if (this.userIsExist(id) || this.userIsExist(name)) {
+            removeDOM(videoDom, true);
+          } else if (!isMark && id && name) {
+            const span = createElement("span");
+            span.classList = "m-span-text";
+            addEventListener(span, "click", () => {
+              if (confirm("确认删除up主 " + name + " ?")) {
+                removeDOM(videoDom, true);
+                this.addUser(id, name);
+                this.detailLeftVideoList(0);
+              }
+            });
+            appendChild(playinfo, span);
           }
-        }, time);
-      }, 1e4, 1e3);
+        }
+      }, time);
     }
     async detail() {
       var _a, _b;
       if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
-        this.detailLeftVideoList(100, ".video-page-operator-card-small");
-        this.detailLeftVideoList();
+        loopDo(() => {
+          this.detailLeftVideoList(100, ".video-page-operator-card-small");
+          this.detailLeftVideoList();
+        }, 100, 1e3);
         const nextBtn = querySelector(".rec-footer");
         addEventListener(nextBtn, "click", () => {
-          this.detailLeftVideoList(0);
+          loopDo(() => {
+            this.detailLeftVideoList(0);
+          }, 100, 1e3);
         });
       }
       if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
