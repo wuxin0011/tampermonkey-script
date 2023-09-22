@@ -48,7 +48,8 @@ const darkCss = `
 .dark .search-suggest, .dark .search-suggest ,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
-.dark #J_liveListNav dl dd span,
+.dark #J_liveListNav dl dd span,.dark #player-gift-wrap,
+.dark .more-attivity-panel,
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -229,6 +230,7 @@ const darkCss = `
 .dark .laypage_main button:hover,
 .dark .laypageskin_default .laypage_curr,
 .dark #J_duyaHeaderRight ul li a,
+.dark .chat-room__bd .load-more-msg,
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;

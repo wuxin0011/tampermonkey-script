@@ -380,6 +380,26 @@ export const findButton = (sel = 'body', key = 'full_screen_button_class_or_id',
 }
 
 
+// 是否全屏
+export const isFull = () => {
+    return !!(document?.fullscreenElement || document?.webkitFullscreenElement || document?.mozFullScreenElement
+        || document?.msFullscreenElement)
+}
+
+/**
+* 监听全屏触发事件
+*/
+export const addFullScreenEvent = (callback) => {
+    if (typeof callback != 'function') {
+        returnn;
+    }
+    document.addEventListener('fullscreenchange', callback);
+    document.addEventListener('webkitfullscreenchange', callback);
+    document.addEventListener('mozfullscreenchange', callback);
+    document.addEventListener('MSFullscreenChange', callback);
+}
+
+
 export const handlerPromise = (result, callback) => {
 
     if (typeof callback !== 'function') {

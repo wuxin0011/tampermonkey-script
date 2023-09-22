@@ -88,9 +88,12 @@ export default class LivePlugin {
             this.index()
             this.category()
             this.create_container()
-            this.isShowLeftMenu()
-            this.isShowGift()
             this.clickLogoShowContainer()
+            loopDo(() => {
+                this.isShowLeftMenu()
+                this.isShowGift()
+            }, 100, 100)
+            
         }
         this.settingBackgroundImage()
     }

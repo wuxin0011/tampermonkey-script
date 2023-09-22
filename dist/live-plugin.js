@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/huya-live
-// @version      4.1.1
+// @version      4.1.2
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
 // @license      MIT
-// @icon         https://cdn.staticaly.com/gh/wuxin0011/blog-resource@main/picgo/icon.png
+// @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArhJREFUWEfllz9ME1Ecx3+/dzUxIUpPxcTEqVD+LDjIoiTSwQldjHGDAwYpbYE4aOJQ8KBFTUx0KLSWoNIDoyFuGsMkcTBx0URjjFBQBmKiQ49ijInh3s/06iWlgfauh8Xoje++7/f5vN+73r0i7PCFO8yHDQI1QzG5HEIOgskPsm85w9IFMmBkQguBNlQOAQTWB4hryWB3V1YgFP++OOCtKAfcYLjD4xeJ8adYE4p5gINn8YpPb78oBehPihDQ0KoS1Vl65/MFnJJfNgLbLeJs6/UA457/S0CUfI3art0ra3dupbalA5UdfdXpRGTJ7PaIUmAWiMbUqehj2wJiR28zcLqPRD2p6ehsMQlR8n9GQTiZuhd5n8naEtjX1X+ctPVHquvgYefHrw8RUFGVsSdbSYjtgWV0sFYDbksgC+dB1XXgNMgy14tJ/hkidjs9NfosX8IpBeaZwM7kwksWyMK1F6qrSjDgBjAjwZhwMzUZeWmMiZL/NQpCWz48R6BlVYnqb9yi7wGxwx8GjkfV6qpT+fBcCQQKq0rsrS4kCPJm8JI6IEqBS6oydqPYw+aU/MOATAQNJ1anI2+2ytt6CAtKyLKj8tOXI+lE7FWh3G8B81tQbOVW7/8tAoW/BWJ7YM7qyqzkCel5wY+RlWJ2s5v+DK0U3dvZ7xZovUlNRB9YmWdkdYHaa3ddtP7zQnKgp99qkf2dvfWcQ5OqjE5bndswEj+kEZzVj2TuUPxbcsC7x2oRO3l3KP5D0HhD9kwYjp9DghnivDyHUsYuI+L5hWD3lK3/BfVXx2s5p2MLQW+i1G7YEqgbiTZqmtC6OOi9/u8LeOQ5xwpL1uWulDGtlnN2AgAncseJa7gk+96Z6YrpLagbnmjmqHk2gAArAOgwAsznjiNBemHQO7qtAmaKlZIx3YFSipuZ8wvlidcmZtmgQAAAAABJRU5ErkJggg==
 // @source       https://github.com/wuxin0011/huya-live
 // @supportURL   https://github.com/wuxin0011/huya-live/issues
 // @match        https://*.douyin.com/*
@@ -737,8 +737,10 @@
         this.index();
         this.category();
         this.create_container();
-        this.isShowLeftMenu();
-        this.isShowGift();
+        loopDo(() => {
+          this.isShowLeftMenu();
+          this.isShowGift();
+        }, 100, 1e3);
         this.clickLogoShowContainer();
       }
       this.settingBackgroundImage();
@@ -3042,7 +3044,7 @@ ${darkCss$1}
 .dark .search-suggest, .dark .search-suggest ,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
-.dark #J_liveListNav dl dd span,
+.dark #J_liveListNav dl dd span,#player-gift-wrap,
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
