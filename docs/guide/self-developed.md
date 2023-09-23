@@ -4,13 +4,14 @@
 ## 克隆仓库
 
 ```shell
-git clone https://github.com/wuxin0011/huya-live
+git clone https://github.com/wuxin0011/tampermonkey-script
 ```
 
 ## 下载依赖
 
 
 ```shell
+cd live-plugin
 pnpm i
 ```
 
@@ -62,7 +63,7 @@ edge
 ```javascript
 // ==UserScript==
 // @name         live-plugin-dev
-// @namespace    https://github.com/wuxin0011/huya-live
+// @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
 // @version      0.0.1
 // @author       wuxin0011
 // @description  虎牙、斗鱼，哔哩哔哩 页面简化，屏蔽主播,关闭抖音提示登录
@@ -78,11 +79,11 @@ edge
 // @match        https://*.douyu.com/*
 // @match        https://*.huya.com/*
 // @match        https://*.bilibili.com/*
-// @require      file:///D://desktop//github//huya-live/dist/live-plugin.js
+// @require      file:///D://desktop//github//tampermonkey-script//live-plugins//dist//live-plugin.js
 // @grant        GM_addStyle
 // ==/UserScript==
 (function(){
-  console.log('将这个文件复制到浏览器油猴脚本中，修改路径 file:///D://desktop//github//huya-live/dist/live-plugin.js 为你本地指向dist/live-plugin.js 这个文件')
+  console.log('将这个文件复制到浏览器油猴脚本中，修改路径 file:///D://desktop//github//tampermonkey-script//live-plugins//dist//live-plugin.js 为你本地指向dist/live-plugin.js 这个文件')
   console.log('使用之前打开浏览器本地支持读取磁盘文件 如 edge 浏览器 edge://extensions/?id=fcmfnpggmnlmfebfghbfnillijihnkoh，其他浏览器同理')
   console.log('选择 \"允许访问文件 URL\" 这个选项 ')
 })()

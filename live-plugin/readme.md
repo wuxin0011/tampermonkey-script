@@ -133,5 +133,5 @@
 # 相关链接
 
 - [插件地址](https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
-- [源码地址](https://github.com/wuxin0011/huya-live)
-- 老版已经迁移到[main-v1](https://github.com/wuxin0011/huya-live/tree/main-v1)分支，该分支不再维护！
+- [源码地址](https://github.com/wuxin0011/tampermonkey-script)
+- 老版已经迁移到[main-v1](https://github.com/wuxin0011/tampermonkey-script/tree/main-v1)分支，该分支不再维护！
