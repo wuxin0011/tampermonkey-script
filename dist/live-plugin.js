@@ -341,6 +341,15 @@
     }
     return classId || key;
   };
+  const addFullScreenEvent = (callback) => {
+    if (typeof callback != "function") {
+      returnn;
+    }
+    document.addEventListener("fullscreenchange", callback);
+    document.addEventListener("webkitfullscreenchange", callback);
+    document.addEventListener("mozfullscreenchange", callback);
+    document.addEventListener("MSFullscreenChange", callback);
+  };
   const handlerPromise = (result, callback) => {
     if (typeof callback !== "function") {
       warn("回调函数不能为空！");
@@ -737,11 +746,12 @@
         this.index();
         this.category();
         this.create_container();
+        this.clickLogoShowContainer();
+        this.addEven();
         loopDo(() => {
           this.isShowLeftMenu();
           this.isShowGift();
-        }, 100, 1e3);
-        this.clickLogoShowContainer();
+        }, 30, 1e3);
       }
       this.settingBackgroundImage();
     }
@@ -1548,6 +1558,12 @@
           this.addUser(id, name);
           this.removeRoom(local_url);
         }
+      });
+    }
+    addEven() {
+      let that = this;
+      addFullScreenEvent(() => {
+        that.isShowGift();
       });
     }
   }
@@ -2589,6 +2605,8 @@ html {
      display:none !important;
   }
 
+
+
   ${css$5}
 
 `;
@@ -3044,7 +3062,8 @@ ${darkCss$1}
 .dark .search-suggest, .dark .search-suggest ,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
-.dark #J_liveListNav dl dd span,#player-gift-wrap,
+.dark #J_liveListNav dl dd span,.dark #player-gift-wrap,
+.dark .more-attivity-panel,
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -3225,6 +3244,7 @@ ${darkCss$1}
 .dark .laypage_main button:hover,
 .dark .laypageskin_default .laypage_curr,
 .dark #J_duyaHeaderRight ul li a,
+.dark .chat-room__bd .load-more-msg,
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -3303,6 +3323,7 @@ ${darkCss$1}
 .mod-index-wrap .mod-index-recommend,
 .mod-index-wrap .mod-news-section,
 .mod-index-wrap .recommend-wrap,
+#player-marquee-wrap .player-marquee-noble-item, #player-marquee-wrap .player-banner-enter,
 .RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
 #huya-ab-fixed,
 #huya-ab,
@@ -4146,77 +4167,7 @@ ${dialog}
 
 
 ` : ``;
-  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `
-.dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
-.dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
-.dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
-.dark .contactUs-content-info-item_3hznU .text_NvNTR,.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-type_2qxNK,
-.dark .mine-header-userInfo_2PEyA .user-basic-nav_3ydDD .user-statistics-num_13v1B,
-.dark .gameSns-content-other-account_9YJ6O .wechat-text_2GmEa, .dark .gameSns-content-other-account_9YJ6O .weibo-text_35duF,
-.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,.dark .game-item-footer-score_2F75T .gameScoreNum_EuGJV,
-.dark .Card-header_1BQ_x .card-title_HKAAg,.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-name_c4Qj2,
-.dark .collection-wrap_19zMo .collection-item_1UBgM .collection-item-game-count_SEbUq,
-.dark .game-item-footer-name_2wzwp,.dark .game-item-footer-type_wMU_g,.dark .game-item-footer-no_269PI,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore-no_UmJz1,
-.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record,
-.dark .bili-game-footer .bili-game-footer-content .bili-game-footer-content-record p,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameScore_OHEKi .gameScoreNum_2smPo,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc,
-.dark .Card-header_3tA8E .card-title_3s7_S, .dark .hotActivity-item-time_h-F8o,
-.dark .list-item-title_IY-UG .date_cylZ8, .dark .list-item-title_IY-UG .games-num_2LlQZ,
-.dark .list-item-cont_1zPV3 .hotGameItem_EJS60 .gameDes_2fvpP .gameName_2u5sS,
-.dark .loadComplete-txt_2z5n_,.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-title_370f1>div,
-.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-name_2y0cn,
-.dark .feed-wrap_3BqTh .card-game-common_2b0P9 .card-content-info-text_1DwU6 .card-content-info-des_27h0g,
-.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-tag_3lnOf,
-.dark .Bookswiper_3q1oK .gallery-thumbs_2oCbc .swiper-thumb-slide .gallery-thumbs-item_3mq8s .game-info_2X55m .game-info-name_1X85G,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-degree_DnAAx,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-footer_2WHGE .score-comment_3P3Er,
-.dark .Card-recomend-item_1FSJD .card-content_1oudE .card-content-des_1sNxd{
-  color:var(--w-text-light) !important;
-}
-
-
-.dark .game-item-footer-name_2wzwp:hover,
-.dark .game-item-footer-type_wMU_g:hover,
-.dark .list-item-cont_27du8 .testGameItem_1xvId .gameDes_1vyj7 .gameName_OGhFc:hover,
-.dark .video-item-biref .biref-info .biref-title:hover {
-  color:var(--w-blue-link-hover) !important;
-}
-
-
-.dark .bili-game-footer,.dark .list_item_1gw1l,.dark .scroll-wrap_1vXo6 ,
-.dark .Card-header_1d4vx .card-title_2RmHu .title_SE4va,
-.dark .bili-game-header-nav .bili-game-header-nav-bar {
-  background:var(--w-bg-darker) !important;
-  color:var(--w-text-light) !important;
-}
-
-
-.dark .Home_1ebVE,
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
-  background: none !important;
-}
-
-
-.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A,.dark .body_RAI9S .aside_17bL3,
-.dark .category-item_3tacB,.dark .collection-wrap_19zMo .collection-item_1UBgM,
-.dark .tag_2uAvO{
-  border: 1px solid var(--w-border) !important;
-  color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark .category-item_3tacB:hover,.dark .Card-header_1BQ_x .btn-more_1RGB7 a:hover,
-.dark .loadingTip-loadMore_1ydD3 .load_btn_2aV1A:hover,
-.dark .tag_2uAvO:hover {
-  color:var(--w-blue-link-hover) !important;
-  border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-` : ``;
+  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `` : ``;
   const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) ? `
 .dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
 .dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,

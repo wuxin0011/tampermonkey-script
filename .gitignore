@@ -22,11 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-test
 backup
 
 !dist
 !test/index.html
 
 
-
+vite.config.js.timestamp-*

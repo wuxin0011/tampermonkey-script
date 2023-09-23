@@ -1,0 +1,153 @@
+.m-dm-container {
+  --dm-container-width: 450px;
+  --dm-container-height: 300px;
+  --dm-container-background-color: 30, 23, 37;
+  --dm-font-color: #fff;
+  --dm-font-color-hover: #000;
+  --dm-background-color: 0, 0, 0;
+  --dm-background-color-hover: #fff;
+  --dm-border-color: #fff;
+  --dm-border-color-hover: #000;
+}
+
+
+
+
+.m-dm-container {
+  width: var(--dm-container-width) !important;
+  height: var(--dm-container-height) !important;
+  background-color: rgba(var(--dm-container-background-color), 1) !important;
+  position: fixed !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  box-shadow: 2px 2px 10px rgba(var(--dm-background-color), 0.7) !important;
+  border-radius: 10px !important;
+  position: fixed !important;
+  right: 0 !important;
+  top: 100px !important;
+  border: none !important;
+  transition: transform ease-in-out 0.5s !important;
+  z-index: 999999 !important;
+  box-sizing: border-box !important;
+  padding: 10px !important;
+}
+
+.m-dy-input-add-keywords {
+  padding: 6px 12px !important;
+  border: none !important;
+  outline: none !important;
+  margin-left: 10px !important;
+  margin-top: 10px !important;
+  border-radius: 10px !important;
+}
+
+.m-dy-input-add-keywords:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+
+
+.m-dm-container-header,
+.m-dm-container-footer {
+  height: 44px !important;
+  position: relative !important;
+}
+
+.m-dm-container-header #m-dm-close-btn {
+  float: right !important;
+  right: 3px !important;
+  color: var(--dm-font-color) !important;
+  font-size: 30px !important;
+  cursor: pointer !important;
+  position: absolute !important;
+}
+
+
+.m-dm-container-body {
+  flex: 1 !important;
+  overflow: auto !important;
+}
+
+.m-dm-keywords-tag {
+  display: inline-block !important;
+  padding: 5px !important;
+  background-color: var(--dm-background-color) !important;
+  border: none !important;
+  outline: none !important;
+  margin: 5px !important;
+  cursor: pointer !important;
+  color: var(--dm-font-color) !important;
+  font-size: 12px !important;
+  border: 1px solid var(--dm-border-color) !important;
+  border-radius: 10px !important;
+ 
+}
+
+.m-dm-keywords-tag:hover {
+  background: rgba(var(--dm-background-color), 0.7) !important;
+  border: 1px solid var(--dm-border-hover-color) !important;
+}
+
+.m-dm-is-all-keywords-button,
+.m-dm-delete-keywords-button,
+.m-dm-add-keywords-button {
+  display: inline-block !important;
+  padding: 4px 8px !important;
+  text-align: center !important;
+  border: none !important;
+  outline: none !important;
+  background-color: var(--dm-background-color-hover) !important;
+  color: var(--dm-font-color-hover) !important;
+  cursor: pointer !important;
+  border: 1px solid var(--dm-border-color) !important;
+  border-radius: 10px !important;
+}
+
+.m-dm-is-all-keywords-button:hover,
+.m-dm-delete-keywords-button:hover,
+.m-dm-add-keywords-button:hover {
+  background-color: rgb(var(--dm-background-color)) !important;
+  color: var(--dm-font-color) !important;
+  border: 1px solid var(--dm-border-color) !important;
+
+}
+
+.m-dm-container-footer {
+  box-sizing: border-box !important;
+  padding: 10px !important;
+}
+
+.m-dm-container-footer p {
+  color: var(--dm-font-color) !important;
+  cursor: pointer !important;
+}
+
+
+.m-dm-ani-close {
+  transform: translateX(var(--dm-container-width)) !important;
+}
+
+.m-dm-container-body {
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #888888 #f0f0f0 !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.m-dm-container-body::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.m-dm-container-body::-webkit-scrollbar-track {
+  background-color: rgb(22, 24, 35) !important;
+}
+
+.m-dm-container-body::-webkit-scrollbar-thumb {
+  background-color: #333 !important;
+  border-radius: 4px !important;
+}

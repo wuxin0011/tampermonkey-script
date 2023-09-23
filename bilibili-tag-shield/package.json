@@ -1,0 +1,21 @@
+{
+  "name": "bilibili-tag-shield",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "bilibilib标签精准屏蔽",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "element-plus": "^2.3.14",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.8",
+    "vite-plugin-monkey": "^3.4.0"
+  }
+}

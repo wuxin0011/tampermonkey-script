@@ -1,0 +1,46 @@
+
+name: tampermonkey-script
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch: {}
+env: 
+  TZ: Asia/Shanghai 
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: 📦 Install dependencies
+        run: npm install --registry=https://registry.npmmirror.com --force --legacy-peer-deps
+      - name: 🚧 Set up project
+        run: npm run docs:build
+     # https://github.com/JamesIves/github-pages-deploy-action
+      - name: 🚀 deploy project
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} 
+          branch: gh-pages
+          folder: docs/.vitepress/dist 
+          # target-folder: blog
+          commit-message: update content
+          force: true
+          git-config-name: wuxin0011
+          git-config-email: 2191377759@qq.com
+          clean: true
+

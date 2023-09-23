@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>barrage-index</title>
+  <link rel="stylesheet" href="./indes.css">
+</head>
+
+<body>
+
+
+
+  <video src="../video/video.mp4" width="500" height="400" controls> </video>
+
+  <div class="m-dm-container">
+    <div class="m-dm-container-header">
+      <input type="text" class="m-dy-input-add-keywords" placeholder="请输入关键字">
+      <div class="m-dm-add-keywords-button">确认</div>
+      <div class="m-dm-delete-keywords-button">清空</div>
+      <div class="m-dm-is-all-keywords-button">全部</div>
+      <span title="收起 使用 ctrl+alt+k可唤醒 我哦" class="m-dm-close-btn" id="m-dm-close-btn"> &times </span>
+    </div>
+    <div class="m-dm-container-body"></div>
+    <div class="m-dm-container-footer">
+      <p title="不再显示">使用&nbsp;ctrl+alt+k&nbsp;可唤醒或者关闭哦！</p>
+    </div>
+
+  </div>
+
+  <a href="./test/index.html">test</a>
+
+
+  <script>
+    const selectKeywordsLocal = 'selectKeywordsLocal'
+    const selectOnlyThieRoom = 'selectOnlyThieRoom'
+    const isNoShowTipKey = 'tip_isNoShowTipKey'
+    const isFisrtInstallKey = 'isFisrtInstallKey'
+    const isFirstAlertKey = 'isFirstAlertKey'
+    const defaultKeywords = ['送出了', '66666']
+    const setItem = (k, v, isParse = false) => window.localStorage.setItem(k, isParse ? JSON.stringify(v) : v)
+    const getItem = (k, isParse = false) => isParse ? JSON.parse(window.localStorage.getItem(k)) : window.localStorage.getItem(k)
+    const isFisrtInstall = () => getItem(isFisrtInstallKey) == null || getItem(isFisrtInstallKey) !== isFisrtInstallKey
+    const isNoShowTip = () => getItem(isNoShowTipKey) == null || getItem(isNoShowTipKey) !== isNoShowTipKey
+    const isFirstAlert = () => getItem(isFirstAlertKey) == null || getItem(isFirstAlertKey) !== isFirstAlertKey
+    const selectKeywords = () => isFisrtInstall() || getItem(selectKeywordsLocal) == null ? defaultKeywords : getItem(selectKeywordsLocal, true)
+    const createRoomKey = (roomId) => `selectOnlyThieRoom_${roomId}`
+    let updateCount = 0
+    const noop = () => {
+      console.log('noop')
+    }
+    let beforeTag = null
+    const MARK = "mark"
+    const MARK_TAG = (t = updateCount) => `mark_tag_${t}`
+    let keywordsCache = [] // 从 cache 中获取肯定比 localStore 快！！
+    let isInit = false
+    let isStart = false
+    let isAllWebKeywords = true // 是否是全网 针对该网站
+
+    let findRoomContents = noop
+
+    const installBeforeInfo = () => {
+      console.log('欢迎使用弹幕屏蔽插件...')
+      console.log('是否是首次安装', isFisrtInstall())
+      console.log('是否不需要快捷键提示', isNoShowTip())
+    }
+
+
+    const addStyle = (str) => {
+      if (isInit) {
+        return;
+      }
+      const head = document.querySelector("head");
+      const style = document.createElement("style");
+      style.innerText = str;
+      head.appendChild(style);
+      console.log('样式填充完毕')
+      isInit = true
+    };
+
+    const removeKeywords = (text) => {
+      if (!Array.isArray(keywordsCache)) {
+        return;
+      }
+      const index = keywordsCache.findIndex(t => t == text)
+      if (index >= 0) {
+        keywordsCache.splice(index, 1)
+        setItem(selectKeywordsLocal, keywordsCache, true)
+        keywordsUpdate()
+      }
+    }
+
+    const createKeywords = (text) => {
+      if (!Array.isArray(keywordsCache)) {
+        keywordsCache = []
+      }
+      const index = keywordsCache.findIndex(t => t == text)
+      if (index < 0) {
+        keywordsCache = [text, ...keywordsCache]
+        setItem(selectKeywordsLocal, keywordsCache, true)
+        // 关键字改变了
+        keywordsUpdate()
+      }
+    }
+
+    // tag 改变
+    const keywordsUpdate = () => {
+      //终止本次扫描
+      console.log('标签失效中... ')
+      // 改变次数 之前被标记的标签将失效！
+      updateCount++
+      // 更新缓存
+      console.log('重新启动标签扫描...', ...keywordsCache)
+      findRoomContents()
+    }
+
+
+    const addOperationEvent = () => {
+      const dmContainer = document.querySelector('.m-dm-container')
+      if (!dmContainer) {
+        console.log('dmContainer has null')
+        return;
+      }
+      const dmInput = dmContainer.querySelector('.m-dy-input-add-keywords')
+      const dmBody = dmContainer.querySelector('.m-dm-container-body')
+      const dmAddButton = dmContainer.querySelector('.m-dm-add-keywords-button')
+      const dmCloseButton = dmContainer.querySelector('#m-dm-close-btn')
+      const dmDeleteButton = dmContainer.querySelector('.m-dm-delete-keywords-button')
+      const dmIsAllBuutton = dmContainer.querySelector('.m-dm-is-all-keywords-button')
+      if (!dmInput || !dmAddButton || !dmBody) {
+        console.log('element has null')
+        return;
+      }
+
+      const find = (text) => keywordsCache.find((t) => t == text)
+      const add = () => {
+        if (!dmInput.value) {
+          alert('请输入关键字')
+          return;
+        }
+        if (find(dmInput.value)) {
+          if (isFirstAlert()) {
+            setItem(isFirstAlertKey, isFirstAlertKey)
+            alert('关键字已重复')
+          } else {
+            dmInput.value = ''
+          }
+          return;
+        }
+        createTag(dmBody, dmInput.value)
+        createKeywords(dmInput.value)
+        setItem(isFisrtInstallKey, isFisrtInstallKey)
+        dmInput.value = ''
+      }
+
+      // enter
+      dmInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          add()
+        }
+      })
+
+
+      // click
+      dmAddButton.addEventListener('click', () => {
+        add()
+      })
+
+      // click
+      dmCloseButton.addEventListener('click', () => {
+        if (dmContainer.classList.contains('m-dm-ani-close')) {
+          dmContainer.classList.remove('m-dm-ani-close')
+        } else {
+          dmContainer.classList.add('m-dm-ani-close')
+        }
+      })
+
+      // click
+      // 
+      dmIsAllBuutton.addEventListener('click', () => {
+        isAllWebKeywords = !isAllWebKeywords
+        dmIsAllBuutton.textContent = isAllWebKeywords ? '房间' : '全网'
+        dmIsAllBuutton.title = isAllWebKeywords ? '点击切换到屏蔽当前房间' : '点击切换到屏蔽全部房间操作'
+
+      })
+
+
+      // click
+      dmDeleteButton.addEventListener('click', () => {
+        if (confirm('确认清空？')) {
+          const allTags = dmContainer.querySelectorAll('.m-dm-keywords-tag')
+          if (allTags.length > 0) {
+            for (let tag of allTags) {
+              tag && tag.remove()
+            }
+          }
+          keywordsCache = []
+          setItem(selectKeywordsLocal, keywordsCache, true)
+          // 没有关键字了终止扫描
+          window.cancelAnimationFrame(findRoomContents)
+        }
+      })
+
+      console.log('响应事件监听完毕...')
+      // 执行弹幕搜索
+      findRoomContents()
+    }
+
+
+
+
+
+
+
+    const addShowEvent = () => {
+      const dmContainer = document.querySelector('.m-dm-container')
+      document.addEventListener('keydown', function (event) {
+        if (event.ctrlKey && event.altKey && event.key === 'k') {
+          if (dmContainer.classList.contains('m-dm-ani-close')) {
+            dmContainer.classList.remove('m-dm-ani-close')
+            setItem(isFisrtInstallKey, isFisrtInstallKey)
+          } else {
+            dmContainer.classList.add('m-dm-ani-close')
+          }
+        }
+      });
+      console.log('快捷键监听完毕... ctrl + alt + k')
+    }
+
+    const createTag = (dmBody, text) => {
+      if (!dmBody || !text) {
+        console.log('create tag fail ')
+        return;
+      }
+      const dmTag = document.createElement('span')
+
+      dmTag.className = 'm-dm-keywords-tag'
+      dmTag.textContent = `${text}`
+      dmTag.title = `点击移除关键字: ${text}`
+      dmTag.addEventListener('click', () => {
+        removeKeywords(text)
+        dmTag.remove()
+      })
+      !!beforeTag ? dmBody.appendChild(dmTag) : dmBody.insertBefore(dmTag, beforeTag);
+      // update before
+      beforeTag = dmTag
+    }
+
+    const createTags = () => {
+      console.log('标签创建中....')
+      const dmBody = document.querySelector('.m-dm-container-body')
+      const keys = selectKeywords()
+      if (!Array.isArray(keys)) {
+        console.log('标签创建完标签创建失败....', keys)
+        return;
+      }
+      for (let i = 0; i < keys.length; i++) {
+        createTag(dmBody, keys[i])
+      }
+      keywordsCache = [...keys]
+      console.log('标签创建完毕....', ...keywordsCache)
+    }
+
+    const tipClick = () => {
+      const tip = document.querySelector('.m-dm-container-footer p')
+      tip.addEventListener('click', () => {
+        setItem(isNoShowTipKey, isNoShowTipKey)
+        tip.style.display = 'none'
+      })
+    }
+
+
+    const createContainer = () => {
+      //
+    }
+
+
+    const addOperation = () => {
+      const dmContainer = document.querySelector('.m-dm-container')
+      if (!dmContainer) {
+        console.log('未找到弹幕容器... ')
+        return;
+      }
+      // 添加基本事件监听
+      addShowEvent()
+      addOperationEvent()
+      createTags()
+      tipClick()
+    }
+
+
+
+
+    const initDom = () => {
+      installBeforeInfo()
+      if (isFisrtInstall()) {
+        setTimeout(() => {
+          createContainer()
+          addOperation()
+        }, 5000)
+      } else {
+        createContainer()
+        addOperation()
+      }
+
+    }
+
+
+
+
+    const start = () => {
+      if (isStart) {
+        return;
+      }
+      initDom()
+
+      isStart = true
+    }
+    start()
+
+
+  </script>
+
+</body>
+
+</html>
