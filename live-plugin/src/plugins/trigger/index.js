@@ -26,6 +26,7 @@ export default class TriggerLive extends LivePlugin {
         this.video_player_container = '.room-player-wrap'
         this.full_screen_button = '.room-player-wrap .player-fullscreen-btn'
         this.full_button_tag_name = 'span'
+        this.full_screen_is_find = false
         this.default_background_image = 'https://livewebbs2.msstatic.com/huya_1682329462_content.jpg'
         this.baseUrl = "https://www.huya.com/"
         this.menu = '.mod-sidebar'

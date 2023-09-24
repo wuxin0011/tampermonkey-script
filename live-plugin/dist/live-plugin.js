@@ -410,7 +410,7 @@
       return !is_douyin && !is_bilibili;
     },
     supportAutoFullScreen() {
-      return true;
+      return !is_douyu;
     },
     supportAutoViewMaxPro() {
       return true;
@@ -615,7 +615,7 @@
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
             ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
             ${support.supportMenu() ? `<input type="checkbox" id="checkbox2" ${isShowMenu ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单 ` : ``}
-            ${` <input type="checkbox" id="checkbox3" ${isShowFullScreen ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏`}
+            ${support.supportAutoFullScreen() ? ` <input type="checkbox" id="checkbox3" ${isShowFullScreen ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏` : ``}
             ${support.supportGift() ? `<input type="checkbox" id="checkbox4" ${isShowGift ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物` : ``}
             <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
             ${`<input type="checkbox" id="checkbox6" ${isMaxPro ? "checked" : ""} class="checkbox" title="自动最高画质"/>画质`}
@@ -624,7 +624,7 @@
                                             ${themeOptions()}
                                         </select>` : ``}
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
-            <button class="btn btn-info btn-close-container" title="关闭" >关闭</button>
+            <button class="btn btn-info btn-close-container" title="关闭 , ctrl+alt+j 可唤醒" >关闭</button>
         </div>
         <table ${support.supportTable() ? "" : 'style="display:none !important;"'}>
             <thead>
@@ -706,6 +706,7 @@
       this.bg_show_key = "bg_show_key";
       this.bg_is_first_key = "bg_is_first_key";
       this.full_screen_key = "full_screen_key";
+      this.full_screen_is_find = true;
       this.full_screen_class_or_id = "full_screen_button_class_or_id";
       this.full_button_tag_name = "div";
       this.full_screen_button = getLocalStore(this.full_screen_class_or_id, String.name, false) || this.full_screen_class_or_id;
@@ -998,8 +999,8 @@
       const full_screen_btn = querySelector(container, ".operation #checkbox3");
       addEventListener(full_screen_btn, "change", function(e) {
         addLocalStore(that.full_screen_key, e.target.checked, Boolean.name);
-        that.isFullScreen(true);
         addLocalStore(that.full_screen_is_first_key, false, Boolean.name);
+        that.isFullScreen(true);
       });
       const show_gift = querySelector(container, ".operation #checkbox4");
       addEventListener(show_gift, "change", function(e) {
@@ -1449,7 +1450,9 @@
      * @returns
      */
     checkFullScreenButton() {
-      this.full_screen_button = findButton(this.video_player_container, this.full_screen_class_or_id, this.full_screen_text, this.full_button_tag_name);
+      if (this.full_screen_is_find) {
+        this.full_screen_button = findButton(this.video_player_container, this.full_screen_class_or_id, this.full_screen_text, this.full_button_tag_name);
+      }
     }
     /**
      * 自动全屏
@@ -1459,6 +1462,9 @@
       let full_screen_text = this.full_screen_text;
       let full_cancel_text = this.full_cancel_text;
       let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name);
+      if (!is_should_full_screen) {
+        return;
+      }
       let button = null;
       if (isClickFull) {
         button = querySelector(this.full_screen_button);
@@ -1471,24 +1477,25 @@
       } else {
         loopDo((timer) => {
           button = querySelector(this.full_screen_button);
-          log("fullScreen button", !!button ? "找到button了" : "未找到全屏button");
+          log("fullScreen button", this.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
           if (button && button instanceof HTMLElement) {
             let isClick = button == null ? void 0 : button.isClick;
             if (isClick) {
               clearInterval(timer);
               return;
             }
-            if (!isClick && is_should_full_screen && ((button == null ? void 0 : button.title) === full_screen_text || button.textContent === full_screen_text)) {
+            if (!isClick && ((button == null ? void 0 : button.title) === full_screen_text || button.textContent === full_screen_text)) {
               log("全屏按钮自动触发了!");
-              button.isClick = true;
               button.click();
+              button.isClick = true;
             } else if ((button == null ? void 0 : button.title) === full_cancel_text || (button == null ? void 0 : button.textContent) === full_cancel_text) {
               button.click();
+              button.isClick = true;
             }
           } else {
             this.checkFullScreenButton(button);
           }
-        }, 3, 500);
+        }, 10, 3e3);
       }
     }
     /**
@@ -1578,6 +1585,7 @@
       this.video_player_container = ".room-player-wrap";
       this.full_screen_button = ".room-player-wrap .player-fullscreen-btn";
       this.full_button_tag_name = "span";
+      this.full_screen_is_find = false;
       this.default_background_image = "https://livewebbs2.msstatic.com/huya_1682329462_content.jpg";
       this.baseUrl = "https://www.huya.com/";
       this.menu = ".mod-sidebar";
@@ -2617,7 +2625,8 @@ html {
 `;
   const darkCss$1 = `
 
-
+.dark .DyCover-pic,
+.dark .LazyLoad,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
 }
@@ -2634,8 +2643,8 @@ html {
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
-.dark .Category-item,.dark .DropMenuList-linkAll,
-.dark .Header-menu-wrap,.dark .DyListCover-wrap,
+.dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
+.dark .Header-menu-wrap,.dark .DyListCover-wrap,.dark .wm-general-bgblur,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
 .dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,.dark .ListFooter .ListFooter-btn-wrap,
@@ -2698,6 +2707,7 @@ html {
 .dark .PlayerToolbar span,.dark .Title-followNum, .dark .PlayerToolbar-signCont,
 .dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame ,.dark .Barrage-EntranceIntroduce-Content,
 .dark .SwipeTabsContent .tabItem ,.dark .layout-Classify-card>strong ,.dark .secondCateCard-hot,
+.dark .layout-Classify-card.secondCateCard,.dark .layout-Classify-card.secondCateCard.secondCateCark-hoverCard,.dark .HoverCark-wrap,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,.dark .customizeModal-title>h3,.dark .Search-label, .dark .Search-historyList>li,
 .dakr .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
 .dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,.dark .Barrage-toolbarText,.dark .ShieldTool-listItem,.dark .BarrageTips,.dark .ChatBarrageCollectPop-title,
@@ -2767,7 +2777,8 @@ html {
 .dark .layout-Player-aside,.dark .layout-Player-asideMain, .dark .layout-Player-barrage,
 .dark .PopularBarrage .PopularBarragePanel-foot,.dark .BarrageWordPanel-card,.dark .BarrageWordPanel-btn,
 .dark .dy-Modal-footer button,.dark .LevelFilterLimit-input,
-.dark .layout-Classify-card, .dark customizeModal-submit,
+.dark .layout-Classify-card, .dark customizeModal-submit,.dark .layout-Menu, 
+.dark .layout-Player-asideMain, .layout-Player-toolbar,
 .dark .customizeModal-cancel,.dark .ChatBarrageCollect .ChatBarrageCollect-tip
 {
   border: 1px solid var(--w-border) !important;

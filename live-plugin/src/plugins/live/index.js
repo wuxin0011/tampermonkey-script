@@ -48,6 +48,7 @@ export default class LivePlugin {
         this.bg_show_key = 'bg_show_key'  // 是否显示背景key
         this.bg_is_first_key = "bg_is_first_key"
         this.full_screen_key = 'full_screen_key' // 是否全屏
+        this.full_screen_is_find = true // 没找到时是否需要查找
         this.full_screen_class_or_id = 'full_screen_button_class_or_id' // 全屏按钮的class或者id，如果提供了将直接从这里获取
         this.full_button_tag_name = 'div' // 全屏按钮默认标签命名 span div button ...
         this.full_screen_button = getLocalStore(this.full_screen_class_or_id, String.name, false) || this.full_screen_class_or_id
@@ -163,6 +164,7 @@ export default class LivePlugin {
         if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
             return;
         }
+
 
         const check = () => {
             // TODO 实现随着版本更新获取list
@@ -390,8 +392,8 @@ export default class LivePlugin {
         const full_screen_btn = querySelector(container, '.operation #checkbox3')
         addEventListener(full_screen_btn, 'change', function (e) {
             addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
-            that.isFullScreen(true)
             addLocalStore(that.full_screen_is_first_key, false, Boolean.name)
+            that.isFullScreen(true)
         })
 
         // 礼物模式
@@ -922,7 +924,9 @@ export default class LivePlugin {
      * @returns
      */
     checkFullScreenButton() {
-        this.full_screen_button = findButton(this.video_player_container, this.full_screen_class_or_id, this.full_screen_text, this.full_button_tag_name)
+        if (this.full_screen_is_find) {
+            this.full_screen_button = findButton(this.video_player_container, this.full_screen_class_or_id, this.full_screen_text, this.full_button_tag_name)
+        }
     }
 
     /**
@@ -933,6 +937,9 @@ export default class LivePlugin {
         let full_screen_text = this.full_screen_text
         let full_cancel_text = this.full_cancel_text
         let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
+        if (!is_should_full_screen) {
+            return;
+        }
         let button = null
         if (isClickFull) {
             button = querySelector(this.full_screen_button)
@@ -945,26 +952,27 @@ export default class LivePlugin {
         } else {
             loopDo((timer) => {
                 button = querySelector(this.full_screen_button)
-                log("fullScreen button", !!button ? '找到button了' : "未找到全屏button")
+                log("fullScreen button", this.full_screen_button, !!button ? '找到button了' : "未找到全屏button")
                 if (button && button instanceof HTMLElement) {
                     let isClick = button?.isClick
                     if (isClick) {
                         clearInterval(timer)
                         return;
                     }
-                    if (!isClick && is_should_full_screen && (button?.title === full_screen_text || button.textContent === full_screen_text)) {
+                    if (!isClick && (button?.title === full_screen_text || button.textContent === full_screen_text)) {
                         log("全屏按钮自动触发了!")
-                        button.isClick = true
                         button.click()
+                        button.isClick = true
                     } else if (button?.title === full_cancel_text || button?.textContent === full_cancel_text) {
                         button.click()
+                        button.isClick = true
                     }
 
                 } else {
                     this.checkFullScreenButton(button)
                 }
 
-            }, 3, 500)
+            }, 10, 3000)
 
         }
 

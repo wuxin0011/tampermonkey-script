@@ -2,7 +2,8 @@
 
 const darkCss = `
 
-
+.dark .DyCover-pic,
+.dark .LazyLoad,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
 }
@@ -19,8 +20,8 @@ const darkCss = `
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
-.dark .Category-item,.dark .DropMenuList-linkAll,
-.dark .Header-menu-wrap,.dark .DyListCover-wrap,
+.dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
+.dark .Header-menu-wrap,.dark .DyListCover-wrap,.dark .wm-general-bgblur,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
 .dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,.dark .ListFooter .ListFooter-btn-wrap,
@@ -83,6 +84,7 @@ const darkCss = `
 .dark .PlayerToolbar span,.dark .Title-followNum, .dark .PlayerToolbar-signCont,
 .dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame ,.dark .Barrage-EntranceIntroduce-Content,
 .dark .SwipeTabsContent .tabItem ,.dark .layout-Classify-card>strong ,.dark .secondCateCard-hot,
+.dark .layout-Classify-card.secondCateCard,.dark .layout-Classify-card.secondCateCard.secondCateCark-hoverCard,.dark .HoverCark-wrap,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,.dark .customizeModal-title>h3,.dark .Search-label, .dark .Search-historyList>li,
 .dakr .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
 .dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,.dark .Barrage-toolbarText,.dark .ShieldTool-listItem,.dark .BarrageTips,.dark .ChatBarrageCollectPop-title,
@@ -152,7 +154,8 @@ const darkCss = `
 .dark .layout-Player-aside,.dark .layout-Player-asideMain, .dark .layout-Player-barrage,
 .dark .PopularBarrage .PopularBarragePanel-foot,.dark .BarrageWordPanel-card,.dark .BarrageWordPanel-btn,
 .dark .dy-Modal-footer button,.dark .LevelFilterLimit-input,
-.dark .layout-Classify-card, .dark customizeModal-submit,
+.dark .layout-Classify-card, .dark customizeModal-submit,.dark .layout-Menu, 
+.dark .layout-Player-asideMain, .layout-Player-toolbar,
 .dark .customizeModal-cancel,.dark .ChatBarrageCollect .ChatBarrageCollect-tip
 {
   border: 1px solid var(--w-border) !important;
