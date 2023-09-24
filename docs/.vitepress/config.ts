@@ -16,7 +16,7 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo/md-logo.png',
     outline: {
-      level: [2,3]
+      level: [2, 3]
     },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -56,6 +56,11 @@ export default defineConfig({
     footer: {
       message: 'MIT Licensed ',
       copyright: 'Copyright © 2023-present  <a href="https://github.com/wuxin0011">wuxin0011</a> '
+    },
+    algolia: {
+      appId: "IAWNWZYOCW",
+      apiKey: 'c4b6e3b5249969ce2e83fc3f3d6fec59',
+      indexName: 'wuxin0011-m-note'
     },
     lastUpdatedText: '最后更新时间'
   },
