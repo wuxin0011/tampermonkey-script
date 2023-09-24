@@ -30,7 +30,7 @@ const darkCss = `
 .dark .Barrage-listItem,.dark .Barrage-EntranceIntroduce, .dark .Barrage-roomVip--super,
 .dark .DiamondsFansBarrage, .dark #js-floatingbarrage-container li, .dark #js-fansflating-barrage,
 .dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame, .dark .FollowGuide,
-.dark .ChatSend-button,.dark .BarrageBuffer,
+.dark .BarrageBuffer,
 .dark .Barrage-FansHome-content,.dark .Barrage-FansHome,
 .dark .ChatSend-txt,.dark .layout-Classify-card,.dark .cate2TagB-item,
 .dark .PlayerToolbar-signCont,.dark .dy-Modal-content,.dark .CustomGroupCommon .dy-Modal-title,
@@ -165,6 +165,7 @@ const darkCss = `
 
 
 .dark .Header-wrap,.dark .layout-Player-title,
+.dark .ChatSend-txt,
 .dark .public-DropMenu-drop-main:before,.dark .Search-anchor-avatar,
 .dark .categoryTab-head,.dark .ListHeader-hero-header,.dark .ListHeader-hero-content-icon,
 .dark .EmotionTab,.dark .ChatFansBarragePop-describe,.dark .FansMedalPanel-container,
@@ -181,7 +182,6 @@ const darkCss = `
 .dark .DropMenuList-linkAll,
 .dark .ListFooter .ListFooter-btn-wrap,
 .dark .cate2TagB-item,
-.dark .ChatSend-button,.dark .ChatSend-txt,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,
 .dark .categoryTab-item,.dark .Header-wrap.is-start .Search ,.dark .addedCategory-item .dark .search-ipt,
 .dark .layout-Module-filter-more,.dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,
@@ -224,7 +224,7 @@ const darkCss = `
 .dark .Search-recommend .Search-direct,.dark Search-category,
 .dark .layout-Search-input,.dark .layout-Search-btn,
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
-.dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,
+.dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
 .dakr .Search-direct {
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -233,6 +233,7 @@ const darkCss = `
 
 
 .dark .DyCover:hover,.dark .layout-Search-btn:hover,
+.dark .ChatSend-button:hover,
 .dark .dark Search-category:hover,.dark .categoryBoxB-editB .edit:hover,
 .dark .Search-default-item:hover,.dark .Search-recommend .Search-direct:hover,
 .dark .Category-item:hover,.dark .ListRecommend-refresh:hover,
