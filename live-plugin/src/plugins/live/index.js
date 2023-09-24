@@ -96,8 +96,8 @@ export default class LivePlugin {
                 this.isShowLeftMenu()
                 this.isShowGift()
             }, 30, 1000)
-            
-            
+
+
         }
         this.settingBackgroundImage()
     }
@@ -1045,11 +1045,17 @@ export default class LivePlugin {
         })
     }
 
-    addEven(){
-        let that =  this
-        addFullScreenEvent(()=>{
+    addEven() {
+        let that = this
+        addFullScreenEvent(() => {
             that.isShowGift()
         })
+
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.altKey && event.key === 'j') {
+                that.isShowContainer()
+            }
+        });
     }
 
 
