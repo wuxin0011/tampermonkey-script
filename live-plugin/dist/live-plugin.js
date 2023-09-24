@@ -3048,8 +3048,8 @@ ${darkCss$1}
 .dark .player-gift-wrap,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M.checked--2qEbUox3t-pKVluoe87qMG i,
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
-
-.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
+.dark [class^=Panel],.dark [class^=PanelHd],.dark [class^=PanelBd],.dark [class^=PanelFt],
+.dark [class^=PopMsg],.dark [class^=PopMsg] [class^=title],.dark [class^=PopMsg] [class^=desc],.dark [class^=PopMsg] [class^=PopMsgArr],.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
 .dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark .listItem--2DQMeljGuIpJJbgUmLePE3 span,
 .dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejSSMCTSLSPah47f_19h-,
 .dark .duya-header-search input,.dark .inpage-advice-list li:hover,
@@ -3137,8 +3137,9 @@ ${darkCss$1}
 .dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,.dark [class^=checkbox] i,
 .dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,.dark [class^=checkbox] span,
 .dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark [class^=listItem],
-.dark barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,.dark [class^=barrageBox] [class^=title],
-.dark [class^=barrageBox] [class^=panel-hd],
+.dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,.dark [class^=barrageBox] [class^=title],
+.dark [class^=barrageBox] [class^=panel-hd], .dark [class^=panel] [class^=panel-hd],
+.dark [class^=panel-hd],
 .dark .chat-room__ft span,.dark .chat-room__ft p,
 .dark .duya-header-right a i,
 .dark .duya-header-right a span,
@@ -3254,6 +3255,8 @@ ${darkCss$1}
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
 .dark .msg-of-king,.dark [class^=roomBlockWords] [class^=btn],
 .dark [class^=SubConfirmPop],.dark [class^=emot-preview],
+.dark [class^=colorNormal],
+.dark [class^=colorNormal][class^=lock],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
