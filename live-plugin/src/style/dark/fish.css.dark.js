@@ -2,6 +2,11 @@
 
 const darkCss = `
 
+
+.dark .Search-backTop {
+  background: var(--w-bg-dark) !important;
+}
+
 .dark .layout-Module-head.is-fixed
  {
   background: var(--w-bg) !important;
@@ -50,6 +55,8 @@ const darkCss = `
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
 .dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
+.dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
+.dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
 .dark #js-footer
 {
   background: var(--w-bg-darker) !important;
@@ -65,6 +72,7 @@ const darkCss = `
   background-color: rgba(var(--w-bg-darker),0.7) !important;
 }
 
+.dark .SearchAnchorVideo-title,
 .dark .dy-ModalRadius-header, .dark .addedCategory-count,
 .dark .RoomList .layout-Module-title, .dark .RoomList .layout-Module-title a,.dark layout-Module-title span,
 .dark .AnchorRank .layout-Module-title,.dark  .AnchorRank .layout-Module-title a,
@@ -94,8 +102,14 @@ const darkCss = `
 .dark .CustomGroupManager-title strong,.dark .CustomGroupManager-groupItem,.dark .CustomGroupManager-checkItem>span,
 .dark .CustomGroupManager,.dark .LevelFilKeyTab .tab, .dark .layout-Result,
 .dark .FKNokeywords-title, .dark .Search-recommend-info p,.dark .layout-Module-title,
+.dark .Search-keyword, .dark .Search-anchor.is-horizon .Search-anchor-info .Search-anchor-recommendTitle,
+.dark .Search-anchor .Search-anchor-info .Search-anchor-recommendTitle,.dark SearchAnchorVideo-title,
+.dark .Search-anchor-info h1,.dark .Search-anchor-info h2,.dark .Search-anchor-info h3,.dark .Search-anchor-info h4,.dark .Search-anchor-info h5,.dark .Search-anchor-info h6,
 .dark .DropPaneList-live.is-live,.dark .Search-category h3,.dark .Search-category p,.dark .Search-category p span,
-.dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText
+.dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText,
+.dark .SearchChannel-item-detail-name,.dark .SearchChannel-item-detail-name span,
+.dark .SearchChannel-item-detail-desc.SearchChannel-item-detail-isCate,.dark .SearchChannel-item-detail-desc.SearchChannel-item-detail-isCate span,
+.dark .Search-yuba .des .name,.dark .layout-Search-input>input
 {
   color: var(--w-text-light) !important;
 }
@@ -128,7 +142,9 @@ const darkCss = `
 .dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,
 .dark .PopularBarrage .PopularBarragePanel-descLock:hover,.dark .DropPaneList span,
 .dark .Search-content-title, .dark .Search-default-title, .dark .Search-history-title, .dark .Search-hot-title,
-.dark .FilKeyTab .tab.active
+.dark .FilKeyTab .tab.active,.dark Search-anchor-data,.dark .Search-anchor.is-horizon .Search-anchor-info p,
+.dark .Search-anchor .Search-anchor-info,.dark Search-anchor-cate,.dark .Search-anchor-info,
+.dark .Search-anchor-info h4.is-official,.dark .Search-anchor-info h3.is-official,.dark .Search-anchor-info h2.is-official,.dark .Search-anchor-info .is-official
 {
   color: var(--w-text) !important;
 }
@@ -153,7 +169,7 @@ const darkCss = `
 
 
 .dark .Header-wrap,.dark .layout-Player-title,
-.dark .public-DropMenu-drop-main:before,
+.dark .public-DropMenu-drop-main:before,.dark .Search-anchor-avatar,
 .dark .categoryTab-head,.dark .ListHeader-hero-header,.dark .ListHeader-hero-content-icon,
 .dark .EmotionTab,.dark .ChatFansBarragePop-describe,.dark .FansMedalPanel-container,
 .dark .LevelFilterLimit,.dark .FKNokeywords-title
@@ -203,7 +219,7 @@ const darkCss = `
   border: none !important;
 }
 
-
+.dark .Search-direct,
 .dark .DyCover,.dark .Search-yuba,
 .dark .layout-Card-history, .dark .layout-Card-rank,
 .dark .layout-Cover-item,.dark .Search-input-pane,
@@ -212,7 +228,7 @@ const darkCss = `
 .dark .Search-recommend .Search-direct,.dark Search-category,
 .dark .layout-Search-input,.dark .layout-Search-btn,
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
-.dark .categoryBoxB-editB .edit,
+.dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,
 .dakr .Search-direct {
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -226,13 +242,14 @@ const darkCss = `
 .dark .Category-item:hover,.dark .ListRecommend-refresh:hover,
 .dakr .Search-direct:hover,.dark .ListHeader-pop-label:hover,
 .dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
+.dark .Search-direct:hover,
 .dark .Search-recommend:hover {
   background: var(--w-bg) !important;
   border:1px solid var(--w-text-light) !important;
   color: var(--w-text) !important;
 }
 
-.dark .layout-Tab-container.is-fixed,
+
 .dark .dy-ModalRadius-footer button,
 .dark .layout-Tab-item,.dark .dy-ModalRadius-close,
 .dark .DropPaneList>a{
