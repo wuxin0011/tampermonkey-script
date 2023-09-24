@@ -2919,6 +2919,9 @@ li.Header-menu-link,
 #js-player-asideMain #layout-Player-aside .FirePower,
 .layout-Player-video .layout-Player-videoAbove .ChargeTask-closeBg,
 #bc4-bgblur,.Search-ad,
+.SignBaseComponent-sign-ad, 
+.SignBaseComponent-sign-ad .LazyLoad,
+.list-Banner-adv,
 .Baby-image.is-achievement,
 .multiBitRate-da4b60{
   display:none !important;
