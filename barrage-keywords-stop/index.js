@@ -26,19 +26,26 @@
   const isFisrtInstallKey = 'isFisrtInstallKey'                                            // 是否是第一次安装 默认是第一次
   const isFirstAlertKey = 'isFirstAlertKey'                                                // 错误内容第一次给出提示 默认是
   const selectOnlyThieRoom = 'selectOnlyThieRoom'                                          // 当前房间号的关键词
-  const defaultKeywords = ['送出了', '6666', '直播间']                                      // 默认关键词
+  const defaultKeywords = ['送出', '6666', '直播间']                                        // 默认关键词
   const localLink = window.location.href
+  const isAnimationKey = "m_isAnimationKey" // 是否附带动画效果
+  const AnimationTimeKey = "m_time_isAnimationKey" // 是否附带动画效果
   const isDouYinLive = /https?:\/\/live\.douyin.*/.test(localLink)
   const isHyLive = /https?:\/\/www\.huya\.com.+/.test(localLink)
   const isDouyuLive = /https?:\/\/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/.test(localLink)
   const isBiliBiliLive = /https?:\/\/live\.bilibili.*/.test(localLink)
   const isLocalHost = /127\..*/.test(localLink)
   const noop = () => { }
+  const MAX_ANIMATION_TIME = 2 // 最大过渡动画时间
+  const DEFAULT_ANIMATION_TIME = 0.5 // 最大过渡动画时间
   const setItem = (k, v, isParse = false) => window.localStorage.setItem(k, isParse ? JSON.stringify(v) : v)
   const getItem = (k, isParse = false) => isParse ? JSON.parse(window.localStorage.getItem(k)) : window.localStorage.getItem(k)
   const isFisrtInstall = () => getItem(isFisrtInstallKey) == null || getItem(isFisrtInstallKey) !== isFisrtInstallKey
   const isNoShowTip = () => getItem(isNoShowTipKey) == null || getItem(isNoShowTipKey) !== isNoShowTipKey
   const isFirstAlert = () => getItem(isFirstAlertKey) == null || getItem(isFirstAlertKey) !== isFirstAlertKey
+  const getAnimationTime = () => getItem(AnimationTimeKey) == null ? DEFAULT_ANIMATION_TIME : (isNaN(getItem(AnimationTimeKey)) ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey) > MAX_ANIMATION_TIME ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey))
+  let isAnimation = getItem(isAnimationKey) == null || getItem(isAnimationKey) === isAnimationKey
+  let animationTime = DEFAULT_ANIMATION_TIME
   const selectKeywords = () => isFisrtInstall() || getItem(selectKeywordsLocal) == null ? defaultKeywords : getItem(selectKeywordsLocal, true)
   const createRoomId = (id) => id ? `${selectOnlyThieRoom}_${id}` : `${selectOnlyThieRoom}_${localLink}`
   const getRoomId = () => {
@@ -82,7 +89,7 @@
   let tagInitSuccess = true
   let isAllRooms = false
   let isSupport = true
-  const isPrintStop = true // 是否禁止控制台输出弹幕
+  const isPrintStop = false // 是否禁止控制台输出弹幕
   let currentContainer = null
 
   /******************************************************************************************************************************************************************** */
@@ -98,13 +105,13 @@
 
 
   const removeDom = (dom, r = false) => {
-    if (dom && dom instanceof HTMLElement) {
-      window.requestAnimationFrame(() => {
-        dom.style.display = 'none'
-        if (r) {
-          dom.remove()
-        }
-      })
+    try {
+      dom.style.display = 'none'
+      if (r) {
+        dom.remove()
+      }
+    } catch (error) {
+
     }
   }
 
@@ -114,10 +121,10 @@
     }
     for (let index = 0; index < keywordsCache.length; index++) {
       if (keywordsCache[index] && (text.indexOf(keywordsCache[index]) !== -1)) {
-        // if (!isPrintStop) {
-        //   console.error('\n\n==============================stop=====================================')
-        //   console.error(`禁止`, text, ' keywords: ', keywordsCache[index])
-        // }
+        if (!isPrintStop) {
+          console.error('\n\n==============================stop=====================================')
+          console.error(`禁止`, text, ' keywords: ', keywordsCache[index])
+        }
         return true
       }
     }
@@ -131,24 +138,27 @@
 
   // 弹幕处理
   let findBarrages = () => {
-    const findTargetText = (container) => {
-      if (!container) {
+    const findTargetText = (selector) => {
+      if (!selector) {
         return;
       }
-      const nodes = document.querySelectorAll(container)
+      const nodes = document.querySelectorAll(`${selector} :not([${MARK}="${MARK_TAG(nodeVersion)}"])`)
       for (let index = 0; index < nodes.length; index++) {
         const node = nodes[index]
         if (node) {
-          // check
-          if (!checkVersionIsSame(node)) {
-            if (contains(node?.textContent)) {
-              removeDom(node, true)
+          if (contains(node?.textContent)) {
+            if (isAnimation) {
+              node.style.transition = `opacity ${animationTime}s ease-out`
+              node.style.opacity = '0'
+              // 监听过渡结束事件，在过渡结束后删除节点
+              node.addEventListener('transitionend', () => {
+                removeDom(node, true)
+              });
             } else {
-              // update node new  version
-              node.setAttribute(MARK, MARK_TAG(nodeVersion))
+              removeDom(node, true)
             }
           }
-
+          node.setAttribute(MARK, MARK_TAG(nodeVersion))
         }
 
       }
@@ -243,19 +253,22 @@
       keywordsUpdate(keywordsCache)
     }
   }
-
+  // style="width: var(--dm-input-time-width);"
   const containerStr = ` 
     <div class="m-dm-container-header">
       <input type="text" class="m-dy-input-add-keywords" placeholder="请输入关键字">
       <div class="m-dm-add-keywords-button">确认</div>
       <div class="m-dm-all-keywords-button" title="当前弹幕仅在房间内生效,点击切换到全房间">房间</div>
       <div class="m-dm-delete-keywords-button">清空</div>
+      <input type="checkbox" class="m-dm-animation-checkbox" id="m-dm-animation-checkbox" title="如果弹幕区出现抖动，添加一个过渡可能好点">
+      <input type="text"  class="m-dm-input-animation-time" id="m-dm-input-animation-time" title="自定义输出一个过渡时间,默认为0.5s,建议数字大小在0-1之间" placeholder="请输入弹幕过渡时间">
+      <div class="m-dm-time-button">确认</div>
       <span title="收起 使用 ctrl+alt+k可唤醒 我哦" class="m-dm-close-btn" id="m-dm-close-btn"> &times </span>
-      <a href="https://greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>
     </div>
     <div class="m-dm-container-body"></div>
     <div class="m-dm-container-footer">
        <p title="不再显示" >使用&nbsp;ctrl+alt+k&nbsp;可唤醒或者关闭哦！</p>
+      <a href="https://greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>
     </div>
 `
 
@@ -263,8 +276,10 @@
   const style = `
  
   .m-dm-container {
-    --dm-container-width: 450px;
+    --dm-container-width: 500px;
     --dm-container-height: 300px;
+    --dm-input-add-keywords-width: 120px;
+    --dm-input-time-width: 50px;
     --dm-container-background-color: 30, 23, 37;
     --dm-font-color: #fff;
     --dm-font-color-hover: #000;
@@ -297,8 +312,9 @@
     padding: 10px !important;
   }
 
+  .m-dm-input-animation-time,
   .m-dy-input-add-keywords {
-    width: 150px !important;
+    width: var(--dm-input-add-keywords-width) !important;
     padding: 6px 12px !important;
     border: none !important;
     outline: none !important;
@@ -307,12 +323,20 @@
     border-radius: 10px !important;
   }
 
+  .m-dm-input-animation-time,
   .m-dy-input-add-keywords:focus {
     border: none !important;
     outline: none !important;
   }
 
+  .m-dm-input-animation-time {
+    width: var(--dm-input-time-width) !important;
+  }
+
   .m-dm-install-link {
+    display:inline-block !important;
+    float:right !important;
+    right:5px !important;
     color: var(--dm-font-color) !important;
   }
 
@@ -359,6 +383,7 @@
   }
 
 
+  .m-dm-time-button,
   .m-dm-all-keywords-button,
   .m-dm-delete-keywords-button,
   .m-dm-add-keywords-button {
@@ -375,6 +400,7 @@
   }
 
   
+  .m-dm-time-button:hover,
   .m-dm-all-keywords-button:hover,
   .m-dm-delete-keywords-button:hover,
   .m-dm-add-keywords-button:hover {
@@ -422,12 +448,17 @@
     border-radius: 4px !important;
   }
 
+  .m-fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+
   
   `
 
 
   //  初始化之前将本地房间号和全网房间全部关键词收集
-  const initKeywords = () => {
+  const initInfo = () => {
     keywordsCache = []
     if (Array.isArray(selectOnlyThisRoomsKeywords())) {
       keywordsCache = [...new Set(selectOnlyThisRoomsKeywords())]
@@ -435,17 +466,24 @@
     if (Array.isArray(selectKeywords())) {
       keywordsCache = [...new Set(keywordsCache, selectKeywords())]
     }
-    console.log('重新启动标签扫描=>', keywordsCache)
+
+
+    isAnimation = getItem(isAnimationKey) == null
+    animationTime = getAnimationTime()
+
+    console.log('重新扫描中...当前关键词☠:', keywordsCache)
   }
 
   // notify ！
   const notify = () => {
     try {
       window.cancelAnimationFrame(findBarrages)
-      nodeVersion = nodeVersion + 2
-      initKeywords() // init keywords
+      initInfo() // init info
       if (Array.isArray(keywordsCache) && keywordsCache.length > 0) {
+        nodeVersion = nodeVersion + 2
         findBarrages() // run ！
+      } else {
+        console.log('当前标签为空！停止扫描！🚀')
       }
     } catch (error) {
       console.error('弹幕插件出现异常了 notify Error 😭 ...', error)
@@ -464,7 +502,10 @@
     const dmAddButton = dmContainer.querySelector('.m-dm-add-keywords-button')
     const dmChangeButton = dmContainer.querySelector('.m-dm-all-keywords-button')
     const dmCloseButton = dmContainer.querySelector('#m-dm-close-btn')
+    const dmAnimationCheckbox = dmContainer.querySelector('#m-dm-animation-checkbox')
     const dmDeleteButton = dmContainer.querySelector('.m-dm-delete-keywords-button')
+    const dmAniTimeInput = dmContainer.querySelector('#m-dm-input-animation-time')
+    const dmTimeButton = dmContainer.querySelector('.m-dm-time-button')
     if (!dmInput || !dmAddButton || !dmBody) {
       console.log('element has null')
       return;
@@ -528,7 +569,34 @@
     })
 
 
+    // animation
+    dmAnimationCheckbox.checked = isAnimation ? true : false
+    dmAnimationCheckbox.addEventListener('change', (e) => {
+      setItem(isAnimationKey, e.target.checked ? isAnimationKey : `NO_${isAnimationKey}`)
+      notify()
+    })
 
+
+    /* 添加动画过度时间 */
+    dmAniTimeInput.value = getAnimationTime()
+    const addTime = () => {
+      if (isNaN(dmAniTimeInput.value) || (dmAniTimeInput.value < 0 || dmAniTimeInput.value > MAX_ANIMATION_TIME)) {
+        alert(`请输入0-${MAX_ANIMATION_TIME}的数字`)
+        dmAniTimeInput.value = animationTime
+        return;
+      }
+      setItem(AnimationTimeKey, dmAniTimeInput.value)
+      notify()
+    }
+    dmAniTimeInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        addTime()
+      }
+    })
+
+    dmTimeButton.addEventListener('click', (event) => {
+      addTime()
+    })
     // c
     dmDeleteButton.addEventListener('click', () => {
       if (confirm('确认清空？')) {
@@ -628,6 +696,7 @@
     if (!currentContainer) {
       return;
     }
+    console.log('标签删除中...')
     const allTags = currentContainer.querySelectorAll('.m-dm-container-body .m-dm-keywords-tag')
     if (allTags && allTags.length > 0) {
       for (let i = 0; i < allTags.length; i++) {
@@ -678,8 +747,6 @@
 
 
   const addOperation = () => {
-
-
     if (!isSupport) {
       console.warn('不支持哦初始化失败')
       return;

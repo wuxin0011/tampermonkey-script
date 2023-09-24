@@ -3017,16 +3017,18 @@ ${darkCss$1}
   const darkCss = `
 
 /* 修改背景和字体颜色 */
-.dark body,
-.dark #main_col,.dark .room-core,
-.dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
+.dark body,.dark #main_col,.dark .room-core,.dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
 .dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,
-.dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165, .dark #J_liveListNav dl dd div.role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
+.dark #J_liveListNav dl dd .role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165, 
+.dark #J_liveListNav dl dd .role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
+.dark #J_liveListNav dl dd [class^=role-box], .dark #J_liveListNav dl dd [class^=role-box]:hover,
 .dark #J_liveListNav dl dd div li,.dark #J_liveListNav dl dd div li:hover,
 .dark .js-responded-list,.dark .program-preview-box .preview-bd,
 .dark .game-live-item,.dark .game-live-item .txt .num,
 .dark .game-live-item .txt .game-type a,.dark .game-live-item .txt .game-type ,
-.dark .live-box .box-hd .more-list li,.dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
+.dark .live-box .box-hd .more-list li,
+.dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
+.dark [class^=Category] [class^=SecTitle],
 .dark .nav-expand-list,.dark .nav-expand-list-more ,
 .dark #js-game-list li,.dark .mod-list .box-hd .filter dd .tag-layer,.dark #J_mainWrap,
 .dark .room-hd,.dark .room-core-r,
@@ -3063,7 +3065,8 @@ ${darkCss$1}
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
 .dark #J_liveListNav dl dd span,.dark #player-gift-wrap,
-.dark .more-attivity-panel,
+.dark .more-attivity-panel,.dark [class^=roomBlockWords],
+.dark [class*=msg-of-king],
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -3100,6 +3103,7 @@ ${darkCss$1}
 .dark .live-box .box-hd .title a,
 .dark .hy-header-style-skr .hy-nav-link,
 .dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a,
+.dark [class^=Category] [class^=Item] a,
 .dark #js-game-list li a .g-gameCard-fullName,
 .dark .box-hd .title,
 .dark .mod-list .box-hd .filter dd .tag-layer,
@@ -3130,10 +3134,11 @@ ${darkCss$1}
 .dark #tipsOrchat .live-tips,
 .dark #tipsOrchat ._PortalChatPanelRoot div p,
 .dark #tipsOrchat ._PortalChatPanelRoot div span,
-.dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,
-.dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,
-.dark .listItem--2DQMeljGuIpJJbgUmLePE3, .dark barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,
-.dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeZiQOtXN_KaP20,
+.dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,.dark [class^=checkbox] i,
+.dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,.dark [class^=checkbox] span,
+.dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark [class^=listItem],
+.dark barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,.dark [class^=barrageBox] [class^=title],
+.dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeZiQOtXN_KaP20,.dark [panel^=barrageBox] [class^=panel-hd],
 .dark .chat-room__ft span,.dark .chat-room__ft p,
 .dark .duya-header-right a i,
 .dark .duya-header-right a span,
@@ -3148,55 +3153,32 @@ ${darkCss$1}
 
 
 /* 修改字体颜色 hover */
-.dark .liveList-title a:hover,
-.dark .game-live-item .title:hover,
-.dark .game-live-item .txt:hover,
-.dark .live-box .box-hd .title a:hover,
-.dark .live-box .box-hd .more-list li a:hover,
-.dark #js-game-list li a .g-gameCard-fullName:hover,
-.dark .box-hd .title:hover,
-.dark .game-live-item .txt i:hover,
-.dark .host-name:hover,
-.dark .mod-list .box-hd .filter dd .tag-layer:hover,
-.dark .subscribe-live-item .txt .msg-row .nick:hover,
-.dark .subscribe-live-item .txt .msg-row .intro:hover,
-.dark .list-hd .title:hover,
-.dark  #js-search-main .host-item .nick,
-.dark .search-main .type-keyword,
-.dark #tipsOrchat .live-tips i,
-.dark .duya-header-right a:hover,
-.dark .duya-header-right a i:hover,
-.dark .duya-header-right a span:hover,
-.dark .chat-room__bd .chat-room__scroll .clearBtn:hover,
-.dark .chat-room__bd .chat-room__scroll .lockBtn:hover,
-.dark .main-info .info-video .video-detail .video-title,
-.dark .main-info .info-video .video-author h3,.dark .FavoritePresenter--MMD7zrcd7sYoYy4-nf4LW .subscribe-hd--24Dtf1lXtfSas6Og00JGh .subscribe-tit--27roiaLDJp7Mr5zcqn8qjy,
+.dark .liveList-title a:hover,.dark .game-live-item .title:hover,.dark .game-live-item .txt:hover,.dark .live-box .box-hd .title a:hover,.dark .live-box .box-hd .more-list li a:hover,
+.dark #js-game-list li a .g-gameCard-fullName:hover,.dark .box-hd .title:hover,.dark .game-live-item .txt i:hover,.dark .host-name:hover,.dark .mod-list .box-hd .filter dd .tag-layer:hover,
+.dark .subscribe-live-item .txt .msg-row .nick:hover,.dark .subscribe-live-item .txt .msg-row .intro:hover,.dark .list-hd .title:hover,.dark  #js-search-main .host-item .nick,
+.dark .search-main .type-keyword,.dark #tipsOrchat .live-tips i,.dark .duya-header-right a:hover,.dark .duya-header-right a i:hover,.dark .duya-header-right a span:hover,.dark .chat-room__bd .chat-room__scroll .clearBtn:hover,
+.dark .chat-room__bd .chat-room__scroll .lockBtn:hover,.dark .main-info .info-video .video-detail .video-title,
+.dark .main-info .info-video .video-author h3,
+.dark .FavoritePresenter--MMD7zrcd7sYoYy4-nf4LW .subscribe-hd--24Dtf1lXtfSas6Og00JGh .subscribe-tit--27roiaLDJp7Mr5zcqn8qjy,
 .dark .search-header .find-result em,.dark .aside-videolist .video-item:hover .item-detail h3,
-.dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a:hover{
+.dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a:hover,
+.dark dark [class^=FavoritePresenter] [class^=subscribe-hd],
+.dark dark [class^=FavoritePresenter] [class^=subscribe-hd] [class^=subscribe-tit],
+.dark dark [class^=Category] [class^=Item] a:hover
+{
+
   color: var(--w-text) !important;
 }
 
 
 
 /* 修改border */
-.dark .program-preview-box,
-.dark .recom-banners,
-.dark .recom-moments,
-.dark .game-live-item,
-.dark .nav-expand-list,
-.dark #js-game-list li,
-.dark .g-gameCard-item,
-.dark .room-sidebar,
-.dark .list-hd .follow-ctrl,
-.dark .btn-more,
-.dark #js-search-main .host-item,
-.dark .subscribe-live-item,
-.dark .chat-room__input .btn-sendMsg,
-.dark .laypageskin_default a,
-.dark .chat-room__bd .chat-room__scroll .clearBtn,
-.dark .chat-room__bd .chat-room__scroll .lockBtn,
+.dark .program-preview-box,.dark .recom-banners,.dark .recom-moments,.dark .game-live-item,.dark .nav-expand-list,
+.dark #js-game-list li,.dark .g-gameCard-item,.dark .room-sidebar,.dark .list-hd .follow-ctrl,.dark .btn-more,.dark #js-search-main .host-item,.dark .subscribe-live-item,
+.dark .chat-room__input .btn-sendMsg,.dark .laypageskin_default a,.dark .chat-room__bd .chat-room__scroll .clearBtn,.dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .main-info .info-draw,.dark .main-info .info-comment,.dark .main-info .info-comment h2,
-.dark #chat-room__wrap #chat-room__list .RoomMessageRichText--2Y0TYze1NxfsGAbfcA8jGV{
+.dark #chat-room__wrap #chat-room__list .RoomMessageRichText--2Y0TYze1NxfsGAbfcA8jGV,
+.dark #chat-room__wrap #chat-room__list [class^=RoomMessageRichText]{
   border:1px solid var(--w-border) !important;
 }
 
@@ -3269,6 +3251,8 @@ ${darkCss$1}
 .dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span,
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
+.dark .msg-of-king,
+.dark [class^=SubConfirmPop],.dark [class^=emot-preview],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -3279,9 +3263,10 @@ ${darkCss$1}
 
 
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span:hover,
-
+.dark [class^=SubConfirmPop] span:hover,
 .dark #J_liveListNav dl dd ul li ul li:hover,
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span:hover,
+.dark [class^=SubConfirmPop] [class^=control] span:hover,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on:hover,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover{
   background: var(--w-bg) !important;
@@ -3300,8 +3285,6 @@ ${darkCss$1}
   color: var(--w-text) !important;
 }
 
-
-
 `;
   const css$2 = is_huya ? `
 
@@ -3311,7 +3294,7 @@ ${darkCss$1}
 .game-live-item .txt i:hover,.host-name:hover {
   color:rgb(255, 135, 0);
 }
-.helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+.helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
 .mod-index-wrap #js-main,
@@ -3324,7 +3307,7 @@ ${darkCss$1}
 .mod-index-wrap .mod-news-section,
 .mod-index-wrap .recommend-wrap,
 #player-marquee-wrap .player-marquee-noble-item, #player-marquee-wrap .player-banner-enter,
-.RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
+.RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,[class^=RoomPublicMessage],
 #huya-ab-fixed,
 #huya-ab,
 .liveList-header-r,

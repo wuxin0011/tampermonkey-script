@@ -9,7 +9,7 @@ const css = is_huya ? `
 .game-live-item .txt i:hover,.host-name:hover {
   color:rgb(255, 135, 0);
 }
-.helperbar-root--12hgWk_4zOxrdJ73vtf1YI,
+.helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
 .mod-index-wrap #js-main,
@@ -22,7 +22,7 @@ const css = is_huya ? `
 .mod-index-wrap .mod-news-section,
 .mod-index-wrap .recommend-wrap,
 #player-marquee-wrap .player-marquee-noble-item, #player-marquee-wrap .player-banner-enter,
-.RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,
+.RoomPublicMessage--n3v61Bk0DehYuR0xEQ9S1,[class^=RoomPublicMessage],
 #huya-ab-fixed,
 #huya-ab,
 .liveList-header-r,
