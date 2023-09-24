@@ -34,7 +34,7 @@ const darkCss = `
 .dark .player-gift-wrap,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M.checked--2qEbUox3t-pKVluoe87qMG i,
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
-.dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeziQOTXN_KaP20,
+
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
 .dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark .listItem--2DQMeljGuIpJJbgUmLePE3 span,
 .dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejSSMCTSLSPah47f_19h-,
@@ -124,7 +124,7 @@ const darkCss = `
 .dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,.dark [class^=checkbox] span,
 .dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark [class^=listItem],
 .dark barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,.dark [class^=barrageBox] [class^=title],
-.dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeZiQOtXN_KaP20,.dark [panel^=barrageBox] [class^=panel-hd],
+.dark [class^=barrageBox] [class^=panel-hd],
 .dark .chat-room__ft span,.dark .chat-room__ft p,
 .dark .duya-header-right a i,
 .dark .duya-header-right a span,
@@ -213,6 +213,7 @@ const darkCss = `
 .dark .laypageskin_default .laypage_curr,
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
+
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -237,7 +238,7 @@ const darkCss = `
 .dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span,
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
-.dark .msg-of-king,
+.dark .msg-of-king,.dark [class^=roomBlockWords] [class^=btn],
 .dark [class^=SubConfirmPop],.dark [class^=emot-preview],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
@@ -272,6 +273,8 @@ const darkCss = `
 }
 
 `
-
+// 活动框 
+// .dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeziQOTXN_KaP20,
+// .dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeZiQOtXN_KaP20,.dark [panel^=barrageBox] [class^=panel-hd],
 export default darkCss
 
