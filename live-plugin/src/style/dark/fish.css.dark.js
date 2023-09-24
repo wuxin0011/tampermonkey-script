@@ -7,13 +7,6 @@ const darkCss = `
   background: var(--w-bg-dark) !important;
 }
 
-.dark .layout-Module-head.is-fixed
- {
-  background: var(--w-bg) !important;
-}
-
-
-
 
 .dark  .Horn4Category-popWrap 
  {
@@ -22,7 +15,7 @@ const darkCss = `
   border:1px solid var(--w-text-light) !important;
 }
 
-.dark  body,
+.dark  body,.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
