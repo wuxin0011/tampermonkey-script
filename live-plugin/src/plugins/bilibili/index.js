@@ -26,6 +26,8 @@ export default class BiliBili extends LivePlugin {
         this.header_logo = '.bili-header .bili-header__bar ul>li>a'
         this.video_player_container = '#bilibili-player'
         this.fullScreenText = '进入全屏 (f)'
+        this.full_screen_is_find = false
+        this.full_screen_button = '.bpx-player-ctrl-btn.bpx-player-ctrl-full'
         this.auto_max_pro_class_or_id_list = '.bpx-player-ctrl-btn.bpx-player-ctrl-quality .bpx-player-ctrl-quality-menu>.bpx-player-ctrl-quality-menu-item'
         this.init()
     }
@@ -37,7 +39,6 @@ export default class BiliBili extends LivePlugin {
     createButton() {
         let that = this
         loopDo(() => {
-            log('createbutton ...', that.logo_btn)
             if (!!that.logo_btn) {
                 return;
             }
@@ -53,12 +54,11 @@ export default class BiliBili extends LivePlugin {
                 btn.style.cursor = 'pointer'
                 btn.style.position = 'fixed'
                 btn.style.bottom = '220px'
-                btn.style.right = '10px'
+                btn.style.right = '6px'
                 btn.style.display = 'block'
                 btn.style.zIndex = 9999999
                 window.onscroll = () => {
-                    log('hello ....')
-                    if (window.scrollY >= 500) {
+                    if (window.scrollY >= 530) {
                         btn.style.display = 'block'
                     } else {
                         btn.style.display = 'none'
