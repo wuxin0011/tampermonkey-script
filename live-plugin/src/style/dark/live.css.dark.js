@@ -34,6 +34,18 @@ const css = `
    }
 
 
+   .dark .m-container .btn {
+      background: var(--w-bg-darker) !important;
+      outline:1px solid var(--w-text) !important;
+      color: var(--w-text-light) !important;
+   }
+
+   .dark .m-container .btn:hover {
+    background: var(--w-bg) !important;
+    outline:1px solid var(--w-text-light) !important;
+    color: var(--w-text) !important;
+   }
+
 
 `
 export default css
