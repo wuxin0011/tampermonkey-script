@@ -71,10 +71,12 @@ const darkCss = `
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
 .dark #J_liveListNav dl dd span,
-.dark #player-gift-wrap,
+.dark #player-gift-wrap,.dark .player-all-gift-panel,
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
 .dark [class*=msg-of-king],
+.dark #player-gift-tip .mic-name-color,
+.dark #player-gift-tip .make-friend-people-switch,
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -157,6 +159,8 @@ const darkCss = `
 .dark .chat-room__ft span,.dark .chat-room__ft p,
 .dark .duya-header-right a i,
 .dark .duya-header-right a span,
+.dark #player-gift-tip .super-fans-gift .super-fans-gift-content i,
+.dark #player-gift-tip .motorcade-gather-gift,.dark #player-gift-tip .mic-name,
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .search-advice-list li a,.dark .search-header .find-result,
@@ -207,9 +211,14 @@ const darkCss = `
 }
 
 
-.dark .hy-header-style-normal .duya-header-wrap,
-.dark .duya-header,
-.dark .chat-room__input,
+.dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
+.dark .duya-header,.dark .player-all-gift-panel,.dark .player-all-gift-panel .arrow,
+.dark .chat-room__input,.dark #player-gift-tip,.dark .player-face li .player-superfans-card-count,
+.dark .player-face li .plaer-face-icon-bg,.dark .player-face li .player-superfans-card-count,
+.dark #player-gift-tip,.dark #player-gift-tip .make-friend-people-switch,
+.dark #player-gift-tip .make-friend-unsubscribe,
+.dark #player-gift-tip .make-friend-line,
+.dark #player-gift-tip .bottom,.dark #player-pc-watch-btn,
 .dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
 {
   background: var(--w-bg-darker) !important;
@@ -235,7 +244,7 @@ const darkCss = `
 }
 
 .dark .laypageskin_default a:hover,
-.dark .comment-container textarea,
+.dark .comment-container textarea,.dark .player-face li .plaer-face-icon-bg,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off .subscribe-count,
 .dark .nav-expand-list.nav-expand-game span a:hover{
   border-color:var(--w-text-light) !important;
@@ -280,7 +289,8 @@ const darkCss = `
 .dark .msg-of-king,.dark [class^=roomBlockWords] [class^=btn],
 .dark [class^=SubConfirmPop],.dark [class^=emot-preview],
 .dark [class^=colorNormal],
-
+.dark #player-danmu-report,
+.dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off

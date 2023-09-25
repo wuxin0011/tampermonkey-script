@@ -141,22 +141,21 @@ export const updateDarkStyleType = (type) => {
  * 主题动画切换 快照版
  * @link https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API
  * @param event Event
+ * @param isClick 是否通过点击方式 通过点击方式切换主题不应该判断是不是黑夜
  */
-export const toggleColorMode = (event) => {
-
+export const toggleColorMode = (event, isClick = false) => {
   if (!event) {
     return;
   }
-
   try {
     const isAppearanceTransition = document?.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!isAppearanceTransition) {
       log('不支持快照切换...,将使用普通方式切换主题')
-      themeUpdate()
+      isClick ? clickUpdateTheme() : themeUpdate()
       return
     }
   } catch (error) {
-    themeUpdate()
+    isClick ? clickUpdateTheme() : themeUpdate()
     return;
   }
   const x = event.clientX
@@ -166,7 +165,7 @@ export const toggleColorMode = (event) => {
     Math.max(y, innerHeight - y),
   )
   const transition = document.startViewTransition(() => {
-    themeUpdate()
+    isClick ? clickUpdateTheme() : themeUpdate()
   })
   transition.ready
     .then(() => {
@@ -189,6 +188,17 @@ export const toggleColorMode = (event) => {
         },
       )
     })
+}
+
+
+const clickUpdateTheme = () => {
+  const classList = document.documentElement.classList
+  classList.contains('dark') ? wls.getItem(DARK_THEME_KEY) === theme.light : wls.getItem(DARK_THEME_KEY) === theme.dark
+  if (!classList.contains('dark')) {
+    classList.add('dark')
+  } else if (classList.contains('dark')) {
+    classList.remove('dark')
+  }
 }
 
 
@@ -244,17 +254,18 @@ export const updateDarkClass = () => {
   }
   const classList = document.documentElement.classList
   if (!classList.contains('dark') && isNeedDark()) {
-    document.documentElement.classList.add('dark')
+    classList.add('dark')
   } else if (classList.contains('dark') && !isNeedDark()) {
-    document.documentElement.classList.remove('dark')
+    classList.remove('dark')
   }
+
 }
 
 
 /**
  * update theme
  */
-export const themeUpdate = () => {
+export const themeUpdate = async () => {
   wls.setItem(DARK_THEME_KEY, isNeedDark() ? theme.light : theme.dark)
   updateDarkClass()
 }

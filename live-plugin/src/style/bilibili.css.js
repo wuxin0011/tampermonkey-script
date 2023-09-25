@@ -39,6 +39,23 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
    width: 40px;
 }
 
+.m-span-text {
+   transition: all 0.3s ease ;
+   cursor: pointer  ;
+   opacity: 0 ;
+   float:right ;
+   display:inline-block ;
+   margin:0 10px ;
+   transform: scale(0.5) ;
+   font-size:20px ;
+   position:relative ;
+ }
+ 
+ .m-span-text::before{
+   content:"🧹" ;
+   cursor: pointer ;
+ }
+
 .bili-video-card__info--bottom:hover .m-span-text,
 .video-page-card-small:hover .m-span-text,
 .up-info-container:hover .m-span-text,
@@ -48,6 +65,9 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
    transform: scale(1.1);
    color:orange;
 }
+
+
+ 
 
 
 ${dark}

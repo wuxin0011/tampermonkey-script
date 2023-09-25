@@ -3,8 +3,12 @@ import { log } from '../../utils'
 
 
 
-
-export const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf('非法访问') : false
+/**
+ * 接口是否被B站服务器封了
+ * @param {*} obj 
+ * @returns 
+ */
+export const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf('非法访问')!==-1 : false
 
 
 

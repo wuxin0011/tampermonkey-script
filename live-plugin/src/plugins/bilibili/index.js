@@ -112,7 +112,6 @@ export default class BiliBili extends LivePlugin {
                 for (let feed of divs) {
                     const isMark = !!querySelector(feed, '.m-span-text')
                     if (!isMark) {
-                        console.log('feed', feed)
                         let item = querySelector(feed, 'div.bili-video-card__info--bottom')
                         const name = querySelector(item, 'span.bili-video-card__info--author')?.textContent
                         const href = querySelector(item, '.bili-video-card__info--owner')?.href
@@ -136,7 +135,6 @@ export default class BiliBili extends LivePlugin {
                 for (let feed of divs) {
                     const isMark = !!querySelector(feed, '.m-span-text')
                     if (!isMark) {
-                        console.log('feed =>', feed)
                         let item = querySelector(feed, 'div.bili-video-card__info--bottom')
                         let isLive = false;
                         if (!item) {
@@ -201,9 +199,6 @@ export default class BiliBili extends LivePlugin {
                 that.addDeleteRoomButton(200)
             })
         }, 3000)
-
-
-
 
     }
 

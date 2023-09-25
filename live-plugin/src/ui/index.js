@@ -55,6 +55,7 @@ export const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift,
 /**
  * LivePluginElement WebComponent
  * @link https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_custom_elements
+ * @link https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_shadow_DOM
  */
 export class LivePluginElement extends HTMLElement {
     constructor() {
@@ -64,15 +65,14 @@ export class LivePluginElement extends HTMLElement {
         const style = document.createElement('style');
         style.innerHTML = LivePluginCss
         this.shadowRoot.appendChild(style);
-
     }
 
     createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) {
-        // const livePlugin = document.createElement('live-plugin-element');
-        const livePlugin = this;
+        const livePlugin = document.createElement('live-plugin-element');
+        // 或者 livePlugin = this
         // container
         const container = document.createElement('div');
-        container.className = `${isNeedDark() ? 'm-dark' : ''} m-container`
+        container.className = `${isNeedDark() ? 'dark' : ''} m-container`
         container.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro)
         livePlugin.shadowRoot.appendChild(container);
         // insert dom

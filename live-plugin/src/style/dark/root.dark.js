@@ -38,6 +38,25 @@ html {
 .dark::view-transition-new(root) {
   z-index: 10;
 }
+
+
+
+::-webkit-scrollbar {
+  width: 4px !important;
+  background-color: teal !important;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #eee !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: teal !important;
+  border-radius: 6px !important;
+}
+
+
+
 `
 
 export default root

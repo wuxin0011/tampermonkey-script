@@ -328,23 +328,7 @@ ${root}
     color: red ;
   }
   
-  .m-span-text {
-      transition: all 0.3s ease;
-      cursor: pointer ;
-      opacity: 0;
-      float:right;
-      display:inline-block;
-      margin:0 10px;
-      transform: scale(0.5);
-      font-size:20px;
-      position:relative;
-  }
 
-  .m-span-text::before{
-      content:"🧹";
-      cursor: pointer ;
-  }
-  
   .m-container-display-block{
      display:block ;
   }
@@ -352,6 +336,12 @@ ${root}
      display:none ;
   }
 
+  .m-container .m-link:hover {
+    color: var(--w-text-light) ;
+    text-decoration: underline ;
+  }
+  
+  
 
 
   ${dark}

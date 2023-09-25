@@ -358,6 +358,7 @@ export default class LivePlugin {
         // 文件上传
         const upload = querySelector(container, '.operation .bg-btn')
         addEventListener(upload, 'click', function (e) {
+            console.log('文件点击中...', upload)
             uploadButton.click()
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
@@ -365,17 +366,20 @@ export default class LivePlugin {
         // 显示关闭
         const close_container = querySelector(container, '.operation .btn-close-container')
         addEventListener(close_container, 'click', function (e) {
+            console.log('close_container...', close_container)
             that.isShowContainer()
         })
 
         // 关闭
         const close_container2 = querySelector(container, '.operation #m-close-button1')
         addEventListener(close_container2, 'click', function (e) {
+            console.log('close_container2...', close_container2)
             that.isShowContainer()
         })
         // 选择背景
         const checkbox = querySelector(container, '.operation #checkbox1')
         addEventListener(checkbox, 'change', function (e) {
+            console.log('checkbox...', checkbox)
             log('背景是否开启', e.target.checked ? '开启' : '关闭')
             addLocalStore(that.bg_show_key, e.target.checked, Boolean.name)
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
@@ -384,6 +388,7 @@ export default class LivePlugin {
         // 是否关闭菜单
         const menu = querySelector(container, '.operation #checkbox2')
         addEventListener(menu, 'change', function (e) {
+            console.log('menu...', menu)
             that.getLeftMenu(e.target.checked)
             addLocalStore(that.menu_is_first_key, false, Boolean.name)
         })
@@ -391,6 +396,7 @@ export default class LivePlugin {
         // 剧场模式
         const full_screen_btn = querySelector(container, '.operation #checkbox3')
         addEventListener(full_screen_btn, 'change', function (e) {
+            console.log('full_screen_btn...', full_screen_btn)
             addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
             addLocalStore(that.full_screen_is_first_key, false, Boolean.name)
             that.isFullScreen(true)
@@ -399,6 +405,7 @@ export default class LivePlugin {
         // 礼物模式
         const show_gift = querySelector(container, '.operation #checkbox4')
         addEventListener(show_gift, 'change', function (e) {
+            console.log('show_gift...', show_gift)
             addLocalStore(that.gift_key, e.target.checked, Boolean.name)
             that.isShowGift()
             addLocalStore(that.gift_is_first_key, false, Boolean.name)
@@ -406,6 +413,8 @@ export default class LivePlugin {
 
         const show_logo_btn = querySelector(container, '.operation #checkbox5')
         addEventListener(show_logo_btn, 'change', function (e) {
+            console.log('show_logo_btn...', show_logo_btn)
+
             e.preventDefault()
             if (!that.logo_btn) {
                 warn('获取不到Logo哦！')
@@ -427,6 +436,7 @@ export default class LivePlugin {
         // 最高画质
         const auto_max_pro = querySelector(container, '.operation #checkbox6')
         addEventListener(auto_max_pro, 'change', function (e) {
+            console.log('auto_max_pro...', auto_max_pro)
             addLocalStore(that.auto_max_pro_key, e.target.checked, Boolean.name)
             addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name)
             that.isAutoMaxVideoPro()
@@ -478,42 +488,58 @@ export default class LivePlugin {
         const theme_btn = querySelector(container, '.operation .room-theme')
         const theme_select = querySelector(container, '.operation #m-dark-select')
 
-
-        const changeButtonStatus = (result = false) => {
+        const cancelAutoTheme = (result = false) => {
             if (theme_is_auto_box) {
                 theme_is_auto_box.checked = result
                 addLocalStore(THEME_IS_AUTO, result, Boolean.name, false)
             }
-            const needDark = isNeedDark()
-            console.log('isNeedDark', needDark ? '当前为黑夜模式' : '当前为白天模式')
-            if (theme_btn) {
-                theme_btn.innerText = needDark ? '白天' : '黑夜'
-                theme_btn.title = needDark ? '点击切换到白天模式' : '点击切换到黑夜模式'
-            }
-            console.log('update before ...', container.className, ' isDark ', needDark && !container.classList.contains('m-dark'))
-            if (needDark && !container.classList.contains('m-dark')) {
-                container.className = `m-dark ${container.className}`
-            } else {
-                container.classList.contains('m-dark') && container.classList.remove('m-dark')
-            }
-            console.log('update after ...', container.className)
         }
 
 
+
+        const updateThemeBtnContent = () => {
+            if (theme_btn) {
+                theme_btn.innerText = isNeedDark() ? '白天' : '黑夜'
+                theme_btn.title = isNeedDark() ? '点击切换到白天模式' : '点击切换到黑夜模式'
+            }
+        }
+
+
+
         addEventListener(theme_btn, 'click', function (e) {
-            toggleColorMode(e)
-            changeButtonStatus()
+            toggleColorMode(e, true)
+            if (container.classList.contains('dark')) {
+                container.classList.remove('dark')
+            } else if (!container.classList.contains('dark')) {
+                container.className = `dark ${container.className}`
+            }
+            cancelAutoTheme()
+            updateThemeBtnContent()
         })
 
 
         addEventListener(theme_is_auto_box, 'change', function (e) {
             toggleColorMode(e)
-            changeButtonStatus(e.target.checked)
+            cancelAutoTheme(e.target.checked)
+            updateThemeBtnContent()
+            if (e.target.checked) {
+                if (!isNeedDark() && container.classList.contains('dark')) {
+                    container.classList.remove('dark')
+                } else if (isNeedDark() && !container.classList.contains('dark')) {
+                    container.className = `dark ${container.className}`
+                }
+            }
+
+
         })
 
         addEventListener(theme_select, 'change', function (e) {
-            changeButtonStatus(false)
+            cancelAutoTheme(false)
+            updateThemeBtnContent()
             updateDarkStyleType(e.target.value)
+            if (!container.classList.contains('dark')) {
+                container.className = `dark ${container.className}`
+            }
         })
 
 
@@ -1055,6 +1081,7 @@ export default class LivePlugin {
             this.removeRoom(local_url)
         })
     }
+
 
     addEven() {
         let that = this
