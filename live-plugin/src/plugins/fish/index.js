@@ -31,9 +31,10 @@ export default class FishLive extends LivePlugin {
         this.baseUrl = "https://www.douyu.com/"
         this.default_background_image = 'https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg'
         this.menu = '#js-aside'
+        this.full_screen_button = "[class^=controlbar] [class^=fs]"
         this.gift_tool = '.layout-Player-main #js-player-toolbar'
         this.header_logo = '#js-header .Header-left .Header-logo'
-        this.auto_max_pro_class_or_id_list = '#js-player-video .room-Player-Box .rate-5c068c ul>li'
+        this.auto_max_pro_class_or_id_list = '#js-player-video .room-Player-Box [class^=rate] ul>li'
         this.init()
     }
 
@@ -290,6 +291,52 @@ export default class FishLive extends LivePlugin {
         } catch (e) {
             return null
         }
+    }
+
+
+    isFullScreen(isClickFull = false) {
+        let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
+        if (!is_should_full_screen) {
+            return;
+        }
+        // 获取视频元素
+        loopDo((timer) => {
+            var video = querySelector('video');
+            if (!video) {
+                return;
+            }
+            if (!(video instanceof HTMLVideoElement)) {
+                console.log('container is not video element !')
+                return;
+            }
+            console.log('video ....', video)
+
+            
+
+            video.addEventListener('loadedmetadata', function () {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                    console.log('requestFullscreen 视频自动全屏中....')
+                } else if (video.mozRequestFullScreen) { // Firefox
+                    video.mozRequestFullScreen();
+                    console.log('mozRequestFullScreen 视频自动全屏中....')
+
+                } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    video.webkitRequestFullscreen();
+                    console.log('webkitRequestFullscreen 视频自动全屏中....')
+
+                } else if (video.msRequestFullscreen) { // IE/Edge
+                    video.msRequestFullscreen();
+                    console.log('msRequestFullscreen 视频自动全屏中....')
+
+                }
+                console.log('视频加载完毕....')
+            });
+            clearInterval(timer)
+        }, 20, 3000)
+
+
+
     }
 
 }

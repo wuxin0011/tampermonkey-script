@@ -1,4 +1,5 @@
 import { support } from "@/utils";
+import LivePluginCss from '@/style/live.css'
 import { isNeedDark, isAutoDark, themeOptions } from '@/hook/useTheme'
 
 
@@ -13,7 +14,7 @@ import { isNeedDark, isAutoDark, themeOptions } from '@/hook/useTheme'
  * @returns
  */
 const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
-    return `<div class="m-container">
+    return `
     <div class="m-container-box" id="m-container-box2">
         <div class="operation">
             ${support.supportSearch() ? `<input type="text" placeholder="房间号或者名称...">` : ``}
@@ -26,7 +27,7 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
             ${support.supportMenu() ? `<input type="checkbox" id="checkbox2" ${isShowMenu ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单 ` : ``}
             ${support.supportAutoFullScreen() ? ` <input type="checkbox" id="checkbox3" ${isShowFullScreen ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏` : ``}
             ${support.supportGift() ? `<input type="checkbox" id="checkbox4" ${isShowGift ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物` : ``}
-            <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
+            <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo. ctrl+alt+j 可唤醒"/>logo
             ${support.supportAutoViewMaxPro() ? `<input type="checkbox" id="checkbox6" ${isMaxPro ? "checked" : ""} class="checkbox" title="自动最高画质"/>画质` : ``}
             ${support.supportTheme() ? `<input type="checkbox" id="m-dark-is-auto" ${isAutoDark() ? "checked" : ""} class="checkbox" title="自动调整主题,根据时间段改变"/>自动` : ``}
             ${support.supportTheme() ? `<select class="m-dark-type-select" id="m-dark-select">
@@ -46,8 +47,58 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
             </tbody>
         </table>
         </div>
- </div>`
+`
 }
+
+
+
+/**
+ * LivePluginElement webComponent
+ * @link https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_custom_elements
+ */
+export class LivePluginElement extends HTMLElement {
+    constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+        const style = document.createElement('style');
+        style.innerHTML = LivePluginCss
+        // init
+        const isShowBg = this.getAttribute('is-show-bg');
+        const isShowMenu = this.getAttribute('is-show-menu');
+        const isShowFullScreen = this.getAttribute('is-show-full-screen');
+        const isShowGift = this.getAttribute('is-show-gift');
+        const isShowLogo = this.getAttribute('is-show-logo');
+        const isMaxPro = this.getAttribute('is-max-pro');
+
+
+        // html content
+        const wrapper = document.createElement('div');
+        wrapper.className = `${isNeedDark()?'dark':''} m-container`
+        wrapper.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro)
+
+        // add shadow style 
+        shadow.appendChild(style);
+        // add dom
+        shadow.appendChild(wrapper);
+    }
+}
+
+
+// 
+
+export const createContainer = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
+    const livePlugin = document.createElement('live-plugin-element');
+    livePlugin.setAttribute('is-show-bg', isShowBg);
+    livePlugin.setAttribute('is-show-menu', isShowMenu);
+    livePlugin.setAttribute('is-show-full-screen', isShowFullScreen);
+    livePlugin.setAttribute('is-show-gift', isShowGift);
+    livePlugin.setAttribute('is-show-logo', isShowLogo);
+    livePlugin.setAttribute('is-max-pro', isMaxPro);
+    document.querySelector('body').append(livePlugin)
+    return livePlugin.shadowRoot.querySelector('.m-container')
+}
+
+
 
 
 export default htmlTemplate

@@ -2,11 +2,6 @@
 import { is_bilibili } from '../utils'
 import dark from './dark/bilibili.css.dark'
 const css = is_bilibili ? `
-
-.m-container {
-   --m-container-operation-right-width:200px;
-}
-
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
 div#i_cecream .adblock-tips,

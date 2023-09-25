@@ -147,9 +147,7 @@ background-color: #f2f5f6 !important;
    display:none;
 }
 
-.m-container {
-  --m-container-input-width: 120px;
-}
+
 
 ${dark}
 

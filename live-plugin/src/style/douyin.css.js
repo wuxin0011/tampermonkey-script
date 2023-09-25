@@ -7,14 +7,6 @@ const css = is_douyin ? `
     #login-full-panel{
        display:none !important;
     }
-  .m-container {
-    --m-container-height: 56px;
-    z-index: 10 !important;
-  }
-
-  .m-container table {
-    display: none !important;
-  }
   
 `: ''
 export default css

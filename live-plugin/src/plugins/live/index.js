@@ -22,19 +22,17 @@ import {
     querySelectorAll,
     removeDOM,
     removeVideo,
-    s2d,
     uploadImage,
     warn,
     wd,
-    isFull,
     addFullScreenEvent,
     wls, handlerDisplay
 } from '../../utils'
 
 import iconLogo from '@/utils/logo'
-import getHtmlStr from "@/ui";
+import { createContainer } from "@/ui";
 import { isBVId, isUserId, getBiliBiliInfoByVideoID, getBiliBiliInfoByUserId } from '@/api/bilibili';
-import { themeUpdate, toggleColorMode, updateDarkStyleType, THEME_IS_AUTO, isNeedDark } from '@/hook/useTheme'
+import { toggleColorMode, updateDarkStyleType, THEME_IS_AUTO, DARK_THEME_KEY, isNeedDark } from '@/hook/useTheme'
 import { isRisk } from '../../api/bilibili';
 
 /**
@@ -201,7 +199,6 @@ export default class LivePlugin {
     create_container() {
         // 初始化房间号
         let that = this
-        let body = querySelector('body') ?? createElement('body')
         that.users = getLocalStore(that.key, Array.name) || []
         let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name) // 是否显示背景 默认显示
         let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name) // 左侧菜单默认不显示
@@ -209,15 +206,15 @@ export default class LivePlugin {
         let isShowGift = wls.getItem(this.gift_is_first_key) === null ? false : getLocalStore(that.gift_key, Boolean.name) // 礼物默认不显示
         let isShowLogo = wls.getItem(this.btn_is_first_key) === null ? true : getLocalStore(that.logo_show_key, Boolean.name) // logo 默认显示
         let isAutoMaxPro = wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name) // logo 默认显示
-        that.m_container = s2d(getHtmlStr(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro))
-        appendChild(body, that.m_container)
 
+        // create container ...
+        that.m_container = createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro)
         if (querySelector(that.m_container, '#m-container-box2 table tbody')) {
             that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
-            this.is_new = true
+            that.is_new = true
         } else {
             that.tbody = querySelector(that.m_container, '.m-container table tbody')
-            this.is_new = false
+            that.is_new = false
         }
 
         // 生成操作按钮
@@ -227,7 +224,6 @@ export default class LivePlugin {
         // 右侧点击添加button
         that.createButton()
         log('操作面板初始化完毕！')
-
     }
 
     /**
@@ -336,6 +332,9 @@ export default class LivePlugin {
                     that.menu_is_first_key,
                     that.gift_is_first_key,
                     that.is_first_auto_max_pro_key,
+                    DARK_THEME_KEY,
+                    THEME_IS_AUTO,
+
                 ]
                 for (let item of deleteKeyList) {
                     wls.removeItem(item)
@@ -479,39 +478,46 @@ export default class LivePlugin {
         const theme_select = querySelector(container, '.operation #m-dark-select')
 
 
-        const cancelAutoTheme = (result = false) => {
+        const changeButtonStatus = (result = false) => {
             if (theme_is_auto_box) {
                 theme_is_auto_box.checked = result
                 addLocalStore(THEME_IS_AUTO, result, Boolean.name, false)
             }
+            const needDark = !isNeedDark()
+            if (theme_btn) {
+                theme_btn.innerText = needDark ? '白天' : '黑夜'
+                theme_btn.title = needDark ? '点击切换到白天模式' : '点击切换到黑夜模式'
+            }
+            if (needDark && !container.classList.contains('dark')) {
+                container.className = `dark ${container.className}`
+            } else {
+                container.classList.contains('dark') && container.classList.remove('dark')
+            }
+
+
         }
 
-        const updateThemeBtnContent = () => {
-            if (theme_btn) {
-                theme_btn.innerText = isNeedDark() ? '白天' : '黑夜'
-                theme_btn.title = isNeedDark() ? '点击切换到白天模式' : '点击切换到黑夜模式'
-            }
-        }
 
         addEventListener(theme_btn, 'click', function (e) {
             toggleColorMode(e)
-            cancelAutoTheme()
-            updateThemeBtnContent()
+            changeButtonStatus()
         })
 
 
         addEventListener(theme_is_auto_box, 'change', function (e) {
             toggleColorMode(e)
-            cancelAutoTheme(e.target.checked)
-            updateThemeBtnContent()
+            changeButtonStatus(e.target.checked)
         })
 
         addEventListener(theme_select, 'change', function (e) {
-            cancelAutoTheme(false)
-            updateThemeBtnContent()
+            changeButtonStatus(false)
             updateDarkStyleType(e.target.value)
         })
 
+
+    }
+
+    containerDarkChange() {
 
     }
 
@@ -934,47 +940,44 @@ export default class LivePlugin {
      * @param isClickFull 是否是通过点击方式触发
      */
     isFullScreen(isClickFull = false) {
-        let full_screen_text = this.full_screen_text
-        let full_cancel_text = this.full_cancel_text
-        let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
+        let that = this
+        let is_should_full_screen = getLocalStore(that.full_screen_key, Boolean.name)
         if (!is_should_full_screen) {
             return;
         }
+
         let button = null
         if (isClickFull) {
-            button = querySelector(this.full_screen_button)
+            button = querySelector(that.full_screen_button)
             if (button && button instanceof HTMLElement) {
                 button.click()
-                this.isShowContainer()
+                that.isShowContainer()
             } else {
-                this.checkFullScreenButton(button)
+                that.checkFullScreenButton(button)
             }
         } else {
             loopDo((timer) => {
-                button = querySelector(this.full_screen_button)
-                log("fullScreen button", this.full_screen_button, !!button ? '找到button了' : "未找到全屏button")
+                button = querySelector(that.full_screen_button)
+                log("fullScreen button", that.full_screen_button, !!button ? '找到button了' : "未找到全屏button")
                 if (button && button instanceof HTMLElement) {
                     let isClick = button?.isClick
                     if (isClick) {
                         clearInterval(timer)
                         return;
                     }
-                    if (!isClick && (button?.title === full_screen_text || button.textContent === full_screen_text)) {
+                    if (!isClick) {
                         log("全屏按钮自动触发了!")
                         button.click()
                         button.isClick = true
-                    } else if (button?.title === full_cancel_text || button?.textContent === full_cancel_text) {
-                        button.click()
-                        button.isClick = true
                     }
-
                 } else {
-                    this.checkFullScreenButton(button)
+                    that.checkFullScreenButton(button)
                 }
 
-            }, 10, 3000)
+            }, 30, 3000)
 
         }
+
 
     }
 
@@ -991,7 +994,6 @@ export default class LivePlugin {
      */
     isShowContainer() {
         if (this.m_container && this.m_container instanceof HTMLElement) {
-            log('container change ....')
             if (this.is_new) {
                 if (this.m_container.classList.contains('m-container-is-active')) {
                     this.m_container.classList.remove('m-container-is-active')
@@ -1001,7 +1003,7 @@ export default class LivePlugin {
             } else {
                 this.m_container.style.display = this.m_container.style.display === 'block' ? 'none' : 'block'
             }
-
+            log('container class=>', this.m_container.classList)
         }
     }
 
@@ -1009,11 +1011,15 @@ export default class LivePlugin {
      *  点击 直播平台 Logo
      */
     clickLogoShowContainer() {
+        let that = this
+        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
+            // 不显示操作容器了
+            return;
+        }
         if (this.header_logo === 'none' || !this.header_logo) {
             warn('Logo选择器不能为 none ！')
             return
         }
-        let that = this
         findMark(that.header_logo, (a) => {
             if (!(a instanceof HTMLAnchorElement)) {
                 return;

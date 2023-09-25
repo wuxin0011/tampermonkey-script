@@ -6,7 +6,7 @@ import { wls, warn, log, support, getLocalStore, addLocalStore } from '../utils'
  * [白天]
  * [黑夜]
  */
-const DARK_THEME_KEY = "wx_dark_theme_key"
+export const DARK_THEME_KEY = "wx_dark_theme_key"
 
 
 /**

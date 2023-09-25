@@ -91,7 +91,6 @@
       error(e);
     }
   };
-  const s2d = (string) => new DOMParser().parseFromString(string, "text/html").body.childNodes[0];
   const isArray = (a) => a && (a == null ? void 0 : a.length) > 0;
   const timeoutSelectorAll = (selector, callback, time = 0) => {
     if (typeof callback != "function") {
@@ -410,7 +409,7 @@
       return !is_douyin && !is_bilibili;
     },
     supportAutoFullScreen() {
-      return !is_douyu;
+      return true;
     },
     supportAutoViewMaxPro() {
       return true;
@@ -441,6 +440,449 @@
     }
     return logo;
   };
+  const liveDarkCss = `
+  .dark.m-container {
+    --m-container-background-color: var(--w-bg-darker);
+  }
+  
+
+  .dark .m-select-dark-option,
+  .dark .m-select-dark, .dark .m-dark-type-select,
+  .dark.m-container {
+    background-color: var(--m-container-background-color) ;
+    color:var(--w-text-light) ;
+  }
+
+
+  .dark.m-container .m-link,
+  .dark.m-container .m-link:visited {
+    color: var(--w-text) ;
+  }
+  
+  .m-container .m-link:hover {
+    color: var(--w-text-light) ;
+    text-decoration: underline ;
+  }
+  
+  
+
+  .dark.m-container table tr,
+  .dark.m-container table tbody tr:nth-child(1) 
+   {
+    border-color: var(--w-text-light) ;
+   }
+
+
+   .dark.m-container .btn {
+      background: var(--w-bg-darker) ;
+      outline:1px solid var(--w-text) ;
+      color: var(--w-text-light) ;
+   }
+
+   .dark.m-container .btn:hover {
+    background: var(--w-bg) ;
+    outline:1px solid var(--w-text-light) ;
+    color: var(--w-text) ;
+   }
+
+
+`;
+  const root$1 = `
+html {
+  --w-brand: #3aa675;
+  --w-light: #e5e7eb;
+  --w-brand-light: #349469;
+  --w-bg: #22272e;
+  --w-bg-light: #2b313a;
+  --w-bg-lighter: #262c34;
+  --w-bg-dark: #343b44;
+  --w-bg-darker: #37404c;
+  --w-bg-darker: var(--w-bg-dark);
+  --w-text: #adbac7;
+  --w-text-light: #cbd4dc;
+  --w-text-lighter: #cdd6dd;
+  --w-text-lightest: #8094a8;
+  --w-border: #3e4c5a;
+  --w-border-dark: #34404c;
+  --w-blue-link-hover:#00aeec;
+  --w-skeleton:#494f57;
+  --w-white: #fff;
+}
+
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 10;
+}
+::view-transition-new(root) {
+  z-index: 10000;
+}
+.dark::view-transition-old(root) {
+  z-index: 10000;
+}
+.dark::view-transition-new(root) {
+  z-index: 10;
+}
+`;
+  const css$4 = `
+${root$1}
+.m-container,
+  .m-container .btn,
+  .m-container table,
+  .m-container table tbody,
+  .m-container table thead,
+  .m-container table tr {
+    margin: 0 ;
+    padding: 0 ;
+    border: none;
+    outline: none;
+  }
+  
+  .m-container {
+    --m-font-color: #fff;
+    --m-container-background-color: #fff;
+    --m-container-width: 800px;
+    --m-container-height: 400px;
+    --m-container-operation-right-width: 150px;
+    --m-container-input-width: ${is_bilibili ? "200px" : "120px"};
+    --m-container-box-transition: all 0.5s ease-in-out;
+    --m-container-select-width: var(--m-container-input-width);
+    --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) ;
+  }
+  
+  .m-container {
+    box-sizing: border-box ;
+    position: fixed ;
+    flex-direction: column ;
+    width: var(--m-container-width) ;
+    height: var(--m-container-height) ;
+    top: 100px ;
+    left: 50% ;
+    border-radius: 10px ;
+    overflow: hidden ;
+    background-color: var(--m-container-background-color) ;
+    z-index: ${is_douyin ? "10" : "100000000"} ;
+    padding: 15px ;
+    transition: var(--m-container-box-transition) ;
+    box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
+      -1px -2px 18px rgba(0, 0, 0, 0.1) ;
+  
+    opacity: 0;
+    transform: translate(-50%, -150%);
+  }
+  
+  .m-container-is-active {
+    opacity: 1;
+    transform: translate(-50%, 0%);
+    z-index:100000000 ;
+  }
+  
+  .m-container-box {
+    display: flex ;
+    flex-direction: column ;
+    width: 100% ;
+    height: 100% ;
+  }
+  
+  .m-container .operation {
+    box-sizing: border-box ;
+    height: auto ;
+    justify-content: start ;
+  }
+  
+  
+  .m-container input[type="text"] {
+    width: var(--m-container-input-width) ;
+    box-sizing: border-box ;
+    border: 1px solid rgba(8, 125, 235, 0.6) ;
+    outline: none ;
+    padding: 5px 10px ;
+    border-radius: 20px ;
+    transition: var(--m-container-box-transition);
+  }
+  
+  .m-container input:focus {
+    border: 1px solid rgba(8, 125, 235, 1) ;
+  }
+  
+  .m-container .operation input[type="checkbox"] {
+    display: inline ;
+  }
+  
+  .m-container .operation input[type="file"] {
+    display: none ;
+  }
+  
+  .m-container table {
+    position: relative ;
+    box-sizing: border-box ;
+    overflow: hidden ;
+    text-align: left ;
+    flex: 1 ;
+    display: flex ;
+    flex-direction: column ;
+  }
+  
+  .m-container table tr {
+    margin: 5px 0 ;
+    display: flex ;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4) ;
+    justify-content: space-between;
+  }
+  
+  .m-container table tr td:nth-child(1),
+  .m-container table thead th:nth-child(1) {
+    width: 50px;
+    text-align: center ;
+  }
+  
+  .m-container table tr td:nth-child(2),
+  .m-container table tr td:nth-child(3),
+  .m-container table tr td:nth-child(4),
+  .m-container table thead th:nth-child(2),
+  .m-container table thead th:nth-child(3),
+  .m-container table thead th:nth-child(4) {
+    flex: 1 ;
+    text-align: center ;
+    white-space: nowrap ;
+    overflow: hidden ;
+    text-overflow: ellipsis ;
+  }
+  
+  .m-container table tbody {
+    flex: 1 ;
+    overflow: auto ;
+  }
+  
+  .m-container table th,
+  .m-container table td {
+    padding: 10px ;
+  }
+  
+  .m-container table tbody tr:nth-child(1) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4) ;
+  }
+  
+  .m-container .m-link,
+  .m-container .m-link:visited {
+    color: teal ;
+  }
+  
+  .m-container .m-link:hover {
+    color: blue ;
+    text-decoration: underline ;
+  }
+  
+  .m-container .btn {
+    cursor: pointer ;
+    padding: 5px 8px ;
+    border: none ;
+    max-width:50px ;
+    color: var(--m-font-color) ;
+    font-size: 1rem ;
+    border-radius: 20px ;
+    margin: 0 ;
+    background-color: rgba(166, 169, 173, 1) ;
+    z-index: 1000 ;
+    outline: none ;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) ;
+  }
+  
+  .m-container .btn:hover {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) ;
+  }
+  
+  .m-container .btn:hover {
+    background-color: rgba(166, 169, 173, 0.6) ;
+  }
+  
+  .m-container .btn-primary {
+    background-color: rgba(64, 158, 255, 1) ;
+  }
+  
+  .m-container .btn-primary:hover {
+    background-color: rgba(64, 158, 255, 0.6) ;
+  }
+  
+  .m-container .btn-success {
+    background-color: rgba(103, 194, 58, 1) ;
+  }
+  
+  .m-container .btn-success:hover {
+    background-color: rgba(103, 194, 58, 0.6) ;
+  }
+  
+  .m-container .btn-info {
+    background-color: rgba(119, 119, 119, 1) ;
+  }
+  
+  .m-container .btn-info:hover {
+    background-color: rgba(119, 119, 119, 0.6) ;
+  }
+  
+  .m-container .btn-warning {
+    background-color: rgba(230, 162, 60, 1) ;
+  }
+  
+  .m-container .btn-warning:hover {
+    background-color: rgba(230, 162, 60, 0.6) ;
+  }
+  
+  .m-container .btn-danger {
+    background-color: rgba(245, 108, 108, 1) ;
+  }
+  
+  .m-container .btn-danger:hover {
+    background-color: rgba(245, 108, 108, 0.6) ;
+  }
+  
+  #m-container-box1 {
+    position: absolute ;
+    z-index: 10000000 ;
+    transition: var(--m-container-box-transition) ;
+    width: 100% ;
+    height: 100% ;
+  }
+  
+  #m-container-box2 {
+    position: absolute ;
+    z-index: 9999 ;
+    transition: var(--m-container-box-transition) ;
+    width: 100% ;
+    height: 100% ;
+  }
+  
+  .m-ani-left-is-active {
+    transform: translateX(0) ;
+    visibility: visible ;
+    opacity: 1 ;
+  }
+  
+  .m-ani-left-is-close {
+    transform: translateX(-100%) ;
+    visibility: hidden ;
+    opacity: 0 ;
+  }
+  
+  .m-ani-right-is-active {
+    transform: translateX(0) ;
+    visibility: visible ;
+    opacity: 1 ;
+  }
+  
+  .m-ani-right-is-close {
+    transform: translateX(100%) ;
+    visibility: hidden ;
+    opacity: 0 ;
+  }
+  
+  .m-type-container .m-type-item {
+    display: flex ;
+    height: 30px ;
+  }
+  
+  .m-type-container .m-type-item .m-type-item-left {
+    flex: 1 ;
+    position: relative ;
+    box-sizing: border-box ;
+    overflow: hidden ;
+  }
+  
+  .m-type-container .m-type-item .m-type-item-right {
+    width: var(--m-container-operation-right-width);
+    text-align: center ;
+  }
+  
+  .m-type-container .m-type-item .m-type-item-left .m-select-option-container,
+  .m-type-container .m-type-item .m-type-item-left .m-select-input-container {
+    transition: var(--m-container-box-transition) ;
+    position: absolute ;
+    width: 100% ;
+  }
+  
+  .m-type-container .m-select {
+    display: flex ;
+  }
+  
+  .m-type-container .m-select .m-select-item {
+    margin-right: 10px ;
+  }
+  
+  .m-type-container .m-select .m-select-item:last-child {
+    margin-right: 0 ;
+  }
+  
+  .m-type-container .m-select select {
+    width: 100px ;
+    color: rgba(119, 119, 119, 0.9) ;
+  }
+  
+  .m-type-container .m-select select::placeholder {
+    color: rgba(119, 119, 119, 0.9) ;
+  }
+  
+  .m-type-container .m-tag-select {
+    width: calc(var(--m-container-select-width)/2) ;
+    outline: none ;
+    border: 1px solid rgba(8, 125, 235, 0.6) ;
+    padding: 5px 8px ;
+    padding: 5px 10px ;
+  }
+  
+  .m-container select {
+    border: 1px solid rgba(8, 125, 235, 1) ;
+  }
+  
+  
+  .m-type-container .m-select .m-option-default {
+    color: rgba(119, 119, 119, 0.6) ;
+  }
+  
+  .m-type-container input[type="text"] {
+    width: 350px ;
+  }
+  
+  .m-type-container .m-select input {
+    width: var(--m-container-input-width) ;
+  }
+  
+  .m-type-container .m-search-msg {
+    color: red ;
+  }
+  
+  .m-span-text {
+      transition: all 0.3s ease;
+      cursor: pointer ;
+      opacity: 0;
+      float:right;
+      display:inline-block;
+      margin:0 10px;
+      transform: scale(0.5);
+      font-size:20px;
+      position:relative;
+  }
+
+  .m-span-text::before{
+      content:"🧹";
+      cursor: pointer ;
+  }
+  
+  .m-container-display-block{
+     display:block ;
+  }
+  .m-container-display-none{
+     display:none ;
+  }
+
+
+
+  ${liveDarkCss}
+
+`;
   const DARK_THEME_KEY = "wx_dark_theme_key";
   const THEME_IS_AUTO = "wx_dark_theme_is_auto";
   const THEME_TYPE_KEY = "wx_dark_theme_type_key";
@@ -604,7 +1046,7 @@
     return str;
   };
   const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
-    return `<div class="m-container">
+    return `
     <div class="m-container-box" id="m-container-box2">
         <div class="operation">
             ${support.supportSearch() ? `<input type="text" placeholder="房间号或者名称...">` : ``}
@@ -615,9 +1057,9 @@
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
             ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
             ${support.supportMenu() ? `<input type="checkbox" id="checkbox2" ${isShowMenu ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单 ` : ``}
-            ${support.supportAutoFullScreen() ? ` <input type="checkbox" id="checkbox3" ${isShowFullScreen ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏` : ``}
+            ${` <input type="checkbox" id="checkbox3" ${isShowFullScreen ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏`}
             ${support.supportGift() ? `<input type="checkbox" id="checkbox4" ${isShowGift ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物` : ``}
-            <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo"/>logo
+            <input type="checkbox" id="checkbox5" ${isShowLogo ? "checked" : ""} class="checkbox" title="关闭或者显示插件Logo. ctrl+alt+j 可唤醒"/>logo
             ${`<input type="checkbox" id="checkbox6" ${isMaxPro ? "checked" : ""} class="checkbox" title="自动最高画质"/>画质`}
             ${support.supportTheme() ? `<input type="checkbox" id="m-dark-is-auto" ${isAutoDark() ? "checked" : ""} class="checkbox" title="自动调整主题,根据时间段改变"/>自动` : ``}
             ${support.supportTheme() ? `<select class="m-dark-type-select" id="m-dark-select">
@@ -637,7 +1079,37 @@
             </tbody>
         </table>
         </div>
- </div>`;
+`;
+  };
+  class LivePluginElement extends HTMLElement {
+    constructor() {
+      super();
+      const shadow = this.attachShadow({ mode: "open" });
+      const style = document.createElement("style");
+      style.innerHTML = css$4;
+      const isShowBg = this.getAttribute("is-show-bg");
+      const isShowMenu = this.getAttribute("is-show-menu");
+      const isShowFullScreen = this.getAttribute("is-show-full-screen");
+      const isShowGift = this.getAttribute("is-show-gift");
+      const isShowLogo = this.getAttribute("is-show-logo");
+      const isMaxPro = this.getAttribute("is-max-pro");
+      const wrapper = document.createElement("div");
+      wrapper.className = `${isNeedDark() ? "dark" : ""} m-container`;
+      wrapper.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro);
+      shadow.appendChild(style);
+      shadow.appendChild(wrapper);
+    }
+  }
+  const createContainer = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
+    const livePlugin = document.createElement("live-plugin-element");
+    livePlugin.setAttribute("is-show-bg", isShowBg);
+    livePlugin.setAttribute("is-show-menu", isShowMenu);
+    livePlugin.setAttribute("is-show-full-screen", isShowFullScreen);
+    livePlugin.setAttribute("is-show-gift", isShowGift);
+    livePlugin.setAttribute("is-show-logo", isShowLogo);
+    livePlugin.setAttribute("is-max-pro", isMaxPro);
+    document.querySelector("body").append(livePlugin);
+    return livePlugin.shadowRoot.querySelector(".m-container");
   };
   const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf("非法访问") : false;
   const isBVId = (keywords) => /.*\/BV(.*)/.test(keywords);
@@ -833,7 +1305,6 @@
      */
     create_container() {
       let that = this;
-      let body = querySelector("body") ?? createElement("body");
       that.users = getLocalStore(that.key, Array.name) || [];
       let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name);
       let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name);
@@ -841,14 +1312,13 @@
       let isShowGift = wls.getItem(this.gift_is_first_key) === null ? false : getLocalStore(that.gift_key, Boolean.name);
       let isShowLogo = wls.getItem(this.btn_is_first_key) === null ? true : getLocalStore(that.logo_show_key, Boolean.name);
       let isAutoMaxPro = wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name);
-      that.m_container = s2d(htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro));
-      appendChild(body, that.m_container);
+      that.m_container = createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro);
       if (querySelector(that.m_container, "#m-container-box2 table tbody")) {
         that.tbody = querySelector(that.m_container, "#m-container-box2 table tbody");
-        this.is_new = true;
+        that.is_new = true;
       } else {
         that.tbody = querySelector(that.m_container, ".m-container table tbody");
-        this.is_new = false;
+        that.is_new = false;
       }
       that.operationDOMButton();
       that.createRoomItem(that.users);
@@ -953,7 +1423,9 @@
             that.full_screen_is_first_key,
             that.menu_is_first_key,
             that.gift_is_first_key,
-            that.is_first_auto_max_pro_key
+            that.is_first_auto_max_pro_key,
+            DARK_THEME_KEY,
+            THEME_IS_AUTO
           ];
           for (let item of deleteKeyList) {
             wls.removeItem(item);
@@ -1068,33 +1540,36 @@
       const theme_is_auto_box = querySelector(container, ".operation #m-dark-is-auto");
       const theme_btn = querySelector(container, ".operation .room-theme");
       const theme_select = querySelector(container, ".operation #m-dark-select");
-      const cancelAutoTheme = (result = false) => {
+      const changeButtonStatus = (result = false) => {
         if (theme_is_auto_box) {
           theme_is_auto_box.checked = result;
           addLocalStore(THEME_IS_AUTO, result, Boolean.name, false);
         }
-      };
-      const updateThemeBtnContent = () => {
+        const needDark = !isNeedDark();
         if (theme_btn) {
-          theme_btn.innerText = isNeedDark() ? "白天" : "黑夜";
-          theme_btn.title = isNeedDark() ? "点击切换到白天模式" : "点击切换到黑夜模式";
+          theme_btn.innerText = needDark ? "白天" : "黑夜";
+          theme_btn.title = needDark ? "点击切换到白天模式" : "点击切换到黑夜模式";
+        }
+        if (needDark && !container.classList.contains("dark")) {
+          container.className = `dark ${container.className}`;
+        } else {
+          container.classList.contains("dark") && container.classList.remove("dark");
         }
       };
       addEventListener(theme_btn, "click", function(e) {
         toggleColorMode(e);
-        cancelAutoTheme();
-        updateThemeBtnContent();
+        changeButtonStatus();
       });
       addEventListener(theme_is_auto_box, "change", function(e) {
         toggleColorMode(e);
-        cancelAutoTheme(e.target.checked);
-        updateThemeBtnContent();
+        changeButtonStatus(e.target.checked);
       });
       addEventListener(theme_select, "change", function(e) {
-        cancelAutoTheme(false);
-        updateThemeBtnContent();
+        changeButtonStatus(false);
         updateDarkStyleType(e.target.value);
       });
+    }
+    containerDarkChange() {
     }
     initAnimation(container) {
       let box1 = querySelector(container, "#m-container-box1");
@@ -1459,43 +1934,39 @@
      * @param isClickFull 是否是通过点击方式触发
      */
     isFullScreen(isClickFull = false) {
-      let full_screen_text = this.full_screen_text;
-      let full_cancel_text = this.full_cancel_text;
-      let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name);
+      let that = this;
+      let is_should_full_screen = getLocalStore(that.full_screen_key, Boolean.name);
       if (!is_should_full_screen) {
         return;
       }
       let button = null;
       if (isClickFull) {
-        button = querySelector(this.full_screen_button);
+        button = querySelector(that.full_screen_button);
         if (button && button instanceof HTMLElement) {
           button.click();
-          this.isShowContainer();
+          that.isShowContainer();
         } else {
-          this.checkFullScreenButton(button);
+          that.checkFullScreenButton(button);
         }
       } else {
         loopDo((timer) => {
-          button = querySelector(this.full_screen_button);
-          log("fullScreen button", this.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
+          button = querySelector(that.full_screen_button);
+          log("fullScreen button", that.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
           if (button && button instanceof HTMLElement) {
             let isClick = button == null ? void 0 : button.isClick;
             if (isClick) {
               clearInterval(timer);
               return;
             }
-            if (!isClick && ((button == null ? void 0 : button.title) === full_screen_text || button.textContent === full_screen_text)) {
+            if (!isClick) {
               log("全屏按钮自动触发了!");
-              button.click();
-              button.isClick = true;
-            } else if ((button == null ? void 0 : button.title) === full_cancel_text || (button == null ? void 0 : button.textContent) === full_cancel_text) {
               button.click();
               button.isClick = true;
             }
           } else {
-            this.checkFullScreenButton(button);
+            that.checkFullScreenButton(button);
           }
-        }, 10, 3e3);
+        }, 30, 3e3);
       }
     }
     /**
@@ -1510,7 +1981,6 @@
      */
     isShowContainer() {
       if (this.m_container && this.m_container instanceof HTMLElement) {
-        log("container change ....");
         if (this.is_new) {
           if (this.m_container.classList.contains("m-container-is-active")) {
             this.m_container.classList.remove("m-container-is-active");
@@ -1520,17 +1990,21 @@
         } else {
           this.m_container.style.display = this.m_container.style.display === "block" ? "none" : "block";
         }
+        log("container class=>", this.m_container.classList);
       }
     }
     /**
      *  点击 直播平台 Logo
      */
     clickLogoShowContainer() {
+      let that = this;
+      if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
+        return;
+      }
       if (this.header_logo === "none" || !this.header_logo) {
         warn("Logo选择器不能为 none ！");
         return;
       }
-      let that = this;
       findMark(that.header_logo, (a) => {
         if (!(a instanceof HTMLAnchorElement)) {
           return;
@@ -1722,9 +2196,10 @@
       this.baseUrl = "https://www.douyu.com/";
       this.default_background_image = "https://sta-op.douyucdn.cn/dylamr/2022/11/07/1e10382d9a430b4a04245e5427e892c8.jpg";
       this.menu = "#js-aside";
+      this.full_screen_button = "[class^=controlbar] [class^=fs]";
       this.gift_tool = ".layout-Player-main #js-player-toolbar";
       this.header_logo = "#js-header .Header-left .Header-logo";
-      this.auto_max_pro_class_or_id_list = "#js-player-video .room-Player-Box .rate-5c068c ul>li";
+      this.auto_max_pro_class_or_id_list = "#js-player-video .room-Player-Box [class^=rate] ul>li";
       this.init();
     }
     // 公共部分页面操作
@@ -1940,6 +2415,40 @@
       } catch (e) {
         return null;
       }
+    }
+    isFullScreen(isClickFull = false) {
+      let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name);
+      if (!is_should_full_screen) {
+        return;
+      }
+      loopDo((timer) => {
+        var video2 = querySelector("video");
+        if (!video2) {
+          return;
+        }
+        if (!(video2 instanceof HTMLVideoElement)) {
+          console.log("container is not video element !");
+          return;
+        }
+        console.log("video ....", video2);
+        video2.addEventListener("loadedmetadata", function() {
+          if (video2.requestFullscreen) {
+            video2.requestFullscreen();
+            console.log("requestFullscreen 视频自动全屏中....");
+          } else if (video2.mozRequestFullScreen) {
+            video2.mozRequestFullScreen();
+            console.log("mozRequestFullScreen 视频自动全屏中....");
+          } else if (video2.webkitRequestFullscreen) {
+            video2.webkitRequestFullscreen();
+            console.log("webkitRequestFullscreen 视频自动全屏中....");
+          } else if (video2.msRequestFullscreen) {
+            video2.msRequestFullscreen();
+            console.log("msRequestFullscreen 视频自动全屏中....");
+          }
+          console.log("视频加载完毕....");
+        });
+        clearInterval(timer);
+      }, 20, 3e3);
     }
   }
   class BiliBili extends LivePlugin {
@@ -2194,447 +2703,6 @@
       this.isAutoMaxVideoPro();
     }
   }
-  const css$5 = `
-  .dark .m-container {
-    --m-container-background-color: var(--w-bg-darker);
-  }
-  
-
-  .dark .m-select-dark-option,
-  .dark .m-select-dark, .dark .m-dark-type-select,
-  .dark .m-container {
-    background-color: var(--m-container-background-color) !important;
-    color:var(--w-text-light) !important;
-  }
-
-
-  .dark .m-container .m-link,
-  .dark .m-container .m-link:visited {
-    color: var(--w-text) !important;
-  }
-  
-  .m-container .m-link:hover {
-    color: var(--w-text-light) !important;
-    text-decoration: underline !important;
-  }
-  
-  
-
-  .dark .m-container table tr,
-  .dark .m-container table tbody tr:nth-child(1) 
-   {
-    border-color: var(--w-text-light) !important;
-   }
-
-
-   .dark .m-container .btn {
-      background: var(--w-bg-darker) !important;
-      outline:1px solid var(--w-text) !important;
-      color: var(--w-text-light) !important;
-   }
-
-   .dark .m-container .btn:hover {
-    background: var(--w-bg) !important;
-    outline:1px solid var(--w-text-light) !important;
-    color: var(--w-text) !important;
-   }
-
-
-`;
-  const css$4 = `
-html {
-  --w-brand: #3aa675;
-  --w-light: #e5e7eb;
-  --w-brand-light: #349469;
-  --w-bg: #22272e;
-  --w-bg-light: #2b313a;
-  --w-bg-lighter: #262c34;
-  --w-bg-dark: #343b44;
-  --w-bg-darker: #37404c;
-  --w-bg-darker: var(--w-bg-dark);
-  --w-text: #adbac7;
-  --w-text-light: #cbd4dc;
-  --w-text-lighter: #cdd6dd;
-  --w-text-lightest: #8094a8;
-  --w-border: #3e4c5a;
-  --w-border-dark: #34404c;
-  --w-blue-link-hover:#00aeec;
-  --w-skeleton:#494f57;
-  --w-white: #fff;
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 10;
-}
-::view-transition-new(root) {
-  z-index: 10000;
-}
-.dark::view-transition-old(root) {
-  z-index: 10000;
-}
-.dark::view-transition-new(root) {
-  z-index: 10;
-}
-
-.m-container,
-  .m-container .btn,
-  .m-container table,
-  .m-container table tbody,
-  .m-container table thead,
-  .m-container table tr {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none;
-    outline: none;
-  }
-  
-  .m-container {
-    --m-font-color: #fff;
-    --m-container-background-color: #fff;
-    --m-container-width: 800px;
-    --m-container-height: 400px;
-    --m-container-operation-right-width: 150px;
-    --m-container-input-width: 100px;
-    --m-container-box-transition: all 0.4s ease-in-out;
-    --m-container-select-width: var(--m-container-input-width);
-    --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) !important;
-  }
-  
-  .m-container {
-    box-sizing: border-box !important;
-    position: fixed !important;
-    flex-direction: column !important;
-    width: var(--m-container-width) !important;
-    height: var(--m-container-height) !important;
-    top: 100px !important;
-    left: 50% !important;
-    border-radius: 10px !important;
-    overflow: hidden !important;
-    background-color: var(--m-container-background-color) !important;
-    z-index: 100000000 !important;
-    padding: 15px !important;
-    transition: var(--m-container-box-transition) !important;
-    box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.1),
-      -1px -2px 18px rgba(0, 0, 0, 0.1) !important;
-  
-    opacity: 0;
-    transform: translate(-50%, -150%);
-  }
-  
-  .m-container-is-active {
-    opacity: 1;
-    transform: translate(-50%, 0%);
-    z-index:100000000 !important;
-  }
-  
-  .m-container-box {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  .m-container .operation {
-    box-sizing: border-box !important;
-    height: auto !important;
-    justify-content: start !important;
-  }
-  
-  
-  .m-container input[type="text"] {
-    width: var(--m-container-input-width) !important;
-    box-sizing: border-box !important;
-    border: 1px solid rgba(8, 125, 235, 0.6) !important;
-    outline: none !important;
-    padding: 5px 10px !important;
-    border-radius: 20px !important;
-    transition: var(--m-container-box-transition);
-  }
-  
-  .m-container input:focus {
-    border: 1px solid rgba(8, 125, 235, 1) !important;
-  }
-  
-  .m-container .operation input[type="checkbox"] {
-    display: inline !important;
-  }
-  
-  .m-container .operation input[type="file"] {
-    display: none !important;
-  }
-  
-  .m-container table {
-    position: relative !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    text-align: left !important;
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  
-  .m-container table tr {
-    margin: 5px 0 !important;
-    display: flex !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
-    justify-content: space-between;
-  }
-  
-  .m-container table tr td:nth-child(1),
-  .m-container table thead th:nth-child(1) {
-    width: 50px;
-    text-align: center !important;
-  }
-  
-  .m-container table tr td:nth-child(2),
-  .m-container table tr td:nth-child(3),
-  .m-container table tr td:nth-child(4),
-  .m-container table thead th:nth-child(2),
-  .m-container table thead th:nth-child(3),
-  .m-container table thead th:nth-child(4) {
-    flex: 1 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-  
-  .m-container table tbody {
-    flex: 1 !important;
-    overflow: auto !important;
-  }
-  
-  .m-container table th,
-  .m-container table td {
-    padding: 10px !important;
-  }
-  
-  .m-container table tbody tr:nth-child(1) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
-  }
-  
-  .m-container .m-link,
-  .m-container .m-link:visited {
-    color: teal !important;
-  }
-  
-  .m-container .m-link:hover {
-    color: teal !important;
-    text-decoration: underline !important;
-  }
-  
-  .m-container .btn {
-    cursor: pointer !important;
-    padding: 5px 8px !important;
-    border: none !important;
-    max-width:50px !important;
-    color: var(--m-font-color) !important;
-    font-size: 1rem !important;
-    border-radius: 20px !important;
-    margin: 0 !important;
-    background-color: rgba(166, 169, 173, 1) !important;
-    z-index: 1000 !important;
-    outline: none !important;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
-  }
-  
-  .m-container .btn:hover {
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1) !important;
-  }
-  
-  .m-container .btn:hover {
-    background-color: rgba(166, 169, 173, 0.6) !important;
-  }
-  
-  .m-container .btn-primary {
-    background-color: rgba(64, 158, 255, 1) !important;
-  }
-  
-  .m-container .btn-primary:hover {
-    background-color: rgba(64, 158, 255, 0.6) !important;
-  }
-  
-  .m-container .btn-success {
-    background-color: rgba(103, 194, 58, 1) !important;
-  }
-  
-  .m-container .btn-success:hover {
-    background-color: rgba(103, 194, 58, 0.6) !important;
-  }
-  
-  .m-container .btn-info {
-    background-color: rgba(119, 119, 119, 1) !important;
-  }
-  
-  .m-container .btn-info:hover {
-    background-color: rgba(119, 119, 119, 0.6) !important;
-  }
-  
-  .m-container .btn-warning {
-    background-color: rgba(230, 162, 60, 1) !important;
-  }
-  
-  .m-container .btn-warning:hover {
-    background-color: rgba(230, 162, 60, 0.6) !important;
-  }
-  
-  .m-container .btn-danger {
-    background-color: rgba(245, 108, 108, 1) !important;
-  }
-  
-  .m-container .btn-danger:hover {
-    background-color: rgba(245, 108, 108, 0.6) !important;
-  }
-  
-  #m-container-box1 {
-    position: absolute !important;
-    z-index: 10000000 !important;
-    transition: var(--m-container-box-transition) !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  #m-container-box2 {
-    position: absolute !important;
-    z-index: 9999 !important;
-    transition: var(--m-container-box-transition) !important;
-    ;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  .m-ani-left-is-active {
-    transform: translateX(0) !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .m-ani-left-is-close {
-    transform: translateX(-100%) !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-  
-  .m-ani-right-is-active {
-    transform: translateX(0) !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .m-ani-right-is-close {
-    transform: translateX(100%) !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-  
-  .m-type-container .m-type-item {
-    display: flex !important;
-    height: 30px !important;
-  }
-  
-  .m-type-container .m-type-item .m-type-item-left {
-    flex: 1 !important;
-    position: relative !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-  }
-  
-  .m-type-container .m-type-item .m-type-item-right {
-    width: var(--m-container-operation-right-width);
-    text-align: center !important;
-  }
-  
-  .m-type-container .m-type-item .m-type-item-left .m-select-option-container,
-  .m-type-container .m-type-item .m-type-item-left .m-select-input-container {
-    transition: var(--m-container-box-transition) !important;
-    position: absolute !important;
-    width: 100% !important;
-  }
-  
-  .m-type-container .m-select {
-    display: flex !important;
-  }
-  
-  .m-type-container .m-select .m-select-item {
-    margin-right: 10px !important;
-  }
-  
-  .m-type-container .m-select .m-select-item:last-child {
-    margin-right: 0 !important;
-  }
-  
-  .m-type-container .m-select select {
-    width: 100px !important;
-    color: rgba(119, 119, 119, 0.9) !important;
-  }
-  
-  .m-type-container .m-select select::placeholder {
-    color: rgba(119, 119, 119, 0.9) !important;
-  }
-  
-  .m-type-container .m-tag-select {
-    width: calc(var(--m-container-select-width)/2) !important;
-    outline: none !important;
-    border: 1px solid rgba(8, 125, 235, 0.6) !important;
-    padding: 5px 8px !important;
-    padding: 5px 10px !important;
-  }
-  
-  .m-container select {
-    border: 1px solid rgba(8, 125, 235, 1) !important;
-  }
-  
-  
-  .m-type-container .m-select .m-option-default {
-    color: rgba(119, 119, 119, 0.6) !important;
-  }
-  
-  .m-type-container input[type="text"] {
-    width: 350px !important;
-  }
-  
-  .m-type-container .m-select input {
-    width: var(--m-container-input-width) !important;
-  }
-  
-  .m-type-container .m-search-msg {
-    color: red !important;
-  }
-  
-  .m-span-text {
-      transition: all 0.3s ease;
-      cursor: pointer !important;
-      opacity: 0;
-      float:right;
-      display:inline-block;
-      margin:0 10px;
-      transform: scale(0.5);
-      font-size:20px;
-      position:relative;
-  }
-
-  .m-span-text::before{
-      content:"🧹";
-      cursor: pointer !important;
-  }
-  
-  .m-container-display-block{
-     display:block !important;
-  }
-  .m-container-display-none{
-     display:none !important;
-  }
-
-
-
-  ${css$5}
-
-`;
   const darkCss$1 = `
 
 .dark .DyCover-pic,
@@ -3048,9 +3116,7 @@ background-color: #f2f5f6 !important;
    display:none;
 }
 
-.m-container {
-  --m-container-input-width: 120px;
-}
+
 
 ${darkCss$1}
 
@@ -3469,14 +3535,6 @@ ${darkCss}
     #login-full-panel{
        display:none !important;
     }
-  .m-container {
-    --m-container-height: 56px;
-    z-index: 10 !important;
-  }
-
-  .m-container table {
-    display: none !important;
-  }
   
 ` : "";
   const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ? `
@@ -4846,11 +4904,6 @@ ${other}
 
 `;
   const css = is_bilibili ? `
-
-.m-container {
-   --m-container-operation-right-width:200px;
-}
-
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
 div#i_cecream .adblock-tips,
@@ -4903,7 +4956,7 @@ ${dark}
 ` : "";
   addStyle(
     `
-${css$4}
+${root$1}
 ${css$3}
 ${css$2}
 ${css}
@@ -4914,6 +4967,7 @@ ${css$1}
     if (typeof window == "undefined") {
       return;
     }
+    customElements.define("live-plugin-element", LivePluginElement);
     if (is_exculues) {
       console.warn("当前地址不支持！");
       return;

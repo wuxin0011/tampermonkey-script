@@ -1,11 +1,11 @@
 {
-  "name": "huya-live",
+  "name": "live-plugin",
   "private": true,
   "author": "wuxin0011",
   "version": "4.1.2",
   "type": "module",
   "license": "MIT",
-  "description": "虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀",
+  "description": "虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活",
   "keywords": [
     "直播插件",
     "油猴插件",
@@ -21,11 +21,11 @@
     "vite-plugin-monkey": "^3.2.0"
   },
   "bugs": {
-    "url": "https://github.com/wuxin0011/huya-live/issues",
+    "url": "https://github.com/wuxin0011/tampermonkey-script/issues",
     "email": "2191377759@qq.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wuxin0011/huya-live"
+    "url": "https://github.com/wuxin0011/tampermonkey-script/live-plugin"
   }
 }

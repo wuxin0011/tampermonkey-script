@@ -20,6 +20,9 @@ import {
 } from './plugins';
 
 
+import { LivePluginElement } from '@/ui'
+
+
 
 import { updateDarkClass } from './hook/useTheme';
 
@@ -32,6 +35,9 @@ import './style/index.css.js';
     if (typeof window == 'undefined') {
         return;
     }
+
+    // 注册自定义组件
+    customElements.define('live-plugin-element', LivePluginElement);
 
     if (is_exculues) {
         console.warn('当前地址不支持！')
@@ -52,6 +58,7 @@ import './style/index.css.js';
             'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
             'border-radius: 0 3px 3px 0; color: #fff')
         //插件执行入口
+
         updateDarkClass()
 
         if (is_huya) {

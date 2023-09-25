@@ -468,7 +468,7 @@ export const support = {
         return !is_douyin && !is_bilibili
     },
     supportAutoFullScreen() {
-        return !is_douyu // 斗鱼暂不支持！加载时间太长了！
+        return true
     },
     supportAutoViewMaxPro() {
         return true
