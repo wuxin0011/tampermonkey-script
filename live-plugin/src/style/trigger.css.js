@@ -12,7 +12,7 @@ const css = is_huya ? `
 .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
-.mod-index-wrap #js-main,
+.mod-index-wrap #js-main,#J_treasureChestContainer,
 .mod-index-wrap #banner,
 .mod-index-wrap .mod-game-type,
 .mod-index-wrap .mod-actlist,

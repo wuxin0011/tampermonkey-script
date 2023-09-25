@@ -230,13 +230,16 @@ const darkCss = `
   border:1px solid var(--w-text-light) !important;
 }
 
+
+.dark .ChatSpeaker--2lgjsxdm6dK5MZ-6kVGLtx textarea:focus,
+.dark [class^=ChatSpeaker] textarea:focus,
 .dark .hy-header-style-normal .duya-header-search input:focus {
   border:1px solid var(--w-text) !important;
 }
 
 
 
-.dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,
+.dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,.dark [class^=MmdPopPanel],
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span,
 .dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
 .dark .msg-of-king,.dark [class^=roomBlockWords] [class^=btn],
@@ -276,8 +279,5 @@ const darkCss = `
 }
 
 `
-// 活动框 
-// .dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeziQOTXN_KaP20,
-// .dark .panel--17CN9xHGgPu8Nq3SPsiM8u .panel-hd-112tPbAPeZiQOtXN_KaP20,.dark [panel^=barrageBox] [class^=panel-hd],
 export default darkCss
 

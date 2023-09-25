@@ -1,9 +1,9 @@
 import {
     addEventListener,
-    findMark, getLocalStore,
+    findMark,
     intervalRemoveElement,
     isArray,
-    local_url, log,
+    local_url,
     loopDo,
     querySelector,
     querySelectorAll,
@@ -11,8 +11,7 @@ import {
     removeVideo,
     setTimeoutMark,
     timeoutSelectorAllOne,
-    warn,
-    wd, wls
+    warn
 } from '../../utils';
 
 import LivePlugin from "../live";
