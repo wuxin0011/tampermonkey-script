@@ -485,17 +485,18 @@ export default class LivePlugin {
                 addLocalStore(THEME_IS_AUTO, result, Boolean.name, false)
             }
             const needDark = isNeedDark()
+            console.log('isNeedDark', needDark ? '当前为黑夜模式' : '当前为白天模式')
             if (theme_btn) {
                 theme_btn.innerText = needDark ? '白天' : '黑夜'
                 theme_btn.title = needDark ? '点击切换到白天模式' : '点击切换到黑夜模式'
             }
-            if (needDark && !container.classList.contains('dark')) {
-                container.className = `dark ${container.className}`
+            console.log('update before ...', container.className, ' isDark ', needDark && !container.classList.contains('m-dark'))
+            if (needDark && !container.classList.contains('m-dark')) {
+                container.className = `m-dark ${container.className}`
             } else {
-                container.classList.contains('dark') && container.classList.remove('dark')
+                container.classList.contains('m-dark') && container.classList.remove('m-dark')
             }
-
-
+            console.log('update after ...', container.className)
         }
 
 
@@ -1010,7 +1011,7 @@ export default class LivePlugin {
      */
     clickLogoShowContainer() {
         let that = this
-        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name) && is_bilibili)) {
+        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
             // bilibili有人反馈不需要头部这个Logo现在移除
             return;
         }

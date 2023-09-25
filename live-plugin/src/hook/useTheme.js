@@ -134,7 +134,6 @@ export const updateDarkStyleType = (type) => {
   wls.setItem(DARK_THEME_KEY, theme.dark)
   // 切换主题类型
   updateDarkClass()
-  log('主题切换成功！', '你选择主题是', DARK_TYPE[type].name, '颜色是', darkColor() === DARK_TYPE[type].color ? 'ok' : 'fail')
 }
 
 
@@ -146,10 +145,9 @@ export const updateDarkStyleType = (type) => {
 export const toggleColorMode = (event) => {
 
   if (!event) {
-    warn('event is not allow null !')
     return;
   }
-  
+
   try {
     const isAppearanceTransition = document?.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!isAppearanceTransition) {
@@ -168,7 +166,6 @@ export const toggleColorMode = (event) => {
     Math.max(y, innerHeight - y),
   )
   const transition = document.startViewTransition(() => {
-    log('支持快照切换...')
     themeUpdate()
   })
   transition.ready
@@ -197,6 +194,7 @@ export const toggleColorMode = (event) => {
 
 const autoDarkType = () => {
   let hour = new Date().getHours()
+  console.log('current hours:', hour)
   let type = DARK_THEME_TYPE.DEFAULT
   if (isAutoDark()) {
     if (hour >= 0 && hour <= 7) { // 黑夜0
@@ -223,10 +221,8 @@ const autoDarkColor = () => {
   if (isAutoDark()) {
     let type = autoDarkType()
     color = DARK_TYPE[type].color
-    log('autoDarkColor=', color, 'type=', type)
   } else {
     color = darkColor()
-    log('darkColor=', color, 'type=')
   }
 
   return color
@@ -259,7 +255,6 @@ export const updateDarkClass = () => {
  * update theme
  */
 export const themeUpdate = () => {
-  log(isNeedDark() ? '切换到白天' : "切换到黑夜")
   wls.setItem(DARK_THEME_KEY, isNeedDark() ? theme.light : theme.dark)
   updateDarkClass()
 }

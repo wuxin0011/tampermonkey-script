@@ -72,7 +72,7 @@ export class LivePluginElement extends HTMLElement {
         const livePlugin = this;
         // container
         const container = document.createElement('div');
-        container.className = `${isNeedDark() ? 'dark' : ''} m-container`
+        container.className = `${isNeedDark() ? 'm-dark' : ''} m-container`
         container.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro)
         livePlugin.shadowRoot.appendChild(container);
         // insert dom

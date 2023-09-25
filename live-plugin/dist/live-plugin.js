@@ -541,11 +541,9 @@
     addLocalStore(THEME_TYPE_KEY, type, String.name, false);
     wls.setItem(DARK_THEME_KEY, theme.dark);
     updateDarkClass();
-    log("主题切换成功！", "你选择主题是", DARK_TYPE[type].name, "颜色是", darkColor() === DARK_TYPE[type].color ? "ok" : "fail");
   };
   const toggleColorMode = (event) => {
     if (!event) {
-      warn("event is not allow null !");
       return;
     }
     try {
@@ -566,7 +564,6 @@
       Math.max(y, innerHeight - y)
     );
     const transition = document.startViewTransition(() => {
-      log("支持快照切换...");
       themeUpdate();
     });
     transition.ready.then(() => {
@@ -588,6 +585,7 @@
   };
   const autoDarkType = () => {
     let hour = (/* @__PURE__ */ new Date()).getHours();
+    console.log("current hours:", hour);
     let type = DARK_THEME_TYPE.DEFAULT;
     if (isAutoDark()) {
       if (hour >= 0 && hour <= 7) {
@@ -613,10 +611,8 @@
     if (isAutoDark()) {
       let type = autoDarkType();
       color = DARK_TYPE[type].color;
-      log("autoDarkColor=", color, "type=", type);
     } else {
       color = darkColor();
-      log("darkColor=", color, "type=");
     }
     return color;
   };
@@ -636,7 +632,6 @@
     }
   };
   const themeUpdate = () => {
-    log(isNeedDark() ? "切换到白天" : "切换到黑夜");
     wls.setItem(DARK_THEME_KEY, isNeedDark() ? theme.light : theme.dark);
     updateDarkClass();
   };
@@ -649,21 +644,21 @@
     return str;
   };
   const liveDarkCss = `
-  .dark.m-container {
+  .m-dark.m-container {
     --m-container-background-color: var(--w-bg-darker);
   }
   
 
-  .dark .m-select-dark-option,
-  .dark .m-select-dark, .dark .m-dark-type-select,
-  .dark.m-container {
+  .m-dark .m-select-dark-option,
+  .m-dark .m-select-dark, .m-dark .m-dark-type-select,
+  .m-dark.m-container {
     background-color: var(--m-container-background-color) ;
     color:var(--w-text-light) ;
   }
 
 
-  .dark.m-container .m-link,
-  .dark.m-container .m-link:visited {
+  .m-dark.m-container .m-link,
+  .m-dark.m-container .m-link:visited {
     color: var(--w-text) ;
   }
   
@@ -674,14 +669,14 @@
   
   
 
-  .dark.m-container table tr,
-  .dark.m-container table tbody tr:nth-child(1) 
+  .m-dark.m-container table tr,
+  .m-dark.m-container table tbody tr:nth-child(1) 
    {
     border-color: var(--w-text-light) ;
    }
 
 
-   .dark.m-container .btn {
+   .m-dark.m-container .btn {
       background: var(--w-bg-darker) ;
       outline:1px solid var(--w-text) ;
       color: var(--w-text-light) ;
@@ -689,7 +684,7 @@
 
    
 
-   .dark.m-container .btn:hover {
+   .m-dark.m-container .btn:hover {
     background: var(--w-bg) ;
     outline:1px solid var(--w-text-light) ;
     color: var(--w-text) ;
@@ -1140,7 +1135,7 @@ ${root$1}
     createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) {
       const livePlugin = this;
       const container = document.createElement("div");
-      container.className = `${isNeedDark() ? "dark" : ""} m-container`;
+      container.className = `${isNeedDark() ? "m-dark" : ""} m-container`;
       container.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro);
       livePlugin.shadowRoot.appendChild(container);
       document.querySelector("body").append(livePlugin);
@@ -1536,15 +1531,18 @@ ${root$1}
           addLocalStore(THEME_IS_AUTO, result, Boolean.name, false);
         }
         const needDark = isNeedDark();
+        console.log("isNeedDark", needDark ? "当前为黑夜模式" : "当前为白天模式");
         if (theme_btn) {
           theme_btn.innerText = needDark ? "白天" : "黑夜";
           theme_btn.title = needDark ? "点击切换到白天模式" : "点击切换到黑夜模式";
         }
-        if (needDark && !container.classList.contains("dark")) {
-          container.className = `dark ${container.className}`;
+        console.log("update before ...", container.className, " isDark ", needDark && !container.classList.contains("m-dark"));
+        if (needDark && !container.classList.contains("m-dark")) {
+          container.className = `m-dark ${container.className}`;
         } else {
-          container.classList.contains("dark") && container.classList.remove("dark");
+          container.classList.contains("m-dark") && container.classList.remove("m-dark");
         }
+        console.log("update after ...", container.className);
       };
       addEventListener(theme_btn, "click", function(e) {
         toggleColorMode(e);
@@ -1986,7 +1984,7 @@ ${root$1}
      */
     clickLogoShowContainer() {
       let that = this;
-      if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name) && is_bilibili)) {
+      if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
         return;
       }
       if (this.header_logo === "none" || !this.header_logo) {
@@ -2509,6 +2507,7 @@ ${root$1}
           for (let feed of divs) {
             const isMark = !!querySelector(feed, ".m-span-text");
             if (!isMark) {
+              console.log("feed", feed);
               let item = querySelector(feed, "div.bili-video-card__info--bottom");
               const name = (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent;
               const href = (_b = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _b.href;
@@ -2528,6 +2527,7 @@ ${root$1}
           for (let feed of divs) {
             const isMark = !!querySelector(feed, ".m-span-text");
             if (!isMark) {
+              console.log("feed =>", feed);
               let item = querySelector(feed, "div.bili-video-card__info--bottom");
               let isLive = false;
               if (!item) {
@@ -2558,6 +2558,9 @@ ${root$1}
         }
       };
       const operationLogo = () => {
+        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
+          return;
+        }
         findMark(that == null ? void 0 : that.header_logo, (logo) => {
           logo.setAttribute("href", "javascript:;void(0)");
           logo.setAttribute("title", "点击Logo，显示插件配置");

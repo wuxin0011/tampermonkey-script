@@ -9,6 +9,8 @@ import {
     loopDo,
     querySelector,
     removeDOM,
+    wls,
+    getLocalStore,
     timeoutSelectorAll
 } from '@/utils';
 import Logo from '@/utils/logo';
@@ -93,7 +95,7 @@ export default class BiliBili extends LivePlugin {
                 return href.match(/https:\/\/space\.bilibili\.com\/(\d+).*/)[1]
             }
         } catch (error) {
-            
+
         }
         return this.getBilibiliRoomId(href)
     }
@@ -110,6 +112,7 @@ export default class BiliBili extends LivePlugin {
                 for (let feed of divs) {
                     const isMark = !!querySelector(feed, '.m-span-text')
                     if (!isMark) {
+                        console.log('feed', feed)
                         let item = querySelector(feed, 'div.bili-video-card__info--bottom')
                         const name = querySelector(item, 'span.bili-video-card__info--author')?.textContent
                         const href = querySelector(item, '.bili-video-card__info--owner')?.href
@@ -133,17 +136,16 @@ export default class BiliBili extends LivePlugin {
                 for (let feed of divs) {
                     const isMark = !!querySelector(feed, '.m-span-text')
                     if (!isMark) {
+                        console.log('feed =>', feed)
                         let item = querySelector(feed, 'div.bili-video-card__info--bottom')
                         let isLive = false;
                         if (!item) {
                             isLive = true;
                             item = querySelector(feed, '.bili-live-card__info--text')
                         }
-
                         const name = !isLive ? querySelector(item, 'span.bili-video-card__info--author')?.textContent : querySelector(item, 'a.bili-live-card__info--uname span')?.textContent
                         const href = !isLive ? querySelector(item, '.bili-video-card__info--owner')?.href : querySelector(item, 'a.bili-live-card__info--uname')?.href
                         const id = this.getBilibiliRoomId(href)
-
                         if (this.userIsExist(name) || this.userIsExist(id)) {
                             removeDOM(feed, true)
                         } else if (id && name) {
@@ -173,6 +175,9 @@ export default class BiliBili extends LivePlugin {
         }
 
         const operationLogo = () => {
+            if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
+                return;
+            }
             findMark(that?.header_logo, (logo) => {
                 logo.setAttribute('href', "javascript:;void(0)")
                 logo.setAttribute('title', '点击Logo，显示插件配置')
