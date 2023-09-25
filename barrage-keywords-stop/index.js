@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         barrage-keywords-stop
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/barrage-keywords-stop
-// @version      0.0.2
+// @version      0.0.3
 // @author       wuxin0011
 // @description  抖音、斗鱼、虎牙、bilibili弹幕关键字屏蔽，按下 ctrl+alt+k 即可激活🧨
 // @license      MIT
@@ -20,6 +20,7 @@
   if (typeof window === undefined) {
     return;
   }
+
   /********************************************************************common************************************************************************************************ */
   const selectKeywordsLocal = 'selectKeywordsLocal'                                        // 当前网站全部保存的关键词
   const isNoShowTipKey = 'tip_isNoShowTipKey'                                              // 是否不需要提示   默认是
@@ -253,7 +254,6 @@
       keywordsUpdate(keywordsCache)
     }
   }
-  // style="width: var(--dm-input-time-width);"
   const containerStr = ` 
     <div class="m-dm-container-header">
       <input type="text" class="m-dy-input-add-keywords" placeholder="请输入关键字">
@@ -273,13 +273,14 @@
 `
 
 
+
   const style = `
  
   .m-dm-container {
     --dm-container-width: 500px;
     --dm-container-height: 300px;
     --dm-input-add-keywords-width: 120px;
-    --dm-input-time-width: 50px;
+    --dm-input-time-width: 20px;
     --dm-container-background-color: 30, 23, 37;
     --dm-font-color: #fff;
     --dm-font-color-hover: #000;
@@ -293,93 +294,93 @@
 
 
   .m-dm-container {
-    width: var(--dm-container-width) !important;
-    height: var(--dm-container-height) !important;
-    background-color: rgba(var(--dm-container-background-color), 1) !important;
-    position: fixed !important;
-    display: flex !important;
-    flex-direction: column !important;
-    box-sizing: border-box !important;
-    box-shadow: 2px 2px 10px rgba(var(--dm-background-color), 0.7) !important;
-    border-radius: 10px !important;
-    position: fixed !important;
-    right: 0 !important;
-    top: 100px !important;
-    border: none !important;
-    transition: transform ease-in-out 0.5s !important;
-    z-index: 999999 !important;
-    box-sizing: border-box !important;
-    padding: 10px !important;
+    width: var(--dm-container-width) ;
+    height: var(--dm-container-height) ;
+    background-color: rgba(var(--dm-container-background-color), 1) ;
+    position: fixed ;
+    display: flex ;
+    flex-direction: column ;
+    box-sizing: border-box ;
+    box-shadow: 2px 2px 10px rgba(var(--dm-background-color), 0.7) ;
+    border-radius: 10px ;
+    position: fixed ;
+    right: 0 ;
+    top: 100px ;
+    border: none ;
+    transition: transform ease-in-out 0.5s ;
+    z-index: 999999 ;
+    box-sizing: border-box ;
+    padding: 10px ;
   }
 
   .m-dm-input-animation-time,
   .m-dy-input-add-keywords {
-    width: var(--dm-input-add-keywords-width) !important;
-    padding: 6px 12px !important;
-    border: none !important;
-    outline: none !important;
-    margin-left: 10px !important;
-    margin-top: 10px !important;
-    border-radius: 10px !important;
+    width: var(--dm-input-add-keywords-width) ;
+    padding: 6px 12px ;
+    border: none ;
+    outline: none ;
+    margin-left: 10px ;
+    margin-top: 10px ;
+    border-radius: 10px ;
   }
 
   .m-dm-input-animation-time,
   .m-dy-input-add-keywords:focus {
-    border: none !important;
-    outline: none !important;
+    border: none ;
+    outline: none ;
   }
 
   .m-dm-input-animation-time {
-    width: var(--dm-input-time-width) !important;
+    width: var(--dm-input-time-width) ;
   }
 
   .m-dm-install-link {
-    display:inline-block !important;
-    float:right !important;
-    right:5px !important;
-    color: var(--dm-font-color) !important;
+    display:inline-block ;
+    float:right ;
+    right:5px ;
+    color: var(--dm-font-color) ;
   }
 
 
 
   .m-dm-container-header,
   .m-dm-container-footer {
-    height: 44px !important;
-    position: relative  !important;
+    height: 44px ;
+    position: relative  ;
   }
 
   .m-dm-container-header #m-dm-close-btn {
-    float:right !important;
-    right: 3px !important;
-    color: var(--dm-font-color) !important;
-    font-size: 30px !important;
-    cursor: pointer  !important;
-    position: absolute  !important;
+    float:right ;
+    right: 3px ;
+    color: var(--dm-font-color) ;
+    font-size: 30px ;
+    cursor: pointer  ;
+    position: absolute  ;
   }
 
 
   .m-dm-container-body {
-    flex: 1 !important;
-    overflow: auto !important;
+    flex: 1 ;
+    overflow: auto ;
   }
 
   .m-dm-keywords-tag {
-    display: inline-block !important;
-    padding: 5px !important;
-    background-color: var(--dm-background-color) !important;
-    border: none !important;
-    outline: none !important;
-    margin: 5px !important;
-    cursor: pointer !important;
-    color: var(--dm-font-color) !important;
-    font-size: 12px !important;
-    border: 1px solid var(--dm-border-color) !important;
-    border-radius: 10px !important;
+    display: inline-block ;
+    padding: 5px ;
+    background-color: var(--dm-background-color) ;
+    border: none ;
+    outline: none ;
+    margin: 5px ;
+    cursor: pointer ;
+    color: var(--dm-font-color) ;
+    font-size: 12px ;
+    border: 1px solid var(--dm-border-color) ;
+    border-radius: 10px ;
   }
 
   .m-dm-keywords-tag:hover {
-    background: rgba(var(--dm-background-color), 0.7) !important;
-    border: 1px solid var(--dm-border-hover-color) !important;
+    background: rgba(var(--dm-background-color), 0.7) ;
+    border: 1px solid var(--dm-border-hover-color) ;
   }
 
 
@@ -387,16 +388,16 @@
   .m-dm-all-keywords-button,
   .m-dm-delete-keywords-button,
   .m-dm-add-keywords-button {
-    display: inline-block !important;
-    padding: 4px 8px !important;
-    text-align: center !important;
-    border: none !important;
-    outline: none !important;
-    background-color: var(--dm-background-color-hover) !important;
-    color: var(--dm-font-color-hover) !important;
-    cursor: pointer !important;
-    border: 1px solid var(--dm-border-color) !important;
-    border-radius: 10px !important;
+    display: inline-block ;
+    padding: 4px 8px ;
+    text-align: center ;
+    border: none ;
+    outline: none ;
+    background-color: var(--dm-background-color-hover) ;
+    color: var(--dm-font-color-hover) ;
+    cursor: pointer ;
+    border: 1px solid var(--dm-border-color) ;
+    border-radius: 10px ;
   }
 
   
@@ -404,57 +405,89 @@
   .m-dm-all-keywords-button:hover,
   .m-dm-delete-keywords-button:hover,
   .m-dm-add-keywords-button:hover {
-    background-color: rgb(var(--dm-background-color)) !important;
-    color: var(--dm-font-color) !important;
-    border: 1px solid var(--dm-border-color) !important;
+    background-color: rgb(var(--dm-background-color)) ;
+    color: var(--dm-font-color) ;
+    border: 1px solid var(--dm-border-color) ;
 
   }
 
   .m-dm-container-footer {
-    box-sizing: border-box !important;
-    padding: 10px !important;
+    box-sizing: border-box ;
+    padding: 10px ;
   }
 
   .m-dm-container-footer p {
-    color: var(--dm-font-color) !important;
-    cursor: pointer !important;
+    color: var(--dm-font-color) ;
+    cursor: pointer ;
   }
 
 
   .m-dm-ani-close {
-    transform: translateX(var(--dm-container-width)) !important;
+    transform: translateX(var(--dm-container-width)) ;
   }
 
   .m-dm-container-body {
-    overflow: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: thin !important;
-    scrollbar-color: #888888 #f0f0f0 !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
+    overflow: auto ;
+    -webkit-overflow-scrolling: touch ;
+    scrollbar-width: thin ;
+    scrollbar-color: #888888 #f0f0f0 ;
+    -webkit-overflow-scrolling: touch ;
+    scrollbar-width: none ;
+    -ms-overflow-style: none ;
   }
 
   .m-dm-container-body::-webkit-scrollbar {
-    width: 4px !important;
+    width: 4px ;
   }
 
   .m-dm-container-body::-webkit-scrollbar-track {
-    background-color: rgb(22, 24, 35) !important;
+    background-color: rgb(22, 24, 35) ;
   }
 
   .m-dm-container-body::-webkit-scrollbar-thumb {
-    background-color: #333 !important;
-    border-radius: 4px !important;
+    background-color: #333 ;
+    border-radius: 4px ;
   }
-
-  .m-fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-  }
-
   
   `
+
+  /**
+ * webComponent
+ */
+  class BarrageKeywordsStop extends HTMLElement {
+    constructor() {
+      super()
+      this.attachShadow({ mode: "open" });
+      const css = document.createElement("style");
+      css.innerHTML = style;
+      this.shadowRoot.appendChild(css);
+    }
+    createContainer(tagName, isShow, isBefore = false) {
+
+      const c = document.querySelector(tagName)
+      if (!c) {
+        isSupport = false
+        console.log('当前容器不存在！请检查', tagName)
+        return;
+      }
+      const plugin = document.createElement('barrage-keywords-stop')
+      const shadowRoot = plugin.shadowRoot
+      const dmContainer = document.createElement('div')
+      dmContainer.className = `m-dm-container ${isFisrtInstall() || isShow ? '' : 'm-dm-ani-close'} `
+      dmContainer.innerHTML = containerStr
+      const tip = dmContainer.querySelector('.m-dm-container-footer p')
+      tip.style.display = isNoShowTip() ? 'none' : 'block'
+      shadowRoot.appendChild(dmContainer)
+      if (isBefore) {
+        c.parentNode.insertBefore(plugin, c.nextSibling);
+      } else {
+        c.append(plugin)
+      }
+      return dmContainer
+    }
+  }
+
+  customElements.define('barrage-keywords-stop', BarrageKeywordsStop)
 
 
   //  初始化之前将本地房间号和全网房间全部关键词收集
@@ -723,25 +756,13 @@
 
 
   const createContainer = (tagName = 'body', isShow = true, isBefore = false) => {
-    const c = document.querySelector(tagName)
-    if (!c) {
+    currentContainer = new BarrageKeywordsStop().createContainer(tagName, isShow, isBefore)
+    if (!currentContainer) {
       isSupport = false
       console.log('当前容器不存在！请检查', tagName)
       return;
     }
-    const dmContainer = document.createElement('div')
-    dmContainer.className = `m-dm-container ${isFisrtInstall() || isShow ? '' : 'm-dm-ani-close'} `
-    dmContainer.innerHTML = containerStr
-    const tip = dmContainer.querySelector('.m-dm-container-footer p')
-    tip.style.display = isNoShowTip() ? 'none' : 'block'
-    if (isBefore) {
-      c.parentNode.insertBefore(dmContainer, c.nextSibling);
-    } else {
-      c.append(dmContainer)
-    }
-    isSupport = true
     console.log('弹幕容器创建完毕....')
-    currentContainer = dmContainer
     addOperation()
   }
 
