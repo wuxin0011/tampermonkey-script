@@ -1,5 +1,7 @@
 import {
+    HostUser,
     addEventListener,
+    addFullScreenEvent,
     addLocalStore,
     appendChild,
     createElement,
@@ -7,32 +9,31 @@ import {
     findButton,
     findMark,
     getLocalStore,
+    handlerDisplay,
     handlerPromise,
-    HostUser,
+    isArray,
     is_bilibili,
     is_douyu,
     is_huya,
     is_localhost,
-    isArray,
     local_url,
-    support,
     log,
     loopDo,
     querySelector,
     querySelectorAll,
     removeDOM,
     removeVideo,
+    support,
     uploadImage,
     warn,
     wd,
-    addFullScreenEvent,
-    wls, handlerDisplay
-} from '../../utils'
+    wls
+} from '../../utils';
 
-import iconLogo from '@/utils/logo'
-import { createContainer } from "@/ui";
-import { isBVId, isUserId, getBiliBiliInfoByVideoID, getBiliBiliInfoByUserId } from '@/api/bilibili';
-import { toggleColorMode, updateDarkStyleType, THEME_IS_AUTO, DARK_THEME_KEY, isNeedDark } from '@/hook/useTheme'
+import { getBiliBiliInfoByUserId, getBiliBiliInfoByVideoID, isBVId, isUserId } from '@/api/bilibili';
+import { DARK_THEME_KEY, THEME_IS_AUTO, isNeedDark, toggleColorMode, updateDarkStyleType } from '@/hook/useTheme';
+import { LivePluginElement } from "@/ui";
+import iconLogo from '@/utils/logo';
 import { isRisk } from '../../api/bilibili';
 
 /**
@@ -208,7 +209,7 @@ export default class LivePlugin {
         let isAutoMaxPro = wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name) // logo 默认显示
 
         // create container ...
-        that.m_container = createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro)
+        that.m_container = new LivePluginElement().createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro)
         if (querySelector(that.m_container, '#m-container-box2 table tbody')) {
             that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
             that.is_new = true
@@ -483,7 +484,7 @@ export default class LivePlugin {
                 theme_is_auto_box.checked = result
                 addLocalStore(THEME_IS_AUTO, result, Boolean.name, false)
             }
-            const needDark = !isNeedDark()
+            const needDark = isNeedDark()
             if (theme_btn) {
                 theme_btn.innerText = needDark ? '白天' : '黑夜'
                 theme_btn.title = needDark ? '点击切换到白天模式' : '点击切换到黑夜模式'
@@ -517,9 +518,6 @@ export default class LivePlugin {
 
     }
 
-    containerDarkChange() {
-
-    }
 
 
     initAnimation(container) {
@@ -1012,8 +1010,8 @@ export default class LivePlugin {
      */
     clickLogoShowContainer() {
         let that = this
-        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
-            // 不显示操作容器了
+        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name) && is_bilibili)) {
+            // bilibili有人反馈不需要头部这个Logo现在移除
             return;
         }
         if (this.header_logo === 'none' || !this.header_logo) {

@@ -13,7 +13,7 @@ import { isNeedDark, isAutoDark, themeOptions } from '@/hook/useTheme'
  * @param {isMaxPro} isMaxPro
  * @returns
  */
-const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
+export const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
     return `
     <div class="m-container-box" id="m-container-box2">
         <div class="operation">
@@ -53,52 +53,33 @@ const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShow
 
 
 /**
- * LivePluginElement webComponent
+ * LivePluginElement WebComponent
  * @link https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_custom_elements
  */
 export class LivePluginElement extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open' });
+        // add css
         const style = document.createElement('style');
         style.innerHTML = LivePluginCss
-        // init
-        const isShowBg = this.getAttribute('is-show-bg');
-        const isShowMenu = this.getAttribute('is-show-menu');
-        const isShowFullScreen = this.getAttribute('is-show-full-screen');
-        const isShowGift = this.getAttribute('is-show-gift');
-        const isShowLogo = this.getAttribute('is-show-logo');
-        const isMaxPro = this.getAttribute('is-max-pro');
+        this.shadowRoot.appendChild(style);
 
+    }
 
-        // html content
-        const wrapper = document.createElement('div');
-        wrapper.className = `${isNeedDark()?'dark':''} m-container`
-        wrapper.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro)
-
-        // add shadow style 
-        shadow.appendChild(style);
-        // add dom
-        shadow.appendChild(wrapper);
+    createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) {
+        // const livePlugin = document.createElement('live-plugin-element');
+        const livePlugin = this;
+        // container
+        const container = document.createElement('div');
+        container.className = `${isNeedDark() ? 'dark' : ''} m-container`
+        container.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro)
+        livePlugin.shadowRoot.appendChild(container);
+        // insert dom
+        document.querySelector('body').append(livePlugin)
+        return container
     }
 }
 
 
-// 
 
-export const createContainer = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
-    const livePlugin = document.createElement('live-plugin-element');
-    livePlugin.setAttribute('is-show-bg', isShowBg);
-    livePlugin.setAttribute('is-show-menu', isShowMenu);
-    livePlugin.setAttribute('is-show-full-screen', isShowFullScreen);
-    livePlugin.setAttribute('is-show-gift', isShowGift);
-    livePlugin.setAttribute('is-show-logo', isShowLogo);
-    livePlugin.setAttribute('is-max-pro', isMaxPro);
-    document.querySelector('body').append(livePlugin)
-    return livePlugin.shadowRoot.querySelector('.m-container')
-}
-
-
-
-
-export default htmlTemplate

@@ -3,20 +3,36 @@
 const darkCss = `
 
 /* 修改背景和字体颜色 */
-.dark body,.dark #main_col,.dark .room-core,.dark input,.dark input:focus, .dark textarea,.dark textarea:focus,
-.dark .hy-header-style-normal .duya-header-wrap,.dark .duya-header,.dark .duya-header .duya-header-bd,
+.dark body,
+.dark #main_col,
+.dark .room-core,
+.dark input,
+.dark input:focus,
+.dark textarea,
+.dark textarea:focus,
+.dark .hy-header-style-normal .duya-header-wrap,
+.dark .duya-header,
+.dark .duya-header .duya-header-bd,
 .dark #J_liveListNav dl dd .role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165, 
 .dark #J_liveListNav dl dd .role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
-.dark #J_liveListNav dl dd [class^=role-box], .dark #J_liveListNav dl dd [class^=role-box]:hover,
-.dark #J_liveListNav dl dd div li,.dark #J_liveListNav dl dd div li:hover,
-.dark .js-responded-list,.dark .program-preview-box .preview-bd,
-.dark .game-live-item,.dark .game-live-item .txt .num,
-.dark .game-live-item .txt .game-type a,.dark .game-live-item .txt .game-type ,
+.dark #J_liveListNav dl dd [class^=role-box],
+.dark #J_liveListNav dl dd [class^=role-box]:hover,
+.dark #J_liveListNav dl dd div li,
+.dark #J_liveListNav dl dd div li:hover,
+.dark .js-responded-list,
+.dark .program-preview-box .preview-bd,
+.dark .game-live-item,
+.dark .game-live-item .txt .num,
+.dark .game-live-item .txt .game-type a,
+.dark .game-live-item .txt .game-type,
 .dark .live-box .box-hd .more-list li,
 .dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
 .dark [class^=Category] [class^=SecTitle],
-.dark .nav-expand-list,.dark .nav-expand-list-more ,
-.dark #js-game-list li,.dark .mod-list .box-hd .filter dd .tag-layer,.dark #J_mainWrap,
+.dark .nav-expand-list,
+.dark .nav-expand-list-more ,
+.dark #js-game-list li,
+.dark .mod-list .box-hd .filter dd .tag-layer,
+.dark #J_mainWrap,
 .dark .room-hd,.dark .room-core-r,
 .dark .room-sidebar,.dark .room-player-gift-placeholder,
 .dark #chat-room__wrap #chat-room__list div,.dark #chat-room__wrap #chat-room__list div a,
@@ -34,7 +50,11 @@ const darkCss = `
 .dark .player-gift-wrap,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M.checked--2qEbUox3t-pKVluoe87qMG i,
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
-.dark [class^=Panel],.dark [class^=PanelHd],.dark [class^=PanelBd],.dark [class^=PanelFt],
+.dark [class^=panel],
+.dark [class^=Panel],
+.dark [class^=PanelHd],
+.dark [class^=PanelBd],
+.dark [class^=PanelFt],
 .dark [class^=PopMsg],.dark [class^=PopMsg] [class^=title],.dark [class^=PopMsg] [class^=desc],.dark [class^=PopMsg] [class^=PopMsgArr],.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
 .dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark .listItem--2DQMeljGuIpJJbgUmLePE3 span,
 .dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejSSMCTSLSPah47f_19h-,
@@ -50,12 +70,15 @@ const darkCss = `
 .dark .search-suggest, .dark .search-suggest ,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current,
-.dark #J_liveListNav dl dd span,.dark #player-gift-wrap,
+.dark #J_liveListNav dl dd span,
+.dark #player-gift-wrap,
+.dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
 .dark [class*=msg-of-king],
 .dark .huya-footer{
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
+  outline: none !important;
 }
 
 
@@ -74,6 +97,7 @@ const darkCss = `
 .dark .search-suggest .search-item.current,
 .dark .hy-nav-item-on .hy-nav-link {
   border:1px solid var(--w-text-light) !important;
+  outline: none !important;
 }
 
 /* 修改字体颜色 */
@@ -120,11 +144,15 @@ const darkCss = `
 .dark #tipsOrchat .live-tips,
 .dark #tipsOrchat ._PortalChatPanelRoot div p,
 .dark #tipsOrchat ._PortalChatPanelRoot div span,
-.dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,.dark [class^=checkbox] i,
+.dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,
+.dark [class^=checkbox] i,
 .dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,.dark [class^=checkbox] span,
 .dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark [class^=listItem],
-.dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,.dark [class^=barrageBox] [class^=title],
-.dark [class^=barrageBox] [class^=panel-hd], .dark [class^=panel] [class^=panel-hd],
+.dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,
+.dark [class^=barrageBox] [class^=title],
+.dark [class^=barrageBox] [class^=panel-hd], 
+.dark [class^=panel],
+.dark [class^=panel] [class^=panel-hd],
 .dark [class^=panel-hd],
 .dark .chat-room__ft span,.dark .chat-room__ft p,
 .dark .duya-header-right a i,
@@ -167,6 +195,7 @@ const darkCss = `
 .dark #chat-room__wrap #chat-room__list .RoomMessageRichText--2Y0TYze1NxfsGAbfcA8jGV,
 .dark #chat-room__wrap #chat-room__list [class^=RoomMessageRichText]{
   border:1px solid var(--w-border) !important;
+  outline: none !important;
 }
 
 
@@ -174,6 +203,7 @@ const darkCss = `
 .dark .nav-expand-list.nav-expand-game span:hover {
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
+  outline: none !important;
 }
 
 
@@ -184,6 +214,7 @@ const darkCss = `
 {
   background: var(--w-bg-darker) !important;
   border-color:var(--w-border) !important;
+  outline: none !important;
 }
 
 
@@ -193,12 +224,14 @@ const darkCss = `
 .dark ._2uc0_gzwdW4cbL_UOgWDJd,
 .dark #tipsOrchat{
   border-color:var(--w-border) !important;
+  outline: none !important;
 }
 
 .dark #duya-header,
 .dark #chat-room__wrap #chat-room__list div a,
 .dark #chat-room__wrap #chat-room__list div a span {
   border:none !important;
+  outline: none !important;
 }
 
 .dark .laypageskin_default a:hover,
@@ -214,7 +247,7 @@ const darkCss = `
 .dark .laypageskin_default .laypage_curr,
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
-
+.dark .ixyGIy,
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -224,10 +257,11 @@ const darkCss = `
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .hy-header-style-normal .duya-header-search input,
-.dark .comment-container textarea:focus,
+.dark .comment-container textarea:focus,.dark #pub_msg_input,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
 {
   border:1px solid var(--w-text-light) !important;
+  outline: none !important;
 }
 
 
@@ -235,6 +269,7 @@ const darkCss = `
 .dark [class^=ChatSpeaker] textarea:focus,
 .dark .hy-header-style-normal .duya-header-search input:focus {
   border:1px solid var(--w-text) !important;
+  outline: none !important;
 }
 
 
@@ -245,6 +280,7 @@ const darkCss = `
 .dark .msg-of-king,.dark [class^=roomBlockWords] [class^=btn],
 .dark [class^=SubConfirmPop],.dark [class^=emot-preview],
 .dark [class^=colorNormal],
+
 .dark [class^=colorNormal][class^=lock],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
@@ -252,6 +288,7 @@ const darkCss = `
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
+  outline: none !important;
 }
 
 
@@ -265,6 +302,7 @@ const darkCss = `
   background: var(--w-bg) !important;
   border:1px solid var(--w-text-light) !important;
   color: var(--w-text) !important;
+  outline: none !important;
 }
 
 
@@ -276,8 +314,11 @@ const darkCss = `
 .dark .g-gameCard-link:hover{
   background: var(--w-bg) !important;
   color: var(--w-text) !important;
+  outline: none !important;
 }
 
 `
+
+// .dark .panel--2ziT75l8g5Y26rBqbNQ0tG,
 export default darkCss
 
