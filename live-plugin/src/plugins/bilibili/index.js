@@ -93,7 +93,7 @@ export default class BiliBili extends LivePlugin {
                 return href.match(/https:\/\/space\.bilibili\.com\/(\d+).*/)[1]
             }
         } catch (error) {
-            console.log('error', '获取房间号失败！')
+            
         }
         return this.getBilibiliRoomId(href)
     }
@@ -222,12 +222,10 @@ export default class BiliBili extends LivePlugin {
                     const span = createElement('span')
                     span.classList = 'm-span-text'
                     addEventListener(span, 'click', () => {
-                        if (confirm('确认删除up主 ' + name + ' ?')) {
-                            removeDOM(videoDom, true)
-                            this.addUser(id, name)
-                            // 遍历一遍 删除所有相关视频
-                            this.detailLeftVideoList(0)
-                        }
+                        removeDOM(videoDom, true)
+                        this.addUser(id, name)
+                        // 遍历一遍 删除所有相关视频
+                        this.detailLeftVideoList(0)
                     })
                     appendChild(playinfo, span)
                 }
@@ -257,19 +255,15 @@ export default class BiliBili extends LivePlugin {
             this.isFullScreen()
             this.isAutoMaxVideoPro()
             let result = await getBiliBiliInfoByVideoID(local_url)
-            console.log('视频查询结果详情:', result)
             if (result && result?.code === 0 && this.userIsExist(result?.owner?.mid) || this.userIsExist(result?.owner?.name)) {
-                console.log('房间需要屏蔽....')
                 this.roomIsNeedRemove()
             }
-
         }
 
     }
 
 
     async getNameByRoomId(keywords) {
-        log('getNameByRoomId 查询中...', keywords)
         if (isBVId(keywords)) {
             let result = await getBiliBiliInfoByVideoID(keywords)
             if (result && result?.code === 0) {

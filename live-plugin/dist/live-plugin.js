@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         直播插件
-// @namespace    https://github.com/wuxin0011/huya-live
+// @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
 // @version      4.1.2
 // @author       wuxin0011
-// @description  虎牙、斗鱼、哔哔哔里、抖音 页面简化，给观众一个干净的页面！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀
+// @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArhJREFUWEfllz9ME1Ecx3+/dzUxIUpPxcTEqVD+LDjIoiTSwQldjHGDAwYpbYE4aOJQ8KBFTUx0KLSWoNIDoyFuGsMkcTBx0URjjFBQBmKiQ49ijInh3s/06iWlgfauh8Xoje++7/f5vN+73r0i7PCFO8yHDQI1QzG5HEIOgskPsm85w9IFMmBkQguBNlQOAQTWB4hryWB3V1YgFP++OOCtKAfcYLjD4xeJ8adYE4p5gINn8YpPb78oBehPihDQ0KoS1Vl65/MFnJJfNgLbLeJs6/UA457/S0CUfI3art0ra3dupbalA5UdfdXpRGTJ7PaIUmAWiMbUqehj2wJiR28zcLqPRD2p6ehsMQlR8n9GQTiZuhd5n8naEtjX1X+ctPVHquvgYefHrw8RUFGVsSdbSYjtgWV0sFYDbksgC+dB1XXgNMgy14tJ/hkidjs9NfosX8IpBeaZwM7kwksWyMK1F6qrSjDgBjAjwZhwMzUZeWmMiZL/NQpCWz48R6BlVYnqb9yi7wGxwx8GjkfV6qpT+fBcCQQKq0rsrS4kCPJm8JI6IEqBS6oydqPYw+aU/MOATAQNJ1anI2+2ytt6CAtKyLKj8tOXI+lE7FWh3G8B81tQbOVW7/8tAoW/BWJ7YM7qyqzkCel5wY+RlWJ2s5v+DK0U3dvZ7xZovUlNRB9YmWdkdYHaa3ddtP7zQnKgp99qkf2dvfWcQ5OqjE5bndswEj+kEZzVj2TuUPxbcsC7x2oRO3l3KP5D0HhD9kwYjp9DghnivDyHUsYuI+L5hWD3lK3/BfVXx2s5p2MLQW+i1G7YEqgbiTZqmtC6OOi9/u8LeOQ5xwpL1uWulDGtlnN2AgAncseJa7gk+96Z6YrpLagbnmjmqHk2gAArAOgwAsznjiNBemHQO7qtAmaKlZIx3YFSipuZ8wvlidcmZtmgQAAAAABJRU5ErkJggg==
-// @source       https://github.com/wuxin0011/huya-live
-// @supportURL   https://github.com/wuxin0011/huya-live/issues
+// @source       https://github.com/wuxin0011/tampermonkey-script/live-plugin
+// @supportURL   https://github.com/wuxin0011/tampermonkey-script/issues
 // @match        https://*.douyin.com/*
 // @match        https://*.douyu.com/*
 // @match        https://*.huya.com/*
@@ -548,7 +548,7 @@ ${root$1}
     --m-container-width: 800px;
     --m-container-height: 400px;
     --m-container-operation-right-width: 150px;
-    --m-container-input-width: ${is_bilibili ? "200px" : "120px"};
+    --m-container-input-width: ${is_bilibili ? "200px" : "100px"};
     --m-container-box-transition: all 0.5s ease-in-out;
     --m-container-select-width: var(--m-container-input-width);
     --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) ;

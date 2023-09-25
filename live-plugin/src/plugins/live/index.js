@@ -1049,13 +1049,11 @@ export default class LivePlugin {
         span.classList = 'm-span-text'
         appendChild(place, span)
         addEventListener(span, 'click', () => {
-            if (confirm(`${message}${name} ?`)) {
-                if (remove) {
-                    removeDOM(container, true)
-                }
-                this.addUser(id, name)
-                this.removeRoom(local_url)
+            if (remove) {
+                removeDOM(container, true)
             }
+            this.addUser(id, name)
+            this.removeRoom(local_url)
         })
     }
 

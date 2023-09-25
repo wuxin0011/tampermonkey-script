@@ -113,9 +113,8 @@ export default class FishLive extends LivePlugin {
         findMark('.Title-roomInfo h2.Title-anchorNameH2', (hostName) => {
             hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
             addEventListener(hostName, 'click', () => {
-                if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
-                    that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
-                }
+                that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+
             })
         })
         // 带有轮播图
@@ -169,10 +168,8 @@ export default class FishLive extends LivePlugin {
                     })
                     addEventListener(user, 'click', (e) => {
                         e.preventDefault()
-                        if (confirm(`确认禁用 ${name}`)) {
-                            that.addUser(that.getRoomIdByUrl(url), name);
-                            removeDOM(li);
-                        }
+                        that.addUser(that.getRoomIdByUrl(url), name);
+                        removeDOM(li);
                     })
                     // 是否应该删除
                     if (that.isRemove(url) || that.userIsExist(name)) {
@@ -197,12 +194,10 @@ export default class FishLive extends LivePlugin {
                             removeDOM(li, true)
                         } else {
                             addEventListener(user, 'click', (e) => {
-                                if (confirm(`确认禁用 ${name}？`)) {
-                                    const id = that.getRoomIdByUrl(url);
-                                    that.addUser(id, name);
-                                    removeDOM(li);
-                                }
                                 e.preventDefault()
+                                const id = that.getRoomIdByUrl(url);
+                                that.addUser(id, name);
+                                removeDOM(li);
                             })
                             // 监听鼠标移入事件
                             addEventListener(li, 'mouseenter', (e) => {
@@ -216,11 +211,9 @@ export default class FishLive extends LivePlugin {
                                 const name = user.textContent || ''
                                 addEventListener(user, 'click', (e) => {
                                     e.preventDefault()
-                                    if (confirm(`确认禁用 ${name}？`)) {
-                                        const id = that.getRoomIdByUrl(url);
-                                        that.addUser(id, name);
-                                        removeDOM(li);
-                                    }
+                                    const id = that.getRoomIdByUrl(url);
+                                    that.addUser(id, name);
+                                    removeDOM(li);
                                 })
 
                             })
@@ -311,7 +304,7 @@ export default class FishLive extends LivePlugin {
             }
             console.log('video ....', video)
 
-            
+
 
             video.addEventListener('loadedmetadata', function () {
                 if (video.requestFullscreen) {
