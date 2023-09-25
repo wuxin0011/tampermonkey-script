@@ -2032,13 +2032,11 @@ ${root$1}
       span.classList = "m-span-text";
       appendChild(place, span);
       addEventListener(span, "click", () => {
-        if (confirm(`${message}${name} ?`)) {
-          if (remove) {
-            removeDOM(container, true);
-          }
-          this.addUser(id, name);
-          this.removeRoom(local_url);
+        if (remove) {
+          removeDOM(container, true);
         }
+        this.addUser(id, name);
+        this.removeRoom(local_url);
       });
     }
     addEven() {
@@ -2109,9 +2107,7 @@ ${root$1}
         findMark(".host-name", (hostName) => {
           hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
           addEventListener(hostName, "click", () => {
-            if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
-              that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
-            }
+            that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
           });
         });
         let ads = [
@@ -2167,10 +2163,8 @@ ${root$1}
           const user = querySelector(li, ".txt i");
           const name = user.textContent || "";
           addEventListener(user, "click", () => {
-            if (confirm(`确认禁用 ${name}？`)) {
-              that.addUser(that.getRoomIdByUrl(url), name);
-              removeDOM(li);
-            }
+            that.addUser(that.getRoomIdByUrl(url), name);
+            removeDOM(li);
           });
           if (that.isRemove(url)) {
             removeDOM(li);
@@ -2264,9 +2258,7 @@ ${root$1}
       findMark(".Title-roomInfo h2.Title-anchorNameH2", (hostName) => {
         hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
         addEventListener(hostName, "click", () => {
-          if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
-            that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
-          }
+          that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
         });
       });
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
@@ -2307,10 +2299,8 @@ ${root$1}
             });
             addEventListener(user, "click", (e) => {
               e.preventDefault();
-              if (confirm(`确认禁用 ${name}`)) {
-                that.addUser(that.getRoomIdByUrl(url), name);
-                removeDOM(li);
-              }
+              that.addUser(that.getRoomIdByUrl(url), name);
+              removeDOM(li);
             });
             if (that.isRemove(url) || that.userIsExist(name)) {
               removeDOM(li);
@@ -2334,12 +2324,10 @@ ${root$1}
                 removeDOM(li, true);
               } else {
                 addEventListener(user, "click", (e) => {
-                  if (confirm(`确认禁用 ${name}？`)) {
-                    const id = that.getRoomIdByUrl(url);
-                    that.addUser(id, name);
-                    removeDOM(li);
-                  }
                   e.preventDefault();
+                  const id = that.getRoomIdByUrl(url);
+                  that.addUser(id, name);
+                  removeDOM(li);
                 });
                 addEventListener(li, "mouseenter", (e) => {
                   const a = querySelector(e.target, "a.DyListCover-wrap.is-hover");
@@ -2352,11 +2340,9 @@ ${root$1}
                   const name2 = user2.textContent || "";
                   addEventListener(user2, "click", (e2) => {
                     e2.preventDefault();
-                    if (confirm(`确认禁用 ${name2}？`)) {
-                      const id = that.getRoomIdByUrl(url2);
-                      that.addUser(id, name2);
-                      removeDOM(li);
-                    }
+                    const id = that.getRoomIdByUrl(url2);
+                    that.addUser(id, name2);
+                    removeDOM(li);
                   });
                 });
               }
@@ -2517,7 +2503,6 @@ ${root$1}
           return href.match(/https:\/\/space\.bilibili\.com\/(\d+).*/)[1];
         }
       } catch (error2) {
-        console.log("error", "获取房间号失败！");
       }
       return this.getBilibiliRoomId(href);
     }
@@ -2619,11 +2604,9 @@ ${root$1}
             const span = createElement("span");
             span.classList = "m-span-text";
             addEventListener(span, "click", () => {
-              if (confirm("确认删除up主 " + name + " ?")) {
-                removeDOM(videoDom, true);
-                this.addUser(id, name);
-                this.detailLeftVideoList(0);
-              }
+              removeDOM(videoDom, true);
+              this.addUser(id, name);
+              this.detailLeftVideoList(0);
             });
             appendChild(playinfo, span);
           }
@@ -2648,16 +2631,13 @@ ${root$1}
         this.isFullScreen();
         this.isAutoMaxVideoPro();
         let result = await getBiliBiliInfoByVideoID(local_url);
-        console.log("视频查询结果详情:", result);
         if (result && (result == null ? void 0 : result.code) === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
-          console.log("房间需要屏蔽....");
           this.roomIsNeedRemove();
         }
       }
     }
     async getNameByRoomId(keywords) {
       var _a, _b, _c;
-      log("getNameByRoomId 查询中...", keywords);
       if (isBVId(keywords)) {
         let result = await getBiliBiliInfoByVideoID(keywords);
         if (result && (result == null ? void 0 : result.code) === 0) {

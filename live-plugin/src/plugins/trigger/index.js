@@ -1,9 +1,9 @@
 import {
     addEventListener,
-    findMark,
+    findMark, getLocalStore,
     intervalRemoveElement,
     isArray,
-    local_url,
+    local_url, log,
     loopDo,
     querySelector,
     querySelectorAll,
@@ -11,7 +11,8 @@ import {
     removeVideo,
     setTimeoutMark,
     timeoutSelectorAllOne,
-    warn
+    warn,
+    wd, wls
 } from '../../utils';
 
 import LivePlugin from "../live";
@@ -85,7 +86,9 @@ export default class TriggerLive extends LivePlugin {
             findMark('.host-name', (hostName) => {
                 hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
                 addEventListener(hostName, 'click', () => {
-                    that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+                    if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
+                        that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+                    }
                 })
             })
 
@@ -149,8 +152,10 @@ export default class TriggerLive extends LivePlugin {
                 const user = querySelector(li, '.txt i')
                 const name = user.textContent || ''
                 addEventListener(user, 'click', () => {
-                    that.addUser(that.getRoomIdByUrl(url), name);
-                    removeDOM(li);
+                    if (confirm(`确认禁用 ${name}？`)) {
+                        that.addUser(that.getRoomIdByUrl(url), name);
+                        removeDOM(li);
+                    }
                 })
                 if (that.isRemove(url)) {
                     removeDOM(li)
