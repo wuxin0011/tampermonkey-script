@@ -28,18 +28,31 @@ import {
     warn,
     wd,
     wls
-} from '../../utils';
+} from '@/utils';
 
-import { getBiliBiliInfoByUserId, getBiliBiliInfoByVideoID, isBVId, isUserId } from '@/api/bilibili';
-import { DARK_THEME_KEY, THEME_IS_AUTO, isNeedDark, toggleColorMode, updateDarkStyleType } from '@/hook/useTheme';
+import {
+    getBiliBiliInfoByUserId,
+    getBiliBiliInfoByVideoID,
+    isBVId,
+    isUserId,
+    isRisk
+} from '@/api/bilibili';
+import {
+    DARK_THEME_KEY,
+    THEME_IS_AUTO,
+    isNeedDark,
+    isAutoDark,
+    theme,
+    THEME_TYPE_KEY,
+    toggleColorMode,
+    updateDarkStyleType
+} from '@/hook/useTheme';
 import { LivePluginElement } from "@/ui";
 import iconLogo from '@/utils/logo';
-import { isRisk } from '../../api/bilibili';
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
- */
-export default class LivePlugin {
+ */export default class LivePlugin {
     constructor() {
         this.baseUrl = "/"  // 首页
         this.key = 'key'  // 存放内容信息
@@ -358,7 +371,7 @@ export default class LivePlugin {
         // 文件上传
         const upload = querySelector(container, '.operation .bg-btn')
         addEventListener(upload, 'click', function (e) {
-            console.log('文件点击中...', upload)
+
             uploadButton.click()
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
@@ -366,20 +379,20 @@ export default class LivePlugin {
         // 显示关闭
         const close_container = querySelector(container, '.operation .btn-close-container')
         addEventListener(close_container, 'click', function (e) {
-            console.log('close_container...', close_container)
+
             that.isShowContainer()
         })
 
         // 关闭
         const close_container2 = querySelector(container, '.operation #m-close-button1')
         addEventListener(close_container2, 'click', function (e) {
-            console.log('close_container2...', close_container2)
+
             that.isShowContainer()
         })
         // 选择背景
         const checkbox = querySelector(container, '.operation #checkbox1')
         addEventListener(checkbox, 'change', function (e) {
-            console.log('checkbox...', checkbox)
+
             log('背景是否开启', e.target.checked ? '开启' : '关闭')
             addLocalStore(that.bg_show_key, e.target.checked, Boolean.name)
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
@@ -388,7 +401,7 @@ export default class LivePlugin {
         // 是否关闭菜单
         const menu = querySelector(container, '.operation #checkbox2')
         addEventListener(menu, 'change', function (e) {
-            console.log('menu...', menu)
+
             that.getLeftMenu(e.target.checked)
             addLocalStore(that.menu_is_first_key, false, Boolean.name)
         })
@@ -396,7 +409,7 @@ export default class LivePlugin {
         // 剧场模式
         const full_screen_btn = querySelector(container, '.operation #checkbox3')
         addEventListener(full_screen_btn, 'change', function (e) {
-            console.log('full_screen_btn...', full_screen_btn)
+
             addLocalStore(that.full_screen_key, e.target.checked, Boolean.name)
             addLocalStore(that.full_screen_is_first_key, false, Boolean.name)
             that.isFullScreen(true)
@@ -405,7 +418,7 @@ export default class LivePlugin {
         // 礼物模式
         const show_gift = querySelector(container, '.operation #checkbox4')
         addEventListener(show_gift, 'change', function (e) {
-            console.log('show_gift...', show_gift)
+
             addLocalStore(that.gift_key, e.target.checked, Boolean.name)
             that.isShowGift()
             addLocalStore(that.gift_is_first_key, false, Boolean.name)
@@ -413,7 +426,7 @@ export default class LivePlugin {
 
         const show_logo_btn = querySelector(container, '.operation #checkbox5')
         addEventListener(show_logo_btn, 'change', function (e) {
-            console.log('show_logo_btn...', show_logo_btn)
+
 
             e.preventDefault()
             if (!that.logo_btn) {
@@ -436,7 +449,7 @@ export default class LivePlugin {
         // 最高画质
         const auto_max_pro = querySelector(container, '.operation #checkbox6')
         addEventListener(auto_max_pro, 'change', function (e) {
-            console.log('auto_max_pro...', auto_max_pro)
+
             addLocalStore(that.auto_max_pro_key, e.target.checked, Boolean.name)
             addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name)
             that.isAutoMaxVideoPro()
@@ -489,56 +502,52 @@ export default class LivePlugin {
         const theme_select = querySelector(container, '.operation #m-dark-select')
 
         const cancelAutoTheme = (result = false) => {
-            if (theme_is_auto_box) {
-                theme_is_auto_box.checked = result
-                addLocalStore(THEME_IS_AUTO, result, Boolean.name, false)
-            }
+            theme_is_auto_box.checked = result
+            wls.setItem(THEME_IS_AUTO, result ? THEME_IS_AUTO : `no_${THEME_IS_AUTO}`)
+            theme_btn.innerText = isNeedDark() ? '白天' : '黑夜'
+            theme_btn.title = isNeedDark() ? '点击切换到白天模式' : '点击切换到黑夜模式'
         }
 
-
-
-        const updateThemeBtnContent = () => {
-            if (theme_btn) {
-                theme_btn.innerText = isNeedDark() ? '白天' : '黑夜'
-                theme_btn.title = isNeedDark() ? '点击切换到白天模式' : '点击切换到黑夜模式'
-            }
-        }
-
-
-
+        // 点击按钮模式切换主题
         addEventListener(theme_btn, 'click', function (e) {
             toggleColorMode(e, true)
             if (container.classList.contains('dark')) {
                 container.classList.remove('dark')
+                localStorage.setItem(DARK_THEME_KEY,theme.light)
             } else if (!container.classList.contains('dark')) {
+                localStorage.setItem(DARK_THEME_KEY,theme.dark)
                 container.className = `dark ${container.className}`
             }
-            cancelAutoTheme()
-            updateThemeBtnContent()
-        })
-
-
-        addEventListener(theme_is_auto_box, 'change', function (e) {
-            toggleColorMode(e)
-            cancelAutoTheme(e.target.checked)
-            updateThemeBtnContent()
-            if (e.target.checked) {
-                if (!isNeedDark() && container.classList.contains('dark')) {
-                    container.classList.remove('dark')
-                } else if (isNeedDark() && !container.classList.contains('dark')) {
-                    container.className = `dark ${container.className}`
-                }
-            }
-
-
-        })
-
-        addEventListener(theme_select, 'change', function (e) {
             cancelAutoTheme(false)
-            updateThemeBtnContent()
+        })
+
+
+        // 自动模式
+        // 自动模式下白天为白天主题黑夜为黑夜主题，不同时间段的黑夜主题是不一样的
+        addEventListener(theme_is_auto_box, 'change', function (e) {
+            // 设置为白天主题
+            wls.setItem(DARK_THEME_KEY,theme.light)
+            // 是否是自动
+            cancelAutoTheme(e.target.checked)
+            // 切换主题
+            toggleColorMode(e)
+            // 切换容器主题
+            if (!isNeedDark()) {
+                container.classList.contains('dark') && container.classList.remove('dark')
+            } else {
+                !container.classList.contains('dark') && (container.className = `dark ${container.className}`)
+            }
+        })
+
+
+        // 切换黑夜模式不同主题
+        // 多种黑夜模式 切换过程中代表取消自动模式 和 选择了黑夜模式
+        addEventListener(theme_select, 'change', function (e) {
+            localStorage.setItem(DARK_THEME_KEY,theme.dark)
+            cancelAutoTheme(false)
             updateDarkStyleType(e.target.value)
-            if (!container.classList.contains('dark')) {
-                container.className = `dark ${container.className}`
+            if (document.documentElement.classList.contains('dark')) {
+                !container.classList.contains('dark') && (container.className = `dark ${container.className}`)
             }
         })
 

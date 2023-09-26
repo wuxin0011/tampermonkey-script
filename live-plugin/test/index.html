@@ -38,6 +38,7 @@
             body {
                 height: 100vh;
             }
+
         </style>
     </head>
 
@@ -72,7 +73,10 @@
 
             setTimeout(() => {
 
-                let container = document.querySelector('.m-container')
+                // custom-element
+                const ele = document.querySelector('live-plugin-element')
+
+                let container = ele.shadowRoot.querySelector('.m-container')
 
                 let mBtn = document.querySelector('#open')
                 let refesh = document.querySelector('#refesh')
@@ -104,9 +108,13 @@
 
                 let max = 100
                 let maxContentLen = 10
-                let tbody = document.querySelector('tbody')
+                let tbody = container.querySelector('tbody')
 
                 function addContent() {
+                    if (!tbody) {
+                        console.log('tbdoy is null')
+                        return;
+                    }
                     tbody.querySelectorAll('tr').forEach(tr => tr.remove())
                     let arr = Array.from({
                         length: random(max)
@@ -134,9 +142,9 @@
 
                 addContent()
 
-                tbody = document.querySelector('#m-container-box2 tbody')
+                tbody = container.querySelector('#m-container-box2 tbody')
                 addContent()
-            }, 3000);
+            }, 1000);
         </script>
 
     </body>

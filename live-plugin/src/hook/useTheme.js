@@ -30,9 +30,9 @@ const DARK_COLOR_VARIABLE = '--w-bg-darker'
 /**
  * 
  */
-const theme = {
-  dark: 'dark',
+export const theme = {
   light: 'light',
+  dark: 'dark',
 }
 
 
@@ -84,7 +84,7 @@ export const DARK_TYPE = {
 
 
 /**
- * 是否是黑色主题 默认为黑色主题
+ * 是否是黑色主题 
  * @returns boolean
  */
 export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark
@@ -94,7 +94,7 @@ export const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark
 /**
  * 是否自动 默认根据时间自动
  */
-export const isAutoDark = () => getLocalStore(THEME_IS_AUTO, Boolean.name, false) || wls.getItem(THEME_IS_AUTO) === null
+export const isAutoDark = () => wls.getItem(THEME_IS_AUTO) === THEME_IS_AUTO || wls.getItem(THEME_IS_AUTO) === null
 
 
 /**
@@ -128,10 +128,9 @@ export const updateStyleColor = (key, value) => document.documentElement.style.s
  * @param {主题类型} type 
  */
 export const updateDarkStyleType = (type) => {
-  // 类型保存到本地
-  addLocalStore(THEME_TYPE_KEY, type, String.name, false)
   // 修改类型，自动更换为黑色主题
-  wls.setItem(DARK_THEME_KEY, theme.dark)
+  wls.setItem(THEME_TYPE_KEY, type)
+  
   // 切换主题类型
   updateDarkClass()
 }
@@ -175,14 +174,14 @@ export const toggleColorMode = (event, isClick = false) => {
       ]
       document.documentElement.animate(
         {
-          clipPath: isDark()
+          clipPath: isNeedDark()
             ? [...clipPath].reverse()
             : clipPath,
         },
         {
           duration: 400,
           easing: 'ease-out',
-          pseudoElement: isDark()
+          pseudoElement: isNeedDark()
             ? '::view-transition-old(root)'
             : '::view-transition-new(root)',
         },
@@ -193,11 +192,12 @@ export const toggleColorMode = (event, isClick = false) => {
 
 const clickUpdateTheme = () => {
   const classList = document.documentElement.classList
-  classList.contains('dark') ? wls.getItem(DARK_THEME_KEY) === theme.light : wls.getItem(DARK_THEME_KEY) === theme.dark
   if (!classList.contains('dark')) {
     classList.add('dark')
+    wls.setItem(DARK_THEME_KEY,theme.dark) 
   } else if (classList.contains('dark')) {
     classList.remove('dark')
+    wls.setItem(DARK_THEME_KEY,theme.light)
   }
 }
 
@@ -238,7 +238,6 @@ const autoDarkColor = () => {
   return color
 }
 
-
 export const isNeedDark = () => ((new Date().getHours() < 7 || new Date().getHours() >= 17) && isAutoDark()) || isDark()
 
 
@@ -265,8 +264,7 @@ export const updateDarkClass = () => {
 /**
  * update theme
  */
-export const themeUpdate = async () => {
-  wls.setItem(DARK_THEME_KEY, isNeedDark() ? theme.light : theme.dark)
+export const themeUpdate = () => {
   updateDarkClass()
 }
 

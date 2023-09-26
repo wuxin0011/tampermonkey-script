@@ -57,7 +57,7 @@
   const wd = window.document;
   const wls = window.localStorage;
   const download_plugin_url = "https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD";
-  const source_code_url = "https://github.com/wuxin0011/huya-live";
+  const source_code_url = "https://github.com/wuxin0011/tampermonkey-script/live-plugin";
   const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file);
   const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : el ? wd.querySelector(el) : emptyMethod;
   const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : el ? wd.querySelectorAll(el) : emptyMethod;
@@ -491,8 +491,8 @@
   const THEME_TYPE_KEY = "wx_dark_theme_type_key";
   const DARK_COLOR_VARIABLE = "--w-bg-darker";
   const theme = {
-    dark: "dark",
-    light: "light"
+    light: "light",
+    dark: "dark"
   };
   const DARK_THEME_TYPE = {
     "DEFAULT": "DEFAULT",
@@ -529,7 +529,7 @@
     }
   };
   const isDark = () => wls.getItem(DARK_THEME_KEY) === theme.dark;
-  const isAutoDark = () => getLocalStore(THEME_IS_AUTO, Boolean.name, false) || wls.getItem(THEME_IS_AUTO) === null;
+  const isAutoDark = () => wls.getItem(THEME_IS_AUTO) === THEME_IS_AUTO || wls.getItem(THEME_IS_AUTO) === null;
   const LOCAL_THEME_TYPE = wls.getItem(THEME_TYPE_KEY) === null ? DARK_THEME_TYPE.DEFAULT : wls.getItem(THEME_TYPE_KEY);
   const darkColor = () => {
     let type = wls.getItem(THEME_TYPE_KEY) === null ? DARK_THEME_TYPE.DEFAULT : wls.getItem(THEME_TYPE_KEY);
@@ -538,8 +538,7 @@
   };
   const updateStyleColor = (key, value) => document.documentElement.style.setProperty(key, value);
   const updateDarkStyleType = (type) => {
-    addLocalStore(THEME_TYPE_KEY, type, String.name, false);
-    wls.setItem(DARK_THEME_KEY, theme.dark);
+    wls.setItem(THEME_TYPE_KEY, type);
     updateDarkClass();
   };
   const toggleColorMode = (event, isClick = false) => {
@@ -573,23 +572,24 @@
       ];
       document.documentElement.animate(
         {
-          clipPath: isDark() ? [...clipPath].reverse() : clipPath
+          clipPath: isNeedDark() ? [...clipPath].reverse() : clipPath
         },
         {
           duration: 400,
           easing: "ease-out",
-          pseudoElement: isDark() ? "::view-transition-old(root)" : "::view-transition-new(root)"
+          pseudoElement: isNeedDark() ? "::view-transition-old(root)" : "::view-transition-new(root)"
         }
       );
     });
   };
   const clickUpdateTheme = () => {
     const classList = document.documentElement.classList;
-    classList.contains("dark") ? wls.getItem(DARK_THEME_KEY) === theme.light : wls.getItem(DARK_THEME_KEY) === theme.dark;
     if (!classList.contains("dark")) {
       classList.add("dark");
+      wls.setItem(DARK_THEME_KEY, theme.dark);
     } else if (classList.contains("dark")) {
       classList.remove("dark");
+      wls.setItem(DARK_THEME_KEY, theme.light);
     }
   };
   const autoDarkType = () => {
@@ -640,8 +640,7 @@
       classList.remove("dark");
     }
   };
-  const themeUpdate = async () => {
-    wls.setItem(DARK_THEME_KEY, isNeedDark() ? theme.light : theme.dark);
+  const themeUpdate = () => {
     updateDarkClass();
   };
   const themeOptions = () => {
@@ -652,50 +651,6 @@
     }
     return str;
   };
-  const liveDarkCss = `
-  .dark.m-container {
-    --m-container-background-color: var(--w-bg-darker);
-  }
-  
-
-  .dark .m-select-dark-option,
-  .dark .m-select-dark,.dark .m-dark-type-select,
-  .dark.m-container {
-    background-color: var(--m-container-background-color) ;
-    color:var(--w-text-light) ;
-  }
-
-
-  .dark.m-container .m-link,
-  .dark.m-container .m-link:visited {
-    color: var(--w-text) ;
-  }
-  
-
-
-  .dark.m-container table tr,
-  .dark.m-container table tbody tr:nth-child(1) 
-   {
-    border-color: var(--w-text-light) ;
-   }
-
-
-   .dark.m-container .btn {
-      background: var(--w-bg-darker) ;
-      outline:1px solid var(--w-text) ;
-      color: var(--w-text-light) ;
-   }
-
-   
-
-   .dark.m-container .btn:hover {
-    background: var(--w-bg) ;
-    outline:1px solid var(--w-text-light) ;
-    color: var(--w-text) ;
-   }
-
-
-`;
   const root$1 = `
 html {
   --w-brand: #3aa675;
@@ -738,9 +693,18 @@ html {
 }
 
 
+.m-container-display-block{
+  display:block !important ;
+}
+.m-container-display-none{
+  display:none  !important ;
+}
+
+
+
 
 ::-webkit-scrollbar {
-  width: 4px !important;
+  width: 6px !important;
   background-color: teal !important;
 }
 
@@ -749,10 +713,58 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: teal !important;
+  background-color: var(--w-blue-link-hover) !important;
   border-radius: 6px !important;
 }
 
+
+
+`;
+  const liveDarkCss = `
+
+${root$1}
+
+
+  .dark.m-container {
+    --m-container-background-color: var(--w-bg-darker);
+  }
+  
+
+  .dark .m-select-dark-option,
+  .dark .m-select-dark,.dark .m-dark-type-select,
+  .dark.m-container {
+    background-color: var(--m-container-background-color) ;
+    color:var(--w-text-light) ;
+  }
+
+
+  .dark.m-container .m-link,
+  .dark.m-container .m-link:visited {
+    color: var(--w-text) ;
+  }
+  
+
+
+  .dark.m-container table tr,
+  .dark.m-container table tbody tr:nth-child(1) 
+   {
+    border-color: var(--w-text-light) ;
+   }
+
+
+   .dark.m-container .btn {
+      background: var(--w-bg-darker) ;
+      outline:1px solid var(--w-text) ;
+      color: var(--w-text-light) ;
+   }
+
+   
+
+   .dark.m-container .btn:hover {
+    background: var(--w-bg) ;
+    outline:1px solid var(--w-text-light) ;
+    color: var(--w-text) ;
+   }
 
 
 `;
@@ -1443,23 +1455,19 @@ ${root$1}
       });
       const upload = querySelector(container, ".operation .bg-btn");
       addEventListener(upload, "click", function(e) {
-        console.log("文件点击中...", upload);
         uploadButton.click();
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
       });
       const close_container = querySelector(container, ".operation .btn-close-container");
       addEventListener(close_container, "click", function(e) {
-        console.log("close_container...", close_container);
         that.isShowContainer();
       });
       const close_container2 = querySelector(container, ".operation #m-close-button1");
       addEventListener(close_container2, "click", function(e) {
-        console.log("close_container2...", close_container2);
         that.isShowContainer();
       });
       const checkbox = querySelector(container, ".operation #checkbox1");
       addEventListener(checkbox, "change", function(e) {
-        console.log("checkbox...", checkbox);
         log("背景是否开启", e.target.checked ? "开启" : "关闭");
         addLocalStore(that.bg_show_key, e.target.checked, Boolean.name);
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
@@ -1467,27 +1475,23 @@ ${root$1}
       });
       const menu = querySelector(container, ".operation #checkbox2");
       addEventListener(menu, "change", function(e) {
-        console.log("menu...", menu);
         that.getLeftMenu(e.target.checked);
         addLocalStore(that.menu_is_first_key, false, Boolean.name);
       });
       const full_screen_btn = querySelector(container, ".operation #checkbox3");
       addEventListener(full_screen_btn, "change", function(e) {
-        console.log("full_screen_btn...", full_screen_btn);
         addLocalStore(that.full_screen_key, e.target.checked, Boolean.name);
         addLocalStore(that.full_screen_is_first_key, false, Boolean.name);
         that.isFullScreen(true);
       });
       const show_gift = querySelector(container, ".operation #checkbox4");
       addEventListener(show_gift, "change", function(e) {
-        console.log("show_gift...", show_gift);
         addLocalStore(that.gift_key, e.target.checked, Boolean.name);
         that.isShowGift();
         addLocalStore(that.gift_is_first_key, false, Boolean.name);
       });
       const show_logo_btn = querySelector(container, ".operation #checkbox5");
       addEventListener(show_logo_btn, "change", function(e) {
-        console.log("show_logo_btn...", show_logo_btn);
         e.preventDefault();
         if (!that.logo_btn) {
           warn("获取不到Logo哦！");
@@ -1506,7 +1510,6 @@ ${root$1}
       });
       const auto_max_pro = querySelector(container, ".operation #checkbox6");
       addEventListener(auto_max_pro, "change", function(e) {
-        console.log("auto_max_pro...", auto_max_pro);
         addLocalStore(that.auto_max_pro_key, e.target.checked, Boolean.name);
         addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name);
         that.isAutoMaxVideoPro();
@@ -1548,45 +1551,38 @@ ${root$1}
       const theme_btn = querySelector(container, ".operation .room-theme");
       const theme_select = querySelector(container, ".operation #m-dark-select");
       const cancelAutoTheme = (result = false) => {
-        if (theme_is_auto_box) {
-          theme_is_auto_box.checked = result;
-          addLocalStore(THEME_IS_AUTO, result, Boolean.name, false);
-        }
-      };
-      const updateThemeBtnContent = () => {
-        if (theme_btn) {
-          theme_btn.innerText = isNeedDark() ? "白天" : "黑夜";
-          theme_btn.title = isNeedDark() ? "点击切换到白天模式" : "点击切换到黑夜模式";
-        }
+        theme_is_auto_box.checked = result;
+        wls.setItem(THEME_IS_AUTO, result ? THEME_IS_AUTO : `no_${THEME_IS_AUTO}`);
+        theme_btn.innerText = isNeedDark() ? "白天" : "黑夜";
+        theme_btn.title = isNeedDark() ? "点击切换到白天模式" : "点击切换到黑夜模式";
       };
       addEventListener(theme_btn, "click", function(e) {
         toggleColorMode(e, true);
         if (container.classList.contains("dark")) {
           container.classList.remove("dark");
+          localStorage.setItem(DARK_THEME_KEY, theme.light);
         } else if (!container.classList.contains("dark")) {
+          localStorage.setItem(DARK_THEME_KEY, theme.dark);
           container.className = `dark ${container.className}`;
         }
-        cancelAutoTheme();
-        updateThemeBtnContent();
+        cancelAutoTheme(false);
       });
       addEventListener(theme_is_auto_box, "change", function(e) {
-        toggleColorMode(e);
+        wls.setItem(DARK_THEME_KEY, theme.light);
         cancelAutoTheme(e.target.checked);
-        updateThemeBtnContent();
-        if (e.target.checked) {
-          if (!isNeedDark() && container.classList.contains("dark")) {
-            container.classList.remove("dark");
-          } else if (isNeedDark() && !container.classList.contains("dark")) {
-            container.className = `dark ${container.className}`;
-          }
+        toggleColorMode(e);
+        if (!isNeedDark()) {
+          container.classList.contains("dark") && container.classList.remove("dark");
+        } else {
+          !container.classList.contains("dark") && (container.className = `dark ${container.className}`);
         }
       });
       addEventListener(theme_select, "change", function(e) {
+        localStorage.setItem(DARK_THEME_KEY, theme.dark);
         cancelAutoTheme(false);
-        updateThemeBtnContent();
         updateDarkStyleType(e.target.value);
-        if (!container.classList.contains("dark")) {
-          container.className = `dark ${container.className}`;
+        if (document.documentElement.classList.contains("dark")) {
+          !container.classList.contains("dark") && (container.className = `dark ${container.className}`);
         }
       });
     }

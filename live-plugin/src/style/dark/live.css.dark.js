@@ -1,7 +1,11 @@
 
-
+import root from "./root.dark"
 
 const liveDarkCss = `
+
+${root}
+
+
   .dark.m-container {
     --m-container-background-color: var(--w-bg-darker);
   }

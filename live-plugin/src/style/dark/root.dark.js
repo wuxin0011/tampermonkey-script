@@ -40,9 +40,18 @@ html {
 }
 
 
+.m-container-display-block{
+  display:block !important ;
+}
+.m-container-display-none{
+  display:none  !important ;
+}
+
+
+
 
 ::-webkit-scrollbar {
-  width: 4px !important;
+  width: 6px !important;
   background-color: teal !important;
 }
 
@@ -51,7 +60,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: teal !important;
+  background-color: var(--w-blue-link-hover) !important;
   border-radius: 6px !important;
 }
 
