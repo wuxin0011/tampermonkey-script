@@ -65,6 +65,21 @@ html {
 }
 
 
+.dark ::-webkit-scrollbar {
+  width: 6px !important;
+  background-color: teal !important;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: var(--w-text) !important;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--w-bg-light) !important;
+  border-radius: 6px !important;
+}
+
+
 
 `
 

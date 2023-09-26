@@ -60,7 +60,7 @@ export default defineConfig({
     algolia: {
       appId: "IAWNWZYOCW",
       apiKey: 'c4b6e3b5249969ce2e83fc3f3d6fec59',
-      indexName: 'wuxin0011-m-note'
+      indexName: 'dev_m_note',
     },
     lastUpdatedText: '最后更新时间'
   },

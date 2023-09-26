@@ -718,6 +718,21 @@ html {
 }
 
 
+.dark ::-webkit-scrollbar {
+  width: 6px !important;
+  background-color: teal !important;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: var(--w-text) !important;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--w-bg-light) !important;
+  border-radius: 6px !important;
+}
+
+
 
 `;
   const liveDarkCss = `
@@ -2013,7 +2028,7 @@ ${root$1}
      */
     clickLogoShowContainer() {
       let that = this;
-      if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
+      if (is_bilibili) {
         return;
       }
       if (this.header_logo === "none" || !this.header_logo) {

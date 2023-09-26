@@ -513,9 +513,9 @@ import iconLogo from '@/utils/logo';
             toggleColorMode(e, true)
             if (container.classList.contains('dark')) {
                 container.classList.remove('dark')
-                localStorage.setItem(DARK_THEME_KEY,theme.light)
+                localStorage.setItem(DARK_THEME_KEY, theme.light)
             } else if (!container.classList.contains('dark')) {
-                localStorage.setItem(DARK_THEME_KEY,theme.dark)
+                localStorage.setItem(DARK_THEME_KEY, theme.dark)
                 container.className = `dark ${container.className}`
             }
             cancelAutoTheme(false)
@@ -526,7 +526,7 @@ import iconLogo from '@/utils/logo';
         // 自动模式下白天为白天主题黑夜为黑夜主题，不同时间段的黑夜主题是不一样的
         addEventListener(theme_is_auto_box, 'change', function (e) {
             // 设置为白天主题
-            wls.setItem(DARK_THEME_KEY,theme.light)
+            wls.setItem(DARK_THEME_KEY, theme.light)
             // 是否是自动
             cancelAutoTheme(e.target.checked)
             // 切换主题
@@ -543,7 +543,7 @@ import iconLogo from '@/utils/logo';
         // 切换黑夜模式不同主题
         // 多种黑夜模式 切换过程中代表取消自动模式 和 选择了黑夜模式
         addEventListener(theme_select, 'change', function (e) {
-            localStorage.setItem(DARK_THEME_KEY,theme.dark)
+            localStorage.setItem(DARK_THEME_KEY, theme.dark)
             cancelAutoTheme(false)
             updateDarkStyleType(e.target.value)
             if (document.documentElement.classList.contains('dark')) {
@@ -1046,8 +1046,8 @@ import iconLogo from '@/utils/logo';
      */
     clickLogoShowContainer() {
         let that = this
-        if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
-            // bilibili有人反馈不需要头部这个Logo现在移除
+        // bilibili有人反馈不需要头部这个Logo现在移除
+        if (is_bilibili) {
             return;
         }
         if (this.header_logo === 'none' || !this.header_logo) {
