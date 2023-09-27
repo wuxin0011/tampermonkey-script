@@ -44,6 +44,7 @@ import './style/index.css.js';
         return;
     }
 
+
     try {
         let text = '%c欢迎使用直播插件,下载地址%c'
         if (!is_localhost) {
@@ -60,6 +61,7 @@ import './style/index.css.js';
         //插件执行入口
 
         updateDarkClass()
+
 
         if (is_huya) {
             // 执行虎牙直播插件
@@ -79,7 +81,6 @@ import './style/index.css.js';
         } else {
             error('插件地址不适配，请检查匹配地址！！！')
         }
-
     } catch (e) {
         error(e)
     }
