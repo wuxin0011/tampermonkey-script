@@ -1,6 +1,9 @@
 import { local_url } from '@/utils'
+
+
 const isDouyuDetail = (new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url))
 
+// 斗鱼直播黑屏问题
 const loadingLazy = isDouyuDetail ? `` : `
 .dark .LazyLoad{
   background: var(--w-bg-dark) !important;
