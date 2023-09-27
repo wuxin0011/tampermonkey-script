@@ -40,7 +40,7 @@ copy_js_file(){
     echo "脚本复制中...."
     cp live-plugin/dist/live-plugin.js dist/live-plugin.js
     echo "live-plugin.js copy success 🚀...."
-    cp barrage-keywords-stop/index.js dist/barrage-keywords-stop.js
+    cp barrage-keywords-stop/dist/barrage-keywords-stop.js dist/barrage-keywords-stop.js
     echo "barrage-keywords-stop.js copy success 🚀...."
     cp bilibili-tag-shield/dist/bilibili-tag-shield.js dist/bilibili-tag-shield.js
     echo "bilibili-tag-shield.js copy success 🚀...."
