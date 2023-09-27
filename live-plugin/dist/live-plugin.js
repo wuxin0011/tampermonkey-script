@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.2
+// @version      4.1.3
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
@@ -767,19 +767,7 @@ ${root$1}
    }
 
 
-   .dark.m-container .btn {
-      background: var(--w-bg-darker) ;
-      outline:1px solid var(--w-text) ;
-      color: var(--w-text-light) ;
-   }
 
-   
-
-   .dark.m-container .btn:hover {
-    background: var(--w-bg) ;
-    outline:1px solid var(--w-text-light) ;
-    color: var(--w-text) ;
-   }
 
 
 `;
@@ -2436,40 +2424,43 @@ ${root$1}
         return null;
       }
     }
-    isFullScreen(isClickFull = false) {
-      let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name);
-      if (!is_should_full_screen) {
-        return;
-      }
-      loopDo((timer) => {
-        var video2 = querySelector("video");
-        if (!video2) {
-          return;
-        }
-        if (!(video2 instanceof HTMLVideoElement)) {
-          console.log("container is not video element !");
-          return;
-        }
-        console.log("video ....", video2);
-        video2.addEventListener("loadedmetadata", function() {
-          if (video2.requestFullscreen) {
-            video2.requestFullscreen();
-            console.log("requestFullscreen 视频自动全屏中....");
-          } else if (video2.mozRequestFullScreen) {
-            video2.mozRequestFullScreen();
-            console.log("mozRequestFullScreen 视频自动全屏中....");
-          } else if (video2.webkitRequestFullscreen) {
-            video2.webkitRequestFullscreen();
-            console.log("webkitRequestFullscreen 视频自动全屏中....");
-          } else if (video2.msRequestFullscreen) {
-            video2.msRequestFullscreen();
-            console.log("msRequestFullscreen 视频自动全屏中....");
-          }
-          console.log("视频加载完毕....");
-        });
-        clearInterval(timer);
-      }, 20, 3e3);
+    isFullScreen() {
     }
+    // isFullScreen(isClickFull = false) {
+    //     let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
+    //     if (!is_should_full_screen) {
+    //         return;
+    //     }
+    //     // 获取视频元素
+    //     loopDo((timer) => {
+    //         var video = querySelector('video');
+    //         if (!video) {
+    //             return;
+    //         }
+    //         if (!(video instanceof HTMLVideoElement)) {
+    //             console.log('container is not video element !')
+    //             return;
+    //         }
+    //         console.log('video ....', video)
+    //         video.addEventListener('loadedmetadata', function () {
+    //             if (video.requestFullscreen) {
+    //                 video.requestFullscreen();
+    //                 console.log('requestFullscreen 视频自动全屏中....')
+    //             } else if (video.mozRequestFullScreen) { // Firefox
+    //                 video.mozRequestFullScreen();
+    //                 console.log('mozRequestFullScreen 视频自动全屏中....')
+    //             } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
+    //                 video.webkitRequestFullscreen();
+    //                 console.log('webkitRequestFullscreen 视频自动全屏中....')
+    //             } else if (video.msRequestFullscreen) { // IE/Edge
+    //                 video.msRequestFullscreen();
+    //                 console.log('msRequestFullscreen 视频自动全屏中....')
+    //             }
+    //             console.log('视频加载完毕....')
+    //         });
+    //         clearInterval(timer)
+    //     }, 20, 3000)
+    // }
   }
   class BiliBili extends LivePlugin {
     constructor() {
@@ -2720,10 +2711,17 @@ ${root$1}
       this.isAutoMaxVideoPro();
     }
   }
+  const isDouyuDetail = new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url);
+  const loadingLazy = isDouyuDetail ? `` : `
+.dark .LazyLoad{
+  background: var(--w-bg-dark) !important;
+}
+`;
   const darkCss$1 = `
 
+${loadingLazy}
 .dark .DyCover-pic,
-.dark .LazyLoad,
+
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
 }
@@ -2736,12 +2734,13 @@ ${root$1}
   border:1px solid var(--w-text-light) !important;
 }
 
+.dark .wm-general-bgblur,
 .dark  body,.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
 .dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
-.dark .Header-menu-wrap,.dark .DyListCover-wrap,.dark .wm-general-bgblur,
+.dark .Header-menu-wrap,.dark .DyListCover-wrap,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
 .dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,.dark .ListFooter .ListFooter-btn-wrap,

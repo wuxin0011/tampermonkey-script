@@ -1,9 +1,16 @@
+import { local_url } from '@/utils'
+const isDouyuDetail = (new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url))
 
-
+const loadingLazy = isDouyuDetail ? `` : `
+.dark .LazyLoad{
+  background: var(--w-bg-dark) !important;
+}
+`
 const darkCss = `
 
+${loadingLazy}
 .dark .DyCover-pic,
-.dark .LazyLoad,
+
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
 }
@@ -16,12 +23,13 @@ const darkCss = `
   border:1px solid var(--w-text-light) !important;
 }
 
+.dark .wm-general-bgblur,
 .dark  body,.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
 .dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
-.dark .Header-menu-wrap,.dark .DyListCover-wrap,.dark .wm-general-bgblur,
+.dark .Header-menu-wrap,.dark .DyListCover-wrap,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
 .dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,.dark .ListFooter .ListFooter-btn-wrap,

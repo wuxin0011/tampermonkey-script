@@ -286,50 +286,54 @@ export default class FishLive extends LivePlugin {
         }
     }
 
-
-    isFullScreen(isClickFull = false) {
-        let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
-        if (!is_should_full_screen) {
-            return;
-        }
-        // 获取视频元素
-        loopDo((timer) => {
-            var video = querySelector('video');
-            if (!video) {
-                return;
-            }
-            if (!(video instanceof HTMLVideoElement)) {
-                console.log('container is not video element !')
-                return;
-            }
-            console.log('video ....', video)
-
-
-
-            video.addEventListener('loadedmetadata', function () {
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                    console.log('requestFullscreen 视频自动全屏中....')
-                } else if (video.mozRequestFullScreen) { // Firefox
-                    video.mozRequestFullScreen();
-                    console.log('mozRequestFullScreen 视频自动全屏中....')
-
-                } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                    video.webkitRequestFullscreen();
-                    console.log('webkitRequestFullscreen 视频自动全屏中....')
-
-                } else if (video.msRequestFullscreen) { // IE/Edge
-                    video.msRequestFullscreen();
-                    console.log('msRequestFullscreen 视频自动全屏中....')
-
-                }
-                console.log('视频加载完毕....')
-            });
-            clearInterval(timer)
-        }, 20, 3000)
-
-
-
+    isFullScreen(){
+        
     }
+
+
+    // isFullScreen(isClickFull = false) {
+    //     let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
+    //     if (!is_should_full_screen) {
+    //         return;
+    //     }
+    //     // 获取视频元素
+    //     loopDo((timer) => {
+    //         var video = querySelector('video');
+    //         if (!video) {
+    //             return;
+    //         }
+    //         if (!(video instanceof HTMLVideoElement)) {
+    //             console.log('container is not video element !')
+    //             return;
+    //         }
+    //         console.log('video ....', video)
+
+
+
+    //         video.addEventListener('loadedmetadata', function () {
+    //             if (video.requestFullscreen) {
+    //                 video.requestFullscreen();
+    //                 console.log('requestFullscreen 视频自动全屏中....')
+    //             } else if (video.mozRequestFullScreen) { // Firefox
+    //                 video.mozRequestFullScreen();
+    //                 console.log('mozRequestFullScreen 视频自动全屏中....')
+
+    //             } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
+    //                 video.webkitRequestFullscreen();
+    //                 console.log('webkitRequestFullscreen 视频自动全屏中....')
+
+    //             } else if (video.msRequestFullscreen) { // IE/Edge
+    //                 video.msRequestFullscreen();
+    //                 console.log('msRequestFullscreen 视频自动全屏中....')
+
+    //             }
+    //             console.log('视频加载完毕....')
+    //         });
+    //         clearInterval(timer)
+    //     }, 20, 3000)
+
+
+
+    // }
 
 }
