@@ -1,11 +1,11 @@
 import { defineConfig } from 'vitepress'
-import { VPTeamMembers } from 'vitepress/theme'
 import { fileURLToPath, URL } from 'node:url'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "tampermonkey-script",
   description: "油猴脚本",
-  base: '/tampermonkey-script',
+  // @link https://vitepress.dev/reference/cli#command-line-interface
+  // base: process.env.BASE_PATH,
 
   head: [
     [

@@ -8,15 +8,17 @@
   "description": "油猴插件仓库",
   "scripts": {
     "deploy": "bash publish.sh",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:dev": "vitepress dev --base /tampermonkey-script/ docs",
+    "docs:build": "vitepress build --base /tampermonkey-script/  docs",
+    "vercel:build": "vitepress build --base / docs",
+    "docs:preview": "vitepress preview --base /tampermonkey-script/ docs"
   },
   "dependencies": {
     "viewerjs": "^1.11.6",
     "vitepress-plugin-image-viewer": "^1.1.2"
   },
   "devDependencies": {
+    "@types/node": "^16.17.0",
     "sass": "^1.68.0",
     "sass-loader": "^13.3.2",
     "vite": "^4.3.5",
