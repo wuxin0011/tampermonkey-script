@@ -26,6 +26,7 @@ const darkCss = `
 .dark .game-live-item .txt .game-type a,
 .dark .game-live-item .txt .game-type,
 .dark .live-box .box-hd .more-list li,
+.dark #J_duyaHeaderRight ul li a,
 .dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
 .dark [class^=Category] [class^=SecTitle],
 .dark .nav-expand-list,
@@ -292,6 +293,9 @@ const darkCss = `
 .dark #player-danmu-report,
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
+.dark .ucard-normal--1-VRAi0Zm5CwE-PaY2FEie,
+.dark [class^=ucard-normal],
+.dark .chat-room__list .msg-timed span,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -315,11 +319,13 @@ const darkCss = `
   outline: none !important;
 }
 
-
+.dark .host-item .avatar .avatar-mask,
+.dark .superStar-item .avatar .avatar-mask {
+  background:none !important;
+}
 
 
 .dark #J_liveListNav dl dd span:hover,
-.dark #J_duyaHeaderRight ul li a,
 .dark #J_duyaHeaderRight ul li a:hover,
 .dark .g-gameCard-link:hover{
   background: var(--w-bg) !important;
