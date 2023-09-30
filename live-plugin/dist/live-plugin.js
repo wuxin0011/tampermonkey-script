@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.3
+// @version      4.1.4
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
@@ -46,7 +46,7 @@
   const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/;
   const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
   const huya_address_pattern = /^https:\/\/www\.huya\.((com)|(cn)).*/;
-  const douyin_address_pattern = /^https:\/\/www\.douyin\.((com)|(cn)).*/;
+  const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/;
   const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/;
   const local_url = window.location.href;
   const is_huya = huya_address_pattern.test(local_url);
@@ -1099,10 +1099,10 @@ ${root$1}
   
 
   .m-container-display-block{
-     display:block ;
+     display:block !important;
   }
   .m-container-display-none{
-     display:none ;
+     display:none !important;
   }
 
   .m-container .m-link:hover {
@@ -1139,7 +1139,7 @@ ${root$1}
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
             <button class="btn btn-info btn-close-container" title="关闭 , ctrl+alt+j 可唤醒" >关闭</button>
         </div>
-        <table ${support.supportTable() ? "" : 'style="display:none !important;"'}>
+        <table class="${support.supportTable() ? "" : "m-container-display-none"}">
             <thead>
                 <th>序号</th>
                 <th>名称</th>
@@ -3164,6 +3164,7 @@ ${darkCss$1}
 .dark .game-live-item .txt .game-type a,
 .dark .game-live-item .txt .game-type,
 .dark .live-box .box-hd .more-list li,
+.dark #J_duyaHeaderRight ul li a,
 .dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
 .dark [class^=Category] [class^=SecTitle],
 .dark .nav-expand-list,
@@ -3430,6 +3431,9 @@ ${darkCss$1}
 .dark #player-danmu-report,
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
+.dark .ucard-normal--1-VRAi0Zm5CwE-PaY2FEie,
+.dark [class^=ucard-normal],
+.dark .chat-room__list .msg-timed span,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -3453,11 +3457,13 @@ ${darkCss$1}
   outline: none !important;
 }
 
-
+.dark .host-item .avatar .avatar-mask,
+.dark .superStar-item .avatar .avatar-mask {
+  background:none !important;
+}
 
 
 .dark #J_liveListNav dl dd span:hover,
-.dark #J_duyaHeaderRight ul li a,
 .dark #J_duyaHeaderRight ul li a:hover,
 .dark .g-gameCard-link:hover{
   background: var(--w-bg) !important;
@@ -3607,11 +3613,40 @@ ${darkCss}
     #login-full-panel{
        display:none !important;
     }
+
+    .login-mask-enter-done,
+    .box-align-center, {
+      display:none ;
+
+    }
+
+    .m-douyin-login{
+        display:block !important;
+    }
+
+    ::-webkit-scrollbar {
+        width: 6px !important;
+        background-color: teal !important;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background-color: var(--w-bg) !important;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--w-bg-light) !important;
+        border-radius: 6px !important;
+      }
+      
   
 ` : "";
   const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ? `
-.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
-.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
+.dark .home-cell-desc-title[data-v-350d21cc],
+.dark .home-cell-desc-title,
+.dark .home-cell-desc-subtitle[data-v-350d21cc], 
+.dark .home-cell-desc-subtitle, 
+.dark .with-up-space,
+.dark .with-up-space[data-v-350d21cc]
  {
   color:var(--w-text-light) !important;
 }
@@ -3955,8 +3990,12 @@ ${darkCss}
   --b_text3: var(--text3);
   --b_text4: var(--text4);
 }
+
+
+
+
 `;
-  const common = `
+  const common$1 = `
 ${root}
 ${header}
 ${footer}
@@ -4085,7 +4124,7 @@ ${dialog}
 
 
 .dark body,.dark #header-v3,.dark .app-v1,.dark .app-v2,.dark .app-v3,.dark .app-v4,.dark .app-v5,
-.dark #app,.dark .v-img,
+.dark #app,.dark .v-img, .dark .bili-header * ,
 .dark .header-channel,.dark .header-channel-fixed-right-item,
 .dark .bili-video-card__wrap,.dark .bili-header .game,
 .dark .large-header,
@@ -4173,14 +4212,16 @@ ${dialog}
 .dark .bili-header .live-left-list-item-text,
 .dark .bili-header .game-right-title,
 .dark .bili-header .game-left-panel-item-title, 
-.bili-header .game-left-banner-title,
+.dark .bili-header .game-left-banner-title,
 .dark .bili-header .manga-right-list-item-text,
 .dark .bili-header .header-fav-card__info--name,
+.dark .favorite-panel-popover__nav *,
 .dark .favorite-panel-popover__nav .tab-item,
 .dark .favorite-panel-popover__nav .tab-item__num,
 .dark .bili-header .header-fav-card__info--title,
 .dark .dark .history-panel-popover .header-tabs-panel__content--date,
 .dark .history-panel-popover .header-history-card__info--title,
+.dark .header-tabs-panel *,
 .dark .header-tabs-panel,
 .dark .header-tabs-panel__content--date,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-content .nav-search-input,
@@ -4321,13 +4362,31 @@ ${dialog}
 }
 
 `;
+  const common = `
+.dark * {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+`;
   const is_account = local_url.indexOf("https://account.bilibili.com/") !== -1;
   const account_css = is_account ? `
-
+${common}
 
 ` : ``;
-  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `` : ``;
+  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `
+
+${common}
+
+  .dark .head-img,
+  .dark .header-wrap {
+    background:var(--w-bg-darker) !important;
+  }
+  
+  ` : ``;
   const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) ? `
+${common}
 .dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
 .dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
 .dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
@@ -4398,15 +4457,46 @@ ${dialog}
 }
 
 ` : ``;
-  const is_link = local_url.indexOf("https://link.bilibili.com/") !== -1;
+  const is_link$2 = local_url.indexOf("https://link.bilibili.com/") !== -1;
+  const link_css$2 = is_link$2 ? `
+${common}
+
+` : ``;
+  const is_link$1 = local_url.indexOf("https://message.bilibili.com/") !== -1;
+  const link_css$1 = is_link$1 ? `
+
+${common}
+
+
+` : ``;
+  const is_link = local_url.indexOf("https://live.bilibili.com/") !== -1;
   const link_css = is_link ? `
 
+.dark * {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+}
+
+.dark {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+.dark #webShare .bili-share-pc,
+.dark .live-non-revenue-player .sc-gsnTZi div {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
 
 ` : ``;
   const other = `
 ${account_css}
 ${app_bilibili}
 ${game_bilibili}
+${link_css$2}
+${link_css$1}
 ${link_css}
 `;
   const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ? `
@@ -4423,20 +4513,22 @@ ${link_css}
 .dark .normal-article-holder h6,
 .dark .article-container .title-container .title,
 .dark .article-breadcrumb .breadcrumb-title,
-.dark .article-read-info>span[data-v-36aefa22],.dark .article-read-info>span,
-.dark .right-side-bar .to-top .iconfont[data-v-38a9fd1d],.dark .right-side-bar .to-top .iconfont,
-.dark .right-side-bar .side-toolbar .toolbar-item[data-v-38a9fd1d],.dark .right-side-bar .side-toolbar .toolbar-item,
+.dark [class^=article-read-info]>span,
+.dark .right-side-bar .to-top [class^=iconfont],
+.dark .right-side-bar .side-toolbar [class^=toolbar-item],
 .dark .coin-dialog-wrapper .coin-title,.dark .coin-dialog-wrapper .van-icon-guanbi,
-.dark .right-side-bar .side-toolbar .toolbar-item .iconfont[data-v-38a9fd1d],.dark .right-side-bar .side-toolbar .toolbar-item .iconfont
- {
+.dark .right-side-bar .side-toolbar .toolbar-item [class^=iconfont]
+
+{
   color:var(--w-text-light) !important;
 }
 
-.dark .right-side-bar .to-top[data-v-38a9fd1d],.dark .right-side-bar .to-top,
-.dark .right-side-bar .side-toolbar[data-v-38a9fd1d],.dark .right-side-bar .side-toolbar,
-.dark .follow-btn[data-v-2847c980],.dark .follow-btn,
+.dark .right-side-bar [class^=to-top],
+.dark .right-side-bar [class^=side-toolbar],
+.dark [class^=follow-btn],
 .dark .coin-dialog-wrapper .confirm-btn,
 .dark .van-popover.van-followed,
+.dark .right-side-bar [class^=catalog],
 .dark .coin-dialog-wrapper,
 .dark .article-container {
   border: 1px solid var(--w-border) !important;
@@ -4446,19 +4538,19 @@ ${link_css}
 
 .dark .article-container ,
 .dark .comment-wrapper .comment-m,
-.dark .followed[data-v-2847c980],.dark .followed,
-.dark .article-up-info[data-v-904253a6],.dark .article-up-info,
+.dark [class^=followed],
+.dark [class^=article-up-info],
+.dark .right-side-bar [class^=catalog]::after,
 .dark .fixed-top-header {
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
 }
 
 .dark .nav-tool-container .section:hover,
-.dark .right-side-bar .to-top .iconfont[data-v-38a9fd1d]:hover,.dark .right-side-bar .to-top .iconfont:hover,
-.dark .right-side-bar .to-top[data-v-38a9fd1d]:hover,.dark .right-side-bar .to-top:hover,
+.dark .right-side-bar .to-top [class^=iconfont]:hover,
+.dark .right-side-bar [class^=to-top]:hover,
 .dark .coin-dialog-wrapper .confirm-btn:hover,
-
-.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
+.dark .nav-tool-container [class^=section]:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
   background:var(--w-bg-darker) !important;
@@ -4484,7 +4576,6 @@ ${link_css}
 .dark .list-create {
   background:var(--w-bg) !important;
 }
-
 .dark .elec .elec-status-bg-grey,
 .dark #page-index #i-ann-content textarea,
 .dark .bili-dyn-item,
@@ -4500,8 +4591,10 @@ ${link_css}
 .dark #page-series-index .channel-option.no-channel,
 .dark #page-series-index .channel-option,
 .dark .bili-rich-textarea__inner.empty,
+.dark .note-editor .rich-text-options,
+.dark #web-toolbar,
 .dark .n .n-inner {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -4510,7 +4603,8 @@ ${link_css}
 }
 
 
-.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel p,
+.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel p,
 .dark .album-list__title,.dark .album-list__tab-name,
 .dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
 .dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
@@ -4518,20 +4612,23 @@ ${link_css}
 .dark #page-index .col-2 .section-title,
 .dark #page-index .col-2 .section .user-auth .auth-description,
 .dark .user-info .user-info-title .info-title[data-v-31d5659a],
-.dark .user-info .user-info-title .info-title,
+.dark .user-info .user-info-title [class^=info-title],
 .dark .user-info .info-content .info-command[data-v-31d5659a],
-.dark .user-info .info-content .info-command,
+.dark .user-info .info-content [class^=info-command],
 .dark .user-info .info-content .info-value[data-v-31d5659a],
-.dark .user-info .info-content .info-value,
+.dark .user-info .info-content [class^=info-value],
 .dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
 .dark .idc-meta-item,
 .dark .elec .elec-count,.dark .elec,
 .dark .elec .elec-setting, .elec .elec-total-c-num,
 .dark .elec-total-c,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .icon-tag,
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .tag-content,
+.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag [class^=icon-tag],
+.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag [class^=tag-content],
 .dark #page-video #submit-video-type-filter a .count,
-.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30], .dark #page-series-index .channel-index .breadcrumb, 
+.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
+.dark #page-series-index .channel-index [class^=breadcrumb], 
 .dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
 .dark #page-series-index .channel-index .breadcrumb .item.cur,
 .dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
@@ -4545,7 +4642,7 @@ ${link_css}
 .dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
 .dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
 .dark .bili-popover, .dark .bili-popover__arrow,
-.dark .game-card__info-title[data-v-7c9854da],.dark .game-card__info-title,
+.dark .game-card__info-title[data-v-7c9854da],.dark [class^=game-card__info-title],
 .dark .section-title {
   color:var(--w-text-light) !important;
 }
@@ -4598,38 +4695,46 @@ ${link_css}
 
 
 .dark .col-full,
-
-
-.dark .btn
+.dark .btn,
+.dark .btn.btn-large, 
+.dark .btn.btn-large .btn-content[data-v-53027a10],
 .dark .new-elec-trigger,
 .dark .btn.idc-btn.default,
 .dark .elec-status,
 .dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel .create-channel,
-.dark .btn,.dark .btn.btn-large, .dark .btn.btn-large .btn-content[data-v-53027a10],
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel .create-channel,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
-.reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,.reply-box .box-normal .reply-box-send::after,
-.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,
+.dark .reply-box .box-normal .reply-box-send::after,
+.dark .reply-box .box-normal .reply-box-send,
 .dark .be-dropdown-item:hover,
+.dark .resizable-component .editor-innter,
 .dark .btn.idc-btn.primary {
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   border-color: var(--w-text) !important;
 }
 
 
 
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,.dark #page-series-index .channel-option.no-channel .create-channel:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel:hover,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
 .dark .btn.primary.btn-large:hover,
-.dark .btn:hover,.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,.dark .btn.btn-large:hover,
+.dark .btn:hover,
+.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
+.dark .btn.btn-large .btn-content:hover,
+.dark .btn.btn-large:hover,
 .dark .bili-dyn-more__menu:hover,
 .dark .contribution-sidenav .contribution-item:hover,
 .dark .btn:hover,
-.reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,.reply-box .box-normal .reply-box-send:hover::after,
-.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send:hover,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,
+.dark .reply-box .box-normal .reply-box-send:hover::after,
+.dark .reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send:hover,
 .dark .new-elec-trigger:hover,
 .dark .elec-status:hover,
 .dark .btn.idc-btn.primary:hover {
@@ -4665,14 +4770,6 @@ ${link_css}
 
 ` : ``;
   const t = `
-.dark #app {
-  --bg1: var(--w-bg-darker);
-  --text1: var(--w-text-light);
-  --text3: var(--w-text);
-  --v_bg1_float: var(--bg1);
-  --v_bg2_float: var(--bg1);
-}
-
 
 
 `;
@@ -4970,7 +5067,7 @@ ${douga}
 ${read}
 `;
   const dark = `
-${common}
+${common$1}
 ${router}
 ${other}
 

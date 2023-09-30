@@ -330,10 +330,10 @@ ${root}
   
 
   .m-container-display-block{
-     display:block ;
+     display:block !important;
   }
   .m-container-display-none{
-     display:none ;
+     display:none !important;
   }
 
   .m-container .m-link:hover {

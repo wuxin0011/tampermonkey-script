@@ -1,7 +1,8 @@
 import {
-    getLocalStore, isArray,
-    log, loopDo,
-    querySelector, querySelectorAll, setTimeoutMark, timeoutSelectorAll, warn
+    addEventListener,
+    log,
+    querySelector,
+    loopDo,
 } from '../../utils';
 
 import LivePlugin from "../live";
@@ -46,6 +47,9 @@ export default class DouYin extends LivePlugin {
         this.isFullScreen()
         this.isAutoMaxVideoPro()
     }
+
+
+   
 
 
 }

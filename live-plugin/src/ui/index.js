@@ -36,7 +36,7 @@ export const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift,
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
             <button class="btn btn-info btn-close-container" title="关闭 , ctrl+alt+j 可唤醒" >关闭</button>
         </div>
-        <table ${support.supportTable() ? '' : 'style="display:none !important;"'}>
+        <table class="${support.supportTable() ? '' : 'm-container-display-none'}">
             <thead>
                 <th>序号</th>
                 <th>名称</th>

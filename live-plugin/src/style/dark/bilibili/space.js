@@ -7,7 +7,6 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 .dark .list-create {
   background:var(--w-bg) !important;
 }
-
 .dark .elec .elec-status-bg-grey,
 .dark #page-index #i-ann-content textarea,
 .dark .bili-dyn-item,
@@ -23,8 +22,10 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 .dark #page-series-index .channel-option.no-channel,
 .dark #page-series-index .channel-option,
 .dark .bili-rich-textarea__inner.empty,
+.dark .note-editor .rich-text-options,
+.dark #web-toolbar,
 .dark .n .n-inner {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -33,7 +34,8 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 }
 
 
-.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel p,
+.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel p,
 .dark .album-list__title,.dark .album-list__tab-name,
 .dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
 .dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
@@ -41,20 +43,23 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 .dark #page-index .col-2 .section-title,
 .dark #page-index .col-2 .section .user-auth .auth-description,
 .dark .user-info .user-info-title .info-title[data-v-31d5659a],
-.dark .user-info .user-info-title .info-title,
+.dark .user-info .user-info-title [class^=info-title],
 .dark .user-info .info-content .info-command[data-v-31d5659a],
-.dark .user-info .info-content .info-command,
+.dark .user-info .info-content [class^=info-command],
 .dark .user-info .info-content .info-value[data-v-31d5659a],
-.dark .user-info .info-content .info-value,
+.dark .user-info .info-content [class^=info-value],
 .dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
 .dark .idc-meta-item,
 .dark .elec .elec-count,.dark .elec,
 .dark .elec .elec-setting, .elec .elec-total-c-num,
 .dark .elec-total-c,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .icon-tag,
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .tag-content,
+.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag [class^=icon-tag],
+.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag [class^=tag-content],
 .dark #page-video #submit-video-type-filter a .count,
-.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30], .dark #page-series-index .channel-index .breadcrumb, 
+.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
+.dark #page-series-index .channel-index [class^=breadcrumb], 
 .dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
 .dark #page-series-index .channel-index .breadcrumb .item.cur,
 .dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
@@ -68,7 +73,7 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 .dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
 .dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
 .dark .bili-popover, .dark .bili-popover__arrow,
-.dark .game-card__info-title[data-v-7c9854da],.dark .game-card__info-title,
+.dark .game-card__info-title[data-v-7c9854da],.dark [class^=game-card__info-title],
 .dark .section-title {
   color:var(--w-text-light) !important;
 }
@@ -121,38 +126,46 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 
 
 .dark .col-full,
-
-
-.dark .btn
+.dark .btn,
+.dark .btn.btn-large, 
+.dark .btn.btn-large .btn-content[data-v-53027a10],
 .dark .new-elec-trigger,
 .dark .btn.idc-btn.default,
 .dark .elec-status,
 .dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel .create-channel,
-.dark .btn,.dark .btn.btn-large, .dark .btn.btn-large .btn-content[data-v-53027a10],
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel .create-channel,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
-.reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,.reply-box .box-normal .reply-box-send::after,
-.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,
+.dark .reply-box .box-normal .reply-box-send::after,
+.dark .reply-box .box-normal .reply-box-send,
 .dark .be-dropdown-item:hover,
+.dark .resizable-component .editor-innter,
 .dark .btn.idc-btn.primary {
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   border-color: var(--w-text) !important;
 }
 
 
 
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,.dark #page-series-index .channel-option.no-channel .create-channel:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel:hover,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
 .dark .btn.primary.btn-large:hover,
-.dark .btn:hover,.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,.dark .btn.btn-large:hover,
+.dark .btn:hover,
+.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
+.dark .btn.btn-large .btn-content:hover,
+.dark .btn.btn-large:hover,
 .dark .bili-dyn-more__menu:hover,
 .dark .contribution-sidenav .contribution-item:hover,
 .dark .btn:hover,
-.reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,.reply-box .box-normal .reply-box-send:hover::after,
-.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send:hover,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,
+.dark .reply-box .box-normal .reply-box-send:hover::after,
+.dark .reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send:hover,
 .dark .new-elec-trigger:hover,
 .dark .elec-status:hover,
 .dark .btn.idc-btn.primary:hover {
