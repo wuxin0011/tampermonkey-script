@@ -7,7 +7,7 @@ const link_css =  is_link ?
 .dark #link-message-container * {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-bg-border) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 `:``

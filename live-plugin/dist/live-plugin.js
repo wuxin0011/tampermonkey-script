@@ -3635,8 +3635,12 @@ ${darkCss}
   
 ` : "";
   const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ? `
-.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
-.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
+.dark .home-cell-desc-title[data-v-350d21cc],
+.dark .home-cell-desc-title,
+.dark .home-cell-desc-subtitle[data-v-350d21cc], 
+.dark .home-cell-desc-subtitle, 
+.dark .with-up-space,
+.dark .with-up-space[data-v-350d21cc]
  {
   color:var(--w-text-light) !important;
 }
@@ -4537,7 +4541,8 @@ ${link_css}
 }
 
 
-.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel p,
+.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel p,
 .dark .album-list__title,.dark .album-list__tab-name,
 .dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
 .dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
@@ -4555,10 +4560,13 @@ ${link_css}
 .dark .elec .elec-count,.dark .elec,
 .dark .elec .elec-setting, .elec .elec-total-c-num,
 .dark .elec-total-c,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .icon-tag,
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .tag-content,
+.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag .icon-tag,
+.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag .tag-content,
 .dark #page-video #submit-video-type-filter a .count,
-.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30], .dark #page-series-index .channel-index .breadcrumb, 
+.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
+.dark #page-series-index .channel-index .breadcrumb, 
 .dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
 .dark #page-series-index .channel-index .breadcrumb .item.cur,
 .dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
@@ -4625,19 +4633,20 @@ ${link_css}
 
 
 .dark .col-full,
-
-
-.dark .btn
+.dark .btn,
+.dark .btn.btn-large, 
+.dark .btn.btn-large .btn-content[data-v-53027a10],
 .dark .new-elec-trigger,
 .dark .btn.idc-btn.default,
 .dark .elec-status,
 .dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel .create-channel,
-.dark .btn,.dark .btn.btn-large, .dark .btn.btn-large .btn-content[data-v-53027a10],
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel .create-channel,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
-.reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,.reply-box .box-normal .reply-box-send::after,
-.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,
+.dark .reply-box .box-normal .reply-box-send::after,
+.dark .reply-box .box-normal .reply-box-send,
 .dark .be-dropdown-item:hover,
 .dark .btn.idc-btn.primary {
   color:var(--w-text-light) !important;
@@ -4647,16 +4656,22 @@ ${link_css}
 
 
 
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,.dark #page-series-index .channel-option.no-channel .create-channel:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel:hover,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
 .dark .btn.primary.btn-large:hover,
-.dark .btn:hover,.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,.dark .btn.btn-large:hover,
+.dark .btn:hover,
+.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
+.dark .btn.btn-large .btn-content:hover,
+.dark .btn.btn-large:hover,
 .dark .bili-dyn-more__menu:hover,
 .dark .contribution-sidenav .contribution-item:hover,
 .dark .btn:hover,
-.reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,.reply-box .box-normal .reply-box-send:hover::after,
-.reply-box .box-normal .reply-box-send,.reply-box .box-normal .reply-box-send:hover,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,
+.dark .reply-box .box-normal .reply-box-send:hover::after,
+.dark .reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send:hover,
 .dark .new-elec-trigger:hover,
 .dark .elec-status:hover,
 .dark .btn.idc-btn.primary:hover {
@@ -4692,14 +4707,6 @@ ${link_css}
 
 ` : ``;
   const t = `
-.dark #app {
-  --bg1: var(--w-bg-darker);
-  --text1: var(--w-text-light);
-  --text3: var(--w-text);
-  --v_bg1_float: var(--bg1);
-  --v_bg2_float: var(--bg1);
-}
-
 
 
 `;
