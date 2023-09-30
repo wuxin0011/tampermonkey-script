@@ -1,10 +1,12 @@
 
 
 import { local_url } from "@/utils"
+import common from './common'
 
 const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url)
   ?
   `
+${common}
 .dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
 .dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
 .dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,

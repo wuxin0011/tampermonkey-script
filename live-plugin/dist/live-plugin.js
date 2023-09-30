@@ -3984,8 +3984,12 @@ ${darkCss}
   --b_text3: var(--text3);
   --b_text4: var(--text4);
 }
+
+
+
+
 `;
-  const common = `
+  const common$1 = `
 ${root}
 ${header}
 ${footer}
@@ -4350,13 +4354,31 @@ ${dialog}
 }
 
 `;
+  const common = `
+.dark * {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+`;
   const is_account = local_url.indexOf("https://account.bilibili.com/") !== -1;
   const account_css = is_account ? `
-
+${common}
 
 ` : ``;
-  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `` : ``;
+  const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `
+
+${common}
+
+  .dark .head-img,
+  .dark .header-wrap {
+    background:var(--w-bg-darker) !important;
+  }
+  
+  ` : ``;
   const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) ? `
+${common}
 .dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
 .dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
 .dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
@@ -4427,15 +4449,46 @@ ${dialog}
 }
 
 ` : ``;
-  const is_link = local_url.indexOf("https://link.bilibili.com/") !== -1;
+  const is_link$2 = local_url.indexOf("https://link.bilibili.com/") !== -1;
+  const link_css$2 = is_link$2 ? `
+${common}
+
+` : ``;
+  const is_link$1 = local_url.indexOf("https://message.bilibili.com/") !== -1;
+  const link_css$1 = is_link$1 ? `
+
+${common}
+
+
+` : ``;
+  const is_link = local_url.indexOf("https://live.bilibili.com/") !== -1;
   const link_css = is_link ? `
 
+.dark * {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+}
+
+.dark {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+
+.dark .live-non-revenue-player .sc-gsnTZi div {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
 
 ` : ``;
   const other = `
 ${account_css}
 ${app_bilibili}
 ${game_bilibili}
+${link_css$2}
+${link_css$1}
 ${link_css}
 `;
   const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ? `
@@ -5004,7 +5057,7 @@ ${douga}
 ${read}
 `;
   const dark = `
-${common}
+${common$1}
 ${router}
 ${other}
 
