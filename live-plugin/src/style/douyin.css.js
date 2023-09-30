@@ -8,7 +8,13 @@ const css = is_douyin ? `
        display:none !important;
     }
 
-    .#m-douyin-login{
+    .login-mask-enter-done,
+    .box-align-center, {
+      display:none ;
+
+    }
+
+    .m-douyin-login{
         display:block !important;
     }
 

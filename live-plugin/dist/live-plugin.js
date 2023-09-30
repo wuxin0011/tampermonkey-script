@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.3
+// @version      4.1.4
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
@@ -46,7 +46,7 @@
   const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/;
   const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
   const huya_address_pattern = /^https:\/\/www\.huya\.((com)|(cn)).*/;
-  const douyin_address_pattern = /^https:\/\/www\.douyin\.((com)|(cn)).*/;
+  const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/;
   const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/;
   const local_url = window.location.href;
   const is_huya = huya_address_pattern.test(local_url);
@@ -1099,10 +1099,10 @@ ${root$1}
   
 
   .m-container-display-block{
-     display:block ;
+     display:block !important;
   }
   .m-container-display-none{
-     display:none ;
+     display:none !important;
   }
 
   .m-container .m-link:hover {
@@ -1139,7 +1139,7 @@ ${root$1}
             <a class="m-link" href="https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
             <button class="btn btn-info btn-close-container" title="关闭 , ctrl+alt+j 可唤醒" >关闭</button>
         </div>
-        <table ${support.supportTable() ? "" : 'style="display:none !important;"'}>
+        <table class="${support.supportTable() ? "" : "m-container-display-none"}">
             <thead>
                 <th>序号</th>
                 <th>名称</th>
@@ -3614,7 +3614,13 @@ ${darkCss}
        display:none !important;
     }
 
-    .#m-douyin-login{
+    .login-mask-enter-done,
+    .box-align-center, {
+      display:none ;
+
+    }
+
+    .m-douyin-login{
         display:block !important;
     }
 
@@ -4118,7 +4124,7 @@ ${dialog}
 
 
 .dark body,.dark #header-v3,.dark .app-v1,.dark .app-v2,.dark .app-v3,.dark .app-v4,.dark .app-v5,
-.dark #app,.dark .v-img,
+.dark #app,.dark .v-img, .dark .bili-header * ,
 .dark .header-channel,.dark .header-channel-fixed-right-item,
 .dark .bili-video-card__wrap,.dark .bili-header .game,
 .dark .large-header,
@@ -4206,14 +4212,16 @@ ${dialog}
 .dark .bili-header .live-left-list-item-text,
 .dark .bili-header .game-right-title,
 .dark .bili-header .game-left-panel-item-title, 
-.bili-header .game-left-banner-title,
+.dark .bili-header .game-left-banner-title,
 .dark .bili-header .manga-right-list-item-text,
 .dark .bili-header .header-fav-card__info--name,
+.dark .favorite-panel-popover__nav *,
 .dark .favorite-panel-popover__nav .tab-item,
 .dark .favorite-panel-popover__nav .tab-item__num,
 .dark .bili-header .header-fav-card__info--title,
 .dark .dark .history-panel-popover .header-tabs-panel__content--date,
 .dark .history-panel-popover .header-history-card__info--title,
+.dark .header-tabs-panel *,
 .dark .header-tabs-panel,
 .dark .header-tabs-panel__content--date,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-content .nav-search-input,
@@ -4475,7 +4483,7 @@ ${common}
   background-color:var(--w-bg-darker) !important;
 }
 
-
+.dark #webShare .bili-share-pc,
 .dark .live-non-revenue-player .sc-gsnTZi div {
   color:var(--w-text-light) !important;
   border-color: var(--w-border) !important;
@@ -4568,7 +4576,6 @@ ${link_css}
 .dark .list-create {
   background:var(--w-bg) !important;
 }
-
 .dark .elec .elec-status-bg-grey,
 .dark #page-index #i-ann-content textarea,
 .dark .bili-dyn-item,
@@ -4584,8 +4591,10 @@ ${link_css}
 .dark #page-series-index .channel-option.no-channel,
 .dark #page-series-index .channel-option,
 .dark .bili-rich-textarea__inner.empty,
+.dark .note-editor .rich-text-options,
+.dark #web-toolbar,
 .dark .n .n-inner {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -4603,23 +4612,23 @@ ${link_css}
 .dark #page-index .col-2 .section-title,
 .dark #page-index .col-2 .section .user-auth .auth-description,
 .dark .user-info .user-info-title .info-title[data-v-31d5659a],
-.dark .user-info .user-info-title .info-title,
+.dark .user-info .user-info-title [class^=info-title],
 .dark .user-info .info-content .info-command[data-v-31d5659a],
-.dark .user-info .info-content .info-command,
+.dark .user-info .info-content [class^=info-command],
 .dark .user-info .info-content .info-value[data-v-31d5659a],
-.dark .user-info .info-content .info-value,
+.dark .user-info .info-content [class^=info-value],
 .dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
 .dark .idc-meta-item,
 .dark .elec .elec-count,.dark .elec,
 .dark .elec .elec-setting, .elec .elec-total-c-num,
 .dark .elec-total-c,
 .dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
-.dark .user-info .info-content .info-tags .info-tag .icon-tag,
+.dark .user-info .info-content .info-tags .info-tag [class^=icon-tag],
 .dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
-.dark .user-info .info-content .info-tags .info-tag .tag-content,
+.dark .user-info .info-content .info-tags .info-tag [class^=tag-content],
 .dark #page-video #submit-video-type-filter a .count,
 .dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
-.dark #page-series-index .channel-index .breadcrumb, 
+.dark #page-series-index .channel-index [class^=breadcrumb], 
 .dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
 .dark #page-series-index .channel-index .breadcrumb .item.cur,
 .dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
@@ -4633,7 +4642,7 @@ ${link_css}
 .dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
 .dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
 .dark .bili-popover, .dark .bili-popover__arrow,
-.dark .game-card__info-title[data-v-7c9854da],.dark .game-card__info-title,
+.dark .game-card__info-title[data-v-7c9854da],.dark [class^=game-card__info-title],
 .dark .section-title {
   color:var(--w-text-light) !important;
 }
@@ -4701,9 +4710,10 @@ ${link_css}
 .dark .reply-box .box-normal .reply-box-send::after,
 .dark .reply-box .box-normal .reply-box-send,
 .dark .be-dropdown-item:hover,
+.dark .resizable-component .editor-innter,
 .dark .btn.idc-btn.primary {
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   border-color: var(--w-text) !important;
 }
 
