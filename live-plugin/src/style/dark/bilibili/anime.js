@@ -4,8 +4,12 @@ import { local_url } from "@/utils"
 const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ?
 
   `
-.dark .home-cell-desc-title[data-v-350d21cc],.dark .home-cell-desc-title,
-.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space,.dark .home-cell-desc-subtitle[data-v-350d21cc], .with-up-space[data-v-350d21cc]
+.dark .home-cell-desc-title[data-v-350d21cc],
+.dark .home-cell-desc-title,
+.dark .home-cell-desc-subtitle[data-v-350d21cc], 
+.dark .home-cell-desc-subtitle, 
+.dark .with-up-space,
+.dark .with-up-space[data-v-350d21cc]
  {
   color:var(--w-text-light) !important;
 }
