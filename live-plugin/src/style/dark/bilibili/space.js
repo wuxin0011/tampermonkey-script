@@ -33,7 +33,8 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 }
 
 
-.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel p,
+.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel p,
 .dark .album-list__title,.dark .album-list__tab-name,
 .dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
 .dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
@@ -51,10 +52,13 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 .dark .elec .elec-count,.dark .elec,
 .dark .elec .elec-setting, .elec .elec-total-c-num,
 .dark .elec-total-c,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .icon-tag,
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],.dark .user-info .info-content .info-tags .info-tag .tag-content,
+.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag .icon-tag,
+.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
+.dark .user-info .info-content .info-tags .info-tag .tag-content,
 .dark #page-video #submit-video-type-filter a .count,
-.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30], .dark #page-series-index .channel-index .breadcrumb, 
+.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
+.dark #page-series-index .channel-index .breadcrumb, 
 .dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
 .dark #page-series-index .channel-index .breadcrumb .item.cur,
 .dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
@@ -121,15 +125,15 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 
 
 .dark .col-full,
-
-
-.dark .btn
+.dark .btn,
+.dark .btn.btn-large, 
+.dark .btn.btn-large .btn-content[data-v-53027a10],
 .dark .new-elec-trigger,
 .dark .btn.idc-btn.default,
 .dark .elec-status,
 .dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],.dark #page-series-index .channel-option.no-channel .create-channel,
-.dark .btn,.dark .btn.btn-large, .dark .btn.btn-large .btn-content[data-v-53027a10],
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],
+.dark #page-series-index .channel-option.no-channel .create-channel,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
 .dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,
@@ -144,11 +148,14 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
 
 
 
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,.dark #page-series-index .channel-option.no-channel .create-channel:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,
+.dark #page-series-index .channel-option.no-channel .create-channel:hover,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
 .dark .btn.primary.btn-large:hover,
-.dark .btn:hover,.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
+.dark .btn:hover,
+.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
+.dark .btn.btn-large .btn-content:hover,
 .dark .btn.btn-large:hover,
 .dark .bili-dyn-more__menu:hover,
 .dark .contribution-sidenav .contribution-item:hover,
