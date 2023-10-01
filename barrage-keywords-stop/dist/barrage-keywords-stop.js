@@ -373,7 +373,7 @@ class BarrageKeywordsStop extends HTMLElement {
                 return;
             }
             setItem(AnimationTimeKey, dmAniTimeInput.value);
-            addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : "已关闭"}`);
+            addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : "已关闭,需要开启才能生效哦！"}`);
             notify();
         };
         dmAniTimeInput.addEventListener("keydown", (event => {

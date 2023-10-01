@@ -250,7 +250,7 @@ import BarrageKeywordsStop from './ui/index';
 		const add = () => {
 			const text = dmInput.value
 			if (!text) {
-				alert('请输入关键字')
+				addTipMessageText('请输入关键字!')
 				return;
 			}
 			if (find(text)) {
@@ -312,7 +312,7 @@ import BarrageKeywordsStop from './ui/index';
 		dmAniTimeInput.value = getAnimationTime() as string
 		const addTime = () => {
 			if (isNaN(Number(dmAniTimeInput.value)) || (Number(dmAniTimeInput.value) < 0 || Number(dmAniTimeInput.value) > MAX_ANIMATION_TIME)) {
-				alert(`请输入0-${MAX_ANIMATION_TIME}的数字`)
+				addTipMessageText(`请输入0-${MAX_ANIMATION_TIME}的数字`)
 				dmAniTimeInput.value = String(animationTime)
 				return;
 			}
