@@ -299,10 +299,10 @@ import BarrageKeywordsStop from './ui/index';
 
 
 		// animation
-		dmAnimationCheckbox.checked = isAnimation ? true : false
+		dmAnimationCheckbox.checked = isOpenTranisition()
 		dmAnimationCheckbox.addEventListener('change', () => {
 			setItem(isAnimationKey, dmAnimationCheckbox.checked ? isAnimationKey : `NO_${isAnimationKey}`)
-			addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭'}`)
+			addTipMessageText(`弹幕过渡效果${dmAnimationCheckbox.checked ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭'}`)
 			notify()
 
 		})
@@ -317,7 +317,7 @@ import BarrageKeywordsStop from './ui/index';
 				return;
 			}
 			setItem(AnimationTimeKey, dmAniTimeInput.value)
-			addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭'}`)
+			addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭,需要开启才能生效哦！'}`)
 			notify()
 
 		}

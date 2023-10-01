@@ -359,10 +359,10 @@ class BarrageKeywordsStop extends HTMLElement {
             dmChangeButton.title = isAllRooms ? "当前弹幕在所有直播间生效,点击切换房间" : "当前弹幕仅在该房间生效，点击切换到全房间";
             addTipMessageText(`切换成功 ${isAllRooms ? "当前弹幕在所有直播间生效🧱" : "当前弹幕仅在该房间生效🚀"}`);
         }));
-        dmAnimationCheckbox.checked = isAnimation ? true : false;
+        dmAnimationCheckbox.checked = isOpenTranisition();
         dmAnimationCheckbox.addEventListener("change", (() => {
             setItem(isAnimationKey, dmAnimationCheckbox.checked ? isAnimationKey : `NO_${isAnimationKey}`);
-            addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : "已关闭"}`);
+            addTipMessageText(`弹幕过渡效果${dmAnimationCheckbox.checked ? `已开启,过渡时间${dmAniTimeInput.value}s` : "已关闭"}`);
             notify();
         }));
         dmAniTimeInput.value = getAnimationTime();
