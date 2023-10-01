@@ -31,8 +31,8 @@ export default class BarrageKeywordsStop extends HTMLElement {
     const dmContainer = document.createElement('div')
     dmContainer.className = `m-dm-container ${isFisrtInstall() || isShow ? '' : 'm-dm-ani-close'} `
     dmContainer.innerHTML = containerDOMStr
-    const tip = dmContainer.querySelector('.m-dm-container-footer p') as HTMLElement
-    tip!.style!.display = isNoShowTip() ? 'none' : 'block'
+    const tip = dmContainer.querySelector('.m-dm-container-footer .message-tip') as HTMLElement
+    tip.textContent = isNoShowTip() ? '使用ctrl+alt+k可唤醒或者关闭哦！' : ''
     shadowRoot!.appendChild(dmContainer)
     if (isBefore) {
       c?.parentNode?.insertBefore(plugin, c.nextSibling);

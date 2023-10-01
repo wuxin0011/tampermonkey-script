@@ -19,46 +19,42 @@
 /**
  * 全局房间关键词 key
  */
-export const selectKeywordsLocal = 'selectKeywordsLocal'                                       
+export const selectKeywordsLocal = 'selectKeywordsLocal'
 
 
 /**
  * 是否不需要提示 key
  */
-export const isNoShowTipKey = 'tip_isNoShowTipKey'                                             
+export const isNoShowTipKey = 'tip_isNoShowTipKey'
 
 
 /**
  * 是否是第一次安装
  */
-export const isFisrtInstallKey = 'isFisrtInstallKey'                                           
+export const isFisrtInstallKey = 'isFisrtInstallKey'
 
-/**
- * 第一次是否提示
- */
-export const isFirstAlertKey = 'isFirstAlertKey'                                              
 
 
 /**
  * 该房间关键词 key
  */
-export const selectOnlyThieRoom = 'selectOnlyThieRoom'                                         
+export const selectOnlyThieRoom = 'selectOnlyThieRoom'
 
 
 /**
  * 是否附带动画效果
  */
-export const isAnimationKey = "m_isAnimationKey" 
+export const isAnimationKey = "m_isAnimationKey"
 
 /**
  * 动画时长
  */
-export const AnimationTimeKey = "m_time_isAnimationKey" 
+export const AnimationTimeKey = "m_time_isAnimationKey"
 
 /**
  * 默认关键词
  */
-export const defaultKeywords = ['送出', '6666', '直播间']                                     
+export const defaultKeywords = ['送出', '6666', '直播间']
 
 /**
  * 当前url
@@ -99,13 +95,13 @@ export const noop = () => { }
 /**
  * 最大动画时长
  */
-export const MAX_ANIMATION_TIME = 2 
+export const MAX_ANIMATION_TIME = 2
 
 
 /**
  * 默认时长
  */
-export const DEFAULT_ANIMATION_TIME = 0.5 
+export const DEFAULT_ANIMATION_TIME = 0.5
 
 
 
@@ -142,11 +138,6 @@ export const isFisrtInstall = () => getItem(isFisrtInstallKey) == null || getIte
  */
 export const isNoShowTip = () => getItem(isNoShowTipKey) == null || getItem(isNoShowTipKey) !== isNoShowTipKey
 
-/**
- * 提示
- * @returns boolean true
- */
-export const isFirstAlert = () => getItem(isFirstAlertKey) == null || getItem(isFirstAlertKey) !== isFirstAlertKey
 
 
 /**
@@ -155,6 +146,11 @@ export const isFirstAlert = () => getItem(isFirstAlertKey) == null || getItem(is
  */
 export const getAnimationTime = () => getItem(AnimationTimeKey) == null ? DEFAULT_ANIMATION_TIME : (isNaN(getItem(AnimationTimeKey)) ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey) > MAX_ANIMATION_TIME ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey))
 
+
+/**
+ * 是否开启过渡
+ */
+export const isOpenTranisition = () => getItem(isAnimationKey) == null || getItem(isAnimationKey) === isAnimationKey
 
 /**
  * 全网关键词
@@ -211,19 +207,20 @@ export const getRoomId = (): string | null => {
  * @returns  boolean
  */
 export const isFull = () => {
-  return !!(document?.fullscreenElement)
+  if ('fullscreenElement' in document) {
+    return !!document['fullscreenElement']
+  }
+  if ('webkitFullscreenElement' in document) {
+    return !!document['webkitFullscreenElement']
+  }
+  if ('mozFullScreenElement' in document) {
+    return !!document['mozFullScreenElement']
+  }
+  if ('msFullscreenElement' in document) {
+    return !!document['msFullscreenElement']
+  }
 }
 
-/**
- * 是否全屏
- * @returns  boolean
- */
-// export const isFull = () => {
-//   return !!(document?.fullscreenElement
-//     || document?.webkitFullscreenElement
-//     || document?.mozFullScreenElement
-//     || document?.msFullscreenElement)
-// }
 
 
 /**

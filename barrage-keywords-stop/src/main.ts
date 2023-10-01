@@ -6,13 +6,10 @@ import {
 	MARK_TAG,
 	MAX_ANIMATION_TIME,
 	getAnimationTime,
-	getItem,
 	isAnimationKey,
 	isBiliBiliLive,
 	isDouYinLive,
 	isDouyuLive,
-	isFirstAlert,
-	isFirstAlertKey,
 	isFisrtInstall,
 	isFisrtInstallKey,
 	isFull,
@@ -20,6 +17,7 @@ import {
 	isLocalHost,
 	isNoShowTip,
 	isNoShowTipKey,
+	isOpenTranisition,
 	localLink,
 	removeDom,
 	roomId,
@@ -32,7 +30,7 @@ import {
 
 import {
 	SUPPORT, TAG_TYPE
-} from './utils/const'
+} from './utils/const';
 
 
 import BarrageKeywordsStop from './ui/index';
@@ -44,13 +42,15 @@ import BarrageKeywordsStop from './ui/index';
 		return;
 	}
 
-	let isAnimation = getItem(isAnimationKey) == null || getItem(isAnimationKey) === isAnimationKey
+	const tipTimeout = 2000
+	let isAnimation = false
 	let animationTime = DEFAULT_ANIMATION_TIME
 
 	let nodeVersion = 0
 	let beforeTag: HTMLSpanElement | null = null
 
 	let keywordsCache: string[] = []
+	let tipMessageElement: HTMLParagraphElement | null = null
 
 
 
@@ -59,7 +59,7 @@ import BarrageKeywordsStop from './ui/index';
 	let tagInitSuccess = true
 	let isAllRooms = false
 	let isSupport = true
-	const isPrintStop = true
+	const isPrintStopInfo = false
 	let currentContainer: HTMLElement | null = null
 	let requestAnimationFrameTimer: number = 0
 
@@ -75,7 +75,7 @@ import BarrageKeywordsStop from './ui/index';
 		}
 		for (let index = 0; index < keywordsCache.length; index++) {
 			if (keywordsCache[index] && (text.indexOf(keywordsCache[index]) !== -1)) {
-				if (!isPrintStop) {
+				if (isPrintStopInfo) {
 					console.error('\n\n==============================stop=====================================')
 					console.error(`禁止`, text, ' keywords: ', keywordsCache[index])
 				}
@@ -100,8 +100,8 @@ import BarrageKeywordsStop from './ui/index';
 				if (node instanceof HTMLElement) {
 					if (contains(node?.textContent)) {
 						if (isAnimation) {
-							node.style.transition = `opacity ${animationTime}s ease-out`
 							node.style.opacity = '0'
+							node.style.transition = `opacity ${animationTime}s ease-out`
 							// 监听过渡结束事件，在过渡结束后删除节点
 							node.addEventListener('transitionend', () => {
 								removeDom(node, true)
@@ -116,10 +116,6 @@ import BarrageKeywordsStop from './ui/index';
 			}
 		}
 
-		// 遍历节点
-		if (Array.isArray(BARRAGE_CONTAINER)) {
-
-		}
 		for (let i = 0; i < BARRAGE_CONTAINER.length; i++) {
 			findTargetText(BARRAGE_CONTAINER[i] as unknown as string)
 		}
@@ -128,34 +124,6 @@ import BarrageKeywordsStop from './ui/index';
 	}
 
 
-	// const SUPPORT = {
-	// 	HY: 'HY_LIVE',
-	// 	DOUYIN: 'DOUYIN_LIVE',
-	// 	DOUYU: 'DOUYU_LIVE',
-	// 	BILIBILI: 'BILIBILI_LIVE',
-	// 	LOCALHOST: 'LOCALHOST_LIVE'
-	// }
-
-
-	// const TAG_TYPE = {
-	// 	[SUPPORT.DOUYIN]: {
-	// 		[BARRAGE_TYPE.ALL_BARRAGE]: ['.xgplayer-danmu>div', '.webcast-chatroom___item.webcast-chatroom___enter-done', '.xgplayer-danmu div']
-	// 	},
-	// 	[SUPPORT.HY]: {
-	// 		[BARRAGE_TYPE.ALL_BARRAGE]: ['#player-video #danmuwrap #danmudiv .danmu-item', '#player-video #danmuwrap #danmudiv #danmudiv2', '#player-marquee-wrap .player-marquee-noble-item', '#player-marquee-wrap .player-banner-enter', '#chat-room__list>div']
-	// 	},
-	// 	[SUPPORT.BILIBILI]: {
-	// 		[BARRAGE_TYPE.ALL_BARRAGE]: ['.web-player-danmaku .danmaku-item-container .bili-dm', '#chat-items .chat-item']
-
-	// 	},
-	// 	[SUPPORT.DOUYU]: {
-	// 		[BARRAGE_TYPE.ALL_BARRAGE]: ['#douyu_room_normal_player_danmuDom .ani-broadcast', '#js-barrage-container #js-barrage-list li']
-	// 	},
-	// 	[SUPPORT.LOCALHOST]: {
-	// 		[BARRAGE_TYPE.ALL_BARRAGE]: ['video']
-	// 	}
-	// }
-
 	const installBeforeInfo = () => {
 		console.log('欢迎使用弹幕屏蔽插件...')
 		console.log('是否是首次安装', isFisrtInstall() ? "是" : "否")
@@ -163,16 +131,6 @@ import BarrageKeywordsStop from './ui/index';
 	}
 
 
-	const addStyle = (str: string) => {
-		if (isInit) {
-			return;
-		}
-		const head = document.querySelector("head");
-		const style = document.createElement("style");
-		style.innerText = str;
-		head!.appendChild(style);
-		isInit = true
-	};
 
 	const keywordsUpdate = (array: string[]) => {
 		if (!Array.isArray(array)) {
@@ -181,6 +139,7 @@ import BarrageKeywordsStop from './ui/index';
 		isAllRooms ? setItem(selectKeywordsLocal, array, true) : setItem(roomId(), array, true)
 		// 通知改变 之前被标记标签如果没被处理将失效
 		notify()
+
 	}
 
 
@@ -190,6 +149,7 @@ import BarrageKeywordsStop from './ui/index';
 		}
 		const index = keywordsCache.findIndex(t => t == text)
 		if (index >= 0) {
+			addTipMessageText(`关键词 ${text} 已移除`)
 			keywordsCache.splice(index, 1)
 			keywordsUpdate([...keywordsCache])
 		}
@@ -204,6 +164,7 @@ import BarrageKeywordsStop from './ui/index';
 		}
 		const index = keywordsCache.findIndex(t => t == text)
 		if (index === -1) {
+			addTipMessageText(`关键词 ${text} 已添加`)
 			keywordsCache = [text, ...keywordsCache]
 			keywordsUpdate(keywordsCache)
 		}
@@ -226,10 +187,12 @@ import BarrageKeywordsStop from './ui/index';
 		}
 
 
-		isAnimation = getItem(isAnimationKey) == null
+		isAnimation = isOpenTranisition()
 		animationTime = getAnimationTime()
 
-		console.log('重新扫描中...当前关键词☠:', keywordsCache)
+		console.log('是否开启动画过渡效果🕢:', isAnimation ? '开启了弹幕过渡效果' : '关闭了弹幕过渡效果')
+		console.log('弹幕过渡时长🕑:', animationTime, 's')
+		console.log('重新扫描中...当前关键词🧹:', keywordsCache)
 	}
 
 	// notify ！
@@ -241,11 +204,14 @@ import BarrageKeywordsStop from './ui/index';
 			if (Array.isArray(keywordsCache) && keywordsCache.length > 0) {
 				nodeVersion = nodeVersion + 2
 				findBarrages() // run ！
+				setTimeout(() => {
+					addTipMessageText('弹幕重新扫描中...🚀')
+				}, tipTimeout);
 			} else {
-				console.log('当前标签为空！停止扫描！🚀')
+				addTipMessageText('当前标签为空！停止扫描！🧹')
 			}
 		} catch (error) {
-			console.error('弹幕插件出现异常了😭 ...', error)
+			addTipMessageText('弹幕插件出现异常了😭')
 		}
 	}
 
@@ -278,31 +244,26 @@ import BarrageKeywordsStop from './ui/index';
 			return;
 		}
 
-		const tip = dmContainer.querySelector('.m-dm-container-footer p') as HTMLElement
-		tip!.addEventListener('click', () => {
-			setItem(isNoShowTipKey, isNoShowTipKey)
-			tip!.style.display = 'none'
-		})
+		tipMessageElement = dmContainer.querySelector('.m-dm-container-footer .message-tip') as HTMLParagraphElement
 
 		const find = (text: string) => keywordsCache.find((t) => t == text)
 		const add = () => {
-			if (!dmInput.value) {
+			const text = dmInput.value
+			if (!text) {
 				alert('请输入关键字')
 				return;
 			}
-			if (find(dmInput.value)) {
-				if (isFirstAlert()) {
-					setItem(isFirstAlertKey, isFirstAlertKey)
-					alert('关键字已重复')
-				} else {
-					dmInput.value = ''
-				}
+			if (find(text)) {
+				addTipMessageText(`添加失败，关键词${text}已存在！😭`)
+				dmInput.value = ''
 				return;
 			}
-			createTag(dmBody, dmInput.value)
-			createKeywords(dmInput.value)
+			createTag(dmBody, text)
+			createKeywords(text)
 			setItem(isFisrtInstallKey, isFisrtInstallKey)
 			dmInput.value = ''
+			notify()
+
 		}
 
 		// enter
@@ -333,14 +294,17 @@ import BarrageKeywordsStop from './ui/index';
 			createTags()
 			dmChangeButton.textContent = isAllRooms ? '全房间' : '房间'
 			dmChangeButton.title = isAllRooms ? '当前弹幕在所有直播间生效,点击切换房间' : '当前弹幕仅在该房间生效，点击切换到全房间'
+			addTipMessageText(`切换成功 ${isAllRooms ? '当前弹幕在所有直播间生效🧱' : '当前弹幕仅在该房间生效🚀'}`)
 		})
 
 
 		// animation
 		dmAnimationCheckbox.checked = isAnimation ? true : false
-		dmAnimationCheckbox.addEventListener('change', (e: Event) => {
+		dmAnimationCheckbox.addEventListener('change', () => {
 			setItem(isAnimationKey, dmAnimationCheckbox.checked ? isAnimationKey : `NO_${isAnimationKey}`)
+			addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭'}`)
 			notify()
+
 		})
 
 
@@ -353,7 +317,9 @@ import BarrageKeywordsStop from './ui/index';
 				return;
 			}
 			setItem(AnimationTimeKey, dmAniTimeInput.value)
+			addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭'}`)
 			notify()
+
 		}
 		dmAniTimeInput.addEventListener('keydown', (event) => {
 			if (event.key === 'Enter') {
@@ -370,11 +336,24 @@ import BarrageKeywordsStop from './ui/index';
 				removeTags()
 				keywordsCache = []
 				setItem(isAllRooms ? selectKeywordsLocal : roomId(), keywordsCache, true)
+				addTipMessageText(`${isAllRooms ? '全房间' : '该房间'}关键词标签已清空！`)
 				notify()
+
 			}
 		})
 
 		console.log('响应事件监听完毕...')
+	}
+
+	const addTipMessageText = (text: string, wait = tipTimeout) => {
+		if (!tipMessageElement) {
+			return;
+		}
+		tipMessageElement.style.opacity = '1'
+		tipMessageElement.textContent = text
+		setTimeout(() => {
+			tipMessageElement!.style.opacity = '0'
+		}, wait);
 	}
 
 
@@ -413,10 +392,8 @@ import BarrageKeywordsStop from './ui/index';
 
 		document.addEventListener('keydown', function (event) {
 			if (event.ctrlKey && event.altKey && event.key === 'k') {
-				console.log('init ...')
 				const dmContainer = currentContainer
 				if (!dmContainer) {
-					console.log('触发失败 获取不到容器!')
 					return;
 				}
 				if (dmContainer.classList.contains('m-dm-ani-close')) {
@@ -469,7 +446,6 @@ import BarrageKeywordsStop from './ui/index';
 		if (!currentContainer) {
 			return;
 		}
-		console.log('标签删除中...')
 		const allTags = currentContainer.querySelectorAll('.m-dm-container-body .m-dm-keywords-tag') as unknown as HTMLElement[]
 		if (allTags && allTags.length > 0) {
 			for (let i = 0; i < allTags.length; i++) {

@@ -19,8 +19,6 @@ const isNoShowTipKey = "tip_isNoShowTipKey";
 
 const isFisrtInstallKey = "isFisrtInstallKey";
 
-const isFirstAlertKey = "isFirstAlertKey";
-
 const selectOnlyThieRoom = "selectOnlyThieRoom";
 
 const isAnimationKey = "m_isAnimationKey";
@@ -53,9 +51,9 @@ const isFisrtInstall = () => getItem(isFisrtInstallKey) == null || getItem(isFis
 
 const isNoShowTip = () => getItem(isNoShowTipKey) == null || getItem(isNoShowTipKey) !== isNoShowTipKey;
 
-const isFirstAlert = () => getItem(isFirstAlertKey) == null || getItem(isFirstAlertKey) !== isFirstAlertKey;
-
 const getAnimationTime = () => getItem(AnimationTimeKey) == null ? DEFAULT_ANIMATION_TIME : isNaN(getItem(AnimationTimeKey)) ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey) > MAX_ANIMATION_TIME ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey);
+
+const isOpenTranisition = () => getItem(isAnimationKey) == null || getItem(isAnimationKey) === isAnimationKey;
 
 const selectKeywords = () => isFisrtInstall() || getItem(selectKeywordsLocal) == null ? defaultKeywords : getItem(selectKeywordsLocal, true);
 
@@ -74,7 +72,7 @@ const getRoomId = () => {
         } else if (isHyLive) {
             match = localLink.match(/https:\/\/www\.huya\.com\/(.*)/);
         } else if (isDouyuLive) {
-            if (/.*rid=(\d+).*/.test(localLink) && localLink.match(/rid=(\d+)/)) {
+            if (/.*rid=(\d+).*/.test(localLink)) {
                 match = localLink.match(/rid=(\d+)/);
             } else if (localLink.match(/https:\/\/www\.douyu\.com\/(\d+).*/)) {
                 match = localLink.match(/https:\/\/www\.douyu\.com\/(\d+).*/);
@@ -87,7 +85,20 @@ const getRoomId = () => {
     return localLink;
 };
 
-const isFull = () => !!(document === null || document === void 0 ? void 0 : document.fullscreenElement);
+const isFull = () => {
+    if ("fullscreenElement" in document) {
+        return !!document["fullscreenElement"];
+    }
+    if ("webkitFullscreenElement" in document) {
+        return !!document["webkitFullscreenElement"];
+    }
+    if ("mozFullScreenElement" in document) {
+        return !!document["mozFullScreenElement"];
+    }
+    if ("msFullscreenElement" in document) {
+        return !!document["msFullscreenElement"];
+    }
+};
 
 const roomId = () => createRoomId(getRoomId());
 
@@ -122,9 +133,9 @@ const TAG_TYPE = {
     [SUPPORT.LOCALHOST]: [ "video" ]
 };
 
-const style = `\n \n  .m-dm-container {\n    --dm-container-width: 500px;\n    --dm-container-height: 300px;\n    --dm-input-add-keywords-width: 120px;\n    --dm-input-time-width: 20px;\n    --dm-container-background-color: 30, 23, 37;\n    --dm-font-color: #fff;\n    --dm-font-color-hover: #000;\n    --dm-background-color: 0, 0, 0;\n    --dm-background-color-hover: #fff;\n    --dm-border-color: #fff;\n    --dm-border-color-hover: #000;\n  }\n\n\n\n\n  .m-dm-container {\n    width: var(--dm-container-width) ;\n    height: var(--dm-container-height) ;\n    background-color: rgba(var(--dm-container-background-color), 1) ;\n    position: fixed ;\n    display: flex ;\n    flex-direction: column ;\n    box-sizing: border-box ;\n    box-shadow: 2px 2px 10px rgba(var(--dm-background-color), 0.7) ;\n    border-radius: 10px ;\n    position: fixed ;\n    right: 0 ;\n    top: 100px ;\n    border: none ;\n    transition: transform ease-in-out 0.5s ;\n    z-index: 999999 ;\n    box-sizing: border-box ;\n    padding: 10px ;\n  }\n\n  .m-dm-input-animation-time,\n  .m-dy-input-add-keywords {\n    width: var(--dm-input-add-keywords-width) ;\n    padding: 6px 12px ;\n    border: none ;\n    outline: none ;\n    margin-left: 10px ;\n    margin-top: 10px ;\n    border-radius: 10px ;\n  }\n\n  .m-dm-input-animation-time,\n  .m-dy-input-add-keywords:focus {\n    border: none ;\n    outline: none ;\n  }\n\n  .m-dm-input-animation-time {\n    width: var(--dm-input-time-width) ;\n  }\n\n  .m-dm-install-link {\n    display:inline-block ;\n    float:right ;\n    right:5px ;\n    color: var(--dm-font-color) ;\n  }\n\n\n\n  .m-dm-container-header,\n  .m-dm-container-footer {\n    height: 44px ;\n    position: relative  ;\n  }\n\n  .m-dm-container-header #m-dm-close-btn {\n    float:right ;\n    right: 3px ;\n    color: var(--dm-font-color) ;\n    font-size: 30px ;\n    cursor: pointer  ;\n    position: absolute  ;\n  }\n\n\n  .m-dm-container-body {\n    flex: 1 ;\n    overflow: auto ;\n  }\n\n  .m-dm-keywords-tag {\n    display: inline-block ;\n    padding: 5px ;\n    background-color: var(--dm-background-color) ;\n    border: none ;\n    outline: none ;\n    margin: 5px ;\n    cursor: pointer ;\n    color: var(--dm-font-color) ;\n    font-size: 12px ;\n    border: 1px solid var(--dm-border-color) ;\n    border-radius: 10px ;\n  }\n\n  .m-dm-keywords-tag:hover {\n    background: rgba(var(--dm-background-color), 0.7) ;\n    border: 1px solid var(--dm-border-hover-color) ;\n  }\n\n\n  .m-dm-time-button,\n  .m-dm-all-keywords-button,\n  .m-dm-delete-keywords-button,\n  .m-dm-add-keywords-button {\n    display: inline-block ;\n    padding: 4px 8px ;\n    text-align: center ;\n    border: none ;\n    outline: none ;\n    background-color: var(--dm-background-color-hover) ;\n    color: var(--dm-font-color-hover) ;\n    cursor: pointer ;\n    border: 1px solid var(--dm-border-color) ;\n    border-radius: 10px ;\n  }\n\n  \n  .m-dm-time-button:hover,\n  .m-dm-all-keywords-button:hover,\n  .m-dm-delete-keywords-button:hover,\n  .m-dm-add-keywords-button:hover {\n    background-color: rgb(var(--dm-background-color)) ;\n    color: var(--dm-font-color) ;\n    border: 1px solid var(--dm-border-color) ;\n\n  }\n\n  .m-dm-container-footer {\n    box-sizing: border-box ;\n    padding: 10px ;\n  }\n\n  .m-dm-container-footer p {\n    color: var(--dm-font-color) ;\n    cursor: pointer ;\n  }\n\n\n  .m-dm-ani-close {\n    transform: translateX(var(--dm-container-width)) ;\n  }\n\n  .m-dm-container-body {\n    overflow: auto ;\n    -webkit-overflow-scrolling: touch ;\n    scrollbar-width: thin ;\n    scrollbar-color: #888888 #f0f0f0 ;\n    -webkit-overflow-scrolling: touch ;\n    scrollbar-width: none ;\n    -ms-overflow-style: none ;\n  }\n\n  .m-dm-container-body::-webkit-scrollbar {\n    width: 4px ;\n  }\n\n  .m-dm-container-body::-webkit-scrollbar-track {\n    background-color: rgb(22, 24, 35) ;\n  }\n\n  .m-dm-container-body::-webkit-scrollbar-thumb {\n    background-color: #333 ;\n    border-radius: 4px ;\n  }\n  \n  `;
+const style = `\n \n  .m-dm-container {\n    --dm-container-width: 500px;\n    --dm-container-height: 300px;\n    --dm-input-add-keywords-width: 120px;\n    --dm-input-time-width: 20px;\n    --dm-container-background-color: 30, 23, 37;\n    --dm-font-color: #fff;\n    --dm-font-color-hover: #000;\n    --dm-background-color: 0, 0, 0;\n    --dm-background-color-hover: #fff;\n    --dm-border-color: #fff;\n    --dm-border-color-hover: #000;\n  }\n\n\n\n\n  .m-dm-container {\n    width: var(--dm-container-width) ;\n    height: var(--dm-container-height) ;\n    background-color: rgba(var(--dm-container-background-color), 1) ;\n    position: fixed ;\n    display: flex ;\n    flex-direction: column ;\n    box-sizing: border-box ;\n    box-shadow: 2px 2px 10px rgba(var(--dm-background-color), 0.7) ;\n    border-radius: 10px ;\n    position: fixed ;\n    right: 0 ;\n    top: 100px ;\n    border: none ;\n    transition: transform ease-in-out 0.5s ;\n    z-index: 999999 ;\n    box-sizing: border-box ;\n    padding: 10px ;\n  }\n\n  .m-dm-input-animation-time,\n  .m-dy-input-add-keywords {\n    width: var(--dm-input-add-keywords-width) ;\n    padding: 8px 12px ;\n    border: none ;\n    outline: none ;\n    margin-left: 10px ;\n    margin-top: 10px ;\n    border-radius: 10px ;\n  }\n\n  .m-dm-input-animation-time,\n  .m-dy-input-add-keywords:focus {\n    border: none ;\n    outline: none ;\n  }\n\n  .m-dm-input-animation-time {\n    width: var(--dm-input-time-width) ;\n  }\n\n  .m-dm-install-link {\n    display:inline-block ;\n    float:right ;\n    right:5px ;\n    color: var(--dm-font-color) ;\n  }\n\n\n\n  .m-dm-container-header,\n  .m-dm-container-footer {\n    height: 44px ;\n    position: relative  ;\n  }\n\n  .m-dm-container-header #m-dm-close-btn {\n    float:right ;\n    right: 3px ;\n    color: var(--dm-font-color) ;\n    font-size: 30px ;\n    cursor: pointer  ;\n    position: absolute  ;\n  }\n\n\n  .m-dm-container-body {\n    flex: 1 ;\n    overflow: auto ;\n  }\n\n  .m-dm-keywords-tag {\n    display: inline-block ;\n    padding: 5px ;\n    background-color: var(--dm-background-color) ;\n    border: none ;\n    margin: 5px ;\n    cursor: pointer ;\n    color: var(--dm-font-color) ;\n    font-size: 12px ;\n    outline: 1px solid var(--dm-border-color) ;\n    border-radius: 10px ;\n  }\n\n  .m-dm-keywords-tag:hover {\n    background-color:var(--dm-font-color);\n    color:var(--dm-font-color-hover);\n  }\n\n\n  .m-dm-time-button,\n  .m-dm-all-keywords-button,\n  .m-dm-delete-keywords-button,\n  .m-dm-add-keywords-button {\n    display: inline-block ;\n    padding: 4px 8px ;\n    text-align: center ;\n    border: none ;\n    outline: none ;\n    background-color: var(--dm-background-color-hover) ;\n    color: var(--dm-font-color-hover) ;\n    cursor: pointer ;\n    border: 1px solid var(--dm-border-color) ;\n    border-radius: 10px ;\n  }\n\n  \n  .m-dm-time-button:hover,\n  .m-dm-all-keywords-button:hover,\n  .m-dm-delete-keywords-button:hover,\n  .m-dm-add-keywords-button:hover {\n    background-color: rgb(var(--dm-background-color)) ;\n    color: var(--dm-font-color) ;\n    border: 1px solid var(--dm-border-color) ;\n\n  }\n\n  .m-dm-container-footer {\n    box-sizing: border-box ;\n    padding: 10px ;\n  }\n\n  .m-dm-container-footer .message-tip{\n    color: var(--dm-font-color) ;\n    opacity:1;\n    display:inline-block;\n    transition:opacity 0.5s ease-out;\n  }\n\n\n  .m-dm-ani-close {\n    transform: translateX(var(--dm-container-width)) ;\n  }\n\n  .m-dm-container-body {\n    overflow: auto ;\n    -webkit-overflow-scrolling: touch ;\n    scrollbar-width: thin ;\n    scrollbar-color: #888888 #f0f0f0 ;\n    -webkit-overflow-scrolling: touch ;\n    scrollbar-width: none ;\n    -ms-overflow-style: none ;\n  }\n\n\n\n  .m-dm-container-body::-webkit-scrollbar {\n    width: 4px ;\n  }\n\n  .m-dm-container-body::-webkit-scrollbar-track {\n    background-color: rgb(22, 24, 35) ;\n  }\n\n  .m-dm-container-body::-webkit-scrollbar-thumb {\n    background-color: #333 ;\n    border-radius: 4px ;\n  }\n\n\n  \n  `;
 
-const containerDOMStr = ` \n    <div class="m-dm-container-header">\n      <input type="text" class="m-dy-input-add-keywords" placeholder="请输入关键字">\n      <div class="m-dm-add-keywords-button">确认</div>\n      <div class="m-dm-all-keywords-button" title="当前弹幕仅在房间内生效,点击切换到全房间">房间</div>\n      <div class="m-dm-delete-keywords-button">清空</div>\n      <input type="checkbox" class="m-dm-animation-checkbox" id="m-dm-animation-checkbox" title="如果弹幕区出现抖动，添加一个过渡可能好点">\n      <input type="text"  class="m-dm-input-animation-time" id="m-dm-input-animation-time" title="自定义输出一个过渡时间,默认为0.5s,建议数字大小在0-1之间" placeholder="请输入弹幕过渡时间">\n      <div class="m-dm-time-button">确认</div>\n      <span title="收起 使用 ctrl+alt+k可唤醒 我哦" class="m-dm-close-btn" id="m-dm-close-btn"> &times </span>\n    </div>\n    <div class="m-dm-container-body"></div>\n    <div class="m-dm-container-footer">\n       <p title="不再显示" >使用&nbsp;ctrl+alt+k&nbsp;可唤醒或者关闭哦！</p>\n      <a href="https://greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>\n    </div>\n`;
+const containerDOMStr = ` \n    <div class="m-dm-container-header">\n      <input type="text" class="m-dy-input-add-keywords" placeholder="请输入关键字">\n      <div class="m-dm-add-keywords-button">确认</div>\n      <div class="m-dm-all-keywords-button" title="当前弹幕仅在房间内生效,点击切换到全房间">房间</div>\n      <div class="m-dm-delete-keywords-button">清空</div>\n      <input type="checkbox" class="m-dm-animation-checkbox" id="m-dm-animation-checkbox" title="如果弹幕区出现抖动，添加一个过渡可能好点">\n      <input type="text"  class="m-dm-input-animation-time" id="m-dm-input-animation-time" title="自定义输出一个过渡时间,默认为0.5s,建议数字大小在0-1之间" placeholder="请输入弹幕过渡时间">\n      <div class="m-dm-time-button">确认</div>\n      <span title="收起 使用 ctrl+alt+k可唤醒 我哦" class="m-dm-close-btn" id="m-dm-close-btn"> &times </span>\n    </div>\n    <div class="m-dm-container-body"></div>\n    <div class="m-dm-container-footer">\n       <p class="message-tip"></p>\n      <a href="https://greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>\n    </div>\n`;
 
 class BarrageKeywordsStop extends HTMLElement {
     constructor() {
@@ -151,8 +162,8 @@ class BarrageKeywordsStop extends HTMLElement {
         const dmContainer = document.createElement("div");
         dmContainer.className = `m-dm-container ${isFisrtInstall() || isShow ? "" : "m-dm-ani-close"} `;
         dmContainer.innerHTML = containerDOMStr;
-        const tip = dmContainer.querySelector(".m-dm-container-footer p");
-        tip.style.display = isNoShowTip() ? "none" : "block";
+        const tip = dmContainer.querySelector(".m-dm-container-footer .message-tip");
+        tip.textContent = isNoShowTip() ? "使用ctrl+alt+k可唤醒或者关闭哦！" : "";
         shadowRoot.appendChild(dmContainer);
         if (isBefore) {
             (_a = c === null || c === void 0 ? void 0 : c.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(plugin, c.nextSibling);
@@ -167,11 +178,13 @@ class BarrageKeywordsStop extends HTMLElement {
     if (typeof window === undefined) {
         return;
     }
-    let isAnimation = getItem(isAnimationKey) == null || getItem(isAnimationKey) === isAnimationKey;
+    const tipTimeout = 2e3;
+    let isAnimation = false;
     let animationTime = DEFAULT_ANIMATION_TIME;
     let nodeVersion = 0;
     let beforeTag = null;
     let keywordsCache = [];
+    let tipMessageElement = null;
     let isStart = false;
     let tagInitSuccess = true;
     let isAllRooms = false;
@@ -201,8 +214,8 @@ class BarrageKeywordsStop extends HTMLElement {
                 if (node instanceof HTMLElement) {
                     if (contains(node === null || node === void 0 ? void 0 : node.textContent)) {
                         if (isAnimation) {
-                            node.style.transition = `opacity ${animationTime}s ease-out`;
                             node.style.opacity = "0";
+                            node.style.transition = `opacity ${animationTime}s ease-out`;
                             node.addEventListener("transitionend", (() => {
                                 removeDom(node, true);
                             }));
@@ -237,6 +250,7 @@ class BarrageKeywordsStop extends HTMLElement {
         }
         const index = keywordsCache.findIndex((t => t == text));
         if (index >= 0) {
+            addTipMessageText(`关键词 ${text} 已移除`);
             keywordsCache.splice(index, 1);
             keywordsUpdate([ ...keywordsCache ]);
         }
@@ -247,6 +261,7 @@ class BarrageKeywordsStop extends HTMLElement {
         }
         const index = keywordsCache.findIndex((t => t == text));
         if (index === -1) {
+            addTipMessageText(`关键词 ${text} 已添加`);
             keywordsCache = [ text, ...keywordsCache ];
             keywordsUpdate(keywordsCache);
         }
@@ -260,9 +275,11 @@ class BarrageKeywordsStop extends HTMLElement {
         if (Array.isArray(selectKeywords())) {
             keywordsCache = [ ...new Set([ ...keywordsCache, ...selectKeywords() ]) ];
         }
-        isAnimation = getItem(isAnimationKey) == null;
+        isAnimation = isOpenTranisition();
         animationTime = getAnimationTime();
-        console.log("重新扫描中...当前关键词☠:", keywordsCache);
+        console.log("是否开启动画过渡效果🕢:", isAnimation ? "开启了弹幕过渡效果" : "关闭了弹幕过渡效果");
+        console.log("弹幕过渡时长🕑:", animationTime, "s");
+        console.log("重新扫描中...当前关键词🧹:", keywordsCache);
     };
     const notify = () => {
         try {
@@ -271,11 +288,14 @@ class BarrageKeywordsStop extends HTMLElement {
             if (Array.isArray(keywordsCache) && keywordsCache.length > 0) {
                 nodeVersion = nodeVersion + 2;
                 findBarrages();
+                setTimeout((() => {
+                    addTipMessageText("弹幕重新扫描中...🚀");
+                }), tipTimeout);
             } else {
-                console.log("当前标签为空！停止扫描！🚀");
+                addTipMessageText("当前标签为空！停止扫描！🧹");
             }
         } catch (error) {
-            console.error("弹幕插件出现异常了😭 ...", error);
+            addTipMessageText("弹幕插件出现异常了😭");
         }
     };
     const addOperationEvent = () => {
@@ -298,30 +318,24 @@ class BarrageKeywordsStop extends HTMLElement {
             console.log("element has null");
             return;
         }
-        const tip = dmContainer.querySelector(".m-dm-container-footer p");
-        tip.addEventListener("click", (() => {
-            setItem(isNoShowTipKey, isNoShowTipKey);
-            tip.style.display = "none";
-        }));
+        tipMessageElement = dmContainer.querySelector(".m-dm-container-footer .message-tip");
         const find = text => keywordsCache.find((t => t == text));
         const add = () => {
-            if (!dmInput.value) {
+            const text = dmInput.value;
+            if (!text) {
                 alert("请输入关键字");
                 return;
             }
-            if (find(dmInput.value)) {
-                if (isFirstAlert()) {
-                    setItem(isFirstAlertKey, isFirstAlertKey);
-                    alert("关键字已重复");
-                } else {
-                    dmInput.value = "";
-                }
+            if (find(text)) {
+                addTipMessageText(`添加失败，关键词${text}已存在！😭`);
+                dmInput.value = "";
                 return;
             }
-            createTag(dmBody, dmInput.value);
-            createKeywords(dmInput.value);
+            createTag(dmBody, text);
+            createKeywords(text);
             setItem(isFisrtInstallKey, isFisrtInstallKey);
             dmInput.value = "";
+            notify();
         };
         dmInput.addEventListener("keydown", (event => {
             if (event.key === "Enter") {
@@ -343,10 +357,12 @@ class BarrageKeywordsStop extends HTMLElement {
             createTags();
             dmChangeButton.textContent = isAllRooms ? "全房间" : "房间";
             dmChangeButton.title = isAllRooms ? "当前弹幕在所有直播间生效,点击切换房间" : "当前弹幕仅在该房间生效，点击切换到全房间";
+            addTipMessageText(`切换成功 ${isAllRooms ? "当前弹幕在所有直播间生效🧱" : "当前弹幕仅在该房间生效🚀"}`);
         }));
         dmAnimationCheckbox.checked = isAnimation ? true : false;
-        dmAnimationCheckbox.addEventListener("change", (e => {
+        dmAnimationCheckbox.addEventListener("change", (() => {
             setItem(isAnimationKey, dmAnimationCheckbox.checked ? isAnimationKey : `NO_${isAnimationKey}`);
+            addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : "已关闭"}`);
             notify();
         }));
         dmAniTimeInput.value = getAnimationTime();
@@ -357,6 +373,7 @@ class BarrageKeywordsStop extends HTMLElement {
                 return;
             }
             setItem(AnimationTimeKey, dmAniTimeInput.value);
+            addTipMessageText(`弹幕过渡效果${isOpenTranisition() ? `已开启,过渡时间${dmAniTimeInput.value}s` : "已关闭"}`);
             notify();
         };
         dmAniTimeInput.addEventListener("keydown", (event => {
@@ -372,10 +389,21 @@ class BarrageKeywordsStop extends HTMLElement {
                 removeTags();
                 keywordsCache = [];
                 setItem(isAllRooms ? selectKeywordsLocal : roomId(), keywordsCache, true);
+                addTipMessageText(`${isAllRooms ? "全房间" : "该房间"}关键词标签已清空！`);
                 notify();
             }
         }));
         console.log("响应事件监听完毕...");
+    };
+    const addTipMessageText = (text, wait = tipTimeout) => {
+        if (!tipMessageElement) {
+            return;
+        }
+        tipMessageElement.style.opacity = "1";
+        tipMessageElement.textContent = text;
+        setTimeout((() => {
+            tipMessageElement.style.opacity = "0";
+        }), wait);
     };
     const handleFullScreenChange = () => {
         removeDom(currentContainer, true);
@@ -396,10 +424,8 @@ class BarrageKeywordsStop extends HTMLElement {
     const addCtrlAltKEvent = () => {
         document.addEventListener("keydown", (function(event) {
             if (event.ctrlKey && event.altKey && event.key === "k") {
-                console.log("init ...");
                 const dmContainer = currentContainer;
                 if (!dmContainer) {
-                    console.log("触发失败 获取不到容器!");
                     return;
                 }
                 if (dmContainer.classList.contains("m-dm-ani-close")) {
@@ -440,7 +466,6 @@ class BarrageKeywordsStop extends HTMLElement {
         if (!currentContainer) {
             return;
         }
-        console.log("标签删除中...");
         const allTags = currentContainer.querySelectorAll(".m-dm-container-body .m-dm-keywords-tag");
         if (allTags && allTags.length > 0) {
             for (let i = 0; i < allTags.length; i++) {
