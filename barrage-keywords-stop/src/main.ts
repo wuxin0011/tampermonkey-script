@@ -16,7 +16,6 @@ import {
 	isHyLive,
 	isLocalHost,
 	isNoShowTip,
-	isNoShowTipKey,
 	isOpenTranisition,
 	localLink,
 	removeDom,
@@ -463,7 +462,7 @@ import BarrageKeywordsStop from './ui/index';
 		if (!dmBody) {
 			return;
 		}
-		const keys = isAllRooms ? selectKeywords() : [...selectOnlyThisRoomsKeywords()]
+		const keys = isAllRooms ? selectKeywords() : selectOnlyThisRoomsKeywords()
 		if (!Array.isArray(keys)) {
 			return;
 		}
