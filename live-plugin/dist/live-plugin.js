@@ -3213,11 +3213,14 @@ ${darkCss$1}
 .dark #player-gift-wrap,.dark .player-all-gift-panel,
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
+
 .dark [class*=msg-of-king],
+.dark .ButtonMon--220refp4DGUDqT-yPXcS8W.fans--33nbMT8b0W7GezN12PjsS8 .btn--1nWuP5PQFEC5TC290fbKN,
+.dark [class^=ButtonMon][class^=fans] [class^=btn],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
 .dark .huya-footer{
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
   outline: none !important;
 }
@@ -3226,7 +3229,7 @@ ${darkCss$1}
 /* 修改字体颜色 */
 .dark .hy-nav-item-on .hy-nav-link,
 .dark .hy-nav-link:hover {
-  background: none !important;
+  background-color: none !important;
   color: #fff !important;
 }
 
@@ -3344,7 +3347,7 @@ ${darkCss$1}
 
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover,
 .dark .nav-expand-list.nav-expand-game span:hover {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
   outline: none !important;
 }
@@ -3360,7 +3363,7 @@ ${darkCss$1}
 .dark #player-gift-tip .bottom,.dark #player-pc-watch-btn,
 .dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
 {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   border-color:var(--w-border) !important;
   outline: none !important;
 }
@@ -3434,10 +3437,11 @@ ${darkCss$1}
 .dark .ucard-normal--1-VRAi0Zm5CwE-PaY2FEie,
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
+.dark [class^=roomBlockWords-list] li,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
   outline: none !important;
