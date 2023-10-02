@@ -807,6 +807,7 @@ ${root$1}
     left: 50% ;
     border-radius: 10px ;
     overflow: hidden ;
+    font-size:14px;
     background-color: var(--m-container-background-color) ;
     z-index: ${is_douyin ? "10" : "100000000"} ;
     padding: 15px ;
@@ -815,6 +816,7 @@ ${root$1}
       -1px -2px 18px rgba(0, 0, 0, 0.1) ;
   
     opacity: 0;
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
     transform: translate(-50%, -150%);
   }
   
@@ -904,6 +906,7 @@ ${root$1}
   .m-container table th,
   .m-container table td {
     padding: 10px ;
+    font-size:14px;
   }
   
   .m-container table tbody tr:nth-child(1) {
@@ -926,12 +929,13 @@ ${root$1}
     border: none ;
     max-width:50px ;
     color: var(--m-font-color) ;
-    font-size: 1rem ;
+    font-size: 12px ;
     border-radius: 20px ;
     margin: 0 ;
     background-color: rgba(166, 169, 173, 1) ;
     z-index: 1000 ;
     outline: none ;
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.4) ;
   }
   
