@@ -3,7 +3,7 @@ import { local_url } from "@/utils"
 
 const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 
-`
+  `
 .dark p,.dark a,.dark span,
 .dark  h1,.dark  h2,.dark  h3,.dark  h4,.dark  h5,.dark  h6,
 .dark .iconfont,
@@ -34,6 +34,8 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 .dark .van-popover.van-followed,
 .dark .right-side-bar [class^=catalog],
 .dark .coin-dialog-wrapper,
+.dark .article-read-info .spoiler[data-v-36aefa22],
+.dark .article-read-info .spoiler,
 .dark .article-container {
   border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
@@ -49,6 +51,8 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
 }
+
+
 
 .dark .nav-tool-container .section:hover,
 .dark .right-side-bar .to-top [class^=iconfont]:hover,

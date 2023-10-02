@@ -771,7 +771,7 @@ ${root$1}
 
 
 `;
-  const css$4 = `
+  const css$5 = `
 ${root$1}
 .m-container,
   .m-container .btn,
@@ -1161,7 +1161,7 @@ ${root$1}
       super();
       this.attachShadow({ mode: "open" });
       const style = document.createElement("style");
-      style.innerHTML = css$4;
+      style.innerHTML = css$5;
       this.shadowRoot.appendChild(style);
     }
     createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) {
@@ -2990,7 +2990,7 @@ ${loadingLazy}
 }
 
 `;
-  const css$3 = is_douyu ? `
+  const css$4 = is_douyu ? `
 
 .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
   cursor:pointer !important;
@@ -3480,7 +3480,7 @@ ${darkCss$1}
 }
 
 `;
-  const css$2 = is_huya ? `
+  const css$3 = is_huya ? `
 
 .game-live-item i,.host-name {
   cursor:pointer;
@@ -3614,7 +3614,7 @@ ${darkCss$1}
 ${darkCss}
 
 ` : "";
-  const css$1 = is_douyin ? `
+  const css$2 = is_douyin ? `
     #related-video-card-login-guide,
     #captcha_container,
     .JsAsIOEV,
@@ -3700,7 +3700,9 @@ ${darkCss}
 
 `;
   const comment = `
- .dark .bb-comment, .comment-bilibili-fold,
+ .dark .player-left-components *,
+ .dark .bb-comment *,
+ .dark .bb-comment, .dark .comment-bilibili-fold,
  .dark .bb-comment .comment-send-lite .comment-emoji,
  .dark .bb-comment .comment-send.comment-send-lite,
  .dark .bb-comment .comment-send-lite.comment-send-lite,
@@ -3908,6 +3910,23 @@ ${darkCss}
 }
 
 `;
+  const videoToolsDarkCss = `
+
+.dark .main-container .tool-bar *,
+.dark .main-container .ep-list-wrapper *,
+.dark .ep-section-module *,
+.dark .nav-tools *,
+.dark .toolbar *,
+
+.dark .main-container .review-module .review-list *,
+.dark .main-container .tool-bar .mobel-info .mobel-more {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  outline-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+`;
   const root = `
 :root {
   --w-brand: #3aa675;
@@ -4003,7 +4022,7 @@ ${darkCss}
 
 
 `;
-  const common$1 = `
+  const common = `
 ${root}
 ${header}
 ${footer}
@@ -4011,6 +4030,7 @@ ${login}
 ${page_num}
 ${comment}
 ${dialog}
+${videoToolsDarkCss}
 `;
   const douga = /.*:\/\/www\.bilibili\.com\/v\/douga\/.*/.test(local_url) ? `
 
@@ -4370,7 +4390,7 @@ ${dialog}
 }
 
 `;
-  const common = `
+  const commonDark = `
 .dark * {
   color:var(--w-text-light) !important;
   border-color: var(--w-border) !important;
@@ -4379,14 +4399,15 @@ ${dialog}
 }
 
 `;
+  const css$1 = commonDark;
   const is_account = local_url.indexOf("https://account.bilibili.com/") !== -1;
   const account_css = is_account ? `
-${common}
+${css$1}
 
 ` : ``;
   const app_bilibili = /https:\/\/app\.bilibili\.com\/.*/.test(local_url) ? `
 
-${common}
+${css$1}
 
   .dark .head-img,
   .dark .header-wrap {
@@ -4395,7 +4416,7 @@ ${common}
   
   ` : ``;
   const game_bilibili = /https:\/\/game\.bilibili\.com\/.*/.test(local_url) ? `
-${common}
+${css$1}
 .dark span,.dark a,.dark p,.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,
 .dark .aside-wrap_2TTgM .anchor_wrapper_2leFH .anchor_item_3DKWq .text_H0qLc,
 .dark .gameSns-content-account-text_2kf1l .title_3cbN0,.dark .gameSns-content-account-text_2kf1l .subtitle_3xtPu,
@@ -4468,13 +4489,13 @@ ${common}
 ` : ``;
   const is_link$2 = local_url.indexOf("https://link.bilibili.com/") !== -1;
   const link_css$2 = is_link$2 ? `
-${common}
+${css$1}
 
 ` : ``;
   const is_link$1 = local_url.indexOf("https://message.bilibili.com/") !== -1;
   const link_css$1 = is_link$1 ? `
 
-${common}
+${css$1}
 
 
 ` : ``;
@@ -4539,6 +4560,8 @@ ${link_css}
 .dark .van-popover.van-followed,
 .dark .right-side-bar [class^=catalog],
 .dark .coin-dialog-wrapper,
+.dark .article-read-info .spoiler[data-v-36aefa22],
+.dark .article-read-info .spoiler,
 .dark .article-container {
   border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
@@ -4554,6 +4577,8 @@ ${link_css}
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
 }
+
+
 
 .dark .nav-tool-container .section:hover,
 .dark .right-side-bar .to-top [class^=iconfont]:hover,
@@ -5067,25 +5092,39 @@ html {
   const isUrl = window.location.href.indexOf("https://www.bilibili.com/bangumi/play") !== -1;
   const bangumiCss = isUrl ? `
 
-${common}
+.dark * {
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  outline-color: var(--w-border) !important;
+}
+
+.dark .home-container,.dark #__next,.dark .main-container,
+.dark .plp-r *,
+.dark .mediainfo_mediaInfo__Cpow4 *{
+  color:var(--w-text-light) !important;
+  border-color: var(--w-border) !important;
+  outline-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
 
 .dark .bili-avatar-icon.bili-avatar-right-icon{
   display:none !important;
 }
 
-.dark #bilibili-player-wrap {
-  background-color:red !important; 
-}
-
-.dark .video_playerInner__0_RRO *,
-.dark .video_playerInner__0_RRO {
-  background-color:none !important;
-}
 
 .dark .reply-box .box-normal .reply-box-send .send-text[data-v-757acbb5],
 .dark .reply-box .box-normal .reply-box-send .send-text {
   background:none !important;
 }
+
+
+.dark * [class^=imageListItem_title][class^=imageListItem_active]:hover,
+.dark * [class^=imageListItem_title]:hover,
+.dark * .ep-title:hover {
+  color:var(--w-blue-link-hover) !important;
+}
+
+
 
 ` : ``;
   const router = `
@@ -5101,7 +5140,7 @@ ${read}
 ${bangumiCss}
 `;
   const dark = `
-${common$1}
+${common}
 ${router}
 ${other}
 
@@ -5180,10 +5219,10 @@ ${dark}
   addStyle(
     `
 ${root$1}
+${css$4}
 ${css$3}
-${css$2}
 ${css}
-${css$1}
+${css$2}
 `
   );
   (function() {

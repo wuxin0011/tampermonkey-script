@@ -1,1 +1,5 @@
-export { default as CommonDarkCss} from '../common/common-dark'
+import CommonDarkCss from '../common/common-dark'
+
+const css  = CommonDarkCss
+
+export default css

@@ -4,7 +4,9 @@
 
 const comment =
   `
- .dark .bb-comment, .comment-bilibili-fold,
+ .dark .player-left-components *,
+ .dark .bb-comment *,
+ .dark .bb-comment, .dark .comment-bilibili-fold,
  .dark .bb-comment .comment-send-lite .comment-emoji,
  .dark .bb-comment .comment-send.comment-send-lite,
  .dark .bb-comment .comment-send-lite.comment-send-lite,
