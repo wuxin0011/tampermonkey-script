@@ -17,9 +17,11 @@ import {
 	isLocalHost,
 	isNoShowTip,
 	isOpenTranisition,
+	isSelectAllRoom,
 	localLink,
 	removeDom,
 	roomId,
+	selectAllRoomKey,
 	selectKeywords,
 	selectKeywordsLocal,
 	selectOnlyThisRoomsKeywords,
@@ -135,7 +137,7 @@ import BarrageKeywordsStop from './ui/index';
 		if (!Array.isArray(array)) {
 			array = [] as string[]
 		}
-		isAllRooms ? setItem(selectKeywordsLocal, array, true) : setItem(roomId(), array, true)
+		setItem(isSelectAllRoom() ? selectKeywordsLocal : roomId(), array, true)
 		// 通知改变 之前被标记标签如果没被处理将失效
 		notify()
 
@@ -188,6 +190,7 @@ import BarrageKeywordsStop from './ui/index';
 
 		isAnimation = isOpenTranisition()
 		animationTime = getAnimationTime()
+		isAllRooms = isSelectAllRoom()
 
 		console.log('是否开启动画过渡效果🕢:', isAnimation ? '开启了弹幕过渡效果' : '关闭了弹幕过渡效果')
 		console.log('弹幕过渡时长🕑:', animationTime, 's')
@@ -287,12 +290,22 @@ import BarrageKeywordsStop from './ui/index';
 			}
 		})
 
+
+		const updateRoomText = () => {
+			dmChangeButton.textContent = isSelectAllRoom() ? '全房间' : '房间'
+			dmChangeButton.title = isSelectAllRoom() ? '当前弹幕在所有直播间生效,点击切换房间' : '当前弹幕仅在该房间生效，点击切换到全房间'
+		}
+		updateRoomText()
+
 		// click
 		dmChangeButton.addEventListener('click', () => {
+			// 点击之前保存之前的keywords！！！
+			setItem(isSelectAllRoom() ? selectKeywordsLocal : roomId(), keywordsCache, true)
+			// 修改房间类型
 			isAllRooms = !isAllRooms
+			setItem(selectAllRoomKey, isAllRooms ? selectAllRoomKey : `NO${selectAllRoomKey}`)
 			createTags()
-			dmChangeButton.textContent = isAllRooms ? '全房间' : '房间'
-			dmChangeButton.title = isAllRooms ? '当前弹幕在所有直播间生效,点击切换房间' : '当前弹幕仅在该房间生效，点击切换到全房间'
+			updateRoomText()
 			addTipMessageText(`切换成功 ${isAllRooms ? '当前弹幕在所有直播间生效🧱' : '当前弹幕仅在该房间生效🚀'}`)
 		})
 
@@ -303,7 +316,6 @@ import BarrageKeywordsStop from './ui/index';
 			setItem(isAnimationKey, dmAnimationCheckbox.checked ? isAnimationKey : `NO_${isAnimationKey}`)
 			addTipMessageText(`弹幕过渡效果${dmAnimationCheckbox.checked ? `已开启,过渡时间${dmAniTimeInput.value}s` : '已关闭'}`)
 			notify()
-
 		})
 
 
@@ -334,10 +346,9 @@ import BarrageKeywordsStop from './ui/index';
 			if (confirm('确认清空？')) {
 				removeTags()
 				keywordsCache = []
-				setItem(isAllRooms ? selectKeywordsLocal : roomId(), keywordsCache, true)
-				addTipMessageText(`${isAllRooms ? '全房间' : '该房间'}关键词标签已清空！`)
+				setItem(isSelectAllRoom() ? selectKeywordsLocal : roomId(), keywordsCache, true)
+				addTipMessageText(`${isSelectAllRoom() ? '全房间' : '该房间'}关键词标签已清空！`)
 				notify()
-
 			}
 		})
 
@@ -451,6 +462,11 @@ import BarrageKeywordsStop from './ui/index';
 				removeDom(allTags[i], true)
 			}
 		}
+		// delete 
+		for (let i = 0; i < keywordsCache.length; i++) {
+			delete keywordsCache[i]
+		}
+		keywordsCache = []
 	}
 
 	const createTags = () => {
@@ -462,13 +478,14 @@ import BarrageKeywordsStop from './ui/index';
 		if (!dmBody) {
 			return;
 		}
-		const keys = isAllRooms ? selectKeywords() : selectOnlyThisRoomsKeywords()
+		const keys = isSelectAllRoom() ? selectKeywords() : selectOnlyThisRoomsKeywords()
 		if (!Array.isArray(keys)) {
 			return;
 		}
 		for (let i = 0; i < keys.length; i++) {
 			createTag(dmBody as HTMLElement, keys[i])
 		}
+		keywordsCache = keys
 		console.log('标签创建完毕....')
 	}
 

@@ -9,6 +9,7 @@ import read from './read'
 import space from './space'
 import t from './t'
 import video from './video'
+import  bangumi from './bangumi'
 
 
 const router =
@@ -22,6 +23,7 @@ ${anime}
 ${guochuang}
 ${douga}
 ${read}
+${bangumi}
 `
 
 const dark =

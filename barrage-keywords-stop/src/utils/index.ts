@@ -23,6 +23,12 @@ export const selectKeywordsLocal = 'selectKeywordsLocal'
 
 
 /**
+ * 是否是全部房间选择
+ */
+export const selectAllRoomKey = '_selectAllRoomKey_'
+
+
+/**
  * 是否不需要提示 key
  */
 export const isNoShowTipKey = 'tip_isNoShowTipKey'
@@ -137,6 +143,13 @@ export const isFisrtInstall = () => getItem(isFisrtInstallKey) == null || getIte
  * @returns boolean true
  */
 export const isNoShowTip = () => getItem(isNoShowTipKey) == null || getItem(isNoShowTipKey) !== isNoShowTipKey
+
+
+/**
+ * 提示
+ * @returns boolean true
+ */
+export const isSelectAllRoom = () => getItem(selectAllRoomKey) === selectAllRoomKey
 
 
 

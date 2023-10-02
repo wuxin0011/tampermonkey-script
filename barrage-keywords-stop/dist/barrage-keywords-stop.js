@@ -15,6 +15,8 @@
 // ==/UserScript==
 const selectKeywordsLocal = "selectKeywordsLocal";
 
+const selectAllRoomKey = "_selectAllRoomKey_";
+
 const isNoShowTipKey = "tip_isNoShowTipKey";
 
 const isFisrtInstallKey = "isFisrtInstallKey";
@@ -50,6 +52,8 @@ const getItem = (k, isParse = false) => isParse ? JSON.parse(window.localStorage
 const isFisrtInstall = () => getItem(isFisrtInstallKey) == null || getItem(isFisrtInstallKey) !== isFisrtInstallKey;
 
 const isNoShowTip = () => getItem(isNoShowTipKey) == null || getItem(isNoShowTipKey) !== isNoShowTipKey;
+
+const isSelectAllRoom = () => getItem(selectAllRoomKey) === selectAllRoomKey;
 
 const getAnimationTime = () => getItem(AnimationTimeKey) == null ? DEFAULT_ANIMATION_TIME : isNaN(getItem(AnimationTimeKey)) ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey) > MAX_ANIMATION_TIME ? DEFAULT_ANIMATION_TIME : getItem(AnimationTimeKey);
 
@@ -241,7 +245,7 @@ class BarrageKeywordsStop extends HTMLElement {
         if (!Array.isArray(array)) {
             array = [];
         }
-        isAllRooms ? setItem(selectKeywordsLocal, array, true) : setItem(roomId(), array, true);
+        setItem(isSelectAllRoom() ? selectKeywordsLocal : roomId(), array, true);
         notify();
     };
     const removeKeywords = text => {
@@ -277,6 +281,7 @@ class BarrageKeywordsStop extends HTMLElement {
         }
         isAnimation = isOpenTranisition();
         animationTime = getAnimationTime();
+        isAllRooms = isSelectAllRoom();
         console.log("是否开启动画过渡效果🕢:", isAnimation ? "开启了弹幕过渡效果" : "关闭了弹幕过渡效果");
         console.log("弹幕过渡时长🕑:", animationTime, "s");
         console.log("重新扫描中...当前关键词🧹:", keywordsCache);
@@ -352,11 +357,17 @@ class BarrageKeywordsStop extends HTMLElement {
                 dmContainer.classList.add("m-dm-ani-close");
             }
         }));
+        const updateRoomText = () => {
+            dmChangeButton.textContent = isSelectAllRoom() ? "全房间" : "房间";
+            dmChangeButton.title = isSelectAllRoom() ? "当前弹幕在所有直播间生效,点击切换房间" : "当前弹幕仅在该房间生效，点击切换到全房间";
+        };
+        updateRoomText();
         dmChangeButton.addEventListener("click", (() => {
+            setItem(isSelectAllRoom() ? selectKeywordsLocal : roomId(), keywordsCache, true);
             isAllRooms = !isAllRooms;
+            setItem(selectAllRoomKey, isAllRooms ? selectAllRoomKey : `NO${selectAllRoomKey}`);
             createTags();
-            dmChangeButton.textContent = isAllRooms ? "全房间" : "房间";
-            dmChangeButton.title = isAllRooms ? "当前弹幕在所有直播间生效,点击切换房间" : "当前弹幕仅在该房间生效，点击切换到全房间";
+            updateRoomText();
             addTipMessageText(`切换成功 ${isAllRooms ? "当前弹幕在所有直播间生效🧱" : "当前弹幕仅在该房间生效🚀"}`);
         }));
         dmAnimationCheckbox.checked = isOpenTranisition();
@@ -388,8 +399,8 @@ class BarrageKeywordsStop extends HTMLElement {
             if (confirm("确认清空？")) {
                 removeTags();
                 keywordsCache = [];
-                setItem(isAllRooms ? selectKeywordsLocal : roomId(), keywordsCache, true);
-                addTipMessageText(`${isAllRooms ? "全房间" : "该房间"}关键词标签已清空！`);
+                setItem(isSelectAllRoom() ? selectKeywordsLocal : roomId(), keywordsCache, true);
+                addTipMessageText(`${isSelectAllRoom() ? "全房间" : "该房间"}关键词标签已清空！`);
                 notify();
             }
         }));
@@ -472,6 +483,10 @@ class BarrageKeywordsStop extends HTMLElement {
                 removeDom(allTags[i], true);
             }
         }
+        for (let i = 0; i < keywordsCache.length; i++) {
+            delete keywordsCache[i];
+        }
+        keywordsCache = [];
     };
     const createTags = () => {
         if (!currentContainer) {
@@ -482,13 +497,14 @@ class BarrageKeywordsStop extends HTMLElement {
         if (!dmBody) {
             return;
         }
-        const keys = isAllRooms ? selectKeywords() : [ ...selectOnlyThisRoomsKeywords() ];
+        const keys = isSelectAllRoom() ? selectKeywords() : selectOnlyThisRoomsKeywords();
         if (!Array.isArray(keys)) {
             return;
         }
         for (let i = 0; i < keys.length; i++) {
             createTag(dmBody, keys[i]);
         }
+        keywordsCache = keys;
         console.log("标签创建完毕....");
     };
     const createContainer = (tagName = "body", isShow = true, isBefore = false) => {

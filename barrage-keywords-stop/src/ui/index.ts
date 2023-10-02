@@ -8,7 +8,7 @@ import containerDOMStr from './container';
 * webComponent
 */
 export default class BarrageKeywordsStop extends HTMLElement {
-  constructor() {
+  constructor() { 
     super()
     this.attachShadow({ mode: "open" });
     const css = document.createElement("style");

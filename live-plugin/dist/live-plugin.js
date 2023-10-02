@@ -4375,6 +4375,7 @@ ${dialog}
   color:var(--w-text-light) !important;
   border-color: var(--w-border) !important;
   background-color:var(--w-bg-darker) !important;
+  outline-color: var(--w-border) !important;
 }
 
 `;
@@ -5063,6 +5064,30 @@ html {
   box-shadow: none !important;
 }
 `;
+  const isUrl = window.location.href.indexOf("https://www.bilibili.com/bangumi/play") !== -1;
+  const bangumiCss = isUrl ? `
+
+${common}
+
+.dark .bili-avatar-icon.bili-avatar-right-icon{
+  display:none !important;
+}
+
+.dark #bilibili-player-wrap {
+  background-color:red !important; 
+}
+
+.dark .video_playerInner__0_RRO *,
+.dark .video_playerInner__0_RRO {
+  background-color:none !important;
+}
+
+.dark .reply-box .box-normal .reply-box-send .send-text[data-v-757acbb5],
+.dark .reply-box .box-normal .reply-box-send .send-text {
+  background:none !important;
+}
+
+` : ``;
   const router = `
 ${home}
 ${video}
@@ -5073,6 +5098,7 @@ ${anime}
 ${guochuang}
 ${douga}
 ${read}
+${bangumiCss}
 `;
   const dark = `
 ${common$1}
