@@ -25,6 +25,7 @@ import { LivePluginElement } from '@/ui'
 
 
 import { updateDarkClass } from './hook/useTheme';
+import Login from './login'
 
 import './style/index.css.js';
 
@@ -35,34 +36,43 @@ import './style/index.css.js';
     if (typeof window == 'undefined') {
         return;
     }
-
-    // 注册自定义组件
-    customElements.define('live-plugin-element', LivePluginElement);
-
     if (is_exculues) {
-        console.warn('当前地址不支持！')
         return;
     }
 
+    if (window?.LivePluginLoadingComplate) {
+        return;
+    }
+
+    if (!is_localhost) {
+        console.clear()
+    }
+    // 注册自定义组件
+    customElements.define('live-plugin-element', LivePluginElement);
+    console.log(
+        '%c%s%c%s',
+        'background: rgb(91, 148, 227); padding: 5px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;',
+        `欢迎使用live-plugin 下载地址:`,
+        'background: rgb(51, 160, 111); padding: 5px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;',
+        download_plugin_url,
+    )
+    console.log(
+        '%c%s%c%s',
+        ' background: rgb(91, 148, 227);padding: 5px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;',
+        `源码地址:`,
+        ' background: rgb(51, 160, 111); padding: 5px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;',
+        source_code_url,
+    )
 
     try {
-        let text = '%c欢迎使用直播插件,下载地址%c'
-        if (!is_localhost) {
-            console.clear()
-        }
-        console.log(
-            text.concat(download_plugin_url, ''),
-            'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
-            'border-radius: 0 3px 3px 0; color: #fff')
-        console.log(
-            '%c地址:%c '.concat(source_code_url, ''),
-            'background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff',
-            'border-radius: 0 3px 3px 0; color: #fff')
-        //插件执行入口
-
+        Login()
         updateDarkClass()
+    } catch (error) {
 
+    }
 
+    try {
+        //插件执行入口
         if (is_huya) {
             // 执行虎牙直播插件
             new TriggerLive()
@@ -81,11 +91,13 @@ import './style/index.css.js';
         } else {
             error('插件地址不适配，请检查匹配地址！！！')
         }
+
     } catch (e) {
         error(e)
     }
-
+    window.LivePluginLoadingComplate = true
 })()
 
-
+// NoLogin
+import './login/index'
 

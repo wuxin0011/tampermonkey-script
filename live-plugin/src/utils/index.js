@@ -489,7 +489,27 @@ export class HostUser {
     }
 }
 
+// export class LoginBox {
+//     constructor(box, btn, closeBtn) {
+//         this.box = box
+//         this.btn = btn
+//         this.closeBtn = closeBtn
+//     }
+// }
 
+// export const LoginElement = () => {
+//     let l = null;
+//     if (is_douyin) {
+//         l = new LoginBox('[class^=login-full-panel]', '#_7hLtYmO>button', '.dy-account-close')
+//     } else if (is_douyu) {
+//         l = new LoginBox()
+//     } else if (is_bilibili) {
+//         l = new LoginBox()
+//     } else if (is_huya) {
+//         l = new LoginBox('#UDBSdkLgn', '[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span', '#close-udbLogin')
+//     }
+//     return l;
+// }
 
 
 

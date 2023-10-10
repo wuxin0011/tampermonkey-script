@@ -40,6 +40,7 @@ export default class FishLive extends LivePlugin {
 
     // 公共部分页面操作
     common() {
+        this.autoHideMenu()
     }
 
     //首页操作
@@ -286,54 +287,28 @@ export default class FishLive extends LivePlugin {
         }
     }
 
-    isFullScreen(){
-        
+    isFullScreen() {
+
     }
 
+    autoHideMenu() {
+        const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name)
+        if (isShow) {
+            return;
+        }
+        loopDo((timer) => {
+            const clickM = querySelector('.Aside-toggle')
+            const leftSider = querySelector('#js-aside')
+            if (leftSider instanceof HTMLElement && clickM instanceof HTMLElement) {
+                const leftSiderWidth = Number(window.getComputedStyle(leftSider).width.split('px')[0])
+                if ((leftSiderWidth > 80)) {
+                    clickM.click()
+                    log('左侧侧边栏自动收起！')
+                }
+                clearInterval(timer)
+            }
+        }, 100, 100)
+    }
 
-    // isFullScreen(isClickFull = false) {
-    //     let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
-    //     if (!is_should_full_screen) {
-    //         return;
-    //     }
-    //     // 获取视频元素
-    //     loopDo((timer) => {
-    //         var video = querySelector('video');
-    //         if (!video) {
-    //             return;
-    //         }
-    //         if (!(video instanceof HTMLVideoElement)) {
-    //             console.log('container is not video element !')
-    //             return;
-    //         }
-    //         console.log('video ....', video)
-
-
-
-    //         video.addEventListener('loadedmetadata', function () {
-    //             if (video.requestFullscreen) {
-    //                 video.requestFullscreen();
-    //                 console.log('requestFullscreen 视频自动全屏中....')
-    //             } else if (video.mozRequestFullScreen) { // Firefox
-    //                 video.mozRequestFullScreen();
-    //                 console.log('mozRequestFullScreen 视频自动全屏中....')
-
-    //             } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
-    //                 video.webkitRequestFullscreen();
-    //                 console.log('webkitRequestFullscreen 视频自动全屏中....')
-
-    //             } else if (video.msRequestFullscreen) { // IE/Edge
-    //                 video.msRequestFullscreen();
-    //                 console.log('msRequestFullscreen 视频自动全屏中....')
-
-    //             }
-    //             console.log('视频加载完毕....')
-    //         });
-    //         clearInterval(timer)
-    //     }, 20, 3000)
-
-
-
-    // }
 
 }

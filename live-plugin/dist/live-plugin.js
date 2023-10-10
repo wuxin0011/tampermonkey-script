@@ -40,7 +40,7 @@
   const emptyMethod = (...args) => {
     console.warn(`${prefix} run empty method...`);
   };
-  const log = (...args) => console.log(msg(args));
+  const log$1 = (...args) => console.log(msg(args));
   const warn = (...args) => console.warn(msg(args));
   const error = (...args) => console.error(msg(args));
   const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/;
@@ -480,7 +480,7 @@
     if (!userId) {
       return null;
     }
-    log("user Id", userId);
+    log$1("user Id", userId);
     return await fetch(`https://api.bilibili.com/x/space/wbi/acc/info?mid=${userId}`, {
       method: "get",
       mode: "cors"
@@ -548,7 +548,7 @@
     try {
       const isAppearanceTransition = (document == null ? void 0 : document.startViewTransition) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!isAppearanceTransition) {
-        log("不支持快照切换...,将使用普通方式切换主题");
+        log$1("不支持快照切换...,将使用普通方式切换主题");
         isClick ? clickUpdateTheme() : themeUpdate();
         return;
       }
@@ -1297,14 +1297,14 @@ ${root$1}
       if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
         return;
       }
-      log("查找播放视频画质列表", that.auto_max_pro_class_or_id_list);
+      log$1("查找播放视频画质列表", that.auto_max_pro_class_or_id_list);
       loopDo((timer) => {
         let items = querySelectorAll(that.auto_max_pro_class_or_id_list);
         if (isArray(items)) {
           for (let item of items) {
             let result = that.auto_max_pro_keywords.findIndex((key) => item.innerText.indexOf(key) !== -1);
             if (result === -1) {
-              log("当前最高画质", item.innerText);
+              log$1("当前最高画质", item.innerText);
               if (is_huya) {
                 item = querySelector(item, "span");
               }
@@ -1340,7 +1340,7 @@ ${root$1}
       that.operationDOMButton();
       that.createRoomItem(that.users);
       that.createButton();
-      log("操作面板初始化完毕！");
+      log$1("操作面板初始化完毕！");
     }
     /**
      * 通过用户列表构建列表
@@ -1456,7 +1456,8 @@ ${root$1}
         const file = uploadButton.files[0] || null;
         uploadImage(file, (base64) => {
           addLocalStore(that.bg_key, base64, String.name, false);
-          that.settingBackgroundImage(e.target.result);
+          console.log("result");
+          that.settingBackgroundImage(base64);
         });
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
       });
@@ -1475,7 +1476,7 @@ ${root$1}
       });
       const checkbox = querySelector(container, ".operation #checkbox1");
       addEventListener(checkbox, "change", function(e) {
-        log("背景是否开启", e.target.checked ? "开启" : "关闭");
+        log$1("背景是否开启", e.target.checked ? "开启" : "关闭");
         addLocalStore(that.bg_show_key, e.target.checked, Boolean.name);
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
         that.settingBackgroundImage();
@@ -1523,7 +1524,7 @@ ${root$1}
       });
       this.themeContr(container);
       this.initAnimation(container);
-      log("操作按钮添加成功！");
+      log$1("操作按钮添加成功！");
     }
     handlerBiliBiliKeywords(keywords, inputValue) {
       let that = this;
@@ -1634,7 +1635,7 @@ ${root$1}
           select2_box2.classList.remove("m-ani-right-is-active");
         }
       });
-      log("动画初始化完毕！");
+      log$1("动画初始化完毕！");
     }
     searchUserByRoomId(name, roomId, inputValue) {
       let that = this;
@@ -1695,7 +1696,7 @@ ${root$1}
       let x, y;
       const mouse_key = that.key + "_mouse_key";
       let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name);
-      log(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`);
+      log$1(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`);
       if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
         btn.style.left = mouse_left + "px";
         btn.style.top = mouse_top + "px";
@@ -1704,7 +1705,7 @@ ${root$1}
       addEventListener(btn, "mousedown", (event) => {
         x = event.offsetX;
         y = event.offsetY;
-        log("mouseDown", x, y);
+        log$1("mouseDown", x, y);
         flag = true;
         addEventListener(wd, "mousemove", move);
       });
@@ -1734,7 +1735,7 @@ ${root$1}
       btn.style.display = wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name) ? "block" : "none";
       that.logo_btn = btn;
       appendChild(body, that.logo_btn);
-      log("button 添加完毕！");
+      log$1("button 添加完毕！");
     }
     /**
      * 该房间是否已改被删除
@@ -1829,7 +1830,7 @@ ${root$1}
      */
     settingBackgroundImage(url, container) {
       if (!support.supportBg()) {
-        log("当前平台不支持背景");
+        log$1("当前平台不支持背景");
         return;
       }
       container = querySelector("body");
@@ -1838,17 +1839,17 @@ ${root$1}
         return;
       }
       let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name);
-      log("是否添加背景=>", isShowBg ? "显示" : "关闭", wls.getItem(this.bg_is_first_key) === null ? "null" : wls.getItem(this.bg_is_first_key));
+      log$1("是否添加背景=>", isShowBg ? "显示" : "关闭", wls.getItem(this.bg_is_first_key) === null ? "null" : wls.getItem(this.bg_is_first_key));
       if (isShowBg) {
         url = !!url ? url : wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image;
         container.style.backgroundSize = "cover";
         container.style.backgroundRepeat = "no-repeat ";
         container.style.backgroundAttachment = "fixed";
         container.style.backgroundImage = `url(${url})`;
-        log("背景图添加完毕！");
+        log$1("背景图添加完毕！");
       } else {
         container.style.backgroundImage = "none";
-        log("背景图已关闭！");
+        log$1("背景图已关闭！");
       }
     }
     /**
@@ -1940,7 +1941,8 @@ ${root$1}
      */
     isShowLeftMenu() {
       let menu = this.menu ? querySelector(this.menu) : "";
-      handlerDisplay(menu, wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name));
+      const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
+      handlerDisplay(menu, isShow);
     }
     /**
      * 检查是否能找到全屏按钮
@@ -1973,7 +1975,7 @@ ${root$1}
       } else {
         loopDo((timer) => {
           button = querySelector(that.full_screen_button);
-          log("fullScreen button", that.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
+          log$1("fullScreen button", that.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
           if (button && button instanceof HTMLElement) {
             let isClick = button == null ? void 0 : button.isClick;
             if (isClick) {
@@ -1981,7 +1983,7 @@ ${root$1}
               return;
             }
             if (!isClick) {
-              log("全屏按钮自动触发了!");
+              log$1("全屏按钮自动触发了!");
               button.click();
               button.isClick = true;
             }
@@ -2012,7 +2014,7 @@ ${root$1}
         } else {
           this.m_container.style.display = this.m_container.style.display === "block" ? "none" : "block";
         }
-        log("container class=>", this.m_container.classList);
+        log$1("container class=>", this.m_container.classList);
       }
     }
     /**
@@ -2035,14 +2037,14 @@ ${root$1}
         a.title = "点击Logo,显示插件配置";
         addEventListener(a, "click", (e) => {
           e.preventDefault();
-          log("click header logo !");
+          log$1("click header logo !");
           that.isShowContainer();
         });
         loopDo(() => {
           a = querySelector(that.header_logo);
           a.href = "javascript:;void(0)";
         }, 5, 1e3);
-        log("logo点击按钮装置完毕！");
+        log$1("logo点击按钮装置完毕！");
       }, 5, 500);
     }
     createSpan(container, place, id, name = id, message = "确认屏蔽up主 ", remove = true) {
@@ -2121,6 +2123,7 @@ ${root$1}
     // 公共部分操作
     common() {
       this.removeRoomByClickRoomName();
+      this.autoHideMenu();
     }
     // 详情操作
     detail() {
@@ -2198,6 +2201,23 @@ ${root$1}
         }, 0);
       }, 500);
     }
+    autoHideMenu() {
+      const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
+      if (isShow) {
+        return;
+      }
+      loopDo((timer) => {
+        const b = querySelector("body");
+        const clickM = querySelector("#sidebar-hide-btn");
+        if (b instanceof HTMLElement && clickM instanceof HTMLElement) {
+          if (!b.classList.contains("sidebar-min")) {
+            clickM.click();
+            log("左侧侧边栏自动收起！");
+          }
+          clearInterval(timer);
+        }
+      }, 100, 100);
+    }
   }
   const getInfo = async (roomId = local_url) => {
     if (douyu_address_pattern.test(roomId)) {
@@ -2224,6 +2244,7 @@ ${root$1}
     }
     // 公共部分页面操作
     common() {
+      this.autoHideMenu();
     }
     //首页操作
     index() {
@@ -2383,7 +2404,7 @@ ${root$1}
       let that = this;
       let searchResult = await getInfo(keywords);
       if ((searchResult == null ? void 0 : searchResult.room) && ((_a = searchResult == null ? void 0 : searchResult.room) == null ? void 0 : _a.nickname)) {
-        log(`搜索到主播 ${searchResult.room.nickname}`);
+        log$1(`搜索到主播 ${searchResult.room.nickname}`);
         return searchResult.room.nickname;
       }
       let hostName = querySelector(".Title-blockInline .Title-anchorName h2");
@@ -2430,41 +2451,24 @@ ${root$1}
     }
     isFullScreen() {
     }
-    // isFullScreen(isClickFull = false) {
-    //     let is_should_full_screen = getLocalStore(this.full_screen_key, Boolean.name)
-    //     if (!is_should_full_screen) {
-    //         return;
-    //     }
-    //     // 获取视频元素
-    //     loopDo((timer) => {
-    //         var video = querySelector('video');
-    //         if (!video) {
-    //             return;
-    //         }
-    //         if (!(video instanceof HTMLVideoElement)) {
-    //             console.log('container is not video element !')
-    //             return;
-    //         }
-    //         console.log('video ....', video)
-    //         video.addEventListener('loadedmetadata', function () {
-    //             if (video.requestFullscreen) {
-    //                 video.requestFullscreen();
-    //                 console.log('requestFullscreen 视频自动全屏中....')
-    //             } else if (video.mozRequestFullScreen) { // Firefox
-    //                 video.mozRequestFullScreen();
-    //                 console.log('mozRequestFullScreen 视频自动全屏中....')
-    //             } else if (video.webkitRequestFullscreen) { // Chrome, Safari and Opera
-    //                 video.webkitRequestFullscreen();
-    //                 console.log('webkitRequestFullscreen 视频自动全屏中....')
-    //             } else if (video.msRequestFullscreen) { // IE/Edge
-    //                 video.msRequestFullscreen();
-    //                 console.log('msRequestFullscreen 视频自动全屏中....')
-    //             }
-    //             console.log('视频加载完毕....')
-    //         });
-    //         clearInterval(timer)
-    //     }, 20, 3000)
-    // }
+    autoHideMenu() {
+      const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
+      if (isShow) {
+        return;
+      }
+      loopDo((timer) => {
+        const clickM = querySelector(".Aside-toggle");
+        const leftSider = querySelector("#js-aside");
+        if (leftSider instanceof HTMLElement && clickM instanceof HTMLElement) {
+          const leftSiderWidth = Number(window.getComputedStyle(leftSider).width.split("px")[0]);
+          if (leftSiderWidth > 80) {
+            clickM.click();
+            log$1("左侧侧边栏自动收起！");
+          }
+          clearInterval(timer);
+        }
+      }, 100, 100);
+    }
   }
   class BiliBili extends LivePlugin {
     constructor() {
@@ -2707,7 +2711,7 @@ ${root$1}
       return this.notSupport();
     }
     notSupport() {
-      log("抖音暂时不支持该操作！");
+      log$1("抖音暂时不支持该操作！");
       return null;
     }
     common() {
@@ -2715,6 +2719,107 @@ ${root$1}
       this.isAutoMaxVideoPro();
     }
   }
+  const login$1 = () => {
+    const addStyle2 = (str) => {
+      const head = document.querySelector("head");
+      const s = document.createElement("style");
+      s.innerHTML = str;
+      head.appendChild(s);
+    };
+    const login_box = "login-box";
+    const login_btn = "login-btn";
+    const cancel_btn = "cancel-btn";
+    const LOGIN_BOX = {
+      "huya": {
+        [login_box]: "#UDBSdkLgn",
+        [login_btn]: "[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span",
+        [cancel_btn]: "#close-udbLogin"
+      },
+      "douyin-lg": {
+        [login_box]: "[class^=login-full-panel]",
+        [login_btn]: "#_7hLtYmO>button",
+        [cancel_btn]: ".dy-account-close"
+      },
+      "douyin-sm": {
+        [login_box]: "[class^=login-full-panel]",
+        [login_btn]: "#tcTjz3nj",
+        [cancel_btn]: ".dy-account-close"
+      }
+    };
+    const addLoginCancel = (loginSelector, loginBtnCancel) => {
+      let loginContainer = document.querySelector(loginSelector);
+      if (!(loginContainer instanceof HTMLElement)) {
+        return;
+      }
+      console.log("login cancel 扫描中...");
+      let timer = setInterval(() => {
+        let closeBtn = loginContainer.querySelector(loginBtnCancel);
+        if (closeBtn) {
+          clearInterval(timer);
+          console.log("cancel button 已经找到了", closeBtn);
+          closeBtn.addEventListener("click", () => {
+            console.log("click me!", loginContainer);
+          });
+        }
+      }, 1e3);
+    };
+    const handlerLogin = (loginSelector, loginBtnSelector, loginBtnCancel) => {
+      let timer = setInterval(() => {
+        let loginContainer = document.querySelector(loginSelector);
+        if (!loginContainer) {
+          return;
+        }
+        if (loginContainer.mark) {
+          clearInterval(timer);
+          return;
+        }
+        loginContainer.mark = true;
+        if (loginContainer && !loginContainer.classList.contains("m-display-none")) {
+          loginContainer.classList.add("m-display-none");
+        }
+        const btn = document.querySelector(loginBtnSelector);
+        if (btn) {
+          btn.onclick = () => {
+            console.log("click me login !");
+            loginContainer = document.querySelector(loginSelector);
+            if (loginContainer) {
+              if (loginContainer.classList.contains("m-display-none")) {
+                loginContainer.classList.remove("m-display-none");
+                if (!loginContainer.classList.contains("m-display-block")) {
+                  loginContainer.classList.add("m-display-block");
+                }
+                addLoginCancel(loginSelector, loginBtnCancel);
+              } else {
+                if (loginContainer.classList.contains("m-display-block")) {
+                  loginContainer.classList.remove("m-display-block");
+                }
+                if (!loginContainer.classList.contains("m-display-none")) {
+                  loginContainer.classList.add("m-display-none");
+                }
+              }
+            }
+            console.log("click me login !", loginContainer);
+          };
+        }
+      }, 100);
+    };
+    const addEventLoginContainer = () => {
+      Object.values(LOGIN_BOX).forEach((item) => {
+        console.log("item", item);
+        handlerLogin(item[login_box], item[login_btn], item[cancel_btn]);
+      });
+    };
+    addEventLoginContainer();
+    const loginCss = `
+  .m-display-block {
+      display:block !important;
+  }
+  .m-display-none {
+      display:none !important;
+  }
+`;
+    addStyle2(loginCss);
+  };
   const isDouyuDetail = new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url);
   const loadingLazy = isDouyuDetail ? `` : `
 .dark .LazyLoad{
@@ -5229,27 +5334,36 @@ ${css$2}
     if (typeof window == "undefined") {
       return;
     }
-    customElements.define("live-plugin-element", LivePluginElement);
     if (is_exculues) {
-      console.warn("当前地址不支持！");
       return;
     }
+    if (window == null ? void 0 : window.LivePluginLoadingComplate) {
+      return;
+    }
+    if (!is_localhost) {
+      console.clear();
+    }
+    customElements.define("live-plugin-element", LivePluginElement);
+    console.log(
+      "%c%s%c%s",
+      "background: rgb(91, 148, 227); padding: 5px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
+      `欢迎使用live-plugin 下载地址:`,
+      "background: rgb(51, 160, 111); padding: 5px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
+      download_plugin_url
+    );
+    console.log(
+      "%c%s%c%s",
+      " background: rgb(91, 148, 227);padding: 5px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
+      `源码地址:`,
+      " background: rgb(51, 160, 111); padding: 5px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
+      source_code_url
+    );
     try {
-      let text = "%c欢迎使用直播插件,下载地址%c";
-      if (!is_localhost) {
-        console.clear();
-      }
-      console.log(
-        text.concat(download_plugin_url, ""),
-        "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
-        "border-radius: 0 3px 3px 0; color: #fff"
-      );
-      console.log(
-        "%c地址:%c ".concat(source_code_url, ""),
-        "background: rgb(255, 93, 35); padding: 1px; border-radius: 3px 0 0 3px; color: #fff",
-        "border-radius: 0 3px 3px 0; color: #fff"
-      );
+      login$1();
       updateDarkClass();
+    } catch (error2) {
+    }
+    try {
       if (is_huya) {
         new TriggerLive();
       } else if (is_douyu) {
@@ -5266,6 +5380,7 @@ ${css$2}
     } catch (e) {
       error(e);
     }
+    window.LivePluginLoadingComplate = true;
   })();
 
 })();

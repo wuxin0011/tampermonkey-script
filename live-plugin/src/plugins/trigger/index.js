@@ -11,7 +11,9 @@ import {
     removeVideo,
     setTimeoutMark,
     timeoutSelectorAllOne,
-    warn
+    warn,
+    wls,
+    getLocalStore,
 } from '../../utils';
 
 import LivePlugin from "../live";
@@ -76,6 +78,7 @@ export default class TriggerLive extends LivePlugin {
     // 公共部分操作
     common() {
         this.removeRoomByClickRoomName()
+        this.autoHideMenu()
     }
 
     // 详情操作
@@ -163,6 +166,29 @@ export default class TriggerLive extends LivePlugin {
         }, 500)
 
     }
+
+    autoHideMenu() {
+        const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name)
+        if (isShow) {
+            return;
+        }
+        loopDo((timer) => {
+            const b = querySelector('body')
+            const clickM = querySelector('#sidebar-hide-btn')
+            if (b instanceof HTMLElement && clickM instanceof HTMLElement) {
+                // 新增判断是否需要收起左侧菜单栏 如果是隐藏状态应该需要隐藏
+                if (!b.classList.contains('sidebar-min')) {
+                    clickM.click()
+                    log('左侧侧边栏自动收起！')
+                }
+                clearInterval(timer)
+            }
+        }, 100, 100)
+
+    }
+
+
+
 
 
 
