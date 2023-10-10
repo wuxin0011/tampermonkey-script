@@ -363,7 +363,8 @@ import iconLogo from '@/utils/logo';
             const file = uploadButton.files[0] || null
             uploadImage(file, (base64) => {
                 addLocalStore(that.bg_key, base64, String.name, false)
-                that.settingBackgroundImage(e.target.result)
+                console.log('result')
+                that.settingBackgroundImage(base64)
             })
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
@@ -955,7 +956,8 @@ import iconLogo from '@/utils/logo';
      */
     isShowLeftMenu() {
         let menu = this.menu ? querySelector(this.menu) : ''
-        handlerDisplay(menu, wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name))
+        const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name)
+        handlerDisplay(menu, isShow)
     }
 
 
