@@ -15,7 +15,7 @@ const login = () => {
   const huyaLogin = () => /https?:\/\/.*\.huya\.com\/.*/.test(localUrl)
   const douyinLogin = () => /https?:\/\/.*\.douyin\.com\/.*/.test(localUrl)
   const bilibiliLogin = () => /https?:\/\/.*\.bilibili\.com\/.*/.test(localUrl)
-  const douyuLogin = () => /https?:\/\/.*\.douyin\.com\/.*/.test(localUrl)
+  const douyuLogin = () => /https?:\/\/.*\.douyu\.com\/.*/.test(localUrl)
 
 
   const hy = [{
@@ -95,9 +95,7 @@ const login = () => {
       }
       if (btn && !btn.mark) {
         btn.mark = true
-        console.log('click btn click add success!')
         btn.addEventListener('click', () => {
-          console.log('click me login !')
           loginContainer = document.querySelector(loginSelector)
           if (loginContainer) {
             // open
@@ -134,7 +132,7 @@ const login = () => {
 
     if (huyaLogin()) {
       LOGIN_BOX = [...hy]
-    } else if (douyuLogin()) {
+    } else if (douyinLogin()) {
       LOGIN_BOX = [...douyin]
     } else if (douyuLogin()) {
 
