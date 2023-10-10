@@ -21,7 +21,7 @@ const css = is_huya ? `
 .mod-index-wrap .mod-index-recommend,
 .mod-index-wrap .mod-news-section,
 .mod-index-wrap .recommend-wrap,
-#player-marquee-wrap,
+#player-marquee-wrap,.small-handle-tip,
 #player-marquee-wrap .player-marquee-noble-item,
 #player-marquee-wrap .player-banner-enter,
 #player-marquee-wrap [id^=player-banner-enter],

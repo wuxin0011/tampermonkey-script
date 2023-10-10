@@ -68,7 +68,7 @@ import './style/index.css.js';
         Login()
         updateDarkClass()
     } catch (error) {
-
+        console.error('live-plugin:',error)
     }
 
     try {

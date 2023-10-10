@@ -2729,34 +2729,42 @@ ${root$1}
     const login_box = "login-box";
     const login_btn = "login-btn";
     const cancel_btn = "cancel-btn";
-    const LOGIN_BOX = {
-      "huya": {
-        [login_box]: "#UDBSdkLgn",
-        [login_btn]: "[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span",
-        [cancel_btn]: "#close-udbLogin"
-      },
-      "douyin-lg": {
-        [login_box]: "[class^=login-full-panel]",
-        [login_btn]: "#_7hLtYmO>button",
-        [cancel_btn]: ".dy-account-close"
-      },
-      "douyin-sm": {
-        [login_box]: "[class^=login-full-panel]",
-        [login_btn]: "#tcTjz3nj",
-        [cancel_btn]: ".dy-account-close"
-      }
-    };
+    const localUrl = window.location.href;
+    const huyaLogin = () => /https?:\/\/.*\.huya\.com\/.*/.test(localUrl);
+    const douyuLogin = () => /https?:\/\/.*\.douyin\.com\/.*/.test(localUrl);
+    const hy = [{
+      [login_box]: "#UDBSdkLgn",
+      [login_btn]: "[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span",
+      [cancel_btn]: "#close-udbLogin"
+    }];
+    const douyin = [{
+      [login_box]: "[id^=login-full-panel]",
+      [login_btn]: "#_7hLtYmO>button",
+      [cancel_btn]: ".dy-account-close"
+    }, {
+      [login_box]: "[id^=login-full-panel]",
+      [login_btn]: "#tcTjz3nj",
+      [cancel_btn]: ".dy-account-close"
+    }];
+    let LOGIN_BOX = [];
     const addLoginCancel = (loginSelector, loginBtnCancel) => {
       let loginContainer = document.querySelector(loginSelector);
       if (!(loginContainer instanceof HTMLElement)) {
         return;
       }
+      if (loginContainer.classList.contains("m-display-block")) {
+        loginContainer.classList.remove("m-display-block");
+      }
       console.log("login cancel 扫描中...");
       let timer = setInterval(() => {
         let closeBtn = loginContainer.querySelector(loginBtnCancel);
-        if (closeBtn) {
+        if (closeBtn && closeBtn.mark) {
           clearInterval(timer);
+          return;
+        }
+        if (closeBtn && !closeBtn.mark) {
           console.log("cancel button 已经找到了", closeBtn);
+          closeBtn.mark = true;
           closeBtn.addEventListener("click", () => {
             console.log("click me!", loginContainer);
           });
@@ -2764,8 +2772,9 @@ ${root$1}
       }, 1e3);
     };
     const handlerLogin = (loginSelector, loginBtnSelector, loginBtnCancel) => {
+      let loginContainer = null;
       let timer = setInterval(() => {
-        let loginContainer = document.querySelector(loginSelector);
+        loginContainer = document.querySelector(loginSelector);
         if (!loginContainer) {
           return;
         }
@@ -2777,9 +2786,17 @@ ${root$1}
         if (loginContainer && !loginContainer.classList.contains("m-display-none")) {
           loginContainer.classList.add("m-display-none");
         }
+      }, 100);
+      let timer1 = setInterval(() => {
         const btn = document.querySelector(loginBtnSelector);
-        if (btn) {
-          btn.onclick = () => {
+        if (btn && btn.mark) {
+          clearInterval(timer1);
+          return;
+        }
+        if (btn && !btn.mark) {
+          btn.mark = true;
+          console.log("click btn click add success!");
+          btn.addEventListener("click", () => {
             console.log("click me login !");
             loginContainer = document.querySelector(loginSelector);
             if (loginContainer) {
@@ -2799,17 +2816,22 @@ ${root$1}
               }
             }
             console.log("click me login !", loginContainer);
-          };
+          });
         }
       }, 100);
     };
-    const addEventLoginContainer = () => {
-      Object.values(LOGIN_BOX).forEach((item) => {
-        console.log("item", item);
+    const initbox = () => {
+      if (huyaLogin()) {
+        LOGIN_BOX = [...hy];
+      } else if (douyuLogin()) {
+        LOGIN_BOX = [...douyin];
+      } else
+        ;
+      LOGIN_BOX.forEach((item) => {
         handlerLogin(item[login_box], item[login_btn], item[cancel_btn]);
       });
     };
-    addEventLoginContainer();
+    initbox();
     const loginCss = `
   .m-display-block {
       display:block !important;
@@ -3605,7 +3627,7 @@ ${darkCss$1}
 .mod-index-wrap .mod-index-recommend,
 .mod-index-wrap .mod-news-section,
 .mod-index-wrap .recommend-wrap,
-#player-marquee-wrap,
+#player-marquee-wrap,.small-handle-tip,
 #player-marquee-wrap .player-marquee-noble-item,
 #player-marquee-wrap .player-banner-enter,
 #player-marquee-wrap [id^=player-banner-enter],
@@ -5362,6 +5384,7 @@ ${css$2}
       login$1();
       updateDarkClass();
     } catch (error2) {
+      console.error("live-plugin:", error2);
     }
     try {
       if (is_huya) {
