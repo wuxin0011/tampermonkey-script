@@ -238,14 +238,14 @@ export default class BiliBili extends LivePlugin {
             loopDo(() => {
                 this.detailLeftVideoList(100, '.video-page-operator-card-small')
                 this.detailLeftVideoList()
-            }, 100, 1000)
+            }, 1000, 10000000)
 
 
             const nextBtn = querySelector('.rec-footer')
             addEventListener(nextBtn, 'click', () => {
                 loopDo(() => {
                     this.detailLeftVideoList(0)
-                }, 100, 1000)
+                }, 1000, 10000000)
 
             })
         }

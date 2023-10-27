@@ -57,7 +57,7 @@
   const wd = window.document;
   const wls = window.localStorage;
   const download_plugin_url = "https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD";
-  const source_code_url = "https://github.com/wuxin0011/tampermonkey-script/live-plugin";
+  const source_code_url = "https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin";
   const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file);
   const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : el ? wd.querySelector(el) : emptyMethod;
   const querySelectorAll = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelectorAll(sel) : el ? wd.querySelectorAll(el) : emptyMethod;
@@ -2124,6 +2124,36 @@ ${root$1}
     common() {
       this.removeRoomByClickRoomName();
       this.autoHideMenu();
+      this.updateHeaderIcon();
+    }
+    // 头部logo显示不明显问题
+    updateHeaderIcon() {
+      loopDo((timer) => {
+        const imgs = querySelectorAll("#duya-header-logo img");
+        if (!isArray(imgs)) {
+          return;
+        }
+        for (let img of imgs) {
+          img.src = "https://a.msstatic.com/huya/main3/static/img/logo.png";
+        }
+        clearInterval(timer);
+      });
+      loopDo((timer) => {
+        const icon = querySelector("[class^=NavItem] [class^=NavItemHd] i[class*=fav]");
+        if (!icon) {
+          return;
+        }
+        icon.style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)";
+        clearInterval(timer);
+      });
+      loopDo((timer) => {
+        const icon = querySelector("[class^=NavItem] [class^=NavItemHd] i[class*=history]");
+        if (!icon) {
+          return;
+        }
+        icon.style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)";
+        clearInterval(timer);
+      });
     }
     // 详情操作
     detail() {
@@ -2655,12 +2685,12 @@ ${root$1}
         loopDo(() => {
           this.detailLeftVideoList(100, ".video-page-operator-card-small");
           this.detailLeftVideoList();
-        }, 100, 1e3);
+        }, 1e3, 1e7);
         const nextBtn = querySelector(".rec-footer");
         addEventListener(nextBtn, "click", () => {
           loopDo(() => {
             this.detailLeftVideoList(0);
-          }, 100, 1e3);
+          }, 1e3, 1e7);
         });
       }
       if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
@@ -2841,16 +2871,25 @@ ${root$1}
     addStyle2(loginCss);
   };
   const isDouyuDetail = new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url);
+  const isCreate = () => local_url.indexOf("https://www.douyu.com/creator") !== -1;
+  const createDark = isCreate() ? `
+  .dark * {
+    background-color: var(--w-bg-darker) !important;
+    border-color: var(--w-text) !important;
+    color: var(--w-text-light) !important;
+  }
+  
+  ` : ``;
   const loadingLazy = isDouyuDetail ? `` : `
 .dark .LazyLoad{
   background: var(--w-bg-dark) !important;
 }
 `;
   const darkCss$1 = `
-
+${createDark}
 ${loadingLazy}
-.dark .DyCover-pic,
 
+.dark .DyCover-pic,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
 }
@@ -2899,6 +2938,8 @@ ${loadingLazy}
 .dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
+.dark .layout-Player-chat,
+.dark layout-Player-chat *,
 .dark #js-footer
 {
   background: var(--w-bg-darker) !important;
@@ -3126,6 +3167,7 @@ ${loadingLazy}
 
 .layout-Section.layout-Slide .layout-Slide-player,
 .layout-Slide-bannerInner,
+.Header-broadcast-wrap,
 #lazyModule3,
 #lazyModule4,
 #lazyModule5,
@@ -3270,7 +3312,7 @@ ${darkCss$1}
   const darkCss = `
 
 /* 修改背景和字体颜色 */
-.dark body,
+
 .dark #main_col,
 .dark .room-core,
 .dark input,
@@ -3367,8 +3409,8 @@ ${darkCss$1}
 
 .dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE,
 .dark .search-suggest .search-item:hover,
-.dark .search-suggest .search-item.current,
-.dark .hy-nav-item-on .hy-nav-link {
+.dark .search-suggest .search-item.current {
+  background-color:none !important;
   border:1px solid var(--w-text-light) !important;
   outline: none !important;
 }
@@ -3528,6 +3570,7 @@ ${darkCss$1}
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
 .dark .ixyGIy,
+
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -3567,6 +3610,8 @@ ${darkCss$1}
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=roomBlockWords-list] li,
+.dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
+.dark #search-bar-input,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -3734,6 +3779,20 @@ ${darkCss$1}
  }
 #J_playerMain:hover #player-ctrl-wrap{
    opacity: 1;
+}
+
+[class^=NavItem] span[class^=NavText] {
+  color:#555 !important;
+}
+.duya-header-search input {
+  background-color: #e5e7eb;
+}
+[class^=NavItem] [class^=NavItemHd] i[class*=fav] {
+  background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png') !important;
+}
+
+[class^=NavItem] [class^=NavItemHd] i[class*=history] {
+  background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png') !important;
 }
 
 ${darkCss}
@@ -5364,20 +5423,6 @@ ${css$2}
       console.clear();
     }
     customElements.define("live-plugin-element", LivePluginElement);
-    console.log(
-      "%c%s%c%s",
-      "background: rgb(91, 148, 227); padding: 5px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
-      `欢迎使用live-plugin 下载地址:`,
-      "background: rgb(51, 160, 111); padding: 5px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
-      download_plugin_url
-    );
-    console.log(
-      "%c%s%c%s",
-      " background: rgb(91, 148, 227);padding: 5px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
-      `源码地址:`,
-      " background: rgb(51, 160, 111); padding: 5px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
-      source_code_url
-    );
     try {
       login$1();
       updateDarkClass();
@@ -5385,6 +5430,7 @@ ${css$2}
       console.error("live-plugin:", error2);
     }
     try {
+      let pluginSupport = true;
       if (is_huya) {
         new TriggerLive();
       } else if (is_douyu) {
@@ -5396,7 +5442,24 @@ ${css$2}
       } else if (is_localhost) {
         new LivePlugin();
       } else {
+        pluginSupport = false;
         error("插件地址不适配，请检查匹配地址！！！");
+      }
+      if (pluginSupport) {
+        console.log(
+          "%c%s%c%s",
+          "background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); padding: 2px;  border-radius: 20px 0 0 20px; color: #fff;font-size:12px;",
+          `欢迎使用live-plugin 下载地址:`,
+          "background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:12px;",
+          download_plugin_url
+        );
+        console.log(
+          "%c%s%c%s",
+          " background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);padding: 2px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
+          `源码地址:`,
+          "background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
+          source_code_url
+        );
       }
     } catch (e) {
       error(e);

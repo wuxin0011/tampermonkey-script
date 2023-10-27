@@ -1,9 +1,10 @@
 
 
+
 const darkCss = `
 
 /* 修改背景和字体颜色 */
-.dark body,
+
 .dark #main_col,
 .dark .room-core,
 .dark input,
@@ -100,8 +101,8 @@ const darkCss = `
 
 .dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE,
 .dark .search-suggest .search-item:hover,
-.dark .search-suggest .search-item.current,
-.dark .hy-nav-item-on .hy-nav-link {
+.dark .search-suggest .search-item.current {
+  background-color:none !important;
   border:1px solid var(--w-text-light) !important;
   outline: none !important;
 }
@@ -261,6 +262,7 @@ const darkCss = `
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
 .dark .ixyGIy,
+
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -300,6 +302,8 @@ const darkCss = `
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=roomBlockWords-list] li,
+.dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
+.dark #search-bar-input,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -339,6 +343,5 @@ const darkCss = `
 
 `
 
-// .dark .panel--2ziT75l8g5Y26rBqbNQ0tG,
 export default darkCss
 

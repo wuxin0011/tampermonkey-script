@@ -132,6 +132,20 @@ const css = is_huya ? `
    opacity: 1;
 }
 
+[class^=NavItem] span[class^=NavText] {
+  color:#555 !important;
+}
+.duya-header-search input {
+  background-color: #e5e7eb;
+}
+[class^=NavItem] [class^=NavItemHd] i[class*=fav] {
+  background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png') !important;
+}
+
+[class^=NavItem] [class^=NavItemHd] i[class*=history] {
+  background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png') !important;
+}
+
 ${dark}
 
 `: ''

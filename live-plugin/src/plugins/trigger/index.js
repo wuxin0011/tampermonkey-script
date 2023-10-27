@@ -79,7 +79,41 @@ export default class TriggerLive extends LivePlugin {
     common() {
         this.removeRoomByClickRoomName()
         this.autoHideMenu()
+        this.updateHeaderIcon()
+
     }
+
+    // 头部logo显示不明显问题
+    updateHeaderIcon() {
+        loopDo((timer) => {
+            const imgs = querySelectorAll('#duya-header-logo img')
+            if (!isArray(imgs)) {
+                return;
+            }
+            for (let img of imgs) {
+                img.src = 'https://a.msstatic.com/huya/main3/static/img/logo.png'
+            }
+            clearInterval(timer)
+        })
+
+        loopDo((timer) => {
+            const icon = querySelector('[class^=NavItem] [class^=NavItemHd] i[class*=fav]')
+            if (!icon) {
+                return;
+            }
+            icon.style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)'
+            clearInterval(timer)
+        })
+        loopDo((timer) => {
+            const icon = querySelector('[class^=NavItem] [class^=NavItemHd] i[class*=history]')
+            if (!icon) {
+                return;
+            }
+            icon.style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)'
+            clearInterval(timer)
+        })
+    }
+
 
     // 详情操作
     detail() {

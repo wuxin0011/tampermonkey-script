@@ -12,6 +12,7 @@ const css = is_douyu ? `
 
 .layout-Section.layout-Slide .layout-Slide-player,
 .layout-Slide-bannerInner,
+.Header-broadcast-wrap,
 #lazyModule3,
 #lazyModule4,
 #lazyModule5,

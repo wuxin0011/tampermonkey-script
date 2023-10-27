@@ -3,6 +3,25 @@ import { local_url } from '@/utils'
 
 const isDouyuDetail = (new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url))
 
+
+const isCreate = () => local_url.indexOf('https://www.douyu.com/creator') !== -1
+
+
+
+
+
+const createDark =
+  isCreate() ?
+    `
+  .dark * {
+    background-color: var(--w-bg-darker) !important;
+    border-color: var(--w-text) !important;
+    color: var(--w-text-light) !important;
+  }
+  
+  ` :
+    ``
+
 // 斗鱼直播黑屏问题
 const loadingLazy = isDouyuDetail ? `` : `
 .dark .LazyLoad{
@@ -10,10 +29,10 @@ const loadingLazy = isDouyuDetail ? `` : `
 }
 `
 const darkCss = `
-
+${createDark}
 ${loadingLazy}
-.dark .DyCover-pic,
 
+.dark .DyCover-pic,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
 }
@@ -62,6 +81,8 @@ ${loadingLazy}
 .dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
+.dark .layout-Player-chat,
+.dark layout-Player-chat *,
 .dark #js-footer
 {
   background: var(--w-bg-darker) !important;
