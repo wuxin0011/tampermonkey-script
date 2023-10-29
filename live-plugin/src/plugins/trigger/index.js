@@ -1,6 +1,7 @@
 import {
     addEventListener,
     findMark,
+    getLocalStore,
     intervalRemoveElement,
     isArray,
     local_url,
@@ -9,11 +10,9 @@ import {
     querySelectorAll,
     removeDOM,
     removeVideo,
-    setTimeoutMark,
-    timeoutSelectorAllOne,
+    throttle,
     warn,
-    wls,
-    getLocalStore,
+    wls
 } from '../../utils';
 
 import LivePlugin from "../live";
@@ -64,14 +63,13 @@ export default class TriggerLive extends LivePlugin {
     category() {
         let that = this
         if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
-            timeoutSelectorAllOne('.live-list-nav dd', (node) => {
+            Array.from(querySelectorAll('.live-list-nav dd')).forEach(node => {
                 addEventListener(node, 'click', () => {
                     setTimeout(() => {
                         that.removeRoomByClickRoomName()
                     }, 2000)
                 })
             })
-
         }
     }
 
@@ -86,14 +84,12 @@ export default class TriggerLive extends LivePlugin {
     // 头部logo显示不明显问题
     updateHeaderIcon() {
         loopDo((timer) => {
-            const imgs = querySelectorAll('#duya-header-logo img')
-            if (!isArray(imgs)) {
-                return;
-            }
-            for (let img of imgs) {
+            Array.from(querySelectorAll('#duya-header-logo img')).forEach(img => {
+                if (img) {
+                    clearInterval(timer)
+                }
                 img.src = 'https://a.msstatic.com/huya/main3/static/img/logo.png'
-            }
-            clearInterval(timer)
+            })
         })
 
         loopDo((timer) => {
@@ -181,24 +177,31 @@ export default class TriggerLive extends LivePlugin {
     // 通过点击直播间名称删除直播间
     removeRoomByClickRoomName() {
         const that = this
-        timeoutSelectorAllOne('.game-live-item', (li) => {
-            setTimeoutMark(li, () => {
+        const addClick = () => {
+            Array.from(querySelectorAll('.game-live-item')).forEach(li => {
+                if (li.mark) {
+                    return;
+                }
+                li.mark = 'mark'
                 const a = querySelector(li, 'a')
                 const url = a.href
                 const user = querySelector(li, '.txt i')
                 const name = user.textContent || ''
+                user.title = `点击屏蔽主播【${name}】`
                 addEventListener(user, 'click', () => {
-                    if (confirm(`确认禁用 ${name}？`)) {
-                        that.addUser(that.getRoomIdByUrl(url), name);
-                        removeDOM(li);
-                    }
+                    // if (confirm(`确认禁用 ${name}？`)) {
+
+                    // }
+                    that.addUser(that.getRoomIdByUrl(url), name);
+                    removeDOM(li);
                 })
                 if (that.isRemove(url)) {
                     removeDOM(li)
                 }
-            }, 0)
-        }, 500)
-
+            })
+        }
+        addClick()
+        window.addEventListener('scroll', throttle(1000, addClick))
     }
 
     autoHideMenu() {

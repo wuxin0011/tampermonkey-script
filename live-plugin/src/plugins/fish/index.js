@@ -1,10 +1,8 @@
 import {
     addEventListener,
     backgroundNone,
-    findButton,
     findMark,
     getLocalStore,
-    isArray,
     local_url,
     log,
     loopDo,
@@ -12,9 +10,7 @@ import {
     querySelectorAll,
     removeDOM,
     removeVideo,
-    setTimeoutMark,
     throttle,
-    timeoutSelectorAllOne,
     wls
 } from '../../utils';
 
@@ -47,58 +43,131 @@ export default class FishLive extends LivePlugin {
     index() {
         let that = this
         // 直播源
-        if (window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
-            window.scroll(0, 0)
-            // 移除直播
-            removeVideo('.layout-Slide-player video')
-            // 获取暂停button
-            const vbox = querySelector('#room-html5-player');
-            if (vbox) {
-                const divs = querySelectorAll(vbox, 'div')
-                if (isArray(divs)) {
-                    for (let div of divs) {
-                        if (div?.title === '暂停') {
-                            div.click()
-                        }
-                    }
-                }
-            }
-            that.removeRoomByClickRoomName()
-            window.onscroll = throttle(500, () => {
-                that.removeRoomByClickRoomName()
-            })
-            // btn
-            let topBtn = querySelector('.layout-Main .ToTopBtn')
-            if (topBtn) {
-                topBtn.style.display = 'block'
-            }
+        if (!(window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
+            return;
         }
+        window.scroll(0, 0)
+        // 移除直播
+        removeVideo('.layout-Slide-player video')
+        // 获取暂停button
+        const vbox = querySelector('#room-html5-player');
+        if (vbox) {
+            Array.from(querySelectorAll(vbox, 'div')).from(div => {
+                if (div?.title === '暂停') {
+                    div.click()
+                }
+            })
+        }
+        let topBtn = querySelector('.layout-Main .ToTopBtn')
+        if (topBtn) {
+            topBtn.style.display = 'block'
+        }
+        function runIndex() {
+            console.log('window index run ...')
+            Array.from(querySelectorAll('li.layout-List-item')).forEach(li => {
+                const user = querySelector(li, '.DyCover-user')
+                const a = querySelector(li, '.DyCover')
+                const name = user?.textContent || ''
+                if (that.isRemove(a?.href) || that.userIsExist(name)) {
+                    removeDOM(li)
+                    return
+                }
+                if (li.mark) {
+                    return;
+                }
+                a.setAttribute('href', 'javascript:;void(0)');
+                addEventListener(user, 'click', (e) => {
+                    e.preventDefault()
+                    that.addUser(that.getRoomIdByUrl(a?.href), name);
+                    removeDOM(li);
+                })
+                li.mark = true
+            })
+        }
+        runIndex()
+        window.onscroll = throttle(500, runIndex)
     }
 
     // 分类页面操作
     category() {
         let that = this
         // 匹配分类页
-        if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
-            that.removeRoomByClickRoomName()
-            const labels = querySelectorAll('.layout-Module-filter .layout-Module-label')
-            timeoutSelectorAllOne('.layout-Module-filter .layout-Module-label', (label) => {
-                addEventListener(label, 'click', (e) => {
-                    e.preventDefault()
-                    // 获取当前地址
-                    let to_link = label && label.href ? label.href : null
-                    if (to_link) {
-                        window.location.href = to_link
-                    } else {
-                        // 获取全部地址
-                        window.location.href = 'https://www.douyu.com/g_' + local_url.match(RegExp(
-                            /subCate\/.*/g))[0].replace('subCate', '').match(new RegExp(
-                                /\w+/g))[0]
+        if (!(new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url))) {
+            return;
+        }
+        Array.from(querySelectorAll('.layout-Module-filter .layout-Module-label')).forEach(label => {
+            addEventListener(label, 'click', (e) => {
+                e.preventDefault()
+                // 获取当前地址
+                let to_link = label && label.href ? label.href : null
+                if (to_link) {
+                    window.location.href = to_link
+                } else {
+                    // 获取全部地址
+                    window.location.href = 'https://www.douyu.com/g_' + local_url.match(RegExp(
+                        /subCate\/.*/g))[0].replace('subCate', '').match(new RegExp(
+                            /\w+/g))[0]
+                }
+
+            })
+        })
+        function runCategory() {
+            Array.from(querySelectorAll('.layout-Cover-item')).forEach(li => {
+                if (li.mark) {
+                    return;
+                }
+                const link = querySelector(li, '.DyListCover-wrap')
+                if (!link) {
+                    return;
+                }
+                link.setAttribute('href', 'javascript:;void(0)');
+                const user = querySelector(link, '.DyListCover-userName')
+                const name = user.textContent || ''
+                const roomId = that.getRoomIdByUrl(link?.href);
+                if (that.isRemove(roomId) || that.userIsExist(name)) {
+                    removeDOM(li, true)
+                } else {
+                    if (!user.mark && roomId && name) {
+                        user.mark = 'mark'
+                        link.title = `点击移除主播:${name}`
+                        addEventListener(user, 'click', (e) => {
+                            e.preventDefault()
+                            that.addUser(roomId, name);
+                            removeDOM(li);
+                        })
                     }
 
+                }
+                addEventListener(li, 'mouseenter', () => {
+                    const a = querySelector(li, '.DyListCover-wrap.is-hover')
+                    if (!a) {
+                        return;
+                    }
+                    const user = querySelector(a, '.DyListCover-userName')
+                    const id = that.getRoomIdByUrl(a.href);
+                    if (!user || !roomId || user.mark) {
+                        return;
+                    }
+                    a.title = `点击移除主播:${user.textContent}`
+                    a.setAttribute('href', 'javascript:;void(0)');
+                    addEventListener(a, 'click', (e) => {
+                        e.preventDefault()
+                    })
+                    addEventListener(user, 'click', (e) => {
+                        e.preventDefault()
+                        if (id && user.textContent) {
+                            removeDOM(li);
+                            that.addUser(id, user.textContent);
+                        }
+
+                    })
+                    user.mark = 'is-mark'
                 })
+                li.mark = 'mark'
             })
         }
+        runCategory()
+        window.addEventListener('scroll', throttle(1000, runCategory))
 
 
     }
@@ -107,7 +176,6 @@ export default class FishLive extends LivePlugin {
     // 详情页操作
     detail() {
         let that = this
-        // 匹配只有在播放直播间才会生效
         if (!new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url)) {
             return;
         }
@@ -115,31 +183,25 @@ export default class FishLive extends LivePlugin {
             hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
             addEventListener(hostName, 'click', () => {
                 that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
-
             })
         })
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
-            let divs = querySelectorAll('#root>div')
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
-            if (isArray(divs)) {
-                for (let element of divs) {
-                    if (!!querySelector(element, '.layout-Main')) {
-                        backgroundNone(element, backgroundNones)
-                    } else {
-                        removeDOM(element, true)
-                    }
-
+            Array.from(querySelectorAll('#root>div')).forEach(element => {
+                if (!!querySelector(element, '.layout-Main')) {
+                    backgroundNone(element, backgroundNones)
+                } else {
+                    removeDOM(element, true)
                 }
-            }
 
-
+            })
         }
         // 不带有轮播图
         if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
             findMark('.roomSmallPlayerFloatLayout-closeBtn', (closeBtn) => {
                 closeBtn.click()
-            })
+            }, 100, 500)
             // 对于恶意广告要彻底清除！！！
             let ads = [
                 "#player-above-controller+div"
@@ -148,84 +210,10 @@ export default class FishLive extends LivePlugin {
             removeDOM('.layout-Main .ToTopBtn', true)
 
         }
+
         this.isFullScreen()
         this.isAutoMaxVideoPro()
     }
-
-    // 通过点击直播间名称删除直播间
-    removeRoomByClickRoomName() {
-        let that = this
-        // 首页
-        if (this.baseUrl === local_url || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
-            timeoutSelectorAllOne('.layout-List-item', (li) => {
-                setTimeoutMark(li, () => {
-                    const a = querySelector(li, '.DyCover')
-                    const url = a?.href || ''
-                    const user = querySelector(li, '.DyCover-user')
-                    const name = user?.textContent || ''
-                    a.setAttribute('href', 'javascript:;void(0)');
-                    addEventListener(a, 'click', (e) => {
-                        e.preventDefault()
-                    })
-                    addEventListener(user, 'click', (e) => {
-                        e.preventDefault()
-                        that.addUser(that.getRoomIdByUrl(url), name);
-                        removeDOM(li);
-                    })
-                    // 是否应该删除
-                    if (that.isRemove(url) || that.userIsExist(name)) {
-                        removeDOM(li)
-                    }
-                }, 100)
-            }, 100)
-        }
-        if (new RegExp(/https:\/\/www.douyu.com(\/((directory)|(g_)).*)/).test(local_url)) {
-            timeoutSelectorAllOne('.layout-Cover-item', (li) => {
-                setTimeoutMark(li, () => {
-                    const link = querySelector(li, 'a.DyListCover-wrap')
-                    if (link) {
-                        const url = link?.href || ''
-                        link.setAttribute('href', 'javascript:;void(0)');
-                        addEventListener(link, 'click', (e) => {
-                            e.preventDefault()
-                        })
-                        const user = querySelector(link, 'div.DyListCover-userName')
-                        const name = user.textContent || ''
-                        if (that.isRemove(url) || that.userIsExist(name)) {
-                            removeDOM(li, true)
-                        } else {
-                            addEventListener(user, 'click', (e) => {
-                                e.preventDefault()
-                                const id = that.getRoomIdByUrl(url);
-                                that.addUser(id, name);
-                                removeDOM(li);
-                            })
-                            // 监听鼠标移入事件
-                            addEventListener(li, 'mouseenter', (e) => {
-                                const a = querySelector(e.target, 'a.DyListCover-wrap.is-hover')
-                                const url = a?.href
-                                a.setAttribute('href', 'javascript:;void(0)');
-                                addEventListener(a, 'click', (e) => {
-                                    e.preventDefault()
-                                })
-                                const user = querySelector(a, '.DyListCover-userName')
-                                const name = user.textContent || ''
-                                addEventListener(user, 'click', (e) => {
-                                    e.preventDefault()
-                                    const id = that.getRoomIdByUrl(url);
-                                    that.addUser(id, name);
-                                    removeDOM(li);
-                                })
-
-                            })
-                        }
-                    }
-                }, 100)
-            }, 0)
-
-        }
-    }
-
 
     // 通过房间号获取直播间name
     async getNameByRoomId(keywords) {
@@ -238,34 +226,25 @@ export default class FishLive extends LivePlugin {
         }
         // 从详情页获取
         let hostName = querySelector('.Title-blockInline .Title-anchorName h2')
-        let rooms = null;
         if (!hostName) {
-            rooms = querySelectorAll('.layout-List-item')
             // index
-            if (isArray(rooms)) {
-                for (let room of rooms) {
+            Array.from(querySelectorAll('.layout-List-item')).forEach(room => {
+                const id = that.getRoomIdByUrl(querySelector(room, 'a').href)
+                const user = querySelector(room, '.DyCover-user')
+                if (id === keywords) {
+                    hostName = user
+                }
+            })
+            // 如果还是获取不到从分类页面获取
+            if (!hostName) {
+                Array.from(querySelectorAll('.layout-Cover-item')).forEach(room => {
                     const id = that.getRoomIdByUrl(querySelector(room, 'a').href)
-                    const user = querySelector(room, '.DyCover-user')
+                    const user = querySelector(room, '.DyListCover-userName')
                     if (id === keywords) {
                         hostName = user
                     }
-                }
+                })
             }
-            // 如果还是获取不到从分类页面获取
-            if (!hostName) {
-                rooms = querySelectorAll('.layout-Cover-item')
-                if (isArray(rooms)) {
-                    for (let room of rooms) {
-                        const id = that.getRoomIdByUrl(querySelector(room, 'a').href)
-                        const user = querySelector(room, '.DyListCover-userName')
-                        if (id === keywords) {
-                            hostName = user
-                        }
-                    }
-                }
-            }
-
-
         }
         return hostName?.textContent || ''
     }

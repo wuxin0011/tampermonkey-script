@@ -81,10 +81,12 @@
       if (!(element instanceof HTMLElement)) {
         element = querySelector(element);
       }
+      console.log("remove dom run ...", element, "isRemove?", realRemove);
       if (element instanceof HTMLElement) {
-        element.style.display = "none";
         if (realRemove) {
           element.remove();
+        } else {
+          element.style.display = "none";
         }
       }
     } catch (e) {
@@ -92,32 +94,6 @@
     }
   };
   const isArray = (a) => a && (a == null ? void 0 : a.length) > 0;
-  const timeoutSelectorAll = (selector, callback, time = 0) => {
-    if (typeof callback != "function") {
-      warn("callback should is a function!");
-      return;
-    }
-    setTimeout(() => {
-      const nodes = querySelectorAll(selector);
-      if (isArray(nodes)) {
-        callback(nodes);
-      }
-    }, time);
-  };
-  const timeoutSelectorAllOne = (selector, callback, time = 0) => {
-    if (typeof callback != "function") {
-      warn("callback should is a function!");
-      return;
-    }
-    setTimeout(() => {
-      const nodes = querySelectorAll(selector);
-      if (isArray(nodes)) {
-        for (let node of nodes) {
-          callback(node);
-        }
-      }
-    }, time);
-  };
   const getLocalStore = (k, type = Array.name, isParse = true) => {
     let obj = wls.getItem(k);
     if (type === Array.name) {
@@ -141,7 +117,7 @@
     return obj;
   };
   const addLocalStore = (k, v = [], type = Array.name, isParse = true) => (type === Object.name || type === Array.name) && isParse ? wls.setItem(k, JSON.stringify(v)) : wls.setItem(k, v);
-  const removeVideo = (selector, time1 = 100, maxCount = 1e3) => {
+  const removeVideo = (selector, time1 = 1e3, maxCount = 10) => {
     let count = 0;
     let video_timer = setInterval(() => {
       try {
@@ -158,14 +134,25 @@
       }
     }, time1);
   };
-  const throttle = (wait, func, ...args) => {
-    let pre = Date.now();
-    return () => {
-      if (Date.now() - pre > wait) {
-        func(...args);
-        pre = Date.now();
+  const throttle = (wait, func) => {
+    let timerId = null;
+    let lastArgs = null;
+    const throttled = (...args) => {
+      lastArgs = args;
+      if (!timerId) {
+        timerId = setTimeout(() => {
+          func(...lastArgs);
+          timerId = null;
+          lastArgs = null;
+        }, wait);
       }
     };
+    throttled.cancel = () => {
+      clearTimeout(timerId);
+      timerId = null;
+      lastArgs = null;
+    };
+    return throttled;
   };
   const intervalRemoveElement = (selectors, time = 160, maxCount = 1e3) => {
     if (!isArray(selectors)) {
@@ -211,9 +198,8 @@
       try {
         let element = selector instanceof HTMLElement ? selector : querySelector(selector);
         if (element && element instanceof HTMLElement) {
-          let isMark = element.getAttribute("mark");
-          if (!isMark) {
-            element.setAttribute("mark", true);
+          if (!element.mark) {
+            element.mark = true;
             callback(element);
           } else {
             clearInterval(timer);
@@ -234,33 +220,6 @@
         }
       }
     }, 5e3);
-  };
-  const setTimeoutMark = (selector, callback, wait = 0) => {
-    if (!selector) {
-      warn("selector not allow  or null !");
-      return;
-    }
-    if (typeof callback != "function") {
-      warn("callback is a function!");
-      return;
-    }
-    let timer = setTimeout(() => {
-      try {
-        let element = selector instanceof HTMLElement ? selector : querySelector(selector);
-        if (element && element instanceof HTMLElement) {
-          let isMark = element.getAttribute("mark");
-          if (!isMark) {
-            element.setAttribute("mark", true);
-            callback(element);
-          } else {
-            clearInterval(timer);
-          }
-        }
-      } catch (e) {
-        clearInterval(timer);
-        error(e);
-      }
-    }, wait);
   };
   const backgroundNone = (element, selectors = [".layout-Main"], time = 100, maxCount = 500) => {
     if (!(element instanceof HTMLElement) || !isArray(selectors)) {
@@ -1456,7 +1415,6 @@ ${root$1}
         const file = uploadButton.files[0] || null;
         uploadImage(file, (base64) => {
           addLocalStore(that.bg_key, base64, String.name, false);
-          console.log("result");
           that.settingBackgroundImage(base64);
         });
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
@@ -2047,22 +2005,6 @@ ${root$1}
         log$1("logo点击按钮装置完毕！");
       }, 5, 500);
     }
-    createSpan(container, place, id, name = id, message = "确认屏蔽up主 ", remove = true) {
-      if (!container || !place || !id || !name) {
-        error("createSpan 参数不全！");
-        return;
-      }
-      const span = createElement("span");
-      span.classList = "m-span-text";
-      appendChild(place, span);
-      addEventListener(span, "click", () => {
-        if (remove) {
-          removeDOM(container, true);
-        }
-        this.addUser(id, name);
-        this.removeRoom(local_url);
-      });
-    }
     addEven() {
       let that = this;
       addFullScreenEvent(() => {
@@ -2111,7 +2053,7 @@ ${root$1}
     category() {
       let that = this;
       if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
-        timeoutSelectorAllOne(".live-list-nav dd", (node) => {
+        Array.from(querySelectorAll(".live-list-nav dd")).forEach((node) => {
           addEventListener(node, "click", () => {
             setTimeout(() => {
               that.removeRoomByClickRoomName();
@@ -2129,14 +2071,12 @@ ${root$1}
     // 头部logo显示不明显问题
     updateHeaderIcon() {
       loopDo((timer) => {
-        const imgs = querySelectorAll("#duya-header-logo img");
-        if (!isArray(imgs)) {
-          return;
-        }
-        for (let img of imgs) {
+        Array.from(querySelectorAll("#duya-header-logo img")).forEach((img) => {
+          if (img) {
+            clearInterval(timer);
+          }
           img.src = "https://a.msstatic.com/huya/main3/static/img/logo.png";
-        }
-        clearInterval(timer);
+        });
       });
       loopDo((timer) => {
         const icon = querySelector("[class^=NavItem] [class^=NavItemHd] i[class*=fav]");
@@ -2213,23 +2153,28 @@ ${root$1}
     // 通过点击直播间名称删除直播间
     removeRoomByClickRoomName() {
       const that = this;
-      timeoutSelectorAllOne(".game-live-item", (li) => {
-        setTimeoutMark(li, () => {
+      const addClick = () => {
+        Array.from(querySelectorAll(".game-live-item")).forEach((li) => {
+          if (li.mark) {
+            return;
+          }
+          li.mark = "mark";
           const a = querySelector(li, "a");
           const url = a.href;
           const user = querySelector(li, ".txt i");
           const name = user.textContent || "";
+          user.title = `点击屏蔽主播【${name}】`;
           addEventListener(user, "click", () => {
-            if (confirm(`确认禁用 ${name}？`)) {
-              that.addUser(that.getRoomIdByUrl(url), name);
-              removeDOM(li);
-            }
+            that.addUser(that.getRoomIdByUrl(url), name);
+            removeDOM(li);
           });
           if (that.isRemove(url)) {
             removeDOM(li);
           }
-        }, 0);
-      }, 500);
+        });
+      };
+      addClick();
+      window.addEventListener("scroll", throttle(1e3, addClick));
     }
     autoHideMenu() {
       const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
@@ -2279,52 +2224,124 @@ ${root$1}
     //首页操作
     index() {
       let that = this;
-      if (window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
-        window.scroll(0, 0);
-        removeVideo(".layout-Slide-player video");
-        const vbox = querySelector("#room-html5-player");
-        if (vbox) {
-          const divs = querySelectorAll(vbox, "div");
-          if (isArray(divs)) {
-            for (let div of divs) {
-              if ((div == null ? void 0 : div.title) === "暂停") {
-                div.click();
-              }
-            }
-          }
-        }
-        that.removeRoomByClickRoomName();
-        window.onscroll = throttle(500, () => {
-          that.removeRoomByClickRoomName();
-        });
-        let topBtn = querySelector(".layout-Main .ToTopBtn");
-        if (topBtn) {
-          topBtn.style.display = "block";
-        }
+      if (!(window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
+        return;
       }
+      window.scroll(0, 0);
+      removeVideo(".layout-Slide-player video");
+      const vbox = querySelector("#room-html5-player");
+      if (vbox) {
+        Array.from(querySelectorAll(vbox, "div")).from((div) => {
+          if ((div == null ? void 0 : div.title) === "暂停") {
+            div.click();
+          }
+        });
+      }
+      let topBtn = querySelector(".layout-Main .ToTopBtn");
+      if (topBtn) {
+        topBtn.style.display = "block";
+      }
+      function runIndex() {
+        console.log("window index run ...");
+        Array.from(querySelectorAll("li.layout-List-item")).forEach((li) => {
+          const user = querySelector(li, ".DyCover-user");
+          const a = querySelector(li, ".DyCover");
+          const name = (user == null ? void 0 : user.textContent) || "";
+          if (that.isRemove(a == null ? void 0 : a.href) || that.userIsExist(name)) {
+            removeDOM(li);
+            return;
+          }
+          if (li.mark) {
+            return;
+          }
+          a.setAttribute("href", "javascript:;void(0)");
+          addEventListener(user, "click", (e) => {
+            e.preventDefault();
+            that.addUser(that.getRoomIdByUrl(a == null ? void 0 : a.href), name);
+            removeDOM(li);
+          });
+          li.mark = true;
+        });
+      }
+      runIndex();
+      window.onscroll = throttle(500, runIndex);
     }
     // 分类页面操作
     category() {
       let that = this;
-      if (new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
-        that.removeRoomByClickRoomName();
-        querySelectorAll(".layout-Module-filter .layout-Module-label");
-        timeoutSelectorAllOne(".layout-Module-filter .layout-Module-label", (label) => {
-          addEventListener(label, "click", (e) => {
-            e.preventDefault();
-            let to_link = label && label.href ? label.href : null;
-            if (to_link) {
-              window.location.href = to_link;
-            } else {
-              window.location.href = "https://www.douyu.com/g_" + local_url.match(RegExp(
-                /subCate\/.*/g
-              ))[0].replace("subCate", "").match(new RegExp(
-                /\w+/g
-              ))[0];
+      if (!new RegExp(/https:\/\/www.douyu.com(\/((directory.*)|(g_.*)))$/).test(local_url)) {
+        return;
+      }
+      Array.from(querySelectorAll(".layout-Module-filter .layout-Module-label")).forEach((label) => {
+        addEventListener(label, "click", (e) => {
+          e.preventDefault();
+          let to_link = label && label.href ? label.href : null;
+          if (to_link) {
+            window.location.href = to_link;
+          } else {
+            window.location.href = "https://www.douyu.com/g_" + local_url.match(RegExp(
+              /subCate\/.*/g
+            ))[0].replace("subCate", "").match(new RegExp(
+              /\w+/g
+            ))[0];
+          }
+        });
+      });
+      function runCategory() {
+        Array.from(querySelectorAll(".layout-Cover-item")).forEach((li) => {
+          if (li.mark) {
+            return;
+          }
+          const link = querySelector(li, ".DyListCover-wrap");
+          if (!link) {
+            return;
+          }
+          link.setAttribute("href", "javascript:;void(0)");
+          const user = querySelector(link, ".DyListCover-userName");
+          const name = user.textContent || "";
+          const roomId = that.getRoomIdByUrl(link == null ? void 0 : link.href);
+          if (that.isRemove(roomId) || that.userIsExist(name)) {
+            removeDOM(li, true);
+          } else {
+            if (!user.mark && roomId && name) {
+              user.mark = "mark";
+              link.title = `点击移除主播:${name}`;
+              addEventListener(user, "click", (e) => {
+                e.preventDefault();
+                that.addUser(roomId, name);
+                removeDOM(li);
+              });
             }
+          }
+          addEventListener(li, "mouseenter", () => {
+            const a = querySelector(li, ".DyListCover-wrap.is-hover");
+            if (!a) {
+              return;
+            }
+            const user2 = querySelector(a, ".DyListCover-userName");
+            const id = that.getRoomIdByUrl(a.href);
+            if (!user2 || !roomId || user2.mark) {
+              return;
+            }
+            a.title = `点击移除主播:${user2.textContent}`;
+            a.setAttribute("href", "javascript:;void(0)");
+            addEventListener(a, "click", (e) => {
+              e.preventDefault();
+            });
+            addEventListener(user2, "click", (e) => {
+              e.preventDefault();
+              if (id && user2.textContent) {
+                removeDOM(li);
+                that.addUser(id, user2.textContent);
+              }
+            });
+            user2.mark = "is-mark";
           });
+          li.mark = "mark";
         });
       }
+      runCategory();
+      window.addEventListener("scroll", throttle(1e3, runCategory));
     }
     // 详情页操作
     detail() {
@@ -2339,94 +2356,23 @@ ${root$1}
         });
       });
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
-        let divs = querySelectorAll("#root>div");
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
-        if (isArray(divs)) {
-          for (let element of divs) {
-            if (!!querySelector(element, ".layout-Main")) {
-              backgroundNone(element, backgroundNones);
-            } else {
-              removeDOM(element, true);
-            }
+        Array.from(querySelectorAll("#root>div")).forEach((element) => {
+          if (!!querySelector(element, ".layout-Main")) {
+            backgroundNone(element, backgroundNones);
+          } else {
+            removeDOM(element, true);
           }
-        }
+        });
       }
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
         findMark(".roomSmallPlayerFloatLayout-closeBtn", (closeBtn) => {
           closeBtn.click();
-        });
+        }, 100, 500);
         removeDOM(".layout-Main .ToTopBtn", true);
       }
       this.isFullScreen();
       this.isAutoMaxVideoPro();
-    }
-    // 通过点击直播间名称删除直播间
-    removeRoomByClickRoomName() {
-      let that = this;
-      if (this.baseUrl === local_url || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url)) {
-        timeoutSelectorAllOne(".layout-List-item", (li) => {
-          setTimeoutMark(li, () => {
-            const a = querySelector(li, ".DyCover");
-            const url = (a == null ? void 0 : a.href) || "";
-            const user = querySelector(li, ".DyCover-user");
-            const name = (user == null ? void 0 : user.textContent) || "";
-            a.setAttribute("href", "javascript:;void(0)");
-            addEventListener(a, "click", (e) => {
-              e.preventDefault();
-            });
-            addEventListener(user, "click", (e) => {
-              e.preventDefault();
-              that.addUser(that.getRoomIdByUrl(url), name);
-              removeDOM(li);
-            });
-            if (that.isRemove(url) || that.userIsExist(name)) {
-              removeDOM(li);
-            }
-          }, 100);
-        }, 100);
-      }
-      if (new RegExp(/https:\/\/www.douyu.com(\/((directory)|(g_)).*)/).test(local_url)) {
-        timeoutSelectorAllOne(".layout-Cover-item", (li) => {
-          setTimeoutMark(li, () => {
-            const link = querySelector(li, "a.DyListCover-wrap");
-            if (link) {
-              const url = (link == null ? void 0 : link.href) || "";
-              link.setAttribute("href", "javascript:;void(0)");
-              addEventListener(link, "click", (e) => {
-                e.preventDefault();
-              });
-              const user = querySelector(link, "div.DyListCover-userName");
-              const name = user.textContent || "";
-              if (that.isRemove(url) || that.userIsExist(name)) {
-                removeDOM(li, true);
-              } else {
-                addEventListener(user, "click", (e) => {
-                  e.preventDefault();
-                  const id = that.getRoomIdByUrl(url);
-                  that.addUser(id, name);
-                  removeDOM(li);
-                });
-                addEventListener(li, "mouseenter", (e) => {
-                  const a = querySelector(e.target, "a.DyListCover-wrap.is-hover");
-                  const url2 = a == null ? void 0 : a.href;
-                  a.setAttribute("href", "javascript:;void(0)");
-                  addEventListener(a, "click", (e2) => {
-                    e2.preventDefault();
-                  });
-                  const user2 = querySelector(a, ".DyListCover-userName");
-                  const name2 = user2.textContent || "";
-                  addEventListener(user2, "click", (e2) => {
-                    e2.preventDefault();
-                    const id = that.getRoomIdByUrl(url2);
-                    that.addUser(id, name2);
-                    removeDOM(li);
-                  });
-                });
-              }
-            }
-          }, 100);
-        }, 0);
-      }
     }
     // 通过房间号获取直播间name
     async getNameByRoomId(keywords) {
@@ -2438,29 +2384,22 @@ ${root$1}
         return searchResult.room.nickname;
       }
       let hostName = querySelector(".Title-blockInline .Title-anchorName h2");
-      let rooms = null;
       if (!hostName) {
-        rooms = querySelectorAll(".layout-List-item");
-        if (isArray(rooms)) {
-          for (let room of rooms) {
+        Array.from(querySelectorAll(".layout-List-item")).forEach((room) => {
+          const id = that.getRoomIdByUrl(querySelector(room, "a").href);
+          const user = querySelector(room, ".DyCover-user");
+          if (id === keywords) {
+            hostName = user;
+          }
+        });
+        if (!hostName) {
+          Array.from(querySelectorAll(".layout-Cover-item")).forEach((room) => {
             const id = that.getRoomIdByUrl(querySelector(room, "a").href);
-            const user = querySelector(room, ".DyCover-user");
+            const user = querySelector(room, ".DyListCover-userName");
             if (id === keywords) {
               hostName = user;
             }
-          }
-        }
-        if (!hostName) {
-          rooms = querySelectorAll(".layout-Cover-item");
-          if (isArray(rooms)) {
-            for (let room of rooms) {
-              const id = that.getRoomIdByUrl(querySelector(room, "a").href);
-              const user = querySelector(room, ".DyListCover-userName");
-              if (id === keywords) {
-                hostName = user;
-              }
-            }
-          }
+          });
         }
       }
       return (hostName == null ? void 0 : hostName.textContent) || "";
@@ -2574,60 +2513,93 @@ ${root$1}
     }
     // 添加删除按钮
     addDeleteRoomButton(time = 1e3) {
-      loopDo(() => {
-        timeoutSelectorAll(".feed-card", (divs) => {
-          var _a, _b;
-          for (let feed of divs) {
+      let that = this;
+      const scan = () => {
+        const scanVideo = (sc = true) => {
+          Array.from(querySelectorAll(".feed-card")).forEach((feed) => {
+            var _a, _b;
             const isMark = !!querySelector(feed, ".m-span-text");
-            if (!isMark) {
-              let item = querySelector(feed, "div.bili-video-card__info--bottom");
-              const name = (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent;
-              const href = (_b = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _b.href;
-              const id = this.getBilibiliRoomId(href);
-              if (this.userIsExist(id) || this.userIsExist(name)) {
-                removeDOM(feed, true);
-              } else if (id && name) {
-                this.createSpan(feed, item, id, name);
-              }
+            if (feed.ok && isMark && sc) {
+              return;
             }
-          }
-        }, time);
-      }, 10, 500);
-      loopDo(() => {
-        timeoutSelectorAll(".bili-video-card", (divs) => {
-          var _a, _b, _c, _d;
-          for (let feed of divs) {
+            let item = querySelector(feed, "div.bili-video-card__info--bottom");
+            const name = (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent;
+            const href = (_b = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _b.href;
+            const id = that.getBilibiliRoomId(href);
+            if (!isMark) {
+              createSpan(feed, item, id, name);
+            }
+            if (this.userIsExist(id) || this.userIsExist(name)) {
+              removeDOM(feed, true);
+              return;
+            }
+            feed.ok = true;
+          });
+          Array.from(querySelectorAll(".bili-video-card")).forEach((feed) => {
+            var _a, _b, _c, _d;
             const isMark = !!querySelector(feed, ".m-span-text");
-            if (!isMark) {
-              let item = querySelector(feed, "div.bili-video-card__info--bottom");
-              let isLive = false;
-              if (!item) {
-                isLive = true;
-                item = querySelector(feed, ".bili-live-card__info--text");
-              }
-              const name = !isLive ? (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent : (_b = querySelector(item, "a.bili-live-card__info--uname span")) == null ? void 0 : _b.textContent;
-              const href = !isLive ? (_c = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _c.href : (_d = querySelector(item, "a.bili-live-card__info--uname")) == null ? void 0 : _d.href;
-              const id = this.getBilibiliRoomId(href);
-              if (this.userIsExist(name) || this.userIsExist(id)) {
-                removeDOM(feed, true);
-              } else if (id && name) {
-                this.createSpan(feed, item, id, name);
-              }
+            if (feed.ok && isMark && sc) {
+              return;
             }
+            let item = querySelector(feed, ".bili-video-card__info--bottom");
+            let isLive = false;
+            if (!item) {
+              isLive = true;
+              item = querySelector(feed, ".bili-live-card__info--text");
+            }
+            const name = !isLive ? (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent : (_b = querySelector(item, "a.bili-live-card__info--uname span")) == null ? void 0 : _b.textContent;
+            const href = !isLive ? (_c = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _c.href : (_d = querySelector(item, "a.bili-live-card__info--uname")) == null ? void 0 : _d.href;
+            const id = this.getBilibiliRoomId(href);
+            if (!isMark) {
+              createSpan(feed, item, id, name);
+            }
+            if (this.userIsExist(name) || this.userIsExist(id)) {
+              removeDOM(feed, true);
+            }
+            feed.ok = true;
+          });
+        };
+        const createSpan = (container, place, id, name = id, message = "确认屏蔽up主 ", remove = true) => {
+          if (!container || !place || !id || !name) {
+            return;
           }
-        }, 0);
-      }, 1e5, 500);
+          if (!!container.querySelector(".m-span-text")) {
+            return;
+          }
+          const span = createElement("span");
+          span.classList = "m-span-text";
+          addEventListener(span, "click", (e) => {
+            e.preventDefault();
+            if (remove) {
+              removeDOM(container, true);
+            }
+            that.addUser(id, name);
+            scanVideo(false);
+          });
+          appendChild(place, span);
+        };
+        loopDo(() => {
+          scanVideo();
+        }, 10, 500);
+      };
+      scan();
+      window.addEventListener("scroll", throttle(500, scan));
+      findMark(".feed-roll-btn .roll-btn", (btn) => {
+        addEventListener(btn, "click", () => {
+          scan();
+        });
+      });
     }
     clickLogoShowContainer() {
       let that = this;
       super.clickLogoShowContainer();
-      window.onscroll = () => {
+      window.addEventListener("scroll", () => {
         if (parseInt(window.scrollY) > 90) {
           operationLogo();
         } else {
           super.clickLogoShowContainer();
         }
-      };
+      });
       const operationLogo = () => {
         if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
           return;
@@ -2643,22 +2615,19 @@ ${root$1}
       };
     }
     common() {
-      let that = this;
-      that.addDeleteRoomButton(1e3);
-      setTimeout(() => {
-        const refreshButton = querySelector(".feed-roll-btn .primary-btn");
-        addEventListener(refreshButton, "click", () => {
-          that.addDeleteRoomButton(200);
-        });
-      }, 3e3);
+      this.addDeleteRoomButton();
     }
     index() {
     }
-    detailLeftVideoList(time = 1e3, sel = ".video-page-card-small") {
-      timeoutSelectorAll(sel, (videoList) => {
-        var _a;
-        for (let videoDom of videoList) {
+    detailLeftVideoList(sel = ".video-page-card-small") {
+      const scanVideoList = (sc) => {
+        Array.from(querySelectorAll(sel)).forEach((videoDom) => {
+          var _a;
           const isMark = !!videoDom.getAttribute("mark");
+          const isAdd = !!videoDom.querySelector(".m-span-text");
+          if (isMark && isAdd && !sc) {
+            return;
+          }
           videoDom.setAttribute("mark", true);
           const playinfo = querySelector(videoDom, ".playinfo");
           const link = querySelector(videoDom, ".upname a");
@@ -2666,32 +2635,33 @@ ${root$1}
           const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
           if (this.userIsExist(id) || this.userIsExist(name)) {
             removeDOM(videoDom, true);
-          } else if (!isMark && id && name) {
+            log$1("up主", name, "已经被移除！UUID=>", id);
+          } else if (!isMark) {
             const span = createElement("span");
             span.classList = "m-span-text";
             addEventListener(span, "click", () => {
-              removeDOM(videoDom, true);
               this.addUser(id, name);
-              this.detailLeftVideoList(0);
+              scanVideoList(true);
             });
             appendChild(playinfo, span);
           }
-        }
-      }, time);
+        });
+      };
+      loopDo(() => {
+        scanVideoList(false);
+      }, 10, 1e3);
+      setTimeout(() => {
+        let button = querySelector(".rec-footer");
+        addEventListener(button, "click", () => {
+          scanVideoList(false);
+        });
+      }, 5e3);
     }
     async detail() {
       var _a, _b;
       if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
-        loopDo(() => {
-          this.detailLeftVideoList(100, ".video-page-operator-card-small");
-          this.detailLeftVideoList();
-        }, 1e3, 1e7);
-        const nextBtn = querySelector(".rec-footer");
-        addEventListener(nextBtn, "click", () => {
-          loopDo(() => {
-            this.detailLeftVideoList(0);
-          }, 1e3, 1e7);
-        });
+        this.detailLeftVideoList(".video-page-operator-card-small");
+        this.detailLeftVideoList();
       }
       if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
         this.isFullScreen();
@@ -5418,9 +5388,6 @@ ${css$2}
     }
     if (window == null ? void 0 : window.LivePluginLoadingComplate) {
       return;
-    }
-    if (!is_localhost) {
-      console.clear();
     }
     customElements.define("live-plugin-element", LivePluginElement);
     try {

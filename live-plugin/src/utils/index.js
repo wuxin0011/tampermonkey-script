@@ -64,10 +64,12 @@ export const removeDOM = (element, realRemove = false) => {
         if (!(element instanceof HTMLElement)) {
             element = querySelector(element)
         }
+        console.log('remove dom run ...', element, 'isRemove?', realRemove)
         if (element instanceof HTMLElement) {
-            element.style.display = 'none'
             if (realRemove) {
                 element.remove()
+            } else {
+                element.style.display = 'none'
             }
         }
     } catch (e) {
@@ -77,51 +79,6 @@ export const removeDOM = (element, realRemove = false) => {
 export const s2d = (string) => new DOMParser().parseFromString(string, 'text/html').body.childNodes[0]
 
 export const isArray = (a) => a && a?.length > 0
-
-
-export const timeoutSelectorAll = (selector, callback, time = 0) => {
-    if (typeof callback != 'function') {
-        warn('callback should is a function!')
-        return;
-    }
-    setTimeout(() => {
-        const nodes = querySelectorAll(selector)
-        if (isArray(nodes)) {
-            callback(nodes)
-        }
-    }, time)
-}
-
-export const timeoutSelectorAllOne = (selector, callback, time = 0) => {
-    if (typeof callback != 'function') {
-        warn('callback should is a function!')
-        return;
-    }
-    setTimeout(() => {
-        const nodes = querySelectorAll(selector)
-        if (isArray(nodes)) {
-            for (let node of nodes) {
-                callback(node)
-            }
-        }
-    }, time)
-}
-
-export const timeoutSelector = (selector, callback, time = 0) => {
-    if (typeof callback != 'function') {
-        warn('callback should is a function!')
-        return;
-    }
-    setTimeout(() => {
-        const logoNode = querySelector(selector)
-        if (logoNode) {
-            callback(logoNode)
-        }
-    }, time)
-}
-
-export const onload = (callback) => window.onload = callback
-
 
 export const getLocalStore = (k, type = Array.name, isParse = true) => {
     let obj = wls.getItem(k);
@@ -147,7 +104,7 @@ export const getLocalStore = (k, type = Array.name, isParse = true) => {
 }
 
 export const addLocalStore = (k, v = [], type = Array.name, isParse = true) => (type === Object.name || type === Array.name) && isParse ? wls.setItem(k, JSON.stringify(v)) : wls.setItem(k, v)
-export const removeVideo = (selector, time1 = 100, maxCount = 1000) => {
+export const removeVideo = (selector, time1 = 1000, maxCount = 10) => {
     let count = 0
     let video_timer = setInterval(() => {
         try {
@@ -165,14 +122,28 @@ export const removeVideo = (selector, time1 = 100, maxCount = 1000) => {
     }, time1)
 }
 
-export const throttle = (wait, func, ...args) => {
-    let pre = Date.now();
-    return () => {
-        if (Date.now() - pre > wait) {
-            func(...args)
-            pre = Date.now()
+export const throttle = (wait, func) => {
+    let timerId = null;
+    let lastArgs = null;
+    const throttled = (...args) => {
+        lastArgs = args;
+
+        if (!timerId) {
+            timerId = setTimeout(() => {
+                func(...lastArgs);
+                timerId = null;
+                lastArgs = null;
+            }, wait);
         }
-    }
+    };
+
+    throttled.cancel = () => {
+        clearTimeout(timerId);
+        timerId = null;
+        lastArgs = null;
+    };
+
+    return throttled;
 }
 
 export const intervalRemoveElement = (selectors, time = 160, maxCount = 1000) => {
@@ -222,9 +193,8 @@ export const findMark = (selector, callback, count = 100, wait = 100) => {
         try {
             let element = selector instanceof HTMLElement ? selector : querySelector(selector)
             if (element && element instanceof HTMLElement) {
-                let isMark = element.getAttribute('mark')
-                if (!isMark) {
-                    element.setAttribute('mark', true)
+                if (!element.mark) {
+                    element.mark = true
                     callback(element)
                 } else {
                     clearInterval(timer)

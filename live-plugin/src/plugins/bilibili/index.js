@@ -4,17 +4,16 @@ import {
     appendChild,
     createElement,
     findMark,
+    getLocalStore,
     insertChild,
     local_url,
     loopDo,
     querySelector,
     removeDOM,
-    wls,
-    getLocalStore,
-    timeoutSelectorAll
+    wls
 } from '@/utils';
 import Logo from '@/utils/logo';
-import { log, warn } from "../../utils";
+import { log, querySelectorAll, throttle, warn } from "../../utils";
 import LivePlugin from '../live';
 
 
@@ -107,71 +106,98 @@ export default class BiliBili extends LivePlugin {
 
     // 添加删除按钮
     addDeleteRoomButton(time = 1000) {
-        loopDo(() => {
-            timeoutSelectorAll('.feed-card', (divs) => {
-                for (let feed of divs) {
+        let that = this
+
+
+        const scan = () => {
+            const scanVideo = (sc = true) => {
+                Array.from(querySelectorAll('.feed-card')).forEach(feed => {
                     const isMark = !!querySelector(feed, '.m-span-text')
+                    if (feed.ok && isMark && sc) {
+                        return;
+                    }
+                    let item = querySelector(feed, 'div.bili-video-card__info--bottom')
+                    const name = querySelector(item, 'span.bili-video-card__info--author')?.textContent
+                    const href = querySelector(item, '.bili-video-card__info--owner')?.href
+                    const id = that.getBilibiliRoomId(href)
                     if (!isMark) {
-                        let item = querySelector(feed, 'div.bili-video-card__info--bottom')
-                        const name = querySelector(item, 'span.bili-video-card__info--author')?.textContent
-                        const href = querySelector(item, '.bili-video-card__info--owner')?.href
-                        const id = this.getBilibiliRoomId(href)
-                        if (this.userIsExist(id) || this.userIsExist(name)) {
-                            removeDOM(feed, true)
-                        } else if (id && name) {
-                            this.createSpan(feed, item, id, name)
-                        }
+                        createSpan(feed, item, id, name)
+                    }
+                    if (this.userIsExist(id) || this.userIsExist(name)) {
+                        removeDOM(feed, true)
+                        return;
                     }
 
-                }
+                    feed.ok = true
+                })
 
-            }, time)
-        }, 10, 500)
-
-
-
-        loopDo(() => {
-            timeoutSelectorAll('.bili-video-card', (divs) => {
-                for (let feed of divs) {
+                Array.from(querySelectorAll('.bili-video-card')).forEach(feed => {
                     const isMark = !!querySelector(feed, '.m-span-text')
-                    if (!isMark) {
-                        let item = querySelector(feed, 'div.bili-video-card__info--bottom')
-                        let isLive = false;
-                        if (!item) {
-                            isLive = true;
-                            item = querySelector(feed, '.bili-live-card__info--text')
-                        }
-                        const name = !isLive ? querySelector(item, 'span.bili-video-card__info--author')?.textContent : querySelector(item, 'a.bili-live-card__info--uname span')?.textContent
-                        const href = !isLive ? querySelector(item, '.bili-video-card__info--owner')?.href : querySelector(item, 'a.bili-live-card__info--uname')?.href
-                        const id = this.getBilibiliRoomId(href)
-                        if (this.userIsExist(name) || this.userIsExist(id)) {
-                            removeDOM(feed, true)
-                        } else if (id && name) {
-                            this.createSpan(feed, item, id, name)
-                        }
+                    if (feed.ok && isMark && sc) {
+                        return;
                     }
-
+                    let item = querySelector(feed, '.bili-video-card__info--bottom')
+                    let isLive = false;
+                    if (!item) {
+                        isLive = true;
+                        item = querySelector(feed, '.bili-live-card__info--text')
+                    }
+                    const name = !isLive ? querySelector(item, 'span.bili-video-card__info--author')?.textContent : querySelector(item, 'a.bili-live-card__info--uname span')?.textContent
+                    const href = !isLive ? querySelector(item, '.bili-video-card__info--owner')?.href : querySelector(item, 'a.bili-live-card__info--uname')?.href
+                    const id = this.getBilibiliRoomId(href)
+                    if (!isMark) {
+                        createSpan(feed, item, id, name)
+                    }
+                    if (this.userIsExist(name) || this.userIsExist(id)) {
+                        removeDOM(feed, true)
+                    }
+                    feed.ok = true
+                })
+            }
+            const createSpan = (container, place, id, name = id, message = '确认屏蔽up主 ', remove = true) => {
+                if (!container || !place || !id || !name) {
+                    return;
                 }
+                if (!!container.querySelector('.m-span-text')) {
+                    return;
+                }
+                const span = createElement('span')
+                span.classList = 'm-span-text'
+                addEventListener(span, 'click', (e) => {
+                    e.preventDefault()
+                    if (remove) {
+                        removeDOM(container, true)
+                    }
+                    that.addUser(id, name)
+                    scanVideo(false)
+                })
+                appendChild(place, span)
+            }
+            loopDo(() => {
+                scanVideo()
+            }, 10, 500)
 
-            }, 0)
-        }, 100000, 500);
-
-
+        }
+        scan()
+        window.addEventListener('scroll', throttle(500, scan))
+        findMark('.feed-roll-btn .roll-btn', (btn) => {
+            addEventListener(btn, 'click', () => {
+                scan()
+            })
+        })
     }
 
 
     clickLogoShowContainer() {
         let that = this
         super.clickLogoShowContainer();
-        // left-entry__title
-        window.onscroll = () => {
+        window.addEventListener('scroll', () => {
             if (parseInt(window.scrollY) > 90) {
                 operationLogo()
             } else {
                 super.clickLogoShowContainer()
             }
-        }
-
+        })
         const operationLogo = () => {
             if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
                 return;
@@ -190,26 +216,21 @@ export default class BiliBili extends LivePlugin {
 
 
     common() {
-        let that = this
-        that.addDeleteRoomButton(1000)
-        // 切换时候需要重新执行
-        setTimeout(() => {
-            const refreshButton = querySelector('.feed-roll-btn .primary-btn')
-            addEventListener(refreshButton, 'click', () => {
-                that.addDeleteRoomButton(200)
-            })
-        }, 3000)
-
+        this.addDeleteRoomButton()
     }
 
     index() {
         // TODO index
     }
 
-    detailLeftVideoList(time = 1000, sel = '.video-page-card-small') {
-        timeoutSelectorAll(sel, (videoList) => {
-            for (let videoDom of videoList) {
+    detailLeftVideoList(sel = '.video-page-card-small') {
+        const scanVideoList = (sc) => {
+            Array.from(querySelectorAll(sel)).forEach(videoDom => {
                 const isMark = !!videoDom.getAttribute('mark')
+                const isAdd = !!videoDom.querySelector('.m-span-text')
+                if (isMark && isAdd && !sc) {
+                    return;
+                }
                 // 添加标记 下次不用添加了
                 videoDom.setAttribute('mark', true)
                 const playinfo = querySelector(videoDom, '.playinfo')
@@ -218,36 +239,36 @@ export default class BiliBili extends LivePlugin {
                 const name = querySelector(videoDom, '.upname .name')?.textContent
                 if (this.userIsExist(id) || this.userIsExist(name)) {
                     removeDOM(videoDom, true)
-                } else if (!isMark && id && name) {
+                    log('up主', name, '已经被移除！UUID=>', id)
+                } else if (!isMark) {
                     const span = createElement('span')
                     span.classList = 'm-span-text'
                     addEventListener(span, 'click', () => {
-                        removeDOM(videoDom, true)
                         this.addUser(id, name)
                         // 遍历一遍 删除所有相关视频
-                        this.detailLeftVideoList(0)
+                        scanVideoList(true)
                     })
                     appendChild(playinfo, span)
                 }
-            }
-        }, time)
+            })
+        }
+
+        loopDo(() => {
+            scanVideoList(false)
+        }, 10, 1000)
+        setTimeout(() => {
+            let button = querySelector('.rec-footer')
+            addEventListener(button, 'click', () => {
+                scanVideoList(false)
+            })
+        }, 5000);
+
     }
 
     async detail() {
         if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
-            loopDo(() => {
-                this.detailLeftVideoList(100, '.video-page-operator-card-small')
-                this.detailLeftVideoList()
-            }, 1000, 10000000)
-
-
-            const nextBtn = querySelector('.rec-footer')
-            addEventListener(nextBtn, 'click', () => {
-                loopDo(() => {
-                    this.detailLeftVideoList(0)
-                }, 1000, 10000000)
-
-            })
+            this.detailLeftVideoList('.video-page-operator-card-small')
+            this.detailLeftVideoList()
         }
 
         // TODO MORE

@@ -52,7 +52,8 @@ import iconLogo from '@/utils/logo';
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
- */export default class LivePlugin {
+ */
+export default class LivePlugin {
     constructor() {
         this.baseUrl = "/"  // 首页
         this.key = 'key'  // 存放内容信息
@@ -363,7 +364,6 @@ import iconLogo from '@/utils/logo';
             const file = uploadButton.files[0] || null
             uploadImage(file, (base64) => {
                 addLocalStore(that.bg_key, base64, String.name, false)
-                console.log('result')
                 that.settingBackgroundImage(base64)
             })
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
@@ -1076,22 +1076,6 @@ import iconLogo from '@/utils/logo';
     }
 
 
-    createSpan(container, place, id, name = id, message = '确认屏蔽up主 ', remove = true) {
-        if (!container || !place || !id || !name) {
-            error('createSpan 参数不全！')
-            return;
-        }
-        const span = createElement('span')
-        span.classList = 'm-span-text'
-        appendChild(place, span)
-        addEventListener(span, 'click', () => {
-            if (remove) {
-                removeDOM(container, true)
-            }
-            this.addUser(id, name)
-            this.removeRoom(local_url)
-        })
-    }
 
 
     addEven() {
