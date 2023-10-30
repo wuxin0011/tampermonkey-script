@@ -178,26 +178,34 @@ export default class TriggerLive extends LivePlugin {
     removeRoomByClickRoomName() {
         const that = this
         const addClick = () => {
+            console.log('win scroll ....')
             Array.from(querySelectorAll('.game-live-item')).forEach(li => {
+                if (!(li instanceof HTMLElement)) {
+                    return;
+                }
                 if (li.mark) {
                     return;
                 }
-                li.mark = 'mark'
+
                 const a = querySelector(li, 'a')
-                const url = a.href
+                const roomId = that.getRoomIdByUrl(a.href)
                 const user = querySelector(li, '.txt i')
                 const name = user.textContent || ''
+                console.log(that.users, name, roomId)
                 user.title = `点击屏蔽主播【${name}】`
-                addEventListener(user, 'click', () => {
-                    // if (confirm(`确认禁用 ${name}？`)) {
-
-                    // }
-                    that.addUser(that.getRoomIdByUrl(url), name);
-                    removeDOM(li);
-                })
-                if (that.isRemove(url)) {
-                    removeDOM(li)
+                if (that.userIsExist(roomId) || that.userIsExist(name)) {
+                    console.log(roomId, name)
                 }
+                li.setAttribute('mark', true)
+                if (that.userIsExist(roomId) || that.userIsExist(name)) {
+                    removeDOM(li, true)
+                    return;
+                }
+                addEventListener(user, 'click', () => {
+                    console.log('add user name', roomId, name)
+                    that.addUser(roomId, name);
+                    removeDOM(li, true);
+                })
             })
         }
         addClick()

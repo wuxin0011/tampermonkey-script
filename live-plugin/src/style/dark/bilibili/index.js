@@ -10,6 +10,7 @@ import space from './space'
 import t from './t'
 import video from './video'
 import  bangumi from './bangumi'
+import  account from './account'
 
 
 const router =
@@ -24,6 +25,7 @@ ${guochuang}
 ${douga}
 ${read}
 ${bangumi}
+${account}
 `
 
 const dark =

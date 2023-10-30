@@ -98,13 +98,14 @@ export default class LivePlugin {
 
     // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
     init() {
+        this.users = getLocalStore(this.key, Array.name, true) || []
         if (!this.removeRoom()) {
-            this.common()
+            this.create_container()
             this.detail()
             this.index()
             this.category()
-            this.create_container()
             this.clickLogoShowContainer()
+            this.common()
             this.addEven()
             loopDo(() => {
                 this.isShowLeftMenu()
@@ -214,7 +215,7 @@ export default class LivePlugin {
     create_container() {
         // 初始化房间号
         let that = this
-        that.users = getLocalStore(that.key, Array.name) || []
+
         let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name) // 是否显示背景 默认显示
         let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name) // 左侧菜单默认不显示
         let isShowFullScreen = wls.getItem(this.full_screen_is_first_key) === null ? false : getLocalStore(that.full_screen_key, Boolean.name) // 是否自动全屏 默认不自动

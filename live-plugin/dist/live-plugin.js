@@ -1189,13 +1189,14 @@ ${root$1}
     }
     // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
     init() {
+      this.users = getLocalStore(this.key, Array.name, true) || [];
       if (!this.removeRoom()) {
-        this.common();
+        this.create_container();
         this.detail();
         this.index();
         this.category();
-        this.create_container();
         this.clickLogoShowContainer();
+        this.common();
         this.addEven();
         loopDo(() => {
           this.isShowLeftMenu();
@@ -1281,7 +1282,6 @@ ${root$1}
      */
     create_container() {
       let that = this;
-      that.users = getLocalStore(that.key, Array.name) || [];
       let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name);
       let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name);
       let isShowFullScreen = wls.getItem(this.full_screen_is_first_key) === null ? false : getLocalStore(that.full_screen_key, Boolean.name);
@@ -2154,23 +2154,33 @@ ${root$1}
     removeRoomByClickRoomName() {
       const that = this;
       const addClick = () => {
+        console.log("win scroll ....");
         Array.from(querySelectorAll(".game-live-item")).forEach((li) => {
+          if (!(li instanceof HTMLElement)) {
+            return;
+          }
           if (li.mark) {
             return;
           }
-          li.mark = "mark";
           const a = querySelector(li, "a");
-          const url = a.href;
+          const roomId = that.getRoomIdByUrl(a.href);
           const user = querySelector(li, ".txt i");
           const name = user.textContent || "";
+          console.log(that.users, name, roomId);
           user.title = `点击屏蔽主播【${name}】`;
-          addEventListener(user, "click", () => {
-            that.addUser(that.getRoomIdByUrl(url), name);
-            removeDOM(li);
-          });
-          if (that.isRemove(url)) {
-            removeDOM(li);
+          if (that.userIsExist(roomId) || that.userIsExist(name)) {
+            console.log(roomId, name);
           }
+          li.setAttribute("mark", true);
+          if (that.userIsExist(roomId) || that.userIsExist(name)) {
+            removeDOM(li, true);
+            return;
+          }
+          addEventListener(user, "click", () => {
+            console.log("add user name", roomId, name);
+            that.addUser(roomId, name);
+            removeDOM(li, true);
+          });
         });
       };
       addClick();
@@ -4997,6 +5007,9 @@ html {
 .dark #app .container .textarea .textarea-warp textarea[data-v-67c4001b],.dark #app .container .textarea .textarea-warp textarea,
 .dark #app .submit[data-v-67c4001b],.dark #app .submit,
 .dark .coin-operated-m-exp,
+.dark .video-ai-assistant.video-toolbar-right-item.toolbar-right-ai,
+.dark .ai-summary-popup,
+.dark .ai-summary-popup *,
 .dark .mini-header {
   background:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
@@ -5188,6 +5201,7 @@ html {
 .dark .collection-m-exp .content .group-list .add-group .add-btn,
 .dark .collection-m-exp .bottom .btn.disable,
 .dark .collection-m-exp .bottom .btn,
+.dark .video-ai-assistant-badge,
 .dark .fixed-sidenav-storage .fixed-sidenav-storage-item[data-v-5d529e3e],.dark .fixed-sidenav-storage .fixed-sidenav-storage-item,
 .dark .video-tag-container .tag-panel .tag .show-more-btn[data-v-934a50f8],.dark .video-tag-container .tag-panel .tag .show-more-btn,
 .dark .video-tag-container .tag-panel .tag-link {
@@ -5281,6 +5295,10 @@ html {
 
 
 ` : ``;
+  const isAccaout = window.location.href.indexOf("https://www.bilibili.com/account") !== -1 || window.location.href.indexOf("https://www.bilibili.com/v/customer-service") !== -1;
+  const dark$1 = isAccaout ? `
+${commonDark}
+` : ``;
   const router = `
 ${home}
 ${video}
@@ -5292,6 +5310,7 @@ ${guochuang}
 ${douga}
 ${read}
 ${bangumiCss}
+${dark$1}
 `;
   const dark = `
 ${common}

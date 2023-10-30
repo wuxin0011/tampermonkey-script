@@ -38,6 +38,9 @@ html {
 .dark #app .container .textarea .textarea-warp textarea[data-v-67c4001b],.dark #app .container .textarea .textarea-warp textarea,
 .dark #app .submit[data-v-67c4001b],.dark #app .submit,
 .dark .coin-operated-m-exp,
+.dark .video-ai-assistant.video-toolbar-right-item.toolbar-right-ai,
+.dark .ai-summary-popup,
+.dark .ai-summary-popup *,
 .dark .mini-header {
   background:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
@@ -229,6 +232,7 @@ html {
 .dark .collection-m-exp .content .group-list .add-group .add-btn,
 .dark .collection-m-exp .bottom .btn.disable,
 .dark .collection-m-exp .bottom .btn,
+.dark .video-ai-assistant-badge,
 .dark .fixed-sidenav-storage .fixed-sidenav-storage-item[data-v-5d529e3e],.dark .fixed-sidenav-storage .fixed-sidenav-storage-item,
 .dark .video-tag-container .tag-panel .tag .show-more-btn[data-v-934a50f8],.dark .video-tag-container .tag-panel .tag .show-more-btn,
 .dark .video-tag-container .tag-panel .tag-link {
