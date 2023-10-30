@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.6
+// @version      4.1.7
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
