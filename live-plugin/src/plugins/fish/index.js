@@ -47,17 +47,27 @@ export default class FishLive extends LivePlugin {
             return;
         }
         window.scroll(0, 0)
+
+        // 屏蔽游戏广告链接
+        findMark('.layout-Section.layout-Slide-banner', (a) => {
+            a.href = 'javascript:;void(0)'
+            addEventListener(a, 'click', (e) => e.preventDefault())
+        })
         // 移除直播
-        removeVideo('.layout-Slide-player video')
+        // removeVideo('.layout-Slide-player video')
         // 获取暂停button
-        const vbox = querySelector('#room-html5-player');
-        if (vbox) {
-            Array.from(querySelectorAll(vbox, 'div')).from(div => {
-                if (div?.title === '暂停') {
-                    div.click()
-                }
-            })
-        }
+
+        // 暂停默认播放
+        loopDo((timer) => {
+            console.log('find look')
+            const pause = querySelector('#room-html5-player #__controlbar [class^=pause]')
+            if (pause) {
+                pause.click()
+                clearInterval(timer)
+            }
+        }, 50, 500)
+
+
         let topBtn = querySelector('.layout-Main .ToTopBtn')
         if (topBtn) {
             topBtn.style.display = 'block'
@@ -67,6 +77,9 @@ export default class FishLive extends LivePlugin {
             Array.from(querySelectorAll('li.layout-List-item')).forEach(li => {
                 const user = querySelector(li, '.DyCover-user')
                 const a = querySelector(li, '.DyCover')
+                if (!a) {
+                    return;
+                }
                 const name = user?.textContent || ''
                 if (that.isRemove(a?.href) || that.userIsExist(name)) {
                     removeDOM(li)
@@ -200,8 +213,9 @@ export default class FishLive extends LivePlugin {
         // 不带有轮播图
         if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
             findMark('.roomSmallPlayerFloatLayout-closeBtn', (closeBtn) => {
+                log('自动点击小屏按钮')
                 closeBtn.click()
-            }, 100, 500)
+            }, 30, 500)
             // 对于恶意广告要彻底清除！！！
             let ads = [
                 "#player-above-controller+div"
@@ -213,6 +227,14 @@ export default class FishLive extends LivePlugin {
 
         this.isFullScreen()
         this.isAutoMaxVideoPro()
+
+        // 默认全部选择
+        findMark('.ChatToolBar .ShieldTool-enter .ShieldTool-listItem', (item) => {
+            if (item.className.indexOf('is-noChecked') !== -1) {
+                item.click()
+                log('自动点击了弹幕礼物显示工具')
+            }
+        }, 100, 1000)
     }
 
     // 通过房间号获取直播间name

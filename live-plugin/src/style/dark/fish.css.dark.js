@@ -46,6 +46,7 @@ ${loadingLazy}
 }
 
 .dark .wm-general-bgblur,
+.dark .layout-Slide-bannerInner,
 .dark  body,.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,

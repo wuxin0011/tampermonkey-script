@@ -111,8 +111,6 @@ export default class LivePlugin {
                 this.isShowLeftMenu()
                 this.isShowGift()
             }, 30, 1000)
-
-
         }
         this.settingBackgroundImage()
     }
@@ -805,6 +803,14 @@ export default class LivePlugin {
             // 初始化操作面板
             this.create_container()
         })
+        // 暂停视频
+        loopDo((timer) => {
+            const pause = querySelector('#room-html5-player [class^=pause]')
+            if (pause) {
+                pause.click()
+                clearInterval(timer)
+            }
+        }, 20, 1000)
 
     }
 
@@ -841,7 +847,6 @@ export default class LivePlugin {
             return;
         }
         let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name) // 是否显示背景 默认显示
-        log('是否添加背景=>', isShowBg ? '显示' : "关闭", wls.getItem(this.bg_is_first_key) === null ? 'null' : wls.getItem(this.bg_is_first_key))
         if (isShowBg) {
             url = !!url ? url : (wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image)
             container.style.backgroundSize = "cover"
@@ -1058,20 +1063,13 @@ export default class LivePlugin {
             return
         }
         findMark(that.header_logo, (a) => {
-            if (!(a instanceof HTMLAnchorElement)) {
-                return;
-            }
             a.href = 'javascript:;void(0)';
             a.title = '点击Logo,显示插件配置'
+            a.href = 'javascript:;void(0)';
             addEventListener(a, 'click', (e) => {
                 e.preventDefault()
-                log('click header logo !')
                 that.isShowContainer()
             })
-            loopDo(() => {
-                a = querySelector(that.header_logo)
-                a.href = 'javascript:;void(0)';
-            }, 5, 1000)
             log('logo点击按钮装置完毕！')
         }, 5, 500)
     }

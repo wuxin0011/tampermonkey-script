@@ -47,13 +47,14 @@ export default class TriggerLive extends LivePlugin {
             if (banner_close) {
                 banner_close.click();
             }
-            loopDo((timer) => {
-                let pauseBtn = querySelector('.player-pause-btn')
-                if (pauseBtn) {
-                    pauseBtn.click()
-                    clearInterval(timer)
-                }
-            }, 10, 300)
+            this.removeRoomByClickRoomName()
+            // loopDo((timer) => {
+            //     let pauseBtn = querySelector('.player-pause-btn')
+            //     if (pauseBtn) {
+            //         pauseBtn.click()
+            //         clearInterval(timer)
+            //     }
+            // }, 10, 300)
 
         }
 
@@ -63,6 +64,7 @@ export default class TriggerLive extends LivePlugin {
     category() {
         let that = this
         if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
+            this.removeRoomByClickRoomName()
             Array.from(querySelectorAll('.live-list-nav dd')).forEach(node => {
                 addEventListener(node, 'click', () => {
                     setTimeout(() => {
@@ -75,7 +77,7 @@ export default class TriggerLive extends LivePlugin {
 
     // 公共部分操作
     common() {
-        this.removeRoomByClickRoomName()
+
         this.autoHideMenu()
         this.updateHeaderIcon()
 
@@ -86,28 +88,18 @@ export default class TriggerLive extends LivePlugin {
         loopDo((timer) => {
             Array.from(querySelectorAll('#duya-header-logo img')).forEach(img => {
                 if (img) {
+                    img.src = 'https://a.msstatic.com/huya/main3/static/img/logo.png'
                     clearInterval(timer)
                 }
-                img.src = 'https://a.msstatic.com/huya/main3/static/img/logo.png'
             })
-        })
+        }, 10, 1000)
 
-        loopDo((timer) => {
-            const icon = querySelector('[class^=NavItem] [class^=NavItemHd] i[class*=fav]')
-            if (!icon) {
-                return;
-            }
+        findMark('[class^=NavItem] [class^=NavItemHd] i[class*=fav]', (icon) => {
             icon.style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)'
-            clearInterval(timer)
-        })
-        loopDo((timer) => {
-            const icon = querySelector('[class^=NavItem] [class^=NavItemHd] i[class*=history]')
-            if (!icon) {
-                return;
-            }
+        }, 10, 1000)
+        findMark('[class^=NavItem] [class^=NavItemHd] i[class*=history]', (icon) => {
             icon.style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)'
-            clearInterval(timer)
-        })
+        }, 10, 1000)
     }
 
 
@@ -134,6 +126,15 @@ export default class TriggerLive extends LivePlugin {
             intervalRemoveElement(ads, 500, 20)
             this.isFullScreen()
             this.isAutoMaxVideoPro()
+
+            // 礼物工具
+            // 默认全部选择
+            findMark('#J-room-chat-shield', (item) => {
+                if (item.className.indexOf("shield-on") === -1) {
+                    item.click()
+                    log('自动点击了弹幕礼物显示工具')
+                }
+            }, 100, 1000)
         }
     }
 
@@ -186,16 +187,14 @@ export default class TriggerLive extends LivePlugin {
                 if (li.mark) {
                     return;
                 }
-
                 const a = querySelector(li, 'a')
+                if (!a) {
+                    return
+                }
                 const roomId = that.getRoomIdByUrl(a.href)
                 const user = querySelector(li, '.txt i')
                 const name = user.textContent || ''
-                console.log(that.users, name, roomId)
                 user.title = `点击屏蔽主播【${name}】`
-                if (that.userIsExist(roomId) || that.userIsExist(name)) {
-                    console.log(roomId, name)
-                }
                 li.setAttribute('mark', true)
                 if (that.userIsExist(roomId) || that.userIsExist(name)) {
                     removeDOM(li, true)
@@ -209,7 +208,10 @@ export default class TriggerLive extends LivePlugin {
             })
         }
         addClick()
-        window.addEventListener('scroll', throttle(1000, addClick))
+        loopDo(() => {
+            addClick()
+        }, 5, 5000)
+        // window.addEventListener('scroll', throttle(1000, addClick))
     }
 
     autoHideMenu() {

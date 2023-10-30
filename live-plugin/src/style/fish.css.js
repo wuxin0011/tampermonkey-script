@@ -1,6 +1,6 @@
-import {is_douyu} from "../utils"
+import { is_douyu } from "../utils"
 import dark from './dark/fish.css.dark'
-
+// .layout-Section.layout-Slide .layout-Slide-player,
 const css = is_douyu ? `
 
 .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
@@ -10,8 +10,8 @@ const css = is_douyu ? `
   color:rgb(255, 135, 0) !important;
 }
 
-.layout-Section.layout-Slide .layout-Slide-player,
-.layout-Slide-bannerInner,
+
+
 .Header-broadcast-wrap,
 #lazyModule3,
 #lazyModule4,
@@ -58,9 +58,6 @@ li.Header-menu-link:nth-child(3),
   display:inline-block !important;
 }
 
-.layout-Player-aside .layout-Player-chat,.layout-Player-aside .layout-Player-chat .ChatToolBar {
-display:block !important;
-}
 
 
 .Barrage-main  .UserLevel,
@@ -147,6 +144,7 @@ background-color: #f2f5f6 !important;
 .layout-Player-main #js-player-toolbar {
    display:none;
 }
+
 
 
 

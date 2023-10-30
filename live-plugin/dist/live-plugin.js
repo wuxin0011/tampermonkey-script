@@ -81,7 +81,6 @@
       if (!(element instanceof HTMLElement)) {
         element = querySelector(element);
       }
-      console.log("remove dom run ...", element, "isRemove?", realRemove);
       if (element instanceof HTMLElement) {
         if (realRemove) {
           element.remove();
@@ -1765,6 +1764,13 @@ ${root$1}
         this.m_container = null;
         this.create_container();
       });
+      loopDo((timer) => {
+        const pause = querySelector("#room-html5-player [class^=pause]");
+        if (pause) {
+          pause.click();
+          clearInterval(timer);
+        }
+      }, 20, 1e3);
     }
     /**
      * 判断链接是否应该被删除
@@ -1797,7 +1803,6 @@ ${root$1}
         return;
       }
       let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name);
-      log$1("是否添加背景=>", isShowBg ? "显示" : "关闭", wls.getItem(this.bg_is_first_key) === null ? "null" : wls.getItem(this.bg_is_first_key));
       if (isShowBg) {
         url = !!url ? url : wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image;
         container.style.backgroundSize = "cover";
@@ -1988,20 +1993,13 @@ ${root$1}
         return;
       }
       findMark(that.header_logo, (a) => {
-        if (!(a instanceof HTMLAnchorElement)) {
-          return;
-        }
         a.href = "javascript:;void(0)";
         a.title = "点击Logo,显示插件配置";
+        a.href = "javascript:;void(0)";
         addEventListener(a, "click", (e) => {
           e.preventDefault();
-          log$1("click header logo !");
           that.isShowContainer();
         });
-        loopDo(() => {
-          a = querySelector(that.header_logo);
-          a.href = "javascript:;void(0)";
-        }, 5, 1e3);
         log$1("logo点击按钮装置完毕！");
       }, 5, 500);
     }
@@ -2040,19 +2038,14 @@ ${root$1}
         if (banner_close) {
           banner_close.click();
         }
-        loopDo((timer) => {
-          let pauseBtn = querySelector(".player-pause-btn");
-          if (pauseBtn) {
-            pauseBtn.click();
-            clearInterval(timer);
-          }
-        }, 10, 300);
+        this.removeRoomByClickRoomName();
       }
     }
     // 分类页操作
     category() {
       let that = this;
       if (new RegExp(/^https:\/\/.*\.huya\.((com)|(cn))\/g(\/.*)$/).test(local_url)) {
+        this.removeRoomByClickRoomName();
         Array.from(querySelectorAll(".live-list-nav dd")).forEach((node) => {
           addEventListener(node, "click", () => {
             setTimeout(() => {
@@ -2064,7 +2057,6 @@ ${root$1}
     }
     // 公共部分操作
     common() {
-      this.removeRoomByClickRoomName();
       this.autoHideMenu();
       this.updateHeaderIcon();
     }
@@ -2073,27 +2065,17 @@ ${root$1}
       loopDo((timer) => {
         Array.from(querySelectorAll("#duya-header-logo img")).forEach((img) => {
           if (img) {
+            img.src = "https://a.msstatic.com/huya/main3/static/img/logo.png";
             clearInterval(timer);
           }
-          img.src = "https://a.msstatic.com/huya/main3/static/img/logo.png";
         });
-      });
-      loopDo((timer) => {
-        const icon = querySelector("[class^=NavItem] [class^=NavItemHd] i[class*=fav]");
-        if (!icon) {
-          return;
-        }
+      }, 10, 1e3);
+      findMark("[class^=NavItem] [class^=NavItemHd] i[class*=fav]", (icon) => {
         icon.style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)";
-        clearInterval(timer);
-      });
-      loopDo((timer) => {
-        const icon = querySelector("[class^=NavItem] [class^=NavItemHd] i[class*=history]");
-        if (!icon) {
-          return;
-        }
+      }, 10, 1e3);
+      findMark("[class^=NavItem] [class^=NavItemHd] i[class*=history]", (icon) => {
         icon.style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)";
-        clearInterval(timer);
-      });
+      }, 10, 1e3);
     }
     // 详情操作
     detail() {
@@ -2115,6 +2097,12 @@ ${root$1}
         intervalRemoveElement(ads, 500, 20);
         this.isFullScreen();
         this.isAutoMaxVideoPro();
+        findMark("#J-room-chat-shield", (item) => {
+          if (item.className.indexOf("shield-on") === -1) {
+            item.click();
+            log("自动点击了弹幕礼物显示工具");
+          }
+        }, 100, 1e3);
       }
     }
     // 通过地址获取房间号
@@ -2163,14 +2151,13 @@ ${root$1}
             return;
           }
           const a = querySelector(li, "a");
+          if (!a) {
+            return;
+          }
           const roomId = that.getRoomIdByUrl(a.href);
           const user = querySelector(li, ".txt i");
           const name = user.textContent || "";
-          console.log(that.users, name, roomId);
           user.title = `点击屏蔽主播【${name}】`;
-          if (that.userIsExist(roomId) || that.userIsExist(name)) {
-            console.log(roomId, name);
-          }
           li.setAttribute("mark", true);
           if (that.userIsExist(roomId) || that.userIsExist(name)) {
             removeDOM(li, true);
@@ -2184,7 +2171,9 @@ ${root$1}
         });
       };
       addClick();
-      window.addEventListener("scroll", throttle(1e3, addClick));
+      loopDo(() => {
+        addClick();
+      }, 5, 5e3);
     }
     autoHideMenu() {
       const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
@@ -2238,15 +2227,18 @@ ${root$1}
         return;
       }
       window.scroll(0, 0);
-      removeVideo(".layout-Slide-player video");
-      const vbox = querySelector("#room-html5-player");
-      if (vbox) {
-        Array.from(querySelectorAll(vbox, "div")).from((div) => {
-          if ((div == null ? void 0 : div.title) === "暂停") {
-            div.click();
-          }
-        });
-      }
+      findMark(".layout-Section.layout-Slide-banner", (a) => {
+        a.href = "javascript:;void(0)";
+        addEventListener(a, "click", (e) => e.preventDefault());
+      });
+      loopDo((timer) => {
+        console.log("find look");
+        const pause = querySelector("#room-html5-player #__controlbar [class^=pause]");
+        if (pause) {
+          pause.click();
+          clearInterval(timer);
+        }
+      }, 50, 500);
       let topBtn = querySelector(".layout-Main .ToTopBtn");
       if (topBtn) {
         topBtn.style.display = "block";
@@ -2256,6 +2248,9 @@ ${root$1}
         Array.from(querySelectorAll("li.layout-List-item")).forEach((li) => {
           const user = querySelector(li, ".DyCover-user");
           const a = querySelector(li, ".DyCover");
+          if (!a) {
+            return;
+          }
           const name = (user == null ? void 0 : user.textContent) || "";
           if (that.isRemove(a == null ? void 0 : a.href) || that.userIsExist(name)) {
             removeDOM(li);
@@ -2377,12 +2372,19 @@ ${root$1}
       }
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
         findMark(".roomSmallPlayerFloatLayout-closeBtn", (closeBtn) => {
+          log$1("自动点击小屏按钮");
           closeBtn.click();
-        }, 100, 500);
+        }, 30, 500);
         removeDOM(".layout-Main .ToTopBtn", true);
       }
       this.isFullScreen();
       this.isAutoMaxVideoPro();
+      findMark(".ChatToolBar .ShieldTool-enter .ShieldTool-listItem", (item) => {
+        if (item.className.indexOf("is-noChecked") !== -1) {
+          item.click();
+          log$1("自动点击了弹幕礼物显示工具");
+        }
+      }, 100, 1e3);
     }
     // 通过房间号获取直播间name
     async getNameByRoomId(keywords) {
@@ -2883,6 +2885,7 @@ ${loadingLazy}
 }
 
 .dark .wm-general-bgblur,
+.dark .layout-Slide-bannerInner,
 .dark  body,.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
@@ -3145,8 +3148,8 @@ ${loadingLazy}
   color:rgb(255, 135, 0) !important;
 }
 
-.layout-Section.layout-Slide .layout-Slide-player,
-.layout-Slide-bannerInner,
+
+
 .Header-broadcast-wrap,
 #lazyModule3,
 #lazyModule4,
@@ -3193,9 +3196,6 @@ li.Header-menu-link:nth-child(3),
   display:inline-block !important;
 }
 
-.layout-Player-aside .layout-Player-chat,.layout-Player-aside .layout-Player-chat .ChatToolBar {
-display:block !important;
-}
 
 
 .Barrage-main  .UserLevel,
@@ -3282,6 +3282,7 @@ background-color: #f2f5f6 !important;
 .layout-Player-main #js-player-toolbar {
    display:none;
 }
+
 
 
 
@@ -5402,11 +5403,14 @@ ${css$2}
     if (typeof window == "undefined") {
       return;
     }
+    if (window == null ? void 0 : window.LivePluginLoadingComplate) {
+      return;
+    }
     if (is_exculues) {
       return;
     }
-    if (window == null ? void 0 : window.LivePluginLoadingComplate) {
-      return;
+    if (!is_localhost) {
+      console.clear();
     }
     customElements.define("live-plugin-element", LivePluginElement);
     try {

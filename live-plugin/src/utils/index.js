@@ -64,7 +64,6 @@ export const removeDOM = (element, realRemove = false) => {
         if (!(element instanceof HTMLElement)) {
             element = querySelector(element)
         }
-        console.log('remove dom run ...', element, 'isRemove?', realRemove)
         if (element instanceof HTMLElement) {
             if (realRemove) {
                 element.remove()

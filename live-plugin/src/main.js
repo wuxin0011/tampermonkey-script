@@ -36,16 +36,17 @@ import './style/index.css.js';
     if (typeof window == 'undefined') {
         return;
     }
-    if (is_exculues) {
-        return;
-    }
 
     if (window?.LivePluginLoadingComplate) {
         return;
     }
 
+    if (is_exculues) {
+        return;
+    }
+
     if (!is_localhost) {
-        // console.clear()
+        console.clear()
     }
 
     // 注册自定义组件
