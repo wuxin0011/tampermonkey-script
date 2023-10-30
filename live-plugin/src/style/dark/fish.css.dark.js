@@ -258,6 +258,7 @@ ${loadingLazy}
 .dark .layout-Search-input,.dark .layout-Search-btn,
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
 .dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
+.dark .MuteStatus.is-noLogin,
 .dakr .Search-direct {
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;

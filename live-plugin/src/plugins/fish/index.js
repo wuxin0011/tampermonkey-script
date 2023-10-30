@@ -198,6 +198,12 @@ export default class FishLive extends LivePlugin {
                 that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
             })
         })
+        loopDo(() => {
+            let closeBtn = querySelector('.roomSmallPlayerFloatLayout-closeBtn')
+            if (closeBtn) {
+                closeBtn.click()
+            }
+        }, 30, 500)
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
@@ -212,10 +218,6 @@ export default class FishLive extends LivePlugin {
         }
         // 不带有轮播图
         if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
-            findMark('.roomSmallPlayerFloatLayout-closeBtn', (closeBtn) => {
-                log('自动点击小屏按钮')
-                closeBtn.click()
-            }, 30, 500)
             // 对于恶意广告要彻底清除！！！
             let ads = [
                 "#player-above-controller+div"

@@ -59,7 +59,7 @@ li.Header-menu-link:nth-child(3),
 }
 
 
-
+.SupremeRightIconJSX,.AnchorLevel,
 .Barrage-main  .UserLevel,
 .Barrage-main  .js-user-level,
 .Barrage-main  .Barrage-icon,
@@ -144,7 +144,10 @@ background-color: #f2f5f6 !important;
 .layout-Player-main #js-player-toolbar {
    display:none;
 }
-
+.js-noblefloating-barragecont {
+  background: none !important;
+  border: none !important;
+}
 
 
 

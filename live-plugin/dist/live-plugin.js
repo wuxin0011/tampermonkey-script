@@ -1995,13 +1995,19 @@ ${root$1}
       findMark(that.header_logo, (a) => {
         a.href = "javascript:;void(0)";
         a.title = "点击Logo,显示插件配置";
-        a.href = "javascript:;void(0)";
-        addEventListener(a, "click", (e) => {
-          e.preventDefault();
-          that.isShowContainer();
-        });
+        loopDo((timer) => {
+          a = querySelector(that.header_logo);
+          if (!a.mark) {
+            a.mark = true;
+            addEventListener(a, "click", (e) => {
+              e.preventDefault();
+              that.isShowContainer();
+            });
+            clearInterval(timer);
+          }
+        }, 10, 500);
         log$1("logo点击按钮装置完毕！");
-      }, 5, 500);
+      }, 10, 500);
     }
     addEven() {
       let that = this;
@@ -2360,6 +2366,12 @@ ${root$1}
           that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
         });
       });
+      loopDo(() => {
+        let closeBtn = querySelector(".roomSmallPlayerFloatLayout-closeBtn");
+        if (closeBtn) {
+          closeBtn.click();
+        }
+      }, 30, 500);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         Array.from(querySelectorAll("#root>div")).forEach((element) => {
@@ -2371,10 +2383,6 @@ ${root$1}
         });
       }
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
-        findMark(".roomSmallPlayerFloatLayout-closeBtn", (closeBtn) => {
-          log$1("自动点击小屏按钮");
-          closeBtn.click();
-        }, 30, 500);
         removeDOM(".layout-Main .ToTopBtn", true);
       }
       this.isFullScreen();
@@ -3097,6 +3105,7 @@ ${loadingLazy}
 .dark .layout-Search-input,.dark .layout-Search-btn,
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
 .dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
+.dark .MuteStatus.is-noLogin,
 .dakr .Search-direct {
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -3197,7 +3206,7 @@ li.Header-menu-link:nth-child(3),
 }
 
 
-
+.SupremeRightIconJSX,.AnchorLevel,
 .Barrage-main  .UserLevel,
 .Barrage-main  .js-user-level,
 .Barrage-main  .Barrage-icon,
@@ -3282,7 +3291,10 @@ background-color: #f2f5f6 !important;
 .layout-Player-main #js-player-toolbar {
    display:none;
 }
-
+.js-noblefloating-barragecont {
+  background: none !important;
+  border: none !important;
+}
 
 
 
@@ -3294,6 +3306,11 @@ ${darkCss$1}
 
 /* 修改背景和字体颜色 */
 
+.dark body {
+  background-image:!important;
+}
+
+.dark body,
 .dark #main_col,
 .dark .room-core,
 .dark input,

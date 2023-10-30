@@ -5,6 +5,11 @@ const darkCss = `
 
 /* 修改背景和字体颜色 */
 
+.dark body {
+  background-image:!important;
+}
+
+.dark body,
 .dark #main_col,
 .dark .room-core,
 .dark input,

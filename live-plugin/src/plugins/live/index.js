@@ -1065,13 +1065,19 @@ export default class LivePlugin {
         findMark(that.header_logo, (a) => {
             a.href = 'javascript:;void(0)';
             a.title = '点击Logo,显示插件配置'
-            a.href = 'javascript:;void(0)';
-            addEventListener(a, 'click', (e) => {
-                e.preventDefault()
-                that.isShowContainer()
-            })
+            loopDo((timer) => {
+                a = querySelector(that.header_logo)
+                if (!a.mark) {
+                    a.mark = true
+                    addEventListener(a, 'click', (e) => {
+                        e.preventDefault()
+                        that.isShowContainer()
+                    })
+                    clearInterval(timer)
+                }
+            }, 10, 500)
             log('logo点击按钮装置完毕！')
-        }, 5, 500)
+        }, 10, 500)
     }
 
 
