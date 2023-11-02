@@ -5,12 +5,12 @@ import {
     intervalRemoveElement,
     isArray,
     local_url,
+    log,
     loopDo,
     querySelector,
     querySelectorAll,
     removeDOM,
     removeVideo,
-    throttle,
     warn,
     wls
 } from '../../utils';
@@ -48,14 +48,7 @@ export default class TriggerLive extends LivePlugin {
                 banner_close.click();
             }
             this.removeRoomByClickRoomName()
-            // loopDo((timer) => {
-            //     let pauseBtn = querySelector('.player-pause-btn')
-            //     if (pauseBtn) {
-            //         pauseBtn.click()
-            //         clearInterval(timer)
-            //     }
-            // }, 10, 300)
-
+            this.updateHeaderIcon()
         }
 
     }
@@ -67,9 +60,7 @@ export default class TriggerLive extends LivePlugin {
             this.removeRoomByClickRoomName()
             Array.from(querySelectorAll('.live-list-nav dd')).forEach(node => {
                 addEventListener(node, 'click', () => {
-                    setTimeout(() => {
-                        that.removeRoomByClickRoomName()
-                    }, 2000)
+                    that.removeRoomByClickRoomName()
                 })
             })
         }
@@ -77,29 +68,18 @@ export default class TriggerLive extends LivePlugin {
 
     // 公共部分操作
     common() {
-
         this.autoHideMenu()
-        this.updateHeaderIcon()
-
     }
 
     // 头部logo显示不明显问题
     updateHeaderIcon() {
-        loopDo((timer) => {
-            Array.from(querySelectorAll('#duya-header-logo img')).forEach(img => {
-                if (img) {
-                    img.src = 'https://a.msstatic.com/huya/main3/static/img/logo.png'
-                    clearInterval(timer)
-                }
-            })
-        }, 10, 1000)
+        try {
+            querySelector('#duya-header-logo .hy-hd-logo-1').src = 'https://a.msstatic.com/huya/main3/static/img/logo.png'
+            querySelector('class^=NavItem] [class^=NavItemHd] i[class*=fav]').style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)'
+            querySelector('[class^=NavItem] [class^=NavItemHd] i[class*=history]').style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)'
+        } catch (error) {
 
-        findMark('[class^=NavItem] [class^=NavItemHd] i[class*=fav]', (icon) => {
-            icon.style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)'
-        }, 10, 1000)
-        findMark('[class^=NavItem] [class^=NavItemHd] i[class*=history]', (icon) => {
-            icon.style.backgroundImage = 'url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)'
-        }, 10, 1000)
+        }
     }
 
 
@@ -108,7 +88,7 @@ export default class TriggerLive extends LivePlugin {
         let that = this
         if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
             findMark('.host-name', (hostName) => {
-                hostName.title = `点击屏蔽主播【${hostName?.textContent}】`
+                hostName.title = `点击屏蔽主播【${hostName?.textContent}】🧹`
                 addEventListener(hostName, 'click', () => {
                     if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
                         that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
@@ -179,12 +159,8 @@ export default class TriggerLive extends LivePlugin {
     removeRoomByClickRoomName() {
         const that = this
         const addClick = () => {
-            console.log('win scroll ....')
-            Array.from(querySelectorAll('.game-live-item')).forEach(li => {
-                if (!(li instanceof HTMLElement)) {
-                    return;
-                }
-                if (li.mark) {
+            Array.from(querySelectorAll('.game-live-item:not([mark=true])')).forEach(li => {
+                if (!(li instanceof HTMLElement) || li.mark) {
                     return;
                 }
                 const a = querySelector(li, 'a')
@@ -194,24 +170,24 @@ export default class TriggerLive extends LivePlugin {
                 const roomId = that.getRoomIdByUrl(a.href)
                 const user = querySelector(li, '.txt i')
                 const name = user.textContent || ''
-                user.title = `点击屏蔽主播【${name}】`
-                li.setAttribute('mark', true)
+                user.title = `点击屏蔽主播【${name}】 🧹`
+                li.mark = true
                 if (that.userIsExist(roomId) || that.userIsExist(name)) {
                     removeDOM(li, true)
                     return;
                 }
+                user.mark = 'true'
                 addEventListener(user, 'click', () => {
-                    console.log('add user name', roomId, name)
                     that.addUser(roomId, name);
                     removeDOM(li, true);
                 })
+
             })
         }
         addClick()
         loopDo(() => {
             addClick()
         }, 5, 5000)
-        // window.addEventListener('scroll', throttle(1000, addClick))
     }
 
     autoHideMenu() {

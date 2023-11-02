@@ -193,8 +193,8 @@ export const findMark = (selector, callback, count = 100, wait = 100) => {
             let element = selector instanceof HTMLElement ? selector : querySelector(selector)
             if (element && element instanceof HTMLElement) {
                 if (!element.mark) {
-                    element.mark = true
                     callback(element)
+                    element.mark = true
                 } else {
                     clearInterval(timer)
                 }
@@ -458,27 +458,8 @@ export class HostUser {
     }
 }
 
-// export class LoginBox {
-//     constructor(box, btn, closeBtn) {
-//         this.box = box
-//         this.btn = btn
-//         this.closeBtn = closeBtn
-//     }
-// }
-
-// export const LoginElement = () => {
-//     let l = null;
-//     if (is_douyin) {
-//         l = new LoginBox('[class^=login-full-panel]', '#_7hLtYmO>button', '.dy-account-close')
-//     } else if (is_douyu) {
-//         l = new LoginBox()
-//     } else if (is_bilibili) {
-//         l = new LoginBox()
-//     } else if (is_huya) {
-//         l = new LoginBox('#UDBSdkLgn', '[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span', '#close-udbLogin')
-//     }
-//     return l;
-// }
-
-
-
+/**
+ * 背景是否显示？
+ * @returns boolean
+ */
+export const isShowBg = () => wls.getItem('bg_is_first_key') === null ? true : getLocalStore('bg_show_key', Boolean.name) // 是否显示背景 默认显示

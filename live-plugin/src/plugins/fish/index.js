@@ -52,14 +52,13 @@ export default class FishLive extends LivePlugin {
         findMark('.layout-Section.layout-Slide-banner', (a) => {
             a.href = 'javascript:;void(0)'
             addEventListener(a, 'click', (e) => e.preventDefault())
-        })
+        },10,100)
         // 移除直播
         // removeVideo('.layout-Slide-player video')
         // 获取暂停button
 
         // 暂停默认播放
         loopDo((timer) => {
-            console.log('find look')
             const pause = querySelector('#room-html5-player #__controlbar [class^=pause]')
             if (pause) {
                 pause.click()
@@ -203,7 +202,7 @@ export default class FishLive extends LivePlugin {
             if (closeBtn) {
                 closeBtn.click()
             }
-        }, 30, 500)
+        }, 30, 1000)
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']

@@ -1,5 +1,6 @@
 
-import { wls, warn, log, support, getLocalStore, addLocalStore } from '../utils'
+import cssUpdate from '@/style/dark/dark.image'
+import { log, support, wls } from '../utils'
 
 /**
  * 主题类型
@@ -24,7 +25,7 @@ export const THEME_TYPE_KEY = "wx_dark_theme_type_key"
 /**
  * 背景css key variable
  */
-const DARK_COLOR_VARIABLE = '--w-bg-darker'
+export const DARK_COLOR_VARIABLE = '--w-bg-darker'
 
 
 /**
@@ -130,7 +131,7 @@ export const updateStyleColor = (key, value) => document.documentElement.style.s
 export const updateDarkStyleType = (type) => {
   // 修改类型，自动更换为黑色主题
   wls.setItem(THEME_TYPE_KEY, type)
-  
+
   // 切换主题类型
   updateDarkClass()
 }
@@ -150,11 +151,11 @@ export const toggleColorMode = (event, isClick = false) => {
     const isAppearanceTransition = document?.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!isAppearanceTransition) {
       log('不支持快照切换...,将使用普通方式切换主题')
-      isClick ? clickUpdateTheme() : themeUpdate()
+      isClick ? clickUpdateTheme() : updateDarkClass()
       return
     }
   } catch (error) {
-    isClick ? clickUpdateTheme() : themeUpdate()
+    isClick ? clickUpdateTheme() : updateDarkClass()
     return;
   }
   const x = event.clientX
@@ -164,7 +165,7 @@ export const toggleColorMode = (event, isClick = false) => {
     Math.max(y, innerHeight - y),
   )
   const transition = document.startViewTransition(() => {
-    isClick ? clickUpdateTheme() : themeUpdate()
+    isClick ? clickUpdateTheme() : updateDarkClass()
   })
   transition.ready
     .then(() => {
@@ -194,11 +195,12 @@ const clickUpdateTheme = () => {
   const classList = document.documentElement.classList
   if (!classList.contains('dark')) {
     classList.add('dark')
-    wls.setItem(DARK_THEME_KEY,theme.dark) 
+    wls.setItem(DARK_THEME_KEY, theme.dark)
   } else if (classList.contains('dark')) {
     classList.remove('dark')
-    wls.setItem(DARK_THEME_KEY,theme.light)
+    wls.setItem(DARK_THEME_KEY, theme.light)
   }
+  cssUpdate()
 }
 
 
@@ -257,18 +259,8 @@ export const updateDarkClass = () => {
   } else if (classList.contains('dark') && !isNeedDark()) {
     classList.remove('dark')
   }
-
+  cssUpdate()
 }
-
-
-/**
- * update theme
- */
-export const themeUpdate = () => {
-  updateDarkClass()
-}
-
-
 
 
 

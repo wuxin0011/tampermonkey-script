@@ -1,13 +1,10 @@
 import { local_url } from '@/utils'
 
 
-const isDouyuDetail = (new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url))
+const isDouyuDetail = () => /.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/.test(local_url)
 
 
 const isCreate = () => local_url.indexOf('https://www.douyu.com/creator') !== -1
-
-
-
 
 
 const createDark =
@@ -23,7 +20,7 @@ const createDark =
     ``
 
 // 斗鱼直播黑屏问题
-const loadingLazy = isDouyuDetail ? `` : `
+const loadingLazy = isDouyuDetail() ? `` : `
 .dark .LazyLoad{
   background: var(--w-bg-dark) !important;
 }
@@ -31,7 +28,6 @@ const loadingLazy = isDouyuDetail ? `` : `
 const darkCss = `
 ${createDark}
 ${loadingLazy}
-
 .dark .DyCover-pic,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
@@ -45,11 +41,11 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
-.dark .wm-general-bgblur,
+.dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,
-.dark  body,.dark .layout-Module-head.is-fixed,
+.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
-.dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
+.dark .Header-wrap,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
 .dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
 .dark .Header-menu-wrap,.dark .DyListCover-wrap,
@@ -82,11 +78,11 @@ ${loadingLazy}
 .dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
-.dark .layout-Player-chat,
+.dark .layout-Player-chat,.dark .AnchorRank-item,
 .dark layout-Player-chat *,
 .dark #js-footer
 {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
 }
 
@@ -181,7 +177,7 @@ ${loadingLazy}
 
 
 .dark .dark .CustomGroupManager-saveBtn,.dark .CustomGroupCommon .dy-Modal-header,
-.dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,.dark .layout-Module-container,
+.dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,
 .dark .ListFooter .dy-Pagination-item,.dark .ListFooter .dy-Pagination-next,.dark .ListFooter .dy-Pagination-prev,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,
 .dark .layout-Player-aside,.dark .layout-Player-asideMain, .dark .layout-Player-barrage,
@@ -260,7 +256,7 @@ ${loadingLazy}
 .dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
 .dark .MuteStatus.is-noLogin,
 .dakr .Search-direct {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
@@ -275,7 +271,7 @@ ${loadingLazy}
 .dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
 .dark .Search-direct:hover,
 .dark .Search-recommend:hover {
-  background: var(--w-bg) !important;
+  background-color: var(--w-bg) !important;
   border:1px solid var(--w-text-light) !important;
   color: var(--w-text) !important;
 }
@@ -284,7 +280,7 @@ ${loadingLazy}
 .dark .dy-ModalRadius-footer button,
 .dark .layout-Tab-item,.dark .dy-ModalRadius-close,
 .dark .DropPaneList>a{
-  background: var(--w-bg-dark) !important;
+  background-color: var(--w-bg-dark) !important;
   border: none !important;
   color: var(--w-text-light) !important;
 }
@@ -296,7 +292,7 @@ ${loadingLazy}
 .dark .layout-Tab-item:hover,
 .dark .Search-hotList li:hover,
 .dark .DropPaneList>a:hover {
-  background: var(--w-bg) !important;
+  background-color: var(--w-bg) !important;
   color: var(--w-text) !important;
 }
 

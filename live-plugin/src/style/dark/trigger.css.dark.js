@@ -1,16 +1,7 @@
 
-
-
 const darkCss = `
 
 /* 修改背景和字体颜色 */
-
-.dark body {
-  background-image:!important;
-}
-
-.dark body,
-.dark #main_col,
 .dark .room-core,
 .dark input,
 .dark input:focus,
@@ -25,7 +16,7 @@ const darkCss = `
 .dark #J_liveListNav dl dd [class^=role-box]:hover,
 .dark #J_liveListNav dl dd div li,
 .dark #J_liveListNav dl dd div li:hover,
-.dark .js-responded-list,
+
 .dark .program-preview-box .preview-bd,
 .dark .game-live-item,
 .dark .game-live-item .txt .num,
@@ -39,7 +30,7 @@ const darkCss = `
 .dark .nav-expand-list-more ,
 .dark #js-game-list li,
 .dark .mod-list .box-hd .filter dd .tag-layer,
-.dark #J_mainWrap,
+.dark .layout-Module--aside .layout-Module-container,
 .dark .room-hd,.dark .room-core-r,
 .dark .room-sidebar,.dark .room-player-gift-placeholder,
 .dark #chat-room__wrap #chat-room__list div,.dark #chat-room__wrap #chat-room__list div a,
@@ -81,7 +72,6 @@ const darkCss = `
 .dark #player-gift-wrap,.dark .player-all-gift-panel,
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
-
 .dark [class*=msg-of-king],
 .dark .ButtonMon--220refp4DGUDqT-yPXcS8W.fans--33nbMT8b0W7GezN12PjsS8 .btn--1nWuP5PQFEC5TC290fbKN,
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
@@ -304,7 +294,7 @@ const darkCss = `
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
 .dark .ucard-normal--1-VRAi0Zm5CwE-PaY2FEie,
-.dark [class^=ucard-normal],
+.dark [class^=ucard],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=roomBlockWords-list] li,
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,

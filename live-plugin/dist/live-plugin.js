@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.7
+// @version      4.1.8
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
@@ -40,7 +40,7 @@
   const emptyMethod = (...args) => {
     console.warn(`${prefix} run empty method...`);
   };
-  const log$1 = (...args) => console.log(msg(args));
+  const log = (...args) => console.log(msg(args));
   const warn = (...args) => console.warn(msg(args));
   const error = (...args) => console.error(msg(args));
   const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/;
@@ -198,8 +198,8 @@
         let element = selector instanceof HTMLElement ? selector : querySelector(selector);
         if (element && element instanceof HTMLElement) {
           if (!element.mark) {
-            element.mark = true;
             callback(element);
+            element.mark = true;
           } else {
             clearInterval(timer);
           }
@@ -385,6 +385,7 @@
       this.name = name;
     }
   }
+  const isShowBg = () => wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
   const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf("非法访问") !== -1 : false;
   const isBVId = (keywords) => /.*\/BV(.*)/.test(keywords);
   const getBVId = (url) => {
@@ -438,11 +439,33 @@
     if (!userId) {
       return null;
     }
-    log$1("user Id", userId);
+    log("user Id", userId);
     return await fetch(`https://api.bilibili.com/x/space/wbi/acc/info?mid=${userId}`, {
       method: "get",
       mode: "cors"
     }).then((res) => res.json());
+  };
+  const douyu = [
+    "body",
+    ".wm-general-bgblur",
+    ".layout-Module-container",
+    ".layout-Cover-list"
+  ];
+  const huya = [
+    "body",
+    ".js-responded-list",
+    " #J_mainWrap",
+    "#main_col",
+    ".layout-Module-container"
+  ];
+  const darkImageCss = [.../* @__PURE__ */ new Set([...douyu, ...huya])];
+  const cssUpdate = () => {
+    darkImageCss.forEach((selector) => {
+      const ele = querySelector(selector);
+      if (ele) {
+        ele.style.backgroundColor = isShowBg() ? "" : isNeedDark() ? "var(--w-bg-darker)" : "";
+      }
+    });
   };
   const DARK_THEME_KEY = "wx_dark_theme_key";
   const THEME_IS_AUTO = "wx_dark_theme_is_auto";
@@ -506,12 +529,12 @@
     try {
       const isAppearanceTransition = (document == null ? void 0 : document.startViewTransition) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!isAppearanceTransition) {
-        log$1("不支持快照切换...,将使用普通方式切换主题");
-        isClick ? clickUpdateTheme() : themeUpdate();
+        log("不支持快照切换...,将使用普通方式切换主题");
+        isClick ? clickUpdateTheme() : updateDarkClass();
         return;
       }
     } catch (error2) {
-      isClick ? clickUpdateTheme() : themeUpdate();
+      isClick ? clickUpdateTheme() : updateDarkClass();
       return;
     }
     const x = event.clientX;
@@ -521,7 +544,7 @@
       Math.max(y, innerHeight - y)
     );
     const transition = document.startViewTransition(() => {
-      isClick ? clickUpdateTheme() : themeUpdate();
+      isClick ? clickUpdateTheme() : updateDarkClass();
     });
     transition.ready.then(() => {
       const clipPath = [
@@ -549,6 +572,7 @@
       classList.remove("dark");
       wls.setItem(DARK_THEME_KEY, theme.light);
     }
+    cssUpdate();
   };
   const autoDarkType = () => {
     let hour = (/* @__PURE__ */ new Date()).getHours();
@@ -597,9 +621,7 @@
     } else if (classList.contains("dark") && !isNeedDark()) {
       classList.remove("dark");
     }
-  };
-  const themeUpdate = () => {
-    updateDarkClass();
+    cssUpdate();
   };
   const themeOptions = () => {
     let str = "";
@@ -1078,7 +1100,7 @@ ${root$1}
   ${liveDarkCss}
 
 `;
-  const htmlTemplate = (isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
+  const htmlTemplate = (isShowBg2, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) => {
     return `
     <div class="m-container-box" id="m-container-box2">
         <div class="operation">
@@ -1088,7 +1110,7 @@ ${root$1}
             ${support.supportTheme() ? `<button class="btn btn-info room-theme" title="${isNeedDark() ? "点击切换到白天模式" : "点击切换到黑夜模式"}">${isNeedDark() ? "白天" : "黑夜"}</button>` : ``}
             ${support.supportBg() ? `<button class="btn btn-warning bg-btn" title="上传背景图">背景</button>` : ``}
             ${support.supportBg() ? `<input type="file" id="file">` : ``}
-            ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
+            ${support.supportBg() ? `<input type="checkbox" id="checkbox1" ${isShowBg2 ? "checked" : ""} class="checkbox" title="是否显示背景" />背景` : ``}
             ${support.supportMenu() ? `<input type="checkbox" id="checkbox2" ${isShowMenu ? "checked" : ""} class="checkbox" title="是否显示左侧菜单"/>菜单 ` : ``}
             ${` <input type="checkbox" id="checkbox3" ${isShowFullScreen ? "checked" : ""} class="checkbox" title="自动全屏"/>全屏`}
             ${support.supportGift() ? `<input type="checkbox" id="checkbox4" ${isShowGift ? "checked" : ""} class="checkbox" title="显示礼物栏"/>礼物` : ``}
@@ -1122,11 +1144,11 @@ ${root$1}
       style.innerHTML = css$5;
       this.shadowRoot.appendChild(style);
     }
-    createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) {
+    createContainer(isShowBg2, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro = true) {
       const livePlugin = document.createElement("live-plugin-element");
       const container = document.createElement("div");
       container.className = `${isNeedDark() ? "dark" : ""} m-container`;
-      container.innerHTML = htmlTemplate(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro);
+      container.innerHTML = htmlTemplate(isShowBg2, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isMaxPro);
       livePlugin.shadowRoot.appendChild(container);
       document.querySelector("body").append(livePlugin);
       return container;
@@ -1188,20 +1210,22 @@ ${root$1}
     }
     // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
     init() {
+      this.clickLogoShowContainer();
       this.users = getLocalStore(this.key, Array.name, true) || [];
       if (!this.removeRoom()) {
         this.create_container();
         this.detail();
         this.index();
         this.category();
-        this.clickLogoShowContainer();
         this.common();
-        this.addEven();
-        loopDo(() => {
-          this.isShowLeftMenu();
-          this.isShowGift();
-        }, 30, 1e3);
+        if (is_huya || is_douyu) {
+          loopDo(() => {
+            this.isShowLeftMenu();
+            this.isShowGift();
+          }, 10, 1e3);
+        }
       }
+      this.addEven();
       this.settingBackgroundImage();
     }
     /*********************************建议下面操作方法必须重写的,并且参考此步骤*****************************/
@@ -1256,14 +1280,14 @@ ${root$1}
       if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
         return;
       }
-      log$1("查找播放视频画质列表", that.auto_max_pro_class_or_id_list);
+      log("查找播放视频画质列表", that.auto_max_pro_class_or_id_list);
       loopDo((timer) => {
         let items = querySelectorAll(that.auto_max_pro_class_or_id_list);
         if (isArray(items)) {
           for (let item of items) {
             let result = that.auto_max_pro_keywords.findIndex((key) => item.innerText.indexOf(key) !== -1);
             if (result === -1) {
-              log$1("当前最高画质", item.innerText);
+              log("当前最高画质", item.innerText);
               if (is_huya) {
                 item = querySelector(item, "span");
               }
@@ -1275,19 +1299,20 @@ ${root$1}
         }
       }, 100, 500);
     }
+    updateHeaderIcon() {
+    }
     /*********************************子类继承无需修改的方法******************************/
     /**
      * 容器，所有操作容器均在此容器中，
      */
     create_container() {
       let that = this;
-      let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name);
       let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name);
       let isShowFullScreen = wls.getItem(this.full_screen_is_first_key) === null ? false : getLocalStore(that.full_screen_key, Boolean.name);
       let isShowGift = wls.getItem(this.gift_is_first_key) === null ? false : getLocalStore(that.gift_key, Boolean.name);
       let isShowLogo = wls.getItem(this.btn_is_first_key) === null ? true : getLocalStore(that.logo_show_key, Boolean.name);
       let isAutoMaxPro = wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name);
-      that.m_container = new LivePluginElement().createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro);
+      that.m_container = new LivePluginElement().createContainer(isShowBg(), isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro);
       if (querySelector(that.m_container, "#m-container-box2 table tbody")) {
         that.tbody = querySelector(that.m_container, "#m-container-box2 table tbody");
         that.is_new = true;
@@ -1298,7 +1323,7 @@ ${root$1}
       that.operationDOMButton();
       that.createRoomItem(that.users);
       that.createButton();
-      log$1("操作面板初始化完毕！");
+      log("操作面板初始化完毕！");
     }
     /**
      * 通过用户列表构建列表
@@ -1433,7 +1458,7 @@ ${root$1}
       });
       const checkbox = querySelector(container, ".operation #checkbox1");
       addEventListener(checkbox, "change", function(e) {
-        log$1("背景是否开启", e.target.checked ? "开启" : "关闭");
+        log("背景是否开启", e.target.checked ? "开启" : "关闭");
         addLocalStore(that.bg_show_key, e.target.checked, Boolean.name);
         addLocalStore(that.bg_is_first_key, false, Boolean.name);
         that.settingBackgroundImage();
@@ -1481,7 +1506,7 @@ ${root$1}
       });
       this.themeContr(container);
       this.initAnimation(container);
-      log$1("操作按钮添加成功！");
+      log("操作按钮添加成功！");
     }
     handlerBiliBiliKeywords(keywords, inputValue) {
       let that = this;
@@ -1592,7 +1617,7 @@ ${root$1}
           select2_box2.classList.remove("m-ani-right-is-active");
         }
       });
-      log$1("动画初始化完毕！");
+      log("动画初始化完毕！");
     }
     searchUserByRoomId(name, roomId, inputValue) {
       let that = this;
@@ -1653,7 +1678,7 @@ ${root$1}
       let x, y;
       const mouse_key = that.key + "_mouse_key";
       let { mouse_left, mouse_top } = getLocalStore(mouse_key, Object.name);
-      log$1(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`);
+      log(`获到Logo位置信息 ${mouse_left}px, ${mouse_top}px`);
       if (!isNaN(Number(mouse_left)) && !isNaN(Number(mouse_top))) {
         btn.style.left = mouse_left + "px";
         btn.style.top = mouse_top + "px";
@@ -1662,7 +1687,7 @@ ${root$1}
       addEventListener(btn, "mousedown", (event) => {
         x = event.offsetX;
         y = event.offsetY;
-        log$1("mouseDown", x, y);
+        log("mouseDown", x, y);
         flag = true;
         addEventListener(wd, "mousemove", move);
       });
@@ -1692,7 +1717,7 @@ ${root$1}
       btn.style.display = wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name) ? "block" : "none";
       that.logo_btn = btn;
       appendChild(body, that.logo_btn);
-      log$1("button 添加完毕！");
+      log("button 添加完毕！");
     }
     /**
      * 该房间是否已改被删除
@@ -1794,7 +1819,7 @@ ${root$1}
      */
     settingBackgroundImage(url, container) {
       if (!support.supportBg()) {
-        log$1("当前平台不支持背景");
+        log("当前平台不支持背景");
         return;
       }
       container = querySelector("body");
@@ -1802,18 +1827,18 @@ ${root$1}
         warn("壁纸设置失败 获取不到 container ！");
         return;
       }
-      let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name);
-      if (isShowBg) {
-        url = !!url ? url : wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image;
+      if (isShowBg()) {
+        url = !!url ? url : wls.getItem(this.bg_key) && isShowBg() ? wls.getItem(this.bg_key) : this.default_background_image;
         container.style.backgroundSize = "cover";
         container.style.backgroundRepeat = "no-repeat ";
         container.style.backgroundAttachment = "fixed";
         container.style.backgroundImage = `url(${url})`;
-        log$1("背景图添加完毕！");
+        log("背景图添加完毕！");
       } else {
         container.style.backgroundImage = "none";
-        log$1("背景图已关闭！");
+        log("背景图已关闭！");
       }
+      cssUpdate();
     }
     /**
      * 通过房间名称或者id判断房间是否已经保存到本地
@@ -1938,7 +1963,7 @@ ${root$1}
       } else {
         loopDo((timer) => {
           button = querySelector(that.full_screen_button);
-          log$1("fullScreen button", that.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
+          log("fullScreen button", that.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
           if (button && button instanceof HTMLElement) {
             let isClick = button == null ? void 0 : button.isClick;
             if (isClick) {
@@ -1946,7 +1971,7 @@ ${root$1}
               return;
             }
             if (!isClick) {
-              log$1("全屏按钮自动触发了!");
+              log("全屏按钮自动触发了!");
               button.click();
               button.isClick = true;
             }
@@ -1977,7 +2002,7 @@ ${root$1}
         } else {
           this.m_container.style.display = this.m_container.style.display === "block" ? "none" : "block";
         }
-        log$1("container class=>", this.m_container.classList);
+        log("container class=>", this.m_container.classList);
       }
     }
     /**
@@ -1995,18 +2020,11 @@ ${root$1}
       findMark(that.header_logo, (a) => {
         a.href = "javascript:;void(0)";
         a.title = "点击Logo,显示插件配置";
-        loopDo((timer) => {
-          a = querySelector(that.header_logo);
-          if (!a.mark) {
-            a.mark = true;
-            addEventListener(a, "click", (e) => {
-              e.preventDefault();
-              that.isShowContainer();
-            });
-            clearInterval(timer);
-          }
-        }, 10, 500);
-        log$1("logo点击按钮装置完毕！");
+        addEventListener(a, "click", (e) => {
+          e.preventDefault();
+          that.isShowContainer();
+        });
+        log("logo点击按钮装置完毕！");
       }, 10, 500);
     }
     addEven() {
@@ -2045,6 +2063,7 @@ ${root$1}
           banner_close.click();
         }
         this.removeRoomByClickRoomName();
+        this.updateHeaderIcon();
       }
     }
     // 分类页操作
@@ -2054,9 +2073,7 @@ ${root$1}
         this.removeRoomByClickRoomName();
         Array.from(querySelectorAll(".live-list-nav dd")).forEach((node) => {
           addEventListener(node, "click", () => {
-            setTimeout(() => {
-              that.removeRoomByClickRoomName();
-            }, 2e3);
+            that.removeRoomByClickRoomName();
           });
         });
       }
@@ -2064,31 +2081,22 @@ ${root$1}
     // 公共部分操作
     common() {
       this.autoHideMenu();
-      this.updateHeaderIcon();
     }
     // 头部logo显示不明显问题
     updateHeaderIcon() {
-      loopDo((timer) => {
-        Array.from(querySelectorAll("#duya-header-logo img")).forEach((img) => {
-          if (img) {
-            img.src = "https://a.msstatic.com/huya/main3/static/img/logo.png";
-            clearInterval(timer);
-          }
-        });
-      }, 10, 1e3);
-      findMark("[class^=NavItem] [class^=NavItemHd] i[class*=fav]", (icon) => {
-        icon.style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)";
-      }, 10, 1e3);
-      findMark("[class^=NavItem] [class^=NavItemHd] i[class*=history]", (icon) => {
-        icon.style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)";
-      }, 10, 1e3);
+      try {
+        querySelector("#duya-header-logo .hy-hd-logo-1").src = "https://a.msstatic.com/huya/main3/static/img/logo.png";
+        querySelector("class^=NavItem] [class^=NavItemHd] i[class*=fav]").style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png)";
+        querySelector("[class^=NavItem] [class^=NavItemHd] i[class*=history]").style.backgroundImage = "url(https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png)";
+      } catch (error2) {
+      }
     }
     // 详情操作
     detail() {
       let that = this;
       if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
         findMark(".host-name", (hostName) => {
-          hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】`;
+          hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】🧹`;
           addEventListener(hostName, "click", () => {
             if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
               that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
@@ -2148,12 +2156,8 @@ ${root$1}
     removeRoomByClickRoomName() {
       const that = this;
       const addClick = () => {
-        console.log("win scroll ....");
-        Array.from(querySelectorAll(".game-live-item")).forEach((li) => {
-          if (!(li instanceof HTMLElement)) {
-            return;
-          }
-          if (li.mark) {
+        Array.from(querySelectorAll(".game-live-item:not([mark=true])")).forEach((li) => {
+          if (!(li instanceof HTMLElement) || li.mark) {
             return;
           }
           const a = querySelector(li, "a");
@@ -2163,14 +2167,14 @@ ${root$1}
           const roomId = that.getRoomIdByUrl(a.href);
           const user = querySelector(li, ".txt i");
           const name = user.textContent || "";
-          user.title = `点击屏蔽主播【${name}】`;
-          li.setAttribute("mark", true);
+          user.title = `点击屏蔽主播【${name}】 🧹`;
+          li.mark = true;
           if (that.userIsExist(roomId) || that.userIsExist(name)) {
             removeDOM(li, true);
             return;
           }
+          user.mark = "true";
           addEventListener(user, "click", () => {
-            console.log("add user name", roomId, name);
             that.addUser(roomId, name);
             removeDOM(li, true);
           });
@@ -2236,9 +2240,8 @@ ${root$1}
       findMark(".layout-Section.layout-Slide-banner", (a) => {
         a.href = "javascript:;void(0)";
         addEventListener(a, "click", (e) => e.preventDefault());
-      });
+      }, 10, 100);
       loopDo((timer) => {
-        console.log("find look");
         const pause = querySelector("#room-html5-player #__controlbar [class^=pause]");
         if (pause) {
           pause.click();
@@ -2371,7 +2374,7 @@ ${root$1}
         if (closeBtn) {
           closeBtn.click();
         }
-      }, 30, 500);
+      }, 30, 1e3);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         Array.from(querySelectorAll("#root>div")).forEach((element) => {
@@ -2390,7 +2393,7 @@ ${root$1}
       findMark(".ChatToolBar .ShieldTool-enter .ShieldTool-listItem", (item) => {
         if (item.className.indexOf("is-noChecked") !== -1) {
           item.click();
-          log$1("自动点击了弹幕礼物显示工具");
+          log("自动点击了弹幕礼物显示工具");
         }
       }, 100, 1e3);
     }
@@ -2400,7 +2403,7 @@ ${root$1}
       let that = this;
       let searchResult = await getInfo(keywords);
       if ((searchResult == null ? void 0 : searchResult.room) && ((_a = searchResult == null ? void 0 : searchResult.room) == null ? void 0 : _a.nickname)) {
-        log$1(`搜索到主播 ${searchResult.room.nickname}`);
+        log(`搜索到主播 ${searchResult.room.nickname}`);
         return searchResult.room.nickname;
       }
       let hostName = querySelector(".Title-blockInline .Title-anchorName h2");
@@ -2452,7 +2455,7 @@ ${root$1}
           const leftSiderWidth = Number(window.getComputedStyle(leftSider).width.split("px")[0]);
           if (leftSiderWidth > 80) {
             clickM.click();
-            log$1("左侧侧边栏自动收起！");
+            log("左侧侧边栏自动收起！");
           }
           clearInterval(timer);
         }
@@ -2470,6 +2473,19 @@ ${root$1}
       this.auto_max_pro_class_or_id_list = ".bpx-player-ctrl-btn.bpx-player-ctrl-quality .bpx-player-ctrl-quality-menu>.bpx-player-ctrl-quality-menu-item";
       this.init();
     }
+    // init() {
+    //     this.clickLogoShowContainer()
+    //     this.users = getLocalStore(this.key, Array.name, true) || []
+    //     if (!this.removeRoom()) {
+    //         this.create_container()
+    //         this.detail()
+    //         this.index()
+    //         this.category()
+    //         this.common()
+    //     }
+    //     this.addEven()
+    //     this.settingBackgroundImage()
+    // }
     /**
      * 重写 button
      * @returns
@@ -2655,7 +2671,7 @@ ${root$1}
           const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
           if (this.userIsExist(id) || this.userIsExist(name)) {
             removeDOM(videoDom, true);
-            log$1("up主", name, "已经被移除！UUID=>", id);
+            log("up主", name, "已经被移除！UUID=>", id);
           } else if (!isMark) {
             const span = createElement("span");
             span.classList = "m-span-text";
@@ -2667,10 +2683,8 @@ ${root$1}
           }
         });
       };
-      loopDo(() => {
-        scanVideoList(false);
-      }, 10, 1e3);
       setTimeout(() => {
+        scanVideoList(false);
         let button = querySelector(".rec-footer");
         addEventListener(button, "click", () => {
           scanVideoList(false);
@@ -2679,17 +2693,16 @@ ${root$1}
     }
     async detail() {
       var _a, _b;
-      if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
-        this.detailLeftVideoList(".video-page-operator-card-small");
-        this.detailLeftVideoList();
+      if (!/https:\/\/www\.bilibili\.com\/video\/(.*)/.test(local_url)) {
+        return;
       }
-      if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
-        this.isFullScreen();
-        this.isAutoMaxVideoPro();
-        let result = await getBiliBiliInfoByVideoID(local_url);
-        if (result && (result == null ? void 0 : result.code) === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
-          this.roomIsNeedRemove();
-        }
+      this.detailLeftVideoList();
+      this.detailLeftVideoList(".video-page-operator-card-small");
+      this.isFullScreen();
+      this.isAutoMaxVideoPro();
+      const result = await getBiliBiliInfoByVideoID(local_url);
+      if (result && (result == null ? void 0 : result.code) === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
+        this.roomIsNeedRemove();
       }
     }
     async getNameByRoomId(keywords) {
@@ -2731,7 +2744,7 @@ ${root$1}
       return this.notSupport();
     }
     notSupport() {
-      log$1("抖音暂时不支持该操作！");
+      log("抖音暂时不支持该操作！");
       return null;
     }
     common() {
@@ -2860,7 +2873,7 @@ ${root$1}
 `;
     addStyle2(loginCss);
   };
-  const isDouyuDetail = new RegExp(/.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/).test(local_url);
+  const isDouyuDetail = () => /.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/.test(local_url);
   const isCreate = () => local_url.indexOf("https://www.douyu.com/creator") !== -1;
   const createDark = isCreate() ? `
   .dark * {
@@ -2870,7 +2883,7 @@ ${root$1}
   }
   
   ` : ``;
-  const loadingLazy = isDouyuDetail ? `` : `
+  const loadingLazy = isDouyuDetail() ? `` : `
 .dark .LazyLoad{
   background: var(--w-bg-dark) !important;
 }
@@ -2878,7 +2891,6 @@ ${root$1}
   const darkCss$1 = `
 ${createDark}
 ${loadingLazy}
-
 .dark .DyCover-pic,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
@@ -2892,11 +2904,11 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
-.dark .wm-general-bgblur,
+.dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,
-.dark  body,.dark .layout-Module-head.is-fixed,
+.dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
-.dark .Header-wrap,.dark .layout-Module-container,.dark .AnchorRank-more,
+.dark .Header-wrap,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
 .dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
 .dark .Header-menu-wrap,.dark .DyListCover-wrap,
@@ -2929,11 +2941,11 @@ ${loadingLazy}
 .dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
-.dark .layout-Player-chat,
+.dark .layout-Player-chat,.dark .AnchorRank-item,
 .dark layout-Player-chat *,
 .dark #js-footer
 {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
 }
 
@@ -3028,7 +3040,7 @@ ${loadingLazy}
 
 
 .dark .dark .CustomGroupManager-saveBtn,.dark .CustomGroupCommon .dy-Modal-header,
-.dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,.dark .layout-Module-container,
+.dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,
 .dark .ListFooter .dy-Pagination-item,.dark .ListFooter .dy-Pagination-next,.dark .ListFooter .dy-Pagination-prev,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item,.dark .ListFooter .dy-Pagination .dy-Pagination-item-active,
 .dark .layout-Player-aside,.dark .layout-Player-asideMain, .dark .layout-Player-barrage,
@@ -3107,7 +3119,7 @@ ${loadingLazy}
 .dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
 .dark .MuteStatus.is-noLogin,
 .dakr .Search-direct {
-  background: var(--w-bg-darker) !important;
+  background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
@@ -3122,7 +3134,7 @@ ${loadingLazy}
 .dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
 .dark .Search-direct:hover,
 .dark .Search-recommend:hover {
-  background: var(--w-bg) !important;
+  background-color: var(--w-bg) !important;
   border:1px solid var(--w-text-light) !important;
   color: var(--w-text) !important;
 }
@@ -3131,7 +3143,7 @@ ${loadingLazy}
 .dark .dy-ModalRadius-footer button,
 .dark .layout-Tab-item,.dark .dy-ModalRadius-close,
 .dark .DropPaneList>a{
-  background: var(--w-bg-dark) !important;
+  background-color: var(--w-bg-dark) !important;
   border: none !important;
   color: var(--w-text-light) !important;
 }
@@ -3143,10 +3155,15 @@ ${loadingLazy}
 .dark .layout-Tab-item:hover,
 .dark .Search-hotList li:hover,
 .dark .DropPaneList>a:hover {
-  background: var(--w-bg) !important;
+  background-color: var(--w-bg) !important;
   color: var(--w-text) !important;
 }
 
+`;
+  const headerDarkCss = `
+.layout-Section.layout-Header {
+  background-color:#000  !important;
+}
 `;
   const css$4 = is_douyu ? `
 
@@ -3158,7 +3175,7 @@ ${loadingLazy}
 }
 
 
-
+.layout-Section.layout-Slide,
 .Header-broadcast-wrap,
 #lazyModule3,
 #lazyModule4,
@@ -3296,8 +3313,7 @@ background-color: #f2f5f6 !important;
   border: none !important;
 }
 
-
-
+${headerDarkCss}
 ${darkCss$1}
 
 
@@ -3305,13 +3321,6 @@ ${darkCss$1}
   const darkCss = `
 
 /* 修改背景和字体颜色 */
-
-.dark body {
-  background-image:!important;
-}
-
-.dark body,
-.dark #main_col,
 .dark .room-core,
 .dark input,
 .dark input:focus,
@@ -3326,7 +3335,7 @@ ${darkCss$1}
 .dark #J_liveListNav dl dd [class^=role-box]:hover,
 .dark #J_liveListNav dl dd div li,
 .dark #J_liveListNav dl dd div li:hover,
-.dark .js-responded-list,
+
 .dark .program-preview-box .preview-bd,
 .dark .game-live-item,
 .dark .game-live-item .txt .num,
@@ -3340,7 +3349,7 @@ ${darkCss$1}
 .dark .nav-expand-list-more ,
 .dark #js-game-list li,
 .dark .mod-list .box-hd .filter dd .tag-layer,
-.dark #J_mainWrap,
+.dark .layout-Module--aside .layout-Module-container,
 .dark .room-hd,.dark .room-core-r,
 .dark .room-sidebar,.dark .room-player-gift-placeholder,
 .dark #chat-room__wrap #chat-room__list div,.dark #chat-room__wrap #chat-room__list div a,
@@ -3382,7 +3391,6 @@ ${darkCss$1}
 .dark #player-gift-wrap,.dark .player-all-gift-panel,
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
-
 .dark [class*=msg-of-king],
 .dark .ButtonMon--220refp4DGUDqT-yPXcS8W.fans--33nbMT8b0W7GezN12PjsS8 .btn--1nWuP5PQFEC5TC290fbKN,
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
@@ -3605,7 +3613,7 @@ ${darkCss$1}
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
 .dark .ucard-normal--1-VRAi0Zm5CwE-PaY2FEie,
-.dark [class^=ucard-normal],
+.dark [class^=ucard],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=roomBlockWords-list] li,
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
@@ -5340,7 +5348,7 @@ ${other}
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
 div#i_cecream .adblock-tips,
-.activity-m-v1,
+.activity-m-v1,#right-bottom-banner,
 div.video-container-v1 div.pop-live-small-mode.part-undefined,
 .recommended-swipe.grid-anchor,
 .video-page-special-card-small

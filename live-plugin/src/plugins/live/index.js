@@ -49,6 +49,8 @@ import {
 } from '@/hook/useTheme';
 import { LivePluginElement } from "@/ui";
 import iconLogo from '@/utils/logo';
+import cssUpdate from '../../style/dark/dark.image';
+import { isShowBg, is_douyin } from '../../utils';
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
@@ -98,20 +100,23 @@ export default class LivePlugin {
 
     // 初始化操作方法，子类可以继承该类，实现该类中空方法，参考此操作,初始化构造器实调用该方法就可以了。。。
     init() {
+        this.clickLogoShowContainer()
         this.users = getLocalStore(this.key, Array.name, true) || []
         if (!this.removeRoom()) {
             this.create_container()
             this.detail()
             this.index()
             this.category()
-            this.clickLogoShowContainer()
             this.common()
-            this.addEven()
-            loopDo(() => {
-                this.isShowLeftMenu()
-                this.isShowGift()
-            }, 30, 1000)
+            if (is_huya || is_douyu) {
+                loopDo(() => {
+                    this.isShowLeftMenu()
+                    this.isShowGift()
+                }, 10, 1000)
+            }
+
         }
+        this.addEven()
         this.settingBackgroundImage()
     }
 
@@ -205,6 +210,8 @@ export default class LivePlugin {
         }, 100, 500)
     }
 
+    updateHeaderIcon() {
+    }
 
     /*********************************子类继承无需修改的方法******************************/
     /**
@@ -213,8 +220,6 @@ export default class LivePlugin {
     create_container() {
         // 初始化房间号
         let that = this
-
-        let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(that.bg_show_key, Boolean.name) // 是否显示背景 默认显示
         let isShowMenu = wls.getItem(this.menu_is_first_key) === null ? false : getLocalStore(that.menu_show_key, Boolean.name) // 左侧菜单默认不显示
         let isShowFullScreen = wls.getItem(this.full_screen_is_first_key) === null ? false : getLocalStore(that.full_screen_key, Boolean.name) // 是否自动全屏 默认不自动
         let isShowGift = wls.getItem(this.gift_is_first_key) === null ? false : getLocalStore(that.gift_key, Boolean.name) // 礼物默认不显示
@@ -222,7 +227,7 @@ export default class LivePlugin {
         let isAutoMaxPro = wls.getItem(this.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name) // logo 默认显示
 
         // create container ...
-        that.m_container = new LivePluginElement().createContainer(isShowBg, isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro)
+        that.m_container = new LivePluginElement().createContainer(isShowBg(), isShowMenu, isShowFullScreen, isShowGift, isShowLogo, isAutoMaxPro)
         if (querySelector(that.m_container, '#m-container-box2 table tbody')) {
             that.tbody = querySelector(that.m_container, '#m-container-box2 table tbody')
             that.is_new = true
@@ -846,9 +851,8 @@ export default class LivePlugin {
             warn('壁纸设置失败 获取不到 container ！')
             return;
         }
-        let isShowBg = wls.getItem(this.bg_is_first_key) === null ? true : getLocalStore(this.bg_show_key, Boolean.name) // 是否显示背景 默认显示
-        if (isShowBg) {
-            url = !!url ? url : (wls.getItem(this.bg_key) && isShowBg ? wls.getItem(this.bg_key) : this.default_background_image)
+        if (isShowBg()) {
+            url = !!url ? url : (wls.getItem(this.bg_key) && isShowBg() ? wls.getItem(this.bg_key) : this.default_background_image)
             container.style.backgroundSize = "cover"
             container.style.backgroundRepeat = 'no-repeat '
             container.style.backgroundAttachment = 'fixed'
@@ -858,6 +862,8 @@ export default class LivePlugin {
             container.style.backgroundImage = 'none'
             log('背景图已关闭！')
         }
+        // update
+        cssUpdate()
 
     }
 
@@ -982,6 +988,9 @@ export default class LivePlugin {
      * @param isClickFull 是否是通过点击方式触发
      */
     isFullScreen(isClickFull = false) {
+        // if (true) {
+        //     return;
+        // }
         let that = this
         let is_should_full_screen = getLocalStore(that.full_screen_key, Boolean.name)
         if (!is_should_full_screen) {
@@ -1065,23 +1074,13 @@ export default class LivePlugin {
         findMark(that.header_logo, (a) => {
             a.href = 'javascript:;void(0)';
             a.title = '点击Logo,显示插件配置'
-            loopDo((timer) => {
-                a = querySelector(that.header_logo)
-                if (!a.mark) {
-                    a.mark = true
-                    addEventListener(a, 'click', (e) => {
-                        e.preventDefault()
-                        that.isShowContainer()
-                    })
-                    clearInterval(timer)
-                }
-            }, 10, 500)
+            addEventListener(a, 'click', (e) => {
+                e.preventDefault()
+                that.isShowContainer()
+            })
             log('logo点击按钮装置完毕！')
         }, 10, 500)
     }
-
-
-
 
     addEven() {
         let that = this

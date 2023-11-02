@@ -33,6 +33,21 @@ export default class BiliBili extends LivePlugin {
         this.init()
     }
 
+    // init() {
+    //     this.clickLogoShowContainer()
+    //     this.users = getLocalStore(this.key, Array.name, true) || []
+    //     if (!this.removeRoom()) {
+    //         this.create_container()
+    //         this.detail()
+    //         this.index()
+    //         this.category()
+    //         this.common()
+    //     }
+    //     this.addEven()
+    //     this.settingBackgroundImage()
+    // }
+
+
     /**
      * 重写 button
      * @returns
@@ -252,11 +267,8 @@ export default class BiliBili extends LivePlugin {
                 }
             })
         }
-
-        loopDo(() => {
-            scanVideoList(false)
-        }, 10, 1000)
         setTimeout(() => {
+            scanVideoList(false)
             let button = querySelector('.rec-footer')
             addEventListener(button, 'click', () => {
                 scanVideoList(false)
@@ -266,19 +278,17 @@ export default class BiliBili extends LivePlugin {
     }
 
     async detail() {
-        if (new RegExp(/https:\/\/www\.bilibili\.com\/video\/(.*)/).test(local_url)) {
-            this.detailLeftVideoList('.video-page-operator-card-small')
-            this.detailLeftVideoList()
+        if (!/https:\/\/www\.bilibili\.com\/video\/(.*)/.test(local_url)) {
+            return;
         }
 
-        // TODO MORE
-        if (/https:\/\/www.bilibili.com\/video\/.*/.test(local_url)) {
-            this.isFullScreen()
-            this.isAutoMaxVideoPro()
-            let result = await getBiliBiliInfoByVideoID(local_url)
-            if (result && result?.code === 0 && this.userIsExist(result?.owner?.mid) || this.userIsExist(result?.owner?.name)) {
-                this.roomIsNeedRemove()
-            }
+        this.detailLeftVideoList()
+        this.detailLeftVideoList('.video-page-operator-card-small')
+        this.isFullScreen()
+        this.isAutoMaxVideoPro()
+        const result = await getBiliBiliInfoByVideoID(local_url)
+        if (result && result?.code === 0 && this.userIsExist(result?.owner?.mid) || this.userIsExist(result?.owner?.name)) {
+            this.roomIsNeedRemove()
         }
 
     }
