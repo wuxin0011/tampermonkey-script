@@ -41,6 +41,7 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
+.dark  #lazyModule9 .layout-Module-container,
 .dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,
 .dark .layout-Module-head.is-fixed,

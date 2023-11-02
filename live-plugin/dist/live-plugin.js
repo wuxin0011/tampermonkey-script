@@ -8,9 +8,6 @@
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArhJREFUWEfllz9ME1Ecx3+/dzUxIUpPxcTEqVD+LDjIoiTSwQldjHGDAwYpbYE4aOJQ8KBFTUx0KLSWoNIDoyFuGsMkcTBx0URjjFBQBmKiQ49ijInh3s/06iWlgfauh8Xoje++7/f5vN+73r0i7PCFO8yHDQI1QzG5HEIOgskPsm85w9IFMmBkQguBNlQOAQTWB4hryWB3V1YgFP++OOCtKAfcYLjD4xeJ8adYE4p5gINn8YpPb78oBehPihDQ0KoS1Vl65/MFnJJfNgLbLeJs6/UA457/S0CUfI3art0ra3dupbalA5UdfdXpRGTJ7PaIUmAWiMbUqehj2wJiR28zcLqPRD2p6ehsMQlR8n9GQTiZuhd5n8naEtjX1X+ctPVHquvgYefHrw8RUFGVsSdbSYjtgWV0sFYDbksgC+dB1XXgNMgy14tJ/hkidjs9NfosX8IpBeaZwM7kwksWyMK1F6qrSjDgBjAjwZhwMzUZeWmMiZL/NQpCWz48R6BlVYnqb9yi7wGxwx8GjkfV6qpT+fBcCQQKq0rsrS4kCPJm8JI6IEqBS6oydqPYw+aU/MOATAQNJ1anI2+2ytt6CAtKyLKj8tOXI+lE7FWh3G8B81tQbOVW7/8tAoW/BWJ7YM7qyqzkCel5wY+RlWJ2s5v+DK0U3dvZ7xZovUlNRB9YmWdkdYHaa3ddtP7zQnKgp99qkf2dvfWcQ5OqjE5bndswEj+kEZzVj2TuUPxbcsC7x2oRO3l3KP5D0HhD9kwYjp9DghnivDyHUsYuI+L5hWD3lK3/BfVXx2s5p2MLQW+i1G7YEqgbiTZqmtC6OOi9/u8LeOQ5xwpL1uWulDGtlnN2AgAncseJa7gk+96Z6YrpLagbnmjmqHk2gAArAOgwAsznjiNBemHQO7qtAmaKlZIx3YFSipuZ8wvlidcmZtmgQAAAAABJRU5ErkJggg==
 // @source       https://github.com/wuxin0011/tampermonkey-script/live-plugin
 // @supportURL   https://github.com/wuxin0011/tampermonkey-script/issues
-// @match        https://*.douyin.com/*
-// @match        https://*.douyu.com/*
-// @match        https://*.huya.com/*
 // @match        https://*.bilibili.com/*
 // @match        https://www.douyu.com/*
 // @match        https://www.huya.com/*
@@ -2020,12 +2017,15 @@ ${root$1}
       findMark(that.header_logo, (a) => {
         a.href = "javascript:;void(0)";
         a.title = "点击Logo,显示插件配置";
-        addEventListener(a, "click", (e) => {
-          e.preventDefault();
-          that.isShowContainer();
-        });
-        log("logo点击按钮装置完毕！");
-      }, 10, 500);
+        if (!a.mark) {
+          a.mark = true;
+          addEventListener(a, "click", (e) => {
+            e.preventDefault();
+            that.isShowContainer();
+          });
+          log("logo点击按钮装置完毕！");
+        }
+      }, 5, 500);
     }
     addEven() {
       let that = this;
@@ -2094,30 +2094,31 @@ ${root$1}
     // 详情操作
     detail() {
       let that = this;
-      if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
-        findMark(".host-name", (hostName) => {
-          hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】🧹`;
-          addEventListener(hostName, "click", () => {
-            if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
-              that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
-            }
-          });
-        });
-        let ads = [
-          ".main-wrap .room-mod-ggTop",
-          "#chatRoom .room-gg-chat",
-          "#huya-ab"
-        ];
-        intervalRemoveElement(ads, 500, 20);
-        this.isFullScreen();
-        this.isAutoMaxVideoPro();
-        findMark("#J-room-chat-shield", (item) => {
-          if (item.className.indexOf("shield-on") === -1) {
-            item.click();
-            log("自动点击了弹幕礼物显示工具");
-          }
-        }, 100, 1e3);
+      if (!new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
+        return;
       }
+      findMark(".host-name", (hostName) => {
+        hostName.title = `点击屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】🧹`;
+        addEventListener(hostName, "click", () => {
+          if (confirm(`确认屏蔽主播【${hostName == null ? void 0 : hostName.textContent}】？`)) {
+            that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
+          }
+        });
+      });
+      let ads = [
+        ".main-wrap .room-mod-ggTop",
+        "#chatRoom .room-gg-chat",
+        "#huya-ab"
+      ];
+      intervalRemoveElement(ads, 500, 20);
+      this.isFullScreen();
+      this.isAutoMaxVideoPro();
+      findMark("#J-room-chat-shield", (item) => {
+        if (item.className.indexOf("shield-on") === -1) {
+          item.click();
+          log("自动点击了弹幕礼物显示工具");
+        }
+      }, 100, 1e3);
     }
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
@@ -2904,6 +2905,7 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
+.dark  #lazyModule9 .layout-Module-container,
 .dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,
 .dark .layout-Module-head.is-fixed,
@@ -3319,7 +3321,6 @@ ${darkCss$1}
 
 ` : "";
   const darkCss = `
-
 /* 修改背景和字体颜色 */
 .dark .room-core,
 .dark input,
@@ -3329,13 +3330,11 @@ ${darkCss$1}
 .dark .hy-header-style-normal .duya-header-wrap,
 .dark .duya-header,
 .dark .duya-header .duya-header-bd,
-.dark #J_liveListNav dl dd .role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165, 
-.dark #J_liveListNav dl dd .role-box--CmncxF51UUP9Y9q3Gf4Tt.role-box_3--2j_unpb869X0sxOjH9L165:hover,
-.dark #J_liveListNav dl dd [class^=role-box],
-.dark #J_liveListNav dl dd [class^=role-box]:hover,
+.dark #J_liveListNav dl dd [class^=role],
+.dark #J_liveListNav dl dd [class^=role]:hover,
 .dark #J_liveListNav dl dd div li,
 .dark #J_liveListNav dl dd div li:hover,
-
+.dark [class^=emoticon] [class^=emot],
 .dark .program-preview-box .preview-bd,
 .dark .game-live-item,
 .dark .game-live-item .txt .num,
@@ -3343,28 +3342,28 @@ ${darkCss$1}
 .dark .game-live-item .txt .game-type,
 .dark .live-box .box-hd .more-list li,
 .dark #J_duyaHeaderRight ul li a,
-.dark .Category--2-gctJ3idXKRr9fHBvo6NK .SecTitle--1gf_r_H6RSc--8znfHWnx4,
 .dark [class^=Category] [class^=SecTitle],
+.dark [class^=listItem],.dark [class^=listItem] span,
 .dark .nav-expand-list,
 .dark .nav-expand-list-more ,
 .dark #js-game-list li,
 .dark .mod-list .box-hd .filter dd .tag-layer,
-.dark .layout-Module--aside .layout-Module-container,
 .dark .room-hd,.dark .room-core-r,
 .dark .room-sidebar,.dark .room-player-gift-placeholder,
 .dark #chat-room__wrap #chat-room__list div,.dark #chat-room__wrap #chat-room__list div a,
 .dark #js-preview-box,.dark #recom-banners,.dark #tipsOrchat,
 .dark .banners-box,.dark .box-recom .recom-banners,.dark .box-recom .recom-moments,
-.dark .hotMoment-box .moment-item .moment-comment .comment-item,.dark #J_RoomChatSpeaker textarea,
+.dark .hotMoment-box .moment-item .moment-comment .comment-item,
 .dark .chat-room__input,.dark .chat-room__ft,
-.dark .room-panel,.dark .Panel--8WJ1xUECB7O5tfnF11lg,
+.dark .room-panel,
 .dark .subscribe-live-item,.dark .list-hd .follow-ctrl,
 .dark .btn-more,.dark #js-search-main .host-item,.dark #js-search-main .host-item .desc,
 .dark .search-left .superStar-item,.dark .chat-room__input .btn-sendMsg ,
 .dark .nav-expand-list.nav-expand-game span a,.dark .chat-room__ft .chat-emot div,
 .dark #tipsOrchat ._PortalChatPanelRoot div, .dark .ddJUGO,
 .dark .laypageskin_default a,.dark .laypage_main button,.dark .laypage_main input,
-.dark .player-gift-wrap,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M.checked--2qEbUox3t-pKVluoe87qMG i,
+.dark .player-gift-wrap,
+.dark [class^=checkbox][class^=checked] i,
 .dark .chat-room__bd .chat-room__scroll .clearBtn,
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark [class^=panel],
@@ -3372,9 +3371,9 @@ ${darkCss$1}
 .dark [class^=PanelHd],
 .dark [class^=PanelBd],
 .dark [class^=PanelFt],
-.dark [class^=PopMsg],.dark [class^=PopMsg] [class^=title],.dark [class^=PopMsg] [class^=desc],.dark [class^=PopMsg] [class^=PopMsgArr],.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
-.dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark .listItem--2DQMeljGuIpJJbgUmLePE3 span,
-.dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejSSMCTSLSPah47f_19h-,
+.dark [class^=PopMsg],.dark [class^=PopMsg] [class^=title],.dark [class^=PopMsg] [class^=desc],
+.dark [class^=PopMsg] [class^=PopMsgArr],
+.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off,
 .dark .duya-header-search input,.dark .inpage-advice-list li:hover,
 .dark #play2 .content .content-aside>div,.dark #play2 .content .content-aside>div h2,
 .dark #play2 .content .content-aside>div .more,.dark .main-info,
@@ -3392,7 +3391,6 @@ ${darkCss$1}
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
 .dark [class*=msg-of-king],
-.dark .ButtonMon--220refp4DGUDqT-yPXcS8W.fans--33nbMT8b0W7GezN12PjsS8 .btn--1nWuP5PQFEC5TC290fbKN,
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
@@ -3433,7 +3431,6 @@ ${darkCss$1}
 .dark .video-funny .title span,
 .dark .live-box .box-hd .title a,
 .dark .hy-header-style-skr .hy-nav-link,
-.dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a,
 .dark [class^=Category] [class^=Item] a,
 .dark #js-game-list li a .g-gameCard-fullName,
 .dark .box-hd .title,
@@ -3465,16 +3462,13 @@ ${darkCss$1}
 .dark #tipsOrchat .live-tips,
 .dark #tipsOrchat ._PortalChatPanelRoot div p,
 .dark #tipsOrchat ._PortalChatPanelRoot div span,
-.dark #tipsOrchat ._PortalChatPanelRoot div i,.dark .checkbox--3UDS8fEzoJbhidQEBAym6M i,
+.dark #tipsOrchat ._PortalChatPanelRoot div i,
 .dark [class^=checkbox] i,
-.dark .checkbox--3UDS8fEzoJbhidQEBAym6M span,.dark [class^=checkbox] span,
-.dark .listItem--2DQMeljGuIpJJbgUmLePE3,.dark [class^=listItem],
-.dark .barrageBox--12mXUQ-jjQe4g8cXRIDZnw .title--3ejssMCTSLSPah47f_19h-,
+.dark [class^=checkbox] span,
+.dark [class^=listItem],.dark [class^=listItem] span,
 .dark [class^=barrageBox] [class^=title],
-.dark [class^=barrageBox] [class^=panel-hd], 
+.dark [class^=barrageBox] [class^=panel], 
 .dark [class^=panel],
-.dark [class^=panel] [class^=panel-hd],
-.dark [class^=panel-hd],
 .dark .chat-room__ft span,.dark .chat-room__ft p,
 .dark .duya-header-right a i,
 .dark .duya-header-right a span,
@@ -3497,11 +3491,9 @@ ${darkCss$1}
 .dark .search-main .type-keyword,.dark #tipsOrchat .live-tips i,.dark .duya-header-right a:hover,.dark .duya-header-right a i:hover,.dark .duya-header-right a span:hover,.dark .chat-room__bd .chat-room__scroll .clearBtn:hover,
 .dark .chat-room__bd .chat-room__scroll .lockBtn:hover,.dark .main-info .info-video .video-detail .video-title,
 .dark .main-info .info-video .video-author h3,
-.dark .FavoritePresenter--MMD7zrcd7sYoYy4-nf4LW .subscribe-hd--24Dtf1lXtfSas6Og00JGh .subscribe-tit--27roiaLDJp7Mr5zcqn8qjy,
 .dark .search-header .find-result em,.dark .aside-videolist .video-item:hover .item-detail h3,
-.dark .Category--2-gctJ3idXKRr9fHBvo6NK .Item--2Tc1DF80qnq4qFUM3vHPPM a:hover,
-.dark dark [class^=FavoritePresenter] [class^=subscribe-hd],
-.dark dark [class^=FavoritePresenter] [class^=subscribe-hd] [class^=subscribe-tit],
+.dark dark [class^=FavoritePresenter] [class^=subscribe],
+.dark dark [class^=FavoritePresenter] [class^=subscribe] [class^=subscribe],
 .dark dark [class^=Category] [class^=Item] a:hover
 {
 
@@ -3515,7 +3507,6 @@ ${darkCss$1}
 .dark #js-game-list li,.dark .g-gameCard-item,.dark .room-sidebar,.dark .list-hd .follow-ctrl,.dark .btn-more,.dark #js-search-main .host-item,.dark .subscribe-live-item,
 .dark .chat-room__input .btn-sendMsg,.dark .laypageskin_default a,.dark .chat-room__bd .chat-room__scroll .clearBtn,.dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .main-info .info-draw,.dark .main-info .info-comment,.dark .main-info .info-comment h2,
-.dark #chat-room__wrap #chat-room__list .RoomMessageRichText--2Y0TYze1NxfsGAbfcA8jGV,
 .dark #chat-room__wrap #chat-room__list [class^=RoomMessageRichText]{
   border:1px solid var(--w-border) !important;
   outline: none !important;
@@ -3576,7 +3567,7 @@ ${darkCss$1}
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
 .dark .ixyGIy,
-
+.dark #J_RoomChatSpeaker textarea,
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -3594,7 +3585,6 @@ ${darkCss$1}
 }
 
 
-.dark .ChatSpeaker--2lgjsxdm6dK5MZ-6kVGLtx textarea:focus,
 .dark [class^=ChatSpeaker] textarea:focus,
 .dark .hy-header-style-normal .duya-header-search input:focus {
   border:1px solid var(--w-text) !important;
@@ -3603,21 +3593,20 @@ ${darkCss$1}
 
 
 
-.dark .MmdPopPanel--e_LkiARLtmY25hB1R9rdB,.dark [class^=MmdPopPanel],
-.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span,
-.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span,
+.dark [class^=MmdPopPanel],
 .dark .msg-of-king,.dark [class^=roomBlockWords] [class^=btn],
-.dark [class^=SubConfirmPop],.dark [class^=emot-preview],
+.dark [class^=SubConfirmPop],
+.dark [class^=SubConfirmPop] span,
+.dark [class^=SubConfirmPop] [class^=control] span,
 .dark [class^=colorNormal],
 .dark #player-danmu-report,
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
-.dark .ucard-normal--1-VRAi0Zm5CwE-PaY2FEie,
 .dark [class^=ucard],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=roomBlockWords-list] li,
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
-.dark #search-bar-input,
+.dark #search-bar-input,.dark [class^=barrageBox],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -3628,10 +3617,8 @@ ${darkCss$1}
 }
 
 
-.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh span:hover,
 .dark [class^=SubConfirmPop] span:hover,
 .dark #J_liveListNav dl dd ul li ul li:hover,
-.dark .SubConfirmPop--2VSR0gV-WvcfUtEzoh_Kjh .control--2EUGLFp0K_j4h_YJLiCtlj span:hover,
 .dark [class^=SubConfirmPop] [class^=control] span:hover,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on:hover,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off:hover{
@@ -3654,6 +3641,30 @@ ${darkCss$1}
   color: var(--w-text) !important;
   outline: none !important;
 }
+
+.dark .chat-room__ft .chat-room__ft__pannel .room-chat-tool-color {
+  width: 20px !important;
+  height: 20px !important;
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+  border-radius:50%; !important;
+  position:relative !important;
+}
+
+.dark #J-room-chat-color::before {
+  content: '饰';
+  left:50% !important;
+  top:50% !important;
+  position: absolute !important;
+  transform: translate(-50%,-50%) !important;
+}
+
+.dark #msg_send_bt {
+  border-left : 1px solid var(--w-text) !important;
+}
+
+
 
 `;
   const css$3 = is_huya ? `

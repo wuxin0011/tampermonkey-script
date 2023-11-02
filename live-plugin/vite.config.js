@@ -13,9 +13,6 @@ export default defineConfig({
         entry: 'src/main.js', userscript: {
             icon: icon,
             match: [
-                 'https://*.douyin.com/*',
-                 'https://*.douyu.com/*', 
-                 'https://*.huya.com/*', 
                  'https://*.bilibili.com/*',
                  'https://www.douyu.com/*',
                  'https://www.huya.com/*', 

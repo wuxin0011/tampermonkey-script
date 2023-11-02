@@ -86,36 +86,39 @@ export default class TriggerLive extends LivePlugin {
     // 详情操作
     detail() {
         let that = this
-        if (new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
-            findMark('.host-name', (hostName) => {
-                hostName.title = `点击屏蔽主播【${hostName?.textContent}】🧹`
-                addEventListener(hostName, 'click', () => {
-                    if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
-                        that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
-                    }
-                })
-            })
-
-
-            let ads = [
-                '.main-wrap .room-mod-ggTop',
-                '#chatRoom .room-gg-chat',
-                '#huya-ab'
-            ]
-            // 移除视频播放器区域广告
-            intervalRemoveElement(ads, 500, 20)
-            this.isFullScreen()
-            this.isAutoMaxVideoPro()
-
-            // 礼物工具
-            // 默认全部选择
-            findMark('#J-room-chat-shield', (item) => {
-                if (item.className.indexOf("shield-on") === -1) {
-                    item.click()
-                    log('自动点击了弹幕礼物显示工具')
-                }
-            }, 100, 1000)
+        // .chat-room__ft .chat-room__ft__pannel .room-chat-tool-color
+        if (!new RegExp(/^https:\/\/www\.huya\.com(\/\w+)$/).test(local_url)) {
+            return;
         }
+        findMark('.host-name', (hostName) => {
+            hostName.title = `点击屏蔽主播【${hostName?.textContent}】🧹`
+            addEventListener(hostName, 'click', () => {
+                if (confirm(`确认屏蔽主播【${hostName?.textContent}】？`)) {
+                    that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
+                }
+            })
+        })
+
+
+        let ads = [
+            '.main-wrap .room-mod-ggTop',
+            '#chatRoom .room-gg-chat',
+            '#huya-ab'
+        ]
+        // 移除视频播放器区域广告
+        intervalRemoveElement(ads, 500, 20)
+        this.isFullScreen()
+        this.isAutoMaxVideoPro()
+
+        // 礼物工具
+        // 默认全部选择
+        findMark('#J-room-chat-shield', (item) => {
+            if (item.className.indexOf("shield-on") === -1) {
+                item.click()
+                log('自动点击了弹幕礼物显示工具')
+            }
+        }, 100, 1000)
+
     }
 
     // 通过地址获取房间号
