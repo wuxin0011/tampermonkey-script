@@ -25,7 +25,7 @@ const css = is_douyu ? `
   color:rgb(255, 135, 0) !important;
 }
 
-
+.PkView,.SysSign-Ad,
 .layout-Section.layout-Slide,
 .Header-broadcast-wrap,
 #lazyModule3,
@@ -73,7 +73,7 @@ li.Header-menu-link:nth-child(3),
   display:inline-block !important;
 }
 
-
+.LiveRoomDianzan,
 .SupremeRightIconJSX,.AnchorLevel,
 .Barrage-main  .UserLevel,
 .Barrage-main  .js-user-level,
@@ -162,6 +162,15 @@ background-color: #f2f5f6 !important;
 .js-noblefloating-barragecont {
   background: none !important;
   border: none !important;
+}
+
+
+#js-barrage-container .Barrage-main>div>div {
+  margin-bottom: -20px !important;
+}
+
+.ChatSpeak .ChatBarrageCollect-tip {
+  width:auto !important;
 }
 
 ${headerDarkCss}

@@ -118,6 +118,9 @@ export default class TriggerLive extends LivePlugin {
                 log('自动点击了弹幕礼物显示工具')
             }
         }, 100, 1000)
+        setTimeout(() => {
+            this.autoHideMenu()
+        }, 10000);
 
     }
 
@@ -195,6 +198,7 @@ export default class TriggerLive extends LivePlugin {
 
     autoHideMenu() {
         const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name)
+        console.log('is show left meun ?', isShow)
         if (isShow) {
             return;
         }
@@ -209,7 +213,7 @@ export default class TriggerLive extends LivePlugin {
                 }
                 clearInterval(timer)
             }
-        }, 100, 100)
+        }, 10, 2000)
 
     }
 

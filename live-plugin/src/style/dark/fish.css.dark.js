@@ -255,7 +255,9 @@ ${loadingLazy}
 .dark .layout-Search-input,.dark .layout-Search-btn,
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
 .dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
-.dark .MuteStatus.is-noLogin,
+.dark .MuteStatus.is-noLogin,.dark .FansMedalEnter-enterName,
+.dark .FansBarrageSwitcher[class*=color],.dark .BarrageWord-fkbutton .fkbutton-icon,
+.dark .PopularBarrage .PopularBarrageBtn,.dark .EnergyBarrageIcon,
 .dakr .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -296,6 +298,9 @@ ${loadingLazy}
   background-color: var(--w-bg) !important;
   color: var(--w-text) !important;
 }
+
+
+
 
 `
 

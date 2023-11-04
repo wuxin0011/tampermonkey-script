@@ -12,7 +12,7 @@
 // @match        https://www.douyu.com/*
 // @match        https://www.huya.com/*
 // @match        https://www.bilibili.com/*
-// @match        https://www.douyin.com/*
+// @match        https://*.douyin.com/*
 // @grant        GM_addStyle
 // ==/UserScript==
 
@@ -2119,6 +2119,9 @@ ${root$1}
           log("自动点击了弹幕礼物显示工具");
         }
       }, 100, 1e3);
+      setTimeout(() => {
+        this.autoHideMenu();
+      }, 1e4);
     }
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
@@ -2188,6 +2191,7 @@ ${root$1}
     }
     autoHideMenu() {
       const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
+      console.log("is show left meun ?", isShow);
       if (isShow) {
         return;
       }
@@ -2201,7 +2205,7 @@ ${root$1}
           }
           clearInterval(timer);
         }
-      }, 100, 100);
+      }, 10, 2e3);
     }
   }
   const getInfo = async (roomId = local_url) => {
@@ -3119,7 +3123,9 @@ ${loadingLazy}
 .dark .layout-Search-input,.dark .layout-Search-btn,
 .dark .Search-feedback-textarea,.dark .VideoCollectionMix .layout-videoCollection-item,
 .dark .categoryBoxB-editB .edit,.dark .layout-Nav-backTop,.dark .ChatSend-button,
-.dark .MuteStatus.is-noLogin,
+.dark .MuteStatus.is-noLogin,.dark .FansMedalEnter-enterName,
+.dark .FansBarrageSwitcher[class*=color],.dark .BarrageWord-fkbutton .fkbutton-icon,
+.dark .PopularBarrage .PopularBarrageBtn,.dark .EnergyBarrageIcon,
 .dakr .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -3161,6 +3167,9 @@ ${loadingLazy}
   color: var(--w-text) !important;
 }
 
+
+
+
 `;
   const headerDarkCss = `
 .layout-Section.layout-Header {
@@ -3176,7 +3185,7 @@ ${loadingLazy}
   color:rgb(255, 135, 0) !important;
 }
 
-
+.PkView,.SysSign-Ad,
 .layout-Section.layout-Slide,
 .Header-broadcast-wrap,
 #lazyModule3,
@@ -3224,7 +3233,7 @@ li.Header-menu-link:nth-child(3),
   display:inline-block !important;
 }
 
-
+.LiveRoomDianzan,
 .SupremeRightIconJSX,.AnchorLevel,
 .Barrage-main  .UserLevel,
 .Barrage-main  .js-user-level,
@@ -3313,6 +3322,15 @@ background-color: #f2f5f6 !important;
 .js-noblefloating-barragecont {
   background: none !important;
   border: none !important;
+}
+
+
+#js-barrage-container .Barrage-main>div>div {
+  margin-bottom: -20px !important;
+}
+
+.ChatSpeak .ChatBarrageCollect-tip {
+  width:auto !important;
 }
 
 ${headerDarkCss}

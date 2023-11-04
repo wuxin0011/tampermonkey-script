@@ -17,7 +17,7 @@ export default defineConfig({
                  'https://www.douyu.com/*',
                  'https://www.huya.com/*', 
                  'https://www.bilibili.com/*',
-                 'https://www.douyin.com/*',
+                 'https://*.douyin.com/*',
                 ],
             namespace: config.repository.url,
             version: config.version,
