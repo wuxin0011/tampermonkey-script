@@ -238,7 +238,7 @@ export default class BiliBili extends LivePlugin {
         // TODO index
     }
 
-    detailLeftVideoList(sel = '.video-page-card-small') {
+    detailLeftVideoList(sel = '.card-box') {
         const scanVideoList = (sc) => {
             Array.from(querySelectorAll(sel)).forEach(videoDom => {
                 const isMark = !!videoDom.getAttribute('mark')

@@ -153,7 +153,6 @@ const home = `
 .dark .bili-header .game-right-list-item:hover,
 .dark .bili-header .manga-right-list-item-text:hover,
 .dark .bili-header .header-fav-card__info--name:hover,
-.dark .bili-header .header-fav-card__info--title:hover,
 .dark .bili-header .left-entry .download-wrapper .download-bottom:hover ,
 .dark .bili-header .live-left-list-item-text:hover,
 .dark .bili-header .game-right-title:hover,
@@ -164,7 +163,10 @@ const home = `
 .dark .bili-header .bili-header__channel .channel-link__left:hover,
 .dark .bili-video-card .bili-video-card__info--author:hover,.dark .right-entry-text:hover,
 .dark .icon-title:hover,.dark .bili-header .slide-down .right-entry .right-entry__outside .right-entry-icon:hover,
-.dark .history-panel-popover .header-history-card__info--title:hover
+.dark .trending-item:hover .trending-text,
+.dark .header-history-card:hover .header-history-card__info--title,
+.dark .header-history-card .header-history-video:hover,
+.dark .bili-header .header-fav-card:hover .header-fav-card__info--title,
 .dark .bili-video-card .bili-video-card__info--tit>a:hover {
   color:var(--w-blue-link-hover) !important;
 }
@@ -228,12 +230,12 @@ const home = `
 
 
 /* background 和 蓝色 border */
-.dark .trending-item:hover,
-.dark .header-history-card:hover,
+
+
 .dark .header-dynamic-list-item:hover,
-.dark .header-history-card .header-history-video:hover,
-.dark .bili-header .avatar-panel-popover .links-item .single-link-item:hover,
-.dark .bili-header .header-fav-card:hover {
+
+.dark .bili-header .avatar-panel-popover .links-item .single-link-item:hover
+{
   border:1px solid var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
 }

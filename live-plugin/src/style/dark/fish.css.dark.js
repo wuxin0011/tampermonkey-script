@@ -41,7 +41,7 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
-.dark  #lazyModule9 .layout-Module-container,
+.dark .layout-Module--aside.AnchorRank .layout-Module-container,
 .dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,
 .dark .layout-Module-head.is-fixed,
@@ -248,7 +248,7 @@ ${loadingLazy}
 .dark .Search-direct,
 .dark .DyCover,.dark .Search-yuba,
 .dark .layout-Card-history, .dark .layout-Card-rank,
-.dark .layout-Cover-item,.dark .Search-input-pane,
+.dark .Search-input-pane,.dark .DyListCover.HeaderCell,
 .dark .ListRecommend-refresh,.dark .ListHeader-pop-label,
 .dark layout-Module-label,.dark .Search-default-item,
 .dark .Search-recommend .Search-direct,.dark Search-category,
