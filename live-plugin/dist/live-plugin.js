@@ -3622,7 +3622,7 @@ ${darkCss$1}
 .dark [class^=colorNormal][class^=lock],
 .dark [class^=ucard],
 .dark .chat-room__list .msg-timed span,
-.dark [class^=roomBlockWords-list] li,
+.dark [class^=roomBlockWords] li,
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
