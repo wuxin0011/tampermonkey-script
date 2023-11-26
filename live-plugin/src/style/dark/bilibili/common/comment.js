@@ -5,7 +5,8 @@
 const comment =
   `
  .dark .player-left-components *,
- .dark .bb-comment *,
+ .dark .bb-comment,
+
  .dark .bb-comment, .dark .comment-bilibili-fold,
  .dark .bb-comment .comment-send-lite .comment-emoji,
  .dark .bb-comment .comment-send.comment-send-lite,
@@ -17,7 +18,7 @@ const comment =
  .dark .bili-rich-textarea__inner,.dark .bili-emoji__footer,
  .dark .bili-emoji__pkg,.dark .bili-emoji,.dark .emoji-box
  {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -51,6 +52,15 @@ const comment =
 }
 
 
+.dark .user-card,
+.dark .user-card .btn-box .message
+{
+  border: 1px solid var(--w-text) !important;
+  color:var(--w-text-light) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+
 
 .dark .emoji-box,.dark .emoji-box .emoji-tabs,.dark .bili-emoji__pkg.active,
 .dark .bb-comment .operation .opera-list,
@@ -63,7 +73,7 @@ const comment =
 .dark .comment-bilibili-fold .comment-send-lite .textarea-container .ipt-txt,
 .dark .comment-bilibili-fold .operation .opera-list{
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   border-color: var(--w-text) !important;
 }
 
@@ -72,9 +82,10 @@ const comment =
 .dark .btn.idc-btn.primary:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
+.dark .user-card .btn-box .message:hover,
 .dark .btn.idc-btn.default:hover,.dark .bili-emoji__list__item:hover,
 .dark .emoji-box .emoji-wrap .emoji-pic:hover,
 .dark .emoji-list.emoji-text.emoji-pic:hover,
@@ -82,7 +93,7 @@ const comment =
 .dark .emoji-box .emoji-tabs .tab-link.on {
   color:var(--w-blue-link-hover) !important;
   border:1px solid var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 `

@@ -23,7 +23,7 @@ const guochuang = /.*:\/\/www\.bilibili\.com\/guochuang\/.*/.test(local_url) ?
   color:var(--w-text-light) !important;
 }
 
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+.dark .block-area .timeline-toggle-block .timeline-toggle-btn {
   background: none !important;
 }
 
@@ -32,7 +32,7 @@ const guochuang = /.*:\/\/www\.bilibili\.com\/guochuang\/.*/.test(local_url) ?
 .dark .timeline-box .timeline-item .item-right p.num a, 
 .dark .timeline-box .timeline-item .item-right p.num span,
 .dark .new-stat-module .zone-title .headline .new-stat-more,
-.dark .back-top-tools .tool-item,.dakr .block-area .timeline-toggle-block .timeline-toggle-btn,
+.dark .back-top-tools .tool-item,.dark .block-area .timeline-toggle-block .timeline-toggle-btn,
 .dark .sec-rank .more-link,.dark .pgc-rank-dropdown,.dark .pgc-rank-dropdown .dropdown-list,
 .dark .random-change {
   border: 1px solid var(--w-border) !important;
@@ -40,7 +40,7 @@ const guochuang = /.*:\/\/www\.bilibili\.com\/guochuang\/.*/.test(local_url) ?
   background:var(--w-bg-darker) !important;
 }
 
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn:hover,
+.dark .block-area .timeline-toggle-block .timeline-toggle-btn:hover,
 .dark .new-stat-module .zone-title .headline .new-stat-more:hover,
 .dark .timeline-box .timeline-item .item-right p.num a:hover, 
 .dark .timeline-box .timeline-item .item-right p.num span:hover,

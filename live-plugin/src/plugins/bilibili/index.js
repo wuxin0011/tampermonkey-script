@@ -54,6 +54,9 @@ export default class BiliBili extends LivePlugin {
      */
     createButton() {
         let that = this
+        if (local_url.indexOf('https://live.bilibili.com/') != 1) {
+            return;
+        }
         loopDo(() => {
             if (!!that.logo_btn) {
                 return;

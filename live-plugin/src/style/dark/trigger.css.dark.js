@@ -73,6 +73,7 @@ const darkCss = `
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
+.dark [class^=ucard],
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -200,6 +201,14 @@ const darkCss = `
 }
 
 
+.dark [class^=roomBlockWords] li,
+.dark [class^=panel] [class^=panel-hd] [class^=box] [class^=box-hd],
+.dark [class^=panel] [class^=panel] [class^=lock] {
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text-light) !important;
+}
+
+
 .dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
 .dark .duya-header,.dark .player-all-gift-panel,.dark .player-all-gift-panel .arrow,
 .dark .chat-room__input,.dark #player-gift-tip,.dark .player-face li .player-superfans-card-count,
@@ -208,7 +217,7 @@ const darkCss = `
 .dark #player-gift-tip .make-friend-unsubscribe,
 .dark #player-gift-tip .make-friend-line,
 .dark #player-gift-tip .bottom,.dark #player-pc-watch-btn,
-.dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
+.dark .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
 {
   background-color: var(--w-bg-darker) !important;
   border-color:var(--w-border) !important;
@@ -265,6 +274,7 @@ const darkCss = `
 
 
 .dark [class^=ChatSpeaker] textarea:focus,
+.dark [class^=roomBlockWords] li,
 .dark .hy-header-style-normal .duya-header-search input:focus {
   border:1px solid var(--w-text) !important;
   outline: none !important;
@@ -281,9 +291,11 @@ const darkCss = `
 .dark #player-danmu-report,
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
-.dark [class^=ucard],
+.dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
-.dark [class^=roomBlockWords] li,
+
+
+.dark [class^=panel] [class^=panel] [class^=lock] [class^=btn],
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,

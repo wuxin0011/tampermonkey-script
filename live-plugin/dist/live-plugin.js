@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.8
+// @version      4.1.9
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
@@ -2379,7 +2379,7 @@ ${root$1}
         if (closeBtn) {
           closeBtn.click();
         }
-      }, 30, 1e3);
+      }, 5, 1e3);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         Array.from(querySelectorAll("#root>div")).forEach((element) => {
@@ -2497,6 +2497,9 @@ ${root$1}
      */
     createButton() {
       let that = this;
+      if (local_url.indexOf("https://live.bilibili.com/") != 1) {
+        return;
+      }
       loopDo(() => {
         if (!!that.logo_btn) {
           return;
@@ -2909,14 +2912,16 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
+
+.dark .DyLiveCover-wrap,.dark .DyLiveRecord-wrap,
 .dark .layout-Module--aside.AnchorRank .layout-Module-container,
 .dark .layout-Section.layout-Header,
-.dark .layout-Slide-bannerInner,
+.dark .layout-Slide-bannerInner,.dark .FKLiWrap,
 .dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
-.dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
+.dark .GiftInfoPanel-brief,
 .dark .Header-menu-wrap,.dark .DyListCover-wrap,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
 .dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
@@ -2926,7 +2931,7 @@ ${loadingLazy}
 .dark .Barrage-listItem,.dark .Barrage-EntranceIntroduce, .dark .Barrage-roomVip--super,
 .dark .DiamondsFansBarrage, .dark #js-floatingbarrage-container li, .dark #js-fansflating-barrage,
 .dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame, .dark .FollowGuide,
-.dark .BarrageBuffer,
+.dark .BarrageBuffer,.dark .Title-anchorName-HC,
 .dark .Barrage-FansHome-content,.dark .Barrage-FansHome,
 .dark .ChatSend-txt,.dark .layout-Classify-card,.dark .cate2TagB-item,
 .dark .PlayerToolbar-signCont,.dark .dy-Modal-content,.dark .CustomGroupCommon .dy-Modal-title,
@@ -2944,11 +2949,12 @@ ${loadingLazy}
 .dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
-.dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
+.dark .Search-recommend:hover,.dark .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
 .dark .layout-Player-chat,.dark .AnchorRank-item,
-.dark layout-Player-chat *,
+.dark .layout-Player-chat *,.dark .EmotionList.EmotionDiamondsPanel .EmotionList-con,
+.dark #js-EmotionDiamondsPanel,.dark .DropPaneList .HistoryList,
 .dark #js-footer
 {
   background-color: var(--w-bg-darker) !important;
@@ -2970,7 +2976,7 @@ ${loadingLazy}
 .dark .AnchorRank .layout-Module-title,.dark  .AnchorRank .layout-Module-title a,
 .dark .DyCover-intro,.dark .DyCover-user,.dark .DyCover-zone,.dark a, .dark .layout-Module-title a,
 .dark .DyRecCover-zone,.dark .DyRecCover-intro,.dark .DyRecCover-userName,.dark .DyRecCover-tag,
-.dark .Category-item,.dark .DropMenuList-name, .dark .DropMenuList-linkAll,.dark .ListHeader-title,
+.dark .DropMenuList-name, .dark .ListHeader-title,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label.is-active,
 .dark .DyListCover-intro,.dark .DyListCover-zone,.dark .DyListCover-hot,.dark .DyListCover-userName,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item-active a,
@@ -2984,7 +2990,7 @@ ${loadingLazy}
 .dark .SwipeTabsContent .tabItem ,.dark .layout-Classify-card>strong ,.dark .secondCateCard-hot,
 .dark .layout-Classify-card.secondCateCard,.dark .layout-Classify-card.secondCateCard.secondCateCark-hoverCard,.dark .HoverCark-wrap,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,.dark .customizeModal-title>h3,.dark .Search-label, .dark .Search-historyList>li,
-.dakr .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
+.dark .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
 .dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,.dark .Barrage-toolbarText,.dark .ShieldTool-listItem,.dark .BarrageTips,.dark .ChatBarrageCollectPop-title,
 .dark .FansBarrageColor-item-txt,.dark .ChatFansBarragePop-txt,
 .dark .PopularBarrage .PopularBarragePanel-descFansPrivilege,
@@ -3002,7 +3008,8 @@ ${loadingLazy}
 .dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText,
 .dark .SearchChannel-item-detail-name,.dark .SearchChannel-item-detail-name span,
 .dark .SearchChannel-item-detail-desc.SearchChannel-item-detail-isCate,.dark .SearchChannel-item-detail-desc.SearchChannel-item-detail-isCate span,
-.dark .Search-yuba .des .name,.dark .layout-Search-input>input
+.dark .Search-yuba .des .name,.dark .layout-Search-input>input,.dark .FKLiWrap:hover,
+.dark .TreasureInfo-desc
 {
   color: var(--w-text-light) !important;
 }
@@ -3018,7 +3025,6 @@ ${loadingLazy}
 .dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
 .dark .layout-Module-title a:hover,
 .dark .DropMenuList-name:hover,
-.dark .DropMenuList-linkAll:hover,
 .dark .ListHeader-title,
 .dark .layout-Module-label--hasList.is-active:hover, 
 .dark .layout-Module-label.is-active:hover,
@@ -3074,10 +3080,10 @@ ${loadingLazy}
 
 
 
-.dark .Category-item,
+
 .dark .layout-Module-label--hasList.is-active, 
 .dark .layout-Module-label,
-.dark .DropMenuList-linkAll,
+
 .dark .ListFooter .ListFooter-btn-wrap,
 .dark .cate2TagB-item,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,
@@ -3088,20 +3094,19 @@ ${loadingLazy}
 .dark .dy-Modal-footer button:hover,.dark .FilterSwitchStatus-switch,
 .dark .BarrageWordPanel-btn,.dark .LevelFilterLimit-input:focus,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,
-.dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus
+.dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus,
+.dark .MatchSystemChatFansBarragePop-describe,
 {
   border: 1px solid var(--w-text-light) !important;
 }
 
 
-.dark .Category-item:hover,
 .dark .layout-Module-label--hasList.is-active:hover, 
 .dark .layout-Module-label:hover,
-.dark .DropMenuList-linkAll:hover,
 .dark .categoryTab-item:hover,
 .dark .addedCategory-item:hover,
 .dark .Barrage-toolbarClear:hover, .dark .Barrage-toolbarLock:hover,
-.dark .ChatBarrageCollect .ChatBarrageCollect-tip:hover,.dark .TagItem:hover,
+.dark .ChatBarrageCollect .ChatBarrageCollect-tip:hover,
 .dark .BarrageWordPanel-btn:hover
 {
   border: 1px solid var(--w-text) !important;
@@ -3113,7 +3118,7 @@ ${loadingLazy}
   border: none !important;
 }
 
-.dark .Search-direct,
+.dark .Search-direct,.dark .DropMenuList-linkAll,
 .dark .DyCover,.dark .Search-yuba,
 .dark .layout-Card-history, .dark .layout-Card-rank,
 .dark .Search-input-pane,.dark .DyListCover.HeaderCell,
@@ -3126,21 +3131,25 @@ ${loadingLazy}
 .dark .MuteStatus.is-noLogin,.dark .FansMedalEnter-enterName,
 .dark .FansBarrageSwitcher[class*=color],.dark .BarrageWord-fkbutton .fkbutton-icon,
 .dark .PopularBarrage .PopularBarrageBtn,.dark .EnergyBarrageIcon,
-.dakr .Search-direct {
+.dark .ActiviesExpandPanel,.dark .GiftExpandPanel,.dark .GiftInfoPanel-cont,
+.dark .BatchGiveForm-num,.dark .TreasureTips,.dark .FKLiWra,
+.dark .MatchSystemChatFansBarragePop,.dark .TagItem,.dark .Category-item,
+.dark .layout-Cover-item,
+.dark .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
 
-
+.dark .Title-anchorName-HC .Title-anchorName-block:hover,
 .dark .DyCover:hover,.dark .layout-Search-btn:hover,
-.dark .ChatSend-button:hover,
+.dark .ChatSend-button:hover,.dark .DropMenuList-linkAll:hover,
 .dark .dark Search-category:hover,.dark .categoryBoxB-editB .edit:hover,
 .dark .Search-default-item:hover,.dark .Search-recommend .Search-direct:hover,
 .dark .Category-item:hover,.dark .ListRecommend-refresh:hover,
-.dakr .Search-direct:hover,.dark .ListHeader-pop-label:hover,
+.dark .Search-direct:hover,.dark .ListHeader-pop-label:hover,
 .dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
-.dark .Search-direct:hover,
+.dark .Search-direct:hover,.dark .TagItem:hover,
 .dark .Search-recommend:hover {
   background-color: var(--w-bg) !important;
   border:1px solid var(--w-text-light) !important;
@@ -3184,7 +3193,7 @@ ${loadingLazy}
 .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
   color:rgb(255, 135, 0) !important;
 }
-
+#js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
 .layout-Section.layout-Slide,
 .Header-broadcast-wrap,
@@ -3412,6 +3421,7 @@ ${darkCss$1}
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
+.dark [class^=ucard],
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -3539,6 +3549,14 @@ ${darkCss$1}
 }
 
 
+.dark [class^=roomBlockWords] li,
+.dark [class^=panel] [class^=panel-hd] [class^=box] [class^=box-hd],
+.dark [class^=panel] [class^=panel] [class^=lock] {
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text-light) !important;
+}
+
+
 .dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
 .dark .duya-header,.dark .player-all-gift-panel,.dark .player-all-gift-panel .arrow,
 .dark .chat-room__input,.dark #player-gift-tip,.dark .player-face li .player-superfans-card-count,
@@ -3547,7 +3565,7 @@ ${darkCss$1}
 .dark #player-gift-tip .make-friend-unsubscribe,
 .dark #player-gift-tip .make-friend-line,
 .dark #player-gift-tip .bottom,.dark #player-pc-watch-btn,
-.dakr .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
+.dark .inpage-advice-list li,.dark #play2 .content .content-aside>div .more
 {
   background-color: var(--w-bg-darker) !important;
   border-color:var(--w-border) !important;
@@ -3604,6 +3622,7 @@ ${darkCss$1}
 
 
 .dark [class^=ChatSpeaker] textarea:focus,
+.dark [class^=roomBlockWords] li,
 .dark .hy-header-style-normal .duya-header-search input:focus {
   border:1px solid var(--w-text) !important;
   outline: none !important;
@@ -3620,9 +3639,11 @@ ${darkCss$1}
 .dark #player-danmu-report,
 .dark #pc-watch-download-tips,.dark #pc-watch-download-tips,
 .dark [class^=colorNormal][class^=lock],
-.dark [class^=ucard],
+.dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
-.dark [class^=roomBlockWords] li,
+
+
+.dark [class^=panel] [class^=panel] [class^=lock] [class^=btn],
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
@@ -3920,7 +3941,8 @@ ${darkCss}
 `;
   const comment = `
  .dark .player-left-components *,
- .dark .bb-comment *,
+ .dark .bb-comment,
+
  .dark .bb-comment, .dark .comment-bilibili-fold,
  .dark .bb-comment .comment-send-lite .comment-emoji,
  .dark .bb-comment .comment-send.comment-send-lite,
@@ -3932,7 +3954,7 @@ ${darkCss}
  .dark .bili-rich-textarea__inner,.dark .bili-emoji__footer,
  .dark .bili-emoji__pkg,.dark .bili-emoji,.dark .emoji-box
  {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -3966,6 +3988,15 @@ ${darkCss}
 }
 
 
+.dark .user-card,
+.dark .user-card .btn-box .message
+{
+  border: 1px solid var(--w-text) !important;
+  color:var(--w-text-light) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+
 
 .dark .emoji-box,.dark .emoji-box .emoji-tabs,.dark .bili-emoji__pkg.active,
 .dark .bb-comment .operation .opera-list,
@@ -3978,7 +4009,7 @@ ${darkCss}
 .dark .comment-bilibili-fold .comment-send-lite .textarea-container .ipt-txt,
 .dark .comment-bilibili-fold .operation .opera-list{
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   border-color: var(--w-text) !important;
 }
 
@@ -3987,9 +4018,10 @@ ${darkCss}
 .dark .btn.idc-btn.primary:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
+.dark .user-card .btn-box .message:hover,
 .dark .btn.idc-btn.default:hover,.dark .bili-emoji__list__item:hover,
 .dark .emoji-box .emoji-wrap .emoji-pic:hover,
 .dark .emoji-list.emoji-text.emoji-pic:hover,
@@ -3997,7 +4029,7 @@ ${darkCss}
 .dark .emoji-box .emoji-tabs .tab-link.on {
   color:var(--w-blue-link-hover) !important;
   border:1px solid var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 `;
@@ -4314,7 +4346,7 @@ ${videoToolsDarkCss}
   color:var(--w-text-light) !important;
 }
 
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+.dark .block-area .timeline-toggle-block .timeline-toggle-btn {
   background: none !important;
 }
 
@@ -4323,7 +4355,7 @@ ${videoToolsDarkCss}
 .dark .timeline-box .timeline-item .item-right p.num a, 
 .dark .timeline-box .timeline-item .item-right p.num span,
 .dark .new-stat-module .zone-title .headline .new-stat-more,
-.dark .back-top-tools .tool-item,.dakr .block-area .timeline-toggle-block .timeline-toggle-btn,
+.dark .back-top-tools .tool-item,.dark .block-area .timeline-toggle-block .timeline-toggle-btn,
 .dark .sec-rank .more-link,.dark .pgc-rank-dropdown,.dark .pgc-rank-dropdown .dropdown-list,
 .dark .random-change {
   border: 1px solid var(--w-border) !important;
@@ -4331,7 +4363,7 @@ ${videoToolsDarkCss}
   background:var(--w-bg-darker) !important;
 }
 
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn:hover,
+.dark .block-area .timeline-toggle-block .timeline-toggle-btn:hover,
 .dark .new-stat-module .zone-title .headline .new-stat-more:hover,
 .dark .timeline-box .timeline-item .item-right p.num a:hover, 
 .dark .timeline-box .timeline-item .item-right p.num span:hover,
@@ -4619,6 +4651,7 @@ ${videoToolsDarkCss}
   outline-color: var(--w-border) !important;
 }
 
+
 `;
   const css$1 = commonDark;
   const is_account = local_url.indexOf("https://account.bilibili.com/") !== -1;
@@ -4686,7 +4719,7 @@ ${css$1}
 
 
 .dark .Home_1ebVE,
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+.dark .block-area .timeline-toggle-block .timeline-toggle-btn {
   background: none !important;
 }
 
@@ -4735,9 +4768,17 @@ ${css$1}
 }
 
 .dark #webShare .bili-share-pc,
+.dark .gift-panel-container-root [class^=gift-panel-background],
 .dark .live-non-revenue-player .sc-gsnTZi div {
   color:var(--w-text-light) !important;
   border-color: var(--w-border) !important;
+  background-color:var(--w-bg-darker) !important;
+}
+
+.dark .gift-control-panel .right-part [class*=recharge]:hover
+{
+  color:var(--w-blue-link-hover) !important;
+  border:1px soild var(--w-text-light) !important;
   background-color:var(--w-bg-darker) !important;
 }
 
@@ -4786,7 +4827,7 @@ ${link_css}
 .dark .article-container {
   border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 .dark .article-container ,
@@ -4796,7 +4837,7 @@ ${link_css}
 .dark .right-side-bar [class^=catalog]::after,
 .dark .fixed-top-header {
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 
@@ -4808,7 +4849,7 @@ ${link_css}
 .dark .nav-tool-container [class^=section]:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 
@@ -4818,7 +4859,7 @@ ${link_css}
 
 
 .dark .van-popover.van-followed .follow_dropdown li:hover {
-  background:var(--w-bg) !important;
+  background-color:var(--w-bg) !important;
   color:var(--w-blue-link-hover) !important;
 }
 
@@ -5025,6 +5066,19 @@ ${link_css}
 
 ` : ``;
   const t = `
+.dark .bili-dyn-card-video__body,
+.dark .bili-dyn-card-ugc__wrap {
+  background-color:var(--w-bg-darker) !important;
+  color:var(--w-text) !important;
+  border: 1px solid var(--w-border-dark) !important;
+}
+.dark .bili-dyn-up-list__item__name {
+  color:var(--w-text) !important;
+}
+
+.dark .bili-dyn-up-list__item__name:hover {
+  color:var(--w-blue-link-hover) !important;
+}
 
 
 `;
@@ -5198,7 +5252,10 @@ html {
 .dark .bili-header .upload-panel-popover .upload-item .item-title[data-v-fc330406]:hover,
 .dark .bili-header .upload-panel-popover .upload-item .item-title:hover,
 .dark .video-page-card-small .card-box .info .upname:hover,
-.dark .video-episode-card__info-title:hover, .dark .video-episode-card__info-duration:hover,
+.dark .video-episode-card:hover .video-episode-card__info-title,
+.dark .video-episode-card:hover .video-episode-card__info-duration,
+.dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing .video-episode-card__info-title,
+.dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing .video-episode-card__info-duration,
 .dark .first-line-title:hover,
 .dark .video-complaint-info video-toolbar-item-text:hover,
 .dark .video-note video-toolbar-right-item toolbar-right-note:hover,
@@ -5233,7 +5290,7 @@ html {
 .dark .vip-login-btn, .dark .vip-login-btn[data-v-fc330406],
 .dark .bili-header .header-upload-entry[data-v-fc330406],
 .dark .bili-header .header-upload-entry, .dark .bili-header .header-upload-entry[data-v-fc330406],
-.dark .second-line_right,.dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing,
+.dark .second-line_right,
 .dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask[data-v-757acbb5],
 .dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask,
 .dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn[data-v-757acbb5],

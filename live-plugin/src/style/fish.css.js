@@ -24,7 +24,7 @@ const css = is_douyu ? `
 .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
   color:rgb(255, 135, 0) !important;
 }
-
+#js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
 .layout-Section.layout-Slide,
 .Header-broadcast-wrap,

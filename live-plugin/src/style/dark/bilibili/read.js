@@ -39,7 +39,7 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 .dark .article-container {
   border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 .dark .article-container ,
@@ -49,7 +49,7 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 .dark .right-side-bar [class^=catalog]::after,
 .dark .fixed-top-header {
   color:var(--w-text-light) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 
@@ -61,7 +61,7 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 .dark .nav-tool-container [class^=section]:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
 }
 
 
@@ -71,7 +71,7 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 
 
 .dark .van-popover.van-followed .follow_dropdown li:hover {
-  background:var(--w-bg) !important;
+  background-color:var(--w-bg) !important;
   color:var(--w-blue-link-hover) !important;
 }
 

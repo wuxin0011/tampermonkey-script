@@ -41,14 +41,16 @@ ${loadingLazy}
   border:1px solid var(--w-text-light) !important;
 }
 
+
+.dark .DyLiveCover-wrap,.dark .DyLiveRecord-wrap,
 .dark .layout-Module--aside.AnchorRank .layout-Module-container,
 .dark .layout-Section.layout-Header,
-.dark .layout-Slide-bannerInner,
+.dark .layout-Slide-bannerInner,.dark .FKLiWrap,
 .dark .layout-Module-head.is-fixed,
 .dark .layout-List-item,.dark .layout-List-item .DyCover,
 .dark .Header-wrap,.dark .AnchorRank-more,
 .dark .Elevator,.dark .Elevator-item,.dark .Elevator-item.is-active>span::before,.dark .public-DropMenu-drop,
-.dark .Category-item,.dark .DropMenuList-linkAll,.dark .GiftInfoPanel-brief,
+.dark .GiftInfoPanel-brief,
 .dark .Header-menu-wrap,.dark .DyListCover-wrap,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label,
 .dark .ListFooter .dy-Pagination-next, .dark .ListFooter .dy-Pagination-prev,
@@ -58,7 +60,7 @@ ${loadingLazy}
 .dark .Barrage-listItem,.dark .Barrage-EntranceIntroduce, .dark .Barrage-roomVip--super,
 .dark .DiamondsFansBarrage, .dark #js-floatingbarrage-container li, .dark #js-fansflating-barrage,
 .dark .Barrage-EntranceIntroduce-Anchor, .dark .Barrage-EntranceIntroduce-Goodgame, .dark .FollowGuide,
-.dark .BarrageBuffer,
+.dark .BarrageBuffer,.dark .Title-anchorName-HC,
 .dark .Barrage-FansHome-content,.dark .Barrage-FansHome,
 .dark .ChatSend-txt,.dark .layout-Classify-card,.dark .cate2TagB-item,
 .dark .PlayerToolbar-signCont,.dark .dy-Modal-content,.dark .CustomGroupCommon .dy-Modal-title,
@@ -76,11 +78,12 @@ ${loadingLazy}
 .dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
-.dark .Search-recommend:hover,.dark .DropPaneList.HistoryList .DropPaneList-title,.dark .index-listWrap-jz2Rt,
+.dark .Search-recommend:hover,.dark .DropPaneList-title,.dark .index-listWrap-jz2Rt,
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
 .dark .layout-Player-chat,.dark .AnchorRank-item,
-.dark layout-Player-chat *,
+.dark .layout-Player-chat *,.dark .EmotionList.EmotionDiamondsPanel .EmotionList-con,
+.dark #js-EmotionDiamondsPanel,.dark .DropPaneList .HistoryList,
 .dark #js-footer
 {
   background-color: var(--w-bg-darker) !important;
@@ -102,7 +105,7 @@ ${loadingLazy}
 .dark .AnchorRank .layout-Module-title,.dark  .AnchorRank .layout-Module-title a,
 .dark .DyCover-intro,.dark .DyCover-user,.dark .DyCover-zone,.dark a, .dark .layout-Module-title a,
 .dark .DyRecCover-zone,.dark .DyRecCover-intro,.dark .DyRecCover-userName,.dark .DyRecCover-tag,
-.dark .Category-item,.dark .DropMenuList-name, .dark .DropMenuList-linkAll,.dark .ListHeader-title,
+.dark .DropMenuList-name, .dark .ListHeader-title,
 .dark .layout-Module-label--hasList.is-active, .dark .layout-Module-label.is-active,
 .dark .DyListCover-intro,.dark .DyListCover-zone,.dark .DyListCover-hot,.dark .DyListCover-userName,
 .dark .ListFooter .dy-Pagination .dy-Pagination-item-active a,
@@ -116,7 +119,7 @@ ${loadingLazy}
 .dark .SwipeTabsContent .tabItem ,.dark .layout-Classify-card>strong ,.dark .secondCateCard-hot,
 .dark .layout-Classify-card.secondCateCard,.dark .layout-Classify-card.secondCateCard.secondCateCark-hoverCard,.dark .HoverCark-wrap,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,.dark .customizeModal-title>h3,.dark .Search-label, .dark .Search-historyList>li,
-.dakr .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
+.dark .Search-hotList li,.dark .Search-linkIcon svg,.dark .categoryTab-tab,.dark .ListHeader-hero-content-tag,
 .dark .Barrage-toolbarClear, .dark .Barrage-toolbarLock,.dark .Barrage-toolbarText,.dark .ShieldTool-listItem,.dark .BarrageTips,.dark .ChatBarrageCollectPop-title,
 .dark .FansBarrageColor-item-txt,.dark .ChatFansBarragePop-txt,
 .dark .PopularBarrage .PopularBarragePanel-descFansPrivilege,
@@ -134,7 +137,8 @@ ${loadingLazy}
 .dark .FilterKeywords-allText, .dark .FilterKeywords-intelligentText,
 .dark .SearchChannel-item-detail-name,.dark .SearchChannel-item-detail-name span,
 .dark .SearchChannel-item-detail-desc.SearchChannel-item-detail-isCate,.dark .SearchChannel-item-detail-desc.SearchChannel-item-detail-isCate span,
-.dark .Search-yuba .des .name,.dark .layout-Search-input>input
+.dark .Search-yuba .des .name,.dark .layout-Search-input>input,.dark .FKLiWrap:hover,
+.dark .TreasureInfo-desc
 {
   color: var(--w-text-light) !important;
 }
@@ -150,7 +154,6 @@ ${loadingLazy}
 .dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
 .dark .layout-Module-title a:hover,
 .dark .DropMenuList-name:hover,
-.dark .DropMenuList-linkAll:hover,
 .dark .ListHeader-title,
 .dark .layout-Module-label--hasList.is-active:hover, 
 .dark .layout-Module-label.is-active:hover,
@@ -206,10 +209,10 @@ ${loadingLazy}
 
 
 
-.dark .Category-item,
+
 .dark .layout-Module-label--hasList.is-active, 
 .dark .layout-Module-label,
-.dark .DropMenuList-linkAll,
+
 .dark .ListFooter .ListFooter-btn-wrap,
 .dark .cate2TagB-item,
 .dark .PlayerToolbar-signCont .RoomText-list .SignBaseComponent-text-link,
@@ -220,20 +223,19 @@ ${loadingLazy}
 .dark .dy-Modal-footer button:hover,.dark .FilterSwitchStatus-switch,
 .dark .BarrageWordPanel-btn,.dark .LevelFilterLimit-input:focus,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,
-.dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus
+.dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus,
+.dark .MatchSystemChatFansBarragePop-describe,
 {
   border: 1px solid var(--w-text-light) !important;
 }
 
 
-.dark .Category-item:hover,
 .dark .layout-Module-label--hasList.is-active:hover, 
 .dark .layout-Module-label:hover,
-.dark .DropMenuList-linkAll:hover,
 .dark .categoryTab-item:hover,
 .dark .addedCategory-item:hover,
 .dark .Barrage-toolbarClear:hover, .dark .Barrage-toolbarLock:hover,
-.dark .ChatBarrageCollect .ChatBarrageCollect-tip:hover,.dark .TagItem:hover,
+.dark .ChatBarrageCollect .ChatBarrageCollect-tip:hover,
 .dark .BarrageWordPanel-btn:hover
 {
   border: 1px solid var(--w-text) !important;
@@ -245,7 +247,7 @@ ${loadingLazy}
   border: none !important;
 }
 
-.dark .Search-direct,
+.dark .Search-direct,.dark .DropMenuList-linkAll,
 .dark .DyCover,.dark .Search-yuba,
 .dark .layout-Card-history, .dark .layout-Card-rank,
 .dark .Search-input-pane,.dark .DyListCover.HeaderCell,
@@ -258,21 +260,25 @@ ${loadingLazy}
 .dark .MuteStatus.is-noLogin,.dark .FansMedalEnter-enterName,
 .dark .FansBarrageSwitcher[class*=color],.dark .BarrageWord-fkbutton .fkbutton-icon,
 .dark .PopularBarrage .PopularBarrageBtn,.dark .EnergyBarrageIcon,
-.dakr .Search-direct {
+.dark .ActiviesExpandPanel,.dark .GiftExpandPanel,.dark .GiftInfoPanel-cont,
+.dark .BatchGiveForm-num,.dark .TreasureTips,.dark .FKLiWra,
+.dark .MatchSystemChatFansBarragePop,.dark .TagItem,.dark .Category-item,
+.dark .layout-Cover-item,
+.dark .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
 
-
+.dark .Title-anchorName-HC .Title-anchorName-block:hover,
 .dark .DyCover:hover,.dark .layout-Search-btn:hover,
-.dark .ChatSend-button:hover,
+.dark .ChatSend-button:hover,.dark .DropMenuList-linkAll:hover,
 .dark .dark Search-category:hover,.dark .categoryBoxB-editB .edit:hover,
 .dark .Search-default-item:hover,.dark .Search-recommend .Search-direct:hover,
 .dark .Category-item:hover,.dark .ListRecommend-refresh:hover,
-.dakr .Search-direct:hover,.dark .ListHeader-pop-label:hover,
+.dark .Search-direct:hover,.dark .ListHeader-pop-label:hover,
 .dark .Search-topicRecommend:hover,.dark layout-Module-label:hover,
-.dark .Search-direct:hover,
+.dark .Search-direct:hover,.dark .TagItem:hover,
 .dark .Search-recommend:hover {
   background-color: var(--w-bg) !important;
   border:1px solid var(--w-text-light) !important;

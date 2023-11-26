@@ -202,7 +202,7 @@ export default class FishLive extends LivePlugin {
             if (closeBtn) {
                 closeBtn.click()
             }
-        }, 30, 1000)
+        }, 5, 1000)
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']

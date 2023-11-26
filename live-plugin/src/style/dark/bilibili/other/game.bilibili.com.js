@@ -55,7 +55,7 @@ ${common}
 
 
 .dark .Home_1ebVE,
-.dakr .block-area .timeline-toggle-block .timeline-toggle-btn {
+.dark .block-area .timeline-toggle-block .timeline-toggle-btn {
   background: none !important;
 }
 
