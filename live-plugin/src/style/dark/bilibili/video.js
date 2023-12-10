@@ -39,7 +39,7 @@ html {
 .dark #app .submit[data-v-67c4001b],.dark #app .submit,
 .dark .coin-operated-m-exp,
 .dark .video-ai-assistant.video-toolbar-right-item.toolbar-right-ai,
-.dark .ai-summary-popup,
+.dark .ai-summary-popup,.dark .bpx-player-auxiliary .bpx-player-dm-management,
 .dark .ai-summary-popup *,
 .dark .mini-header {
   background:var(--w-bg-darker) !important;

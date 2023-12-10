@@ -8,6 +8,7 @@ div#i_cecream .adblock-tips,
 .activity-m-v1,#right-bottom-banner,
 div.video-container-v1 div.pop-live-small-mode.part-undefined,
 .recommended-swipe.grid-anchor,
+.desktop-download-tip,
 .video-page-special-card-small
 {
    display:none !important;

@@ -8,7 +8,7 @@ const exculues = [
     'https://show.bilibili.com/',
     'https://www.bilibili.com/cheese',
     'https://pay.bilibili.com/',
-    'https://show.bilibili.com/',
+    'https://live.bilibili.com/',
     'https://link.bilibili.com/'
 ]
 const prefix = '[live-plugin]:'

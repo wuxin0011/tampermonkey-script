@@ -50,7 +50,7 @@ const home = `
 .dark .bili-header .avatar-panel-popover .logout-item,
 .dark .video-container-v1 .danmaku-box .danmaku-wrap,
 .dark #i_cecream {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -230,10 +230,7 @@ const home = `
 
 
 /* background 和 蓝色 border */
-
-
 .dark .header-dynamic-list-item:hover,
-
 .dark .bili-header .avatar-panel-popover .links-item .single-link-item:hover
 {
   border:1px solid var(--w-text-light) !important;

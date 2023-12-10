@@ -9,6 +9,9 @@ const css = is_huya ? `
 .game-live-item .txt i:hover,.host-name:hover {
   color:rgb(255, 135, 0);
 }
+
+/* 小黄车礼物 */
+#player-ext-wrap,
 .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,

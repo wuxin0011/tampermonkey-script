@@ -5,14 +5,13 @@ import { default as link } from './link.bilibili.com'
 import { default as message } from './message.bilibili.com'
 import { default as Live } from './live.bilibili.com'
 
-
+//  TODO Live 暂时移除b站直播样式
 const other = `
 ${account}
 ${app}
 ${game}
 ${link}
 ${message}
-${Live}
 `
 
 export default other

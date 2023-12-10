@@ -29,7 +29,7 @@
     "https://show.bilibili.com/",
     "https://www.bilibili.com/cheese",
     "https://pay.bilibili.com/",
-    "https://show.bilibili.com/",
+    "https://live.bilibili.com/",
     "https://link.bilibili.com/"
   ];
   const prefix = "[live-plugin]:";
@@ -2379,7 +2379,7 @@ ${root$1}
         if (closeBtn) {
           closeBtn.click();
         }
-      }, 5, 1e3);
+      }, 10, 1e3);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         Array.from(querySelectorAll("#root>div")).forEach((element) => {
@@ -2883,6 +2883,12 @@ ${root$1}
   };
   const isDouyuDetail = () => /.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/.test(local_url);
   const isCreate = () => local_url.indexOf("https://www.douyu.com/creator") !== -1;
+  const dataLayoutItmeDarkCss = local_url.indexOf("https://www.douyu.com/g_wzry") != -1 ? `` : `.dark .layout-Cover-item{
+  background-color: var(--w-bg-darker) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+}
+`;
   const createDark = isCreate() ? `
   .dark * {
     background-color: var(--w-bg-darker) !important;
@@ -2899,6 +2905,7 @@ ${root$1}
   const darkCss$1 = `
 ${createDark}
 ${loadingLazy}
+${dataLayoutItmeDarkCss}
 .dark .DyCover-pic,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
@@ -3134,7 +3141,6 @@ ${loadingLazy}
 .dark .ActiviesExpandPanel,.dark .GiftExpandPanel,.dark .GiftInfoPanel-cont,
 .dark .BatchGiveForm-num,.dark .TreasureTips,.dark .FKLiWra,
 .dark .MatchSystemChatFansBarragePop,.dark .TagItem,.dark .Category-item,
-.dark .layout-Cover-item,
 .dark .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -3421,11 +3427,19 @@ ${darkCss$1}
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
-.dark [class^=ucard],
+.dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
   outline: none !important;
+}
+
+
+/* 弹幕白条问题 */
+.dark [class^=RoomMessageRichText],
+.dark .msg-bubble {
+  border:none  !important;
+  margin:0 !important;
 }
 
 
@@ -3641,8 +3655,8 @@ ${darkCss$1}
 .dark [class^=colorNormal][class^=lock],
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
-
-
+.dark [class^=PanelGuide] [class^=ClubPrivilege] [class^=Privilege] [class^=item],
+.dark [class^=PanelGuide] [class^=Obtain] [class^=btn],
 .dark [class^=panel] [class^=panel] [class^=lock] [class^=btn],
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
@@ -3714,6 +3728,9 @@ ${darkCss$1}
 .game-live-item .txt i:hover,.host-name:hover {
   color:rgb(255, 135, 0);
 }
+
+/* 小黄车礼物 */
+#player-ext-wrap,
 .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
@@ -4428,7 +4445,7 @@ ${videoToolsDarkCss}
 .dark .bili-header .avatar-panel-popover .logout-item,
 .dark .video-container-v1 .danmaku-box .danmaku-wrap,
 .dark #i_cecream {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
@@ -4608,10 +4625,7 @@ ${videoToolsDarkCss}
 
 
 /* background 和 蓝色 border */
-
-
 .dark .header-dynamic-list-item:hover,
-
 .dark .bili-header .avatar-panel-popover .links-item .single-link-item:hover
 {
   border:1px solid var(--w-text-light) !important;
@@ -4741,53 +4755,23 @@ ${css$1}
 }
 
 ` : ``;
-  const is_link$2 = local_url.indexOf("https://link.bilibili.com/") !== -1;
-  const link_css$2 = is_link$2 ? `
-${css$1}
-
-` : ``;
-  const is_link$1 = local_url.indexOf("https://message.bilibili.com/") !== -1;
+  const is_link$1 = local_url.indexOf("https://link.bilibili.com/") !== -1;
   const link_css$1 = is_link$1 ? `
-
 ${css$1}
 
-
 ` : ``;
-  const is_link = local_url.indexOf("https://live.bilibili.com/") !== -1;
+  const is_link = local_url.indexOf("https://message.bilibili.com/") !== -1;
   const link_css = is_link ? `
 
-.dark * {
-  color:var(--w-text-light) !important;
-  border-color: var(--w-border) !important;
-}
+${css$1}
 
-.dark {
-  color:var(--w-text-light) !important;
-  border-color: var(--w-border) !important;
-  background-color:var(--w-bg-darker) !important;
-}
-
-.dark #webShare .bili-share-pc,
-.dark .gift-panel-container-root [class^=gift-panel-background],
-.dark .live-non-revenue-player .sc-gsnTZi div {
-  color:var(--w-text-light) !important;
-  border-color: var(--w-border) !important;
-  background-color:var(--w-bg-darker) !important;
-}
-
-.dark .gift-control-panel .right-part [class*=recharge]:hover
-{
-  color:var(--w-blue-link-hover) !important;
-  border:1px soild var(--w-text-light) !important;
-  background-color:var(--w-bg-darker) !important;
-}
 
 ` : ``;
+  local_url.indexOf("https://live.bilibili.com/") !== -1;
   const other = `
 ${account_css}
 ${app_bilibili}
 ${game_bilibili}
-${link_css$2}
 ${link_css$1}
 ${link_css}
 `;
@@ -5119,7 +5103,7 @@ html {
 .dark #app .submit[data-v-67c4001b],.dark #app .submit,
 .dark .coin-operated-m-exp,
 .dark .video-ai-assistant.video-toolbar-right-item.toolbar-right-ai,
-.dark .ai-summary-popup,
+.dark .ai-summary-popup,.dark .bpx-player-auxiliary .bpx-player-dm-management,
 .dark .ai-summary-popup *,
 .dark .mini-header {
   background:var(--w-bg-darker) !important;
@@ -5439,6 +5423,7 @@ div#i_cecream .adblock-tips,
 .activity-m-v1,#right-bottom-banner,
 div.video-container-v1 div.pop-live-small-mode.part-undefined,
 .recommended-swipe.grid-anchor,
+.desktop-download-tip,
 .video-page-special-card-small
 {
    display:none !important;

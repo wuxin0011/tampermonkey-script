@@ -7,6 +7,17 @@ const isDouyuDetail = () => /.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/.test(local_url
 const isCreate = () => local_url.indexOf('https://www.douyu.com/creator') !== -1
 
 
+
+const dataLayoutItmeDarkCss = local_url.indexOf('https://www.douyu.com/g_wzry') !=-1?
+``
+:
+`.dark .layout-Cover-item{
+  background-color: var(--w-bg-darker) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+}
+`
+
 const createDark =
   isCreate() ?
     `
@@ -28,6 +39,7 @@ const loadingLazy = isDouyuDetail() ? `` : `
 const darkCss = `
 ${createDark}
 ${loadingLazy}
+${dataLayoutItmeDarkCss}
 .dark .DyCover-pic,
 .dark .Search-backTop {
   background: var(--w-bg-dark) !important;
@@ -263,7 +275,6 @@ ${loadingLazy}
 .dark .ActiviesExpandPanel,.dark .GiftExpandPanel,.dark .GiftInfoPanel-cont,
 .dark .BatchGiveForm-num,.dark .TreasureTips,.dark .FKLiWra,
 .dark .MatchSystemChatFansBarragePop,.dark .TagItem,.dark .Category-item,
-.dark .layout-Cover-item,
 .dark .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;

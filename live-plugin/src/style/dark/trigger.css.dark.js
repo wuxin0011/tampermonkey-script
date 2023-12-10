@@ -73,11 +73,19 @@ const darkCss = `
 .dark [class^=ButtonMon][class^=fans] [class^=btn],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
-.dark [class^=ucard],
+.dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
   outline: none !important;
+}
+
+
+/* 弹幕白条问题 */
+.dark [class^=RoomMessageRichText],
+.dark .msg-bubble {
+  border:none  !important;
+  margin:0 !important;
 }
 
 
@@ -293,8 +301,8 @@ const darkCss = `
 .dark [class^=colorNormal][class^=lock],
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
-
-
+.dark [class^=PanelGuide] [class^=ClubPrivilege] [class^=Privilege] [class^=item],
+.dark [class^=PanelGuide] [class^=Obtain] [class^=btn],
 .dark [class^=panel] [class^=panel] [class^=lock] [class^=btn],
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
