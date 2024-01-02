@@ -275,6 +275,7 @@ ${dataLayoutItmeDarkCss}
 .dark .ActiviesExpandPanel,.dark .GiftExpandPanel,.dark .GiftInfoPanel-cont,
 .dark .BatchGiveForm-num,.dark .TreasureTips,.dark .FKLiWra,
 .dark .MatchSystemChatFansBarragePop,.dark .TagItem,.dark .Category-item,
+.dark .Header-search-wrap .Search,
 .dark .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -318,7 +319,7 @@ ${dataLayoutItmeDarkCss}
 }
 
 
-
+.dark .HoverCard-wrap,
 .dark .DropPaneList .HistoryList,
 .dark .Header-history-tab.is-active,
 .dark .Header-history-tab,
@@ -339,7 +340,6 @@ ${dataLayoutItmeDarkCss}
 .dark .Title-followBtn:hover {
   background: var(--w-bg) !important;
 }
-
 
 
 

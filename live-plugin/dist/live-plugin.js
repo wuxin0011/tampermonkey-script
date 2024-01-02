@@ -2478,19 +2478,6 @@ ${root$1}
       this.auto_max_pro_class_or_id_list = ".bpx-player-ctrl-btn.bpx-player-ctrl-quality .bpx-player-ctrl-quality-menu>.bpx-player-ctrl-quality-menu-item";
       this.init();
     }
-    // init() {
-    //     this.clickLogoShowContainer()
-    //     this.users = getLocalStore(this.key, Array.name, true) || []
-    //     if (!this.removeRoom()) {
-    //         this.create_container()
-    //         this.detail()
-    //         this.index()
-    //         this.category()
-    //         this.common()
-    //     }
-    //     this.addEven()
-    //     this.settingBackgroundImage()
-    // }
     /**
      * 重写 button
      * @returns
@@ -3141,6 +3128,7 @@ ${dataLayoutItmeDarkCss}
 .dark .ActiviesExpandPanel,.dark .GiftExpandPanel,.dark .GiftInfoPanel-cont,
 .dark .BatchGiveForm-num,.dark .TreasureTips,.dark .FKLiWra,
 .dark .MatchSystemChatFansBarragePop,.dark .TagItem,.dark .Category-item,
+.dark .Header-search-wrap .Search,
 .dark .Search-direct {
   background-color: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
@@ -3184,7 +3172,7 @@ ${dataLayoutItmeDarkCss}
 }
 
 
-
+.dark .HoverCard-wrap,
 .dark .DropPaneList .HistoryList,
 .dark .Header-history-tab.is-active,
 .dark .Header-history-tab,
@@ -3210,7 +3198,6 @@ ${dataLayoutItmeDarkCss}
 
 
 
-
 `;
   const headerDarkCss = `
 .layout-Section.layout-Header {
@@ -3224,6 +3211,10 @@ ${dataLayoutItmeDarkCss}
 }
 .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
   color:rgb(255, 135, 0) !important;
+}
+
+.layout-Search-btn {
+  width:55px !important;
 }
 
 .Title-roomInfo .Title-followIcon,
@@ -3469,7 +3460,7 @@ ${darkCss$1}
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
 .dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
-
+.dark .game-live-item .txt .room,
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;

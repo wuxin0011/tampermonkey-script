@@ -25,6 +25,10 @@ const css = is_douyu ? `
   color:rgb(255, 135, 0) !important;
 }
 
+.layout-Search-btn {
+  width:55px !important;
+}
+
 .Title-roomInfo .Title-followIcon,
 #js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
