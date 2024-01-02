@@ -208,14 +208,16 @@ export default class BiliBili extends LivePlugin {
             if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
                 return;
             }
-            findMark(that?.header_logo, (logo) => {
-                logo.setAttribute('href', "javascript:;void(0)")
-                logo.setAttribute('title', '点击Logo，显示插件配置')
-                addEventListener(logo, 'click', (e) => {
-                    e.preventDefault()
-                    that.isShowContainer()
-                })
-            })
+
+            // 移除B站头部问题，
+            // findMark(that?.header_logo, (logo) => {
+            //     logo.setAttribute('href', "javascript:;void(0)")
+            //     logo.setAttribute('title', '点击Logo，显示插件配置')
+            //     addEventListener(logo, 'click', (e) => {
+            //         e.preventDefault()
+            //         that.isShowContainer()
+            //     })
+            // })
         }
 
     }

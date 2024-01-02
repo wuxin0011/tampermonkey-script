@@ -1,6 +1,6 @@
 const header = `
-.bb-comment, .comment-bilibili-fold {
-  
+.dark .bili-header .bili-avatar-icon.bili-avatar-right-icon {
+  display:none !important;
 }
 
 `

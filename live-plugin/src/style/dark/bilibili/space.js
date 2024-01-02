@@ -198,6 +198,10 @@ const space = /.*:\/\/space\.bilibili\.com\/\d+.*/.test(local_url) ?
   background: var(--w-blue-link-hove) !important;
 }
 
+.dark .elec .elec-status {
+  background-image: none !important;
+}
+
 
 `
   :

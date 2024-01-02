@@ -2635,14 +2635,6 @@ ${root$1}
         if (!(wls.getItem(that.btn_is_first_key) == null || getLocalStore(that.logo_show_key, Boolean.name))) {
           return;
         }
-        findMark(that == null ? void 0 : that.header_logo, (logo) => {
-          logo.setAttribute("href", "javascript:;void(0)");
-          logo.setAttribute("title", "点击Logo，显示插件配置");
-          addEventListener(logo, "click", (e) => {
-            e.preventDefault();
-            that.isShowContainer();
-          });
-        });
       };
     }
     common() {
@@ -4151,8 +4143,8 @@ ${darkCss}
 
 `;
   const header = `
-.bb-comment, .comment-bilibili-fold {
-  
+.dark .bili-header .bili-avatar-icon.bili-avatar-right-icon {
+  display:none !important;
 }
 
 `;
@@ -5119,6 +5111,10 @@ ${link_css}
   background: var(--w-blue-link-hove) !important;
 }
 
+.dark .elec .elec-status {
+  background-image: none !important;
+}
+
 
 ` : ``;
   const t = `
@@ -5288,7 +5284,6 @@ html {
 .dark .reply-box.disabled .box-normal .reply-box-send .send-text[data-v-757acbb5], .dark .reply-box.disabled .box-normal .reply-box-send .send-text,
 .dark .sub-reply-list .view-more .view-more-pagination[data-v-27ad2dff], .dark .sub-reply-list .view-more .view-more-paginatio,
 .dark .note-content, .dark .note-list .note-card-container .note-card .note-content[data-v-13587840],.dark .note-list .note-card-container .note-card .note-content,
-.dark .note-pc .note-container .note-header .note-title,
 .dark .note-list .note-card-container .note-card .user-info .user-name,.dark .note-list .note-card-container .note-card .user-info .user-name[data-v-13587840],
 .dark .recommend-list-v1 .rec-title,.dark .recommend-list-v1 .rec-title[data-v-39ee0c7c],
 .dark .video-toolbar-right-item, .dark .video-note.video-toolbar-right-item[data-v-bb961c9e],.dark .video-note.video-toolbar-right-item,
@@ -5352,10 +5347,10 @@ html {
 .dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn[data-v-757acbb5],
 .dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn,
 .dark .recommend-list-v1 .rec-footer[data-v-39ee0c7c], .dark .recommend-list-v1 .rec-footer,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5],.dark .reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5],.dark .reply-box .box-normal [class^=reply-box-send],
 .dark .reply-box .reply-box-send[data-v-757acbb5],.dark .reply-box .reply-box-send,
 .dark .video-tool-more-popover .video-tool-more-dropdown .dropdown-item,
-.dark .video-tool-more-popover, .dark .note-header.drag-el,
+.dark .video-tool-more-popover, 
 .dark .user-card-m-exp .user-info-wrapper .info .user .user-label,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .like ,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .liked,
@@ -5367,12 +5362,12 @@ html {
 .dark .coin-operated-m,
 .dark .coin-operated-m-exp .coin-bottom .bi-btn,
 .dark .collection-m-exp,
-.dark .primary-btn,.dark .palette-button-wrap .flexible-roll-btn-inner[data-v-46b9cf37],.dark .palette-button-wrap .flexible-roll-btn-inner,
+.dark .primary-btn,.dark .palette-button-wrap .flexible-roll-btn-inner[data-v-46b9cf37],.dark .palette-button-wrap [class^=flexible-roll-btn-inner],
 .dark .collection-m-exp .content .group-list .add-group .add-btn,
 .dark .collection-m-exp .bottom .btn.disable,
 .dark .collection-m-exp .bottom .btn,
 .dark .video-ai-assistant-badge,
-.dark .fixed-sidenav-storage .fixed-sidenav-storage-item[data-v-5d529e3e],.dark .fixed-sidenav-storage .fixed-sidenav-storage-item,
+.dark .fixed-sidenav-storage .fixed-sidenav-storage-item[data-v-5d529e3e],.dark .fixed-sidenav-storage [class^=fixed-sidenav-storage-item],
 .dark .video-tag-container .tag-panel .tag .show-more-btn[data-v-934a50f8],.dark .video-tag-container .tag-panel .tag .show-more-btn,
 .dark .video-tag-container .tag-panel .tag-link {
   color:var(--w-text-light) !important;
