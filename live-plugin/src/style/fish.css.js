@@ -24,6 +24,8 @@ const css = is_douyu ? `
 .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
   color:rgb(255, 135, 0) !important;
 }
+
+.Title-roomInfo .Title-followIcon,
 #js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
 .layout-Section.layout-Slide,
@@ -172,6 +174,17 @@ background-color: #f2f5f6 !important;
 .ChatSpeak .ChatBarrageCollect-tip {
   width:auto !important;
 }
+
+.Title-followBtnBox {
+  white-space: inherit !important;
+}
+
+.Header-follow-tabs,
+.Header-history-tabs {
+  display:flex  !important;
+  justify-content: center  !important;
+}
+
 
 ${headerDarkCss}
 ${dark}

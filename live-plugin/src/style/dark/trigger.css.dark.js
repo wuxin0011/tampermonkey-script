@@ -1,6 +1,7 @@
-
 const darkCss = `
 /* 修改背景和字体颜色 */
+
+
 .dark .room-core,
 .dark input,
 .dark input:focus,
@@ -70,10 +71,11 @@ const darkCss = `
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
 .dark [class*=msg-of-king],
-.dark [class^=ButtonMon][class^=fans] [class^=btn],
+.dark [class^=ButtonMon],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
 .dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
+
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -166,6 +168,7 @@ const darkCss = `
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .search-advice-list li a,.dark .search-header .find-result,
 .dark #play2 .crumb,.dark #play2 .crumb a,.dark .live-box .box-hd .more-list li a,
+.dark #player-gift-dialog gift-yellow,
 .dark .aside-videolist .video-item .item-detail .detail-nick span, dark .aside-videolist .video-item .item-detail .detail-playcount span
 .dark .live-box .box-hd .more-list li a{
   color: var(--w-text-light) !important;
@@ -220,7 +223,7 @@ const darkCss = `
 .dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
 .dark .duya-header,.dark .player-all-gift-panel,.dark .player-all-gift-panel .arrow,
 .dark .chat-room__input,.dark #player-gift-tip,.dark .player-face li .player-superfans-card-count,
-.dark .player-face li .plaer-face-icon-bg,.dark .player-face li .player-superfans-card-count,
+.dark .player-face li .player-superfans-card-count,
 .dark #player-gift-tip,.dark #player-gift-tip .make-friend-people-switch,
 .dark #player-gift-tip .make-friend-unsubscribe,
 .dark #player-gift-tip .make-friend-line,
@@ -250,8 +253,7 @@ const darkCss = `
 }
 
 .dark .laypageskin_default a:hover,
-.dark .comment-container textarea,.dark .player-face li .plaer-face-icon-bg,
-.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off .subscribe-count,
+.dark .comment-container textarea,.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off .subscribe-count,
 .dark .nav-expand-list.nav-expand-game span a:hover{
   border-color:var(--w-text-light) !important;
 }
@@ -302,10 +304,12 @@ const darkCss = `
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=PanelGuide] [class^=ClubPrivilege] [class^=Privilege] [class^=item],
-.dark [class^=PanelGuide] [class^=Obtain] [class^=btn],
 .dark [class^=panel] [class^=panel] [class^=lock] [class^=btn],
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
+.dark [class^=FanClub] [class^=tips],
+.dark #player-gift-tip .list .btn,
+.dark #player-gift-dialog .btn,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -316,7 +320,23 @@ const darkCss = `
 }
 
 
+
+.dark [class^=panel] [class^=panel-bd] [class^=box-hd],
+.dark [class^=colorDefault],
+.dark [class^=PanelFt] [class^=btn],
+.dark #player-gift-dialog,
+.dark [class^=PanelGuide] [class^=btn]
+ {
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+  outline: none !important;
+}
+
+.dark #player-gift-dialog .btn:hover,
 .dark [class^=SubConfirmPop] span:hover,
+.dark #player-gift-tip .list .btn:hover,
+.dark #player-gift-tip .list .btn.send,
 .dark #J_liveListNav dl dd ul li ul li:hover,
 .dark [class^=SubConfirmPop] [class^=control] span:hover,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on:hover,
@@ -363,6 +383,18 @@ const darkCss = `
   border-left : 1px solid var(--w-text) !important;
 }
 
+.dark #J_roomHdHostLvInfo,
+.dark [class^=HonorInfo],
+.dark .player-face .player-face-arrow,
+.dark .player-face li .plaer-face-icon-bg,
+.dark [class^=ButtonMon] [class^=sub],
+.dark [class^=ButtonMon] [class^=btn]
+ {
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-border) !important;
+  color: var(--w-text) !important;
+  outline: none !important;
+}
 
 
 `

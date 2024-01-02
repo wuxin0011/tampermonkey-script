@@ -33,19 +33,7 @@ export default class BiliBili extends LivePlugin {
         this.init()
     }
 
-    // init() {
-    //     this.clickLogoShowContainer()
-    //     this.users = getLocalStore(this.key, Array.name, true) || []
-    //     if (!this.removeRoom()) {
-    //         this.create_container()
-    //         this.detail()
-    //         this.index()
-    //         this.category()
-    //         this.common()
-    //     }
-    //     this.addEven()
-    //     this.settingBackgroundImage()
-    // }
+
 
 
     /**

@@ -90,12 +90,12 @@ ${dataLayoutItmeDarkCss}
 .dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
-.dark .Search-recommend:hover,.dark .DropPaneList-title,.dark .index-listWrap-jz2Rt,
+.dark .Search-recommend:hover,.dark [class^=index-listWrap],
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
 .dark .layout-Player-chat,.dark .AnchorRank-item,
 .dark .layout-Player-chat *,.dark .EmotionList.EmotionDiamondsPanel .EmotionList-con,
-.dark #js-EmotionDiamondsPanel,.dark .DropPaneList .HistoryList,
+.dark #js-EmotionDiamondsPanel,
 .dark #js-footer
 {
   background-color: var(--w-bg-darker) !important;
@@ -179,7 +179,7 @@ ${dataLayoutItmeDarkCss}
 .dark .ShieldTool-listItem.is-checked .ShieldTool-checkText,.dark .BarrageTips .BarrageTips--active,
 .dark .ChatFansBarragePop-txt span,.dark .dark .ChatFansBarragePop-diamondsTxt span,.dark .ChatFansBarragePop-diamondsTxt span,
 .dark .PopularBarrage .PopularBarragePanel-descFansPrivilege:hover,
-.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,
+.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,.dark .DropPaneList-title,
 .dark .PopularBarrage .PopularBarragePanel-descLock:hover,.dark .DropPaneList span,
 .dark .Search-content-title, .dark .Search-default-title, .dark .Search-history-title, .dark .Search-hot-title,
 .dark .FilKeyTab .tab.active,.dark Search-anchor-data,.dark .Search-anchor.is-horizon .Search-anchor-info p,
@@ -191,7 +191,7 @@ ${dataLayoutItmeDarkCss}
 
 
 
-
+.dark .Title-followBtnBox,
 .dark .dark .CustomGroupManager-saveBtn,.dark .CustomGroupCommon .dy-Modal-header,
 .dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,
 .dark .ListFooter .dy-Pagination-item,.dark .ListFooter .dy-Pagination-next,.dark .ListFooter .dy-Pagination-prev,
@@ -300,10 +300,11 @@ ${dataLayoutItmeDarkCss}
 .dark .dy-ModalRadius-footer button,
 .dark .layout-Tab-item,.dark .dy-ModalRadius-close,
 .dark .DropPaneList>a{
-  background-color: var(--w-bg-dark) !important;
+  background-color: var(--w-bg-darker) !important;
   border: none !important;
   color: var(--w-text-light) !important;
 }
+
 
 .dark .dy-ModalRadius-close:hover,.dy-ModalRadius-footer button:hover,
 .dark .layout-Tab-item.is-active,.dark .layout-Tab-item:hover,
@@ -315,6 +316,31 @@ ${dataLayoutItmeDarkCss}
   background-color: var(--w-bg) !important;
   color: var(--w-text) !important;
 }
+
+
+
+.dark .DropPaneList .HistoryList,
+.dark .Header-history-tab.is-active,
+.dark .Header-history-tab,
+.dark .Header-follow-tab.is-active,
+.dark .Header-follow-tab,
+.dark .DropPane-linkAll,
+.dark .CustomGroupMenu-wrapper,
+.dark .Title-followBtn {
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-border) !important;
+  color: var(--w-text-light) !important;
+}
+
+.dark .Header-history-tab.is-active,
+.dark .Header-history-tab:hover,
+.dark .Header-follow-tab.is-active,
+.dark .Header-follow-tab:hover,
+.dark .Title-followBtn:hover {
+  background: var(--w-bg) !important;
+}
+
+
 
 
 

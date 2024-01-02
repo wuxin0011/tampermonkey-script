@@ -1,17 +1,20 @@
 
 import { is_huya } from "../utils"
 import dark from './dark/trigger.css.dark'
-const css = is_huya ? `
 
+const css = is_huya ? `
+ 
 .game-live-item i,.host-name {
   cursor:pointer;
 }
 .game-live-item .txt i:hover,.host-name:hover {
   color:rgb(255, 135, 0);
 }
-
+ 
 /* 小黄车礼物 */
-#player-ext-wrap,
+#player-ext-wrap,#J_noticeLive,
+#public-screen-ab,.superFans-fansDay,
+[class^=ChatPanelRoot] [class^=PanelFt] [class^=text],
 .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
@@ -64,11 +67,11 @@ const css = is_huya ? `
 .room-weeklyRankList{
     display:none !important;
  }
-
+ 
  .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap, {
    display:none;
  }
-
+ 
  .hy-nav-item:nth-child(1),
  .hy-nav-item:nth-child(2),
  .hy-nav-item:nth-child(3),
@@ -115,7 +118,7 @@ const css = is_huya ? `
     color: #3c9cfe !important;
     background:none!important;
   }
-
+ 
   #search-bar-input::placeholder{
      color: transparent !important;
      opacity:0 !important;
@@ -125,7 +128,7 @@ const css = is_huya ? `
 .room-core #player-gift-wrap{
   display:none ;
 }
-
+ 
  #player-ctrl-wrap {
   opacity: 0;
   transition: all 500ms ease-in 0s !important;
@@ -134,7 +137,7 @@ const css = is_huya ? `
 #J_playerMain:hover #player-ctrl-wrap{
    opacity: 1;
 }
-
+ 
 [class^=NavItem] span[class^=NavText] {
   color:#555 !important;
 }
@@ -144,10 +147,17 @@ const css = is_huya ? `
 [class^=NavItem] [class^=NavItemHd] i[class*=fav] {
   background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png') !important;
 }
-
+ 
 [class^=NavItem] [class^=NavItemHd] i[class*=history] {
   background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png') !important;
 }
+
+
+/* 评论区图片显示问题 */
+.chat-room__list .msg img {
+  display:inline-block !important;
+ }
+
 
 ${dark}
 

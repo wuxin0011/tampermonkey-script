@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.9
+// @version      4.1.10
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
@@ -2956,12 +2956,12 @@ ${dataLayoutItmeDarkCss}
 .dark .CustomGroupCommon .dy-Modal-close,.dark .CustomGroupCommon,.dark .dy-Modal-close,.dark .dy-Modal-header,
 .dark .dy-Modal-footer button,.dark .FilterSwitchStatus-switch,.dark .LevelFilKeyTab .tab.active,.dark .LevelFilterLimit,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,.dark .LevelFilKeyTab,
-.dark .Search-recommend:hover,.dark .DropPaneList-title,.dark .index-listWrap-jz2Rt,
+.dark .Search-recommend:hover,.dark [class^=index-listWrap],
 .dark .layout-Card-horizon,.dark .layout-Tab-container .layout-Tab-item.is-active,.dark .layout-Tab-container .layout-Tab-item,
 .dark .SearchChannel-item,.dark SearchChannel-item-detail,.dark .layout-Tab-container.is-fixed,
 .dark .layout-Player-chat,.dark .AnchorRank-item,
 .dark .layout-Player-chat *,.dark .EmotionList.EmotionDiamondsPanel .EmotionList-con,
-.dark #js-EmotionDiamondsPanel,.dark .DropPaneList .HistoryList,
+.dark #js-EmotionDiamondsPanel,
 .dark #js-footer
 {
   background-color: var(--w-bg-darker) !important;
@@ -3045,7 +3045,7 @@ ${dataLayoutItmeDarkCss}
 .dark .ShieldTool-listItem.is-checked .ShieldTool-checkText,.dark .BarrageTips .BarrageTips--active,
 .dark .ChatFansBarragePop-txt span,.dark .dark .ChatFansBarragePop-diamondsTxt span,.dark .ChatFansBarragePop-diamondsTxt span,
 .dark .PopularBarrage .PopularBarragePanel-descFansPrivilege:hover,
-.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,
+.dark .PopularBarrage .PopularBarragePanel-descFansRenew:hover,.dark .DropPaneList-name,.dark .DropPaneList-title,
 .dark .PopularBarrage .PopularBarragePanel-descLock:hover,.dark .DropPaneList span,
 .dark .Search-content-title, .dark .Search-default-title, .dark .Search-history-title, .dark .Search-hot-title,
 .dark .FilKeyTab .tab.active,.dark Search-anchor-data,.dark .Search-anchor.is-horizon .Search-anchor-info p,
@@ -3057,7 +3057,7 @@ ${dataLayoutItmeDarkCss}
 
 
 
-
+.dark .Title-followBtnBox,
 .dark .dark .CustomGroupManager-saveBtn,.dark .CustomGroupCommon .dy-Modal-header,
 .dark .Search-historyList>li,.dark .layout-List-item,.dark .DyListCover-wrap,
 .dark .ListFooter .dy-Pagination-item,.dark .ListFooter .dy-Pagination-next,.dark .ListFooter .dy-Pagination-prev,
@@ -3166,10 +3166,11 @@ ${dataLayoutItmeDarkCss}
 .dark .dy-ModalRadius-footer button,
 .dark .layout-Tab-item,.dark .dy-ModalRadius-close,
 .dark .DropPaneList>a{
-  background-color: var(--w-bg-dark) !important;
+  background-color: var(--w-bg-darker) !important;
   border: none !important;
   color: var(--w-text-light) !important;
 }
+
 
 .dark .dy-ModalRadius-close:hover,.dy-ModalRadius-footer button:hover,
 .dark .layout-Tab-item.is-active,.dark .layout-Tab-item:hover,
@@ -3181,6 +3182,31 @@ ${dataLayoutItmeDarkCss}
   background-color: var(--w-bg) !important;
   color: var(--w-text) !important;
 }
+
+
+
+.dark .DropPaneList .HistoryList,
+.dark .Header-history-tab.is-active,
+.dark .Header-history-tab,
+.dark .Header-follow-tab.is-active,
+.dark .Header-follow-tab,
+.dark .DropPane-linkAll,
+.dark .CustomGroupMenu-wrapper,
+.dark .Title-followBtn {
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-border) !important;
+  color: var(--w-text-light) !important;
+}
+
+.dark .Header-history-tab.is-active,
+.dark .Header-history-tab:hover,
+.dark .Header-follow-tab.is-active,
+.dark .Header-follow-tab:hover,
+.dark .Title-followBtn:hover {
+  background: var(--w-bg) !important;
+}
+
+
 
 
 
@@ -3199,6 +3225,8 @@ ${dataLayoutItmeDarkCss}
 .layout-List-item .DyCover-content .DyCover-user:hover,.layout-Cover-item .DyListCover-userName:hover,.Title-blockInline .Title-anchorName h2:hover {
   color:rgb(255, 135, 0) !important;
 }
+
+.Title-roomInfo .Title-followIcon,
 #js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
 .layout-Section.layout-Slide,
@@ -3348,6 +3376,17 @@ background-color: #f2f5f6 !important;
   width:auto !important;
 }
 
+.Title-followBtnBox {
+  white-space: inherit !important;
+}
+
+.Header-follow-tabs,
+.Header-history-tabs {
+  display:flex  !important;
+  justify-content: center  !important;
+}
+
+
 ${headerDarkCss}
 ${darkCss$1}
 
@@ -3355,6 +3394,8 @@ ${darkCss$1}
 ` : "";
   const darkCss = `
 /* 修改背景和字体颜色 */
+
+
 .dark .room-core,
 .dark input,
 .dark input:focus,
@@ -3424,10 +3465,11 @@ ${darkCss$1}
 .dark #player-box-panel,
 .dark .more-attivity-panel,.dark [class^=roomBlockWords],
 .dark [class*=msg-of-king],
-.dark [class^=ButtonMon][class^=fans] [class^=btn],
+.dark [class^=ButtonMon],
 .dark #player-gift-tip .mic-name-color,
 .dark #player-gift-tip .make-friend-people-switch,
 .dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
+
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -3520,6 +3562,7 @@ ${darkCss$1}
 .dark .chat-room__bd .chat-room__scroll .lockBtn,
 .dark .search-advice-list li a,.dark .search-header .find-result,
 .dark #play2 .crumb,.dark #play2 .crumb a,.dark .live-box .box-hd .more-list li a,
+.dark #player-gift-dialog gift-yellow,
 .dark .aside-videolist .video-item .item-detail .detail-nick span, dark .aside-videolist .video-item .item-detail .detail-playcount span
 .dark .live-box .box-hd .more-list li a{
   color: var(--w-text-light) !important;
@@ -3574,7 +3617,7 @@ ${darkCss$1}
 .dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
 .dark .duya-header,.dark .player-all-gift-panel,.dark .player-all-gift-panel .arrow,
 .dark .chat-room__input,.dark #player-gift-tip,.dark .player-face li .player-superfans-card-count,
-.dark .player-face li .plaer-face-icon-bg,.dark .player-face li .player-superfans-card-count,
+.dark .player-face li .player-superfans-card-count,
 .dark #player-gift-tip,.dark #player-gift-tip .make-friend-people-switch,
 .dark #player-gift-tip .make-friend-unsubscribe,
 .dark #player-gift-tip .make-friend-line,
@@ -3604,8 +3647,7 @@ ${darkCss$1}
 }
 
 .dark .laypageskin_default a:hover,
-.dark .comment-container textarea,.dark .player-face li .plaer-face-icon-bg,
-.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off .subscribe-count,
+.dark .comment-container textarea,.dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off .subscribe-count,
 .dark .nav-expand-list.nav-expand-game span a:hover{
   border-color:var(--w-text-light) !important;
 }
@@ -3656,10 +3698,12 @@ ${darkCss$1}
 .dark [class^=ucard-normal],
 .dark .chat-room__list .msg-timed span,
 .dark [class^=PanelGuide] [class^=ClubPrivilege] [class^=Privilege] [class^=item],
-.dark [class^=PanelGuide] [class^=Obtain] [class^=btn],
 .dark [class^=panel] [class^=panel] [class^=lock] [class^=btn],
 .dark .hy-nav-item-on .hy-nav-link, .dark .hy-nav-link:hover,
 .dark #search-bar-input,.dark [class^=barrageBox],
+.dark [class^=FanClub] [class^=tips],
+.dark #player-gift-tip .list .btn,
+.dark #player-gift-dialog .btn,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-off
  {
@@ -3670,7 +3714,23 @@ ${darkCss$1}
 }
 
 
+
+.dark [class^=panel] [class^=panel-bd] [class^=box-hd],
+.dark [class^=colorDefault],
+.dark [class^=PanelFt] [class^=btn],
+.dark #player-gift-dialog,
+.dark [class^=PanelGuide] [class^=btn]
+ {
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-text) !important;
+  color: var(--w-text-light) !important;
+  outline: none !important;
+}
+
+.dark #player-gift-dialog .btn:hover,
 .dark [class^=SubConfirmPop] span:hover,
+.dark #player-gift-tip .list .btn:hover,
+.dark #player-gift-tip .list .btn.send,
 .dark #J_liveListNav dl dd ul li ul li:hover,
 .dark [class^=SubConfirmPop] [class^=control] span:hover,
 .dark .room-hd .host-control .subscribe-entrance .subscribe-hd.sub-on:hover,
@@ -3717,20 +3777,34 @@ ${darkCss$1}
   border-left : 1px solid var(--w-text) !important;
 }
 
+.dark #J_roomHdHostLvInfo,
+.dark [class^=HonorInfo],
+.dark .player-face .player-face-arrow,
+.dark .player-face li .plaer-face-icon-bg,
+.dark [class^=ButtonMon] [class^=sub],
+.dark [class^=ButtonMon] [class^=btn]
+ {
+  background: var(--w-bg-darker) !important;
+  border:1px solid var(--w-border) !important;
+  color: var(--w-text) !important;
+  outline: none !important;
+}
 
 
 `;
   const css$3 = is_huya ? `
-
+ 
 .game-live-item i,.host-name {
   cursor:pointer;
 }
 .game-live-item .txt i:hover,.host-name:hover {
   color:rgb(255, 135, 0);
 }
-
+ 
 /* 小黄车礼物 */
-#player-ext-wrap,
+#player-ext-wrap,#J_noticeLive,
+#public-screen-ab,.superFans-fansDay,
+[class^=ChatPanelRoot] [class^=PanelFt] [class^=text],
 .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
 .mod-index-wrap .mod-index-main .main-bd,
 .mod-index-wrap .mod-index-main .main-hd,
@@ -3783,11 +3857,11 @@ ${darkCss$1}
 .room-weeklyRankList{
     display:none !important;
  }
-
+ 
  .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap, {
    display:none;
  }
-
+ 
  .hy-nav-item:nth-child(1),
  .hy-nav-item:nth-child(2),
  .hy-nav-item:nth-child(3),
@@ -3834,7 +3908,7 @@ ${darkCss$1}
     color: #3c9cfe !important;
     background:none!important;
   }
-
+ 
   #search-bar-input::placeholder{
      color: transparent !important;
      opacity:0 !important;
@@ -3844,7 +3918,7 @@ ${darkCss$1}
 .room-core #player-gift-wrap{
   display:none ;
 }
-
+ 
  #player-ctrl-wrap {
   opacity: 0;
   transition: all 500ms ease-in 0s !important;
@@ -3853,7 +3927,7 @@ ${darkCss$1}
 #J_playerMain:hover #player-ctrl-wrap{
    opacity: 1;
 }
-
+ 
 [class^=NavItem] span[class^=NavText] {
   color:#555 !important;
 }
@@ -3863,10 +3937,17 @@ ${darkCss$1}
 [class^=NavItem] [class^=NavItemHd] i[class*=fav] {
   background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/fav-0.15b3e0b4a39185db705b7c523cd3f17c.png') !important;
 }
-
+ 
 [class^=NavItem] [class^=NavItemHd] i[class*=history] {
   background-image:url('https://a.msstatic.com/huya/hd/h5/header/components/HeaderDynamic/NavItem/img/history-0.2b32fba04f79057de5abcb2b35cd8eec.png') !important;
 }
+
+
+/* 评论区图片显示问题 */
+.chat-room__list .msg img {
+  display:inline-block !important;
+ }
+
 
 ${darkCss}
 
