@@ -360,7 +360,7 @@ export const isFull = () => {
 */
 export const addFullScreenEvent = (callback) => {
     if (typeof callback != 'function') {
-        returnn;
+        return;
     }
     document.addEventListener('fullscreenchange', callback);
     document.addEventListener('webkitfullscreenchange', callback);

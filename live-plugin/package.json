@@ -8,7 +8,16 @@
   "description": "虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活",
   "keywords": [
     "直播插件",
+    "虎牙直播",
+    "斗鱼直播",
+    "哔哩哔哩",
+    "huya",
+    "douyu",
+    "bilibili",
+    "护眼主题",
+    "黑夜模式",
     "油猴插件",
+    "广告屏蔽",
     "页面美化"
   ],
   "scripts": {
@@ -26,6 +35,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wuxin0011/tampermonkey-script/live-plugin"
+    "url": "https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin"
   }
 }
