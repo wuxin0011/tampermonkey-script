@@ -1,19 +1,21 @@
 // ==UserScript==
 // @name         直播插件
-// @namespace    https://github.com/wuxin0011/tampermonkey-script/live-plugin
-// @version      4.1.10
+// @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
+// @version      4.1.11
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
 // @license      MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArhJREFUWEfllz9ME1Ecx3+/dzUxIUpPxcTEqVD+LDjIoiTSwQldjHGDAwYpbYE4aOJQ8KBFTUx0KLSWoNIDoyFuGsMkcTBx0URjjFBQBmKiQ49ijInh3s/06iWlgfauh8Xoje++7/f5vN+73r0i7PCFO8yHDQI1QzG5HEIOgskPsm85w9IFMmBkQguBNlQOAQTWB4hryWB3V1YgFP++OOCtKAfcYLjD4xeJ8adYE4p5gINn8YpPb78oBehPihDQ0KoS1Vl65/MFnJJfNgLbLeJs6/UA457/S0CUfI3art0ra3dupbalA5UdfdXpRGTJ7PaIUmAWiMbUqehj2wJiR28zcLqPRD2p6ehsMQlR8n9GQTiZuhd5n8naEtjX1X+ctPVHquvgYefHrw8RUFGVsSdbSYjtgWV0sFYDbksgC+dB1XXgNMgy14tJ/hkidjs9NfosX8IpBeaZwM7kwksWyMK1F6qrSjDgBjAjwZhwMzUZeWmMiZL/NQpCWz48R6BlVYnqb9yi7wGxwx8GjkfV6qpT+fBcCQQKq0rsrS4kCPJm8JI6IEqBS6oydqPYw+aU/MOATAQNJ1anI2+2ytt6CAtKyLKj8tOXI+lE7FWh3G8B81tQbOVW7/8tAoW/BWJ7YM7qyqzkCel5wY+RlWJ2s5v+DK0U3dvZ7xZovUlNRB9YmWdkdYHaa3ddtP7zQnKgp99qkf2dvfWcQ5OqjE5bndswEj+kEZzVj2TuUPxbcsC7x2oRO3l3KP5D0HhD9kwYjp9DghnivDyHUsYuI+L5hWD3lK3/BfVXx2s5p2MLQW+i1G7YEqgbiTZqmtC6OOi9/u8LeOQ5xwpL1uWulDGtlnN2AgAncseJa7gk+96Z6YrpLagbnmjmqHk2gAArAOgwAsznjiNBemHQO7qtAmaKlZIx3YFSipuZ8wvlidcmZtmgQAAAAABJRU5ErkJggg==
-// @source       https://github.com/wuxin0011/tampermonkey-script/live-plugin
+// @source       https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
 // @supportURL   https://github.com/wuxin0011/tampermonkey-script/issues
 // @match        https://*.bilibili.com/*
 // @match        https://www.douyu.com/*
 // @match        https://www.huya.com/*
 // @match        https://www.bilibili.com/*
 // @match        https://*.douyin.com/*
+// @grant        GM.registerMenuCommand
 // @grant        GM_addStyle
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
 
 (function () {
@@ -297,7 +299,7 @@
   };
   const addFullScreenEvent = (callback) => {
     if (typeof callback != "function") {
-      returnn;
+      return;
     }
     document.addEventListener("fullscreenchange", callback);
     document.addEventListener("webkitfullscreenchange", callback);
@@ -383,6 +385,12 @@
     }
   }
   const isShowBg = () => wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
+  const isShowFansIconKey = "__isShowFansIconKey__";
+  const isShowGiftRankKey = "__isShowGiftRankKey__";
+  const isShowSysMsgKey = "__isShowSysMsgKey__";
+  const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name);
+  const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name);
+  const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name);
   const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf("非法访问") !== -1 : false;
   const isBVId = (keywords) => /.*\/BV(.*)/.test(keywords);
   const getBVId = (url) => {
@@ -3376,9 +3384,27 @@ ${darkCss$1}
 
 ` : "";
   const darkCss = `
+.dark .chat-room__list .msg-bubble .colon,
+.dark .chat-room__list .msg-bubble .msg,
+.dark .chat-room__list .msg-bubble
+{
+  background:none !important;
+}
+
+
+
 /* 修改背景和字体颜色 */
-
-
+.dark #J_roomWeeklyRankListRoot [class^=UserRankInfo],
+.dark #J_roomWeeklyRankListRoot [class^=NobleApp],
+.dark #J_roomWeeklyRankListRoot [class^=seat-item],
+.dark #J_roomWeeklyRankListRoot [class^=userRank],
+.dark .room-weeklyRankList-nav-item,
+.dark .room-weeklyRankList-nav-item.room-weeklyRankList-nav-item-active,
+.dark #J_roomWeeklyRankListRoot [class^=Item],
+.dark #J_roomWeeklyRankListRoot [class^=item],
+.dark [class^=room-weeklyRankList-skeleton],
+.dark #J_roomWeeklyRankListRoot [class^=rank-item],
+.dark #J_roomWeeklyRankListRoot [class^=SlideDownView],
 .dark .room-core,
 .dark input,
 .dark input:focus,
@@ -3641,8 +3667,8 @@ ${darkCss$1}
 .dark .laypageskin_default .laypage_curr,
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
-.dark .ixyGIy,
-.dark #J_RoomChatSpeaker textarea,
+.dark .ixyGIy,.dark .room-weeklyRankList-content.room-weeklyRankList-content-loading,
+
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -3710,6 +3736,8 @@ ${darkCss$1}
   outline: none !important;
 }
 
+
+
 .dark #player-gift-dialog .btn:hover,
 .dark [class^=SubConfirmPop] span:hover,
 .dark #player-gift-tip .list .btn:hover,
@@ -3760,8 +3788,17 @@ ${darkCss$1}
   border-left : 1px solid var(--w-text) !important;
 }
 
+.dark #J_user_viewer_root + div,
+.dark .J_RoomFollowRoot + div,
+.dark .fansBadgeAnchor-box,
+.dark .J_roomWeeklyRankList,
+.dark .room-sidebar-hd,
 .dark #J_roomHdHostLvInfo,
+.dark .room-weeklyRankList-nav,
+.dark #J_roomWeeklyRankListRoot [class^=tabPane],
+.dark #J_RoomChatSpeaker textarea,
 .dark [class^=HonorInfo],
+
 .dark .player-face .player-face-arrow,
 .dark .player-face li .plaer-face-icon-bg,
 .dark [class^=ButtonMon] [class^=sub],
@@ -3773,7 +3810,47 @@ ${darkCss$1}
   outline: none !important;
 }
 
+.dark #J_roomWeeklyRankListRoot [class^=Item]:hover,
+.dark #J_roomWeeklyRankListRoot [class^=item]:hover,
+.dark #J_roomWeeklyRankListRoot [class^=seat-item]:hover,
+.dark #J_roomWeeklyRankListRoot [class^=rank-item]:hover{
+  background: var(--w-bg) !important;
+}
 
+
+
+`;
+  const sys_msg = isShowSysMsg() ? "" : `
+.chat-room__list .msg-auditorSys,
+.chat-room__list .msg-sys {
+  display:none !important;
+}
+
+`;
+  const ranking = isShowGiftRank() ? "" : `
+.room-weeklyRankList,
+#J_roomSideHd{
+   display: none !important;
+ }
+
+`;
+  const fans_img = isShowFansIcon() ? "" : `
+
+.chat-room__list .msg-bubble-decorationPrefix img,
+.chat-room__list .msg-normal-decorationPrefix,
+.chat-room__list .msg-normal-decorationSuffix,
+.chat-room__list .msg-bubble-decorationSuffix,
+.chat-room__list .msg-bubble-decorationPrefix 
+{
+  display:none !important;
+}
+
+.chat-room__list .msg-bubble .colon,
+.chat-room__list .msg-bubble .msg,
+.chat-room__list .msg-bubble
+{
+  background:none !important;
+}
 `;
   const css$3 = is_huya ? `
  
@@ -3785,7 +3862,7 @@ ${darkCss$1}
 }
  
 /* 小黄车礼物 */
-#player-ext-wrap,#J_noticeLive,
+#player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
 [class^=ChatPanelRoot] [class^=PanelFt] [class^=text],
 .helperbar-root--12hgWk_4zOxrdJ73vtf1YI,[class^=helperbar-root],
@@ -3810,8 +3887,7 @@ ${darkCss$1}
 #huya-ab,
 .liveList-header-r,
 .room-footer,
-.J_roomSideHd,
- #J_roomSideHd,
+#J_profileNotice,
  #match-cms-content,
  #matchComponent2,
 .hy-nav-item,
@@ -3836,8 +3912,7 @@ ${darkCss$1}
  .end-ab-banner,
  .player-app-qrcode,
  .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix,
- #main_col #matchComponent2,
-.room-weeklyRankList{
+ #main_col #matchComponent2{
     display:none !important;
  }
  
@@ -3864,49 +3939,45 @@ ${darkCss$1}
  .duya-header a,.duya-header i{
   color:#000 !important;
  }
- /*******直播间样式*****/
+
  #main_col,
-.chat-room__list .msg-normal,.chat-room__list .msg-bubble,#J_mainRoom{
+#J_mainRoom{
    background:none !important;
  }
+
+ 
  #wrap-ext,
-.chat-room__list .msg-normal-decorationPrefix,
-.chat-room__list .msg-normal-decorationSuffix,
-.chat-room__list .msg-bubble-decorationPrefix,
-.chat-room__list img,
+
 .chat-room__list .msg-noble,
-.chat-room__list .msg-sys,
-.chat-room__list .msg-auditorSys,
 .J_box_msgOfKing,
 .chat-room__list .msg-onTVLottery{
     display: none !important;
  }
 .chat-room__list .msg-bubble span.msg{
     color: #333 !important;
-    background:none!important;
  }
+
 .chat-room__list .msg-bubble .colon,
 .chat-room__list .msg-bubble .msg,
 .chat-room__list .name{
     color: #3c9cfe !important;
-    background:none!important;
-  }
- 
-  #search-bar-input::placeholder{
-     color: transparent !important;
-     opacity:0 !important;
-  }
-  
- .mod-sidebar,
-.room-core #player-gift-wrap{
-  display:none ;
 }
  
- #player-ctrl-wrap {
+#search-bar-input::placeholder{
+    color: transparent !important;
+    opacity:0 !important;
+}
+
+.mod-sidebar,
+.room-core #player-gift-wrap{
+    display:none ;
+}
+ 
+#player-ctrl-wrap {
   opacity: 0;
   transition: all 500ms ease-in 0s !important;
   bottom: 16px;
- }
+}
 #J_playerMain:hover #player-ctrl-wrap{
    opacity: 1;
 }
@@ -3931,6 +4002,10 @@ ${darkCss$1}
   display:inline-block !important;
  }
 
+
+ ${fans_img}
+ ${sys_msg}
+ ${ranking}
 
 ${darkCss}
 
@@ -5564,6 +5639,35 @@ ${css}
 ${css$2}
 `
   );
+  const reload = () => {
+    window.location.reload();
+  };
+  const changeRank = () => {
+    addLocalStore(isShowGiftRankKey, !isShowGiftRank(), Boolean.name);
+    reload();
+  };
+  const changeFansIcon = () => {
+    addLocalStore(isShowFansIconKey, !isShowFansIcon(), Boolean.name);
+    reload();
+  };
+  const changeSysMsg = () => {
+    addLocalStore(isShowSysMsgKey, !isShowSysMsg(), Boolean.name);
+    reload();
+  };
+  const installCommand = () => {
+    if (!is_huya) {
+      return;
+    }
+    GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息`, () => {
+      changeSysMsg();
+    }, { title: "关闭或显示房管操作或主播等操作信息,默认关闭" });
+    GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜`, () => {
+      changeRank();
+    }, { title: "关闭或显示礼物排行，默认关闭" });
+    GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章`, () => {
+      changeFansIcon();
+    }, { title: "关闭或显示粉丝徽章，默认关闭" });
+  };
   (function() {
     if (typeof window == "undefined") {
       return;
@@ -5581,6 +5685,7 @@ ${css$2}
     try {
       login$1();
       updateDarkClass();
+      installCommand();
     } catch (error2) {
       console.error("live-plugin:", error2);
     }

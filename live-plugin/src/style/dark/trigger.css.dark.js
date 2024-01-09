@@ -1,7 +1,25 @@
 const darkCss = `
+.dark .chat-room__list .msg-bubble .colon,
+.dark .chat-room__list .msg-bubble .msg,
+.dark .chat-room__list .msg-bubble
+{
+  background:none !important;
+}
+
+
+
 /* 修改背景和字体颜色 */
-
-
+.dark #J_roomWeeklyRankListRoot [class^=UserRankInfo],
+.dark #J_roomWeeklyRankListRoot [class^=NobleApp],
+.dark #J_roomWeeklyRankListRoot [class^=seat-item],
+.dark #J_roomWeeklyRankListRoot [class^=userRank],
+.dark .room-weeklyRankList-nav-item,
+.dark .room-weeklyRankList-nav-item.room-weeklyRankList-nav-item-active,
+.dark #J_roomWeeklyRankListRoot [class^=Item],
+.dark #J_roomWeeklyRankListRoot [class^=item],
+.dark [class^=room-weeklyRankList-skeleton],
+.dark #J_roomWeeklyRankListRoot [class^=rank-item],
+.dark #J_roomWeeklyRankListRoot [class^=SlideDownView],
 .dark .room-core,
 .dark input,
 .dark input:focus,
@@ -264,8 +282,8 @@ const darkCss = `
 .dark .laypageskin_default .laypage_curr,
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
-.dark .ixyGIy,
-.dark #J_RoomChatSpeaker textarea,
+.dark .ixyGIy,.dark .room-weeklyRankList-content.room-weeklyRankList-content-loading,
+
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -333,6 +351,8 @@ const darkCss = `
   outline: none !important;
 }
 
+
+
 .dark #player-gift-dialog .btn:hover,
 .dark [class^=SubConfirmPop] span:hover,
 .dark #player-gift-tip .list .btn:hover,
@@ -383,8 +403,17 @@ const darkCss = `
   border-left : 1px solid var(--w-text) !important;
 }
 
+.dark #J_user_viewer_root + div,
+.dark .J_RoomFollowRoot + div,
+.dark .fansBadgeAnchor-box,
+.dark .J_roomWeeklyRankList,
+.dark .room-sidebar-hd,
 .dark #J_roomHdHostLvInfo,
+.dark .room-weeklyRankList-nav,
+.dark #J_roomWeeklyRankListRoot [class^=tabPane],
+.dark #J_RoomChatSpeaker textarea,
 .dark [class^=HonorInfo],
+
 .dark .player-face .player-face-arrow,
 .dark .player-face li .plaer-face-icon-bg,
 .dark [class^=ButtonMon] [class^=sub],
@@ -395,6 +424,14 @@ const darkCss = `
   color: var(--w-text) !important;
   outline: none !important;
 }
+
+.dark #J_roomWeeklyRankListRoot [class^=Item]:hover,
+.dark #J_roomWeeklyRankListRoot [class^=item]:hover,
+.dark #J_roomWeeklyRankListRoot [class^=seat-item]:hover,
+.dark #J_roomWeeklyRankListRoot [class^=rank-item]:hover{
+  background: var(--w-bg) !important;
+}
+
 
 
 `

@@ -462,4 +462,32 @@ export class HostUser {
  * 背景是否显示？
  * @returns boolean
  */
-export const isShowBg = () => wls.getItem('bg_is_first_key') === null ? true : getLocalStore('bg_show_key', Boolean.name) // 是否显示背景 默认显示
+export const isShowBg = () => wls.getItem('bg_is_first_key') === null ? true : getLocalStore('bg_show_key', Boolean.name) 
+
+
+export const isShowFansIconKey = '__isShowFansIconKey__'
+export const isShowGiftRankKey = '__isShowGiftRankKey__'
+export const isShowSysMsgKey = '__isShowSysMsgKey__'
+
+
+/**
+ * 是否显示粉丝徽章
+ * @returns boolean
+ */
+export const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name) 
+
+
+/**
+ * 是否显示礼物排行榜
+ * @returns boolean
+ */
+export const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name) 
+
+
+/**
+ * 是否显示系统消息
+ * 比如房管禁用操作提示消息或者主播操作等提示消息
+ * @returns boolean
+ */
+export const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name) 
+

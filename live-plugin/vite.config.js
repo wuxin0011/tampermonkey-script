@@ -23,7 +23,7 @@ export default defineConfig({
             version: config.version,
             description: config.description,
             author:config.author,
-            grant: ["GM_addStyle"],
+            grant: ["GM_addStyle","GM.registerMenuCommand"],
             name: '直播插件',
         },
         build: {

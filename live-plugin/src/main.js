@@ -55,6 +55,7 @@ import './style/index.css.js';
     try {
         Login()
         updateDarkClass()
+        installCommand()
     } catch (error) {
         console.error('live-plugin:', error)
     }
@@ -107,4 +108,5 @@ import './style/index.css.js';
 
 // NoLogin
 import './login/index'
+import installCommand from './utils/command';
 
