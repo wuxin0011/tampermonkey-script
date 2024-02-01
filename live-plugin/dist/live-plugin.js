@@ -10,8 +10,13 @@
 // @supportURL   https://github.com/wuxin0011/tampermonkey-script/issues
 // @match        https://www.douyu.com/*
 // @match        https://www.huya.com/*
-// @match        /^https://(www|search|space|game|message|t).bilibili..*/
 // @match        https://*.douyin.com/*
+// @match        https://www.bilibili.com/*
+// @match        https://search.bilibili.com/*
+// @match        https://space.bilibili.com/*
+// @match        https://game.bilibili.com/*
+// @match        https://message.bilibili.com/*
+// @match        https://t.bilibili.com/*
 // @grant        GM.registerMenuCommand
 // @grant        GM_addStyle
 // @grant        GM_registerMenuCommand
