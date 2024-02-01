@@ -13,10 +13,9 @@ export default defineConfig({
         entry: 'src/main.js', userscript: {
             icon: icon,
             match: [
-                 'https://*.bilibili.com/*',
                  'https://www.douyu.com/*',
                  'https://www.huya.com/*', 
-                 'https://www.bilibili.com/*',
+                 '/^https:\/\/(www|search|space|game|message|t)\.bilibili\..*/',
                  'https://*.douyin.com/*',
                 ],
             namespace: config.repository.url,

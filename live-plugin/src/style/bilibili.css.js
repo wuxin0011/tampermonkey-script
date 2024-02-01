@@ -1,6 +1,18 @@
 
-import { is_bilibili } from '../utils'
+import { is_bilibili, isShowHotSearch } from '../utils'
 import dark from './dark/bilibili.css.dark'
+
+
+
+
+const is_hot = () => isShowHotSearch() ? `` : `
+.search-panel .trending {
+   display:none !important;
+}
+
+`
+
+
 const css = is_bilibili ? `
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
@@ -15,6 +27,8 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
 }
 
 /* 输入框*/
+.nav-search-content .nav-search-input::placeholder,
+#nav_searchform>input::placeholder,
 .nav-search-content>input::placeholder {
    color: transparent;
    opacity:0 !important;
@@ -67,8 +81,23 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
    color:orange;
 }
 
+#reco_list,
+[class^=up-info-container],
+.members-info-container .container,
+.left-container{
+   background: #fff !important;
+   padding:0 20px;
+}
 
- 
+
+#reco_list {
+   padding:6px;
+}
+
+${is_hot()}
+
+
+
 
 
 ${dark}

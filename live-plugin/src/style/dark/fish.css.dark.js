@@ -236,7 +236,7 @@ ${dataLayoutItmeDarkCss}
 .dark .BarrageWordPanel-btn,.dark .LevelFilterLimit-input:focus,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,
 .dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus,
-.dark .MatchSystemChatFansBarragePop-describe,
+.dark .MatchSystemChatFansBarragePop-describe
 {
   border: 1px solid var(--w-text-light) !important;
 }

@@ -1,5 +1,4 @@
 
-import commonDark from './other/common'
 const isUrl = window.location.href.indexOf('https://www.bilibili.com/bangumi/play') !== -1
 
 const bangumiCss = isUrl ? `
@@ -10,6 +9,8 @@ const bangumiCss = isUrl ? `
   outline-color: var(--w-border) !important;
 }
 
+
+.dark .SectionSelector_SectionSelector__TZ_QZ .SectionSelector_expand__VjjPD,
 .dark .home-container,.dark #__next,.dark .main-container,
 .dark .plp-r *,
 .dark .mediainfo_mediaInfo__Cpow4 *{
@@ -19,13 +20,17 @@ const bangumiCss = isUrl ? `
   background-color:var(--w-bg-darker) !important;
 }
 
+.dark .SectionSelector_expand__VjjPD {
+  background:var(--w-bg-darker) !important;
+}
+
 .dark .bili-avatar-icon.bili-avatar-right-icon{
   display:none !important;
 }
 
 
 .dark .reply-box .box-normal .reply-box-send .send-text[data-v-757acbb5],
-.dark .reply-box .box-normal .reply-box-send .send-text {
+.dark .reply-box .box-normal .reply-box-send [class^=send-text] {
   background:none !important;
 }
 
@@ -40,13 +45,6 @@ const bangumiCss = isUrl ? `
 
 `: ``
 
-// .dark .toolbar,
-// .dark .mediainfo_mediaInfo__Cpow4 {
-//   color:var(--w-text-light) !important;
-//   border-color: var(--w-border) !important;
-//   background-color:var(--w-bg-darker) !important;
-//   outline-color: var(--w-border) !important;
-// }
 
 
 export default bangumiCss

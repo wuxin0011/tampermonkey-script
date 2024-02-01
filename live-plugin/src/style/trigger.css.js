@@ -1,11 +1,14 @@
 
-import { is_huya,isShowGiftRank,isShowFansIcon,isShowSysMsg} from "../utils"
+import { is_huya, isShowGiftRank, isShowFansIcon, isShowSysMsg } from "../utils"
 import dark from './dark/trigger.css.dark'
 
-// 系统消息
-const sys_msg = isShowSysMsg() ?'': 
 
-`
+
+// 系统消息
+const sys_msg = isShowSysMsg() ? '' :
+
+  `
+.treasureChest-winningRecord,
 .chat-room__list .msg-auditorSys,
 .chat-room__list .msg-sys {
   display:none !important;
@@ -17,8 +20,8 @@ const sys_msg = isShowSysMsg() ?'':
 
 // 排行榜
 const ranking = isShowGiftRank() ? ''
-:
-`
+  :
+  `
 .room-weeklyRankList,
 #J_roomSideHd{
    display: none !important;
@@ -28,8 +31,8 @@ const ranking = isShowGiftRank() ? ''
 
 // 粉丝徽章
 const fans_img = isShowFansIcon() ? ''
-:
-`
+  :
+  `
 
 .chat-room__list .msg-bubble-decorationPrefix img,
 .chat-room__list .msg-normal-decorationPrefix,
@@ -57,7 +60,8 @@ const css = is_huya ? `
   color:rgb(255, 135, 0);
 }
  
-/* 小黄车礼物 */
+/* NONE */
+[class^=GuangG],
 #player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
 [class^=ChatPanelRoot] [class^=PanelFt] [class^=text],
@@ -112,7 +116,7 @@ const css = is_huya ? `
     display:none !important;
  }
  
- .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap, {
+ .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap {
    display:none;
  }
  

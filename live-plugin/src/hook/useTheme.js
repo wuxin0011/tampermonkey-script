@@ -206,7 +206,7 @@ const clickUpdateTheme = () => {
 
 const autoDarkType = () => {
   let hour = new Date().getHours()
-  console.log('current hours:', hour)
+  // console.log('current hours:', hour)
   let type = DARK_THEME_TYPE.DEFAULT
   if (isAutoDark()) {
     if (hour >= 0 && hour <= 7) { // 黑夜0

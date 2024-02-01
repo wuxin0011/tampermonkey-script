@@ -316,3 +316,11 @@
   --line_bolder_active: var(--Ga4);
   --line_bolder_disabled: var(--Ga1_s)
 }
+
+
+
+html {
+  --graph_bg_thick:var(--w-border-dark);
+}
+
+

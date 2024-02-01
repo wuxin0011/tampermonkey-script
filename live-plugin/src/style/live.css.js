@@ -22,7 +22,7 @@ ${root}
     --m-container-width: 800px;
     --m-container-height: 400px;
     --m-container-operation-right-width: 150px;
-    --m-container-input-width: ${is_bilibili ? '200px' : '100px'};
+    --m-container-input-width: ${is_bilibili ? '150px' : '100px'};
     --m-container-box-transition: all 0.5s ease-in-out;
     --m-container-select-width: var(--m-container-input-width);
     --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) ;

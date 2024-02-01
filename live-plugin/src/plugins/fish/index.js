@@ -52,7 +52,7 @@ export default class FishLive extends LivePlugin {
         findMark('.layout-Section.layout-Slide-banner', (a) => {
             a.href = 'javascript:;void(0)'
             addEventListener(a, 'click', (e) => e.preventDefault())
-        },10,100)
+        }, 10, 100)
         // 移除直播
         // removeVideo('.layout-Slide-player video')
         // 获取暂停button
@@ -87,7 +87,7 @@ export default class FishLive extends LivePlugin {
                 if (li.mark) {
                     return;
                 }
-                a.setAttribute('href', 'javascript:;void(0)');
+                // a.setAttribute('href', 'javascript:;void(0)');
                 addEventListener(user, 'click', (e) => {
                     e.preventDefault()
                     that.addUser(that.getRoomIdByUrl(a?.href), name);
@@ -161,7 +161,7 @@ export default class FishLive extends LivePlugin {
                         return;
                     }
                     a.title = `点击移除主播:${user.textContent}`
-                    a.setAttribute('href', 'javascript:;void(0)');
+                    // a.setAttribute('href', 'javascript:;void(0)');
                     addEventListener(a, 'click', (e) => {
                         e.preventDefault()
                     })
@@ -180,8 +180,6 @@ export default class FishLive extends LivePlugin {
         }
         runCategory()
         window.addEventListener('scroll', throttle(1000, runCategory))
-
-
     }
 
 

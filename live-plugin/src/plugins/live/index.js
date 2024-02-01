@@ -30,6 +30,18 @@ import {
     wls
 } from '@/utils';
 
+
+import {
+    isShowFansIconKey,
+    isShowSysMsgKey,
+    isShowGiftRankKey,
+    isShowColorDmKey,
+    isShowSysMsg,
+    isShowGiftRank,
+    isShowFansIcon,
+    isShowColorDm
+} from "@/utils";
+
 import {
     getBiliBiliInfoByUserId,
     getBiliBiliInfoByVideoID,
@@ -341,6 +353,7 @@ export default class LivePlugin {
                 let deleteKeyList = [
                     that.key,
                     that.bg_key,
+                    that.bg_show_key,
                     that.menu_show_key,
                     that.gift_key,
                     that.logo_show_key,
@@ -353,6 +366,8 @@ export default class LivePlugin {
                     that.is_first_auto_max_pro_key,
                     DARK_THEME_KEY,
                     THEME_IS_AUTO,
+                    '__right_container_key__',
+                    '__right_video_list_reco_list_key__'
 
                 ]
                 for (let item of deleteKeyList) {
@@ -376,7 +391,6 @@ export default class LivePlugin {
         // 文件上传
         const upload = querySelector(container, '.operation .bg-btn')
         addEventListener(upload, 'click', function (e) {
-
             uploadButton.click()
             addLocalStore(that.bg_is_first_key, false, Boolean.name)
         })
@@ -384,14 +398,12 @@ export default class LivePlugin {
         // 显示关闭
         const close_container = querySelector(container, '.operation .btn-close-container')
         addEventListener(close_container, 'click', function (e) {
-
             that.isShowContainer()
         })
 
         // 关闭
         const close_container2 = querySelector(container, '.operation #m-close-button1')
         addEventListener(close_container2, 'click', function (e) {
-
             that.isShowContainer()
         })
         // 选择背景
@@ -846,7 +858,9 @@ export default class LivePlugin {
             log('当前平台不支持背景')
             return;
         }
-        container = querySelector('body')
+        if (!container) {
+            container = querySelector('body')
+        }
         if (!container || !(container instanceof HTMLElement)) {
             warn('壁纸设置失败 获取不到 container ！')
             return;
@@ -1009,7 +1023,7 @@ export default class LivePlugin {
         } else {
             loopDo((timer) => {
                 button = querySelector(that.full_screen_button)
-                log("fullScreen button", that.full_screen_button, !!button ? '找到button了' : "未找到全屏button")
+                // log("fullScreen button", that.full_screen_button, !!button ? '找到button了' : "未找到全屏button")
                 if (button && button instanceof HTMLElement) {
                     let isClick = button?.isClick
                     if (isClick) {
@@ -1086,7 +1100,7 @@ export default class LivePlugin {
     }
 
     addEven() {
-        let that = this
+        const that = this
         addFullScreenEvent(() => {
             that.isShowGift()
         })
@@ -1096,6 +1110,20 @@ export default class LivePlugin {
                 that.isShowContainer()
             }
         });
+
+        const showMessage = (bool) => !bool ? 'YES' : "NO"
+        if (is_huya) {
+            log('================================================================')
+            log('是否显示系统消息 : ', showMessage(isShowSysMsg()))
+            log('是否显示粉丝排行 : ', showMessage(isShowGiftRank()))
+            log('是否显示粉丝徽章 : ', showMessage(isShowFansIcon()))
+            log('================================================================')
+        }
+
+
+        GM_registerMenuCommand(`功能面板💎`, () => {
+            that.isShowContainer()
+        }, { title: '点击显示或者关闭插件菜单,默认关闭，也可以使用 Ctrl + alt + j 查看' })
     }
 
 

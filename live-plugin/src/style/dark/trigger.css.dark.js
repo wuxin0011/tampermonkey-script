@@ -1,3 +1,15 @@
+import { isShowColorDm } from '@/utils'
+
+// 弹幕color是否显示
+const dark_dm_color = () => isShowColorDm() ? '' : `
+
+.dark #danmuwrap span {
+  color: var(--w-text-light) !important;
+}
+`
+
+
+
 const darkCss = `
 .dark .chat-room__list .msg-bubble .colon,
 .dark .chat-room__list .msg-bubble .msg,
@@ -7,8 +19,11 @@ const darkCss = `
 }
 
 
+${dark_dm_color()}
+
 
 /* 修改背景和字体颜色 */
+.dark [class^=chat-popup-layer] [class^=uc-status],
 .dark #J_roomWeeklyRankListRoot [class^=UserRankInfo],
 .dark #J_roomWeeklyRankListRoot [class^=NobleApp],
 .dark #J_roomWeeklyRankListRoot [class^=seat-item],
@@ -41,7 +56,8 @@ const darkCss = `
 .dark .live-box .box-hd .more-list li,
 .dark #J_duyaHeaderRight ul li a,
 .dark [class^=Category] [class^=SecTitle],
-.dark [class^=listItem],.dark [class^=listItem] span,
+.dark [class^=listItem],
+.dark [class^=listItem] span,
 .dark .nav-expand-list,
 .dark .nav-expand-list-more ,
 .dark #js-game-list li,
@@ -118,7 +134,6 @@ const darkCss = `
 
 
 /* 修改border */
-
 .dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current {
@@ -128,8 +143,9 @@ const darkCss = `
 }
 
 /* 修改字体颜色 */
-.dark .duya-header a, .dark p,.dark span,
-.dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6
+.dark .duya-header a, 
+.dark p,
+.dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6,
 .dark .duya-header-nav .hy-nav-item a,
 .dark .duya-header-right a,
 .dark .liveList-title a,
@@ -387,7 +403,7 @@ const darkCss = `
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
-  border-radius:50%; !important;
+  border-radius:50%  !important;
   position:relative !important;
 }
 

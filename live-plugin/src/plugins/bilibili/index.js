@@ -10,11 +10,14 @@ import {
     loopDo,
     querySelector,
     removeDOM,
-    wls
+    wls,
+    isShowBg
 } from '@/utils';
 import Logo from '@/utils/logo';
-import { log, querySelectorAll, throttle, warn } from "../../utils";
+import { handlerDisplay, isShowHotSearch, log, querySelectorAll, throttle, warn } from "../../utils";
 import LivePlugin from '../live';
+import cssUpdate from '../../style/dark/dark.image';
+
 
 
 /**
@@ -29,6 +32,8 @@ export default class BiliBili extends LivePlugin {
         this.fullScreenText = '进入全屏 (f)'
         this.full_screen_is_find = false
         this.full_screen_button = '.bpx-player-ctrl-btn.bpx-player-ctrl-full'
+        // https://i2.hdslb.com/bfs/static/stone-free/dyn-home/assets/bg.png@1c.webp
+        this.default_background_image = 'https://s1.hdslb.com/bfs/static/blive/blfe-message-web/static/img/infocenterbg.a1a0d152.jpg'
         this.auto_max_pro_class_or_id_list = '.bpx-player-ctrl-btn.bpx-player-ctrl-quality .bpx-player-ctrl-quality-menu>.bpx-player-ctrl-quality-menu-item'
         this.init()
     }
@@ -42,16 +47,15 @@ export default class BiliBili extends LivePlugin {
      */
     createButton() {
         let that = this
-        if (local_url.indexOf('https://live.bilibili.com/') != 1) {
-            return;
-        }
+        let isShowLogo = () => wls.getItem(that.btn_is_first_key) === null ? true : getLocalStore(that.logo_show_key, Boolean.name) // logo 默认显示
+
         loopDo(() => {
             if (!!that.logo_btn) {
                 return;
             }
             let buttonBoxs = querySelector('.palette-button-wrap .storage-box .storable-items')
-            let btn = createElement('button')
-            btn.className = 'primary-btn'
+            let btn = createElement('div')
+            btn.className = 'm-bilibili-btn'
             btn.style.fontSize = '16px'
             if (!buttonBoxs) {
                 buttonBoxs = document.querySelector('body')
@@ -62,10 +66,10 @@ export default class BiliBili extends LivePlugin {
                 btn.style.position = 'fixed'
                 btn.style.bottom = '220px'
                 btn.style.right = '6px'
-                btn.style.display = 'block'
+                btn.style.display = 'none'
                 btn.style.zIndex = 9999999
                 window.onscroll = () => {
-                    if (window.scrollY >= 530) {
+                    if (window.scrollY >= 530 && isShowLogo()) {
                         btn.style.display = 'block'
                     } else {
                         btn.style.display = 'none'
@@ -79,7 +83,6 @@ export default class BiliBili extends LivePlugin {
             addEventListener(btn, 'click', function () {
                 that.isShowContainer()
             })
-
             insertChild(buttonBoxs, that.logo_btn)
         }, 20, 500)
 
@@ -227,6 +230,7 @@ export default class BiliBili extends LivePlugin {
         this.addDeleteRoomButton()
     }
 
+
     index() {
         // TODO index
     }
@@ -271,18 +275,24 @@ export default class BiliBili extends LivePlugin {
     }
 
     async detail() {
+        const that = this
         if (!/https:\/\/www\.bilibili\.com\/video\/(.*)/.test(local_url)) {
             return;
         }
 
-        this.detailLeftVideoList()
-        this.detailLeftVideoList('.video-page-operator-card-small')
+        /* ****************************************************************** */
+
+        this.rightMenuVideoOperation()
         this.isFullScreen()
         this.isAutoMaxVideoPro()
-        const result = await getBiliBiliInfoByVideoID(local_url)
-        if (result && result?.code === 0 && this.userIsExist(result?.owner?.mid) || this.userIsExist(result?.owner?.name)) {
-            this.roomIsNeedRemove()
-        }
+
+
+
+        /* 视频推荐不显示暂时关闭 */
+        // const result = await getBiliBiliInfoByVideoID(local_url)
+        // if (result && result?.code === 0 && this.userIsExist(result?.owner?.mid) || this.userIsExist(result?.owner?.name)) {
+        //     this.roomIsNeedRemove()
+        // }
 
     }
 
@@ -305,5 +315,68 @@ export default class BiliBili extends LivePlugin {
 
     }
 
+
+
+    settingBackgroundImage(url, container) {
+        // HOME
+        if (local_url.indexOf('https://www.bilibili.com/?') != -1 || local_url === 'https://www.bilibili.com/' || local_url === 'https://www.bilibili.com') {
+            container = querySelector('#i_cecream')
+        }
+
+        // VIDEO
+        if (local_url.indexOf('https://www.bilibili.com/video') != -1) {
+            container = querySelector('#app')
+        }
+        super.settingBackgroundImage(url, container)
+    }
+
+
+    rightMenuVideoOperation() {
+        let that = this
+        const right_container_key = '__right_container_key__'
+        const right_video_list_reco_list_key = '__right_video_list_reco_list_key__'
+        let right_video_list_container = querySelector('.right-container')
+        let show = wls.getItem(right_container_key) != 'false'
+        right_video_list_container.style.display = show ? "" : 'none'
+
+
+        function scanVideoList() {
+            if (show_video && show) {
+                that.detailLeftVideoList()
+                that.detailLeftVideoList('.video-page-operator-card-small')
+            }
+        }
+
+
+        GM_registerMenuCommand(`右侧面板👔`, () => {
+            show = !show
+            wls.setItem(right_container_key, show)
+            scanVideoList()
+            right_video_list_container.style.display = show ? "" : 'none'
+        }, { title: '如果你认为右侧视频推荐不想看，点我关闭,默认开启' })
+
+
+        // id = reco_list
+        let right_video_list_reco_list = querySelector('#reco_list')
+
+        let show_video = wls.getItem(right_video_list_reco_list_key) != 'false'
+        console.log('默认是否显示video ？ ', show_video, '默认是否显示right menu ？ ', show)
+        right_video_list_reco_list.style.display = show_video ? "" : 'none'
+
+        GM_registerMenuCommand(`视频推荐🎬`, () => {
+            if (!show && !show_video) {
+                show = !show
+                wls.setItem(right_container_key, show)
+                right_video_list_container.style.display = show ? "" : 'none'
+            }
+            show_video = !show_video
+            scanVideoList()
+            wls.setItem(right_video_list_reco_list_key, show_video)
+            right_video_list_reco_list.style.display = show_video ? "" : 'none'
+        }, { title: '如果你认为右侧视频推荐不想看，点我关闭,默认开启' })
+
+
+        scanVideoList()
+    }
 
 }

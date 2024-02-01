@@ -1,17 +1,16 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.11
+// @version      4.1.13
 // @author       wuxin0011
-// @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j激活
+// @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArhJREFUWEfllz9ME1Ecx3+/dzUxIUpPxcTEqVD+LDjIoiTSwQldjHGDAwYpbYE4aOJQ8KBFTUx0KLSWoNIDoyFuGsMkcTBx0URjjFBQBmKiQ49ijInh3s/06iWlgfauh8Xoje++7/f5vN+73r0i7PCFO8yHDQI1QzG5HEIOgskPsm85w9IFMmBkQguBNlQOAQTWB4hryWB3V1YgFP++OOCtKAfcYLjD4xeJ8adYE4p5gINn8YpPb78oBehPihDQ0KoS1Vl65/MFnJJfNgLbLeJs6/UA457/S0CUfI3art0ra3dupbalA5UdfdXpRGTJ7PaIUmAWiMbUqehj2wJiR28zcLqPRD2p6ehsMQlR8n9GQTiZuhd5n8naEtjX1X+ctPVHquvgYefHrw8RUFGVsSdbSYjtgWV0sFYDbksgC+dB1XXgNMgy14tJ/hkidjs9NfosX8IpBeaZwM7kwksWyMK1F6qrSjDgBjAjwZhwMzUZeWmMiZL/NQpCWz48R6BlVYnqb9yi7wGxwx8GjkfV6qpT+fBcCQQKq0rsrS4kCPJm8JI6IEqBS6oydqPYw+aU/MOATAQNJ1anI2+2ytt6CAtKyLKj8tOXI+lE7FWh3G8B81tQbOVW7/8tAoW/BWJ7YM7qyqzkCel5wY+RlWJ2s5v+DK0U3dvZ7xZovUlNRB9YmWdkdYHaa3ddtP7zQnKgp99qkf2dvfWcQ5OqjE5bndswEj+kEZzVj2TuUPxbcsC7x2oRO3l3KP5D0HhD9kwYjp9DghnivDyHUsYuI+L5hWD3lK3/BfVXx2s5p2MLQW+i1G7YEqgbiTZqmtC6OOi9/u8LeOQ5xwpL1uWulDGtlnN2AgAncseJa7gk+96Z6YrpLagbnmjmqHk2gAArAOgwAsznjiNBemHQO7qtAmaKlZIx3YFSipuZ8wvlidcmZtmgQAAAAABJRU5ErkJggg==
 // @source       https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
 // @supportURL   https://github.com/wuxin0011/tampermonkey-script/issues
-// @match        https://*.bilibili.com/*
 // @match        https://www.douyu.com/*
 // @match        https://www.huya.com/*
-// @match        https://www.bilibili.com/*
+// @match        /^https://(www|search|space|game|message|t).bilibili..*/
 // @match        https://*.douyin.com/*
 // @grant        GM.registerMenuCommand
 // @grant        GM_addStyle
@@ -25,14 +24,7 @@
     "https://i.huya.com/",
     "https://www.douyu.com/member/",
     "https://yuba.douyu.com/",
-    "https://manga.bilibili.com/",
-    "https://account.bilibili.com/",
-    "https://member.bilibili.com/",
-    "https://show.bilibili.com/",
-    "https://www.bilibili.com/cheese",
-    "https://pay.bilibili.com/",
-    "https://live.bilibili.com/",
-    "https://link.bilibili.com/"
+    "https://www.bilibili.com/cheese"
   ];
   const prefix = "[live-plugin]:";
   const msg = (...args) => `${prefix} ${args}`;
@@ -43,7 +35,7 @@
   const warn = (...args) => console.warn(msg(args));
   const error = (...args) => console.error(msg(args));
   const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/;
-  const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/;
+  const bilibili_address_pattern = /^https:\/\/(www|search|space|game|message|t)\.bilibili\..*/;
   const huya_address_pattern = /^https:\/\/www\.huya\.((com)|(cn)).*/;
   const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/;
   const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/;
@@ -357,7 +349,10 @@
       return !is_douyin;
     },
     supportBg() {
-      return !is_douyin && !is_bilibili;
+      if (is_bilibili) {
+        return local_url === "https://www.bilibili.com" || local_url === "https://www.bilibili.com/" || local_url.indexOf("https://www.bilibili.com/?") != -1 || local_url.indexOf("https://www.bilibili.com/video") != -1;
+      }
+      return !is_douyin;
     },
     supportMenu() {
       return !is_douyin && !is_bilibili;
@@ -384,13 +379,19 @@
       this.name = name;
     }
   }
-  const isShowBg = () => wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
   const isShowFansIconKey = "__isShowFansIconKey__";
   const isShowGiftRankKey = "__isShowGiftRankKey__";
   const isShowSysMsgKey = "__isShowSysMsgKey__";
+  const isShowColorDmKey = "__isShowColorDm__";
+  const isShowHotSearchKey = "__is_show_hot_search_key__";
+  const isShowHotSearchInputKey = "__is_show_hot_search_input_key__";
+  const isShowBg = () => is_bilibili ? getLocalStore("bg_show_key", Boolean.name) : wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
   const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name);
   const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name);
   const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name);
+  const isShowColorDm = () => getLocalStore(isShowColorDmKey, Boolean.name);
+  const isShowHotSearch = () => wls.getItem(isShowHotSearchKey) != "false";
+  const isShowHotSearchInputKeyword = () => wls.getItem(isShowHotSearchInputKey) != "false";
   const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf("非法访问") !== -1 : false;
   const isBVId = (keywords) => /.*\/BV(.*)/.test(keywords);
   const getBVId = (url) => {
@@ -463,9 +464,33 @@
     "#main_col",
     ".layout-Module-container"
   ];
-  const darkImageCss = [.../* @__PURE__ */ new Set([...douyu, ...huya])];
+  const bilibili = [
+    "body",
+    "#app",
+    "#bili-header-banner-img"
+  ];
+  const darkImageCss = () => {
+    let st = null;
+    if (is_huya) {
+      st = huya;
+    } else if (is_douyu) {
+      st = douyu;
+    } else if (is_bilibili) {
+      st = bilibili;
+    } else {
+      return [];
+    }
+    return [.../* @__PURE__ */ new Set([...st])];
+  };
   const cssUpdate = () => {
-    darkImageCss.forEach((selector) => {
+    if (is_bilibili) {
+      const imgElement = querySelector(".bili-header__banner .v-img img");
+      if (imgElement) {
+        console.log("run update");
+        imgElement.style.display = isShowBg() ? "" : isNeedDark() ? "none" : "block";
+      }
+    }
+    darkImageCss().forEach((selector) => {
       const ele = querySelector(selector);
       if (ele) {
         ele.style.backgroundColor = isShowBg() ? "" : isNeedDark() ? "var(--w-bg-darker)" : "";
@@ -581,7 +606,6 @@
   };
   const autoDarkType = () => {
     let hour = (/* @__PURE__ */ new Date()).getHours();
-    console.log("current hours:", hour);
     let type = DARK_THEME_TYPE.DEFAULT;
     if (isAutoDark()) {
       if (hour >= 0 && hour <= 7) {
@@ -776,7 +800,7 @@ ${root$1}
     --m-container-width: 800px;
     --m-container-height: 400px;
     --m-container-operation-right-width: 150px;
-    --m-container-input-width: ${is_bilibili ? "200px" : "100px"};
+    --m-container-input-width: ${is_bilibili ? "150px" : "100px"};
     --m-container-box-transition: all 0.5s ease-in-out;
     --m-container-select-width: var(--m-container-input-width);
     --m-container-input-outline: 1px solid rgba(8, 125, 235, 0.6) ;
@@ -1419,6 +1443,7 @@ ${root$1}
           let deleteKeyList = [
             that.key,
             that.bg_key,
+            that.bg_show_key,
             that.menu_show_key,
             that.gift_key,
             that.logo_show_key,
@@ -1430,7 +1455,9 @@ ${root$1}
             that.gift_is_first_key,
             that.is_first_auto_max_pro_key,
             DARK_THEME_KEY,
-            THEME_IS_AUTO
+            THEME_IS_AUTO,
+            "__right_container_key__",
+            "__right_video_list_reco_list_key__"
           ];
           for (let item of deleteKeyList) {
             wls.removeItem(item);
@@ -1827,7 +1854,9 @@ ${root$1}
         log("当前平台不支持背景");
         return;
       }
-      container = querySelector("body");
+      if (!container) {
+        container = querySelector("body");
+      }
       if (!container || !(container instanceof HTMLElement)) {
         warn("壁纸设置失败 获取不到 container ！");
         return;
@@ -1968,7 +1997,6 @@ ${root$1}
       } else {
         loopDo((timer) => {
           button = querySelector(that.full_screen_button);
-          log("fullScreen button", that.full_screen_button, !!button ? "找到button了" : "未找到全屏button");
           if (button && button instanceof HTMLElement) {
             let isClick = button == null ? void 0 : button.isClick;
             if (isClick) {
@@ -2036,7 +2064,7 @@ ${root$1}
       }, 5, 500);
     }
     addEven() {
-      let that = this;
+      const that = this;
       addFullScreenEvent(() => {
         that.isShowGift();
       });
@@ -2045,6 +2073,17 @@ ${root$1}
           that.isShowContainer();
         }
       });
+      const showMessage = (bool) => !bool ? "YES" : "NO";
+      if (is_huya) {
+        log("================================================================");
+        log("是否显示系统消息 : ", showMessage(isShowSysMsg()));
+        log("是否显示粉丝排行 : ", showMessage(isShowGiftRank()));
+        log("是否显示粉丝徽章 : ", showMessage(isShowFansIcon()));
+        log("================================================================");
+      }
+      GM_registerMenuCommand(`功能面板💎`, () => {
+        that.isShowContainer();
+      }, { title: "点击显示或者关闭插件菜单,默认关闭，也可以使用 Ctrl + alt + j 查看" });
     }
   }
   class TriggerLive extends LivePlugin {
@@ -2199,7 +2238,7 @@ ${root$1}
     }
     autoHideMenu() {
       const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name);
-      console.log("is show left meun ?", isShow);
+      log("是否显示菜单", isShow ? "显示" : " 不显示");
       if (isShow) {
         return;
       }
@@ -2281,7 +2320,6 @@ ${root$1}
           if (li.mark) {
             return;
           }
-          a.setAttribute("href", "javascript:;void(0)");
           addEventListener(user, "click", (e) => {
             e.preventDefault();
             that.addUser(that.getRoomIdByUrl(a == null ? void 0 : a.href), name);
@@ -2351,7 +2389,6 @@ ${root$1}
               return;
             }
             a.title = `点击移除主播:${user2.textContent}`;
-            a.setAttribute("href", "javascript:;void(0)");
             addEventListener(a, "click", (e) => {
               e.preventDefault();
             });
@@ -2483,6 +2520,7 @@ ${root$1}
       this.fullScreenText = "进入全屏 (f)";
       this.full_screen_is_find = false;
       this.full_screen_button = ".bpx-player-ctrl-btn.bpx-player-ctrl-full";
+      this.default_background_image = "https://s1.hdslb.com/bfs/static/blive/blfe-message-web/static/img/infocenterbg.a1a0d152.jpg";
       this.auto_max_pro_class_or_id_list = ".bpx-player-ctrl-btn.bpx-player-ctrl-quality .bpx-player-ctrl-quality-menu>.bpx-player-ctrl-quality-menu-item";
       this.init();
     }
@@ -2492,16 +2530,14 @@ ${root$1}
      */
     createButton() {
       let that = this;
-      if (local_url.indexOf("https://live.bilibili.com/") != 1) {
-        return;
-      }
+      let isShowLogo = () => wls.getItem(that.btn_is_first_key) === null ? true : getLocalStore(that.logo_show_key, Boolean.name);
       loopDo(() => {
         if (!!that.logo_btn) {
           return;
         }
         let buttonBoxs = querySelector(".palette-button-wrap .storage-box .storable-items");
-        let btn = createElement("button");
-        btn.className = "primary-btn";
+        let btn = createElement("div");
+        btn.className = "m-bilibili-btn";
         btn.style.fontSize = "16px";
         if (!buttonBoxs) {
           buttonBoxs = document.querySelector("body");
@@ -2512,10 +2548,10 @@ ${root$1}
           btn.style.position = "fixed";
           btn.style.bottom = "220px";
           btn.style.right = "6px";
-          btn.style.display = "block";
+          btn.style.display = "none";
           btn.style.zIndex = 9999999;
           window.onscroll = () => {
-            if (window.scrollY >= 530) {
+            if (window.scrollY >= 530 && isShowLogo()) {
               btn.style.display = "block";
             } else {
               btn.style.display = "none";
@@ -2687,18 +2723,12 @@ ${root$1}
       }, 5e3);
     }
     async detail() {
-      var _a, _b;
       if (!/https:\/\/www\.bilibili\.com\/video\/(.*)/.test(local_url)) {
         return;
       }
-      this.detailLeftVideoList();
-      this.detailLeftVideoList(".video-page-operator-card-small");
+      this.rightMenuVideoOperation();
       this.isFullScreen();
       this.isAutoMaxVideoPro();
-      const result = await getBiliBiliInfoByVideoID(local_url);
-      if (result && (result == null ? void 0 : result.code) === 0 && this.userIsExist((_a = result == null ? void 0 : result.owner) == null ? void 0 : _a.mid) || this.userIsExist((_b = result == null ? void 0 : result.owner) == null ? void 0 : _b.name)) {
-        this.roomIsNeedRemove();
-      }
     }
     async getNameByRoomId(keywords) {
       var _a, _b, _c;
@@ -2716,6 +2746,51 @@ ${root$1}
         warn(" getNameByRoomId can not find result ！");
         return null;
       }
+    }
+    settingBackgroundImage(url, container) {
+      if (local_url.indexOf("https://www.bilibili.com/?") != -1 || local_url === "https://www.bilibili.com/" || local_url === "https://www.bilibili.com") {
+        container = querySelector("#i_cecream");
+      }
+      if (local_url.indexOf("https://www.bilibili.com/video") != -1) {
+        container = querySelector("#app");
+      }
+      super.settingBackgroundImage(url, container);
+    }
+    rightMenuVideoOperation() {
+      let that = this;
+      const right_container_key = "__right_container_key__";
+      const right_video_list_reco_list_key = "__right_video_list_reco_list_key__";
+      let right_video_list_container = querySelector(".right-container");
+      let show = wls.getItem(right_container_key) != "false";
+      right_video_list_container.style.display = show ? "" : "none";
+      function scanVideoList() {
+        if (show_video && show) {
+          that.detailLeftVideoList();
+          that.detailLeftVideoList(".video-page-operator-card-small");
+        }
+      }
+      GM_registerMenuCommand(`右侧面板👔`, () => {
+        show = !show;
+        wls.setItem(right_container_key, show);
+        scanVideoList();
+        right_video_list_container.style.display = show ? "" : "none";
+      }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
+      let right_video_list_reco_list = querySelector("#reco_list");
+      let show_video = wls.getItem(right_video_list_reco_list_key) != "false";
+      console.log("默认是否显示video ？ ", show_video, "默认是否显示right menu ？ ", show);
+      right_video_list_reco_list.style.display = show_video ? "" : "none";
+      GM_registerMenuCommand(`视频推荐🎬`, () => {
+        if (!show && !show_video) {
+          show = !show;
+          wls.setItem(right_container_key, show);
+          right_video_list_container.style.display = show ? "" : "none";
+        }
+        show_video = !show_video;
+        scanVideoList();
+        wls.setItem(right_video_list_reco_list_key, show_video);
+        right_video_list_reco_list.style.display = show_video ? "" : "none";
+      }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
+      scanVideoList();
     }
   }
   class DouYin extends LivePlugin {
@@ -3089,7 +3164,7 @@ ${dataLayoutItmeDarkCss}
 .dark .BarrageWordPanel-btn,.dark .LevelFilterLimit-input:focus,
 .dark .BarrageFilter-fkbutton, .dark .FilterKeywords-edit-input, .dark .LevelFilterLimit-input,
 .dark .FilterKeywords-edit-input:focus, .dark .LevelFilterLimit-input:focus,
-.dark .MatchSystemChatFansBarragePop-describe,
+.dark .MatchSystemChatFansBarragePop-describe
 {
   border: 1px solid var(--w-text-light) !important;
 }
@@ -3383,6 +3458,12 @@ ${darkCss$1}
 
 
 ` : "";
+  const dark_dm_color = () => isShowColorDm() ? "" : `
+
+.dark #danmuwrap span {
+  color: var(--w-text-light) !important;
+}
+`;
   const darkCss = `
 .dark .chat-room__list .msg-bubble .colon,
 .dark .chat-room__list .msg-bubble .msg,
@@ -3392,8 +3473,11 @@ ${darkCss$1}
 }
 
 
+${dark_dm_color()}
+
 
 /* 修改背景和字体颜色 */
+.dark [class^=chat-popup-layer] [class^=uc-status],
 .dark #J_roomWeeklyRankListRoot [class^=UserRankInfo],
 .dark #J_roomWeeklyRankListRoot [class^=NobleApp],
 .dark #J_roomWeeklyRankListRoot [class^=seat-item],
@@ -3426,7 +3510,8 @@ ${darkCss$1}
 .dark .live-box .box-hd .more-list li,
 .dark #J_duyaHeaderRight ul li a,
 .dark [class^=Category] [class^=SecTitle],
-.dark [class^=listItem],.dark [class^=listItem] span,
+.dark [class^=listItem],
+.dark [class^=listItem] span,
 .dark .nav-expand-list,
 .dark .nav-expand-list-more ,
 .dark #js-game-list li,
@@ -3503,7 +3588,6 @@ ${darkCss$1}
 
 
 /* 修改border */
-
 .dark .loGrI3HWkrL4-I82d11qx ._5zt-PSmfE5nKpsIw9OQE,
 .dark .search-suggest .search-item:hover,
 .dark .search-suggest .search-item.current {
@@ -3513,8 +3597,9 @@ ${darkCss$1}
 }
 
 /* 修改字体颜色 */
-.dark .duya-header a, .dark p,.dark span,
-.dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6
+.dark .duya-header a, 
+.dark p,
+.dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6,
 .dark .duya-header-nav .hy-nav-item a,
 .dark .duya-header-right a,
 .dark .liveList-title a,
@@ -3772,7 +3857,7 @@ ${darkCss$1}
   background: var(--w-bg-darker) !important;
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
-  border-radius:50%; !important;
+  border-radius:50%  !important;
   position:relative !important;
 }
 
@@ -3821,6 +3906,7 @@ ${darkCss$1}
 
 `;
   const sys_msg = isShowSysMsg() ? "" : `
+.treasureChest-winningRecord,
 .chat-room__list .msg-auditorSys,
 .chat-room__list .msg-sys {
   display:none !important;
@@ -3861,7 +3947,8 @@ ${darkCss$1}
   color:rgb(255, 135, 0);
 }
  
-/* 小黄车礼物 */
+/* NONE */
+[class^=GuangG],
 #player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
 [class^=ChatPanelRoot] [class^=PanelFt] [class^=text],
@@ -3916,7 +4003,7 @@ ${darkCss$1}
     display:none !important;
  }
  
- .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap, {
+ .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap {
    display:none;
  }
  
@@ -4010,10 +4097,21 @@ ${darkCss$1}
 ${darkCss}
 
 ` : "";
+  const inputKeywords = () => isShowHotSearchInputKeyword() ? `` : `
+#douyin-header>input,
+.QSoEc32i>input,
+.st2xnJtZ.YIde9aUh {
+  color: transparent;
+  opacity:0 !important;
+}
+
+`;
   const css$2 = is_douyin ? `
     #related-video-card-login-guide,
     #captcha_container,
+    .video-info-detail,
     .JsAsIOEV,
+    .wwNZW6za,
     #login-full-panel{
        display:none !important;
     }
@@ -4021,7 +4119,6 @@ ${darkCss}
     .login-mask-enter-done,
     .box-align-center, {
       display:none ;
-
     }
 
     .m-douyin-login{
@@ -4041,23 +4138,25 @@ ${darkCss}
         background-color: var(--w-bg-light) !important;
         border-radius: 6px !important;
       }
+
+
+      ${inputKeywords()}
       
   
 ` : "";
   const anime = /.*:\/\/www\.bilibili\.com\/anime\/.*/.test(local_url) ? `
 .dark .home-cell-desc-title[data-v-350d21cc],
-.dark .home-cell-desc-title,
+.dark [class^=home-cell-desc-title],
 .dark .home-cell-desc-subtitle[data-v-350d21cc], 
-.dark .home-cell-desc-subtitle, 
-.dark .with-up-space,
+.dark [class^=home-cell-desc-subtitle], 
+.dark [class^=with-up-space],
 .dark .with-up-space[data-v-350d21cc]
  {
   color:var(--w-text-light) !important;
 }
 
 
-.dark .nav-tool-container .section,
-.dark .nav-tool-container .section[data-v-3b26ecb6] {
+.dark .nav-tool-container [class^=section]{
   border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
@@ -4065,8 +4164,7 @@ ${darkCss}
 
 
 
-.dark .nav-tool-container .section:hover,
-.dark .nav-tool-container .section[data-v-3b26ecb6]:hover {
+.dark .nav-tool-container [class^=section]:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
   background:var(--w-bg-darker) !important;
@@ -4147,7 +4245,7 @@ ${darkCss}
 .dark .user-card,
 .dark .user-card .btn-box .message
 {
-  border: 1px solid var(--w-text) !important;
+  border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
   background-color:var(--w-bg-darker) !important;
 }
@@ -4166,7 +4264,7 @@ ${darkCss}
 .dark .comment-bilibili-fold .operation .opera-list{
   color:var(--w-text-light) !important;
   background-color:var(--w-bg-darker) !important;
-  border-color: var(--w-text) !important;
+  border-color: var(--w-border) !important;
 }
 
 
@@ -4551,15 +4649,8 @@ ${videoToolsDarkCss}
 }
 
 
-/* 黑色主题模式下不显示壁纸 */
-.dark #bili-header-banner-img {
-  display:none !important;
-}
-
-
-
 .dark body,.dark #header-v3,.dark .app-v1,.dark .app-v2,.dark .app-v3,.dark .app-v4,.dark .app-v5,
-.dark #app,.dark .v-img, .dark .bili-header * ,
+.dark #app, .dark .bili-header,
 .dark .header-channel,.dark .header-channel-fixed-right-item,
 .dark .bili-video-card__wrap,.dark .bili-header .game,
 .dark .large-header,
@@ -4600,7 +4691,7 @@ ${videoToolsDarkCss}
 .dark .header-channel-fixed-right-item,
 .dark .bili-header .bili-header__channel .channel-entry-more__link, 
 .dark .bili-header .bili-header__channel .channel-link {
-  border:1px solid var(--w-text-light) !important;
+  border:1px solid var(--w-border) !important;
 }
 
 
@@ -4621,7 +4712,7 @@ ${videoToolsDarkCss}
 .dark .bili-header .avatar-panel-popover .level-item .level-item__bar--tag>span,
 .dark .bili-header .center-search-container .center-search__icon,
 .dark .bili-header .bili-header__channel .channel-link {
-  border-color: var(--w-text) !important;
+  border-color: var(--w-border) !important;
 }
 
 
@@ -4637,13 +4728,8 @@ ${videoToolsDarkCss}
 .dark .bili-header .slide-down .left-entry .loc-mc-box__text,
 .dark .bili-header .slide-down .left-entry .download-entry,
 .dark .bili-header .slide-down .left-entry .loc-entry ,
-.dark .bili-video-card .bili-video-card__info--date,
-.dark .bili-video-card .bili-video-card__info--author,
 .dark .bili-header .bili-header__channel .channel-link__right,
 .dark .bili-header .bili-header__channel .channel-link__left,
-.dark .right-entry-text,.dark .channel-entry-popover .name, .dark .more-channel-popover .name ,
-.dark .icon-title,.dark .bili-header .slide-down .right-entry .right-entry__outside .right-entry-icon,
-.dark .bili-header .live .title,.dark .bili-header .live-left-list-item,
 .dark .bili-header .live-left-list-item-text,
 .dark .bili-header .game-right-title,
 .dark .bili-header .game-left-panel-item-title, 
@@ -4654,11 +4740,16 @@ ${videoToolsDarkCss}
 .dark .favorite-panel-popover__nav .tab-item,
 .dark .favorite-panel-popover__nav .tab-item__num,
 .dark .bili-header .header-fav-card__info--title,
-.dark .dark .history-panel-popover .header-tabs-panel__content--date,
+.dark .history-panel-popover .header-tabs-panel__content--date,
 .dark .history-panel-popover .header-history-card__info--title,
 .dark .header-tabs-panel *,
 .dark .header-tabs-panel,
 .dark .header-tabs-panel__content--date,
+.dark .bili-video-card .bili-video-card__info--date,
+.dark .bili-video-card .bili-video-card__info--author,
+.dark .right-entry-text,.dark .channel-entry-popover .name, .dark .more-channel-popover .name ,
+.dark .icon-title,.dark .bili-header .slide-down .right-entry .right-entry__outside .right-entry-icon,
+.dark .bili-header .live .title,.dark .bili-header .live-left-list-item,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-content .nav-search-input,
 .dark .bili-header .avatar-panel-popover .links-item .single-link-item,
 .dark .bili-header .avatar-panel-popover .vip-item__link,
@@ -4733,13 +4824,20 @@ ${videoToolsDarkCss}
 .dark .bili-header .left-entry .download-wrapper .download-top-content .button,
 .dark .bili-header .avatar-panel-popover .links-item .link-red-tip,
 .dark .bili-header .avatar-panel-popover .links-item .link-beta-tip,
-.dark .vip-entry-containter,.dark vip-entry-btn,
-.dark .vip-entry-btn[data-v-ae740c54],
-.dark .bili-header .center-search-container .center-search__bar #nav-searchform,
-.dark .feed-roll-btn .primary-btn{
+.dark .vip-entry-containter,
+.dark [class^=vip-entry-btn],
+.dark .feed-roll-btn .primary-btn,
+.dark  .primary-btn
+{
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
-  border:1px solid var(--w-text-light) !important;
+  border:1px solid var(--w-border) !important;
+}
+
+.dark .bili-header .center-search-container .center-search__bar #nav-searchform.is-focus,
+.dark .bili-header .center-search-container .center-search__bar #nav-searchform::focus,
+.dark .bili-header .center-search-container .center-search__bar #nav-searchform {
+  border-color: var(--w-text) !important;
 }
 
 
@@ -4755,28 +4853,30 @@ ${videoToolsDarkCss}
 .dark .bili-header .left-entry .download-wrapper .download-top-content .button:hover,
 .dark .bili-header .histories .history-item:hover,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-btn:hover,
-.dark .feed-roll-btn .primary-btn:hover{
- color:var(--w-blue-link-hover) !important;
+.dark .feed-roll-btn .primary-btn:hover ,
+.dark .primary-btn:hover
+{
+  color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
   background:var(--w-bg-darker) !important; 
 }
-/******************************************************************/
+
 
 
 /* background 和 蓝色 border */
 .dark .header-dynamic-list-item:hover,
 .dark .bili-header .avatar-panel-popover .links-item .single-link-item:hover
 {
-  border:1px solid var(--w-text-light) !important;
+  border:1px solid var(--w-border) !important;
   background:var(--w-bg-darker) !important;
 }
 
 
 
 /* 蓝色border */
-.dark .bili-header .center-search-container .center-search__bar #nav-searchform.is-focus,
+
 .dark .suggest-item:hover {
-  border:1px solid var(--w-text) !important;
+  border:1px solid var(--w-border) !important;
   background:var(--w-bg-darker) !important;
 }
 
@@ -4792,8 +4892,11 @@ ${videoToolsDarkCss}
 
 /* fill */
 .dark .bili-header .avatar-panel-popover .level-item .level-item__bar--next svg .level-bg {
-  fill: var(--w-text); !important;
+  fill: var(--w-text)  !important;
 }
+
+
+
 
 `;
   const commonDark = `
@@ -4995,7 +5098,10 @@ ${link_css}
 .dark .list-create {
   background:var(--w-bg) !important;
 }
+
+.dark input#pin-layer-search,
 .dark .elec .elec-status-bg-grey,
+.dark #pin-wrapper #pin-layer,
 .dark #page-index #i-ann-content textarea,
 .dark .bili-dyn-item,
 .dark .bili-dyn-card-video__body,
@@ -5011,6 +5117,9 @@ ${link_css}
 .dark #page-series-index .channel-option,
 .dark .bili-rich-textarea__inner.empty,
 .dark .note-editor .rich-text-options,
+.dark .note-header,
+.dark .bili-header-m .header-search-suggest, 
+.dark .international-header .header-search-suggest,
 .dark #web-toolbar,
 .dark .n .n-inner {
   background-color:var(--w-bg-darker) !important;
@@ -5030,20 +5139,15 @@ ${link_css}
 .dark #page-index .channel.guest .channel-item .channel-title .channel-name, .dark #page-index .channel.guest .channel-name, .dark #page-index .channel-name,
 .dark #page-index .col-2 .section-title,
 .dark #page-index .col-2 .section .user-auth .auth-description,
-.dark .user-info .user-info-title .info-title[data-v-31d5659a],
 .dark .user-info .user-info-title [class^=info-title],
-.dark .user-info .info-content .info-command[data-v-31d5659a],
 .dark .user-info .info-content [class^=info-command],
-.dark .user-info .info-content .info-value[data-v-31d5659a],
 .dark .user-info .info-content [class^=info-value],
 .dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
 .dark .idc-meta-item,
 .dark .elec .elec-count,.dark .elec,
 .dark .elec .elec-setting, .elec .elec-total-c-num,
 .dark .elec-total-c,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
 .dark .user-info .info-content .info-tags .info-tag [class^=icon-tag],
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
 .dark .user-info .info-content .info-tags .info-tag [class^=tag-content],
 .dark #page-video #submit-video-type-filter a .count,
 .dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
@@ -5061,7 +5165,14 @@ ${link_css}
 .dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
 .dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
 .dark .bili-popover, .dark .bili-popover__arrow,
-.dark .game-card__info-title[data-v-7c9854da],.dark [class^=game-card__info-title],
+.dark [class^=game-card__info-title],
+.dark #pin-wrapper .pin-layer-vlist .small-item .title,
+.dark #pin-wrapper .pin-layer-vlist .small-item .meta .play,
+.dark #pin-wrapper .pin-layer-vlist .small-item .meta .icon,
+.dark #pin-wrapper .pin-layer-vlist .small-item .meta .time,
+.dark .list-item .desc,
+.dark .opus-list [class^=opus-item-title],
+.dark .opus-list [class^=opus-item-content],
 .dark .section-title {
   color:var(--w-text-light) !important;
 }
@@ -5073,9 +5184,14 @@ ${link_css}
 }
 
 
-
-
+.dark .col-1, .dark .co1-2,
+.dark #page-index,.dark #page-index .col-1, 
+.dark #page-index .col-2,
+.dark #page-dynamic .bili-dyn-item,
+.dark .i-m-r2,
+.dark .i-m-upload,
 .dark .bili-rich-textarea__inner,
+.dark .i-pin-v .be-tab,
 .dark .bili-popover, .dark .bili-popover__arrow,
 .dark .section {
   border-color: var(--w-border) !important;
@@ -5093,19 +5209,18 @@ ${link_css}
 .dark .bili-topic-search__popover,
 .dark #page-video #submit-video-type-filter,
 .dark #page-dynamic .col-2 .section,
-
 .dark #page-index .col-2 .section  {
   border-color: var(--w-border) !important;
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
 }
 
-.dark #page-index,.dark #page-index .col-1, .dark #page-index .col-2,
+
 .dark #page-index .channel, .dark #page-index .channel .channel-item,
 .dark #page-index .col-1 .section-title,.dark #page-index .col-2 .section-title,
 .dark .series-item .split-line[data-v-40b5e135],.dark .series-item .split-line,
 .dark .g-search input:focus {
-  border-color: var(--w-text) !important;
+  border-color: var(--w-border) !important;
 }
 
 .dark .n .n-inner {
@@ -5116,18 +5231,16 @@ ${link_css}
 .dark .col-full,
 .dark .btn,
 .dark .btn.btn-large, 
-.dark .btn.btn-large .btn-content[data-v-53027a10],
+.dark .btn.btn-large [class^=btn-content],
 .dark .new-elec-trigger,
 .dark .btn.idc-btn.default,
 .dark .elec-status,
 .dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],
 .dark #page-series-index .channel-option.no-channel .create-channel,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,
-.dark .reply-box .box-normal .reply-box-send::after,
-.dark .reply-box .box-normal .reply-box-send,
+.dark .reply-box .box-normal [class^=reply-box-send]::after,
+.dark .reply-box .box-normal [class^=reply-box-send],
 .dark .be-dropdown-item:hover,
 .dark .resizable-component .editor-innter,
 .dark .btn.idc-btn.primary {
@@ -5137,21 +5250,22 @@ ${link_css}
 }
 
 
-
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,
-.dark #page-series-index .channel-option.no-channel .create-channel:hover,
+.dark #pin-wrapper .pin-layer-vlist .small-item .title:hover,
+.dark #pin-wrapper .pin-layer-vlist .small-item .meta .play:hover,
+.dark #pin-wrapper .pin-layer-vlist .small-item .meta .icon:hover,
+.dark #pin-wrapper .pin-layer-vlist .small-item .meta .time:hover,
+.dark #pin-wrapper .pin-layer-vlist .small-item:hover,
+.dark #page-series-index .channel-option.no-channel [class^=create-channel]:hover,
 .dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
 .dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
 .dark .btn.primary.btn-large:hover,
 .dark .btn:hover,
-.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
-.dark .btn.btn-large .btn-content:hover,
+.dark .btn.btn-large [class^=btn-content]:hover,
 .dark .btn.btn-large:hover,
 .dark .bili-dyn-more__menu:hover,
 .dark .contribution-sidenav .contribution-item:hover,
 .dark .btn:hover,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,
-.dark .reply-box .box-normal .reply-box-send:hover::after,
+.dark .reply-box .box-normal [class^=reply-box-send]:hover::after,
 .dark .reply-box .box-normal .reply-box-send,
 .dark .reply-box .box-normal .reply-box-send:hover,
 .dark .new-elec-trigger:hover,
@@ -5191,6 +5305,7 @@ ${link_css}
 }
 
 
+
 ` : ``;
   const t = `
 .dark .bili-dyn-card-video__body,
@@ -5215,11 +5330,22 @@ html {
   --graph_bg_thick:var(--w-border-dark);
 }
 
-
-
+.dark .bpx-player-dm-btn-time,
+.dark .bpx-player-dm-btn-dm,
+.dark .bpx-player-dm-btn-date,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-dm,
+.dark .members-info-container .container,
+.dark .bpx-player-contextmenu>li,
+.dark .reply-item .root-reply-container .content-warp .user-info .user-name[data-v-eb69efad],
+.dark .sub-reply-item .sub-user-info .sub-user-name[data-v-26797283],
+.dark #reco_list,
+.dark [class^=up-info-container],
+.dark .left-container,
 .dark .bili-header__bar,
 .dark .bpx-player-sending-bar,
-.dark .harmony-font,.dark #v_desc,
+.dark .harmony-font,
+.dark #v_desc,
 .dark .bili-comment.browser-pc,
 .dark .comment-container, .dark .bpx-player-auxiliary .bpx-player-dm-function,
 .dark .reply-header,.dark .arc_toolbar_report,.dark .video-toolbar-left,
@@ -5229,89 +5355,94 @@ html {
 .dark .bpx-player-auxiliary .bpx-player-dm-wrap,
 .dark .bpx-player-dm-load-status,
 .dark .base-video-sections-v1,
-.dark .video-sections-v1[data-v-482ecf06],.dark .video-sections-v1,
+.dark [class^=video-sections-v1],
 .dark .video-sections-head_second-line,
-.dark .bili-header .header-login-entry[data-v-fc330406], .dark .bili-header .header-login-entry,
-.dark .vip-login-tip[data-v-fc330406], .dark .vip-login-tip,
-.dark .reply-box.fixed-box[data-v-757acbb5],.dark .reply-box.fixed-box,
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item[data-v-78329793],
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item,
-.dark .emoji-panel .emoji-content .emoji-info[data-v-c4965e38],.dark .emoji-panel, .dark .emoji-panel .emoji-content,
-.dark .emoji-panel .emoji-tab[data-v-c4965e38],.dark .emoji-panel .emoji-tab,.dark .emoji-panel .emoji-title[data-v-c4965e38],.dark .emoji-panel .emoji-title,
-.dark .note-list .list-note-operation[data-v-13587840],.dark .note-list .list-note-operation,.dark .note-list,
-.dark .note-list .note-card-container .note-card[data-v-13587840],.dark .note-list .note-card-container .note-card,
+.dark .bili-header [class^=header-login-entry],
+.dark [class^=vip-login-tip],
+.dark .reply-box[class^=fixed-box],
+.dark .at-panel .at-list-container .at-list-ground .at-user-list [class^=at-user-item],
+.dark .emoji-panel, .dark .emoji-panel [class^=emoji-content],
+.dark .emoji-panel [class^=emoji-tab],
+.dark .emoji-panel [class^=emoji-title],
+.dark .note-list,
+.dark .note-list [class^=list-note-operation],
+.dark .note-list .note-card-container [class^=note-card],
 .dark .user-card-m-exp .user-info-wrapper .face,
-.dark #app .header[data-v-67c4001b],.dark #app .header,
-.dark #app .container .textarea .textarea-warp textarea[data-v-67c4001b],.dark #app .container .textarea .textarea-warp textarea,
-.dark #app .submit[data-v-67c4001b],.dark #app .submit,
+.dark #app [class^=header],
+.dark #app .container .textarea .textarea-warp textarea[data-v-67c4001b],
+.dark #app .container .textarea .textarea-warp textarea,
+.dark #app [class^=submit],
 .dark .coin-operated-m-exp,
 .dark .video-ai-assistant.video-toolbar-right-item.toolbar-right-ai,
-.dark .ai-summary-popup,.dark .bpx-player-auxiliary .bpx-player-dm-management,
+.dark .ai-summary-popup,
+.dark .bpx-player-auxiliary .bpx-player-dm-management,
 .dark .ai-summary-popup *,
 .dark .mini-header {
-  background:var(--w-bg-darker) !important;
+  background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
 
 
-.dark .reply-box.fixed-box[data-v-757acbb5],.dark .reply-box.fixed-box,
-.dark .reply-box .box-expand .reply-box-emoji .emoji-btn[data-v-757acbb5], .dark .reply-box .box-expand .reply-box-emoji .emoji-btn,
-.dark .emoji-panel[data-v-c4965e38], .dark .emoji-panel,
-.dark .reply-box .box-expand .at-btn[data-v-757acbb5], .dark .reply-box .box-expand .at-btn,
+.dark .reply-box[class^=fixed-box],
+.dark .reply-box .box-expand .reply-box-emoji [class^=emoji-btn],
+.dark [class^=emoji-panel], .dark .reply-box [class^=box-expand] [class^=at-btn],
 .dark .arc_toolbar_report,
 .dark .video-toolbar-container,
-
 .dark #v_tag {
-  border-color:var(--w-border-dark) !important;
+  border-color:var(--w-border) !important;
 }
 
 .dark .collection-m-exp .title,
-.dark .reply-item .bottom-line[data-v-36229167], .dark .reply-item .bottom-line {
-  border-color:var(--w-text) !important;
+.dark .reply-item [class^=bottom-line]{
+  border-color:var(--w-border) !important;
 }
 
 
 
-.dark .collection-m-exp .content .group-list li label .count, .dark .collection-m-exp .content .group-list li label,.dark .collection-m-exp,
-.dark .collection-m-exp .content .group-list li label .personal, .dark .collection-m-exp .content .group-list,.dark .collection-m-exp .content,
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info .user-fan[data-v-78329793] ,
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info .user-fan,
-.dark .at-panel .at-list-container .at-list-ground .ground-name[data-v-78329793],
-.dark .at-panel .at-list-container .at-list-ground .ground-name,
-.dark .user-card-m-exp .user-info-wrapper .info p ,.dark .user-card-m-exp .user-info-wrapper .info .sign ,
+.dark .collection-m-exp .content .group-list li label .count, 
+.dark .collection-m-exp .content .group-list li label,.dark .collection-m-exp,
+.dark .collection-m-exp .content .group-list li label .personal,
+.dark .collection-m-exp .content .group-list,.dark .collection-m-exp .content,
+.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info [class^=user-fan],
+.dark .at-panel .at-list-container .at-list-ground [class^=ground-name],
+.dark .user-card-m-exp .user-info-wrapper .info p ,
+.dark .user-card-m-exp .user-info-wrapper .info .sign,
 .dark .user-card-m-exp .user-info-wrapper .info .social a ,
-.dark #app .container .question[data-v-67c4001b],
-.dark #app .container .question,
-.dark #app .container .textarea .textarea-warp .limit[data-v-67c4001b],
-.dark #app .container .textarea .textarea-warp .limit,
+.dark #app .container [class^=question],
+.dark #app .container .textarea .textarea-warp [class^=limit],
 .dark .collection-m-exp .content .group-list li,
-.dark .note-list .note-card-container .note-card .note-info[data-v-13587840],.dark .note-list .note-card-container .note-card .note-info
+.dark .note-list .note-card-container .note-card [class^=note-info]
 {
 
   color:var(--w-text) !important;
 }
 
 
-
-
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info .user-name[data-v-78329793],
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info .user-name,
-.dark .at-panel .panel-title[data-v-78329793], .dark .at-panel .panel-title,
-.dark .reply-box .box-expand .reply-box-emoji .emoji-btn[data-v-757acbb5],
-.dark .reply-box .box-expand .reply-box-emoji .emoji-btn,
-.dark .reply-box .box-expand .at-btn[data-v-757acbb5],
-.dark .reply-box .box-expand .at-btn,
+.dark .bpx-player-contextmenu>li,
+.dark .bpx-player-sending-bar .bpx-player-video-info,
+.dark .bpx-player-video-info-dm,
+.dark .bpx-player-video-info-online,
+.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info [class^=user-name],
+.dark .at-panel [class^=panel-title],
+.dark .reply-box .box-expand .reply-box-emoji [class^=emoji-btn],
+.dark .reply-box .box-expand [class^=at-btn],
 .dark .arc_toolbar_report,
-.dark .bpx-player-video-info-online,.dark .bpx-player-video-info-divide,.dark .bpx-player-video-info-dm,
-.dark .basic-desc-info,.dark .desc-info-text,
+.dark .bpx-player-video-info-online,
+.dark .bpx-player-video-info-divide,
+.dark .bpx-player-video-info-dm,
+.dark .basic-desc-info,
+.dark .desc-info-text,
 .dark .reply-content-container .reply-content,
-.dark .root-reply,.dark .play-num, .dark .abstract,
-.dark .reply-item .root-reply-container .content-warp .user-info .user-name,
+.dark .root-reply,
+.dark .play-num, 
+.dark .abstract,
+.dark .reply-item .root-reply-container .content-warp .user-info [class^=user-name],
 .dark .mini-header__title,
-.dark .toggle-btn-text,.dark .video-toolbar-left-item,
-.dark .video-complaint-info video-toolbar-item-text,
-.dark .video-note video-toolbar-right-item toolbar-right-note,
+.dark .toggle-btn-text,
+.dark .video-toolbar-left-item,
+.dark .video-complaint-info [class^=video-toolbar-item-text],
+.dark .video-note .video-toolbar-right-item [class^=toolbar-right-note],
 .dark .bpx-player-sending-bar .bpx-player-video-info,
 .dark .mini-header .right-entry .right-entry__outside .right-entry-icon,
 .dark .bpx-player-dm-btn-time,.dark .bpx-player-dm-btn-dm,.dark.bpx-player-dm-btn-date,
@@ -5321,47 +5452,34 @@ html {
 .dark .dm-info-date,.dark .first-line-title, .dark .cur-page,
 .dark .bili-header .header-login-entry>img[data-v-fc330406],
 .dark .bili-header .header-login-entry>img,
-.dark .bili-header .login-panel-popover .register-tip[data-v-fc330406] ,
-.dark .bili-header .login-panel-popover .register-tip,
-.dark .bili-header .login-panel-popover .login-btn[data-v-fc330406],
-.dark .bili-header .login-panel-popover .login-btn,
-.dark .bili-header .login-panel-popover .register-tip[data-v-fc330406]>a,
-.dark .bili-header .login-panel-popover .register-tip>a,
-.dark .vip-login-countdown-row .countdown-lable[data-v-fc330406],
-.dark .vip-login-countdown-row .countdown-lable,
-.dark .vip-login-countdown-row .counddown-wrap[data-v-fc330406],
-.dark .vip-login-countdown-row .counddown-wrap,
-.dark .vip-login-countdown-row .counddown-wrap span[data-v-fc330406],
-.dark .vip-login-countdown-row .counddown-wrap span,
-.dark .vip-login-title[data-v-fc330406],
-.dark .vip-login-title,
-.dark .vip-login-subtitle[data-v-fc330406],
-.dark .vip-login-subtitle,
+.dark .bili-header .login-panel-popover [class^=register-tip],
+.dark .bili-header .login-panel-popover [class^=login-btn],
+.dark .bili-header .login-panel-popover [class^=register-tip]>a,
+.dark .vip-login-countdown-row [class^=countdown-lable],
+.dark .vip-login-countdown-row [class^=counddown-wrap],
+.dark .vip-login-countdown-row [class^=counddown-wrap] span,
+.dark [class^=vip-login-title],
+.dark [class^=vip-login-subtitle],
 .dark .video-page-card-small .card-box .info .title,
-.dark .bili-header .upload-panel-popover .upload-item .item-title[data-v-fc330406],
-.dark .bili-header .upload-panel-popover .upload-item .item-title,
+.dark .bili-header .upload-panel-popover .upload-item [class^=item-title],
 .dark .video-page-card-small .card-box .info .upname,
 .dark .video-page-card-small .card-box .info .playinfo,
 .dark .next-button .txt,.dark .video-episode-card__info-title, .dark .video-episode-card__info-duration,
-.dark .membersinfo-normal .header .staff-amt[data-v-42892ec8],
-.dark .membersinfo-normal .header .staff-amt,
-.dark .reply-header .reply-navigation .nav-bar .nav-title .nav-title-text[data-v-a3384d8f],
-.dark .reply-header .reply-navigation .nav-bar .nav-title .nav-title-text,
-.dark .bili-header .login-panel-popover .register-exper[data-v-fc330406],
-.dark .bili-header .login-panel-popover .register-exper,
-.dark .reply-header .reply-navigation .nav-bar .nav-sort.hot .hot-sort[data-v-a3384d8f],
-.dark .reply-header .reply-navigation .nav-bar .nav-sort.time .time-sort[data-v-a3384d8f],
-.dark .reply-header .reply-navigation .nav-bar .nav-sort.hot .hot-sort, 
-.dark .reply-header .reply-navigation .nav-bar .nav-sort.time .time-sort,
-.dark .sub-reply-item .sub-user-info .sub-user-name[data-v-26797283],.dark .sub-reply-item .sub-user-info .sub-user-name,
-.dark .video-info-container .video-title[data-v-4f1c0915],.dark .video-info-container .video-title,
-.dark .video-info-detail[data-v-3b903b56], .dark .video-info-detail,
-.dark .reply-box.disabled .box-normal .reply-box-send .send-text[data-v-757acbb5], .dark .reply-box.disabled .box-normal .reply-box-send .send-text,
-.dark .sub-reply-list .view-more .view-more-pagination[data-v-27ad2dff], .dark .sub-reply-list .view-more .view-more-paginatio,
-.dark .note-content, .dark .note-list .note-card-container .note-card .note-content[data-v-13587840],.dark .note-list .note-card-container .note-card .note-content,
-.dark .note-list .note-card-container .note-card .user-info .user-name,.dark .note-list .note-card-container .note-card .user-info .user-name[data-v-13587840],
-.dark .recommend-list-v1 .rec-title,.dark .recommend-list-v1 .rec-title[data-v-39ee0c7c],
-.dark .video-toolbar-right-item, .dark .video-note.video-toolbar-right-item[data-v-bb961c9e],.dark .video-note.video-toolbar-right-item,
+.dark .membersinfo-normal .header [class^=staff-amt],
+.dark .reply-header .reply-navigation .nav-bar .nav-title [class^=nav-title-text],
+.dark .bili-header .login-panel-popover [class^=register-exper],
+.dark .reply-header .reply-navigation .nav-bar .nav-sort.hot [class^=hot-sort],
+.dark .reply-header .reply-navigation .nav-bar .nav-sort.time [class^=time-sort],
+.dark .sub-reply-item .sub-user-info [class^=sub-user-name],
+.dark .video-info-container [class^=video-title],
+.dark [class^=video-info-detail],
+.dark .reply-box.disabled .box-normal .reply-box-send [class^=send-text],
+.dark .sub-reply-list .view-more [class^=view-more-paginatio],
+.dark .note-list .note-card-container .note-card [class^=note-content],
+.dark .note-list .note-card-container .note-card .user-info [class^=user-name],
+.dark .recommend-list-v1 .rec-title,.dark .recommend-list-v1 [class^=rec-title],
+.dark .video-toolbar-right-item, 
+.dark .video-note[class^=video-toolbar-right-item],
 .dark .user-card-m-exp .user-info-wrapper .info .social .tip_text,
 .dark .user-card-m-exp .user-info-wrapper .info .official-wrapper,
 .dark .user-card-m-exp .user-info-wrapper .info .user .name,
@@ -5373,28 +5491,24 @@ html {
 }
 
 
-.dark .dark .user-card-m-exp .user-info-wrapper .info .user .name:hover,
+.dark .user-card-m-exp .user-info-wrapper .info .user .name:hover,
 .dark .video-page-card-small .card-box .info .title:hover,
-.dark .bili-header .upload-panel-popover .upload-item .item-title[data-v-fc330406]:hover,
-.dark .bili-header .upload-panel-popover .upload-item .item-title:hover,
+.dark .bili-header .upload-panel-popover .upload-item [class^=item-title]:hover,
 .dark .video-page-card-small .card-box .info .upname:hover,
 .dark .video-episode-card:hover .video-episode-card__info-title,
 .dark .video-episode-card:hover .video-episode-card__info-duration,
 .dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing .video-episode-card__info-title,
 .dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing .video-episode-card__info-duration,
 .dark .first-line-title:hover,
-.dark .video-complaint-info video-toolbar-item-text:hover,
-.dark .video-note video-toolbar-right-item toolbar-right-note:hover,
+.dark .video-complaint-info [class^=video-toolbar-item-text]:hover,
+.dark .video-note [class^=video-toolbar-right-item] [class^=toolbar-right-note]:hover,
 .dark .mini-header .right-entry .right-entry__outside .right-entry-icon:hover,
 .dark .mini-header__title:hover,.dark .toggle-btn-text:hover,
-.dark .bili-header .login-panel-popover .login-btn[data-v-fc330406]:before,
-.dark .bili-header .login-panel-popover .login-btn:before,
-.dark .bili-header .login-panel-popover .login-btn[data-v-fc330406]:hover:before,
-.dark .bili-header .login-panel-popover .login-btn:hover:before,
-.dark .bili-header .login-panel-popover .register-tip[data-v-fc330406]>a:hover,
-.dark .bili-header .login-panel-popover .register-tip>a:hover,
-.dark .reply-header .reply-navigation .nav-bar .nav-title .nav-title-text[data-v-a3384d8f]:hover,
-.dark .reply-header .reply-navigation .nav-bar .nav-title .nav-title-text:hover,
+.dark .bili-header .login-panel-popover  [class^=login-btn]:before,
+.dark .bili-header .login-panel-popover  [class^=login-btn]:hover:before,
+.dark .bili-header .login-panel-popover  [class^=login-btn]:hover:before,
+.dark .bili-header .login-panel-popover [class^=register-tip]>a:hover,
+.dark .reply-header .reply-navigation .nav-bar .nav-title [class^=nav-title-text]:hover,
 .dark .user-card-m-exp .user-info-wrapper .info .social a:hover
 
 {
@@ -5402,82 +5516,77 @@ html {
 }
 
 
-.dark .at-panel[data-v-78329793], .dark .at-panel,
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item[data-v-78329793]:hover,
-.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item:hover,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-block-btn,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-protect-btn, 
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-recall-btn, 
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-report-btn ,
+.dark [class^=at-panel],
+.dark .at-panel .at-list-container .at-list-ground .at-user-list [class^=at-user-item]:hover,
 .dark .bpx-player-auxiliary .bpx-player-dm-btn-footer,
 .dark .bpx-player-auxiliary .bpx-player-dm-btn-history.bpx-player-disable,
 .dark .bpx-player-auxiliary .bpx-player-dm-btn-history,
-.dark .membersinfo-normal .header[data-v-42892ec8],.membersinfo-normal .header,
-.dark .reply-box .box-normal .reply-box-warp .reply-box-textarea[data-v-757acbb5],
-.dark .reply-box .box-normal .reply-box-warp .reply-box-textarea,
-.dark .vip-login-countdown-row .counddown-wrap span[data-v-fc330406],.dark .vip-login-countdown-row .counddown-wrap span,
+.dark .membersinfo-normal [class^=header],
+.dark .reply-box .box-normal .reply-box-warp [class^=reply-box-textarea],
+.dark .vip-login-countdown-row .counddown-wrap span[data-v-fc330406],
+.dark .vip-login-countdown-row .counddown-wrap span,
 .dark .reply-tag-item,
-.dark .vip-login-btn, .dark .vip-login-btn[data-v-fc330406],
-.dark .bili-header .header-upload-entry[data-v-fc330406],
-.dark .bili-header .header-upload-entry, .dark .bili-header .header-upload-entry[data-v-fc330406],
+.dark [class^=vip-login-btn],
+.dark .bili-header .header-upload-entry, 
 .dark .second-line_right,
-.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask[data-v-757acbb5],
-.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask,
-.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn[data-v-757acbb5],
-.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn,
-.dark .recommend-list-v1 .rec-footer[data-v-39ee0c7c], .dark .recommend-list-v1 .rec-footer,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5],.dark .reply-box .box-normal [class^=reply-box-send],
-.dark .reply-box .reply-box-send[data-v-757acbb5],.dark .reply-box .reply-box-send,
+.dark .reply-box.disabled .box-normal .reply-box-warp [class^=disable-mask],
+.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask [class^=login-btn],
+.dark .recommend-list-v1 [class^=rec-footer],
+.dark .reply-box .box-normal [class^=reply-box-send],
+.dark .reply-box [class^=reply-box-send],
 .dark .video-tool-more-popover .video-tool-more-dropdown .dropdown-item,
 .dark .video-tool-more-popover, 
 .dark .user-card-m-exp .user-info-wrapper .info .user .user-label,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .like ,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .liked,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .message,
-.dark #app .submit .cancel[data-v-67c4001b],
-.dark #app .submit .cancel,
-.dark #app .submit .confirm[data-v-67c4001b],
-.dark #app .submit .confirm,
+.dark #app .submit [class^=cancel],
+.dark #app .submit [class^=confirm],
 .dark .coin-operated-m,
 .dark .coin-operated-m-exp .coin-bottom .bi-btn,
 .dark .collection-m-exp,
-.dark .primary-btn,.dark .palette-button-wrap .flexible-roll-btn-inner[data-v-46b9cf37],.dark .palette-button-wrap [class^=flexible-roll-btn-inner],
+.dark .primary-btn,
+.dark .palette-button-wrap [class^=flexible-roll-btn-inner],
 .dark .collection-m-exp .content .group-list .add-group .add-btn,
 .dark .collection-m-exp .bottom .btn.disable,
 .dark .collection-m-exp .bottom .btn,
 .dark .video-ai-assistant-badge,
-.dark .fixed-sidenav-storage .fixed-sidenav-storage-item[data-v-5d529e3e],.dark .fixed-sidenav-storage [class^=fixed-sidenav-storage-item],
-.dark .video-tag-container .tag-panel .tag .show-more-btn[data-v-934a50f8],.dark .video-tag-container .tag-panel .tag .show-more-btn,
+.dark .fixed-sidenav-storage [class^=fixed-sidenav-storage-item],
+.dark .video-tag-container .tag-panel .tag [class^=show-more-btn],
 .dark .video-tag-container .tag-panel .tag-link {
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
-  border:1px solid var(--w-text-light) !important;
+  border:1px solid var(--w-border) !important;
 }
 
 
 .dark .collection-m-exp .bottom .btn.disable:hover,.dark .collection-m-exp .bottom .btn:hover,
 .dark .collection-m-exp .content .group-list .add-group .add-btn:hover,
 .dark .coin-operated-m-exp .coin-bottom .bi-btn:hover,
-.dark #app .submit .cancel[data-v-67c4001b]:hover,.dark #app .submit .cancel:hover,
-.dark #app .submit .confirm[data-v-67c4001b]:hover,.dark #app .submit .confirm:hover,
-.dark .fixed-sidenav-storage .fixed-sidenav-storage-item[data-v-5d529e3e]:hover,.dark .fixed-sidenav-storage .fixed-sidenav-storage-item:hover,
+.dark #app .submit [class^=cancel]:hover,
+.dark #app .submit [class^=confirm]:hover,
+.dark .fixed-sidenav-storage [class^=fixed-sidenav-storage-item]:hover,
 .dark .primary-btn:hover,
-.dark .palette-button-wrap .flexible-roll-btn-inner[data-v-46b9cf37]:hover,.dark .palette-button-wrap .flexible-roll-btn-inner:hover,
-
+.dark .palette-button-wrap [class^=flexible-roll-btn-inner]:hover,
 .dark .dark .user-card-m-exp .user-info-wrapper .info .btn-box .message:hover,
 .dark .user-card-m-exp .user-info-wrapper .info .user .user-label:hover,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .liked:hover,
 .dark .user-card-m-exp .user-info-wrapper .info .btn-box .like:hover ,
-.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn[data-v-757acbb5]:hover,
-.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask .login-btn:hover,
+.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask [class^=login-btn]:hover,
 .dark .bpx-player-auxiliary .bpx-player-dm-btn-footer:hover,
 .dark .bpx-player-auxiliary .bpx-player-dm-btn-history.bpx-player-disable:hover,
 .dark .bpx-player-auxiliary .bpx-player-dm-btn-history:hover,
 .dark .second-line_right:hover,
-.dark .vip-login-btn[data-v-fc330406]:hover,
-.dark .vip-login-btn:hover,
-.dark .bili-header .header-upload-entry[data-v-fc330406]:hover,
+.dark [class^=vip-login-btn]:hover,
 .dark .bili-header .header-upload-entry:hover,
-.dark .recommend-list-v1 .rec-footer[data-v-39ee0c7c]:hover, .dark .recommend-list-v1 .rec-footer:hover,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover,.dark .reply-box .box-normal .reply-box-send:hover,
-.dark .reply-box .reply-box-send[data-v-757acbb5]:hover,.dark .reply-box .reply-box-send:hover,
-.dark .video-tag-container .tag-panel .tag .show-more-btn[data-v-934a50f8]:hover,.dark .video-tag-container .tag-panel .tag .show-more-btn:hover,
+.dark .recommend-list-v1 [class^=rec-footer]:hover,
+.dark .reply-box .box-normal [class^=reply-box-send]:hover,
+.dark .reply-box [class^=reply-box-send]:hover,
+.dark .video-tag-container .tag-panel .tag [class^=show-more-btn]:hover,
 .dark .video-tag-container .tag-panel .tag-link:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
@@ -5496,6 +5605,16 @@ html {
 .dark #bilibili-player-placeholder {
   box-shadow: none !important;
 }
+
+
+.dark .header-upload-entry__text,
+.dark .header-upload-entry__icon,
+.dark .reply-box .box-normal .reply-box-warp .reply-box-textarea {
+  border: none !important;
+}
+
+
+
 `;
   const isUrl = window.location.href.indexOf("https://www.bilibili.com/bangumi/play") !== -1;
   const bangumiCss = isUrl ? `
@@ -5506,6 +5625,8 @@ html {
   outline-color: var(--w-border) !important;
 }
 
+
+.dark .SectionSelector_SectionSelector__TZ_QZ .SectionSelector_expand__VjjPD,
 .dark .home-container,.dark #__next,.dark .main-container,
 .dark .plp-r *,
 .dark .mediainfo_mediaInfo__Cpow4 *{
@@ -5515,13 +5636,17 @@ html {
   background-color:var(--w-bg-darker) !important;
 }
 
+.dark .SectionSelector_expand__VjjPD {
+  background:var(--w-bg-darker) !important;
+}
+
 .dark .bili-avatar-icon.bili-avatar-right-icon{
   display:none !important;
 }
 
 
 .dark .reply-box .box-normal .reply-box-send .send-text[data-v-757acbb5],
-.dark .reply-box .box-normal .reply-box-send .send-text {
+.dark .reply-box .box-normal .reply-box-send [class^=send-text] {
   background:none !important;
 }
 
@@ -5558,6 +5683,12 @@ ${router}
 ${other}
 
 `;
+  const is_hot = () => isShowHotSearch() ? `` : `
+.search-panel .trending {
+   display:none !important;
+}
+
+`;
   const css = is_bilibili ? `
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
@@ -5572,6 +5703,8 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
 }
 
 /* 输入框*/
+.nav-search-content .nav-search-input::placeholder,
+#nav_searchform>input::placeholder,
 .nav-search-content>input::placeholder {
    color: transparent;
    opacity:0 !important;
@@ -5624,8 +5757,23 @@ div.video-container-v1 div.pop-live-small-mode.part-undefined,
    color:orange;
 }
 
+#reco_list,
+[class^=up-info-container],
+.members-info-container .container,
+.left-container{
+   background: #fff !important;
+   padding:0 20px;
+}
 
- 
+
+#reco_list {
+   padding:6px;
+}
+
+${is_hot()}
+
+
+
 
 
 ${dark}
@@ -5654,19 +5802,38 @@ ${css$2}
     addLocalStore(isShowSysMsgKey, !isShowSysMsg(), Boolean.name);
     reload();
   };
-  const installCommand = () => {
+  const changeColorDm = () => {
+    addLocalStore(isShowColorDmKey, !isShowColorDm(), Boolean.name);
+    reload();
+  };
+  const huyaCommand = () => {
     if (!is_huya) {
       return;
     }
-    GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息`, () => {
+    GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息📣`, () => {
       changeSysMsg();
     }, { title: "关闭或显示房管操作或主播等操作信息,默认关闭" });
-    GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜`, () => {
+    GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜🧧`, () => {
       changeRank();
     }, { title: "关闭或显示礼物排行，默认关闭" });
-    GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章`, () => {
+    GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章🎫`, () => {
       changeFansIcon();
     }, { title: "关闭或显示粉丝徽章，默认关闭" });
+    GM_registerMenuCommand(`${isShowColorDm() ? "关闭" : "显示"}彩色弹幕🎈`, () => {
+      changeColorDm();
+    }, { title: "关闭或显示彩色弹幕，默认关闭 仅在黑夜模式下生效" });
+  };
+  const bilibiliCommand = () => {
+    if (!is_bilibili)
+      return;
+    GM_registerMenuCommand(`${isShowHotSearch() ? "关闭" : "开启"}热搜🍳`, () => {
+      addLocalStore(isShowHotSearchKey, !isShowHotSearch(), Boolean.name);
+      reload();
+    }, { title: "如果不想看到热搜请点击，默认开启" });
+  };
+  const installCommand = () => {
+    huyaCommand();
+    bilibiliCommand();
   };
   (function() {
     if (typeof window == "undefined") {

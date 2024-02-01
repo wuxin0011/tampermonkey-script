@@ -55,7 +55,7 @@ const comment =
 .dark .user-card,
 .dark .user-card .btn-box .message
 {
-  border: 1px solid var(--w-text) !important;
+  border: 1px solid var(--w-border) !important;
   color:var(--w-text-light) !important;
   background-color:var(--w-bg-darker) !important;
 }
@@ -74,7 +74,7 @@ const comment =
 .dark .comment-bilibili-fold .operation .opera-list{
   color:var(--w-text-light) !important;
   background-color:var(--w-bg-darker) !important;
-  border-color: var(--w-text) !important;
+  border-color: var(--w-border) !important;
 }
 
 

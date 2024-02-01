@@ -2,14 +2,7 @@ const exculues = [
     'https://i.huya.com/',
     'https://www.douyu.com/member/',
     'https://yuba.douyu.com/',
-    'https://manga.bilibili.com/',
-    'https://account.bilibili.com/',
-    'https://member.bilibili.com/',
-    'https://show.bilibili.com/',
     'https://www.bilibili.com/cheese',
-    'https://pay.bilibili.com/',
-    'https://live.bilibili.com/',
-    'https://link.bilibili.com/'
 ]
 const prefix = '[live-plugin]:'
 const msg = (...args) => `${prefix} ${args}`
@@ -19,7 +12,7 @@ export const warn = (...args) => console.warn(msg(args))
 export const error = (...args) => console.error(msg(args))
 export const info = (...args) => console.info(msg(args))
 export const douyu_address_pattern = /^https:\/\/www\.douyu\.((com)|(cn)).*/
-export const bilibili_address_pattern = /^https:\/\/.*\.bilibili\..*/
+export const bilibili_address_pattern = /^https:\/\/(www|search|space|game|message|t)\.bilibili\..*/
 export const huya_address_pattern = /^https:\/\/www\.huya\.((com)|(cn)).*/
 export const douyin_address_pattern = /^https:\/\/.*\.douyin\.((com)|(cn)).*/
 export const localhost = /^http:\/\/127\.0\.0\.1\.*|^http:\/\/localhost.*/
@@ -428,7 +421,10 @@ export const support = {
         return !is_douyin
     },
     supportBg() {
-        return !is_douyin && !is_bilibili
+        if (is_bilibili) {
+            return local_url === 'https://www.bilibili.com' || local_url === 'https://www.bilibili.com/' || local_url.indexOf('https://www.bilibili.com/?') != -1 || local_url.indexOf('https://www.bilibili.com/video') != -1
+        }
+        return !is_douyin
     },
     supportMenu() {
         return !is_douyin && !is_bilibili
@@ -458,30 +454,39 @@ export class HostUser {
     }
 }
 
-/**
- * 背景是否显示？
- * @returns boolean
- */
-export const isShowBg = () => wls.getItem('bg_is_first_key') === null ? true : getLocalStore('bg_show_key', Boolean.name) 
-
 
 export const isShowFansIconKey = '__isShowFansIconKey__'
 export const isShowGiftRankKey = '__isShowGiftRankKey__'
 export const isShowSysMsgKey = '__isShowSysMsgKey__'
+export const isShowColorDmKey = '__isShowColorDm__'
+export const isShowHotSearchKey = '__is_show_hot_search_key__'
+export const isShowHotSearchInputKey = '__is_show_hot_search_input_key__'
+export const isShowHotInstKey = '__is_show_hot_inst_content_key__'
+
+
+
+/**
+ * 背景是否显示 默认显示
+ * bilibiil 默认不显示
+ * @returns boolean
+ */
+export const isShowBg = () => is_bilibili ? getLocalStore('bg_show_key', Boolean.name) : wls.getItem('bg_is_first_key') === null ? true : getLocalStore('bg_show_key', Boolean.name)
+
+
 
 
 /**
  * 是否显示粉丝徽章
  * @returns boolean
  */
-export const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name) 
+export const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name)
 
 
 /**
  * 是否显示礼物排行榜
  * @returns boolean
  */
-export const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name) 
+export const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name)
 
 
 /**
@@ -489,5 +494,40 @@ export const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.nam
  * 比如房管禁用操作提示消息或者主播操作等提示消息
  * @returns boolean
  */
-export const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name) 
+export const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name)
+
+
+/**
+ * 是否显示彩色弹幕
+ * 默认不显示 黑夜模式下生效
+ * @returns boolean
+ */
+export const isShowColorDm = () => getLocalStore(isShowColorDmKey, Boolean.name)
+
+
+/**
+ * 是否显示热搜 ？ 
+ * 默认显示
+ * @returns boolean
+ */
+export const isShowHotSearch = () => wls.getItem(isShowHotSearchKey) != 'false'
+
+
+/**
+ * 是否显示输入框热搜提示词 ？ 
+ * 默认显示
+ * @returns boolean
+ */
+export const isShowHotSearchInputKeyword = () => wls.getItem(isShowHotSearchInputKey) != 'false'
+
+
+/**
+ * 是否显示感兴趣内容 ？ 
+ * 默认显示
+ * @returns boolean
+ */
+export const isShowHotInstContent = () => wls.getItem(isShowHotInstKey) != 'false'
+
+
+
 
