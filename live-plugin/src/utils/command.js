@@ -57,7 +57,7 @@ const douyuCommand = () => {
     return
   }
   GM_registerMenuCommand(`${isShowPk() ? '显示' : '关闭'} pk 条📣`, () => {
-    addLocalStore(isShowPkKey,!isShowPk(),Boolean.name)
+    addLocalStore(isShowPkKey, !isShowPk(), Boolean.name)
   }, { title: '关闭或者显示PK条,默认关闭' })
 }
 
@@ -112,10 +112,14 @@ const douyinCommand = () => {
 
 const installCommand = () => {
   log('install command ...')
-  GM_registerMenuCommand(`${isAutoPlugin() ? '关闭😵':'启用🤣'} 插件`, () => {
+  GM_registerMenuCommand(`${isAutoPlugin() ? '关闭😵' : '启用🤣'} 插件`, () => {
     addLocalStore(isAutoPluginkey, !isAutoPlugin(), Boolean.name)
     window.location.reload()
   }, { title: '如果不想在该网址使用插件请点击这里😀' })
+
+  if (!isAutoPlugin()) {
+    return;
+  }
 
 
   //

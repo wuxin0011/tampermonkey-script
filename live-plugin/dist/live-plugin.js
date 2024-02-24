@@ -3024,6 +3024,9 @@ ${root$1}
       addLocalStore(isAutoPluginkey, !isAutoPlugin(), Boolean.name);
       window.location.reload();
     }, { title: "如果不想在该网址使用插件请点击这里😀" });
+    if (!isAutoPlugin()) {
+      return;
+    }
     huyaCommand();
     bilibiliCommand();
     douyuCommand();
