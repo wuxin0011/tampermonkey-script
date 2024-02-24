@@ -51,7 +51,8 @@ const comment =
   border-color: var(--w-border) !important;
 }
 
-
+.dark .reply-box .box-normal .reply-box-warp[data-v-a6daab22],
+.dark .reply-box .box-normal [class^=reply-box-warp],
 .dark .user-card,
 .dark .user-card .btn-box .message
 {

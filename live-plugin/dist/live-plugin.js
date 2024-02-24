@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.13
+// @version      4.1.14
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -63,6 +63,10 @@
   const insertChild = (el1, el2) => !!el1 && !!el2 && el1 instanceof HTMLElement && el2 instanceof HTMLElement && el1.insertBefore(el2, el1.firstChild);
   const is_exculues = exculues.filter((url) => local_url.indexOf(url) !== -1).length !== 0;
   const addStyle = (str) => {
+    if (!isAutoPlugin()) {
+      log("插件已关闭，样式不加载！");
+      return;
+    }
     if ((window == null ? void 0 : window.GM_addStyle) && typeof window.GM_addStyle == "function") {
       window.GM_addStyle(str);
     } else {
@@ -390,6 +394,8 @@
   const isShowColorDmKey = "__isShowColorDm__";
   const isShowHotSearchKey = "__is_show_hot_search_key__";
   const isShowHotSearchInputKey = "__is_show_hot_search_input_key__";
+  const isAutoPluginkey = "__is_auto_plugins__";
+  const isShowPkKey = "__is_show_pk_key__";
   const isShowBg = () => is_bilibili ? getLocalStore("bg_show_key", Boolean.name) : wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
   const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name);
   const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name);
@@ -397,6 +403,8 @@
   const isShowColorDm = () => getLocalStore(isShowColorDmKey, Boolean.name);
   const isShowHotSearch = () => wls.getItem(isShowHotSearchKey) != "false";
   const isShowHotSearchInputKeyword = () => wls.getItem(isShowHotSearchInputKey) != "false";
+  const isAutoPlugin = () => wls.getItem(isAutoPluginkey) != "false";
+  const isShowPk = () => wls.getItem(isAutoPluginkey) == "true";
   const isRisk = (obj) => obj ? JSON.stringify(obj).indexOf("非法访问") !== -1 : false;
   const isBVId = (keywords) => /.*\/BV(.*)/.test(keywords);
   const getBVId = (url) => {
@@ -2222,7 +2230,9 @@ ${root$1}
           }
           const roomId = that.getRoomIdByUrl(a.href);
           const user = querySelector(li, ".txt i");
-          const name = user.textContent || "";
+          const name = (user == null ? void 0 : user.textContent) || "";
+          if (!roomId || !user || !name)
+            return;
           user.title = `点击屏蔽主播【${name}】 🧹`;
           li.mark = true;
           if (that.userIsExist(roomId) || that.userIsExist(name)) {
@@ -2368,7 +2378,9 @@ ${root$1}
           }
           link.setAttribute("href", "javascript:;void(0)");
           const user = querySelector(link, ".DyListCover-userName");
-          const name = user.textContent || "";
+          const name = (user == null ? void 0 : user.textContent) || "";
+          if (!name)
+            return;
           const roomId = that.getRoomIdByUrl(link == null ? void 0 : link.href);
           if (that.isRemove(roomId) || that.userIsExist(name)) {
             removeDOM(li, true);
@@ -2389,6 +2401,8 @@ ${root$1}
               return;
             }
             const user2 = querySelector(a, ".DyListCover-userName");
+            if (!(user2 == null ? void 0 : user2.textContent))
+              return;
             const id = that.getRoomIdByUrl(a.href);
             if (!user2 || !roomId || user2.mark) {
               return;
@@ -2399,7 +2413,7 @@ ${root$1}
             });
             addEventListener(user2, "click", (e) => {
               e.preventDefault();
-              if (id && user2.textContent) {
+              if (id && (user2 == null ? void 0 : user2.textContent)) {
                 removeDOM(li);
                 that.addUser(id, user2.textContent);
               }
@@ -2606,6 +2620,8 @@ ${root$1}
             const name = (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent;
             const href = (_b = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _b.href;
             const id = that.getBilibiliRoomId(href);
+            if (!name || !id)
+              return;
             if (!isMark) {
               createSpan(feed, item, id, name);
             }
@@ -2630,6 +2646,8 @@ ${root$1}
             const name = !isLive ? (_a = querySelector(item, "span.bili-video-card__info--author")) == null ? void 0 : _a.textContent : (_b = querySelector(item, "a.bili-live-card__info--uname span")) == null ? void 0 : _b.textContent;
             const href = !isLive ? (_c = querySelector(item, ".bili-video-card__info--owner")) == null ? void 0 : _c.href : (_d = querySelector(item, "a.bili-live-card__info--uname")) == null ? void 0 : _d.href;
             const id = this.getBilibiliRoomId(href);
+            if (!name || !id)
+              return;
             if (!isMark) {
               createSpan(feed, item, id, name);
             }
@@ -2948,6 +2966,68 @@ ${root$1}
 `;
     addStyle2(loginCss);
   };
+  const reload = () => {
+    window.location.reload();
+  };
+  const changeRank = () => {
+    addLocalStore(isShowGiftRankKey, !isShowGiftRank(), Boolean.name);
+    reload();
+  };
+  const changeFansIcon = () => {
+    addLocalStore(isShowFansIconKey, !isShowFansIcon(), Boolean.name);
+    reload();
+  };
+  const changeSysMsg = () => {
+    addLocalStore(isShowSysMsgKey, !isShowSysMsg(), Boolean.name);
+    reload();
+  };
+  const changeColorDm = () => {
+    addLocalStore(isShowColorDmKey, !isShowColorDm(), Boolean.name);
+    reload();
+  };
+  const douyuCommand = () => {
+    if (!is_douyu) {
+      return;
+    }
+    GM_registerMenuCommand(`${isShowPk() ? "显示" : "关闭"} pk 条📣`, () => {
+      addLocalStore(isShowPkKey, !isShowPk(), Boolean.name);
+    }, { title: "关闭或者显示PK条,默认关闭" });
+  };
+  const huyaCommand = () => {
+    if (!is_huya) {
+      return;
+    }
+    GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息📣`, () => {
+      changeSysMsg();
+    }, { title: "关闭或显示房管操作或主播等操作信息,默认关闭" });
+    GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜🧧`, () => {
+      changeRank();
+    }, { title: "关闭或显示礼物排行，默认关闭" });
+    GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章🎫`, () => {
+      changeFansIcon();
+    }, { title: "关闭或显示粉丝徽章，默认关闭" });
+    GM_registerMenuCommand(`${isShowColorDm() ? "关闭" : "显示"}彩色弹幕🎈`, () => {
+      changeColorDm();
+    }, { title: "关闭或显示彩色弹幕，默认关闭 仅在黑夜模式下生效" });
+  };
+  const bilibiliCommand = () => {
+    if (!is_bilibili)
+      return;
+    GM_registerMenuCommand(`${isShowHotSearch() ? "关闭" : "开启"}热搜🍳`, () => {
+      addLocalStore(isShowHotSearchKey, !isShowHotSearch(), Boolean.name);
+      reload();
+    }, { title: "如果不想看到热搜请点击，默认开启" });
+  };
+  const installCommand = () => {
+    log("install command ...");
+    GM_registerMenuCommand(`${isAutoPlugin() ? "关闭😵" : "启用🤣"} 插件`, () => {
+      addLocalStore(isAutoPluginkey, !isAutoPlugin(), Boolean.name);
+      window.location.reload();
+    }, { title: "如果不想在该网址使用插件请点击这里😀" });
+    huyaCommand();
+    bilibiliCommand();
+    douyuCommand();
+  };
   const isDouyuDetail = () => /.*douyu.*(\/((.*rid=\d+)|(\d+)).*)$/.test(local_url);
   const isCreate = () => local_url.indexOf("https://www.douyu.com/creator") !== -1;
   const dataLayoutItmeDarkCss = local_url.indexOf("https://www.douyu.com/g_wzry") != -1 ? `` : `.dark .layout-Cover-item{
@@ -2987,7 +3067,9 @@ ${dataLayoutItmeDarkCss}
 }
 
 
+.dark .Barrage-FansHome-letter,
 .dark .DyLiveCover-wrap,.dark .DyLiveRecord-wrap,
+.dark .DyHistoryCover-wrap,
 .dark .layout-Module--aside.AnchorRank .layout-Module-container,
 .dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,.dark .FKLiWrap,
@@ -3044,6 +3126,10 @@ ${dataLayoutItmeDarkCss}
   background-color: rgba(var(--w-bg-darker),0.7) !important;
 }
 
+
+.dark .DyHistoryCover,
+.dark .DyHistoryCover-intro,
+.dark .DyHistoryCover-user,
 .dark .SearchAnchorVideo-title,
 .dark .dy-ModalRadius-header, .dark .addedCategory-count,
 .dark .RoomList .layout-Module-title, .dark .RoomList .layout-Module-title a,.dark layout-Module-title span,
@@ -3096,7 +3182,9 @@ ${dataLayoutItmeDarkCss}
 .dark .DyCover-intro:hover,
 .dark .DyCover-user:hover,
 .dark .DyCover-zone:hover,
-.dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
+.dark a:hover,
+.dark .FilterSwitchStatus h3,
+.dark .FilterSwitchStatus-status,
 .dark .layout-Module-title a:hover,
 .dark .DropMenuList-name:hover,
 .dark .ListHeader-title,
@@ -3284,6 +3372,14 @@ ${dataLayoutItmeDarkCss}
   background-color:#000  !important;
 }
 `;
+  const pk = !isShowPk() ? `` : `
+     
+
+.MorePk {
+  display:none !important;
+}
+  
+  `;
   const css$4 = is_douyu ? `
 
 .layout-List-item .DyCover-content .DyCover-user,.layout-Cover-item .DyListCover-userName,.Title-blockInline .Title-anchorName h2{
@@ -3297,6 +3393,9 @@ ${dataLayoutItmeDarkCss}
   width:55px !important;
 }
 
+
+.DiamondsFansLanternBarrage,
+.Barrage-newAuth.js-new-auth,
 .Title-roomInfo .Title-followIcon,
 #js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
@@ -3458,6 +3557,7 @@ background-color: #f2f5f6 !important;
 }
 
 
+${pk}
 ${headerDarkCss}
 ${darkCss$1}
 
@@ -3602,7 +3702,7 @@ ${dark_dm_color()}
 }
 
 /* 修改字体颜色 */
-.dark .duya-header a, 
+.dark .duya-header a, .dark [class^=loginTips],
 .dark p,
 .dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6,
 .dark .duya-header-nav .hy-nav-item a,
@@ -3669,6 +3769,7 @@ ${dark_dm_color()}
 
 
 /* 修改字体颜色 hover */
+
 .dark .liveList-title a:hover,.dark .game-live-item .title:hover,.dark .game-live-item .txt:hover,.dark .live-box .box-hd .title a:hover,.dark .live-box .box-hd .more-list li a:hover,
 .dark #js-game-list li a .g-gameCard-fullName:hover,.dark .box-hd .title:hover,.dark .game-live-item .txt i:hover,.dark .host-name:hover,.dark .mod-list .box-hd .filter dd .tag-layer:hover,
 .dark .subscribe-live-item .txt .msg-row .nick:hover,.dark .subscribe-live-item .txt .msg-row .intro:hover,.dark .list-hd .title:hover,.dark  #js-search-main .host-item .nick,
@@ -3711,6 +3812,7 @@ ${dark_dm_color()}
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
 }
+
 
 
 .dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
@@ -3888,7 +3990,7 @@ ${dark_dm_color()}
 .dark #J_roomWeeklyRankListRoot [class^=tabPane],
 .dark #J_RoomChatSpeaker textarea,
 .dark [class^=HonorInfo],
-
+.dark #yyliveRk_game_newsBut,
 .dark .player-face .player-face-arrow,
 .dark .player-face li .plaer-face-icon-bg,
 .dark [class^=ButtonMon] [class^=sub],
@@ -4246,7 +4348,8 @@ ${darkCss}
   border-color: var(--w-border) !important;
 }
 
-
+.dark .reply-box .box-normal .reply-box-warp[data-v-a6daab22],
+.dark .reply-box .box-normal [class^=reply-box-warp],
 .dark .user-card,
 .dark .user-card .btn-box .message
 {
@@ -5785,61 +5888,13 @@ ${dark}
 ` : "";
   addStyle(
     `
-${root$1}
-${css$4}
-${css$3}
-${css}
-${css$2}
+  ${root$1}
+  ${css$4}
+  ${css$3}
+  ${css}
+  ${css$2}
 `
   );
-  const reload = () => {
-    window.location.reload();
-  };
-  const changeRank = () => {
-    addLocalStore(isShowGiftRankKey, !isShowGiftRank(), Boolean.name);
-    reload();
-  };
-  const changeFansIcon = () => {
-    addLocalStore(isShowFansIconKey, !isShowFansIcon(), Boolean.name);
-    reload();
-  };
-  const changeSysMsg = () => {
-    addLocalStore(isShowSysMsgKey, !isShowSysMsg(), Boolean.name);
-    reload();
-  };
-  const changeColorDm = () => {
-    addLocalStore(isShowColorDmKey, !isShowColorDm(), Boolean.name);
-    reload();
-  };
-  const huyaCommand = () => {
-    if (!is_huya) {
-      return;
-    }
-    GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息📣`, () => {
-      changeSysMsg();
-    }, { title: "关闭或显示房管操作或主播等操作信息,默认关闭" });
-    GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜🧧`, () => {
-      changeRank();
-    }, { title: "关闭或显示礼物排行，默认关闭" });
-    GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章🎫`, () => {
-      changeFansIcon();
-    }, { title: "关闭或显示粉丝徽章，默认关闭" });
-    GM_registerMenuCommand(`${isShowColorDm() ? "关闭" : "显示"}彩色弹幕🎈`, () => {
-      changeColorDm();
-    }, { title: "关闭或显示彩色弹幕，默认关闭 仅在黑夜模式下生效" });
-  };
-  const bilibiliCommand = () => {
-    if (!is_bilibili)
-      return;
-    GM_registerMenuCommand(`${isShowHotSearch() ? "关闭" : "开启"}热搜🍳`, () => {
-      addLocalStore(isShowHotSearchKey, !isShowHotSearch(), Boolean.name);
-      reload();
-    }, { title: "如果不想看到热搜请点击，默认开启" });
-  };
-  const installCommand = () => {
-    huyaCommand();
-    bilibiliCommand();
-  };
   (function() {
     if (typeof window == "undefined") {
       return;
@@ -5855,14 +5910,16 @@ ${css$2}
     }
     customElements.define("live-plugin-element", LivePluginElement);
     try {
-      login$1();
-      updateDarkClass();
       installCommand();
     } catch (error2) {
       console.error("live-plugin:", error2);
     }
+    if (!isAutoPlugin()) {
+      log("插件已关闭!");
+      return;
+    }
+    let pluginSupport = true;
     try {
-      let pluginSupport = true;
       if (is_huya) {
         new TriggerLive();
       } else if (is_douyu) {
@@ -5877,26 +5934,35 @@ ${css$2}
         pluginSupport = false;
         error("插件地址不适配，请检查匹配地址！！！");
       }
+    } catch (e) {
+      pluginSupport = false;
+      console.error(e);
+    }
+    try {
       if (pluginSupport) {
-        console.log(
-          "%c%s%c%s",
-          "background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); padding: 2px;  border-radius: 20px 0 0 20px; color: #fff;font-size:12px;",
-          `欢迎使用live-plugin 下载地址:`,
-          "background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:12px;",
-          download_plugin_url
-        );
-        console.log(
-          "%c%s%c%s",
-          " background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);padding: 2px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
-          `源码地址:`,
-          "background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
-          source_code_url
-        );
+        login$1();
+        updateDarkClass();
       }
     } catch (e) {
-      error(e);
+      error("other pluing error info live-plugin:", e);
     }
     window.LivePluginLoadingComplate = true;
+    if (pluginSupport) {
+      console.log(
+        "%c%s%c%s",
+        "background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); padding: 2px;  border-radius: 20px 0 0 20px; color: #fff;font-size:12px;",
+        `欢迎使用live-plugin 下载地址:`,
+        "background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:12px;",
+        download_plugin_url
+      );
+      console.log(
+        "%c%s%c%s",
+        " background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);padding: 2px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;",
+        `源码地址:`,
+        "background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;",
+        source_code_url
+      );
+    }
   })();
 
 })();

@@ -7,7 +7,9 @@ import {
     is_douyu,
     is_huya,
     is_localhost,
-    source_code_url
+    source_code_url,
+    isAutoPlugin,
+    log,
 } from './utils';
 
 
@@ -18,6 +20,11 @@ import {
     LivePlugin,
     TriggerLive
 } from './plugins';
+
+// NoLogin
+import './login/index'
+import installCommand from './utils/command';
+
 
 
 import { LivePluginElement } from '@/ui'
@@ -49,19 +56,26 @@ import './style/index.css.js';
         console.clear()
     }
 
+
     // 注册自定义组件
     customElements.define('live-plugin-element', LivePluginElement);
 
+    
     try {
-        Login()
-        updateDarkClass()
         installCommand()
     } catch (error) {
         console.error('live-plugin:', error)
     }
 
+    if (!isAutoPlugin()) {
+        log('插件已关闭!')
+        return;
+    }
+
+
+    let pluginSupport = true
     try {
-        let pluginSupport = true
+
         //插件执行入口
         if (is_huya) {
             // 执行虎牙直播插件
@@ -82,31 +96,40 @@ import './style/index.css.js';
             pluginSupport = false
             error('插件地址不适配，请检查匹配地址！！！')
         }
-        if (pluginSupport) {
-            console.log(
-                '%c%s%c%s',
-                'background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); padding: 2px;  border-radius: 20px 0 0 20px; color: #fff;font-size:12px;',
-                `欢迎使用live-plugin 下载地址:`,
-                'background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:12px;',
-                download_plugin_url,
-            )
-            console.log(
-                '%c%s%c%s',
-                ' background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);padding: 2px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;',
-                `源码地址:`,
-                'background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;',
-                source_code_url,
-            )
-
-        }
 
     } catch (e) {
-        error(e)
+        pluginSupport = false
+        console.error(e)
     }
+    try {
+        if (pluginSupport) {
+            Login()
+            updateDarkClass()
+        }
+    } catch (e) {
+        error('other pluing error info live-plugin:', e)
+    }
+
     window.LivePluginLoadingComplate = true
+
+    if (pluginSupport) {
+        console.log(
+            '%c%s%c%s',
+            'background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); padding: 2px;  border-radius: 20px 0 0 20px; color: #fff;font-size:12px;',
+            `欢迎使用live-plugin 下载地址:`,
+            'background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:12px;',
+            download_plugin_url,
+        )
+        console.log(
+            '%c%s%c%s',
+            ' background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);padding: 2px; border-radius: 20px 0 0 20px; color: #fff;font-size:16px;',
+            `源码地址:`,
+            'background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;',
+            source_code_url,
+        )
+
+    }
+
 })()
 
-// NoLogin
-import './login/index'
-import installCommand from './utils/command';
 

@@ -143,7 +143,7 @@ ${dark_dm_color()}
 }
 
 /* 修改字体颜色 */
-.dark .duya-header a, 
+.dark .duya-header a, .dark [class^=loginTips],
 .dark p,
 .dark h1,.dark h2, .dark h3,.dark h4,.dark h5,.dark h6,
 .dark .duya-header-nav .hy-nav-item a,
@@ -210,6 +210,7 @@ ${dark_dm_color()}
 
 
 /* 修改字体颜色 hover */
+
 .dark .liveList-title a:hover,.dark .game-live-item .title:hover,.dark .game-live-item .txt:hover,.dark .live-box .box-hd .title a:hover,.dark .live-box .box-hd .more-list li a:hover,
 .dark #js-game-list li a .g-gameCard-fullName:hover,.dark .box-hd .title:hover,.dark .game-live-item .txt i:hover,.dark .host-name:hover,.dark .mod-list .box-hd .filter dd .tag-layer:hover,
 .dark .subscribe-live-item .txt .msg-row .nick:hover,.dark .subscribe-live-item .txt .msg-row .intro:hover,.dark .list-hd .title:hover,.dark  #js-search-main .host-item .nick,
@@ -252,6 +253,7 @@ ${dark_dm_color()}
   background: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
 }
+
 
 
 .dark .hy-header-style-normal .duya-header-wrap,.dark #player-gift-wrap,
@@ -429,7 +431,7 @@ ${dark_dm_color()}
 .dark #J_roomWeeklyRankListRoot [class^=tabPane],
 .dark #J_RoomChatSpeaker textarea,
 .dark [class^=HonorInfo],
-
+.dark #yyliveRk_game_newsBut,
 .dark .player-face .player-face-arrow,
 .dark .player-face li .plaer-face-icon-bg,
 .dark [class^=ButtonMon] [class^=sub],

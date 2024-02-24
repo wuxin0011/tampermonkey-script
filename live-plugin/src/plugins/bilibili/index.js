@@ -129,6 +129,7 @@ export default class BiliBili extends LivePlugin {
                     const name = querySelector(item, 'span.bili-video-card__info--author')?.textContent
                     const href = querySelector(item, '.bili-video-card__info--owner')?.href
                     const id = that.getBilibiliRoomId(href)
+                    if (!name || !id) return;
                     if (!isMark) {
                         createSpan(feed, item, id, name)
                     }
@@ -154,6 +155,7 @@ export default class BiliBili extends LivePlugin {
                     const name = !isLive ? querySelector(item, 'span.bili-video-card__info--author')?.textContent : querySelector(item, 'a.bili-live-card__info--uname span')?.textContent
                     const href = !isLive ? querySelector(item, '.bili-video-card__info--owner')?.href : querySelector(item, 'a.bili-live-card__info--uname')?.href
                     const id = this.getBilibiliRoomId(href)
+                    if (!name || !id) return;
                     if (!isMark) {
                         createSpan(feed, item, id, name)
                     }

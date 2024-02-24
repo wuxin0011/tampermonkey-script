@@ -1,5 +1,6 @@
 
 import {
+  log,
   is_huya,
   addLocalStore,
   isShowFansIconKey,
@@ -18,6 +19,11 @@ import {
   isShowHotInstKey,
   isShowHotSearchInputKey,
   isShowHotSearchInputKeyword,
+  isAutoPlugin,
+  isAutoPluginkey,
+  isShowPkKey,
+  isShowPk,
+  is_douyu,
 } from "./index";
 
 
@@ -46,7 +52,14 @@ const changeColorDm = () => {
 }
 
 
-
+const douyuCommand = () => {
+  if (!is_douyu) {
+    return
+  }
+  GM_registerMenuCommand(`${isShowPk() ? '显示' : '关闭'} pk 条📣`, () => {
+    addLocalStore(isShowPkKey,!isShowPk(),Boolean.name)
+  }, { title: '关闭或者显示PK条,默认关闭' })
+}
 
 
 
@@ -67,8 +80,6 @@ const huyaCommand = () => {
     changeColorDm()
   }, { title: '关闭或显示彩色弹幕，默认关闭 仅在黑夜模式下生效' })
 }
-
-
 
 
 const bilibiliCommand = () => {
@@ -100,8 +111,17 @@ const douyinCommand = () => {
 
 
 const installCommand = () => {
+  log('install command ...')
+  GM_registerMenuCommand(`${isAutoPlugin() ? '关闭😵':'启用🤣'} 插件`, () => {
+    addLocalStore(isAutoPluginkey, !isAutoPlugin(), Boolean.name)
+    window.location.reload()
+  }, { title: '如果不想在该网址使用插件请点击这里😀' })
+
+
+  //
   huyaCommand()
   bilibiliCommand()
+  douyuCommand()
   // douyinCommand()
 }
 

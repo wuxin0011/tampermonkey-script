@@ -54,7 +54,9 @@ ${dataLayoutItmeDarkCss}
 }
 
 
+.dark .Barrage-FansHome-letter,
 .dark .DyLiveCover-wrap,.dark .DyLiveRecord-wrap,
+.dark .DyHistoryCover-wrap,
 .dark .layout-Module--aside.AnchorRank .layout-Module-container,
 .dark .layout-Section.layout-Header,
 .dark .layout-Slide-bannerInner,.dark .FKLiWrap,
@@ -111,6 +113,10 @@ ${dataLayoutItmeDarkCss}
   background-color: rgba(var(--w-bg-darker),0.7) !important;
 }
 
+
+.dark .DyHistoryCover,
+.dark .DyHistoryCover-intro,
+.dark .DyHistoryCover-user,
 .dark .SearchAnchorVideo-title,
 .dark .dy-ModalRadius-header, .dark .addedCategory-count,
 .dark .RoomList .layout-Module-title, .dark .RoomList .layout-Module-title a,.dark layout-Module-title span,
@@ -163,7 +169,9 @@ ${dataLayoutItmeDarkCss}
 .dark .DyCover-intro:hover,
 .dark .DyCover-user:hover,
 .dark .DyCover-zone:hover,
-.dark a:hover,.dark .FilterSwitchStatus h3,.dark .FilterSwitchStatus-status,
+.dark a:hover,
+.dark .FilterSwitchStatus h3,
+.dark .FilterSwitchStatus-status,
 .dark .layout-Module-title a:hover,
 .dark .DropMenuList-name:hover,
 .dark .ListHeader-title,

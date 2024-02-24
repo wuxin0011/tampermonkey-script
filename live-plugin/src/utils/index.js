@@ -36,6 +36,12 @@ export const insertChild = (el1, el2) => (!!el1 && !!el2 && (el1 instanceof HTML
 export const is_exculues = exculues.filter(url => local_url.indexOf(url) !== -1).length !== 0
 
 export const addStyle = (str) => {
+
+    if (!isAutoPlugin()) {
+        log('插件已关闭，样式不加载！')
+        return;
+    }
+
     if (window?.GM_addStyle && typeof window.GM_addStyle == 'function') {
         window.GM_addStyle(str)
     } else {
@@ -455,13 +461,16 @@ export class HostUser {
 }
 
 
-export const isShowFansIconKey = '__isShowFansIconKey__'
-export const isShowGiftRankKey = '__isShowGiftRankKey__'
-export const isShowSysMsgKey = '__isShowSysMsgKey__'
-export const isShowColorDmKey = '__isShowColorDm__'
-export const isShowHotSearchKey = '__is_show_hot_search_key__'
-export const isShowHotSearchInputKey = '__is_show_hot_search_input_key__'
-export const isShowHotInstKey = '__is_show_hot_inst_content_key__'
+export const isShowFansIconKey = '__isShowFansIconKey__' // 粉丝牌
+export const isShowGiftRankKey = '__isShowGiftRankKey__' // 礼物
+export const isShowSysMsgKey = '__isShowSysMsgKey__' // 弹幕区域消息
+export const isShowColorDmKey = '__isShowColorDm__' // 弹幕
+export const isShowHotSearchKey = '__is_show_hot_search_key__' // 热搜
+export const isShowHotSearchInputKey = '__is_show_hot_search_input_key__' // 搜索框
+export const isShowHotInstKey = '__is_show_hot_inst_content_key__' // 是否关闭热搜输入关键词
+export const isAutoAddClickEvent = '__is_auto_add_event__' // 是否开启自动添加关闭主播功能
+export const isAutoPluginkey = '__is_auto_plugins__' // 插件是否在支持网址启用 默认启用
+export const isShowPkKey = '__is_show_pk_key__' // 是否显示pk条 （斗鱼)
 
 
 
@@ -527,6 +536,29 @@ export const isShowHotSearchInputKeyword = () => wls.getItem(isShowHotSearchInpu
  * @returns boolean
  */
 export const isShowHotInstContent = () => wls.getItem(isShowHotInstKey) != 'false'
+
+
+
+/**
+ * 是否默认启用插件
+ * 默认启用 
+ * @returns boolean
+ */
+export const isAutoPlugin = () => wls.getItem(isAutoPluginkey) != 'false'
+
+
+
+
+
+/**
+ * 是否显示PK
+ * 默认关闭
+ * @returns boolean
+ */
+export const isShowPk = () => wls.getItem(isAutoPluginkey) == 'true'
+
+
+
 
 
 

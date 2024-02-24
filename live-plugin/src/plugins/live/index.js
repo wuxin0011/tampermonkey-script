@@ -27,7 +27,7 @@ import {
     uploadImage,
     warn,
     wd,
-    wls
+    wls,
 } from '@/utils';
 
 
@@ -39,7 +39,9 @@ import {
     isShowSysMsg,
     isShowGiftRank,
     isShowFansIcon,
-    isShowColorDm
+    isShowColorDm,
+    isAutoPluginkey,
+    isAutoPlugin,
 } from "@/utils";
 
 import {
@@ -1124,6 +1126,11 @@ export default class LivePlugin {
         GM_registerMenuCommand(`功能面板💎`, () => {
             that.isShowContainer()
         }, { title: '点击显示或者关闭插件菜单,默认关闭，也可以使用 Ctrl + alt + j 查看' })
+
+
+        
+
+
     }
 
 

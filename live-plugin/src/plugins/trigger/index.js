@@ -175,7 +175,8 @@ export default class TriggerLive extends LivePlugin {
                 }
                 const roomId = that.getRoomIdByUrl(a.href)
                 const user = querySelector(li, '.txt i')
-                const name = user.textContent || ''
+                const name = user?.textContent || ''
+                if (!roomId || !user || !name) return;
                 user.title = `点击屏蔽主播【${name}】 🧹`
                 li.mark = true
                 if (that.userIsExist(roomId) || that.userIsExist(name)) {
@@ -198,7 +199,7 @@ export default class TriggerLive extends LivePlugin {
 
     autoHideMenu() {
         const isShow = wls.getItem(this.menu_is_first_key) != null && getLocalStore(this.menu_show_key, Boolean.name)
-        log('是否显示菜单', isShow ? '显示' :' 不显示')
+        log('是否显示菜单', isShow ? '显示' : ' 不显示')
         if (isShow) {
             return;
         }

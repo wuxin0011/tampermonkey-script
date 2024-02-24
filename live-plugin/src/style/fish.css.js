@@ -1,4 +1,7 @@
-import { is_douyu, local_url } from "../utils"
+import {
+  is_douyu, local_url,
+  isShowPk,
+} from "../utils"
 import dark from './dark/fish.css.dark'
 // todo 暂时将header设置为黑色！
 const isIndex = () => true || local_url === 'https://www.douyu.com/' || /https:\/\/www\.douyu\.com\/\?.*/.test(local_url)
@@ -15,6 +18,16 @@ const headerDarkCss = isIndex() ?
   ``
 
 
+const pk = !isShowPk() ? `` : `
+     
+
+.MorePk {
+  display:none !important;
+}
+  
+  `
+
+
 
 const css = is_douyu ? `
 
@@ -29,6 +42,9 @@ const css = is_douyu ? `
   width:55px !important;
 }
 
+
+.DiamondsFansLanternBarrage,
+.Barrage-newAuth.js-new-auth,
 .Title-roomInfo .Title-followIcon,
 #js-player-toolbar .RoomText-wrap,
 .PkView,.SysSign-Ad,
@@ -190,6 +206,7 @@ background-color: #f2f5f6 !important;
 }
 
 
+${pk}
 ${headerDarkCss}
 ${dark}
 

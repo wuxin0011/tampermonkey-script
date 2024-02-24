@@ -134,7 +134,8 @@ export default class FishLive extends LivePlugin {
                 }
                 link.setAttribute('href', 'javascript:;void(0)');
                 const user = querySelector(link, '.DyListCover-userName')
-                const name = user.textContent || ''
+                const name = user?.textContent || ''
+                if (!name) return;
                 const roomId = that.getRoomIdByUrl(link?.href);
                 if (that.isRemove(roomId) || that.userIsExist(name)) {
                     removeDOM(li, true)
@@ -156,6 +157,7 @@ export default class FishLive extends LivePlugin {
                         return;
                     }
                     const user = querySelector(a, '.DyListCover-userName')
+                    if (!user?.textContent) return;
                     const id = that.getRoomIdByUrl(a.href);
                     if (!user || !roomId || user.mark) {
                         return;
@@ -167,7 +169,7 @@ export default class FishLive extends LivePlugin {
                     })
                     addEventListener(user, 'click', (e) => {
                         e.preventDefault()
-                        if (id && user.textContent) {
+                        if (id && user?.textContent) {
                             removeDOM(li);
                             that.addUser(id, user.textContent);
                         }
