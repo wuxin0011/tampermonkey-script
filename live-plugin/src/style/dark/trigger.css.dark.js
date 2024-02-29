@@ -301,7 +301,8 @@ ${dark_dm_color()}
 .dark #J_duyaHeaderRight ul li a,
 .dark .chat-room__bd .load-more-msg,
 .dark .ixyGIy,.dark .room-weeklyRankList-content.room-weeklyRankList-content-loading,
-
+.dark .danmu-add--3lwPBnzV90glJnZ1h6GpeS>div,
+.dark [class^=danmu-add],
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;

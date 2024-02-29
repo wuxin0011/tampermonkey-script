@@ -291,6 +291,13 @@ html {
   border: none !important;
 }
 
+/* 视频三连 */
+.dark .video-fav.video-toolbar-left-item.on,
+.dark .video-coin.video-toolbar-left-item.on,
+.dark .video-like.video-toolbar-left-item.on {
+  color:var(--w-blue-link-hover) !important;
+}
+
 
 
 `
