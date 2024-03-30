@@ -419,7 +419,8 @@ ${dark_dm_color()}
 }
 
 .dark #msg_send_bt {
-  border-left : 1px solid var(--w-text) !important;
+  /* border-left : 1px solid var(--w-text) !important; */
+  background: var(--w-bg-darker) !important;
 }
 
 .dark #J_user_viewer_root + div,

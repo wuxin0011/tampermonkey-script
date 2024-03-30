@@ -43,7 +43,7 @@ export default class FishLive extends LivePlugin {
     index() {
         let that = this
         // 直播源
-        if (!(window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
+        if (local_url.indexOf('https://www.douyu.com/home/beta') != -1 && !(local_url=== that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
             return;
         }
         window.scroll(0, 0)
@@ -98,6 +98,11 @@ export default class FishLive extends LivePlugin {
         }
         runIndex()
         window.onscroll = throttle(500, runIndex)
+
+
+        // TODO 斗鱼广告加载广告处理
+        // querySelectorAll('[class^=layoutMain] div[class^=cover]')
+        
     }
 
     // 分类页面操作

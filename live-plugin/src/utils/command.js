@@ -24,6 +24,7 @@ import {
   isShowPkKey,
   isShowPk,
   is_douyu,
+  local_url,
 } from "./index";
 
 
@@ -88,6 +89,17 @@ const bilibiliCommand = () => {
     addLocalStore(isShowHotSearchKey, !isShowHotSearch(), Boolean.name)
     reload()
   }, { title: '如果不想看到热搜请点击，默认开启' })
+
+  
+  if(local_url.indexOf('https://live.bilibili.com/') != -1){
+
+
+  
+
+  }
+
+
+
 }
 
 

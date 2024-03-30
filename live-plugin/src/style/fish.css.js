@@ -42,7 +42,8 @@ const css = is_douyu ? `
   width:55px !important;
 }
 
-
+[class^=elevatorHolder] [class^=elevatorItem]:not(:last-child),
+[class^=recommendCategoryContainer],
 .DiamondsFansLanternBarrage,
 .Barrage-newAuth.js-new-auth,
 .Title-roomInfo .Title-followIcon,
@@ -204,6 +205,8 @@ background-color: #f2f5f6 !important;
   display:flex  !important;
   justify-content: center  !important;
 }
+
+
 
 
 ${pk}

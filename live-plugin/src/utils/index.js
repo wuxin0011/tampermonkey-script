@@ -3,6 +3,7 @@ const exculues = [
     'https://www.douyu.com/member/',
     'https://yuba.douyu.com/',
     'https://www.bilibili.com/cheese',
+    'https://www.bilibili.com/live'
 ]
 const prefix = '[live-plugin]:'
 const msg = (...args) => `${prefix} ${args}`

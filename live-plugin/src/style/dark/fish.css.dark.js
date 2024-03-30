@@ -54,6 +54,8 @@ ${dataLayoutItmeDarkCss}
 }
 
 
+.dark .header__PRovh .Header-wrap.is-darkMode,
+.dark [class^=header] .Header-wrap.is-darkMode,
 .dark .Barrage-FansHome-letter,
 .dark .DyLiveCover-wrap,.dark .DyLiveRecord-wrap,
 .dark .DyHistoryCover-wrap,
@@ -113,7 +115,7 @@ ${dataLayoutItmeDarkCss}
   background-color: rgba(var(--w-bg-darker),0.7) !important;
 }
 
-
+.dark [class^=favoriteTitle],
 .dark .DyHistoryCover,
 .dark .DyHistoryCover-intro,
 .dark .DyHistoryCover-user,
@@ -267,6 +269,8 @@ ${dataLayoutItmeDarkCss}
   border: none !important;
 }
 
+
+.dark [class^=cardTagContainer],
 .dark .Search-direct,.dark .DropMenuList-linkAll,
 .dark .DyCover,.dark .Search-yuba,
 .dark .layout-Card-history, .dark .layout-Card-rank,
@@ -289,6 +293,9 @@ ${dataLayoutItmeDarkCss}
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
+
+
+
 
 .dark .Title-anchorName-HC .Title-anchorName-block:hover,
 .dark .DyCover:hover,.dark .layout-Search-btn:hover,
@@ -349,6 +356,28 @@ ${dataLayoutItmeDarkCss}
   background: var(--w-bg) !important;
 }
 
+
+
+/* new home */
+.dark .header__PRovh .Header-wrap.is-darkMode,
+.dark [class^=desc],
+.dark [class^=cateHead],
+.dark [class^=elevatorItem],
+.dark [class^=layoutMain] [class^=block],
+.dark [class^=elevatorHolder] {
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text) !important;
+}
+
+
+.dark [class^=goTop]  {
+  background-color: var(--w-bg-darker) !important;
+  background-image: url('https://shark2.douyucdn.cn/front-publish/douyu-web-master/_next/static/media/goTop_hover.1133fe37.png') !important;
+}
+
+.dark #header-search-input {
+     background: transparent !important;
+}
 
 
 

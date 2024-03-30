@@ -29,7 +29,8 @@
     "https://i.huya.com/",
     "https://www.douyu.com/member/",
     "https://yuba.douyu.com/",
-    "https://www.bilibili.com/cheese"
+    "https://www.bilibili.com/cheese",
+    "https://www.bilibili.com/live"
   ];
   const prefix = "[live-plugin]:";
   const msg = (...args) => `${prefix} ${args}`;
@@ -2300,7 +2301,7 @@ ${root$1}
     //首页操作
     index() {
       let that = this;
-      if (!(window.location.href === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
+      if (local_url.indexOf("https://www.douyu.com/home/beta") != -1 && !(local_url === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
         return;
       }
       window.scroll(0, 0);
@@ -3017,6 +3018,8 @@ ${root$1}
       addLocalStore(isShowHotSearchKey, !isShowHotSearch(), Boolean.name);
       reload();
     }, { title: "如果不想看到热搜请点击，默认开启" });
+    if (local_url.indexOf("https://live.bilibili.com/") != -1)
+      ;
   };
   const installCommand = () => {
     log("install command ...");
@@ -3070,6 +3073,8 @@ ${dataLayoutItmeDarkCss}
 }
 
 
+.dark .header__PRovh .Header-wrap.is-darkMode,
+.dark [class^=header] .Header-wrap.is-darkMode,
 .dark .Barrage-FansHome-letter,
 .dark .DyLiveCover-wrap,.dark .DyLiveRecord-wrap,
 .dark .DyHistoryCover-wrap,
@@ -3129,7 +3134,7 @@ ${dataLayoutItmeDarkCss}
   background-color: rgba(var(--w-bg-darker),0.7) !important;
 }
 
-
+.dark [class^=favoriteTitle],
 .dark .DyHistoryCover,
 .dark .DyHistoryCover-intro,
 .dark .DyHistoryCover-user,
@@ -3283,6 +3288,8 @@ ${dataLayoutItmeDarkCss}
   border: none !important;
 }
 
+
+.dark [class^=cardTagContainer],
 .dark .Search-direct,.dark .DropMenuList-linkAll,
 .dark .DyCover,.dark .Search-yuba,
 .dark .layout-Card-history, .dark .layout-Card-rank,
@@ -3305,6 +3312,9 @@ ${dataLayoutItmeDarkCss}
   border:1px solid var(--w-text) !important;
   color: var(--w-text-light) !important;
 }
+
+
+
 
 .dark .Title-anchorName-HC .Title-anchorName-block:hover,
 .dark .DyCover:hover,.dark .layout-Search-btn:hover,
@@ -3367,6 +3377,28 @@ ${dataLayoutItmeDarkCss}
 
 
 
+/* new home */
+.dark .header__PRovh .Header-wrap.is-darkMode,
+.dark [class^=desc],
+.dark [class^=cateHead],
+.dark [class^=elevatorItem],
+.dark [class^=layoutMain] [class^=block],
+.dark [class^=elevatorHolder] {
+  background: var(--w-bg-darker) !important;
+  color: var(--w-text) !important;
+}
+
+
+.dark [class^=goTop]  {
+  background-color: var(--w-bg-darker) !important;
+  background-image: url('https://shark2.douyucdn.cn/front-publish/douyu-web-master/_next/static/media/goTop_hover.1133fe37.png') !important;
+}
+
+.dark #header-search-input {
+     background: transparent !important;
+}
+
+
 
 
 `;
@@ -3396,7 +3428,8 @@ ${dataLayoutItmeDarkCss}
   width:55px !important;
 }
 
-
+[class^=elevatorHolder] [class^=elevatorItem]:not(:last-child),
+[class^=recommendCategoryContainer],
 .DiamondsFansLanternBarrage,
 .Barrage-newAuth.js-new-auth,
 .Title-roomInfo .Title-followIcon,
@@ -3558,6 +3591,8 @@ background-color: #f2f5f6 !important;
   display:flex  !important;
   justify-content: center  !important;
 }
+
+
 
 
 ${pk}
@@ -3981,7 +4016,8 @@ ${dark_dm_color()}
 }
 
 .dark #msg_send_bt {
-  border-left : 1px solid var(--w-text) !important;
+  /* border-left : 1px solid var(--w-text) !important; */
+  background: var(--w-bg-darker) !important;
 }
 
 .dark #J_user_viewer_root + div,
