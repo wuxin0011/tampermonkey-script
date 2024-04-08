@@ -203,6 +203,9 @@
 
     const handlerText = (str, title = '') => {
         if (!str) return str
+        // 移出空白字符
+        str = str.replaceAll(' ','')
+        str = str.replaceAll('&nbsp;','')
         function isIgnore(c) {
             return c == '\t' || c == '\b' || c == '\n' || c == '\f'
         }
