@@ -3428,6 +3428,7 @@ ${dataLayoutItmeDarkCss}
   width:55px !important;
 }
 
+#js-room-top-banner,
 [class^=elevatorHolder] [class^=elevatorItem]:not(:last-child),
 [class^=recommendCategoryContainer],
 .DiamondsFansLanternBarrage,
