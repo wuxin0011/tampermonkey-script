@@ -38,6 +38,7 @@ export default defineConfig({
         items: [
           { text: '直播插件', link: '/plugins/live-plugins' },
           { text: '弹幕屏蔽插件', link: '/plugins/barrage-keywords-stop' },
+          { text: '力扣内容转换插件', link: '/plugins/lc-to-markdown-txt-html' },
         ]
       },
       {
