@@ -1,6 +1,6 @@
 ---
-title: 介绍
-description: 项目介绍
+title: 力扣页面内容转换
+description: 复制题目描述转换为 html markdown txt 等
 ---
 
 
@@ -48,3 +48,8 @@ description: 项目介绍
 
 ![txt](https://wuxin0011.github.io/tampermonkey-script/lc-to-markdown-txt-html/html-to-txt.png)
 
+
+## 相关链接
+
+- [评论](https://wuxin0011.github.io/tampermonkey-script/plugins/live-plugins.html)
+- [反馈](https://github.com/wuxin0011/tampermonkey-script/issuesl)
