@@ -29,9 +29,6 @@
 
     const isDiscuss = () => url.indexOf('https://leetcode.cn/circle/discuss') != -1
     const isProblem = () => url.indexOf('https://leetcode.cn/problems') != -1
-
-
-
     // 
     const use = (key) => typeof GM_getValue(key) == 'undefined' ? true : GM_getValue(key)
     const isUseMarkDown = () => use(MARKDOWN_CONVERT)
@@ -58,18 +55,19 @@
         buttons.push(temp)
     }
 
+    const updateDisplay = (element, u) => element && element instanceof HTMLElement ? (element.style.display = u ? 'inline-block' : 'none') : ''
     // markdown button
     const markdownButton = buttons[0]
     markdownButton.id = targetClass
-    markdownButton.style.display = isUseMarkDown() ? 'inline-block' : 'none'
+    updateDisplay(markdownButton,isUseMarkDown())
 
     // txt button
     const txtButton = buttons[1]
-    txtButton.style.display = isUseTxt() ? 'inline-block' : 'none'
+    updateDisplay(txtButton,isUseTxt())
 
     // html button
     const htmlButton = buttons[2]
-    htmlButton.style.display = isUseHTML() ? 'inline-block' : 'none'
+    updateDisplay(htmlButton,isUseHTML())
 
     function getHtmlContent(className) {
         const htmlContent = document.querySelector(className)
@@ -127,10 +125,14 @@
         const buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
         const className = "[data-track-load=description_content]"
         let title = document.querySelector('#qd-content [class*=text-title]')
-        const titleTxt = title.textContent
+        const titleTxt = title?.textContent
         title = title ? '<h2>' + (title?.textContent) + '</h2>' : ''
         let htmlContent = title + getHtmlContent(className)
         let container = document.querySelector(className)
+        if (!container) {
+            console.warn('找不到 容器！', url)
+            return;
+        }
         container = container.previousElementSibling
         markdownButton.className = buttonClassName
         txtButton.className = buttonClassName
@@ -180,14 +182,8 @@
         if (!(container instanceof HTMLElement && ele instanceof HTMLElement)) {
             return;
         }
-
-
-
         // append 
         container.appendChild(ele)
-
-
-
         if (type == SUPPORT_TYPE['md']) {
             const markdown = toMarkdown(htmlContent)
             copy(markdown, ele)
