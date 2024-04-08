@@ -51,5 +51,5 @@ description: 复制题目描述转换为 html markdown txt 等
 
 ## 相关链接
 
-- [评论](https://wuxin0011.github.io/tampermonkey-script/plugins/live-plugins.html)
+- [评论](https://wuxin0011.github.io/tampermonkey-script/plugins/lc-to-markdown-txt-html.html)
 - [反馈](https://github.com/wuxin0011/tampermonkey-script/issuesl)
