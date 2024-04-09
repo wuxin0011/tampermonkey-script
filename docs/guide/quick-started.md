@@ -10,6 +10,7 @@
 edge
 - [暴力猴](https://microsoftedge.microsoft.com/addons/detail/%E6%9A%B4%E5%8A%9B%E7%8C%B4/eeagobfjdenkkddmbclomhiblgggliao?hl=zh-CN)
 - [油猴](https://microsoftedge.microsoft.com/addons/detail/tampermonkey-beta/fcmfnpggmnlmfebfghbfnillijihnkoh?hl=zh-CN)
+- [脚本猫](https://scriptcat.org/zh-CN/)
 
 
 

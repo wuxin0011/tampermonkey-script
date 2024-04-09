@@ -9,6 +9,9 @@
 
 
 
+
+
+
 ## 详情
 
 **目前支持操作:**
@@ -161,9 +164,13 @@ b站演示
     
 
 
+## 安装地址
 
 
-## 地址
+- [油猴地址](https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
+- [脚本猫地址](https://scriptcat.org/zh-CN/script-show-page/1679)
 
-- [插件地址](https://greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
-- [项目地址](https://github.com/wuxin0011/tampermonkey-script/live-plugin)
+
+## 建议反馈
+
+- [更多建议](https://github.com/wuxin0011/tampermonkey-script/issues)
