@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lc-to-markdown-txt-html
 // @author       wuxin0011
-// @version      0.0.1
+// @version      0.0.2
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/lc-to-markdown-txt-html
 // @description  力扣题目描述,讨论发布内容复制 复制为 markdown、txt、html 等格式
 // @icon         data:image/png;base64,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
@@ -14,10 +14,6 @@
 // @grant        GM_getValue
 // @license      MIT
 // ==/UserScript==
-
-
-
-
 
 (function () {
     'use strict';
@@ -34,6 +30,8 @@
     const isUseMarkDown = () => use(MARKDOWN_CONVERT)
     const isUseTxt = () => use(TXT_CONVERT)
     const isUseHTML = () => use(HTML_CONVERT)
+    let timerId = null
+    let loadOk = false
     console.log('markdown', isUseMarkDown(), 'txt', isUseTxt(), 'html', isUseHTML())
 
 
@@ -43,6 +41,8 @@
         'html': 'html'
     }
 
+
+
     const buttons = []
     const targetClass = 'my-button-target'
     const BUTTON_ID = `#${targetClass}`
@@ -51,23 +51,25 @@
         temp.style.marginLeft = '10px'
         const type = i == 0 ? SUPPORT_TYPE['md'] : i == 1 ? SUPPORT_TYPE['txt'] : SUPPORT_TYPE['html']
         temp.title = `复制为 ${type == 'md' ? 'markdown' : type} 格式`
+        temp.id = `${BUTTON_ID}-${type}`
         temp.textContent = type
+        temp.copytype = type
         buttons.push(temp)
     }
+
 
     const updateDisplay = (element, u) => element && element instanceof HTMLElement ? (element.style.display = u ? 'inline-block' : 'none') : ''
     // markdown button
     const markdownButton = buttons[0]
-    markdownButton.id = targetClass
-    updateDisplay(markdownButton,isUseMarkDown())
+    updateDisplay(markdownButton, isUseMarkDown())
 
     // txt button
     const txtButton = buttons[1]
-    updateDisplay(txtButton,isUseTxt())
+    updateDisplay(txtButton, isUseTxt())
 
     // html button
     const htmlButton = buttons[2]
-    updateDisplay(htmlButton,isUseHTML())
+    updateDisplay(htmlButton, isUseHTML())
 
     function getHtmlContent(className) {
         const htmlContent = document.querySelector(className)
@@ -122,12 +124,15 @@
 
 
     function runProblems() {
+        // console.log('run problem', url)
         const buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
         const className = "[data-track-load=description_content]"
         let title = document.querySelector('#qd-content [class*=text-title]')
         const titleTxt = title?.textContent
         title = title ? '<h2>' + (title?.textContent) + '</h2>' : ''
-        let htmlContent = title + getHtmlContent(className)
+        let u = window.location.href
+        let orginUrl = title ? `<a href="${u}">` + (u) + '</a>' : ''
+        let htmlContent = title + getHtmlContent(className) + orginUrl
         let container = document.querySelector(className)
         if (!container) {
             console.warn('找不到 容器！', url)
@@ -137,9 +142,9 @@
         markdownButton.className = buttonClassName
         txtButton.className = buttonClassName
         htmlButton.className = buttonClassName
-        runCopy(container, markdownButton, htmlContent, SUPPORT_TYPE['md'])
         runCopy(container, txtButton, htmlContent, SUPPORT_TYPE['txt'], titleTxt)
         runCopy(container, htmlButton, htmlContent, SUPPORT_TYPE['html'])
+        runCopy(container, markdownButton, htmlContent, SUPPORT_TYPE['md'])
     }
 
 
@@ -147,24 +152,34 @@
         if (!element || !(element instanceof HTMLElement)) {
             return
         }
+
         try {
-            const clipboard = new ClipboardJS(element, {
+            let clipboard = element?.clipboardObject
+            if (clipboard) {
+                //console.log('clipboard destroy')
+                clipboard.destroy();
+            }
+            clipboard = new ClipboardJS(element, {
                 text: function () {
                     return w;
                 }
             })
+            // console.log('update txt >>>>>>>>>')
+            element.clipboardObject = clipboard
             clipboard.on('success', function (e) {
                 updateButtonStatus(element)
             })
             clipboard.on('error', function (e) {
                 updateButtonStatus(element, 'copy error!')
             })
+
+
         } catch (error) {
             // 如果 clipboardjs 引入失败 使用原生的
             // use  navigator writeText
             element.onclick = () => {
                 navigator.clipboard.writeText(w).then(() => {
-                    updateButtonStatus(element)
+                    //updateButtonStatus(element)
                 }, () => {
                     updateButtonStatus(element, 'copy error!')
                 })
@@ -173,6 +188,9 @@
         }
 
     }
+
+
+
 
     function runCopy(container, ele, htmlContent, type = SUPPORT_TYPE['md'], title = '') {
 
@@ -183,7 +201,20 @@
             return;
         }
         // append 
-        container.appendChild(ele)
+        if (!document.getElementById(ele.id)) {
+            ele.originClass = ele.className
+            container.appendChild(ele)
+        } else {
+            if (timerId != null) {
+                window.clearInterval(timerId)
+                timerId = null
+            }
+            // 加载完成 初始化
+            loadOk = true
+            initConmand()
+            updateButtonStatus(ele, ele.copytype, '', 100)
+        }
+
         if (type == SUPPORT_TYPE['md']) {
             const markdown = toMarkdown(htmlContent)
             copy(markdown, ele)
@@ -201,58 +232,104 @@
 
     }
 
+
+    const MAX_LEN = 80
+
+
     const handlerText = (str, title = '') => {
         if (!str) return str
         // 移出空白字符
-        str = str.replaceAll(' ','')
-        str = str.replaceAll('&nbsp;','')
+        str = str.replaceAll(' ', '')
+        str = str.replaceAll('&nbsp;', '')
         function isIgnore(c) {
             return c == '\t' || c == '\b' || c == '\n' || c == '\f'
         }
-        let newstr = ''
-        let find = str.indexOf('提示')
-        let tipPos = find == -1 ? str.length : find
-        for (let i = 0; i < tipPos; i++) {
-            if (isIgnore(str.charAt(i))) {
-                continue;
+        try {
+            let newstr = ''
+            let find = str.indexOf('提示')
+            let findExample = str.indexOf('示例')
+            let desc = findExample == -1 ? str : str.substring(0, findExample)
+            let tipPos = find == -1 ? str.length : find
+
+
+            for (let i = 0; i < desc.length; i++) {
+                let chr = desc.charAt(i)
+                if (isIgnore(chr)) {
+                    continue;
+                }
+                newstr = newstr + chr
+
+                // 复制文本过长换行处理
+                if (chr == '，' || chr == '。') {
+                    newstr += "\n"
+                }
             }
-            newstr = newstr + str.charAt(i)
-        }
-        newstr = newstr.replaceAll('示例', '\n\n示例')
 
-        if (tipPos != str.length) {
-            newstr = newstr + str.substring(find)
-            newstr = newstr.replace('提示', '\n\n提示')
-        }
-
-        if (title) {
-            newstr = newstr.replace(title, `${title}\n\n`)
-        }
-
-        let i = newstr.length
-        for (; i >= 0; i--) {
-            let c = newstr.charAt(i)
-            if (!(isIgnore(c) || c == ' ')) {
-                break
+            // 示例部分
+            if (findExample != -1 && tipPos != str.length) {
+                let exampleStr = str.substring(findExample, tipPos)
+                exampleStr = exampleStr.replaceAll("，", "，\n")
+                exampleStr = exampleStr.replaceAll("。", "。\n")
+                exampleStr = exampleStr.replace(/\n{2,}/g, "\n")
+                exampleStr = exampleStr.replaceAll("示例", "\n示例")
+                newstr += exampleStr
             }
+
+            // 处理提示文本内容
+            if (tipPos != str.length) {
+                let tipsStr = str.substring(find);
+
+                // 多个换行处理
+                tipsStr = tipsStr.replace(/\n{2,}/g, "\n")
+
+                // 修改常见的数据范围异常问题
+                tipsStr = tipsStr.replace('231', '2^31')
+                tipsStr = tipsStr.replace(/10(\d?)/g, '10^$1')
+                newstr = newstr + tipsStr
+                newstr = newstr.replace('提示', '\n\n提示')
+            }
+
+            if (title) {
+                newstr = newstr.replace(title, `${title}\n\n`)
+            }
+
+            let i = newstr.length
+            for (; i >= 0; i--) {
+                let c = newstr.charAt(i)
+                if (!(isIgnore(c) || c == ' ')) {
+                    break
+                }
+            }
+            newstr = newstr.substring(0, i);
+            newstr = newstr.replace('https','\n\nhttps')
+            return newstr
+        } catch (e) {
+            console.error('handler error', e)
+            if (title) {
+                title = title + "\n\n"
+            }
+            str = str.replace(/\n{2,}/g, "\n\n")
+            str = str.replace('231', '2^31')
+            str = str.replace(/10(\d?)/g, '10^$1')
+            str = str.replace('https','\n\nhttps:')
+            return title + str 
         }
-        return newstr.substring(0, i)
+
     }
 
 
-    const updateButtonStatus = (element, newText = 'copy success !', newClass = '', timeout = 1500) => {
+    const updateButtonStatus = (element, newText = 'copied!', newClass = '', timeout = 1500) => {
         if (!element) {
             return;
         }
-        const origin = element.textContent
-        const originClass = element.className
+        // console.log('update button status', element, newText)
         element.textContent = newText
         if (newClass) {
             element.className = newClass
         }
         setTimeout(() => {
-            element.textContent = origin
-            element.className = originClass
+            element.textContent = element.copytype
+            element.className = element.originClass
         }, timeout)
     }
 
@@ -296,11 +373,12 @@
     }
 
 
+    let times = 0
 
-    window.onload = () => {
-        let support = true
-        let timer = setInterval(() => {
 
+    const start = () => {
+        timerId = setInterval(() => {
+            let support = true
             if (isDiscuss()) {
                 runQuestionActionsContainer()
             } else if (isProblem()) {
@@ -308,17 +386,59 @@
             } else {
                 support = false
             }
-
-            if (support) {
-                initConmand()
-                const my_button = document.querySelector(BUTTON_ID)
-                if (my_button) {
-                    window.clearInterval(timer)
-                }
-            } else {
+            times += 1
+            if (times > 10 && timerId != null) {
+                window.clearInterval(timerId)
+                timerId = null
+            }
+            if (!support) {
                 console.warn('No support address ! ', url)
-                window.clearInterval(timer)
+                if (timerId != null) {
+                    window.clearInterval(timerId)
+                }
+                return
             }
         }, 3000);
+
+
     }
+
+
+
+    window.onload = () => {
+
+        times = 0
+        start()
+    }
+
+
+
+    // 监听地址改变
+    // 重新修改描述
+    window.addEventListener("urlchange", () => {
+
+        if (!loadOk) {
+            return
+        }
+        // console.log('url is change ...')
+        // console.log('ok ok')
+        let pretitle = document.querySelector('title').textContent
+        let titleId = null
+        let updateTimes = 0
+        titleId = setInterval(() => {
+            let curTitle = document.querySelector('title').textContent
+            if (isDiscuss()) {
+                runQuestionActionsContainer()
+            } else if (isProblem()) {
+                runProblems()
+            }
+            if (pretitle == curTitle && updateTimes >= 3) {
+                window.clearInterval(titleId)
+                return
+            }
+            updateTimes += 1
+        }, 1500);
+
+    })
+
 })();
