@@ -26,7 +26,7 @@ const read = /.*:\/\/.*\.bilibili\.com\/read\/.*/.test(local_url) ?
 {
   color:var(--w-text-light) !important;
 }
-
+.dark .ql-container,
 .dark .right-side-bar [class^=to-top],
 .dark .right-side-bar [class^=side-toolbar],
 .dark [class^=follow-btn],

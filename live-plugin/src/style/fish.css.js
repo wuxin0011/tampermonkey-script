@@ -207,6 +207,10 @@ background-color: #f2f5f6 !important;
   justify-content: center  !important;
 }
 
+.dark #js-player-title {
+  background-image:none !important;
+}
+
 
 
 

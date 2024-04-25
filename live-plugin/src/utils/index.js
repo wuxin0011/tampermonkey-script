@@ -179,7 +179,7 @@ export const loopDo = (callback, count = 100, wait = 100) => {
 }
 
 
-export const findMark = (selector, callback, count = 100, wait = 100) => {
+export const findMark = (selector, callback, count = 5, wait = 1000) => {
     if (!selector) {
         warn('selector not allow  or null !')
         return;
@@ -195,6 +195,7 @@ export const findMark = (selector, callback, count = 100, wait = 100) => {
                 if (!element.mark) {
                     callback(element)
                     element.mark = true
+                    clearInterval(timer)
                 } else {
                     clearInterval(timer)
                 }

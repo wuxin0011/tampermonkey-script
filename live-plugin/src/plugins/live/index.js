@@ -269,6 +269,14 @@ export default class LivePlugin {
         }
         let that = this
         arr.forEach((item, index) => {
+            // 移出空
+            if( item == null){
+                return
+            }
+            if(!item?.name || !item?.roomId || item.roomId == 'null' || item.roomId == 'null') {
+                this.userDelete(item.name,item.roomId)
+                return
+            }
             let tr = createElement('tr')
             tr.innerHTML = `
                 <td>${index + 1}</td>
@@ -373,7 +381,11 @@ export default class LivePlugin {
 
                 ]
                 for (let item of deleteKeyList) {
-                    wls.removeItem(item)
+                    try{
+                        wls.removeItem(item)
+                    }catch(e){
+
+                    }
                 }
                 that.resetTbody(that.users)
                 window.location.reload()
@@ -936,6 +948,9 @@ export default class LivePlugin {
      * @param name 房间名
      */
     addUser(id, name) {
+        if(!id || !name || id == 'null'|| name == 'null'){
+            return
+        }
         if (this.userIsExist(id) || this.userIsExist(name)) {
             alert('该房间已存在！')
             return;

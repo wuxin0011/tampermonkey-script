@@ -31,6 +31,7 @@ export default class FishLive extends LivePlugin {
         this.gift_tool = '.layout-Player-main #js-player-toolbar'
         this.header_logo = '#js-header .Header-left .Header-logo'
         this.auto_max_pro_class_or_id_list = '#js-player-video .room-Player-Box [class^=rate] ul>li'
+        this.is_use_click_event = false
         this.init()
     }
 
@@ -42,6 +43,12 @@ export default class FishLive extends LivePlugin {
     //首页操作
     index() {
         let that = this
+
+
+        if(local_url.indexOf('https://www.douyu.com/topic')!=-1){
+            return
+        }
+
         // 直播源
         if (local_url.indexOf('https://www.douyu.com/home/beta') != -1 && !(local_url=== that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
             return;
@@ -96,8 +103,12 @@ export default class FishLive extends LivePlugin {
                 li.mark = true
             })
         }
-        runIndex()
-        window.onscroll = throttle(500, runIndex)
+
+        if( this.is_use_click_event ){
+            runIndex()
+            window.onscroll = throttle(500, runIndex)
+        }
+        
 
 
         // TODO 斗鱼广告加载广告处理
@@ -185,8 +196,12 @@ export default class FishLive extends LivePlugin {
                 li.mark = 'mark'
             })
         }
-        runCategory()
-        window.addEventListener('scroll', throttle(1000, runCategory))
+
+
+        if( this.is_use_click_event ){
+            runCategory()
+            window.addEventListener('scroll', throttle(1000, runCategory))
+        }
     }
 
 
@@ -202,12 +217,13 @@ export default class FishLive extends LivePlugin {
                 that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent)
             })
         })
-        loopDo(() => {
+        loopDo((timer) => {
             let closeBtn = querySelector('.roomSmallPlayerFloatLayout-closeBtn')
             if (closeBtn) {
                 closeBtn.click()
+                window.clearInterval(timer)
             }
-        }, 10, 1000)
+        }, 10, 1200)
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
@@ -232,7 +248,13 @@ export default class FishLive extends LivePlugin {
         }
 
         this.isFullScreen()
-        this.isAutoMaxVideoPro()
+        
+        // 暂时移出最高画质操作 
+        // 4.1.17
+        if (this.is_use_click_event) {
+            this.isAutoMaxVideoPro()
+        }
+       
 
         // 默认全部选择
         findMark('.ChatToolBar .ShieldTool-enter .ShieldTool-listItem', (item) => {
@@ -240,7 +262,7 @@ export default class FishLive extends LivePlugin {
                 item.click()
                 log('自动点击了弹幕礼物显示工具')
             }
-        }, 100, 1000)
+        }, 1,5000)
     }
 
     // 通过房间号获取直播间name
@@ -312,9 +334,9 @@ export default class FishLive extends LivePlugin {
                     clickM.click()
                     log('左侧侧边栏自动收起！')
                 }
-                clearInterval(timer)
+                window.clearInterval(timer)
             }
-        }, 100, 100)
+        }, 10, 1000)
     }
 
 

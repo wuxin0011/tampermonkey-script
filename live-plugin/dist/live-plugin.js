@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.16
+// @version      4.1.16.2
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -185,7 +185,7 @@
       }
     }, wait);
   };
-  const findMark = (selector, callback, count = 100, wait = 100) => {
+  const findMark = (selector, callback, count = 5, wait = 1e3) => {
     if (!selector) {
       warn("selector not allow  or null !");
       return;
@@ -201,6 +201,7 @@
           if (!element.mark) {
             callback(element);
             element.mark = true;
+            clearInterval(timer);
           } else {
             clearInterval(timer);
           }
@@ -1378,6 +1379,13 @@ ${root$1}
       }
       let that = this;
       arr.forEach((item, index) => {
+        if (item == null) {
+          return;
+        }
+        if (!(item == null ? void 0 : item.name) || !(item == null ? void 0 : item.roomId) || item.roomId == "null" || item.roomId == "null") {
+          this.userDelete(item.name, item.roomId);
+          return;
+        }
         let tr = createElement("tr");
         tr.innerHTML = `
                 <td>${index + 1}</td>
@@ -1474,7 +1482,10 @@ ${root$1}
             "__right_video_list_reco_list_key__"
           ];
           for (let item of deleteKeyList) {
-            wls.removeItem(item);
+            try {
+              wls.removeItem(item);
+            } catch (e) {
+            }
           }
           that.resetTbody(that.users);
           window.location.reload();
@@ -1934,6 +1945,9 @@ ${root$1}
      * @param name 房间名
      */
     addUser(id, name) {
+      if (!id || !name || id == "null" || name == "null") {
+        return;
+      }
       if (this.userIsExist(id) || this.userIsExist(name)) {
         alert("该房间已存在！");
         return;
@@ -2292,6 +2306,7 @@ ${root$1}
       this.gift_tool = ".layout-Player-main #js-player-toolbar";
       this.header_logo = "#js-header .Header-left .Header-logo";
       this.auto_max_pro_class_or_id_list = "#js-player-video .room-Player-Box [class^=rate] ul>li";
+      this.is_use_click_event = false;
       this.init();
     }
     // 公共部分页面操作
@@ -2301,6 +2316,9 @@ ${root$1}
     //首页操作
     index() {
       let that = this;
+      if (local_url.indexOf("https://www.douyu.com/topic") != -1) {
+        return;
+      }
       if (local_url.indexOf("https://www.douyu.com/home/beta") != -1 && !(local_url === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
         return;
       }
@@ -2344,8 +2362,10 @@ ${root$1}
           li.mark = true;
         });
       }
-      runIndex();
-      window.onscroll = throttle(500, runIndex);
+      if (this.is_use_click_event) {
+        runIndex();
+        window.onscroll = throttle(500, runIndex);
+      }
     }
     // 分类页面操作
     category() {
@@ -2424,8 +2444,10 @@ ${root$1}
           li.mark = "mark";
         });
       }
-      runCategory();
-      window.addEventListener("scroll", throttle(1e3, runCategory));
+      if (this.is_use_click_event) {
+        runCategory();
+        window.addEventListener("scroll", throttle(1e3, runCategory));
+      }
     }
     // 详情页操作
     detail() {
@@ -2439,12 +2461,13 @@ ${root$1}
           that.addUser(that.getRoomIdByUrl(local_url), hostName.textContent);
         });
       });
-      loopDo(() => {
+      loopDo((timer) => {
         let closeBtn = querySelector(".roomSmallPlayerFloatLayout-closeBtn");
         if (closeBtn) {
           closeBtn.click();
+          window.clearInterval(timer);
         }
-      }, 10, 1e3);
+      }, 10, 1200);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         Array.from(querySelectorAll("#root>div")).forEach((element) => {
@@ -2459,13 +2482,15 @@ ${root$1}
         removeDOM(".layout-Main .ToTopBtn", true);
       }
       this.isFullScreen();
-      this.isAutoMaxVideoPro();
+      if (this.is_use_click_event) {
+        this.isAutoMaxVideoPro();
+      }
       findMark(".ChatToolBar .ShieldTool-enter .ShieldTool-listItem", (item) => {
         if (item.className.indexOf("is-noChecked") !== -1) {
           item.click();
           log("自动点击了弹幕礼物显示工具");
         }
-      }, 100, 1e3);
+      }, 1, 5e3);
     }
     // 通过房间号获取直播间name
     async getNameByRoomId(keywords) {
@@ -2527,9 +2552,9 @@ ${root$1}
             clickM.click();
             log("左侧侧边栏自动收起！");
           }
-          clearInterval(timer);
+          window.clearInterval(timer);
         }
-      }, 100, 100);
+      }, 10, 1e3);
     }
   }
   class BiliBili extends LivePlugin {
@@ -3591,6 +3616,10 @@ background-color: #f2f5f6 !important;
 .Header-history-tabs {
   display:flex  !important;
   justify-content: center  !important;
+}
+
+.dark #js-player-title {
+  background-image:none !important;
 }
 
 
@@ -5189,7 +5218,7 @@ ${link_css}
 {
   color:var(--w-text-light) !important;
 }
-
+.dark .ql-container,
 .dark .right-side-bar [class^=to-top],
 .dark .right-side-bar [class^=side-toolbar],
 .dark [class^=follow-btn],
