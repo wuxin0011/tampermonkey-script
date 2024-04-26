@@ -1,28 +1,33 @@
-2466. 统计构造好字符串的方案数
+2349. 设计数字容器系统
 
-给你整数zero，one，low和high，我们从空字符串开始构造一个字符串，每一步执行下面操作中的一种：
-	将'0'在字符串末尾添加zero 次。
-	将'1'在字符串末尾添加one次。
-以上操作可以执行任意次。
-如果通过以上过程得到一个 长度在low 和high之间（包含上下边界）的字符串，那么这个字符串我们称为好字符串。
-请你返回满足以上要求的 不同好字符串数目。由于答案可能很大，请将结果对10^9 + 7取余后返回。
+设计一个数字容器系统，可以实现以下功能：
+	在系统中给定下标处插入或者 替换一个数字。
+	返回系统中给定数字的最小下标。
+请你实现一个NumberContainers类：
+	NumberContainers()初始化数字容器系统。
+	void change(int index, int number) 在下标index处填入number。如果该下标index处已经有数字了，那么用 number替换该数字。
+	int find(int number)返回给定数字number在系统中的最小下标。如果系统中没有number，那么返回-1。
 
-示例 1：
-输入：low = 3, high = 3, zero = 1, one = 1
-输出：8
+示例：
+输入：
+["NumberContainers", "find", "change", "change", "change", "change", "find", "change", "find"]
+[[], [10], [2, 10], [1, 10], [3, 10], [5, 10], [10], [1, 20], [10]]
+输出：
+[null, -1, null, null, null, null, 1, null, 2]
 解释：
-一个可能的好字符串是 "011" 。
-可以这样构造得到："" -> "0" -> "01" -> "011" 。
-从 "000" 到 "111" 之间所有的二进制字符串都是好字符串。
-
-示例 2：
-输入：low = 2, high = 3, zero = 1, one = 2
-输出：5
-解释：好字符串为 "00" ，"11" ，"000" ，"110^" 和 "011" 。
+NumberContainers nc = new NumberContainers();
+nc.find(10); // 没有数字 10 ，所以返回 -1 。
+nc.change(2, 10); // 容器中下标为 2 处填入数字 10 。
+nc.change(1, 10); // 容器中下标为 1 处填入数字 10 。
+nc.change(3, 10); // 容器中下标为 3 处填入数字 10 。
+nc.change(5, 10); // 容器中下标为 5 处填入数字 10 。
+nc.find(10); // 数字 10 所在的下标为 1 ，2 ，3 和 5 。因为最小下标为 1 ，所以返回 1 。
+nc.change(1, 20); // 容器中下标为 1 处填入数字 20 。注意，下标 1 处之前为 10 ，现在被替换为 20 。
+nc.find(10); // 数字 10 所在下标为 2 ，3 和 5 。最小下标为 2 ，所以返回 2 。
 
 提示：
-	1 <= low<= high<= 10^5
-	1 <= zero, one <= low
+	1 <= index, number <= 10^9
+	调用change 和find的总次数不超过10^5 次。
 
 
-https://leetcode.cn/problems/count-ways-to-build-good-strings/description/
+https://leetcode.cn/problems/design-a-number-container-system/description/
