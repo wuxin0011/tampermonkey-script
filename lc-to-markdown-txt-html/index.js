@@ -40,7 +40,7 @@
     let timerId = null
     let loadOk = false
     console.log('markdown', isUseMarkDown(), 'txt', isUseTxt(), 'html', isUseHTML())
-    const isUsePlugins = () => isUseHTML() || isUseMarkDown() || isUseHTML()
+    const isUsePlugins = () => isUseHTML() || isUseMarkDown() || isUseTxt()
     const isUsePluginInThis = () => use(isAutoKey) // 当前页面是否使用该插件
     let isFindButtonContainer = false
 
@@ -386,6 +386,7 @@
 
 
 
+    // console.log('isUsePlugins()',isUsePlugins())
     const start = () => {
         if (!isUsePlugins()) {
             return;
