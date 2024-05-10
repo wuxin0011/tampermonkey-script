@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         lc-to-markdown-txt-html
 // @author       wuxin0011
-// @version      0.0.2-4-beta
+// @version      0.0.3
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/lc-to-markdown-txt-html
 // @description  力扣题目描述,讨论发布内容复制 复制为 markdown、txt、html 等格式
 // @icon         data:image/png;base64,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
 // @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/problems/*
+// @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
+// @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
 // @require      https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js
 // @require      https://cdn.bootcdn.net/ajax/libs/turndown/7.1.2/turndown.min.js
 // @grant        GM_registerMenuCommand
@@ -23,8 +25,13 @@
     const MARKDOWN_CONVERT = '__MARKDOWN_CONVERT__'
     const markdownURL = "https://stonehank.github.io/html-to-md/"
 
+
+
     const isDiscuss = () => url.indexOf('https://leetcode.cn/circle/discuss') != -1
     const isProblem = () => url.indexOf('https://leetcode.cn/problems') != -1
+    const isContest = () => url.indexOf('https://leetcode.cn/contest/weekly-contest') != -1 || url.indexOf('https://leetcode.cn/contest/biweekly-contest') != -1
+
+    const isAutoKey = '__auto_pluging_key' + (isDiscuss() ? '__Discuss__' : isProblem() ? '__Problem__' : '__Contest__')
     // 
     const use = (key) => typeof GM_getValue(key) == 'undefined' ? true : GM_getValue(key)
     const isUseMarkDown = () => use(MARKDOWN_CONVERT)
@@ -33,6 +40,10 @@
     let timerId = null
     let loadOk = false
     console.log('markdown', isUseMarkDown(), 'txt', isUseTxt(), 'html', isUseHTML())
+    const isUsePlugins = () => isUseHTML() || isUseMarkDown() || isUseHTML()
+    const isUsePluginInThis = () => use(isAutoKey) // 当前页面是否使用该插件
+    let isFindButtonContainer = false
+
 
 
     const SUPPORT_TYPE = {
@@ -125,20 +136,64 @@
 
     function runProblems() {
         // console.log('run problem', url)
-        const buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
-        const className = "[data-track-load=description_content]"
-        let title = document.querySelector('#qd-content [class*=text-title]')
+        let buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
+        let className = "[data-track-load=description_content]"
+        let titleClassName = '#qd-content [class*=text-title]'
+        const isFlexMode = !!document.querySelector('#__next')
+        if (isContest()) {
+
+            // console.log('isFlexMode', isFlexMode)
+            if (isFlexMode) {
+                className = ".FN9Jv"
+                titleClassName = '#qd-content a'
+            } else {
+                className = '#base_content .question-content'
+                titleClassName = '#base_content .question-title  h3'
+            }
+
+        } else {
+
+            // LCP 老版本的 容器 https://leetcode.cn/problems/1ybDKD/description/
+            if (!document.querySelector(className)) {
+                className = ".FN9Jv"
+                titleClassName = '#qd-content a'
+            }
+        }
+        let title = document.querySelector(titleClassName)
         const titleTxt = title?.textContent
         title = title ? '<h2>' + (title?.textContent) + '</h2>' : ''
         let u = window.location.href
         let orginUrl = title ? `<a href="${u}">` + (u) + '</a>' : ''
         let htmlContent = title + getHtmlContent(className) + orginUrl
-        let container = document.querySelector(className)
+        let container = null
+
+        // https://leetcode.cn/contest/weekly-contest-312
+        if (isContest() && !isFlexMode) {
+            if (!isFindButtonContainer) {
+                const c = document.querySelector('.contest-question-info')
+                if (c && !c.querySelector('#lx-markdown-plugins')) {
+                    const str = `<li class="list-group-item lx-markdown-plugins" id="lx-markdown-plugins">
+                    <span>插件</span>
+                  </li>`
+                    c.innerHTML = c.innerHTML + str
+                    container = c.querySelector('.lx-markdown-plugins')
+                    if (container) {
+                        isFindButtonContainer = true
+                    }
+                }
+
+            }
+
+        } else {
+            container = document.querySelector(className)
+            if (container) {
+                container = container.previousElementSibling
+            }
+        }
         if (!container) {
             console.warn('找不到 容器！', url)
             return;
         }
-        container = container.previousElementSibling
         markdownButton.className = buttonClassName
         txtButton.className = buttonClassName
         htmlButton.className = buttonClassName
@@ -211,7 +266,7 @@
             }
             // 加载完成 初始化
             loadOk = true
-            initConmand()
+            // initConmand()
             updateButtonStatus(ele, ele.copytype, '', 100)
         }
 
@@ -240,6 +295,7 @@
         if (!str) return str
         // 移出空白字符
         str = str.replaceAll(' ', '')
+        str = str.replaceAll('​​​​​​​​​​​​​​​​​​​​​​​', '')
         str = str.replaceAll('&nbsp;', '')
         str = str.replace('。', "。\n")
         str = str.replace('231', '2^31')
@@ -248,11 +304,10 @@
         // 这个位分界线
         str = str.replace(/\n{2,}/g, "\n")
 
-
-        str = str.replace('http','\n\nhttp')
+        str = str.replace('http', '\n\nhttp')
         str = str.replaceAll('示例', "\n示例")
         str = str.replace('提示', "\n提示")
-        if(title != '') {
+        if (title != '') {
             str = str.replace(title, title + "\n\n")
         }
         return str
@@ -280,6 +335,18 @@
     const initConmand = () => {
         try {
 
+
+            const isAutoPluginCommand = GM_registerMenuCommand(`当前页面 ${isUsePluginInThis() ? '关闭' : '启用'} 插件 `, () => {
+                GM_setValue(isAutoKey, !isUsePluginInThis())
+                window.location.reload()
+            }, { title: `当前页面 ${isUseHTML() ? '关闭' : '启用'} 插件 ` })
+
+
+
+            if (!isUsePluginInThis()) {
+                return;
+            }
+
             // const message = (u, type) => u ? '关闭' : '启用' + (type == 'md' ? ' markdown ' : ` ${type} `)
 
             const html_to_markdown = GM_registerMenuCommand(`${isUseMarkDown() ? '关闭' : '启用'} markdown `, () => {
@@ -300,7 +367,6 @@
 
 
 
-
             const html_to_markdown_web = GM_registerMenuCommand('html转换markdown网站', () => {
                 window.open(markdownURL, '_blank')
             }, { title: '如果格式转换有问题，请复制为 html 然后用这个网站转换' })
@@ -315,20 +381,26 @@
 
 
     let times = 0
+    const MAX_CNT = 10
+    initConmand()
+
 
 
     const start = () => {
+        if (!isUsePlugins()) {
+            return;
+        }
         timerId = setInterval(() => {
             let support = true
             if (isDiscuss()) {
                 runQuestionActionsContainer()
-            } else if (isProblem()) {
+            } else if (isProblem() || isContest()) {
                 runProblems()
             } else {
                 support = false
             }
             times += 1
-            if (times > 10 && timerId != null) {
+            if (times > MAX_CNT && timerId != null) {
                 window.clearInterval(timerId)
                 timerId = null
             }
@@ -349,6 +421,9 @@
     window.onload = () => {
 
         times = 0
+        if (!isUsePluginInThis()) {
+            return;
+        }
         start()
     }
 
@@ -361,8 +436,6 @@
         if (!loadOk) {
             return
         }
-        // console.log('url is change ...')
-        // console.log('ok ok')
         let pretitle = document.querySelector('title').textContent
         let titleId = null
         let updateTimes = 0
