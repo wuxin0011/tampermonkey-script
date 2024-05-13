@@ -14,7 +14,7 @@ const is_hot = () => isShowHotSearch() ? `` : `
 
 
 const css = is_bilibili ? `
-.pop-live-small-mode,
+.pop-live-small-mode,.vip-login-tip,
 #slide_ad,
 .ad-report,
 div#i_cecream .floor-single-card,

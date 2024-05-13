@@ -2639,6 +2639,10 @@ ${root$1}
           Array.from(querySelectorAll(".feed-card")).forEach((feed) => {
             var _a, _b;
             const isMark = !!querySelector(feed, ".m-span-text");
+            if (feed.querySelector(".bili-video-card__info--ad")) {
+              removeDOM(feed);
+              return;
+            }
             if (feed.ok && isMark && sc) {
               return;
             }
@@ -2660,6 +2664,10 @@ ${root$1}
           Array.from(querySelectorAll(".bili-video-card")).forEach((feed) => {
             var _a, _b, _c, _d;
             const isMark = !!querySelector(feed, ".m-span-text");
+            if (feed.querySelector(".bili-video-card__info--ad")) {
+              removeDOM(feed);
+              return;
+            }
             if (feed.ok && isMark && sc) {
               return;
             }
@@ -2739,6 +2747,10 @@ ${root$1}
       const scanVideoList = (sc) => {
         Array.from(querySelectorAll(sel)).forEach((videoDom) => {
           var _a;
+          if (videoDom.querySelector(".bili-video-card__info--ad")) {
+            removeDOM(videoDom);
+            return;
+          }
           const isMark = !!videoDom.getAttribute("mark");
           const isAdd = !!videoDom.querySelector(".m-span-text");
           if (isMark && isAdd && !sc) {
@@ -5877,7 +5889,7 @@ ${other}
 
 `;
   const css = is_bilibili ? `
-.pop-live-small-mode,
+.pop-live-small-mode,.vip-login-tip,
 #slide_ad,
 .ad-report,
 div#i_cecream .floor-single-card,

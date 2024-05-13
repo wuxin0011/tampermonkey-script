@@ -122,6 +122,10 @@ export default class BiliBili extends LivePlugin {
             const scanVideo = (sc = true) => {
                 Array.from(querySelectorAll('.feed-card')).forEach(feed => {
                     const isMark = !!querySelector(feed, '.m-span-text')
+                    if (feed.querySelector('.bili-video-card__info--ad')) {
+                        removeDOM(feed)// 广告
+                        return
+                    }
                     if (feed.ok && isMark && sc) {
                         return;
                     }
@@ -143,6 +147,11 @@ export default class BiliBili extends LivePlugin {
 
                 Array.from(querySelectorAll('.bili-video-card')).forEach(feed => {
                     const isMark = !!querySelector(feed, '.m-span-text')
+
+                    if (feed.querySelector('.bili-video-card__info--ad')) {
+                        removeDOM(feed)// 广告
+                        return
+                    }
                     if (feed.ok && isMark && sc) {
                         return;
                     }
@@ -240,8 +249,16 @@ export default class BiliBili extends LivePlugin {
     detailLeftVideoList(sel = '.card-box') {
         const scanVideoList = (sc) => {
             Array.from(querySelectorAll(sel)).forEach(videoDom => {
+
+                // 广告部分
+                if (videoDom.querySelector('.bili-video-card__info--ad')) {
+                    removeDOM(videoDom)
+                    return
+                }
                 const isMark = !!videoDom.getAttribute('mark')
                 const isAdd = !!videoDom.querySelector('.m-span-text')
+                // .feed-card .bili-video-card__info--ad,
+
                 if (isMark && isAdd && !sc) {
                     return;
                 }
