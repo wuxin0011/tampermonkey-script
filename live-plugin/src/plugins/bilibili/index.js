@@ -147,7 +147,6 @@ export default class BiliBili extends LivePlugin {
 
                 Array.from(querySelectorAll('.bili-video-card')).forEach(feed => {
                     const isMark = !!querySelector(feed, '.m-span-text')
-
                     if (feed.querySelector('.bili-video-card__info--ad')) {
                         removeDOM(feed)// 广告
                         return

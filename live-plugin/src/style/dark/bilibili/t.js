@@ -17,6 +17,14 @@ const t = `
   color:var(--w-blue-link-hover) !important;
 }
 
+.dark .bili-dyn-card-reserve .bili-dyn-card-reserve__card,
+.dark .reference .bili-dyn-card-reserve__card {
+  background-color:var(--w-bg) !important;
+  color:var(--w-text) !important;
+  border: 1px solid var(--w-border) !important;
+}
+
+
 
 `
 
