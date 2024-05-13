@@ -418,11 +418,13 @@ ${dark_dm_color()}
   transform: translate(-50%,-50%) !important;
 }
 
+.dark .chat-room__input .btn-sendMsg.btn-sendMsg-enable,
 .dark #msg_send_bt {
   /* border-left : 1px solid var(--w-text) !important; */
   background: var(--w-bg-darker) !important;
 }
 
+.dark [class^=BrowseHistory] [class^=c-login],
 .dark #J_user_viewer_root + div,
 .dark .J_RoomFollowRoot + div,
 .dark .fansBadgeAnchor-box,

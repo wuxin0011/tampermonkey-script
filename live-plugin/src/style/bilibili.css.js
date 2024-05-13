@@ -14,6 +14,9 @@ const is_hot = () => isShowHotSearch() ? `` : `
 
 
 const css = is_bilibili ? `
+.pop-live-small-mode,
+#slide_ad,
+.ad-report,
 div#i_cecream .floor-single-card,
 div#i_cecream .bili-live-card.is-rcmd,
 div#i_cecream .adblock-tips,
