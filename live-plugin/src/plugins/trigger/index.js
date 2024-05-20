@@ -12,6 +12,7 @@ import {
     removeDOM,
     removeVideo,
     warn,
+    wd,
     wls
 } from '../../utils';
 
@@ -66,6 +67,8 @@ export default class TriggerLive extends LivePlugin {
         }
     }
 
+
+
     // 公共部分操作
     common() {
         this.autoHideMenu()
@@ -98,12 +101,16 @@ export default class TriggerLive extends LivePlugin {
                 }
             })
         })
-
-
         let ads = [
             '.main-wrap .room-mod-ggTop',
             '#chatRoom .room-gg-chat',
-            '#huya-ab'
+            '#huya-ab',
+            '.ab-main',
+            '.pre-ab-wrap',
+            '#pre-ab-wrap',
+            '#pre-ab-video',
+            '.pre-ab-video',
+            '#public-screen-ab'
         ]
         // 移除视频播放器区域广告
         intervalRemoveElement(ads, 500, 20)

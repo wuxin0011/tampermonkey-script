@@ -140,6 +140,7 @@
         let className = "[data-track-load=description_content]"
         let titleClassName = '#qd-content [class*=text-title]'
         const isFlexMode = !!document.querySelector('#__next')
+        console.log('is find',!!document.querySelector(className))
         if (isContest()) {
 
             // console.log('isFlexMode', isFlexMode)
@@ -159,6 +160,7 @@
                 titleClassName = '#qd-content a'
             }
         }
+        
         let title = document.querySelector(titleClassName)
         const titleTxt = title?.textContent
         title = title ? '<h2>' + (title?.textContent) + '</h2>' : ''

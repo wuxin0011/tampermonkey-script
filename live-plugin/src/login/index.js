@@ -19,9 +19,9 @@ const login = () => {
 
 
   const hy = [{
-    [login_box]: '#UDBSdkLgn',
+    [login_box]: '#HUYA-UDBSdkLgn',
     [login_btn]: '[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span',
-    [cancel_btn]: '#close-udbLogin'
+    [cancel_btn]: '#UDBSdkLgn-box .close-layer'
   }]
 
 

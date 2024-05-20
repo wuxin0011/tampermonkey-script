@@ -61,7 +61,8 @@ const css = is_huya ? `
 }
  
 /* NONE */
-[class^=GuangG],
+.pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,
+[class^=GuangG],.J_ad,#public-screen-ab, #ab-banner,.room-hd #ProfileGroup,
 #player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
 [class^=ChatPanelRoot] [class^=PanelFt] [class^=text],

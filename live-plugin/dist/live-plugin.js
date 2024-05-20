@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.16.2
+// @version      4.1.16.3
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -2183,7 +2183,13 @@ ${root$1}
       let ads = [
         ".main-wrap .room-mod-ggTop",
         "#chatRoom .room-gg-chat",
-        "#huya-ab"
+        "#huya-ab",
+        ".ab-main",
+        ".pre-ab-wrap",
+        "#pre-ab-wrap",
+        "#pre-ab-video",
+        ".pre-ab-video",
+        "#public-screen-ab"
       ];
       intervalRemoveElement(ads, 500, 20);
       this.isFullScreen();
@@ -2897,9 +2903,9 @@ ${root$1}
     const huyaLogin = () => /https?:\/\/.*\.huya\.com\/.*/.test(localUrl);
     const douyinLogin = () => /https?:\/\/.*\.douyin\.com\/.*/.test(localUrl);
     const hy = [{
-      [login_box]: "#UDBSdkLgn",
+      [login_box]: "#HUYA-UDBSdkLgn",
       [login_btn]: "[class^=HeaderDynamic] [class^=Login] [class^=LoginHd] span",
-      [cancel_btn]: "#close-udbLogin"
+      [cancel_btn]: "#UDBSdkLgn-box .close-layer"
     }];
     const douyin = [{
       [login_box]: "[id^=login-full-panel]",
@@ -4139,7 +4145,8 @@ ${dark_dm_color()}
 }
  
 /* NONE */
-[class^=GuangG],
+.pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,
+[class^=GuangG],.J_ad,#public-screen-ab, #ab-banner,.room-hd #ProfileGroup,
 #player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
 [class^=ChatPanelRoot] [class^=PanelFt] [class^=text],
