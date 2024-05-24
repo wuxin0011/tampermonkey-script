@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lc-to-markdown-txt-html
 // @author       wuxin0011
-// @version      0.0.3
+// @version      0.0.4
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/lc-to-markdown-txt-html
 // @description  力扣题目描述,讨论发布内容复制 复制为 markdown、txt、html 等格式
 // @icon         data:image/png;base64,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
@@ -135,14 +135,13 @@
 
 
     function runProblems() {
-        // console.log('run problem', url)
+        console.log('~~~ run problem ~~~~', url)
         let buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
         let className = "[data-track-load=description_content]"
         let titleClassName = '#qd-content [class*=text-title]'
         const isFlexMode = !!document.querySelector('#__next')
-        console.log('is find',!!document.querySelector(className))
+        console.log('is find', !!document.querySelector(className))
         if (isContest()) {
-
             // console.log('isFlexMode', isFlexMode)
             if (isFlexMode) {
                 className = ".FN9Jv"
@@ -160,7 +159,7 @@
                 titleClassName = '#qd-content a'
             }
         }
-        
+
         let title = document.querySelector(titleClassName)
         const titleTxt = title?.textContent
         title = title ? '<h2>' + (title?.textContent) + '</h2>' : ''
@@ -194,6 +193,7 @@
         }
         if (!container) {
             console.warn('找不到 容器！', url)
+            urlChangeLoadOk = false
             return;
         }
         markdownButton.className = buttonClassName
@@ -202,6 +202,7 @@
         runCopy(container, txtButton, htmlContent, SUPPORT_TYPE['txt'], titleTxt)
         runCopy(container, htmlButton, htmlContent, SUPPORT_TYPE['html'])
         runCopy(container, markdownButton, htmlContent, SUPPORT_TYPE['md'])
+        urlChangeLoadOk = true
     }
 
 
@@ -262,14 +263,11 @@
             ele.originClass = ele.className
             container.appendChild(ele)
         } else {
-            if (timerId != null) {
-                window.clearInterval(timerId)
-                timerId = null
-            }
             // 加载完成 初始化
             loadOk = true
             // initConmand()
             updateButtonStatus(ele, ele.copytype, '', 100)
+            clearTimeId()
         }
 
         if (type == SUPPORT_TYPE['md']) {
@@ -288,10 +286,6 @@
         }
 
     }
-
-
-    const MAX_LEN = 80
-
 
     const handlerText = (str, title = '') => {
         if (!str) return str
@@ -336,8 +330,6 @@
 
     const initConmand = () => {
         try {
-
-
             const isAutoPluginCommand = GM_registerMenuCommand(`当前页面 ${isUsePluginInThis() ? '关闭' : '启用'} 插件 `, () => {
                 GM_setValue(isAutoKey, !isUsePluginInThis())
                 window.location.reload()
@@ -386,76 +378,81 @@
     const MAX_CNT = 10
     initConmand()
 
+    function clearTimeId() {
+        if (timerId != null) {
+            window.cancelIdleCallback(timerId)
+            window.clearInterval(timerId)
+            window.clearTimeout(timerId)
+            timerId = null;
+        }
+    }
 
-
-    // console.log('isUsePlugins()',isUsePlugins())
     const start = () => {
-        if (!isUsePlugins()) {
+        if (!isUsePlugins() || !isUsePluginInThis()) {
+            clearTimeId()
             return;
         }
-        timerId = setInterval(() => {
-            let support = true
+        if (loadOk) {
+            console.log('load ok')
+            return
+        }
+        timerId = requestIdleCallback(() => {
+
+            try {
+                let support = true
+                if (isDiscuss()) {
+                    runQuestionActionsContainer()
+                } else if (isProblem() || isContest()) {
+                    runProblems()
+                } else {
+                    support = false
+                }
+                times += 1
+                if (times > MAX_CNT && timerId != null || !support) {
+                    clearTimeId()
+                } else if (!loadOk) {
+                    start()
+                }
+            } catch (e) {
+                console.error('install fail ', e)
+            }
+        }, {timeout: 1000})
+
+    }
+
+
+
+    const updateUrl = () => {
+        timerId = requestIdleCallback(() => {
             if (isDiscuss()) {
                 runQuestionActionsContainer()
             } else if (isProblem() || isContest()) {
                 runProblems()
+            }
+            updateTimes += 1
+            if (updateTimes >= 10 || urlChangeLoadOk) {
+                clearTimeId()
             } else {
-                support = false
+                updateUrl()
             }
-            times += 1
-            if (times > MAX_CNT && timerId != null) {
-                window.clearInterval(timerId)
-                timerId = null
-            }
-            if (!support) {
-                console.warn('No support address ! ', url)
-                if (timerId != null) {
-                    window.clearInterval(timerId)
-                }
-                return
-            }
-        }, 3000);
-
-
+        }, { timeout: 200 })
     }
-
 
 
     window.onload = () => {
-
         times = 0
-        if (!isUsePluginInThis()) {
-            return;
-        }
         start()
     }
 
-
-
     // 监听地址改变
     // 重新修改描述
+    let urlChangeLoadOk = false
+    let updateTimes = 0
     window.addEventListener("urlchange", () => {
-
-        if (!loadOk) {
-            return
-        }
-        let pretitle = document.querySelector('title').textContent
-        let titleId = null
-        let updateTimes = 0
-        titleId = setInterval(() => {
-            let curTitle = document.querySelector('title').textContent
-            if (isDiscuss()) {
-                runQuestionActionsContainer()
-            } else if (isProblem()) {
-                runProblems()
-            }
-            if (pretitle == curTitle && updateTimes >= 3) {
-                window.clearInterval(titleId)
-                return
-            }
-            updateTimes += 1
-        }, 1500);
-
+        updateTimes = 0
+        urlChangeLoadOk = false
+        updateUrl();
     })
+
 
 })();
