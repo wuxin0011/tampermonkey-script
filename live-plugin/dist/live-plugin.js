@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.16.3
+// @version      4.1.17-1
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -153,23 +153,6 @@
       lastArgs = null;
     };
     return throttled;
-  };
-  const intervalRemoveElement = (selectors, time = 160, maxCount = 1e3) => {
-    if (!isArray(selectors)) {
-      warn(`selectors 必须是数组 : ${selectors}`);
-      return;
-    }
-    let count = 0;
-    let timer = setInterval(() => {
-      selectors.forEach((sel) => {
-        removeDOM(sel, true);
-      });
-      if (count >= maxCount) {
-        clearInterval(timer);
-        return;
-      }
-      count = count + 1;
-    }, time);
   };
   const loopDo = (callback, count = 100, wait = 100) => {
     if (typeof callback != "function") {
@@ -695,6 +678,12 @@ html {
   --w-blue-link-hover:#00aeec;
   --w-skeleton:#494f57;
   --w-white: #fff;
+}
+
+
+
+.dark html {
+  --bili-comment-tag-bg-light:var(--w-bg-dark);
 }
 
 
@@ -1235,6 +1224,7 @@ ${root$1}
       this.m_container = null;
       this.gift_key = `${this.key}_gift`;
       this.gift_tool = null;
+      this.video_room_selector = null;
       this.gift_is_first_key = "gift_is_first_key";
       this.logo_btn = null;
       this.btn_logo_svg = iconLogo();
@@ -2101,6 +2091,24 @@ ${root$1}
           that.isShowContainer();
         }
       });
+      const core_room = querySelector(this.video_room_selector);
+      console.log("room:", core_room);
+      addEventListener(core_room, "mouseover", (event) => {
+        const gift = querySelector(this.gift_tool);
+        if (gift instanceof HTMLElement) {
+          gift.classList.add("m-container-display-block");
+          gift.style.display = "block";
+          log("enter:", gift);
+        }
+      });
+      addEventListener(core_room, "mouseout", (event) => {
+        const gift = querySelector(this.gift_tool);
+        if (gift instanceof HTMLElement) {
+          gift.classList.remove("m-container-display-block");
+          gift.style.display = "none";
+          log("leave:", gift);
+        }
+      });
       const showMessage = (bool) => !bool ? "YES" : "NO";
       if (is_huya) {
         log("================================================================");
@@ -2126,6 +2134,7 @@ ${root$1}
       this.menu = ".mod-sidebar";
       this.header_logo = "#duya-header #duya-header-logo a";
       this.gift_tool = ".room-core #player-gift-wrap";
+      this.video_room_selector = "#J_playerMain";
       this.auto_max_pro_class_or_id_list = ".player-videoline-videotype .player-videotype-list li";
       this.init();
     }
@@ -2180,18 +2189,6 @@ ${root$1}
           }
         });
       });
-      let ads = [
-        ".main-wrap .room-mod-ggTop",
-        "#chatRoom .room-gg-chat",
-        "#huya-ab",
-        ".ab-main",
-        ".pre-ab-wrap",
-        "#pre-ab-wrap",
-        "#pre-ab-video",
-        ".pre-ab-video",
-        "#public-screen-ab"
-      ];
-      intervalRemoveElement(ads, 500, 20);
       this.isFullScreen();
       this.isAutoMaxVideoPro();
       findMark("#J-room-chat-shield", (item) => {
@@ -2199,10 +2196,13 @@ ${root$1}
           item.click();
           log("自动点击了弹幕礼物显示工具");
         }
-      }, 100, 1e3);
+      }, 5, 1e3);
       setTimeout(() => {
         this.autoHideMenu();
       }, 1e4);
+      setTimeout(() => {
+        log("remove dom ....");
+      }, 3e3);
     }
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
@@ -2310,6 +2310,7 @@ ${root$1}
       this.menu = "#js-aside";
       this.full_screen_button = "[class^=controlbar] [class^=fs]";
       this.gift_tool = ".layout-Player-main #js-player-toolbar";
+      this.video_room_selector = "#js-player-video-above";
       this.header_logo = "#js-header .Header-left .Header-logo";
       this.auto_max_pro_class_or_id_list = "#js-player-video .room-Player-Box [class^=rate] ul>li";
       this.is_use_click_event = false;
@@ -2332,14 +2333,14 @@ ${root$1}
       findMark(".layout-Section.layout-Slide-banner", (a) => {
         a.href = "javascript:;void(0)";
         addEventListener(a, "click", (e) => e.preventDefault());
-      }, 10, 100);
+      }, 10, 1e3);
       loopDo((timer) => {
         const pause = querySelector("#room-html5-player #__controlbar [class^=pause]");
         if (pause) {
           pause.click();
           clearInterval(timer);
         }
-      }, 50, 500);
+      }, 5, 1e3);
       let topBtn = querySelector(".layout-Main .ToTopBtn");
       if (topBtn) {
         topBtn.style.display = "block";
@@ -2370,7 +2371,7 @@ ${root$1}
       }
       if (this.is_use_click_event) {
         runIndex();
-        window.onscroll = throttle(500, runIndex);
+        window.onscroll = throttle(1e3, runIndex);
       }
     }
     // 分类页面操作
@@ -2469,11 +2470,12 @@ ${root$1}
       });
       loopDo((timer) => {
         let closeBtn = querySelector(".roomSmallPlayerFloatLayout-closeBtn");
-        if (closeBtn) {
+        if (closeBtn && !(closeBtn == null ? void 0 : closeBtn.mark)) {
           closeBtn.click();
           window.clearInterval(timer);
+          closeBtn.mark = true;
         }
-      }, 10, 1200);
+      }, 5, 2e3);
       if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
         let backgroundNones = [".wm-general-wrapper.bc-wrapper.bc-wrapper-player", ".wm-general-bgblur"];
         Array.from(querySelectorAll("#root>div")).forEach((element) => {
@@ -3667,6 +3669,11 @@ ${darkCss$1}
 ${dark_dm_color()}
 
 
+.dark .room-core {
+  background : transparent !important;
+}
+
+
 /* 修改背景和字体颜色 */
 .dark [class^=chat-popup-layer] [class^=uc-status],
 .dark #J_roomWeeklyRankListRoot [class^=UserRankInfo],
@@ -3680,7 +3687,6 @@ ${dark_dm_color()}
 .dark [class^=room-weeklyRankList-skeleton],
 .dark #J_roomWeeklyRankListRoot [class^=rank-item],
 .dark #J_roomWeeklyRankListRoot [class^=SlideDownView],
-.dark .room-core,
 .dark input,
 .dark input:focus,
 .dark textarea,
@@ -4145,7 +4151,9 @@ ${dark_dm_color()}
 }
  
 /* NONE */
-.pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,
+#ab-item,
+#J_playerMain .room-player-gift-placeholder,
+.pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,#player-resource-wrap,
 [class^=GuangG],.J_ad,#public-screen-ab, #ab-banner,.room-hd #ProfileGroup,
 #player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
@@ -4287,6 +4295,9 @@ ${dark_dm_color()}
   display:inline-block !important;
  }
 
+ .room-player-wrap .room-player-main {
+  background : transparent !important;
+ }
 
  ${fans_img}
  ${sys_msg}
@@ -5052,7 +5063,9 @@ ${videoToolsDarkCss}
 .dark .bili-header .left-entry .download-wrapper .download-top-content .button:hover,
 .dark .bili-header .histories .history-item:hover,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-btn:hover,
-.dark .feed-roll-btn .primary-btn:hover ,
+.dark .feed-roll-btn .primary-btn:hover,
+.dark .bili-video-card span.no-interest-title:hover,
+.dark .bili-video-card span.no-interest-desc:hover,
 .dark .primary-btn:hover
 {
   color:var(--w-blue-link-hover) !important;
@@ -5533,6 +5546,7 @@ html {
   --graph_bg_thick:var(--w-border-dark);
 }
 
+
 .dark .bpx-player-dm-btn-time,
 .dark .bpx-player-dm-btn-dm,
 .dark .bpx-player-dm-btn-date,
@@ -5718,7 +5732,7 @@ html {
   color:var(--w-blue-link-hover) !important;
 }
 
-
+.dark #tags .tag,
 .dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-block-btn,
 .dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-protect-btn, 
 .dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-recall-btn, 
@@ -5822,6 +5836,7 @@ html {
 .dark .video-like.video-toolbar-left-item.on {
   color:var(--w-blue-link-hover) !important;
 }
+
 
 
 

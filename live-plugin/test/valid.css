@@ -1,202 +1,308 @@
-.dark .list-create {
-  background:var(--w-bg) !important;
+
+
+/*************************************https://www.bilibili.com/video/* ************************ */
+
+
+html {
+  --graph_bg_thick:var(--w-border-dark);
 }
 
+.dark element.style {
+  --bili-comment-tag-color-light: #757575;
+  --bili-comment-tag-color-dark: #939393;
+  --bili-comment-tag-bg-light: var(--w-bg-dark) !important;
+  --bili-comment-tag-bg-dark: #1E1E1E;
+}
 
-.dark input#pin-layer-search,
-.dark .elec .elec-status-bg-grey,
-.dark #pin-wrapper #pin-layer,
-.dark #page-index #i-ann-content textarea,
-.dark .bili-dyn-item,
-.dark .bili-dyn-card-video__body,
-.dark .bili-rich-text__content,
-.dark .bili-dyn-card-video__desc,
-.dark .bili-dyn-card-video__title,
-.dark .series-item .item-title .qipapnum[data-v-40b5e135],
-.dark .series-item .item-title .qipapnum,
-.dark .contribution-sidenav .contribution-item,
-.dark .album-list__tabs,
-.dark #page-series-index .channel-option.no-channel[data-v-9e6dac30],
-.dark #page-series-index .channel-option.no-channel,
-.dark #page-series-index .channel-option,
-.dark .bili-rich-textarea__inner.empty,
-.dark .note-editor .rich-text-options,
-.dark #web-toolbar,
-.dark .n .n-inner {
+.dark .bpx-player-dm-btn-time,
+.dark .bpx-player-dm-btn-dm,
+.dark .bpx-player-dm-btn-date,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-dm,
+.dark .members-info-container .container,
+.dark .bpx-player-contextmenu>li,
+.dark .reply-item .root-reply-container .content-warp .user-info .user-name[data-v-eb69efad],
+.dark .sub-reply-item .sub-user-info .sub-user-name[data-v-26797283],
+.dark #reco_list,
+.dark [class^=up-info-container],
+.dark .left-container,
+.dark .bili-header__bar,
+.dark .bpx-player-sending-bar,
+.dark .harmony-font,
+.dark #v_desc,
+.dark .bili-comment.browser-pc,
+.dark .comment-container, .dark .bpx-player-auxiliary .bpx-player-dm-function,
+.dark .reply-header,.dark .arc_toolbar_report,.dark .video-toolbar-left,
+.dark .bui-collapse .bui-collapse-header,
+.dark .bpx-player-auxiliary .bpx-player-collapse .bui-collapse-body,
+.dark .bpx-player-auxiliary .bpx-player-contextmenu.bpx-player-white,
+.dark .bpx-player-auxiliary .bpx-player-dm-wrap,
+.dark .bpx-player-dm-load-status,
+.dark .base-video-sections-v1,
+.dark [class^=video-sections-v1],
+.dark .video-sections-head_second-line,
+.dark .bili-header [class^=header-login-entry],
+.dark [class^=vip-login-tip],
+.dark .reply-box[class^=fixed-box],
+.dark .at-panel .at-list-container .at-list-ground .at-user-list [class^=at-user-item],
+.dark .emoji-panel, .dark .emoji-panel [class^=emoji-content],
+.dark .emoji-panel [class^=emoji-tab],
+.dark .emoji-panel [class^=emoji-title],
+.dark .note-list,
+.dark .note-list [class^=list-note-operation],
+.dark .note-list .note-card-container [class^=note-card],
+.dark .user-card-m-exp .user-info-wrapper .face,
+.dark #app [class^=header],
+.dark #app .container .textarea .textarea-warp textarea[data-v-67c4001b],
+.dark #app .container .textarea .textarea-warp textarea,
+.dark #app [class^=submit],
+.dark .coin-operated-m-exp,
+.dark .video-ai-assistant.video-toolbar-right-item.toolbar-right-ai,
+.dark .ai-summary-popup,
+.dark .bpx-player-auxiliary .bpx-player-dm-management,
+.dark .ai-summary-popup *,
+.dark .mini-header {
   background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;
 }
 
-.dark .n .n-cursor {
-  background:var(--w-text-light) !important;
+
+
+.dark .reply-box[class^=fixed-box],
+.dark .reply-box .box-expand .reply-box-emoji [class^=emoji-btn],
+.dark [class^=emoji-panel], .dark .reply-box [class^=box-expand] [class^=at-btn],
+.dark .arc_toolbar_report,
+.dark .video-toolbar-container,
+.dark #v_tag {
+  border-color:var(--w-border) !important;
+}
+
+.dark .collection-m-exp .title,
+.dark .reply-item [class^=bottom-line]{
+  border-color:var(--w-border) !important;
 }
 
 
-.dark #page-series-index .channel-option.no-channel p[data-v-9e6dac30],
-.dark #page-series-index .channel-option.no-channel p,
-.dark .album-list__title,.dark .album-list__tab-name,
-.dark .small-item .meta,.dark .n .n-data .n-data-v, .dark .n .n-data .n-data-k,
-.dark #page-series-index .channel-item .channel-name,.dark #page-series-index .channel-item , .dark #page-series-index .channel-item .channel-name[data-v-9e6dac30],
-.dark #page-index .channel.guest .channel-item .channel-title .channel-name, .dark #page-index .channel.guest .channel-name, .dark #page-index .channel-name,
-.dark #page-index .col-2 .section-title,
-.dark #page-index .col-2 .section .user-auth .auth-description,
-.dark .user-info .user-info-title .info-title[data-v-31d5659a],
-.dark .user-info .user-info-title [class^=info-title],
-.dark .user-info .info-content .info-command[data-v-31d5659a],
-.dark .user-info .info-content [class^=info-command],
-.dark .user-info .info-content .info-value[data-v-31d5659a],
-.dark .user-info .info-content [class^=info-value],
-.dark #id-card .idc-content .idc-username,.dark .m-level idc-m-level,
-.dark .idc-meta-item,
-.dark .elec .elec-count,.dark .elec,
-.dark .elec .elec-setting, .elec .elec-total-c-num,
-.dark .elec-total-c,
-.dark .user-info .info-content .info-tags .info-tag .icon-tag[data-v-31d5659a],
-.dark .user-info .info-content .info-tags .info-tag [class^=icon-tag],
-.dark .user-info .info-content .info-tags .info-tag .tag-content[data-v-31d5659a],
-.dark .user-info .info-content .info-tags .info-tag [class^=tag-content],
-.dark #page-video #submit-video-type-filter a .count,
-.dark #page-series-index .channel-index .breadcrumb[data-v-9e6dac30],
-.dark #page-series-index .channel-index [class^=breadcrumb], 
-.dark #page-series-index .channel-index .breadcrumb .item.cur[data-v-9e6dac30],
-.dark #page-series-index .channel-index .breadcrumb .item.cur,
-.dark .breadcrumb, .dark .breadcrumb .item.cur, .dark .breadcrumb .item,
-.dark #page-setting .setting-privacy-item .setting-privacy-name,
-.dark #page-setting .setting-privacy-item,
-.dark #page-fav .fav-sidenav .nav-title .text,.dark #page-fav .fav-main .filter-item .text,.dark #page-fav .fav-main .filter-item,.dark #page-fav .fav-main,
-.dark #page-index .channel .empty-state p,.dark #page-index .channel,.dark #page-index p,.dark .private-hint,.dark .section-title,
-.dark #page-fav .fav-main .filter-item,.dark .be-dropdown-item, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item i, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item span, .dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item p,.dark #page-fav .fav-main .filter-item .filter-type .be-dropdown-item a,
-.dark .favInfo-box .favInfo-details .fav-options .meta,.dark .favInfo-box .favInfo-details .fav-options,
-.dark span,.dark .sub-tabs span, .dark .sub-tabs .filter-content,.dark .sub-tabs,.dark .sub-tab,
-.dark .bili-dyn-title__text,.dark .bili-rich-textarea__inner,
-.dark .bili-dyn-forward-publishing__editor .bili-rich-textarea__inner,
-.dark .bili-popover, .dark .bili-popover__arrow,
-.dark .game-card__info-title[data-v-7c9854da],.dark [class^=game-card__info-title],
-.dark .section-title {
+
+.dark .collection-m-exp .content .group-list li label .count, 
+.dark .collection-m-exp .content .group-list li label,.dark .collection-m-exp,
+.dark .collection-m-exp .content .group-list li label .personal,
+.dark .collection-m-exp .content .group-list,.dark .collection-m-exp .content,
+.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info [class^=user-fan],
+.dark .at-panel .at-list-container .at-list-ground [class^=ground-name],
+.dark .user-card-m-exp .user-info-wrapper .info p ,
+.dark .user-card-m-exp .user-info-wrapper .info .sign,
+.dark .user-card-m-exp .user-info-wrapper .info .social a ,
+.dark #app .container [class^=question],
+.dark #app .container .textarea .textarea-warp [class^=limit],
+.dark .collection-m-exp .content .group-list li,
+.dark .note-list .note-card-container .note-card [class^=note-info]
+{
+
+  color:var(--w-text) !important;
+}
+
+
+.dark .bpx-player-contextmenu>li,
+.dark .bpx-player-sending-bar .bpx-player-video-info,
+.dark .bpx-player-video-info-dm,
+.dark .bpx-player-video-info-online,
+.dark .at-panel .at-list-container .at-list-ground .at-user-list .at-user-item .user-info [class^=user-name],
+.dark .at-panel [class^=panel-title],
+.dark .reply-box .box-expand .reply-box-emoji [class^=emoji-btn],
+.dark .reply-box .box-expand [class^=at-btn],
+.dark .arc_toolbar_report,
+.dark .bpx-player-video-info-online,
+.dark .bpx-player-video-info-divide,
+.dark .bpx-player-video-info-dm,
+.dark .basic-desc-info,
+.dark .desc-info-text,
+.dark .reply-content-container .reply-content,
+.dark .root-reply,
+.dark .play-num, 
+.dark .abstract,
+.dark .reply-item .root-reply-container .content-warp .user-info [class^=user-name],
+.dark .mini-header__title,
+.dark .toggle-btn-text,
+.dark .video-toolbar-left-item,
+.dark .video-complaint-info [class^=video-toolbar-item-text],
+.dark .video-note .video-toolbar-right-item [class^=toolbar-right-note],
+.dark .bpx-player-sending-bar .bpx-player-video-info,
+.dark .mini-header .right-entry .right-entry__outside .right-entry-icon,
+.dark .bpx-player-dm-btn-time,.dark .bpx-player-dm-btn-dm,.dark.bpx-player-dm-btn-date,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-dm,
+.dark .bpx-player-auxiliary .bpx-player-contextmenu.bpx-player-white>li,
+.dark .dm-info-date,.dark .first-line-title, .dark .cur-page,
+.dark .bili-header .header-login-entry>img[data-v-fc330406],
+.dark .bili-header .header-login-entry>img,
+.dark .bili-header .login-panel-popover [class^=register-tip],
+.dark .bili-header .login-panel-popover [class^=login-btn],
+.dark .bili-header .login-panel-popover [class^=register-tip]>a,
+.dark .vip-login-countdown-row [class^=countdown-lable],
+.dark .vip-login-countdown-row [class^=counddown-wrap],
+.dark .vip-login-countdown-row [class^=counddown-wrap] span,
+.dark [class^=vip-login-title],
+.dark [class^=vip-login-subtitle],
+.dark .video-page-card-small .card-box .info .title,
+.dark .bili-header .upload-panel-popover .upload-item [class^=item-title],
+.dark .video-page-card-small .card-box .info .upname,
+.dark .video-page-card-small .card-box .info .playinfo,
+.dark .next-button .txt,.dark .video-episode-card__info-title, .dark .video-episode-card__info-duration,
+.dark .membersinfo-normal .header [class^=staff-amt],
+.dark .reply-header .reply-navigation .nav-bar .nav-title [class^=nav-title-text],
+.dark .bili-header .login-panel-popover [class^=register-exper],
+.dark .reply-header .reply-navigation .nav-bar .nav-sort.hot [class^=hot-sort],
+.dark .reply-header .reply-navigation .nav-bar .nav-sort.time [class^=time-sort],
+.dark .sub-reply-item .sub-user-info [class^=sub-user-name],
+.dark .video-info-container [class^=video-title],
+.dark [class^=video-info-detail],
+.dark .reply-box.disabled .box-normal .reply-box-send [class^=send-text],
+.dark .sub-reply-list .view-more [class^=view-more-paginatio],
+.dark .note-list .note-card-container .note-card [class^=note-content],
+.dark .note-list .note-card-container .note-card .user-info [class^=user-name],
+.dark .recommend-list-v1 .rec-title,.dark .recommend-list-v1 [class^=rec-title],
+.dark .video-toolbar-right-item, 
+.dark .video-note[class^=video-toolbar-right-item],
+.dark .user-card-m-exp .user-info-wrapper .info .social .tip_text,
+.dark .user-card-m-exp .user-info-wrapper .info .official-wrapper,
+.dark .user-card-m-exp .user-info-wrapper .info .user .name,
+.dark .coin-operated-m-exp .coin-title,.dark .coin-operated-m-exp .like-checkbox,
+.dark .coin-operated-m-exp .coin-bottom .tips,
+.dark .collection-m-exp .title,
+.dark .video-title {
   color:var(--w-text-light) !important;
 }
 
 
-.dark #page-setting .setting-tag-list a,
-.dark #page-fav .fav-sidenav .nav-title .text:hover{
-  color:var(--w-text-light) !important;
+.dark .user-card-m-exp .user-info-wrapper .info .user .name:hover,
+.dark .video-page-card-small .card-box .info .title:hover,
+.dark .bili-header .upload-panel-popover .upload-item [class^=item-title]:hover,
+.dark .video-page-card-small .card-box .info .upname:hover,
+.dark .video-episode-card:hover .video-episode-card__info-title,
+.dark .video-episode-card:hover .video-episode-card__info-duration,
+.dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing .video-episode-card__info-title,
+.dark .base-video-sections-v1 .video-section-list .video-episode-card__info-playing .video-episode-card__info-duration,
+.dark .first-line-title:hover,
+.dark .video-complaint-info [class^=video-toolbar-item-text]:hover,
+.dark .video-note [class^=video-toolbar-right-item] [class^=toolbar-right-note]:hover,
+.dark .mini-header .right-entry .right-entry__outside .right-entry-icon:hover,
+.dark .mini-header__title:hover,.dark .toggle-btn-text:hover,
+.dark .bili-header .login-panel-popover  [class^=login-btn]:before,
+.dark .bili-header .login-panel-popover  [class^=login-btn]:hover:before,
+.dark .bili-header .login-panel-popover  [class^=login-btn]:hover:before,
+.dark .bili-header .login-panel-popover [class^=register-tip]>a:hover,
+.dark .reply-header .reply-navigation .nav-bar .nav-title [class^=nav-title-text]:hover,
+.dark .user-card-m-exp .user-info-wrapper .info .social a:hover
+
+{
+  color:var(--w-blue-link-hover) !important;
 }
 
-
-
-
-.dark .bili-rich-textarea__inner,
-.dark .bili-popover, .dark .bili-popover__arrow,
-.dark .section {
-  border-color: var(--w-border) !important;
-}
-
-
-
-
-/* border-color color background */
-.dark .section .count,
-.dark .g-search input,
-.dark #id-card,
-.dark #page-index .col-1,
-.dark #page-fav .fav-main .search-input input,
-.dark .bili-topic-search__popover,
-.dark #page-video #submit-video-type-filter,
-.dark #page-dynamic .col-2 .section,
-
-.dark #page-index .col-2 .section  {
-  border-color: var(--w-border) !important;
+.dark #tags .tag,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-block-btn,
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-protect-btn, 
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-recall-btn, 
+.dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-report-btn ,
+.dark [class^=at-panel],
+.dark .at-panel .at-list-container .at-list-ground .at-user-list [class^=at-user-item]:hover,
+.dark .bpx-player-auxiliary .bpx-player-dm-btn-footer,
+.dark .bpx-player-auxiliary .bpx-player-dm-btn-history.bpx-player-disable,
+.dark .bpx-player-auxiliary .bpx-player-dm-btn-history,
+.dark .membersinfo-normal [class^=header],
+.dark .reply-box .box-normal .reply-box-warp [class^=reply-box-textarea],
+.dark .vip-login-countdown-row .counddown-wrap span[data-v-fc330406],
+.dark .vip-login-countdown-row .counddown-wrap span,
+.dark .reply-tag-item,
+.dark [class^=vip-login-btn],
+.dark .bili-header .header-upload-entry, 
+.dark .second-line_right,
+.dark .reply-box.disabled .box-normal .reply-box-warp [class^=disable-mask],
+.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask [class^=login-btn],
+.dark .recommend-list-v1 [class^=rec-footer],
+.dark .reply-box .box-normal [class^=reply-box-send],
+.dark .reply-box [class^=reply-box-send],
+.dark .video-tool-more-popover .video-tool-more-dropdown .dropdown-item,
+.dark .video-tool-more-popover, 
+.dark .user-card-m-exp .user-info-wrapper .info .user .user-label,
+.dark .user-card-m-exp .user-info-wrapper .info .btn-box .like ,
+.dark .user-card-m-exp .user-info-wrapper .info .btn-box .liked,
+.dark .user-card-m-exp .user-info-wrapper .info .btn-box .message,
+.dark #app .submit [class^=cancel],
+.dark #app .submit [class^=confirm],
+.dark .coin-operated-m,
+.dark .coin-operated-m-exp .coin-bottom .bi-btn,
+.dark .collection-m-exp,
+.dark .primary-btn,
+.dark .palette-button-wrap [class^=flexible-roll-btn-inner],
+.dark .collection-m-exp .content .group-list .add-group .add-btn,
+.dark .collection-m-exp .bottom .btn.disable,
+.dark .collection-m-exp .bottom .btn,
+.dark .video-ai-assistant-badge,
+.dark .fixed-sidenav-storage [class^=fixed-sidenav-storage-item],
+.dark .video-tag-container .tag-panel .tag [class^=show-more-btn],
+.dark .video-tag-container .tag-panel .tag-link {
   color:var(--w-text-light) !important;
   background:var(--w-bg-darker) !important;
-}
-
-.dark #page-index,.dark #page-index .col-1, .dark #page-index .col-2,
-.dark #page-index .channel, .dark #page-index .channel .channel-item,
-.dark #page-index .col-1 .section-title,.dark #page-index .col-2 .section-title,
-.dark .series-item .split-line[data-v-40b5e135],.dark .series-item .split-line,
-.dark .g-search input:focus {
-  border-color: var(--w-text) !important;
-}
-
-.dark .n .n-inner {
-  box-shadow:none !important;
+  border:1px solid var(--w-border) !important;
 }
 
 
-.dark .col-full,
-.dark .btn,
-.dark .btn.btn-large, 
-.dark .btn.btn-large .btn-content[data-v-53027a10],
-.dark .new-elec-trigger,
-.dark .btn.idc-btn.default,
-.dark .elec-status,
-.dark .bili-dyn-more__menu, .dark .be-dropdown-menu,
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30],
-.dark #page-series-index .channel-option.no-channel .create-channel,
-.dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play, 
-.dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]::after,
-.dark .reply-box .box-normal .reply-box-send::after,
-.dark .reply-box .box-normal .reply-box-send,
-.dark .be-dropdown-item:hover,
-.dark .resizable-component .editor-innter,
-.dark .btn.idc-btn.primary {
-  color:var(--w-text-light) !important;
-  background-color:var(--w-bg-darker) !important;
-  border-color: var(--w-text) !important;
-}
-
-
-
-.dark #page-series-index .channel-option.no-channel .create-channel[data-v-9e6dac30]:hover,
-.dark #page-series-index .channel-option.no-channel .create-channel:hover,
-.dark .favInfo-box.favEmpty .favInfo-details .fav-options .fav-play:hover, 
-.dark .favInfo-box.invalid .favInfo-details .fav-options .fav-play:hover,
-.dark .btn.primary.btn-large:hover,
-.dark .btn:hover,
-.dark .btn.btn-large .btn-content[data-v-53027a10]:hover,
-.dark .btn.btn-large .btn-content:hover,
-.dark .btn.btn-large:hover,
-.dark .bili-dyn-more__menu:hover,
-.dark .contribution-sidenav .contribution-item:hover,
-.dark .btn:hover,
-.dark .reply-box .box-normal .reply-box-send[data-v-757acbb5]:hover::after,
-.dark .reply-box .box-normal .reply-box-send:hover::after,
-.dark .reply-box .box-normal .reply-box-send,
-.dark .reply-box .box-normal .reply-box-send:hover,
-.dark .new-elec-trigger:hover,
-.dark .elec-status:hover,
-.dark .btn.idc-btn.primary:hover {
+.dark .collection-m-exp .bottom .btn.disable:hover,.dark .collection-m-exp .bottom .btn:hover,
+.dark .collection-m-exp .content .group-list .add-group .add-btn:hover,
+.dark .coin-operated-m-exp .coin-bottom .bi-btn:hover,
+.dark #app .submit [class^=cancel]:hover,
+.dark #app .submit [class^=confirm]:hover,
+.dark .fixed-sidenav-storage [class^=fixed-sidenav-storage-item]:hover,
+.dark .primary-btn:hover,
+.dark .palette-button-wrap [class^=flexible-roll-btn-inner]:hover,
+.dark .dark .user-card-m-exp .user-info-wrapper .info .btn-box .message:hover,
+.dark .user-card-m-exp .user-info-wrapper .info .user .user-label:hover,
+.dark .user-card-m-exp .user-info-wrapper .info .btn-box .liked:hover,
+.dark .user-card-m-exp .user-info-wrapper .info .btn-box .like:hover ,
+.dark .reply-box.disabled .box-normal .reply-box-warp .disable-mask .no-login-mask [class^=login-btn]:hover,
+.dark .bpx-player-auxiliary .bpx-player-dm-btn-footer:hover,
+.dark .bpx-player-auxiliary .bpx-player-dm-btn-history.bpx-player-disable:hover,
+.dark .bpx-player-auxiliary .bpx-player-dm-btn-history:hover,
+.dark .second-line_right:hover,
+.dark [class^=vip-login-btn]:hover,
+.dark .bili-header .header-upload-entry:hover,
+.dark .recommend-list-v1 [class^=rec-footer]:hover,
+.dark .reply-box .box-normal [class^=reply-box-send]:hover,
+.dark .reply-box [class^=reply-box-send]:hover,
+.dark .video-tag-container .tag-panel .tag [class^=show-more-btn]:hover,
+.dark .video-tag-container .tag-panel .tag-link:hover {
   color:var(--w-blue-link-hover) !important;
   border-color: var(--w-blue-link-hover) !important;
   background:var(--w-bg-darker) !important;
 }
 
-.dark .btn.idc-btn.default:hover {
+.dark .bpx-player-dm-setting-wrap,
+.dark .bpx-player-dm-setting,
+.dark .bui-dropdown-icon,
+.dark .bui-collapse .bui-collapse-header .bui-collapse-arrow .bui-collapse-arrow-text .arrow-icon,
+.dark .bui-danmaku-switch  {
+  fill:var(--w-text-light) !important;
+}
+
+
+.dark #bilibili-player-placeholder {
+  box-shadow: none !important;
+}
+
+
+.dark .header-upload-entry__text,
+.dark .header-upload-entry__icon,
+.dark .reply-box .box-normal .reply-box-warp .reply-box-textarea {
+  border: none !important;
+}
+
+/* 视频三连 */
+.dark .video-fav.video-toolbar-left-item.on,
+.dark .video-coin.video-toolbar-left-item.on,
+.dark .video-like.video-toolbar-left-item.on {
   color:var(--w-blue-link-hover) !important;
-  border:1px solid var(--w-blue-link-hover) !important;
-  background:var(--w-bg-darker) !important;
-}
-
-.dark #page-setting #setting-new-tag-btn,
-.dark #page-setting .setting-tag-list a,
-.dark #page-setting #setting-new-tag {
-  background:var(--w-bg) !important;
-  border-color: var(--w-text) !important;
-}
-
-.dark #page-fav .fav-sidenav .fav-item.cur ,
-.dark #page-fav .fav-sidenav .fav-item:hover  {
-  background:var(--w-bg) !important;
 }
 
 
-.dark .h .h-v-host {
-  color:  var(--w-white) !important;
-  background: var(--w-blue-link-hove) !important;
-}
-
-.dark .elec .elec-status {
-  background-image: none !important;
-}
 

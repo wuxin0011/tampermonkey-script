@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lc-to-markdown-txt-html
 // @author       wuxin0011
-// @version      0.0.4
+// @version      0.0.5
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/lc-to-markdown-txt-html
 // @description  力扣题目描述,讨论发布内容复制 复制为 markdown、txt、html 等格式
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAABsxJREFUeF7tnVvoZVMcxz9TkkQawoQUEYXECKHcybg+uBUevXibvBC55IXyIG/ePbglwwxyl0suo5FRbjVvNJFMkSTF/tU+Op32Oeu69z5rr+96UWat3/r9vr/P+e21z9n799+ARtUKbKg6egWPAKgcAgEgACpXoPLwVQEEQOUKVB6+KoAAqFyBysNXBRAAlStQefiqAAKgcgUqD18VQABUrkDl4asCCIDKFag8fFUAAVC5ApWHrwogACpXoPLwc1WAQ4GLgc3AccAm0ONmmdn6F9gL7AF2Au8C+1L3SAXgMOAR4E5gv1RntD5IgX+Ap4AHgV+DVs5NTgHgNOAt4IjYzbUuiwI/A5cBu2OsxQJwNvA2cFDMplqTXYE/gEuBz0ItxwBgn/hdwFGhm2l+rwr8CJweejmIAWA7cHWvoch4rALbgBtCFocCcCHwXsgGmju4Ape0dwheG4cCsKO5zmzxsqxJYykQVAVCANgf+B2w/2qsrwJ/AhuBv31cDAHAvuSxLyA01l8BOwx+5eNmCAB28LMDoMb6K3Al8IaPmyEA3Aw862NUc0ZXwHL1vI8XAsBHpfLmCIDycpbVYwGQVc7yjAmA8nKW1WMBkFXO8owJgPJyltVjAZBVzvKMCYDycpbVYwGQVc7yjAmA8nKW1WMBkFXO8owJgPJyltVjAZBVzvKMCYDycpbVYwGQVc7yjBUFwJPAa83LDR8C9nx7n+Os5qHWi5pH2+5uX1/LtddNwAsrjD0H2Jyhhsuf//0Y83mA74BrgR+GUmVunwPb16puz7S3S3ABsCC0veh4TvN+weeZEhBjxh5u/Ro4MWbxwhpXybWnc27MsI+vCZc/URXAKDeScwwrl0OWxGU+3wY8nSEgVwWwR+ksKUMNlz9RAOR8JvAe4LGh1Fixz0nAtxn8cH3iVAECS2aGnHibsMtR6nB94lQBJg5AFRUg5yXAJVjqJzJkfY4K4IpnEpeAIQHoEsz+36qD1DL/XLe6AsDz4yIAlgtVRQXIeRsYc2iyW9BbVsC6zL9cFcBuXY8Bzu3wISYeM/M4cAdwpOeH0Heay5/RbwNjPjFjXgJeb7+1PKDphvY+cGbgobbrkvZQ00nt4eZ7iBOAj4HDfbPrMc+lrwCYE9F1BrDkXz/3uvUhwDsLELgEXwTgUeDeOR9OBj4CrN1ejuHyRwB4AmCJvqrjXXuD4APAOqXZcAk+D8ATwNaOLJst676SAwKXPwLAAwD7dfJy4K8lH0lLlCXMEucSfAbAsuTPtjBbBpYBljJc/ggABwCfAtZrx7ptrBoGgZXuBxyvYxsAvwB3eWTVzhd2zkhpwdcLAPZrltc75x5Buk6pz3Sc+O3r1FtX2F7mX8xdwCfNweyKtiWOKxw7vB3bHBK/WDHRbHk1bGh/JX0TONi18Yp/d+mrCuBxCbAqYB04+35IZT6P9hO5dV9N+fT7nEkEgAcANmVICHIlXwAslMaYS8C8iSEgyJl8AZAZgL4rQe7kC4AeAOgLgj6SLwB6AiA3BH0lXwD0CEAuCPpM/mQBiL0tTj0Edu2bcjDsO/kCoOcKMDMfA8EQyRcAAwEQejkYKvkCYEAAfCEYMvkCYGAAXBAMnXwBMAIAyyAYI/kCYCQAFiEYK/kCYEQAZhDcB7yU4Ve92Fvftf85ODYwrfNToJcHQnK+F+AXhmbFKiAAYpWbyDoBMJFExoYhAGKVm8g6ATCRRMaGIQBilZvIOgEwkUTGhiEAYpWbyDoBMJFExoYhAGKVm8g6ATCRRMaGIQBilZvIOgEwkUTGhiEAYpWbyDoBMJFExobRCwBbgB2xHmndoApYWxvrbeQcrpcm5g1sBnY6LWrCOihwBvCljyMhANgfWfgNsD77GuurgLW12djR2KrT4xAAzMArTRW4Zn1jl2dN+7qX27Z2XmKEAnAdsM3LsiaNpYD9GZ7tvpuHAmDzdzfNok7x3UDzBlVgV0cX05UOhAJgxk5tW5umdLEaVJVKNtvXdhj7PiTeGADM/nltmbHDhsb4Ctjh3G7Trb1d0IgFwDY5GrB+fhcE7ajJuRWwzqLWP/GnGMMpAMz2sxbu1vXa/gCTxnAKfAPcD7yYsmUOAGb7n9+WoePbv8qZ03ZKjFNZa13N9wJ7gFfbFrXJsSlJyRKWbUAAlJ2/ZO8FQLKEZRsQAGXnL9l7AZAsYdkGBEDZ+Uv2XgAkS1i2AQFQdv6SvRcAyRKWbUAAlJ2/ZO8FQLKEZRsQAGXnL9l7AZAsYdkGBEDZ+Uv2XgAkS1i2AQFQdv6SvRcAyRKWbUAAlJ2/ZO8FQLKEZRsQAGXnL9l7AZAsYdkG/gORYKWQd56JTQAAAABJRU5ErkJggg==
@@ -9,11 +9,12 @@
 // @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
 // @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
-// @require      https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js
-// @require      https://cdn.bootcdn.net/ajax/libs/turndown/7.1.2/turndown.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js
+// @require      https://unpkg.com/turndown@7.2.0/dist/turndown.js
 // @grant        GM_registerMenuCommand
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_cookie
 // @license      MIT
 // ==/UserScript==
 
@@ -132,8 +133,6 @@
         }
     }
 
-
-
     function runProblems() {
         console.log('~~~ run problem ~~~~', url)
         let buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
@@ -142,9 +141,9 @@
         const isFlexMode = !!document.querySelector('#__next')
         console.log('is find', !!document.querySelector(className))
         if (isContest()) {
-            // console.log('isFlexMode', isFlexMode)
+            console.log('isFlexMode', isFlexMode)
             if (isFlexMode) {
-                className = ".FN9Jv"
+                // className = ".FN9Jv"
                 titleClassName = '#qd-content a'
             } else {
                 className = '#base_content .question-content'
@@ -266,7 +265,7 @@
             // 加载完成 初始化
             loadOk = true
             // initConmand()
-            updateButtonStatus(ele, ele.copytype, '', 100)
+            updateButtonStatus(ele, ele.copytype, '', 1000)
             clearTimeId()
         }
 
@@ -294,14 +293,11 @@
         str = str.replaceAll('​​​​​​​​​​​​​​​​​​​​​​​', '')
         str = str.replaceAll('&nbsp;', '')
         str = str.replace('。', "。\n")
-        str = str.replace('231', '2^31')
-        str = str.replace(/10(?!0)(\d+)/g, '10^$1')
-
-        // 这个位分界线
         str = str.replace(/\n{2,}/g, "\n")
-
         str = str.replace('http', '\n\nhttp')
         str = str.replaceAll('示例', "\n示例")
+        str = str.replace('231', '2^31')
+        str = str.replace(/10(?!0)(\d+)/g, '10^$1')
         str = str.replace('提示', "\n提示")
         if (title != '') {
             str = str.replace(title, title + "\n\n")
@@ -310,7 +306,7 @@
     }
 
 
-    const updateButtonStatus = (element, newText = 'copied!', newClass = '', timeout = 1500) => {
+    const updateButtonStatus = (element, newText = 'copied!', newClass = '', timeout = 1000) => {
         if (!element) {
             return;
         }
@@ -325,7 +321,7 @@
         }, timeout)
     }
 
-
+    const cookieInfo = document.cookie
 
 
     const initConmand = () => {
@@ -367,6 +363,12 @@
 
 
 
+            // const copy_local_cookie = GM_registerMenuCommand('复制 cookie ', () => {
+            //     prompt('复制Cookie, Ctrl+A,Ctrl+C 😅', cookieInfo)
+            // }, { title: '这个功能是本人某些地方需要，但是又不想打开浏览器控制台 。 如果不需要请忽略😅' })
+
+
+
         } catch (e) {
             console.log('init command error', e)
         }
@@ -374,8 +376,10 @@
     }
 
 
+
     let times = 0
     const MAX_CNT = 10
+    const TIME_OUT = 1500
     initConmand()
 
     function clearTimeId() {
@@ -386,8 +390,14 @@
             timerId = null;
         }
     }
-
+    let support = true
     const start = () => {
+        times += 1
+        if (times > MAX_CNT || !support) {
+            // console.info('>>>>>>>>>>>>>>>>>>>clear<<<<<<<<<<<<<<<<<<<<<<<<<')
+            clearTimeId()
+            return
+        }
         if (!isUsePlugins() || !isUsePluginInThis()) {
             clearTimeId()
             return;
@@ -396,10 +406,8 @@
             console.log('load ok')
             return
         }
-        timerId = requestIdleCallback(() => {
-
+        timerId = setTimeout(() => {
             try {
-                let support = true
                 if (isDiscuss()) {
                     runQuestionActionsContainer()
                 } else if (isProblem() || isContest()) {
@@ -407,35 +415,36 @@
                 } else {
                     support = false
                 }
-                times += 1
-                if (times > MAX_CNT && timerId != null || !support) {
-                    clearTimeId()
-                } else if (!loadOk) {
-                    start()
-                }
             } catch (e) {
                 console.error('install fail ', e)
             }
-        }, {timeout: 1000})
+            if (!loadOk) {
+                start()
+            }
+        }, TIME_OUT)
 
     }
 
 
 
     const updateUrl = () => {
+        updateTimes += 1
+        if (updateTimes >= 10 || urlChangeLoadOk) {
+            clearTimeId()
+            return;
+        }
         timerId = requestIdleCallback(() => {
             if (isDiscuss()) {
                 runQuestionActionsContainer()
             } else if (isProblem() || isContest()) {
                 runProblems()
             }
-            updateTimes += 1
-            if (updateTimes >= 10 || urlChangeLoadOk) {
-                clearTimeId()
-            } else {
+
+            if (!urlChangeLoadOk) {
                 updateUrl()
             }
-        }, { timeout: 200 })
+
+        }, { timeout: TIME_OUT })
     }
 
 
@@ -453,6 +462,5 @@
         urlChangeLoadOk = false
         updateUrl();
     })
-
 
 })();

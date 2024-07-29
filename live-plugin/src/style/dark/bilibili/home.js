@@ -221,7 +221,9 @@ const home = `
 .dark .bili-header .left-entry .download-wrapper .download-top-content .button:hover,
 .dark .bili-header .histories .history-item:hover,
 .dark .bili-header .center-search-container .center-search__bar .nav-search-btn:hover,
-.dark .feed-roll-btn .primary-btn:hover ,
+.dark .feed-roll-btn .primary-btn:hover,
+.dark .bili-video-card span.no-interest-title:hover,
+.dark .bili-video-card span.no-interest-desc:hover,
 .dark .primary-btn:hover
 {
   color:var(--w-blue-link-hover) !important;

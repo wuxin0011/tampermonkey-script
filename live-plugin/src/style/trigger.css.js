@@ -61,7 +61,9 @@ const css = is_huya ? `
 }
  
 /* NONE */
-.pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,
+#ab-item,
+#J_playerMain .room-player-gift-placeholder,
+.pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,#player-resource-wrap,
 [class^=GuangG],.J_ad,#public-screen-ab, #ab-banner,.room-hd #ProfileGroup,
 #player-ext-wrap,#J_noticeLive,.chat-room__list div[data-cmid="1"],
 #public-screen-ab,.superFans-fansDay,
@@ -203,6 +205,9 @@ const css = is_huya ? `
   display:inline-block !important;
  }
 
+ .room-player-wrap .room-player-main {
+  background : transparent !important;
+ }
 
  ${fans_img}
  ${sys_msg}

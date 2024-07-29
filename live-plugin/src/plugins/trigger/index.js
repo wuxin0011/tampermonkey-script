@@ -33,6 +33,7 @@ export default class TriggerLive extends LivePlugin {
         this.menu = '.mod-sidebar'
         this.header_logo = '#duya-header #duya-header-logo a'
         this.gift_tool = '.room-core #player-gift-wrap'
+        this.video_room_selector = '#J_playerMain'
         this.auto_max_pro_class_or_id_list = '.player-videoline-videotype .player-videotype-list li'
         this.init()
     }
@@ -102,18 +103,26 @@ export default class TriggerLive extends LivePlugin {
             })
         })
         let ads = [
+            // 头部区域广告
             '.main-wrap .room-mod-ggTop',
+            // 聊天室部分广告
             '#chatRoom .room-gg-chat',
+            // 虎牙广告
             '#huya-ab',
+            // 视频区域广告
             '.ab-main',
+            // 进入直播页视频广告
             '.pre-ab-wrap',
             '#pre-ab-wrap',
             '#pre-ab-video',
             '.pre-ab-video',
+            // 主播屏幕广告
             '#public-screen-ab'
         ]
+
         // 移除视频播放器区域广告
-        intervalRemoveElement(ads, 500, 20)
+        // 对于直播间黑屏的可以调整下检查次数
+        // intervalRemoveElement(ads, 1500, 1)
         this.isFullScreen()
         this.isAutoMaxVideoPro()
 
@@ -124,10 +133,17 @@ export default class TriggerLive extends LivePlugin {
                 item.click()
                 log('自动点击了弹幕礼物显示工具')
             }
-        }, 100, 1000)
+        }, 5, 1000)
         setTimeout(() => {
             this.autoHideMenu()
         }, 10000);
+
+
+        setTimeout(() => {
+            // removeDOM(querySelector('.room-player-gift-placeholder'))
+            log('remove dom ....')
+        }, 3000);
+
 
     }
 

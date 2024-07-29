@@ -8,6 +8,7 @@ html {
   --graph_bg_thick:var(--w-border-dark);
 }
 
+
 .dark .bpx-player-dm-btn-time,
 .dark .bpx-player-dm-btn-dm,
 .dark .bpx-player-dm-btn-date,
@@ -193,7 +194,7 @@ html {
   color:var(--w-blue-link-hover) !important;
 }
 
-
+.dark #tags .tag,
 .dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-block-btn,
 .dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-protect-btn, 
 .dark .bpx-player-auxiliary .bpx-player-dm-container .dm-info-row .dm-info-recall-btn, 
@@ -297,6 +298,7 @@ html {
 .dark .video-like.video-toolbar-left-item.on {
   color:var(--w-blue-link-hover) !important;
 }
+
 
 
 

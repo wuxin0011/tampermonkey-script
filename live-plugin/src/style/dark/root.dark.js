@@ -21,6 +21,12 @@ html {
 }
 
 
+
+.dark html {
+  --bili-comment-tag-bg-light:var(--w-bg-dark);
+}
+
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;

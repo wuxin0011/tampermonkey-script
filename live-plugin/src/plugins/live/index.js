@@ -93,6 +93,7 @@ export default class LivePlugin {
         this.m_container = null   // 操作容器
         this.gift_key = `${this.key}_gift` // 礼物
         this.gift_tool = null  // 礼物栏
+        this.video_room_selector = null  // 礼物栏
         this.gift_is_first_key = "gift_is_first_key" // 礼物是否是第一次 默认不显示
         this.logo_btn = null // button
         this.btn_logo_svg = iconLogo()
@@ -270,11 +271,11 @@ export default class LivePlugin {
         let that = this
         arr.forEach((item, index) => {
             // 移出空
-            if( item == null){
+            if (item == null) {
                 return
             }
-            if(!item?.name || !item?.roomId || item.roomId == 'null' || item.roomId == 'null') {
-                this.userDelete(item.name,item.roomId)
+            if (!item?.name || !item?.roomId || item.roomId == 'null' || item.roomId == 'null') {
+                this.userDelete(item.name, item.roomId)
                 return
             }
             let tr = createElement('tr')
@@ -381,9 +382,9 @@ export default class LivePlugin {
 
                 ]
                 for (let item of deleteKeyList) {
-                    try{
+                    try {
                         wls.removeItem(item)
-                    }catch(e){
+                    } catch (e) {
 
                     }
                 }
@@ -485,6 +486,11 @@ export default class LivePlugin {
             addLocalStore(that.is_first_auto_max_pro_key, false, Boolean.name)
             that.isAutoMaxVideoPro()
         })
+
+
+
+
+
 
         // 主题切换操作
         this.themeContr(container)
@@ -948,7 +954,7 @@ export default class LivePlugin {
      * @param name 房间名
      */
     addUser(id, name) {
-        if(!id || !name || id == 'null'|| name == 'null'){
+        if (!id || !name || id == 'null' || name == 'null') {
             return
         }
         if (this.userIsExist(id) || this.userIsExist(name)) {
@@ -1128,6 +1134,28 @@ export default class LivePlugin {
             }
         });
 
+
+
+
+        const core_room = querySelector(this.video_room_selector)
+        console.log('room:', core_room)
+        addEventListener(core_room, 'mouseover', (event) => {
+            const gift = querySelector(this.gift_tool)
+            if ((gift instanceof HTMLElement)) {
+                gift.classList.add('m-container-display-block')
+                gift.style.display = 'block'
+                log('enter:', gift)
+            }
+        })
+        addEventListener(core_room, 'mouseout', (event) => {
+            const gift = querySelector(this.gift_tool)
+            if ((gift instanceof HTMLElement)) {
+                gift.classList.remove('m-container-display-block')
+                gift.style.display = 'none'
+                log('leave:', gift)
+            }
+        })
+
         const showMessage = (bool) => !bool ? 'YES' : "NO"
         if (is_huya) {
             log('================================================================')
@@ -1143,7 +1171,7 @@ export default class LivePlugin {
         }, { title: '点击显示或者关闭插件菜单,默认关闭，也可以使用 Ctrl + alt + j 查看' })
 
 
-        
+
 
 
     }

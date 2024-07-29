@@ -22,6 +22,11 @@ const darkCss = `
 ${dark_dm_color()}
 
 
+.dark .room-core {
+  background : transparent !important;
+}
+
+
 /* 修改背景和字体颜色 */
 .dark [class^=chat-popup-layer] [class^=uc-status],
 .dark #J_roomWeeklyRankListRoot [class^=UserRankInfo],
@@ -35,7 +40,6 @@ ${dark_dm_color()}
 .dark [class^=room-weeklyRankList-skeleton],
 .dark #J_roomWeeklyRankListRoot [class^=rank-item],
 .dark #J_roomWeeklyRankListRoot [class^=SlideDownView],
-.dark .room-core,
 .dark input,
 .dark input:focus,
 .dark textarea,

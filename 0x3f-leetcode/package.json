@@ -1,0 +1,27 @@
+{
+  "name": "0x3f-problem-solution",
+  "private": false,
+  "version": "0.0.4.2",
+  "author": "wuxin0011",
+  "type": "module",
+  "description": "自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "element-plus": "^2.7.6",
+    "vue": "^3.4.27"
+  },
+  "repository": {
+    "url": "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.12",
+    "vite-plugin-monkey": "^4.0.0"
+  }
+}

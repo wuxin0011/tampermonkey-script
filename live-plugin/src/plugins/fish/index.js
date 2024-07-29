@@ -29,6 +29,7 @@ export default class FishLive extends LivePlugin {
         this.menu = '#js-aside'
         this.full_screen_button = "[class^=controlbar] [class^=fs]"
         this.gift_tool = '.layout-Player-main #js-player-toolbar'
+        this.video_room_selector = '#js-player-video-above'
         this.header_logo = '#js-header .Header-left .Header-logo'
         this.auto_max_pro_class_or_id_list = '#js-player-video .room-Player-Box [class^=rate] ul>li'
         this.is_use_click_event = false
@@ -45,12 +46,12 @@ export default class FishLive extends LivePlugin {
         let that = this
 
 
-        if(local_url.indexOf('https://www.douyu.com/topic')!=-1){
+        if (local_url.indexOf('https://www.douyu.com/topic') != -1) {
             return
         }
 
         // 直播源
-        if (local_url.indexOf('https://www.douyu.com/home/beta') != -1 && !(local_url=== that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
+        if (local_url.indexOf('https://www.douyu.com/home/beta') != -1 && !(local_url === that.baseUrl || new RegExp(/https:\/\/www\.douyu\.com\/\?.*/).test(local_url))) {
             return;
         }
         window.scroll(0, 0)
@@ -59,7 +60,7 @@ export default class FishLive extends LivePlugin {
         findMark('.layout-Section.layout-Slide-banner', (a) => {
             a.href = 'javascript:;void(0)'
             addEventListener(a, 'click', (e) => e.preventDefault())
-        }, 10, 100)
+        }, 10, 1000)
         // 移除直播
         // removeVideo('.layout-Slide-player video')
         // 获取暂停button
@@ -71,7 +72,7 @@ export default class FishLive extends LivePlugin {
                 pause.click()
                 clearInterval(timer)
             }
-        }, 50, 500)
+        }, 5, 1000)
 
 
         let topBtn = querySelector('.layout-Main .ToTopBtn')
@@ -104,16 +105,16 @@ export default class FishLive extends LivePlugin {
             })
         }
 
-        if( this.is_use_click_event ){
+        if (this.is_use_click_event) {
             runIndex()
-            window.onscroll = throttle(500, runIndex)
+            window.onscroll = throttle(1000, runIndex)
         }
-        
+
 
 
         // TODO 斗鱼广告加载广告处理
         // querySelectorAll('[class^=layoutMain] div[class^=cover]')
-        
+
     }
 
     // 分类页面操作
@@ -198,7 +199,7 @@ export default class FishLive extends LivePlugin {
         }
 
 
-        if( this.is_use_click_event ){
+        if (this.is_use_click_event) {
             runCategory()
             window.addEventListener('scroll', throttle(1000, runCategory))
         }
@@ -219,11 +220,12 @@ export default class FishLive extends LivePlugin {
         })
         loopDo((timer) => {
             let closeBtn = querySelector('.roomSmallPlayerFloatLayout-closeBtn')
-            if (closeBtn) {
+            if (closeBtn && !closeBtn?.mark) {
                 closeBtn.click()
                 window.clearInterval(timer)
+                closeBtn.mark = true
             }
-        }, 10, 1200)
+        }, 5, 2000)
         // 带有轮播图
         if (new RegExp(/.*douyu.*\/topic(\/(.*rid=\d+).*)/).test(local_url)) {
             let backgroundNones = ['.wm-general-wrapper.bc-wrapper.bc-wrapper-player', '.wm-general-bgblur']
@@ -248,13 +250,13 @@ export default class FishLive extends LivePlugin {
         }
 
         this.isFullScreen()
-        
+
         // 暂时移出最高画质操作 
         // 4.1.17
         if (this.is_use_click_event) {
             this.isAutoMaxVideoPro()
         }
-       
+
 
         // 默认全部选择
         findMark('.ChatToolBar .ShieldTool-enter .ShieldTool-listItem', (item) => {
@@ -262,7 +264,12 @@ export default class FishLive extends LivePlugin {
                 item.click()
                 log('自动点击了弹幕礼物显示工具')
             }
-        }, 1,5000)
+        }, 1, 5000)
+
+
+
+
+
     }
 
     // 通过房间号获取直播间name
