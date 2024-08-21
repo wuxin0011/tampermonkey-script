@@ -1,11 +1,13 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import ElementPlus from 'element-plus'
+
 import 'element-plus/dist/index.css'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import Cache from './utils/cache'
 import { GM_registerMenuCommand } from '$'
-import { submitProblems, install_pos,addProcess, __0x3f_problmes_update__, __0x3f_problmes_ok_insert_pos__, __is_none_0x3f_problmes_button__, __0x3f_problmes_solution__, __add_cur__, __0x3f_problmes_urls__, support_plugins, initObj, initUrls } from './utils/problems'
+import { Message } from './utils/message';
+import { submitProblems, install_pos, __0X3F_PROBLEM_KEYS__, support_plugins, initObj, initUrls, addProcess } from './utils/problems'
 import {
   isContest,
   isProblem,
@@ -61,9 +63,10 @@ function run() {
       // console.log('submitbutton', submitbutton)
       if (submitbutton) {
         // 网络延迟问题
-        // submitbutton.addEventListener('click', () => {
-        //   submitProblems(local_url)
-        // })
+        submitbutton.addEventListener('click', () => {
+          // console.log('click submit button')
+          submitProblems(local_url, 10 * 1000)
+        })
         watchDom(submitbutton)
       } else if (loadID < 10) {
         run()
@@ -73,11 +76,12 @@ function run() {
   } else if (isLeetCodeCircleUrl(local_url)) {
 
     let Container = null
-    let ok = Cache.get(__is_none_0x3f_problmes_button__, true, Boolean.name)
+    let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], true, Boolean.name)
     const start = () => {
       Container = document.createElement('div');
       const body = document.querySelector('body')
       body.append(Container)
+      // Container.style.height = '100vh'
       Container.style.display = ok && support_plugins() ? 'block' : 'none'
       return Container
     }
@@ -90,23 +94,33 @@ function run() {
       ok = !ok
       // console.log('ok????', ok)
       Container.style.display = ok ? 'block' : 'none'
-      Cache.set(__is_none_0x3f_problmes_button__, ok)
+      Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], ok)
     }, { title: '可以手动关闭或者显示按钮 默认显示 刷新生效' })
 
 
     GM_registerMenuCommand(`安装到${install_pos() ? '右侧' : '左侧'}`, () => {
-      Cache.set(__0x3f_problmes_ok_insert_pos__, install_pos())
+      Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_insert_pos__'], install_pos())
       window.location.reload()
     }, { title: 'AC标记安装位置，默认左侧，刷新生效' })
 
 
+    GM_registerMenuCommand(`清空题目状态缓存`, () => {
+      Message('确认清空题目状态缓存', () => {
+        Cache.remove(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])
+        window.location.reload()
+      })
+    }, { title: '如果题目状态出现问题，可以试试,一般情况下不建议使用' })
+    GM_registerMenuCommand(`同步题目状态`, () => {
+      Message('确认同步题目状态', () => {
+        addProcess(true, undefined, true)
+      })
+    }, { title: '如果不在同一个浏览器答题，会出现ac题目状态没有及时同步，可以使用此功能' })
     GM_registerMenuCommand(`${initObj().onlyUrls ? '仅在收藏题单页面生效' : '所有题单生效'}`, () => {
       const u = initObj()
       u.onlyUrls = !u.onlyUrls
       Container.style.display = support_plugins() ? 'block' : 'none'
-      Cache.set(__0x3f_problmes_solution__, u)
-    })
-
+      Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], u)
+    }, { title: '插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能' })
     GM_registerMenuCommand(`添加本页`, () => {
       const urls = initUrls()
       let ok = false
@@ -142,9 +156,9 @@ function run() {
           link: url,
         })
         Container.style.display = 'block'
-        Cache.set(__0x3f_problmes_urls__, urls)
-        Cache.set(__0x3f_problmes_update__, true);
-        Cache.set(__add_cur__, true)
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], urls)
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true);
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_add_cur__'], true)
         ElMessage({
           message: '收藏成功！刷新生效',
           type: 'success',
@@ -154,15 +168,13 @@ function run() {
 
     })
 
-
     VueApp.use(ElementPlus).mount(dom)
+
+
   }
 
 }
 run()
-
-
-
 startStopRanking()
 
 

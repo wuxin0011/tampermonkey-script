@@ -1,9 +1,9 @@
 
-import { install_pos } from './problems'
+import { install_pos, STATUS } from './problems'
 const width = 14
 const height = 14
 
-
+// svg: https://www.svgviewer.dev/
 
 export const problemFinsh = () => `
 
@@ -37,9 +37,38 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
 
 `
 
-// 暂时移出没有做个题目状态
 export const problemsNo = () => install_pos() ? `
 <svg width="${width}px" height="${height}px" status="null" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 `
     :
     ``
+export const createStatus = (status, link) => {
+    let node;
+    status == null ? 'null' : status
+    if (!link) {
+        return;
+    }
+    node = link instanceof HTMLAnchorElement ? link.parentElement : link
+    if (node) {
+        node.status = status
+    }
+    let installSVG = ''
+    if (status == STATUS['AC']) {
+        installSVG = problemFinsh()
+    } else if (status == STATUS['notac']) {
+        installSVG = problemsTry()
+    } else if (status == STATUS['NO']) {
+        installSVG = problemsNo()
+    } else {
+        installSVG = ''
+    }
+    let svg = node.querySelector('svg')
+    if (svg) {
+        if (svg.getAttribute('status') == status || svg.getAttribute('status') == STATUS['AC']) {
+            return false;
+        }
+        svg.remove()
+    }
+    node.innerHTML = install_pos() ? (installSVG + node.innerHTML) : (node.innerHTML + installSVG)
+    return true
+}

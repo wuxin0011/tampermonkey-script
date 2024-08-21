@@ -104,20 +104,20 @@ export default class TriggerLive extends LivePlugin {
         })
         let ads = [
             // 头部区域广告
-            '.main-wrap .room-mod-ggTop',
+            // '.main-wrap .room-mod-ggTop',
             // 聊天室部分广告
-            '#chatRoom .room-gg-chat',
+            // '#chatRoom .room-gg-chat',
             // 虎牙广告
-            '#huya-ab',
+            // '#huya-ab',
             // 视频区域广告
-            '.ab-main',
+            // '.ab-main',
             // 进入直播页视频广告
-            '.pre-ab-wrap',
-            '#pre-ab-wrap',
-            '#pre-ab-video',
-            '.pre-ab-video',
+            // '.pre-ab-wrap',
+            // '#pre-ab-wrap',
+            // '#pre-ab-video',
+            // '.pre-ab-video',
             // 主播屏幕广告
-            '#public-screen-ab'
+            // '#public-screen-ab'
         ]
 
         // 移除视频播放器区域广告
@@ -150,7 +150,13 @@ export default class TriggerLive extends LivePlugin {
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
         try {
-            return url && url.match(/https:\/\/www\.huya\.com\/(.*)/) ? url.match(/https:\/\/www\.huya\.com\/(.*)/)[1] : ''
+
+            let m = url.match(/https?:\/\/www\.huya\.com\/(\S+)\?&/)
+            log('match url Id', m, url)
+            if (Array.isArray(m) && m.length > 1) {
+                return m[1]
+            }
+            return url.replace('https://www.huya.com/', '')
         } catch (error) {
             warn('url 匹配失败 请检查' + url)
             return ''

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.17-1
+// @version      4.1.17-2
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -2207,7 +2207,12 @@ ${root$1}
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
       try {
-        return url && url.match(/https:\/\/www\.huya\.com\/(.*)/) ? url.match(/https:\/\/www\.huya\.com\/(.*)/)[1] : "";
+        let m = url.match(/https?:\/\/www\.huya\.com\/(\S+)\?&/);
+        log("match url Id", m, url);
+        if (Array.isArray(m) && m.length > 1) {
+          return m[1];
+        }
+        return url.replace("https://www.huya.com/", "");
       } catch (error2) {
         warn("url 匹配失败 请检查" + url);
         return "";

@@ -1,34 +1,30 @@
-import { isProblem, isContest, isLeetCodeCircleUrl } from './index'
-import { problemsNo, problemFinsh, problemsTry } from './status'
 import Cache from './cache'
+import { isContest, isDev, isLeetCodeCircleUrl, isProblem } from './index'
+import { createStatus } from './status'
 
 const inf = 4000  // 目前最大分数为3100
 const mi = 1000   // 目前最小分数为1100 
 
 
+export const __0X3F_PROBLEM_KEYS__ = {
+    '__0x3f_problmes_solution__': '__0x3f_problmes_solution__', // 基本信息
+    '__0x3f_problmes_urls__': '__0x3f_problmes_urls__', // 题单key
+    '__0x3f_problmes_update__': '__0x3f_problmes_update__', // 是否修改了默认题单key
+    '__0x3f_problmes_button_is_none__': '__is_none_0x3f_problmes_button__', // 是否隐藏设置按钮
+    '__0x3f_problmes_insert_pos__': '__0x3f_problmes_insert_pos__', // 安装位置
+    '__0x3f_problmes_status_update__': '__0x3f_problmes_status_update__',
+    '__0x3f_problmes_plugin_load_ok__': '__0x3f_problmes_plugin_load_ok__', // 是否使用插件
+    '__0x3f_problmes_add_cur__': '__0x3f_problmes_add_cur__', // 添加 url
+    '__0x3f_problmes_ac_key__': '__local_ok_problem_key__', // ac key
+    '__0x3f_problmes_ac_version__': '__0x3f_problmes_ac_version__', // TODO ac key version
+}
 
-// 基本信息
-export const __0x3f_problmes_solution__ = '__0x3f_problmes_solution__'
+export const STATUS = {
+    "AC": "ac",
+    "NO": "null",
+    "notac": "notac",
+}
 
-// 题单key
-export const __0x3f_problmes_urls__ = '__0x3f_problmes_urls__'
-
-// 是否修改了默认题单key
-export const __0x3f_problmes_update__ = '__0x3f_problmes_update__'
-
-// 是否隐藏设置按钮
-export const __is_none_0x3f_problmes_button__ = '__is_none_0x3f_problmes_button__'
-
-
-// load ok ？ 
-export const __0x3f_problmes_plugin_load_ok__ = '__0x3f_problmes_plugin_load_ok__'
-
-// insert left or right ?
-export const __0x3f_problmes_ok_insert_pos__ = '__0x3f_problmes_insert_pos__'
-
-
-
-export const __add_cur__ = '__add_cur__'
 
 
 export const defaultObj = {
@@ -38,7 +34,7 @@ export const defaultObj = {
 
 export function install_pos() {
     // 默认安装到左边
-    return !Cache.get(__0x3f_problmes_ok_insert_pos__, false, Boolean.name)
+    return !Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_insert_pos__'], false, Boolean.name)
 }
 function isShow(text, min, max) {
     if (!text) {
@@ -65,12 +61,16 @@ function isShow(text, min, max) {
 }
 
 let A = undefined
+const linkCssSelector = `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] li>a`
+// document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class$="MarkdownContent"]')
 
-export const queryProblem = () => Array.from(document.querySelectorAll('.css-1ayia3m-MarkdownContent li>a')).filter(item => item && item instanceof HTMLAnchorElement && isProblem(item.href))
+export const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter(item => item && item instanceof HTMLAnchorElement && isProblem(item.href))
 
 function loadProblems() {
     A = queryProblem()
+    return A
 }
+
 
 export function handlerProblem(data) {
 
@@ -92,7 +92,7 @@ export function handlerProblem(data) {
         max = Number(max)
         data.min = min
         data.max = max
-        Cache.set(__0x3f_problmes_solution__, data)
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], data)
         for (let i = 0; i < A.length; i++) {
             if (!(A[i] instanceof HTMLAnchorElement)) {
                 continue;
@@ -109,7 +109,6 @@ export function handlerProblem(data) {
             if (!Nohidden) {
                 continue;
             }
-
             if (hiddenAc) {
                 const svg = d.querySelector('svg')
                 if (svg && svg.getAttribute('status')) {
@@ -133,8 +132,8 @@ export function handlerProblem(data) {
 
 }
 
-export const initUrls = () => Cache.get(__0x3f_problmes_update__, true, Boolean.name) ? Cache.get(__0x3f_problmes_urls__, true, Array.name) : defaultUrls
-export const initObj = () => Cache.get(__0x3f_problmes_solution__) ? Object.assign(defaultObj, Cache.get(__0x3f_problmes_solution__)) : defaultObj
+export const initUrls = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true, Boolean.name) ? Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], true, Array.name) : defaultUrls
+export const initObj = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__']) ? Object.assign(defaultObj, Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'])) : defaultObj
 
 
 
@@ -169,6 +168,10 @@ export const support_plugins = () => {
 
 // 默认题单url
 export const defaultUrls = [
+    {
+        title: '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）',
+        link: 'https://leetcode.cn/circle/discuss/K0n2gO/',
+    },
     {
         title: '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）',
         link: 'https://leetcode.cn/circle/discuss/g6KTKL/',
@@ -210,9 +213,6 @@ export const defaultUrls = [
     }
 ]
 
-
-// 本地已经解决的题目
-
 function getId(problemUrl) {
     if (isContest(problemUrl) || isProblem(problemUrl)) {
         try {
@@ -222,15 +222,8 @@ function getId(problemUrl) {
         }
     }
     return ''
-
 }
 
-const local_ok_problem_key = '__local_ok_problem_key__'
-const STATUS = {
-    "AC": "ac",
-    "NO": "null",
-    "notac": "notac",
-}
 
 
 function postData(ID) {
@@ -243,9 +236,45 @@ function postData(ID) {
     }
 }
 
-export function addProcess(reload = true) {
-    loadProblems()
-    let problems_doms = A
+function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) {
+    if (!ID) {
+        return
+    }
+    if (cache[ID] == undefined || cache[ID] != STATUS['AC']) {
+        fetch('https://leetcode.cn/graphql/', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData(ID)),
+        }).then(res => res.json()).then(response => {
+            if (response?.data?.question) {
+                const status = response?.data?.question?.status
+                if (cache[ID] == undefined || cache[ID] != status) {
+                    cache[ID] = status == null ? 'null' : status
+                    if (watch) {
+                        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
+                        if (isDev()) {
+                            console.log('save local status :', cache[ID], 'status = ', status, 'get local status :', Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])[ID])
+                        }
+                        window.localStorage.setItem(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_status_update__'], JSON.stringify({
+                            'id': ID,
+                            'status': cache[ID]
+                        }))
+                    }
+                    createStatus(cache[ID], cur)
+                }
+            } else {
+                console.log('query result is undefined')
+            }
+        }).catch(ignore => {
+            console.error('query status error : ', ignore)
+        });
+    }
+}
+export function addProcess(reload = true, doms = undefined, asyncAc = false) {
+    let problems_doms = Array.isArray(doms) ? doms : loadProblems()
     const cache = getLocalProblemStatus()
     let uid = 0
     let updateCnt = 0
@@ -262,62 +291,26 @@ export function addProcess(reload = true) {
             cur.style.listStyleType = 'none'
         }
         // console.log('query ID', cache[ID])
-        // 本地是否有缓存
-        if (cache[ID]) {
+
+        if (!cache[ID] || cache[ID] != STATUS['AC'] && asyncAc) {
+            // 查询的两个条件
+            // 1>首先检查本地是否有缓存 没用缓存查询
+            // 2>如果本地有题目状态时不是AC但是需要同步也需要操作
+            queryStatus(ID, cache, cur, false)
+        } else {
             let status = cache[ID]
             uid++
-            const svg = cur.querySelector('svg')
-            if (svg) {
-                if (svg.getAttribute('status') == status) {
-                    continue;
-                }
-                svg.remove()
-                updateCnt++
-            }
-            if (install_pos()) {
-                cur.innerHTML = (status == STATUS['AC'] ? problemFinsh() : status == STATUS['notac'] ? problemsTry() : problemsNo()) + cur.innerHTML
-            } else {
-                cur.innerHTML = cur.innerHTML + (status == STATUS['AC'] ? problemFinsh() : status == STATUS['notac'] ? problemsTry() : problemsNo())
-            }
-
-        } else {
-            // console.log('access : ', ID)
-            fetch('https://leetcode.cn/graphql/', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData(ID)),
-            }).then(res => res.json()).then(response => {
-                const status = response?.data?.question?.status
-                // console.log(ID, status == null ? "没错过" : status == 'ac' ? "AC" : "尝试过")
-                if (status == STATUS['AC']) {
-                    cur.innerHTML = install_pos() ? (problemFinsh() + cur.innerHTML) : (cur.innerHTML + problemFinsh())
-                } else if (status == STATUS['notac']) {
-                    cur.innerHTML = install_pos() ? (problemsTry() + cur.innerHTML) : (cur.innerHTML + problemsTry())
-                } else {
-                    if (problemsNo()) {
-                        cur.innerHTML = install_pos() ? (problemsNo() + cur.innerHTML) : (cur.innerHTML + problemsNo())
-                    }
-                }
-                cache[ID] = status == null ? 'null' : status
-                if (cur.parentElement) {
-                    cur.parentElement.status = cache[ID]
-                }
-            }).catch(ignore => {
-                // console.log('error', error)
-            });
+            createStatus(status, cur)
         }
 
     }
-    console.log('cache num :', uid, ',update cnt', updateCnt, ',tot:', A.length)
-
-
+    if (isDev()) {
+        console.log('cache num :', uid, ',tot:', A.length)
+    }
     if (reload) {
         let cnt = 10;
         let timeId = setInterval(() => {
-            Cache.set(local_ok_problem_key, cache)
+            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
             cnt--
             if (cnt == 0) {
                 window.clearInterval(timeId)
@@ -328,7 +321,7 @@ export function addProcess(reload = true) {
 }
 
 // 监听题目提交状态
-export const submitProblems = (url = window.location.href) => {
+export const submitProblems = (url = window.location.href, timeout = 500) => {
     const ID = getId(url)
     if (!ID) {
         return
@@ -336,29 +329,42 @@ export const submitProblems = (url = window.location.href) => {
     setTimeout(() => {
         // console.log('watching ...', GM_getValue(local_ok_problem_key))
         const cache = getLocalProblemStatus()
-        console.log('ID:', ID, 'query status: ', cache[ID])
-        // 对于ac状态题目不必查询
-        if (cache[ID] == undefined || cache[ID] != STATUS['AC']) {
-            fetch('https://leetcode.cn/graphql/', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData(ID)),
-            }).then(res => res.json()).then(response => {
-                const status = response?.data?.question?.status
-                if (cache[ID] != status) {
-                    cache[ID] = status == null ? 'null' : status
-                    console.log('save local status :', cache[ID])
-                    Cache.set(local_ok_problem_key, cache)
-                }
-            }).catch(ignore => {
-                // console.log('error', error)
-            });
+        if (isDev()) {
+            console.log('ID:', ID, 'query status: ', cache[ID])
         }
-    }, 500);
+        // 对于ac状态题目不必查询
+        queryStatus(ID, cache, undefined, true)
+    }, timeout);
 
+}
+
+
+export const watchLinkStatusUpdate = (e) => {
+    if (e.key != __0X3F_PROBLEM_KEYS__['__0x3f_problmes_status_update__']) {
+        return
+    }
+    let { id, status } = JSON.parse(e.newValue)
+    if (!id || !status) {
+        return
+    }
+    let thisLink = `https://leetcode.cn/problems/${id}`
+    if (isDev()) {
+        console.log('update', thisLink, 'status', status)
+    }
+    let link = document.querySelector(`${linkCssSelector}[href^="https://leetcode.cn/problems/${id}"]`)
+    if (!link || !link?.parentElement) {
+        let doms = loadProblems()
+        for (let i = 0; i < doms.length; i++) {
+            if (!doms[i] || !doms[i]?.parentElement) {
+                continue;
+            }
+            if (doms[i].href.indexOf(thisLink) != -1) {
+                link = doms[i]
+                break;
+            }
+        }
+    }
+    createStatus(status, link)
 }
 
 
@@ -376,8 +382,7 @@ export function getProcess() {
     return [cnt, A.length]
 }
 
-
 function getLocalProblemStatus() {
-    return Cache.get(local_ok_problem_key, true, Object.name)
+    return Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
 }
 

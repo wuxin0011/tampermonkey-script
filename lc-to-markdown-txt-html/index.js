@@ -25,9 +25,13 @@
     const TXT_CONVERT = '__TXT_CONVERT__'
     const MARKDOWN_CONVERT = '__MARKDOWN_CONVERT__'
     const markdownURL = "https://stonehank.github.io/html-to-md/"
-
-
-
+    const isDev = () => true
+    const log = (...args) => {
+        if (!isDev()) {
+            return;
+        }
+        console.log('lx-md-html-txt tip:', ...args)
+    }
     const isDiscuss = () => url.indexOf('https://leetcode.cn/circle/discuss') != -1
     const isProblem = () => url.indexOf('https://leetcode.cn/problems') != -1
     const isContest = () => url.indexOf('https://leetcode.cn/contest/weekly-contest') != -1 || url.indexOf('https://leetcode.cn/contest/biweekly-contest') != -1
@@ -40,48 +44,48 @@
     const isUseHTML = () => use(HTML_CONVERT)
     let timerId = null
     let loadOk = false
-    console.log('markdown', isUseMarkDown(), 'txt', isUseTxt(), 'html', isUseHTML())
+    log('markdown', isUseMarkDown(), 'txt', isUseTxt(), 'html', isUseHTML())
     const isUsePlugins = () => isUseHTML() || isUseMarkDown() || isUseTxt()
     const isUsePluginInThis = () => use(isAutoKey) // 当前页面是否使用该插件
     let isFindButtonContainer = false
-
-
-
+    const updateDisplay = (element, u) => element && element instanceof HTMLElement ? (element.style.display = u ? 'inline-block' : 'none') : ''
     const SUPPORT_TYPE = {
         'md': 'md',
         'txt': 'txt',
         'html': 'html'
     }
-
-
-
-    const buttons = []
     const targetClass = 'my-button-target'
     const BUTTON_ID = `#${targetClass}`
-    for (let i = 0; i < 3; i++) {
-        const temp = document.createElement('button')
-        temp.style.marginLeft = '10px'
-        const type = i == 0 ? SUPPORT_TYPE['md'] : i == 1 ? SUPPORT_TYPE['txt'] : SUPPORT_TYPE['html']
-        temp.title = `复制为 ${type == 'md' ? 'markdown' : type} 格式`
-        temp.id = `${BUTTON_ID}-${type}`
-        temp.textContent = type
-        temp.copytype = type
-        buttons.push(temp)
+    let domId = 0
+    const loadButton = () => {
+        const buttons = []
+        // domId++
+        for (let i = 0; i < 3; i++) {
+            const temp = document.createElement('button')
+            temp.style.marginLeft = '10px'
+            temp.className = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
+            const type = i == 0 ? SUPPORT_TYPE['md'] : i == 1 ? SUPPORT_TYPE['txt'] : SUPPORT_TYPE['html']
+            temp.title = `复制为 ${type == 'md' ? 'markdown' : type} 格式`
+            temp.id = `${BUTTON_ID}-${type}-${domId}`
+            temp.textContent = type
+            temp.copytype = type
+            buttons.push(temp)
+
+        }
+        updateDisplay(buttons[0], isUseMarkDown())
+        updateDisplay(buttons[1], isUseTxt())
+        updateDisplay(buttons[2], isUseHTML())
+        return buttons
+
     }
 
-
-    const updateDisplay = (element, u) => element && element instanceof HTMLElement ? (element.style.display = u ? 'inline-block' : 'none') : ''
+    const btns = loadButton()
     // markdown button
-    const markdownButton = buttons[0]
-    updateDisplay(markdownButton, isUseMarkDown())
-
+    const markdownButton = btns[0]
     // txt button
-    const txtButton = buttons[1]
-    updateDisplay(txtButton, isUseTxt())
-
+    const txtButton = btns[1]
     // html button
-    const htmlButton = buttons[2]
-    updateDisplay(htmlButton, isUseHTML())
+    const htmlButton = btns[2]
 
     function getHtmlContent(className) {
         const htmlContent = document.querySelector(className)
@@ -134,14 +138,14 @@
     }
 
     function runProblems() {
-        console.log('~~~ run problem ~~~~', url)
+        // log('~~~ run problem ~~~~', url)
         let buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
         let className = "[data-track-load=description_content]"
         let titleClassName = '#qd-content [class*=text-title]'
         const isFlexMode = !!document.querySelector('#__next')
-        console.log('is find', !!document.querySelector(className))
+        // console.log('is find', !!document.querySelector(className))
         if (isContest()) {
-            console.log('isFlexMode', isFlexMode)
+            // log('isFlexMode', isFlexMode)
             if (isFlexMode) {
                 // className = ".FN9Jv"
                 titleClassName = '#qd-content a'
@@ -191,7 +195,7 @@
             }
         }
         if (!container) {
-            console.warn('找不到 容器！', url)
+            log('找不到 容器！', url)
             urlChangeLoadOk = false
             return;
         }
@@ -202,6 +206,27 @@
         runCopy(container, htmlButton, htmlContent, SUPPORT_TYPE['html'])
         runCopy(container, markdownButton, htmlContent, SUPPORT_TYPE['md'])
         urlChangeLoadOk = true
+
+    }
+
+
+    function loadSolution(dom) {
+        if (!dom) {
+            return
+        }
+        if (dom.querySelector('[class^=break-words]')) {
+            const c = dom.querySelector('[class^=break-words]')
+            if (c.parentNode && c.parentNode.querySelector('div')) {
+                const o = c.parentNode.querySelector('div')
+                // let nodes = Array.from(o.querySelectorAll('div'))
+                // console.log('container:',nodes[nodes.length - 1])
+                let t = c.innerHTML
+                let buttons = loadButton()
+                runCopy(o, buttons[0], t, SUPPORT_TYPE['md'])
+                runCopy(o, buttons[1], t, SUPPORT_TYPE['txt'], '')
+                runCopy(o, buttons[2], t, SUPPORT_TYPE['html'])
+            }
+        }
     }
 
 
@@ -257,8 +282,12 @@
         if (!(container instanceof HTMLElement && ele instanceof HTMLElement)) {
             return;
         }
+        // if (container.querySelector(ele.id)) {
+        //     container.querySelector(ele.id).remove()
+        // }
         // append 
-        if (!document.getElementById(ele.id)) {
+        // container.appendChild(ele)
+        if (!container.getElementById(ele.id)) {
             ele.originClass = ele.className
             container.appendChild(ele)
         } else {
@@ -321,7 +350,6 @@
         }, timeout)
     }
 
-    const cookieInfo = document.cookie
 
 
     const initConmand = () => {
@@ -362,13 +390,6 @@
             }, { title: '如果格式转换有问题，请复制为 html 然后用这个网站转换' })
 
 
-
-            // const copy_local_cookie = GM_registerMenuCommand('复制 cookie ', () => {
-            //     prompt('复制Cookie, Ctrl+A,Ctrl+C 😅', cookieInfo)
-            // }, { title: '这个功能是本人某些地方需要，但是又不想打开浏览器控制台 。 如果不需要请忽略😅' })
-
-
-
         } catch (e) {
             console.log('init command error', e)
         }
@@ -382,6 +403,44 @@
     const TIME_OUT = 1500
     initConmand()
 
+    function loadOK() {
+        console.log('load dom ...')
+        // 095aee37-c8bf-8352-66f7-29f67976f94f
+        let doms = Array.from(document.querySelectorAll('#qd-content .flexlayout__tab'))
+        // dom = undefined
+        if (doms.length == 0) {
+            setTimeout(() => {
+                loadOK()
+            }, 5000)
+            return
+        } else {
+            for (let i = 0; i < doms.length; i++) {
+                let dom = doms[i]
+                let watch = new MutationObserver((records, b) => {
+                    // log(new Date().toDateString(), 'a:', records, 'b:', b)
+                    for (let record of records) {
+                        const target = record.target
+                        if (target.querySelector('[class^=break-words]')) {
+                            console.log(record, record?.type, record?.target)
+                            loadSolution(target)
+                        }
+
+                    }
+
+                    //runProblems()
+                })
+
+                watch.observe(dom, {
+                    childList: true,
+                    subtree: false,
+                    attributes: true
+                })
+            }
+            // loadSolution(document)
+        }
+
+
+    }
     function clearTimeId() {
         if (timerId != null) {
             window.cancelIdleCallback(timerId)
@@ -403,7 +462,7 @@
             return;
         }
         if (loadOk) {
-            console.log('load ok')
+            log('load ok')
             return
         }
         timerId = setTimeout(() => {
@@ -451,6 +510,11 @@
     window.onload = () => {
         times = 0
         start()
+        try {
+            loadOK();
+        } catch (e) {
+
+        }
     }
 
     // 监听地址改变

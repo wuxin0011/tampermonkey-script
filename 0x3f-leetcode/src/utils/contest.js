@@ -18,8 +18,6 @@ function run() {
         if (ls[i] instanceof HTMLElement) {
             ls[i].textContent = '0'
         }
-
-
     }
     window.clearInterval(conetstTimeId)
 }
@@ -33,18 +31,15 @@ export function startStopRanking() {
         return
     }
     const use = Cache.get(stopRankingKey)
+    if (use) {
+        conetstTimeId = setInterval(() => {
+            run()
+        }, 10);
+    }
     GM_registerMenuCommand(`${use ? '使用' : '关闭'} 排行榜`, () => {
         Cache.set(stopRankingKey, !use)
         window.location.reload()
     }, { title: '对于不想看到排行榜的可以使用此功能 默认开启' })
-    if (!use) {
-        return
-    }
-
-    conetstTimeId = setInterval(() => {
-        run()
-    }, 10);
-
 }
 
 

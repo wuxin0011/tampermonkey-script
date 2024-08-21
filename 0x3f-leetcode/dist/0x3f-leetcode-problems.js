@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.4.2
+// @version      0.0.4.4
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -23,7 +23,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" .m-setting-button[data-v-37449578]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-37449578]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-37449578]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" .m-setting-button[data-v-3dc7143a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-3dc7143a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-3dc7143a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -93,6 +93,27 @@
     return vue.openBlock(), vue.createElementBlock("div", null, _hoisted_3$1);
   }
   const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render]]);
+  function Message(title = "确认操作", callback = () => {
+  }, canlcelCallback = () => {
+  }) {
+    ElementPlus.ElMessageBox.confirm(
+      `${title} ?`,
+      "警告",
+      {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning"
+      }
+    ).then(() => {
+      callback();
+    }).catch(() => {
+      ElementPlus.ElMessage({
+        type: "info",
+        message: "已取消"
+      });
+      canlcelCallback();
+    });
+  }
   const isLeetCodeCircleUrl = (url = window.location.href) => url && url.indexOf("https://leetcode.cn/circle") != -1;
   const isProblem = (url = window.location.href) => /^https?:\/\/leetcode.cn\/problems\/.*/i.test(url);
   const isContest = (url = window.location.href) => url.indexOf("https://leetcode.cn/contest/weekly-contest") != -1 || url.indexOf("https://leetcode.cn/contest/biweekly-contest") != -1;
@@ -131,14 +152,63 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const problemsNo = () => install_pos() ? `
 <svg width="${width}px" height="${height}px" status="null" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 ` : ``;
+  const createStatus = (status, link) => {
+    let node;
+    if (!link) {
+      return;
+    }
+    node = link instanceof HTMLAnchorElement ? link.parentElement : link;
+    if (node) {
+      node.status = status;
+    }
+    let installSVG = "";
+    if (status == STATUS["AC"]) {
+      installSVG = problemFinsh();
+    } else if (status == STATUS["notac"]) {
+      installSVG = problemsTry();
+    } else if (status == STATUS["NO"]) {
+      installSVG = problemsNo();
+    } else {
+      installSVG = "";
+    }
+    let svg = node.querySelector("svg");
+    if (svg) {
+      if (svg.getAttribute("status") == status || svg.getAttribute("status") == STATUS["AC"]) {
+        return false;
+      }
+      svg.remove();
+    }
+    node.innerHTML = install_pos() ? installSVG + node.innerHTML : node.innerHTML + installSVG;
+    return true;
+  };
   const inf = 4e3;
   const mi = 1e3;
-  const __0x3f_problmes_solution__ = "__0x3f_problmes_solution__";
-  const __0x3f_problmes_urls__ = "__0x3f_problmes_urls__";
-  const __0x3f_problmes_update__ = "__0x3f_problmes_update__";
-  const __is_none_0x3f_problmes_button__ = "__is_none_0x3f_problmes_button__";
-  const __0x3f_problmes_ok_insert_pos__ = "__0x3f_problmes_insert_pos__";
-  const __add_cur__ = "__add_cur__";
+  const __0X3F_PROBLEM_KEYS__ = {
+    "__0x3f_problmes_solution__": "__0x3f_problmes_solution__",
+    // 基本信息
+    "__0x3f_problmes_urls__": "__0x3f_problmes_urls__",
+    // 题单key
+    "__0x3f_problmes_update__": "__0x3f_problmes_update__",
+    // 是否修改了默认题单key
+    "__0x3f_problmes_button_is_none__": "__is_none_0x3f_problmes_button__",
+    // 是否隐藏设置按钮
+    "__0x3f_problmes_insert_pos__": "__0x3f_problmes_insert_pos__",
+    // 安装位置
+    "__0x3f_problmes_status_update__": "__0x3f_problmes_status_update__",
+    "__0x3f_problmes_plugin_load_ok__": "__0x3f_problmes_plugin_load_ok__",
+    // 是否使用插件
+    "__0x3f_problmes_add_cur__": "__0x3f_problmes_add_cur__",
+    // 添加 url
+    "__0x3f_problmes_ac_key__": "__local_ok_problem_key__",
+    // ac key
+    "__0x3f_problmes_ac_version__": "__0x3f_problmes_ac_version__"
+    // TODO ac key version
+  };
+  const STATUS = {
+    "AC": "ac",
+    "NO": "null",
+    "notac": "notac"
+  };
   const defaultObj = {
     min: mi,
     max: inf,
@@ -148,7 +218,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     hiddenAc: false
   };
   function install_pos() {
-    return !Cache$1.get(__0x3f_problmes_ok_insert_pos__, false, Boolean.name);
+    return !Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], false, Boolean.name);
   }
   function isShow(text, min, max) {
     if (!text) {
@@ -171,9 +241,11 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return true;
   }
   let A = void 0;
-  const queryProblem = () => Array.from(document.querySelectorAll(".css-1ayia3m-MarkdownContent li>a")).filter((item) => item && item instanceof HTMLAnchorElement && isProblem(item.href));
+  const linkCssSelector = `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] li>a`;
+  const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter((item) => item && item instanceof HTMLAnchorElement && isProblem(item.href));
   function loadProblems() {
     A = queryProblem();
+    return A;
   }
   function handlerProblem(data) {
     var _a;
@@ -194,7 +266,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       max = Number(max);
       data.min = min;
       data.max = max;
-      Cache$1.set(__0x3f_problmes_solution__, data);
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], data);
       for (let i = 0; i < A.length; i++) {
         if (!(A[i] instanceof HTMLAnchorElement)) {
           continue;
@@ -227,8 +299,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       console.log("error", e);
     }
   }
-  const initUrls = () => Cache$1.get(__0x3f_problmes_update__, true, Boolean.name) ? Cache$1.get(__0x3f_problmes_urls__, true, Array.name) : defaultUrls;
-  const initObj = () => Cache$1.get(__0x3f_problmes_solution__) ? Object.assign(defaultObj, Cache$1.get(__0x3f_problmes_solution__)) : defaultObj;
+  const initUrls = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
+  const initObj = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"])) : defaultObj;
   const support_plugins = () => {
     const u = initObj();
     if (!u || !u.onlyUrls) return true;
@@ -252,6 +324,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return false;
   };
   const defaultUrls = [
+    {
+      title: "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
+      link: "https://leetcode.cn/circle/discuss/K0n2gO/"
+    },
     {
       title: "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
       link: "https://leetcode.cn/circle/discuss/g6KTKL/"
@@ -303,12 +379,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     return "";
   }
-  const local_ok_problem_key = "__local_ok_problem_key__";
-  const STATUS = {
-    "AC": "ac",
-    "NO": "null",
-    "notac": "notac"
-  };
   function postData(ID) {
     return {
       "query": "\n    query userQuestionStatus($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    status\n  }\n}\n    ",
@@ -318,13 +388,45 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       "operationName": "userQuestionStatus"
     };
   }
-  function addProcess(reload = true) {
+  function queryStatus(ID = "", cache = {}, cur = void 0, watch2 = false) {
+    if (!ID) {
+      return;
+    }
+    if (cache[ID] == void 0 || cache[ID] != STATUS["AC"]) {
+      fetch("https://leetcode.cn/graphql/", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postData(ID))
+      }).then((res) => res.json()).then((response) => {
+        var _a, _b, _c;
+        if ((_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) {
+          const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
+          if (cache[ID] == void 0 || cache[ID] != status) {
+            cache[ID] = status == null ? "null" : status;
+            if (watch2) {
+              Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+              window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
+                "id": ID,
+                "status": cache[ID]
+              }));
+            }
+            createStatus(cache[ID], cur);
+          }
+        } else {
+          console.log("query result is undefined");
+        }
+      }).catch((ignore) => {
+        console.error("query status error : ", ignore);
+      });
+    }
+  }
+  function addProcess(reload = true, doms = void 0, asyncAc = false) {
     var _a;
-    loadProblems();
-    let problems_doms = A;
+    let problems_doms = Array.isArray(doms) ? doms : loadProblems();
     const cache = getLocalProblemStatus();
-    let uid = 0;
-    let updateCnt = 0;
     for (let i = 0; i < problems_doms.length; i++) {
       let cur = problems_doms[i].parentElement;
       if (!(cur instanceof HTMLElement)) {
@@ -337,55 +439,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       if (install_pos()) {
         cur.style.listStyleType = "none";
       }
-      if (cache[ID]) {
-        let status = cache[ID];
-        uid++;
-        const svg = cur.querySelector("svg");
-        if (svg) {
-          if (svg.getAttribute("status") == status) {
-            continue;
-          }
-          svg.remove();
-          updateCnt++;
-        }
-        if (install_pos()) {
-          cur.innerHTML = (status == STATUS["AC"] ? problemFinsh() : status == STATUS["notac"] ? problemsTry() : problemsNo()) + cur.innerHTML;
-        } else {
-          cur.innerHTML = cur.innerHTML + (status == STATUS["AC"] ? problemFinsh() : status == STATUS["notac"] ? problemsTry() : problemsNo());
-        }
+      if (!cache[ID] || cache[ID] != STATUS["AC"] && asyncAc) {
+        queryStatus(ID, cache, cur, false);
       } else {
-        fetch("https://leetcode.cn/graphql/", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(postData(ID))
-        }).then((res) => res.json()).then((response) => {
-          var _a2, _b;
-          const status = (_b = (_a2 = response == null ? void 0 : response.data) == null ? void 0 : _a2.question) == null ? void 0 : _b.status;
-          if (status == STATUS["AC"]) {
-            cur.innerHTML = install_pos() ? problemFinsh() + cur.innerHTML : cur.innerHTML + problemFinsh();
-          } else if (status == STATUS["notac"]) {
-            cur.innerHTML = install_pos() ? problemsTry() + cur.innerHTML : cur.innerHTML + problemsTry();
-          } else {
-            if (problemsNo()) {
-              cur.innerHTML = install_pos() ? problemsNo() + cur.innerHTML : cur.innerHTML + problemsNo();
-            }
-          }
-          cache[ID] = status == null ? "null" : status;
-          if (cur.parentElement) {
-            cur.parentElement.status = cache[ID];
-          }
-        }).catch((ignore) => {
-        });
+        let status = cache[ID];
+        createStatus(status, cur);
       }
     }
-    console.log("cache num :", uid, ",update cnt", updateCnt, ",tot:", A.length);
     if (reload) {
       let cnt = 10;
       let timeId = setInterval(() => {
-        Cache$1.set(local_ok_problem_key, cache);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
         cnt--;
         if (cnt == 0) {
           window.clearInterval(timeId);
@@ -393,34 +457,40 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }, 3e3);
     }
   }
-  const submitProblems = (url = window.location.href) => {
+  const submitProblems = (url = window.location.href, timeout = 500) => {
     const ID = getId(url);
     if (!ID) {
       return;
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
-      console.log("ID:", ID, "query status: ", cache[ID]);
-      if (cache[ID] == void 0 || cache[ID] != STATUS["AC"]) {
-        fetch("https://leetcode.cn/graphql/", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(postData(ID))
-        }).then((res) => res.json()).then((response) => {
-          var _a, _b;
-          const status = (_b = (_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) == null ? void 0 : _b.status;
-          if (cache[ID] != status) {
-            cache[ID] = status == null ? "null" : status;
-            console.log("save local status :", cache[ID]);
-            Cache$1.set(local_ok_problem_key, cache);
-          }
-        }).catch((ignore) => {
-        });
+      queryStatus(ID, cache, void 0, true);
+    }, timeout);
+  };
+  const watchLinkStatusUpdate = (e) => {
+    var _a;
+    if (e.key != __0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"]) {
+      return;
+    }
+    let { id, status } = JSON.parse(e.newValue);
+    if (!id || !status) {
+      return;
+    }
+    let thisLink = `https://leetcode.cn/problems/${id}`;
+    let link = document.querySelector(`${linkCssSelector}[href^="https://leetcode.cn/problems/${id}"]`);
+    if (!link || !(link == null ? void 0 : link.parentElement)) {
+      let doms = loadProblems();
+      for (let i = 0; i < doms.length; i++) {
+        if (!doms[i] || !((_a = doms[i]) == null ? void 0 : _a.parentElement)) {
+          continue;
+        }
+        if (doms[i].href.indexOf(thisLink) != -1) {
+          link = doms[i];
+          break;
+        }
       }
-    }, 500);
+    }
+    createStatus(status, link);
   };
   function getProcess() {
     loadProblems();
@@ -435,7 +505,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return [cnt, A.length];
   }
   function getLocalProblemStatus() {
-    return Cache$1.get(local_ok_problem_key, true, Object.name);
+    return Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
   }
   const _hoisted_1 = { class: "processs-flex" };
   const _hoisted_2 = { style: { "text-align": "center", "color": "#121212" } };
@@ -454,13 +524,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         totProblem.value = tot;
       };
       const finishProcess = vue.computed(() => {
+        let p;
         try {
           const s = String(finishProblem.value / totProblem.value);
           let x1 = s.split(".")[1].padEnd(3).substring(0, 3);
-          return Math.min(100, Number(x1) / 10);
+          p = Math.min(100, Number(x1) / 10);
         } catch (e) {
-          return (finishProblem.value / totProblem.value).toFixed(3) * 100;
+          p = (finishProblem.value / totProblem.value).toFixed(3) * 100;
         }
+        return isNaN(p) ? 0 : p;
       });
       const processColors = [
         { color: "#f56c6c", percentage: 20 },
@@ -493,7 +565,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       const updateIndex = vue.ref(-1);
       const showProblems = () => {
         dialogTableVisible.value = true;
-        let o = Cache$1.get(__add_cur__) == "true" || Cache$1.get(__add_cur__) == true;
+        let o = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"]) == "true" || Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"]) == true;
         if (o) {
           addlocal();
         }
@@ -531,18 +603,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
       const deleteProblems = (index) => {
         tableData.splice(index, 1);
-        Cache$1.set(__0x3f_problmes_urls__, vue.toRaw(tableData));
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
       };
       const handlerDefault = () => {
-        ElementPlus.ElMessageBox.confirm(
-          "确认使用默认题单，将会重置题单?",
-          "警告",
-          {
-            confirmButtonText: "确认",
-            cancelButtonText: "取消",
-            type: "warning"
-          }
-        ).then(() => {
+        Message("确认使用默认题单，将会重置题单", () => {
           for (let i = 0; i < tableData.length; i++) {
             delete tableData[i];
           }
@@ -553,17 +617,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             type: "success",
             message: "重置成功"
           });
-        }).catch(() => {
-          ElementPlus.ElMessage({
-            type: "info",
-            message: "取消重置"
-          });
+        });
+      };
+      const asyncLocalStatus = () => {
+        Message("确认同步题单", () => {
+          addProcess(true, void 0, true);
         });
       };
       window.addEventListener("beforeunload", () => {
-        Cache$1.set(__0x3f_problmes_urls__, vue.toRaw(tableData).filter((u) => u != null && u != void 0));
-        Cache$1.set(__0x3f_problmes_update__, true);
-        Cache$1.set(__add_cur__, false);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData).filter((u) => u != null && u != void 0));
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], false);
       });
       vue.onMounted(() => {
         if (support_plugins()) {
@@ -580,9 +644,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               window.clearInterval(loadTimeId);
             }
           }, 200);
-          setInterval(() => {
-            addProcess(false);
-          }, 1e3 * 30);
+          window.addEventListener("storage", (e) => {
+            watchLinkStatusUpdate(e);
+          });
         }
       });
       const q1 = vue.ref(false);
@@ -602,27 +666,27 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         const _component_el_table_column = vue.resolveComponent("el-table-column");
         const _component_el_table = vue.resolveComponent("el-table");
         const _component_el_drawer = vue.resolveComponent("el-drawer");
-        return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
-          vue.createElementVNode("div", null, [
-            vue.createVNode(_component_el_button, {
-              type: "primary",
-              style: {},
-              onClick: viewSetting,
-              class: "m-setting-button m-button",
-              circle: "",
-              size: "large"
-            }, {
-              default: vue.withCtx(() => [
-                vue.createTextVNode(" 0X3F ")
-              ]),
-              _: 1
-            })
-          ]),
+        return vue.openBlock(), vue.createElementBlock("div", null, [
+          vue.createVNode(_component_el_button, {
+            type: "primary",
+            style: {},
+            onClick: viewSetting,
+            class: "m-setting-button m-button",
+            circle: "",
+            size: "large"
+          }, {
+            default: vue.withCtx(() => [
+              vue.createTextVNode(" 0X3F ")
+            ]),
+            _: 1
+          }),
           vue.createVNode(_component_el_drawer, {
             modelValue: drawer.value,
             "onUpdate:modelValue": _cache[17] || (_cache[17] = ($event) => drawer.value = $event),
+            size: "30%",
             "with-header": false,
-            size: "30%"
+            style: { "position": "fixed !important" },
+            direction: "rtl"
           }, {
             default: vue.withCtx(() => [
               vue.createElementVNode("div", _hoisted_1, [
@@ -735,6 +799,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                 vue.createVNode(_component_el_divider),
                 vue.createVNode(_component_el_button, {
                   plain: "",
+                  onClick: asyncLocalStatus
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode(" 同步本页题目状态 ")
+                  ]),
+                  _: 1
+                }),
+                vue.createVNode(_component_el_button, {
+                  plain: "",
                   onClick: showProblems
                 }, {
                   default: vue.withCtx(() => [
@@ -753,7 +826,21 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                 ]),
                 _: 1
               }),
-              vue.createVNode(_component_el_divider),
+              vue.createVNode(_component_el_tooltip, { content: "此功能是为了多刷题单，重置题目状态，敬请期待!" }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_el_button, {
+                    plain: "",
+                    type: "warning",
+                    disabled: true
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createTextVNode(" 题单重置 ")
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              }),
               vue.createVNode(_component_el_dialog, {
                 modelValue: q1.value,
                 "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => q1.value = $event),
@@ -944,11 +1031,11 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             ]),
             _: 1
           }, 8, ["modelValue"])
-        ], 64);
+        ]);
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-37449578"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-3dc7143a"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
@@ -979,16 +1066,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       return;
     }
     const use = Cache$1.get(stopRankingKey);
+    if (use) {
+      conetstTimeId = setInterval(() => {
+        run$1();
+      }, 10);
+    }
     _GM_registerMenuCommand(`${use ? "使用" : "关闭"} 排行榜`, () => {
       Cache$1.set(stopRankingKey, !use);
       window.location.reload();
     }, { title: "对于不想看到排行榜的可以使用此功能 默认开启" });
-    if (!use) {
-      return;
-    }
-    conetstTimeId = setInterval(() => {
-      run$1();
-    }, 10);
   }
   const local_url = window.location.href;
   let loadID = 0;
@@ -1029,6 +1115,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }
         }
         if (submitbutton) {
+          submitbutton.addEventListener("click", () => {
+            submitProblems(local_url, 10 * 1e3);
+          });
           watchDom(submitbutton);
         } else if (loadID < 10) {
           run();
@@ -1036,7 +1125,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }, 3e3);
     } else if (isLeetCodeCircleUrl(local_url)) {
       let Container = null;
-      let ok = Cache$1.get(__is_none_0x3f_problmes_button__, true, Boolean.name);
+      let ok = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], true, Boolean.name);
       const start = () => {
         Container = document.createElement("div");
         const body = document.querySelector("body");
@@ -1049,18 +1138,29 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       _GM_registerMenuCommand(`${ok ? "隐藏按钮" : "显示按钮"}`, () => {
         ok = !ok;
         Container.style.display = ok ? "block" : "none";
-        Cache$1.set(__is_none_0x3f_problmes_button__, ok);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], ok);
       }, { title: "可以手动关闭或者显示按钮 默认显示 刷新生效" });
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"}`, () => {
-        Cache$1.set(__0x3f_problmes_ok_insert_pos__, install_pos());
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();
       }, { title: "AC标记安装位置，默认左侧，刷新生效" });
+      _GM_registerMenuCommand(`清空题目状态缓存`, () => {
+        Message("确认清空题目状态缓存", () => {
+          Cache$1.remove(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"]);
+          window.location.reload();
+        });
+      }, { title: "如果题目状态出现问题，可以试试,一般情况下不建议使用" });
+      _GM_registerMenuCommand(`同步题目状态`, () => {
+        Message("确认同步题目状态", () => {
+          addProcess(true, void 0, true);
+        });
+      }, { title: "如果不在同一个浏览器答题，会出现ac题目状态没有及时同步，可以使用此功能" });
       _GM_registerMenuCommand(`${initObj().onlyUrls ? "仅在收藏题单页面生效" : "所有题单生效"}`, () => {
         const u = initObj();
         u.onlyUrls = !u.onlyUrls;
         Container.style.display = support_plugins() ? "block" : "none";
-        Cache$1.set(__0x3f_problmes_solution__, u);
-      });
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], u);
+      }, { title: "插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能" });
       _GM_registerMenuCommand(`添加本页`, () => {
         const urls = initUrls();
         let ok2 = false;
@@ -1092,9 +1192,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             link: url
           });
           Container.style.display = "block";
-          Cache$1.set(__0x3f_problmes_urls__, urls);
-          Cache$1.set(__0x3f_problmes_update__, true);
-          Cache$1.set(__add_cur__, true);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], urls);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], true);
           ElementPlus.ElMessage({
             message: "收藏成功！刷新生效",
             type: "success"
