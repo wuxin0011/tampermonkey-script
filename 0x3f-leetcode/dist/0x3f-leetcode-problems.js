@@ -1154,7 +1154,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         Message("确认同步题目状态", () => {
           addProcess(true, void 0, true);
         });
-      }, { title: "如果不在同一个浏览器答题，会出现ac题目状态没有及时同步，可以使用此功能" });
+      }, { title: "如果不在同一个浏览器答题,或者关闭了改插件，会出现ac题目状态没有及时同步，可以使用此功能" });
       _GM_registerMenuCommand(`${initObj().onlyUrls ? "仅在收藏题单页面生效" : "所有题单生效"}`, () => {
         const u = initObj();
         u.onlyUrls = !u.onlyUrls;

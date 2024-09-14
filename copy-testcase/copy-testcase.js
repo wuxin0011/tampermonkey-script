@@ -4,7 +4,6 @@
 // @version      0.0.1
 // @description  一键复制所有样例输入
 // @author       wuxin0011
-// @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
 // @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
@@ -43,7 +42,6 @@
         if (!input) {
             input = text.match(inputRegexEn)
             if (!input) {
-                // console.log('result not match error')
                 return ans
             }
             isEngLish = true
@@ -124,7 +122,7 @@
             console.error("NOT Find dom selector ", selector)
         } else {
             let result;
-            for (let sel of ['.example-block', 'pre']) {
+            for (let sel of ['.example-block', 'pre','blockquote']) {
                 result = getTestCase(sel)
                 let temp = result.join('\n').replace('\n', '')
                 if (temp && temp.indexOf(copyErrorFlag) == -1) {
@@ -137,12 +135,15 @@
     }
 
     function copyTestCase() {
-        var defaultSelector = 'div[data-track-load="description_content"]'
-        var contestSelector = '.question-content.source-content'
-        var testCases = parseExampleInputOutPut(document.querySelector(defaultSelector) ? defaultSelector : contestSelector)
-        let ok = testCases && testCases.indexOf(copyErrorFlag) == -1
-        if (ok) {
-            GM_setClipboard(testCases);
+        let selectors = ['div[data-track-load="description_content"]','.question-content.source-content','#qd-content .FN9Jv']
+        let ok = false
+        for(let selector of selectors ) {
+            var testCases = parseExampleInputOutPut(selector)
+            ok = testCases && testCases.indexOf(copyErrorFlag) == -1
+            if (ok) {
+                GM_setClipboard(testCases);
+                break
+            }
         }
         new Noty({
             type: `${ok ? 'success' : 'error'}`,
@@ -151,6 +152,7 @@
             timeout: 2000
         }).show();
         return ok
+        
     }
     GM_registerMenuCommand("复制样例", copyTestCase);
 })();

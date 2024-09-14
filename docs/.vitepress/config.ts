@@ -39,6 +39,8 @@ export default defineConfig({
           { text: '直播插件', link: '/plugins/live-plugins' },
           { text: '弹幕屏蔽插件', link: '/plugins/barrage-keywords-stop' },
           { text: '力扣内容转换插件', link: '/plugins/lc-to-markdown-txt-html' },
+          { text: '案例复制', link: '/plugins/copy-tesdtcase' },
+          { text: '灵茶题单插件', link: '/plugins/0x3f-problem-solution' },
         ]
       },
       {
