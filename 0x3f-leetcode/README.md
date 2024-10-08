@@ -46,9 +46,8 @@
 
 全屏演示
 
-![image.png](https://scriptcat.org/api/v2/resource/image/rrnV2e22Fwn4GmNm)
 
-
+![image.png](https://scriptcat.org/api/v2/resource/image/W9jkSuunBxtnwyJo)
 
 
 ### 安装地址
@@ -56,3 +55,8 @@
 
 - [油猴](https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution)
 - [脚本猫](https://scriptcat.org/zh-CN/script-show-page/1967)
+
+### 其他
+
+- [反馈](https://wuxin0011.github.io/tampermonkey-script/plugins/0x3f-problem-solution.html)
+- [github](https://github.com/wuxin0011/tampermonkey-script/tree/main/0x3f-leetcode)

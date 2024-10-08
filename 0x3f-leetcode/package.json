@@ -1,7 +1,7 @@
 {
   "name": "0x3f-problem-solution",
   "private": false,
-  "version": "0.0.4.4",
+  "version": "0.0.4.5",
   "author": "wuxin0011",
   "type": "module",
   "description": "自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题",
@@ -16,7 +16,12 @@
     "vue": "^3.4.27"
   },
   "repository": {
-    "url": "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution"
+    "url": "https://github.com/wuxin0011/tampermonkey-script/tree/main/0x3f-leetcode",
+    "downloadURL": "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution",
+    "updateURL": "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution"
+  },
+  "bugs": {
+    "url": "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

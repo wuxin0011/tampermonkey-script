@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import CopyTestCase from './copy-run/CopyTestCase.vue';
 import ElementPlus from 'element-plus'
 
 import 'element-plus/dist/index.css'
@@ -17,6 +18,7 @@ import {
 import {
   startStopRanking
 } from './utils/contest'
+
 const local_url = window.location.href
 let loadID = 0
 let submitCnt = 0
@@ -38,12 +40,26 @@ function watchDom(dom) {
   })
 }
 
+const isTest = true
+
 function run() {
   loadID++
   if (isProblem(local_url) || isContest(local_url)) {
     // 首次加载访问
     if (isProblem(local_url) && loadID == 1) {
       submitProblems(local_url)
+    }
+
+
+
+    if (!isTest && isProblem() && !document.querySelector('.copy-run-container')) {
+      // TODO 测试阶段功能暂时不发布
+      let con = document.createElement('div');
+      con.className = 'copy-run-container'
+      const body = document.querySelector('body')
+      body.append(con)
+      const VueApp = createApp(CopyTestCase)
+      VueApp.use(ElementPlus).mount(con)
     }
 
     setTimeout(() => {
@@ -169,14 +185,11 @@ function run() {
     })
 
     VueApp.use(ElementPlus).mount(dom)
-
-
   }
 
 }
 run()
 startStopRanking()
-
 
 
 

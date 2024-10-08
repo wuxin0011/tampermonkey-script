@@ -18,10 +18,13 @@ export default defineConfig({
       userscript: {
         icon: 'https://assets.leetcode.cn/aliyun-lc-upload/users/endlesscheng/avatar_1690721039.png',
         match: ['https://leetcode.cn/circle/discuss/*','https://leetcode.cn/problems/*','https://leetcode.cn/contest/weekly-contest-*/problems/*','https://leetcode.cn/contest/biweekly-contest-*/problems/*'],
-        namespace: config.repository.url,
+        namespace: config.repository.downloadURL,
+        source: config.repository.url,
         version: config.version,
         description: config.description,
         author: config.author,
+        downloadURL: config.repository.downloadURL,
+        updateURL: config.repository.updateURL,
       },
       build: {
         externalGlobals: {

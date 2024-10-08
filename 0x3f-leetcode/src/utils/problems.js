@@ -132,7 +132,34 @@ export function handlerProblem(data) {
 
 }
 
-export const initUrls = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true, Boolean.name) ? Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], true, Array.name) : defaultUrls
+
+export function computeAcInfo(saveUrls = [], deleteOk = true) {
+    let infos = []
+    console.log('saveUrls', saveUrls)
+    for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
+        try {
+            u = saveUrls[i]
+            if (!u || !u?.link) continue
+            let s = Object.values(u).join('')
+            if (s == 'null' || !Cache.get(u.link) || !getAcCountKey(u.link) || !Cache.get(getAcCountKey(u.link))) {
+                continue
+            }
+            let o = Cache.get(getAcCountKey(u.link))
+            u['ac'] = isNaN(o['ac']) ? 0 : parseInt(o['ac'])
+            u['tot'] = isNaN(o['tot']) ? 0 : parseInt(o['tot'])
+        } catch (e) {
+
+        }
+        infos.push(Object.assign({}, u))
+    }
+    return infos
+}
+
+export const initUrls = () => {
+    let saveUrls = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true, Boolean.name) ? Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], true, Array.name) : defaultUrls
+    // console.log('infos=>', saveUrls)
+    return computeAcInfo(saveUrls)
+}
 export const initObj = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__']) ? Object.assign(defaultObj, Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'])) : defaultObj
 
 
@@ -169,12 +196,21 @@ export const support_plugins = () => {
 // 默认题单url
 export const defaultUrls = [
     {
+        title: '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）',
+        link: 'https://leetcode.cn/circle/discuss/SJFwQI/',
+        cnt: 0,
+        ac: 0
+    }, {
         title: '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）',
         link: 'https://leetcode.cn/circle/discuss/K0n2gO/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）',
         link: 'https://leetcode.cn/circle/discuss/g6KTKL/',
+        cnt: 0,
+        ac: 0
     }, {
         title: '滑动窗口（定长/不定长/多指针）',
         link: 'https://leetcode.cn/circle/discuss/0viNMK/',
@@ -182,34 +218,50 @@ export const defaultUrls = [
     {
         title: '二分算法（二分答案/最小化最大值/最大化最小值/第K小）',
         link: 'https://leetcode.cn/circle/discuss/SqopEo/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '单调栈（矩形面积/贡献法/最小字典序）',
         link: 'https://leetcode.cn/circle/discuss/9oZFK9/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '网格图（DFS/BFS/综合应用）',
         link: 'https://leetcode.cn/circle/discuss/YiXPXW/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）',
         link: 'https://leetcode.cn/circle/discuss/dHn9Vk/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）',
         link: 'https://leetcode.cn/circle/discuss/01LUak/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）',
         link: 'https://leetcode.cn/circle/discuss/tXLS3i/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）',
         link: 'https://leetcode.cn/circle/discuss/mOr1u6/',
+        cnt: 0,
+        ac: 0
     },
     {
         title: '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）',
         link: 'https://leetcode.cn/circle/discuss/IYT3ss/',
+        cnt: 0,
+        ac: 0
     }
 ]
 
@@ -367,6 +419,11 @@ export const watchLinkStatusUpdate = (e) => {
     createStatus(status, link)
 }
 
+export function getAcCountKey(k) {
+    if (!k) return ''
+    return `0x3f_ac_key_${k}`
+}
+
 
 // 查看当前进度
 export function getProcess() {
@@ -379,6 +436,9 @@ export function getProcess() {
             cnt++
         }
     }
+    let url = window.location.href
+    // 判断是不是收藏的题单
+    Cache.set(getAcCountKey(url), { "tot": A.length, "ac": cnt })
     return [cnt, A.length]
 }
 

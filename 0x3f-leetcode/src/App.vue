@@ -3,6 +3,7 @@ import { reactive, ref, watch, toRaw, computed, onMounted } from 'vue'
 import Cache from './utils/cache'
 import { ElMessage } from 'element-plus'
 import Q1 from './components/Q1.vue'
+import Q2 from './components/Q2.vue'
 import { Message } from './utils/message'
 import {
   handlerProblem,
@@ -14,33 +15,69 @@ import {
   getProcess,
   defaultUrls,
   queryProblem,
-  __0X3F_PROBLEM_KEYS__
+  __0X3F_PROBLEM_KEYS__,
+  computeAcInfo,
+  getAcCountKey
 } from './utils/problems'
 
 
 const isTest = false
 
+let tableData = reactive(initUrls())
+const keywords = ref('')
+const dialogTableVisible = ref(false)
+let urlsData = computed(() => {
+  let infos = computeAcInfo(tableData, false)
+  let tot = 0, ac = 0
+  for (let info of infos) {
+    if (info['ac'] && info['tot']) {
+      tot += info['tot']
+      ac += info['ac']
+    }
+  }
+  infos.unshift({ 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': tot, 'ac': ac })
+  return infos
+})
+const isDisabbled = computed(() => !!tableData.find(v => v?.link && v?.link.indexOf(window.location.href) != -1))
+const dialogFormVisible = ref(false)
 let totProblem = ref(0)
 let finishProblem = ref(0)
 const drawer = ref(false)
+
+
+
 const viewSetting = () => {
   drawer.value = !drawer.value
   let [cur, tot] = getProcess()
   finishProblem.value = cur
   totProblem.value = tot
+  let url = window.location.href
+  // console.log('tableData', tableData)
+  let pos = tableData.findIndex(u => !!u && u.link && u.link.indexOf(url) != -1)
+  // console.log('pos', pos)
+  if (url && pos != -1 && tableData[pos]) {
+    tableData[pos]['ac'] = cur
+    tableData[pos]['tot'] = tot
+  }
+  // computeAcInfo(tableData)
 }
 
-const finishProcess = computed(() => {
-  let p;
+
+const computeProcess = (ac = 0, tot = 0) => {
+  if (isNaN(ac) || isNaN(tot)) return 0
+  if (tot == 0) return 0
+  let p = 0
   try {
-    const s = String(finishProblem.value / totProblem.value)
+    const s = String(ac / tot)
     let x1 = s.split('.')[1].padEnd(3).substring(0, 3)
     p = Math.min(100, Number(x1) / 10)
   } catch (e) {
-    p = (finishProblem.value / totProblem.value).toFixed(3) * 100;
+    p = (ac / tot).toFixed(3) * 100;
   }
   return isNaN(p) ? 0 : p
-})
+}
+
+const finishProcess = computed(() => computeProcess(finishProblem.value, totProblem.value))
 const processColors = [
   { color: '#f56c6c', percentage: 20 },
   { color: '#1989fa', percentage: 40 },
@@ -54,12 +91,7 @@ watch(fromData, () => {
   handlerProblem(toRaw(Object.assign({}, fromData)))
 })
 
-let tableData = reactive(initUrls())
-const keywords = ref('')
-const dialogTableVisible = ref(false)
-const urlsData = computed(() => tableData.filter(v => v && v.title && v.title.indexOf(keywords.value) != -1))
-const isDisabbled = computed(() => !!tableData.find(v => v?.link && v?.link.indexOf(window.location.href) != -1))
-const dialogFormVisible = ref(false)
+
 const formLabelWidth = '44px'
 const info = reactive({
   title: '',
@@ -72,7 +104,8 @@ const addlocal = () => {
   if (!isDisabbled) {
     return
   }
-  tableData.unshift({ title: document.title, link: window.location.href })
+  let [cur, tot] = getProcess()
+  tableData.unshift({ title: document.title, link: window.location.href, 'ac': cur, 'tot': tot })
 }
 
 const updateIndex = ref(-1)
@@ -107,7 +140,7 @@ const addOrUpdate = () => {
     return
   }
   if (info.status == 'add') {
-    tableData.unshift({ title: info.title, link: info.link })
+    tableData.unshift({ title: info.title, link: info.link, 'ac': 0, 'tot': 0 })
   } else {
     let index = updateIndex.value
     if (index != -1 && index < tableData.length) {
@@ -128,7 +161,8 @@ const handlerDefault = () => {
     for (let i = 0; i < tableData.length; i++) {
       delete tableData[i]
     }
-    for (let item of defaultUrls) {
+    let infos = computeAcInfo(defaultUrls)
+    for (let item of infos) {
       tableData.unshift(item)
     }
     ElMessage({
@@ -179,6 +213,7 @@ onMounted(() => {
 
 
 const q1 = ref(false)
+const q2 = ref(false)
 
 </script>
 
@@ -248,6 +283,10 @@ const q1 = ref(false)
         <el-dialog v-model="q1" title="关于查询状态会不会被封号 ？">
           <Q1 />
         </el-dialog>
+        <el-dialog v-model="q2" title="相关问题 ？">
+          <Q2 />
+        </el-dialog>
+
 
         <el-dialog v-model="dialogTableVisible" title="题单">
           <el-row :gutter="10">
@@ -264,20 +303,42 @@ const q1 = ref(false)
               <el-button plain @click="handlerDefault">
                 默认
               </el-button>
+              <el-button plain @click="q2 = !q2">
+                相关问题
+              </el-button>
             </el-col>
           </el-row>
           <el-table :data="urlsData" height="300" style="width: 100%;margin-top: 10px;">
             <el-table-column label="标题" width="auto" align="center">
-              <template #default="scope"> <el-link :href="scope.row.link" target="_blank" type="default">{{
+              <template #default="scope"> <el-link :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'" :href="scope.row.link" target="_blank" type="default">{{
                 scope.row.title
-                  }}</el-link></template>
+              }}</el-link></template>
 
             </el-table-column>
-            <el-table-column label="操作" width="auto" align="center">
+            <el-table-column label="AC" width="80" align="center">
+              <template #default="scope">
+                {{ isNaN(scope.row.ac) ? 0 : scope.row.ac }}
+              </template>
+
+            </el-table-column>
+            <el-table-column label="Total" width="80" align="center">
+              <template #default="scope">
+                {{ isNaN(scope.row.tot) ? 0 : scope.row.tot }}
+              </template>
+            </el-table-column>
+            <el-table-column label="process" width="80" align="center">
+              <template #default="scope">
+                {{ scope?.row?.tot == 0 ? 0 :`${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}
+              </template>
+            </el-table-column>
+
+            <el-table-column label="操作" width="150" align="center">
               <template #default="scope">
                 <el-button type="primary" size="small"
+                  :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'"
                   @click="handlerProblems('update', scope.row, scope.$index)">编辑</el-button>
-                <el-button type="danger" size="small" @click="deleteProblems(scope.$index)">删除</el-button>
+                <el-button :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'" type="danger"
+                  size="small" @click="deleteProblems(scope.$index)">删除</el-button>
               </template>
 
             </el-table-column>
