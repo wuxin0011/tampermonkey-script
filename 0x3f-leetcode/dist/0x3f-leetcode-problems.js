@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.4.5
+// @version      0.0.4.6
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-f382fe90]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-f382fe90]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-f382fe90]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-0c5bdd44]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-0c5bdd44]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-0c5bdd44]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -320,11 +320,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   function computeAcInfo(saveUrls = [], deleteOk = true) {
     let infos = [];
-    console.log("saveUrls", saveUrls);
     for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
       try {
         u = saveUrls[i];
         if (!u || !(u == null ? void 0 : u.link)) continue;
+        if (!u["id"]) {
+          u["id"] = i + 1;
+        }
         let s = Object.values(u).join("");
         if (s == "null" || !Cache$1.get(u.link) || !getAcCountKey(u.link) || !Cache$1.get(getAcCountKey(u.link))) {
           continue;
@@ -335,6 +337,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       } catch (e) {
       }
       infos.push(Object.assign({}, u));
+    }
+    if (deleteOk) {
+      for (let i = 0; i < saveUrls[i]; i++) {
+        delete saveUrls[i];
+      }
+      for (let info of infos) {
+        saveUrls.push(info);
+      }
     }
     return infos;
   }
@@ -367,74 +377,85 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   };
   const defaultUrls = [
     {
-      title: "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
-      link: "https://leetcode.cn/circle/discuss/SJFwQI/",
+      title: "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）",
+      link: "https://leetcode.cn/circle/discuss/IYT3ss/",
       cnt: 0,
-      ac: 0
-    },
-    {
-      title: "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
-      link: "https://leetcode.cn/circle/discuss/K0n2gO/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
-      link: "https://leetcode.cn/circle/discuss/g6KTKL/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "滑动窗口（定长/不定长/多指针）",
-      link: "https://leetcode.cn/circle/discuss/0viNMK/"
-    },
-    {
-      title: "二分算法（二分答案/最小化最大值/最大化最小值/第K小）",
-      link: "https://leetcode.cn/circle/discuss/SqopEo/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "单调栈（矩形面积/贡献法/最小字典序）",
-      link: "https://leetcode.cn/circle/discuss/9oZFK9/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "网格图（DFS/BFS/综合应用）",
-      link: "https://leetcode.cn/circle/discuss/YiXPXW/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
-      link: "https://leetcode.cn/circle/discuss/dHn9Vk/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
-      link: "https://leetcode.cn/circle/discuss/01LUak/",
-      cnt: 0,
-      ac: 0
-    },
-    {
-      title: "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
-      link: "https://leetcode.cn/circle/discuss/tXLS3i/",
-      cnt: 0,
-      ac: 0
+      ac: 1
     },
     {
       title: "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
       link: "https://leetcode.cn/circle/discuss/mOr1u6/",
       cnt: 0,
-      ac: 0
+      ac: 0,
+      id: 2
     },
     {
-      title: "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）",
-      link: "https://leetcode.cn/circle/discuss/IYT3ss/",
+      title: "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
+      link: "https://leetcode.cn/circle/discuss/tXLS3i/",
       cnt: 0,
-      ac: 0
+      ac: 0,
+      id: 3
+    },
+    {
+      title: "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
+      link: "https://leetcode.cn/circle/discuss/01LUak/",
+      cnt: 0,
+      ac: 0,
+      id: 4
+    },
+    {
+      title: "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
+      link: "https://leetcode.cn/circle/discuss/dHn9Vk/",
+      cnt: 0,
+      ac: 5
+    },
+    {
+      title: "网格图（DFS/BFS/综合应用）",
+      link: "https://leetcode.cn/circle/discuss/YiXPXW/",
+      cnt: 0,
+      ac: 0,
+      id: 6
+    },
+    {
+      title: "单调栈（矩形面积/贡献法/最小字典序）",
+      link: "https://leetcode.cn/circle/discuss/9oZFK9/",
+      cnt: 0,
+      ac: 7
+    },
+    {
+      title: "二分算法（二分答案/最小化最大值/最大化最小值/第K小）",
+      link: "https://leetcode.cn/circle/discuss/SqopEo/",
+      cnt: 0,
+      ac: 0,
+      id: 8
+    },
+    {
+      title: "滑动窗口（定长/不定长/多指针）",
+      link: "https://leetcode.cn/circle/discuss/0viNMK/",
+      cnt: 0,
+      ac: 0,
+      id: 9
+    },
+    {
+      title: "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
+      link: "https://leetcode.cn/circle/discuss/g6KTKL/",
+      cnt: 0,
+      ac: 0,
+      id: 10
+    },
+    {
+      title: "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
+      link: "https://leetcode.cn/circle/discuss/K0n2gO/",
+      cnt: 0,
+      ac: 0,
+      id: 11
+    },
+    {
+      title: "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
+      link: "https://leetcode.cn/circle/discuss/SJFwQI/",
+      cnt: 0,
+      ac: 0,
+      id: 12
     }
   ];
   function getId(problemUrl) {
@@ -514,10 +535,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         createStatus(status, cur);
       }
     }
+    getProcess();
     if (reload) {
       let cnt = 10;
       let timeId = setInterval(() => {
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+        getProcess();
         cnt--;
         if (cnt == 0) {
           window.clearInterval(timeId);
@@ -588,19 +611,35 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const _sfc_main = {
     __name: "App",
     setup(__props) {
+      const sortType = vue.ref(0);
       let tableData = vue.reactive(initUrls());
       const keywords = vue.ref("");
       const dialogTableVisible = vue.ref(false);
       let urlsData = vue.computed(() => {
-        let infos = computeAcInfo(tableData, false);
-        let tot = 0, ac = 0;
-        for (let info2 of infos) {
+        let infos = computeAcInfo(tableData, false).filter((info2) => info2 && (info2.title && info2.title.indexOf(keywords.value) != -1 || info2.link && info2.link.indexOf(keywords.value) != -1));
+        let tot = 0, ac = 0, c = 0;
+        for (let i = 0, c2 = info.length; i < infos.length; i++) {
+          let info2 = infos[i];
           if (info2["ac"] && info2["tot"]) {
             tot += info2["tot"];
             ac += info2["ac"];
           }
+          if (!info2["id"]) {
+            info2["id"] = c2 + 1;
+            c2++;
+          }
         }
-        infos.unshift({ "title": "灵茶题单完成情况", "link": "https://leetcode.cn/u/endlesscheng/", "tot": tot, "ac": ac });
+        let type = sortType.value;
+        if (type == 0) {
+          infos.sort((info1, info2) => info2.id - info1.id);
+        } else if (type == 1) {
+          infos.sort((info1, info2) => info2.tot - info1.tot);
+        } else if (type == 2) {
+          infos.sort((info1, info2) => info2.ac - info1.ac);
+        } else if (type == 3) {
+          infos.sort((info1, info2) => computeProcess(info2.ac, info2.tot) - computeProcess(info1.ac, info1.tot));
+        }
+        infos.unshift({ "title": "灵茶题单完成情况", "link": "https://leetcode.cn/u/endlesscheng/", "tot": tot, "ac": ac, "id": c + 10 });
         return infos;
       });
       const isDisabbled = vue.computed(() => !!tableData.find((v) => (v == null ? void 0 : v.link) && (v == null ? void 0 : v.link.indexOf(window.location.href)) != -1));
@@ -613,12 +652,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         let [cur, tot] = getProcess();
         finishProblem.value = cur;
         totProblem.value = tot;
-        let url = window.location.href;
-        let pos = tableData.findIndex((u) => !!u && u.link && u.link.indexOf(url) != -1);
-        if (url && pos != -1 && tableData[pos]) {
-          tableData[pos]["ac"] = cur;
-          tableData[pos]["tot"] = tot;
-        }
+        computeAcInfo(tableData, false);
       };
       const computeProcess = (ac = 0, tot = 0) => {
         if (isNaN(ac) || isNaN(tot)) return 0;
@@ -655,7 +689,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           return;
         }
         let [cur, tot] = getProcess();
-        tableData.unshift({ title: document.title, link: window.location.href, "ac": cur, "tot": tot });
+        tableData.unshift({ title: document.title, link: window.location.href, "ac": cur, "tot": tot, "id": tableData.length + 10 });
       };
       const updateIndex = vue.ref(-1);
       const showProblems = () => {
@@ -664,6 +698,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (o) {
           addlocal();
         }
+        computeAcInfo(tableData, false);
       };
       const handlerProblems = (status, updateInfo = { title: "", link: "" }, index = -1) => {
         dialogFormVisible.value = true;
@@ -686,7 +721,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           return;
         }
         if (info.status == "add") {
-          tableData.unshift({ title: info.title, link: info.link, "ac": 0, "tot": 0 });
+          tableData.unshift({ title: info.title, link: info.link, "ac": 0, "tot": 0, "id": tableData.length + 10 });
         } else {
           let index = updateIndex.value;
           if (index != -1 && index < tableData.length) {
@@ -758,6 +793,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         const _component_el_tooltip = vue.resolveComponent("el-tooltip");
         const _component_el_form = vue.resolveComponent("el-form");
         const _component_el_dialog = vue.resolveComponent("el-dialog");
+        const _component_el_option = vue.resolveComponent("el-option");
+        const _component_el_select = vue.resolveComponent("el-select");
         const _component_el_row = vue.resolveComponent("el-row");
         const _component_el_link = vue.resolveComponent("el-link");
         const _component_el_table_column = vue.resolveComponent("el-table-column");
@@ -779,7 +816,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }),
           vue.createVNode(_component_el_drawer, {
             modelValue: drawer.value,
-            "onUpdate:modelValue": _cache[19] || (_cache[19] = ($event) => drawer.value = $event),
+            "onUpdate:modelValue": _cache[20] || (_cache[20] = ($event) => drawer.value = $event),
             size: "30%",
             "with-header": false,
             style: { "position": "fixed !important" },
@@ -960,13 +997,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               }, 8, ["modelValue"]),
               vue.createVNode(_component_el_dialog, {
                 modelValue: dialogTableVisible.value,
-                "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => dialogTableVisible.value = $event),
+                "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => dialogTableVisible.value = $event),
                 title: "题单"
               }, {
                 default: vue.withCtx(() => [
                   vue.createVNode(_component_el_row, { gutter: 10 }, {
                     default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_col, { span: 8 }, {
+                      vue.createVNode(_component_el_col, { span: 5 }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_input, {
                             modelValue: keywords.value,
@@ -977,7 +1014,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         ]),
                         _: 1
                       }),
-                      vue.createVNode(_component_el_col, { span: 16 }, {
+                      vue.createVNode(_component_el_col, { span: 19 }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_button, {
                             plain: "",
@@ -1015,7 +1052,52 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                               vue.createTextVNode(" 相关问题 ")
                             ]),
                             _: 1
-                          })
+                          }),
+                          vue.createVNode(_component_el_select, {
+                            modelValue: sortType.value,
+                            "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => sortType.value = $event),
+                            style: { "margin-left": "5px", "width": "100px" }
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createVNode(_component_el_option, {
+                                label: "默认排序",
+                                value: 0
+                              }, {
+                                default: vue.withCtx(() => [
+                                  vue.createTextVNode("默认排序")
+                                ]),
+                                _: 1
+                              }),
+                              vue.createVNode(_component_el_option, {
+                                label: "题目数量",
+                                value: 1
+                              }, {
+                                default: vue.withCtx(() => [
+                                  vue.createTextVNode("题目数量")
+                                ]),
+                                _: 1
+                              }),
+                              vue.createVNode(_component_el_option, {
+                                label: "AC数量",
+                                value: 2
+                              }, {
+                                default: vue.withCtx(() => [
+                                  vue.createTextVNode("AC数量")
+                                ]),
+                                _: 1
+                              }),
+                              vue.createVNode(_component_el_option, {
+                                label: "完成度",
+                                value: 3
+                              }, {
+                                default: vue.withCtx(() => [
+                                  vue.createTextVNode("完成度")
+                                ]),
+                                _: 1
+                              })
+                            ]),
+                            _: 1
+                          }, 8, ["modelValue"])
                         ]),
                         _: 1
                       })
@@ -1120,14 +1202,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               }, 8, ["modelValue"]),
               vue.createVNode(_component_el_dialog, {
                 modelValue: dialogFormVisible.value,
-                "onUpdate:modelValue": _cache[18] || (_cache[18] = ($event) => dialogFormVisible.value = $event),
+                "onUpdate:modelValue": _cache[19] || (_cache[19] = ($event) => dialogFormVisible.value = $event),
                 title: `${info.status == "add" ? "添加" : "编辑"}`,
                 width: "400"
               }, {
                 footer: vue.withCtx(() => [
                   vue.createElementVNode("div", _hoisted_3, [
                     vue.createVNode(_component_el_button, {
-                      onClick: _cache[17] || (_cache[17] = ($event) => dialogFormVisible.value = false)
+                      onClick: _cache[18] || (_cache[18] = ($event) => dialogFormVisible.value = false)
                     }, {
                       default: vue.withCtx(() => [
                         vue.createTextVNode("取消")
@@ -1155,7 +1237,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_input, {
                             modelValue: info.title,
-                            "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => info.title = $event),
+                            "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => info.title = $event),
                             autocomplete: "off"
                           }, null, 8, ["modelValue"])
                         ]),
@@ -1168,7 +1250,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_input, {
                             modelValue: info.link,
-                            "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => info.link = $event),
+                            "onUpdate:modelValue": _cache[17] || (_cache[17] = ($event) => info.link = $event),
                             autocomplete: "off"
                           }, null, 8, ["modelValue"])
                         ]),
@@ -1187,7 +1269,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-f382fe90"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0c5bdd44"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;

@@ -22,20 +22,40 @@ import {
 
 
 const isTest = false
-
+const sortType = ref(0)
 let tableData = reactive(initUrls())
 const keywords = ref('')
 const dialogTableVisible = ref(false)
+
 let urlsData = computed(() => {
-  let infos = computeAcInfo(tableData, false)
-  let tot = 0, ac = 0
-  for (let info of infos) {
+  let infos = computeAcInfo(tableData, false).filter(info=>info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
+  let tot = 0, ac = 0, c = 0
+  for (let i = 0, c = info.length; i < infos.length; i++) {
+    let info = infos[i]
     if (info['ac'] && info['tot']) {
       tot += info['tot']
       ac += info['ac']
     }
+    if (!info['id']) {
+      info['id'] = c + 1
+      c++
+    }
   }
-  infos.unshift({ 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': tot, 'ac': ac })
+  let type = sortType.value
+  if (type == 0) {
+    // 默认排序
+    infos.sort((info1, info2) => info2.id - info1.id)
+  } else if (type == 1) {
+    // 题目数量排序
+    infos.sort((info1, info2) => info2.tot - info1.tot)
+  } else if (type == 2) {
+    // ac数量排序
+    infos.sort((info1, info2) => info2.ac - info1.ac)
+  } else if (type == 3) {
+    // 完成度排序
+    infos.sort((info1, info2) => computeProcess(info2.ac, info2.tot) - computeProcess(info1.ac, info1.tot))
+  }
+  infos.unshift({ 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': tot, 'ac': ac, 'id': c + 10 })
   return infos
 })
 const isDisabbled = computed(() => !!tableData.find(v => v?.link && v?.link.indexOf(window.location.href) != -1))
@@ -51,15 +71,7 @@ const viewSetting = () => {
   let [cur, tot] = getProcess()
   finishProblem.value = cur
   totProblem.value = tot
-  let url = window.location.href
-  // console.log('tableData', tableData)
-  let pos = tableData.findIndex(u => !!u && u.link && u.link.indexOf(url) != -1)
-  // console.log('pos', pos)
-  if (url && pos != -1 && tableData[pos]) {
-    tableData[pos]['ac'] = cur
-    tableData[pos]['tot'] = tot
-  }
-  // computeAcInfo(tableData)
+  computeAcInfo(tableData, false)
 }
 
 
@@ -76,6 +88,8 @@ const computeProcess = (ac = 0, tot = 0) => {
   }
   return isNaN(p) ? 0 : p
 }
+
+
 
 const finishProcess = computed(() => computeProcess(finishProblem.value, totProblem.value))
 const processColors = [
@@ -105,7 +119,7 @@ const addlocal = () => {
     return
   }
   let [cur, tot] = getProcess()
-  tableData.unshift({ title: document.title, link: window.location.href, 'ac': cur, 'tot': tot })
+  tableData.unshift({ title: document.title, link: window.location.href, 'ac': cur, 'tot': tot, 'id': tableData.length + 10 })
 }
 
 const updateIndex = ref(-1)
@@ -116,6 +130,7 @@ const showProblems = () => {
   if (o) {
     addlocal()
   }
+  computeAcInfo(tableData, false)
 }
 
 const handlerProblems = (status, updateInfo = { title: '', link: '' }, index = -1) => {
@@ -140,7 +155,7 @@ const addOrUpdate = () => {
     return
   }
   if (info.status == 'add') {
-    tableData.unshift({ title: info.title, link: info.link, 'ac': 0, 'tot': 0 })
+    tableData.unshift({ title: info.title, link: info.link, 'ac': 0, 'tot': 0, 'id': tableData.length + 10 })
   } else {
     let index = updateIndex.value
     if (index != -1 && index < tableData.length) {
@@ -188,6 +203,8 @@ window.addEventListener('beforeunload', () => {
   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true)
   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_add_cur__'], false)
 })
+
+
 
 onMounted(() => {
   if (support_plugins()) {
@@ -290,10 +307,10 @@ const q2 = ref(false)
 
         <el-dialog v-model="dialogTableVisible" title="题单">
           <el-row :gutter="10">
-            <el-col :span="8">
+            <el-col :span="5">
               <el-input v-model="keywords" placeholder="请输入关键词过滤" clearable />
             </el-col>
-            <el-col :span="16">
+            <el-col :span="19">
               <el-button plain @click="addlocal" :disabled="isDisabbled">
                 添加本页
               </el-button>
@@ -306,13 +323,20 @@ const q2 = ref(false)
               <el-button plain @click="q2 = !q2">
                 相关问题
               </el-button>
+              <el-select v-model="sortType" style="margin-left:5px;width:100px;">
+                <el-option label="默认排序" :value="0">默认排序</el-option>
+                <el-option label="题目数量" :value="1">题目数量</el-option>
+                <el-option label="AC数量" :value="2">AC数量</el-option>
+                <el-option label="完成度" :value="3">完成度</el-option>
+              </el-select>
             </el-col>
           </el-row>
           <el-table :data="urlsData" height="300" style="width: 100%;margin-top: 10px;">
             <el-table-column label="标题" width="auto" align="center">
-              <template #default="scope"> <el-link :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'" :href="scope.row.link" target="_blank" type="default">{{
-                scope.row.title
-              }}</el-link></template>
+              <template #default="scope"> <el-link :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'"
+                  :href="scope.row.link" target="_blank" type="default">{{
+                    scope.row.title
+                  }}</el-link></template>
 
             </el-table-column>
             <el-table-column label="AC" width="80" align="center">
@@ -328,7 +352,7 @@ const q2 = ref(false)
             </el-table-column>
             <el-table-column label="process" width="80" align="center">
               <template #default="scope">
-                {{ scope?.row?.tot == 0 ? 0 :`${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}
+                {{ scope?.row?.tot == 0 ? 0 : `${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}
               </template>
             </el-table-column>
 
