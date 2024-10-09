@@ -47,7 +47,7 @@
 全屏演示
 
 
-![image.png](https://scriptcat.org/api/v2/resource/image/W9jkSuunBxtnwyJo)
+![image.png](https://scriptcat.org/api/v2/resource/image/GqyZC01mCoSX6OpL)
 
 
 ### 安装地址
