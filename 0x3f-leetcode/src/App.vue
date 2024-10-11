@@ -28,7 +28,7 @@ const keywords = ref('')
 const dialogTableVisible = ref(false)
 
 let urlsData = computed(() => {
-  let infos = computeAcInfo(tableData, false).filter(info=>info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
+  let infos = computeAcInfo(tableData, false).filter(info => info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
   let tot = 0, ac = 0, c = 0
   for (let i = 0, c = info.length; i < infos.length; i++) {
     let info = infos[i]
@@ -133,10 +133,10 @@ const showProblems = () => {
   computeAcInfo(tableData, false)
 }
 
-const handlerProblems = (status, updateInfo = { title: '', link: '' }, index = -1) => {
+const handlerProblems = (status, updateInfo = { title: '', link: '', id: 0 }, index = -1) => {
   dialogFormVisible.value = true
   info.status = status
-  updateIndex.value = index
+  updateIndex.value = updateInfo.id
   Object.assign(info, updateInfo)
 }
 const handlerMessage = (u, title, link) => {
@@ -157,17 +157,25 @@ const addOrUpdate = () => {
   if (info.status == 'add') {
     tableData.unshift({ title: info.title, link: info.link, 'ac': 0, 'tot': 0, 'id': tableData.length + 10 })
   } else {
-    let index = updateIndex.value
-    if (index != -1 && index < tableData.length) {
-      tableData[index].link = info.link
-      tableData[index].title = info.title
+    let id = updateIndex.value
+    for (let i = 0; i < tableData.length; i++) {
+      if (tableData[i]['id'] == id) {
+        tableData[i]['title'] = info.title
+        tableData[i]['link'] = info.link
+        break
+      }
     }
   }
   dialogFormVisible.value = false
 }
 
-const deleteProblems = (index) => {
-  tableData.splice(index, 1)
+const deleteProblems = (id) => {
+  for (let i = 0; i < tableData.length; i++) {
+    if (tableData[i]['id'] == id) {
+      delete tableData[i]
+      break
+    }
+  }
   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], toRaw(tableData))
 }
 
@@ -362,7 +370,7 @@ const q2 = ref(false)
                   :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'"
                   @click="handlerProblems('update', scope.row, scope.$index)">编辑</el-button>
                 <el-button :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'" type="danger"
-                  size="small" @click="deleteProblems(scope.$index)">删除</el-button>
+                  size="small" @click="deleteProblems(scope.row.id)">删除</el-button>
               </template>
 
             </el-table-column>

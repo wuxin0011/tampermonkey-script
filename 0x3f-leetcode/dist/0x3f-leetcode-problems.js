@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-0c5bdd44]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-0c5bdd44]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-0c5bdd44]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-0d8147ce]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-0d8147ce]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-0d8147ce]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -700,10 +700,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         }
         computeAcInfo(tableData, false);
       };
-      const handlerProblems = (status, updateInfo = { title: "", link: "" }, index = -1) => {
+      const handlerProblems = (status, updateInfo = { title: "", link: "", id: 0 }, index = -1) => {
         dialogFormVisible.value = true;
         info.status = status;
-        updateIndex.value = index;
+        updateIndex.value = updateInfo.id;
         Object.assign(info, updateInfo);
       };
       const handlerMessage = (u, title, link) => {
@@ -723,16 +723,24 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (info.status == "add") {
           tableData.unshift({ title: info.title, link: info.link, "ac": 0, "tot": 0, "id": tableData.length + 10 });
         } else {
-          let index = updateIndex.value;
-          if (index != -1 && index < tableData.length) {
-            tableData[index].link = info.link;
-            tableData[index].title = info.title;
+          let id = updateIndex.value;
+          for (let i = 0; i < tableData.length; i++) {
+            if (tableData[i]["id"] == id) {
+              tableData[i]["title"] = info.title;
+              tableData[i]["link"] = info.link;
+              break;
+            }
           }
         }
         dialogFormVisible.value = false;
       };
-      const deleteProblems = (index) => {
-        tableData.splice(index, 1);
+      const deleteProblems = (id) => {
+        for (let i = 0; i < tableData.length; i++) {
+          if (tableData[i]["id"] == id) {
+            delete tableData[i];
+            break;
+          }
+        }
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
       };
       const handlerDefault = () => {
@@ -1184,7 +1192,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                             disabled: scope.row.link == "https://leetcode.cn/u/endlesscheng/",
                             type: "danger",
                             size: "small",
-                            onClick: ($event) => deleteProblems(scope.$index)
+                            onClick: ($event) => deleteProblems(scope.row.id)
                           }, {
                             default: vue.withCtx(() => [
                               vue.createTextVNode("删除")
@@ -1269,7 +1277,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0c5bdd44"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0d8147ce"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
