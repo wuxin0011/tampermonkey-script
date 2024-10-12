@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.4.6
+// @version      0.0.5.0
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-0d8147ce]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-0d8147ce]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-0d8147ce]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-96f24e8f]{color:#000;margin:10px 0}em[data-v-96f24e8f]{color:red}h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-2f60b425]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-2f60b425]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-2f60b425]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -78,61 +78,7 @@
     }
   }
   const Cache$1 = new Cache();
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$2 = {};
-  const _hoisted_1$2 = /* @__PURE__ */ vue.createElementVNode("p", null, " 1. 本人目前测试过，没有封号，但是对于查询过题目会缓存在本地，因此尽量不要清空浏览器缓存 ", -1);
-  const _hoisted_2$2 = /* @__PURE__ */ vue.createElementVNode("p", null, " 2. 脚本会监控题做题提交状态 ，当题目提交时候会缓存题目状态，如果题单中有这个题目，会直接从缓存中获取 ", -1);
-  const _hoisted_3$2 = [
-    _hoisted_1$2,
-    _hoisted_2$2
-  ];
-  function _sfc_render$1(_ctx, _cache) {
-    return vue.openBlock(), vue.createElementBlock("div", null, _hoisted_3$2);
-  }
-  const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1]]);
-  const _sfc_main$1 = {};
-  const _withScopeId = (n) => (vue.pushScopeId("data-v-a8cfbf3e"), n = n(), vue.popScopeId(), n);
-  const _hoisted_1$1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ vue.createElementVNode("h2", null, [
-    /* @__PURE__ */ vue.createTextVNode(" 1. 为什么部分题单出现统计数量为 "),
-    /* @__PURE__ */ vue.createElementVNode("em", null, " 0 "),
-    /* @__PURE__ */ vue.createTextVNode(" 情况 ? ")
-  ], -1));
-  const _hoisted_2$1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ vue.createElementVNode("p", null, "防止一次性访问题单太多，对服务器产生压力，所以采用单个题单访问然后保存状态 , 这样避免访问量问题", -1));
-  const _hoisted_3$1 = [
-    _hoisted_1$1,
-    _hoisted_2$1
-  ];
-  function _sfc_render(_ctx, _cache) {
-    return vue.openBlock(), vue.createElementBlock("div", null, _hoisted_3$1);
-  }
-  const Q2 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-a8cfbf3e"]]);
-  function Message(title = "确认操作", callback = () => {
-  }, canlcelCallback = () => {
-  }) {
-    ElementPlus.ElMessageBox.confirm(
-      `${title} ?`,
-      "警告",
-      {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }
-    ).then(() => {
-      callback();
-    }).catch(() => {
-      ElementPlus.ElMessage({
-        type: "info",
-        message: "已取消"
-      });
-      canlcelCallback();
-    });
-  }
+  const isHttp = (url) => /^https?:\/\/.*$/.test(url);
   const isLeetCodeCircleUrl = (url = window.location.href) => url && url.indexOf("https://leetcode.cn/circle") != -1;
   const isProblem = (url = window.location.href) => /^https?:\/\/leetcode.cn\/problems\/.*/i.test(url);
   const isContest = (url = window.location.href) => url.indexOf("https://leetcode.cn/contest/weekly-contest") != -1 || url.indexOf("https://leetcode.cn/contest/biweekly-contest") != -1;
@@ -220,8 +166,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     // 添加 url
     "__0x3f_problmes_ac_key__": "__local_ok_problem_key__",
     // ac key
-    "__0x3f_problmes_ac_version__": "__0x3f_problmes_ac_version__"
+    "__0x3f_problmes_ac_version__": "__0x3f_problmes_ac_version__",
     // TODO ac key version
+    "__0x3f_problmes_all_problems__": "__0x3f_problmes_all_problems__",
+    // all problems
+    "__0x3f_problmes_random_problems_key__": "__0x3f_problmes_random_problems_key__",
+    //随机题目快捷键
+    "__0x3f_problmes_random_problems__": "__0x3f_problmes_random_problems__"
+    //随机题目
   };
   const STATUS = {
     "AC": "ac",
@@ -234,7 +186,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     visiableMember: true,
     onlyUrls: false,
     useDefaultSetting: true,
-    hiddenAc: false
+    hiddenAc: false,
+    showAcConfig: true
   };
   function install_pos() {
     return !Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], false, Boolean.name);
@@ -323,10 +276,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
       try {
         u = saveUrls[i];
-        if (!u || !(u == null ? void 0 : u.link)) continue;
-        if (!u["id"]) {
-          u["id"] = i + 1;
-        }
+        if (u["select"] == void 0) u.select = true;
+        if (u["title"] == void 0 || u["link"] == void 0) continue;
         let s = Object.values(u).join("");
         if (s == "null" || !Cache$1.get(u.link) || !getAcCountKey(u.link) || !Cache$1.get(getAcCountKey(u.link))) {
           continue;
@@ -352,7 +303,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     let saveUrls = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
     return computeAcInfo(saveUrls);
   };
-  const initObj = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"])) : defaultObj;
+  const initObj = () => {
+    let obj = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"])) : defaultObj;
+    if (obj["showAcConfig"] == null || obj["showAcConfig"] == void 0) {
+      obj.showAcConfig = true;
+    }
+    return obj;
+  };
   const support_plugins = () => {
     const u = initObj();
     if (!u || !u.onlyUrls) return true;
@@ -376,87 +333,19 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return false;
   };
   const defaultUrls = [
-    {
-      title: "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）",
-      link: "https://leetcode.cn/circle/discuss/IYT3ss/",
-      cnt: 0,
-      ac: 1
-    },
-    {
-      title: "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
-      link: "https://leetcode.cn/circle/discuss/mOr1u6/",
-      cnt: 0,
-      ac: 0,
-      id: 2
-    },
-    {
-      title: "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
-      link: "https://leetcode.cn/circle/discuss/tXLS3i/",
-      cnt: 0,
-      ac: 0,
-      id: 3
-    },
-    {
-      title: "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
-      link: "https://leetcode.cn/circle/discuss/01LUak/",
-      cnt: 0,
-      ac: 0,
-      id: 4
-    },
-    {
-      title: "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
-      link: "https://leetcode.cn/circle/discuss/dHn9Vk/",
-      cnt: 0,
-      ac: 5
-    },
-    {
-      title: "网格图（DFS/BFS/综合应用）",
-      link: "https://leetcode.cn/circle/discuss/YiXPXW/",
-      cnt: 0,
-      ac: 0,
-      id: 6
-    },
-    {
-      title: "单调栈（矩形面积/贡献法/最小字典序）",
-      link: "https://leetcode.cn/circle/discuss/9oZFK9/",
-      cnt: 0,
-      ac: 7
-    },
-    {
-      title: "二分算法（二分答案/最小化最大值/最大化最小值/第K小）",
-      link: "https://leetcode.cn/circle/discuss/SqopEo/",
-      cnt: 0,
-      ac: 0,
-      id: 8
-    },
-    {
-      title: "滑动窗口（定长/不定长/多指针）",
-      link: "https://leetcode.cn/circle/discuss/0viNMK/",
-      cnt: 0,
-      ac: 0,
-      id: 9
-    },
-    {
-      title: "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
-      link: "https://leetcode.cn/circle/discuss/g6KTKL/",
-      cnt: 0,
-      ac: 0,
-      id: 10
-    },
-    {
-      title: "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
-      link: "https://leetcode.cn/circle/discuss/K0n2gO/",
-      cnt: 0,
-      ac: 0,
-      id: 11
-    },
-    {
-      title: "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
-      link: "https://leetcode.cn/circle/discuss/SJFwQI/",
-      cnt: 0,
-      ac: 0,
-      id: 12
-    }
+    { "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法", "link": "https://leetcode.cn/circle/discuss/IYT3ss/", "tot": 0, "ac": 0, "id": 1, "disabled": false, "select": true },
+    { "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）", "link": "https://leetcode.cn/circle/discuss/mOr1u6/", "tot": 0, "ac": 0, "id": 2, "disabled": false, "select": true },
+    { "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）", "link": "https://leetcode.cn/circle/discuss/tXLS3i/", "tot": 0, "ac": 0, "id": 3, "disabled": false, "select": true },
+    { "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）", "link": "https://leetcode.cn/circle/discuss/01LUak/", "tot": 0, "ac": 0, "id": 4, "disabled": false, "select": true },
+    { "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）", "link": "https://leetcode.cn/circle/discuss/dHn9Vk/", "tot": 0, "ac": 0, "id": 5, "disabled": false, "select": true },
+    { "title": "网格图（DFS/BFS/综合应用)", "link": "https://leetcode.cn/circle/discuss/YiXPXW/", "tot": 0, "ac": 0, "id": 6, "disabled": false, "select": true },
+    { "title": "单调栈（矩形面积/贡献法/最小字典序", "link": "https://leetcode.cn/circle/discuss/9oZFK9/", "tot": 0, "ac": 0, "id": 7, "disabled": false, "select": true },
+    { "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小", "link": "https://leetcode.cn/circle/discuss/SqopEo/", "tot": 0, "ac": 0, "id": 8, "disabled": true, "select": true },
+    { "title": "滑动窗口（定长/不定长/多指针", "link": "https://leetcode.cn/circle/discuss/0viNMK/", "tot": 0, "ac": 0, "id": 9, "disabled": false, "select": true },
+    { "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）", "link": "https://leetcode.cn/circle/discuss/g6KTKL/", "tot": 0, "ac": 0, "id": 10, "disabled": false, "select": true },
+    { "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）", "link": "https://leetcode.cn/circle/discuss/K0n2gO/", "tot": 0, "ac": 0, "id": 11, "disabled": false, "select": true },
+    { "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）", "link": "https://leetcode.cn/circle/discuss/SJFwQI/", "tot": 0, "ac": 0, "id": 12, "disabled": false, "select": true }
+    // { 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': 0, 'ac': 0, 'id': 0x3f3f3f3f,'disabled':true,'select':false },
   ];
   function getId(problemUrl) {
     if (isContest(problemUrl) || isProblem(problemUrl)) {
@@ -497,6 +386,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             cache[ID] = status == null ? "null" : status;
             if (watch2) {
               Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+              {
+                console.log("save local status :", cache[ID], "status = ", status, "get local status :", Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"])[ID]);
+              }
               window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
                 "id": ID,
                 "status": cache[ID]
@@ -516,6 +408,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     var _a;
     let problems_doms = Array.isArray(doms) ? doms : loadProblems();
     const cache = getLocalProblemStatus();
+    let uid = 0;
     for (let i = 0; i < problems_doms.length; i++) {
       let cur = problems_doms[i].parentElement;
       if (!(cur instanceof HTMLElement)) {
@@ -532,8 +425,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         queryStatus(ID, cache, cur, false);
       } else {
         let status = cache[ID];
+        uid++;
         createStatus(status, cur);
       }
+    }
+    {
+      console.log("cache num :", uid, ",tot:", A.length);
     }
     getProcess();
     if (reload) {
@@ -555,6 +452,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
+      {
+        console.log("ID:", ID, "query status: ", cache[ID]);
+      }
       queryStatus(ID, cache, void 0, true);
     }, timeout);
   };
@@ -568,6 +468,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       return;
     }
     let thisLink = `https://leetcode.cn/problems/${id}`;
+    {
+      console.log("update", thisLink, "status", status);
+    }
     let link = document.querySelector(`${linkCssSelector}[href^="https://leetcode.cn/problems/${id}"]`);
     if (!link || !(link == null ? void 0 : link.parentElement)) {
       let doms = loadProblems();
@@ -587,6 +490,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     if (!k) return "";
     return `0x3f_ac_key_${k}`;
   }
+  function deleteAllACCountKeys() {
+    let urls = initUrls();
+    let keys = [];
+    for (let urlInfo of urls) {
+      let key = getAcCountKey(urlInfo.link);
+      Cache$1.remove(key);
+      keys.push(key);
+    }
+    Cache$1.remove(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"]);
+    return keys;
+  }
   function getProcess() {
     loadProblems();
     const cache = getLocalProblemStatus();
@@ -604,29 +518,190 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   function getLocalProblemStatus() {
     return Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
   }
-  const _hoisted_1 = { class: "processs-flex" };
-  const _hoisted_2 = { style: { "text-align": "center", "color": "#121212" } };
-  const _hoisted_3 = { class: "dialog-footer" };
+  function getRandomInfo(array) {
+    if (!Array.isArray(array)) return [];
+    return array[Math.floor(Math.random() * array.length)];
+  }
+  async function randomProblem() {
+    let allProbmems = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
+    if (!Array.isArray(allProbmems) || allProbmems.length == 0) {
+      let response = await getProblemsJSON();
+      if (Array.isArray(response)) {
+        allProbmems = [...response];
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], [...response]);
+      }
+    }
+    let config = initObj();
+    let urlsData = initUrls();
+    let set = /* @__PURE__ */ new Set();
+    for (let info of urlsData) {
+      if (info.link && info.select) {
+        set.add(info.link);
+      }
+    }
+    let infos = [];
+    let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+    {
+      console.log("config and set", config, set);
+    }
+    for (let info of allProbmems) {
+      if (set.has(info == null ? void 0 : info.problemUrl)) {
+        {
+          console.log("info=>", info.problemUrl, info.title);
+        }
+        for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
+          try {
+            let { title, url, member, score, titleSlug } = info.problems[i];
+            if (!config.showAcConfig && acMap[url] == "ac") {
+              continue;
+            }
+            console.log("config.visiableMember && member", !config.visiableMember && member, config.visiableMember, member);
+            if (!config.visiableMember && member) {
+              continue;
+            }
+            if (score != 0 && (score < config.min || score > config.max)) {
+              continue;
+            }
+            infos.push({ title, url, member, score, titleSlug });
+          } catch (e) {
+            console.log("error", e);
+          }
+        }
+      }
+    }
+    {
+      console.log("filter infos = ", infos);
+    }
+    let data = getRandomInfo(infos);
+    {
+      console.log("randomInfo : ", data);
+    }
+    if ((data == null ? void 0 : data.url) && (data == null ? void 0 : data.title)) {
+      ElementPlus.ElMessage({
+        dangerouslyUseHTMLString: true,
+        type: "success",
+        message: `<div>随机题目☕：&nbsp;<a href="${data.url}" target="_blank" style="color:#5d99f2;">${data.title}</a> ${(data == null ? void 0 : data.score) && (data == null ? void 0 : data.score) > 0 ? `&nbsp;分值${data.score}` : ""}</div>`,
+        duration: 6e3
+      });
+    } else {
+      ElementPlus.ElMessage({
+        type: "error",
+        message: `没有符合条件的题目，请重新配置条件`,
+        duration: 3e3
+      });
+    }
+  }
+  async function GetHubJSONInfo(url) {
+    return fetch(url, {
+      method: "get",
+      mode: "cors"
+    }).then((res) => res.json());
+  }
+  async function getProblemsJSON() {
+    return GetHubJSONInfo("https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/0x3f.json");
+  }
+  async function PostLeetCodeApi(data) {
+    return fetch("https://leetcode.cn/graphql/", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then((res) => res.json());
+  }
+  async function getProblemAcInfo(titleSlug) {
+    return PostLeetCodeApi(postData(titleSlug));
+  }
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$1 = {};
+  const _hoisted_1$1 = /* @__PURE__ */ vue.createStaticVNode("<h2 data-v-96f24e8f> 1. 为什么部分题单出现统计数量为 <em data-v-96f24e8f> 0 </em> 情况 ? </h2><p data-v-96f24e8f>防止一次性访问题单太多，对服务器产生压力，所以采用单个题单访问然后保存状态 , 这样避免访问量问题</p><p data-v-96f24e8f>默认情况下会缓存访问的题单情况，对于没有访问的题单，可以手动在对应题单中同步</p><h2 data-v-96f24e8f> 2、题单有时候会出现不同步 </h2><p data-v-96f24e8f>这个没啥问题，题目状态根据用户提交题目情况会实时更新，只会在提交访问一次</p><h2 data-v-96f24e8f> 3、 如何使用随机题目？ </h2><p data-v-96f24e8f>这个可以根据自己喜好来配置，配置好之后，可以使用 <em data-v-96f24e8f> ctrl + alt + j </em> 触发 </p><h2 data-v-96f24e8f> 4、反馈 </h2>", 8);
+  function _sfc_render(_ctx, _cache) {
+    const _component_el_link = vue.resolveComponent("el-link");
+    return vue.openBlock(), vue.createElementBlock("div", null, [
+      _hoisted_1$1,
+      vue.createElementVNode("p", null, [
+        vue.createTextVNode("你可以"),
+        vue.createVNode(_component_el_link, {
+          underline: false,
+          href: "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
+          type: "primary",
+          target: "_blank"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createTextVNode("点击")
+          ]),
+          _: 1
+        }),
+        vue.createTextVNode("这里反馈 ，或者访问 github 提一个 "),
+        vue.createVNode(_component_el_link, {
+          target: "_blank",
+          underline: false,
+          href: "https://github.com/wuxin0011/tampermonkey-script/issues",
+          type: "primary"
+        }, {
+          default: vue.withCtx(() => [
+            vue.createTextVNode("issues")
+          ]),
+          _: 1
+        })
+      ])
+    ]);
+  }
+  const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-96f24e8f"]]);
+  function Message(title = "确认操作", callback = () => {
+  }, canlcelCallback = () => {
+  }) {
+    ElementPlus.ElMessageBox.confirm(
+      `${title} ?`,
+      "警告",
+      {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning"
+      }
+    ).then(() => {
+      callback();
+    }).catch(() => {
+      ElementPlus.ElMessage({
+        type: "info",
+        message: "已取消"
+      });
+      canlcelCallback();
+    });
+  }
+  const _hoisted_1 = { class: "dialog-footer" };
+  const _hoisted_2 = { class: "processs-flex" };
+  const _hoisted_3 = { style: { "text-align": "center", "color": "#121212" } };
+  const TARGET_URL = "https://leetcode.cn/u/endlesscheng/";
   const formLabelWidth = "44px";
   const _sfc_main = {
     __name: "App",
     setup(__props) {
       const sortType = vue.ref(0);
+      const tableButtonSize = vue.ref("default");
       let tableData = vue.reactive(initUrls());
       const keywords = vue.ref("");
       const dialogTableVisible = vue.ref(false);
+      const showAddLocalButton = vue.computed(() => isLeetCodeCircleUrl());
       let urlsData = vue.computed(() => {
-        let infos = computeAcInfo(tableData, false).filter((info2) => info2 && (info2.title && info2.title.indexOf(keywords.value) != -1 || info2.link && info2.link.indexOf(keywords.value) != -1));
-        let tot = 0, ac = 0, c = 0;
-        for (let i = 0, c2 = info.length; i < infos.length; i++) {
+        let infos = tableData.filter((info2) => info2 && (info2.title && info2.title.indexOf(keywords.value) != -1 || info2.link && info2.link.indexOf(keywords.value) != -1));
+        let tot = 0, ac = 0;
+        for (let i = 0, c = info.length; i < infos.length; i++) {
           let info2 = infos[i];
           if (info2["ac"] && info2["tot"]) {
             tot += info2["tot"];
             ac += info2["ac"];
           }
           if (!info2["id"]) {
-            info2["id"] = c2 + 1;
-            c2++;
+            info2["id"] = c + 1;
+            c++;
           }
         }
         let type = sortType.value;
@@ -639,21 +714,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         } else if (type == 3) {
           infos.sort((info1, info2) => computeProcess(info2.ac, info2.tot) - computeProcess(info1.ac, info1.tot));
         }
-        infos.unshift({ "title": "灵茶题单完成情况", "link": "https://leetcode.cn/u/endlesscheng/", "tot": tot, "ac": ac, "id": c + 10 });
+        infos.unshift({ "title": "灵茶题单完成情况", "link": TARGET_URL, "tot": tot, "ac": ac, "id": 67108863 });
         return infos;
       });
+      const rowIsDisabled = vue.computed(() => (info2) => info2 && info2.link == TARGET_URL);
       const isDisabbled = vue.computed(() => !!tableData.find((v) => (v == null ? void 0 : v.link) && (v == null ? void 0 : v.link.indexOf(window.location.href)) != -1));
       const dialogFormVisible = vue.ref(false);
-      let totProblem = vue.ref(0);
-      let finishProblem = vue.ref(0);
-      const drawer = vue.ref(false);
-      const viewSetting = () => {
-        drawer.value = !drawer.value;
-        let [cur, tot] = getProcess();
-        finishProblem.value = cur;
-        totProblem.value = tot;
-        computeAcInfo(tableData, false);
-      };
       const computeProcess = (ac = 0, tot = 0) => {
         if (isNaN(ac) || isNaN(tot)) return 0;
         if (tot == 0) return 0;
@@ -667,13 +733,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         }
         return isNaN(p) ? 0 : p;
       };
-      const finishProcess = vue.computed(() => computeProcess(finishProblem.value, totProblem.value));
       const processColors = [
         { color: "#f56c6c", percentage: 20 },
         { color: "#1989fa", percentage: 40 },
         { color: "#e6a23c", percentage: 60 },
         { color: "#6f7ad3", percentage: 80 },
-        { color: "#5cb87a", percentage: 100 }
+        { color: "#67c23a", percentage: 100 }
       ];
       const fromData = vue.reactive(initObj());
       vue.watch(fromData, () => {
@@ -692,14 +757,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         tableData.unshift({ title: document.title, link: window.location.href, "ac": cur, "tot": tot, "id": tableData.length + 10 });
       };
       const updateIndex = vue.ref(-1);
-      const showProblems = () => {
-        dialogTableVisible.value = true;
-        let o = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"]) == "true" || Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"]) == true;
-        if (o) {
-          addlocal();
-        }
-        computeAcInfo(tableData, false);
-      };
       const handlerProblems = (status, updateInfo = { title: "", link: "", id: 0 }, index = -1) => {
         dialogFormVisible.value = true;
         info.status = status;
@@ -708,7 +765,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
       const handlerMessage = (u, title, link) => {
         const a = u ? "添加" : "修改";
-        const error = !title || !/https?:\/\/.*/.test(link);
+        const error = !(!!title && isHttp(link));
         if (error) {
           ElementPlus.ElMessage.error(`${a} 失败 请保证标题或者链接有效 `);
         } else {
@@ -758,11 +815,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           });
         });
       };
-      const asyncLocalStatus = () => {
-        Message("确认同步题单", () => {
-          addProcess(true, void 0, true);
-        });
-      };
       window.addEventListener("beforeunload", () => {
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData).filter((u) => u != null && u != void 0));
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
@@ -783,58 +835,653 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               window.clearInterval(loadTimeId);
             }
           }, 200);
-          window.addEventListener("storage", (e) => {
-            watchLinkStatusUpdate(e);
-          });
         }
+        window.addEventListener("storage", (e) => {
+          watchLinkStatusUpdate(e);
+        });
       });
+      _GM_registerMenuCommand(`题单配置信息🛠`, () => {
+        dialogTableVisible.value = !dialogTableVisible.value;
+      }, { title: "AC标记安装位置，默认左侧，刷新生效" });
+      const selectHandlerChange = (row) => {
+        let infos = [];
+        for (let i = 0; i < urlsData.value.length; i++) {
+          if (urlsData.value[i]["link"] == TARGET_URL) continue;
+          infos.push(vue.toRaw(Object.assign({}, urlsData.value[i])));
+        }
+        for (let i = 0; i < tableData.length; i++) {
+          if (row.id == tableData[i].id) {
+            tableData[i].select = row.select;
+            break;
+          }
+        }
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], infos);
+      };
+      const asyncButtonLoad = vue.ref(false);
+      const showProcess = vue.ref(false);
+      const allProblemNum = vue.ref(0);
+      const asyncProblemNum = vue.ref(0);
+      const asyncVisableDialog = vue.ref(false);
+      const showProblemsProcessInfo = vue.reactive({
+        title: "",
+        link: "",
+        cnt: "",
+        ac: "",
+        id: "",
+        select: true
+      });
+      const showProblemsInfo = (info2 = {}) => {
+        asyncVisableDialog.value = !asyncVisableDialog.value;
+        Object.assign(showProblemsProcessInfo, info2);
+      };
+      const loadProcess = vue.computed(() => computeProcess(asyncProblemNum.value, allProblemNum.value));
+      const asyncProblemStatus = async (row = {}) => {
+        if (!(row == null ? void 0 : row.link)) return;
+        let callback = async () => {
+          var _a, _b, _c;
+          let rowData = void 0;
+          let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
+          let cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+          let map = /* @__PURE__ */ new Map();
+          try {
+            for (let info2 of tableData) {
+              if (rowData == void 0 && info2.id == row.id) {
+                rowData = info2;
+              }
+              map.set(info2.link, info2);
+            }
+            if (rowData) {
+              rowData.loading = true;
+            }
+            asyncButtonLoad.value = true;
+            allProblemNum.value = 0;
+            asyncProblemNum.value = 0;
+            showProcess.value = true;
+            let jsonInfo = await getProblemsJSON();
+            if (!Array.isArray(jsonInfo)) {
+              jsonInfo = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
+            } else {
+              Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], jsonInfo);
+            }
+            let datas = [];
+            for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
+              let key = `${jsonInfo[i].problemUrl}`;
+              let origin = map.get(key);
+              if (asyncAll) {
+                for (let p of jsonInfo[i].problems) {
+                  datas.push(Object.assign({ "origin": jsonInfo[i].problemUrl }, p));
+                }
+                if (origin) {
+                  origin.tot = Math.max(jsonInfo[i].problems.length, (origin == null ? void 0 : origin.tot) ?? 0);
+                  origin.ac = 0;
+                }
+              } else if (jsonInfo[i].problemUrl == row.link) {
+                for (let p of jsonInfo[i].problems) {
+                  datas.push(Object.assign({ "origin": jsonInfo[i].problemUrl }, p));
+                }
+                if (origin) {
+                  origin.tot = Math.max(jsonInfo[i].problems.length, (origin == null ? void 0 : origin.tot) ?? 0);
+                  origin.ac = 0;
+                }
+                break;
+              }
+            }
+            if (Array.isArray(datas) && datas.length > 0) {
+              allProblemNum.value = datas.length;
+              asyncProblemNum.value = 0;
+              for (let info2 of datas) {
+                let ID = info2.titleSlug;
+                let key = `${info2.origin}`;
+                let origin = map.get(key);
+                if (cache[ID] != "ac") {
+                  let response = await getProblemAcInfo(ID);
+                  const status = (_b = (_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) == null ? void 0 : _b.status;
+                  cache[ID] = status == null ? "null" : status;
+                }
+                if (origin) {
+                  if (cache[ID] == "ac") {
+                    origin.ac = origin.ac + 1;
+                  }
+                }
+                asyncProblemNum.value += 1;
+              }
+            }
+          } catch (e) {
+            console.log("error", e);
+          } finally {
+            if (rowData) {
+              rowData.loading = false;
+            }
+            asyncButtonLoad.value = false;
+            for (let i = 0; i < tableData.length; i++) {
+              if (getAcCountKey((_c = tableData[i]) == null ? void 0 : _c.link)) {
+                Cache$1.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
+              }
+            }
+            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
+            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+            ElementPlus.ElMessage({
+              type: "success",
+              message: `同步完成🥰`,
+              duration: 3e3
+            });
+            setTimeout(() => {
+              allProblemNum.value = 0;
+              asyncProblemNum.value = 0;
+              showProcess.value = false;
+            }, 5e3);
+          }
+        };
+        if (row.link == TARGET_URL) {
+          Message("该操作将同步所有题单，耗时可能较长 确认操作?", callback);
+        } else {
+          callback();
+        }
+      };
       const q1 = vue.ref(false);
-      const q2 = vue.ref(false);
+      vue.ref(false);
       return (_ctx, _cache) => {
+        const _component_el_dialog = vue.resolveComponent("el-dialog");
+        const _component_el_input = vue.resolveComponent("el-input");
+        const _component_el_form_item = vue.resolveComponent("el-form-item");
+        const _component_el_form = vue.resolveComponent("el-form");
         const _component_el_button = vue.resolveComponent("el-button");
         const _component_el_progress = vue.resolveComponent("el-progress");
-        const _component_el_divider = vue.resolveComponent("el-divider");
-        const _component_el_input = vue.resolveComponent("el-input");
         const _component_el_col = vue.resolveComponent("el-col");
-        const _component_el_form_item = vue.resolveComponent("el-form-item");
-        const _component_el_switch = vue.resolveComponent("el-switch");
-        const _component_el_tooltip = vue.resolveComponent("el-tooltip");
-        const _component_el_form = vue.resolveComponent("el-form");
-        const _component_el_dialog = vue.resolveComponent("el-dialog");
         const _component_el_option = vue.resolveComponent("el-option");
         const _component_el_select = vue.resolveComponent("el-select");
+        const _component_el_tooltip = vue.resolveComponent("el-tooltip");
         const _component_el_row = vue.resolveComponent("el-row");
-        const _component_el_link = vue.resolveComponent("el-link");
         const _component_el_table_column = vue.resolveComponent("el-table-column");
+        const _component_el_link = vue.resolveComponent("el-link");
+        const _component_el_switch = vue.resolveComponent("el-switch");
         const _component_el_table = vue.resolveComponent("el-table");
-        const _component_el_drawer = vue.resolveComponent("el-drawer");
         return vue.openBlock(), vue.createElementBlock("div", null, [
-          vue.createVNode(_component_el_button, {
-            type: "primary",
-            style: {},
-            onClick: viewSetting,
-            class: "m-setting-button m-button",
-            circle: "",
-            size: "large"
+          vue.createVNode(_component_el_dialog, {
+            modelValue: q1.value,
+            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => q1.value = $event)
           }, {
             default: vue.withCtx(() => [
-              vue.createTextVNode(" 0X3F ")
+              vue.createVNode(Q1)
             ]),
             _: 1
-          }),
-          vue.createVNode(_component_el_drawer, {
-            modelValue: drawer.value,
-            "onUpdate:modelValue": _cache[20] || (_cache[20] = ($event) => drawer.value = $event),
-            size: "30%",
-            "with-header": false,
-            style: { "position": "fixed !important" },
-            direction: "rtl"
+          }, 8, ["modelValue"]),
+          vue.createVNode(_component_el_dialog, {
+            modelValue: dialogFormVisible.value,
+            "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => dialogFormVisible.value = $event),
+            title: `${info.status == "add" ? "添加" : "编辑"}`,
+            width: "400"
+          }, {
+            footer: vue.withCtx(() => [
+              vue.createElementVNode("div", _hoisted_1, [
+                vue.createVNode(_component_el_button, {
+                  onClick: _cache[3] || (_cache[3] = ($event) => dialogFormVisible.value = false)
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode("取消")
+                  ]),
+                  _: 1
+                }),
+                vue.createVNode(_component_el_button, { onClick: addOrUpdate }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode(" 确认 ")
+                  ]),
+                  _: 1
+                })
+              ])
+            ]),
+            default: vue.withCtx(() => [
+              vue.createVNode(_component_el_form, null, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_el_form_item, {
+                    label: "标题",
+                    "label-width": formLabelWidth
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_el_input, {
+                        modelValue: info.title,
+                        "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => info.title = $event),
+                        autocomplete: "off"
+                      }, null, 8, ["modelValue"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_form_item, {
+                    label: "链接",
+                    "label-width": formLabelWidth
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_el_input, {
+                        modelValue: info.link,
+                        "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => info.link = $event),
+                        autocomplete: "off"
+                      }, null, 8, ["modelValue"])
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
+          }, 8, ["modelValue", "title"]),
+          vue.createVNode(_component_el_dialog, {
+            modelValue: dialogTableVisible.value,
+            "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => dialogTableVisible.value = $event),
+            title: showProcess.value ? loadProcess.value < 100 ? `统计中...${asyncProblemNum.value}/${allProblemNum.value}` : "统计完成" : "题单信息",
+            width: "60%"
           }, {
             default: vue.withCtx(() => [
-              vue.createElementVNode("div", _hoisted_1, [
+              showProcess.value ? (vue.openBlock(), vue.createBlock(_component_el_progress, {
+                key: 0,
+                color: processColors,
+                percentage: loadProcess.value,
+                "stroke-width": 15,
+                striped: "",
+                "striped-flow": "",
+                style: { "margin-bottom": "20px" },
+                status: `${loadProcess.value == 100 ? "success" : ""}`
+              }, null, 8, ["percentage", "status"])) : vue.createCommentVNode("", true),
+              vue.createVNode(_component_el_row, { gutter: 10 }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_el_col, { span: 4 }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_el_input, {
+                        modelValue: keywords.value,
+                        "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => keywords.value = $event),
+                        placeholder: "请输入关键词过滤",
+                        clearable: ""
+                      }, null, 8, ["modelValue"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_col, { span: 20 }, {
+                    default: vue.withCtx(() => [
+                      showAddLocalButton.value ? (vue.openBlock(), vue.createBlock(_component_el_button, {
+                        key: 0,
+                        plain: "",
+                        onClick: addlocal,
+                        disabled: isDisabbled.value,
+                        size: tableButtonSize.value
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode(" 添加本页 ")
+                        ]),
+                        _: 1
+                      }, 8, ["disabled", "size"])) : vue.createCommentVNode("", true),
+                      showAddLocalButton.value ? (vue.openBlock(), vue.createBlock(_component_el_button, {
+                        key: 1,
+                        plain: "",
+                        onClick: _cache[6] || (_cache[6] = ($event) => handlerProblems("add")),
+                        size: tableButtonSize.value
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode(" 自定义 ")
+                        ]),
+                        _: 1
+                      }, 8, ["size"])) : vue.createCommentVNode("", true),
+                      vue.createVNode(_component_el_select, {
+                        modelValue: sortType.value,
+                        "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => sortType.value = $event),
+                        style: { "margin": "0 5px", "width": "100px" },
+                        disabled: asyncButtonLoad.value
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_option, {
+                            label: "默认排序",
+                            value: 0
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode("默认排序")
+                            ]),
+                            _: 1
+                          }),
+                          vue.createVNode(_component_el_option, {
+                            label: "题目数量",
+                            value: 1
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode("题目数量")
+                            ]),
+                            _: 1
+                          }),
+                          vue.createVNode(_component_el_option, {
+                            label: "AC数量",
+                            value: 2
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode("AC数量")
+                            ]),
+                            _: 1
+                          }),
+                          vue.createVNode(_component_el_option, {
+                            label: "完成度",
+                            value: 3
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode("完成度")
+                            ]),
+                            _: 1
+                          })
+                        ]),
+                        _: 1
+                      }, 8, ["modelValue", "disabled"]),
+                      vue.createVNode(_component_el_tooltip, { content: "同步所有题单" }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_button, {
+                            type: "danger",
+                            onClick: _cache[8] || (_cache[8] = ($event) => asyncProblemStatus({ "link": "https://leetcode.cn/u/endlesscheng/" })),
+                            size: tableButtonSize.value,
+                            loading: asyncButtonLoad.value
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode(vue.toDisplayString(asyncButtonLoad.value ? "同步中" : "同步题单"), 1)
+                            ]),
+                            _: 1
+                          }, 8, ["size", "loading"])
+                        ]),
+                        _: 1
+                      }),
+                      vue.createVNode(_component_el_tooltip, { content: "随机一道灵茶题单中题目,快捷键 Ctrl + Alt + J 可以触发" }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_button, {
+                            type: "primary",
+                            text: "",
+                            onClick: vue.unref(randomProblem),
+                            size: tableButtonSize.value
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode(" 随机题目 ")
+                            ]),
+                            _: 1
+                          }, 8, ["onClick", "size"])
+                        ]),
+                        _: 1
+                      })
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              }),
+              vue.createVNode(_component_el_table, {
+                data: vue.unref(urlsData),
+                height: "300",
+                style: { "width": "100%", "margin-top": "10px" }
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_el_table_column, { type: "index" }),
+                  vue.createVNode(_component_el_table_column, {
+                    label: "标题",
+                    width: "auto",
+                    align: "center"
+                  }, {
+                    default: vue.withCtx((scope) => [
+                      vue.createVNode(_component_el_link, {
+                        disabled: rowIsDisabled.value(scope.row),
+                        href: scope.row.link,
+                        target: "_blank",
+                        type: "default"
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode(vue.toDisplayString(scope.row.title), 1)
+                        ]),
+                        _: 2
+                      }, 1032, ["disabled", "href"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_table_column, {
+                    label: "随机",
+                    width: "70",
+                    align: "center"
+                  }, {
+                    default: vue.withCtx((scope) => [
+                      vue.createVNode(_component_el_switch, {
+                        modelValue: scope.row.select,
+                        "onUpdate:modelValue": ($event) => scope.row.select = $event,
+                        onChange: ($event) => selectHandlerChange(scope.row),
+                        disabled: rowIsDisabled.value(scope.row),
+                        size: "small"
+                      }, null, 8, ["modelValue", "onUpdate:modelValue", "onChange", "disabled"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_table_column, {
+                    label: "AC",
+                    width: "70",
+                    align: "center"
+                  }, {
+                    default: vue.withCtx((scope) => [
+                      vue.createVNode(_component_el_link, {
+                        type: "success",
+                        underline: false,
+                        onClick: ($event) => showProblemsInfo(scope.row)
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode(vue.toDisplayString(isNaN(scope.row.ac) ? 0 : scope.row.ac), 1)
+                        ]),
+                        _: 2
+                      }, 1032, ["onClick"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_table_column, {
+                    label: "Total",
+                    width: "70",
+                    align: "center"
+                  }, {
+                    default: vue.withCtx((scope) => [
+                      vue.createVNode(_component_el_link, {
+                        type: "primary",
+                        underline: false,
+                        onClick: ($event) => showProblemsInfo(scope.row)
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode(vue.toDisplayString(isNaN(scope.row.tot) ? 0 : scope.row.tot), 1)
+                        ]),
+                        _: 2
+                      }, 1032, ["onClick"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_table_column, {
+                    label: "进度",
+                    width: "70",
+                    align: "center"
+                  }, {
+                    default: vue.withCtx((scope) => [
+                      vue.createVNode(_component_el_link, {
+                        onClick: ($event) => showProblemsInfo(scope.row),
+                        type: "warning",
+                        underline: false
+                      }, {
+                        default: vue.withCtx(() => {
+                          var _a, _b, _c;
+                          return [
+                            vue.createTextVNode(vue.toDisplayString(((_a = scope == null ? void 0 : scope.row) == null ? void 0 : _a.tot) == 0 ? 0 : `${computeProcess((_b = scope == null ? void 0 : scope.row) == null ? void 0 : _b.ac, (_c = scope == null ? void 0 : scope.row) == null ? void 0 : _c.tot)}%`), 1)
+                          ];
+                        }),
+                        _: 2
+                      }, 1032, ["onClick"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_table_column, {
+                    label: "操作",
+                    width: "200px",
+                    align: "center"
+                  }, {
+                    default: vue.withCtx((scope) => [
+                      vue.createVNode(_component_el_button, {
+                        loading: scope.row.loading,
+                        onClick: ($event) => asyncProblemStatus(scope.row),
+                        size: "small",
+                        type: "success",
+                        disabled: rowIsDisabled.value(scope.row),
+                        link: ""
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode("同步")
+                        ]),
+                        _: 2
+                      }, 1032, ["loading", "onClick", "disabled"]),
+                      vue.createVNode(_component_el_button, {
+                        onClick: ($event) => handlerProblems("update", scope.row, scope.$index),
+                        size: "small",
+                        type: "primary",
+                        disabled: rowIsDisabled.value(scope.row),
+                        link: ""
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode("编辑")
+                        ]),
+                        _: 2
+                      }, 1032, ["onClick", "disabled"]),
+                      vue.createVNode(_component_el_button, {
+                        onClick: ($event) => deleteProblems(scope.row.id),
+                        size: "small",
+                        type: "danger",
+                        link: "",
+                        disabled: rowIsDisabled.value(scope.row)
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode("删除")
+                        ]),
+                        _: 2
+                      }, 1032, ["onClick", "disabled"])
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              }, 8, ["data"]),
+              vue.createVNode(_component_el_row, {
+                gutter: 10,
+                style: { "margin": "10px 0" }
+              }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_el_col, { span: 6 }, {
+                    default: vue.withCtx(() => [
+                      vue.createTextVNode(" 会员  "),
+                      vue.createVNode(_component_el_tooltip, { content: "过滤会员题目，会员题不会出现在随机题目中，默认过滤" }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_switch, {
+                            modelValue: fromData.visiableMember,
+                            "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => fromData.visiableMember = $event)
+                          }, null, 8, ["modelValue"])
+                        ]),
+                        _: 1
+                      }),
+                      vue.createTextVNode(" ac  "),
+                      vue.createVNode(_component_el_tooltip, { content: "过滤AC的题目,AC题目出现在随机题目中，默认不过滤" }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_switch, {
+                            modelValue: fromData.showAcConfig,
+                            "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => fromData.showAcConfig = $event)
+                          }, null, 8, ["modelValue"])
+                        ]),
+                        _: 1
+                      })
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_col, { span: 10 }, {
+                    default: vue.withCtx(() => [
+                      vue.createTextVNode("   "),
+                      vue.createVNode(_component_el_tooltip, { content: "随机题目将会随机在这个区间中的题目" }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_link, {
+                            underline: false,
+                            type: "primary"
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode("分数区间")
+                            ]),
+                            _: 1
+                          })
+                        ]),
+                        _: 1
+                      }),
+                      vue.createTextVNode("   "),
+                      vue.createVNode(_component_el_input, {
+                        modelValue: fromData.min,
+                        "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => fromData.min = $event),
+                        "aria-placeholder": "",
+                        placeholder: " min  ",
+                        style: { "width": "60px" }
+                      }, null, 8, ["modelValue"]),
+                      vue.createTextVNode("- "),
+                      vue.createVNode(_component_el_input, {
+                        modelValue: fromData.max,
+                        "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => fromData.max = $event),
+                        "aria-placeholder": "",
+                        placeholder: " max",
+                        style: { "width": "60px" }
+                      }, null, 8, ["modelValue"])
+                    ]),
+                    _: 1
+                  }),
+                  vue.createVNode(_component_el_col, { span: 8 }, {
+                    default: vue.withCtx(() => [
+                      vue.createVNode(_component_el_tooltip, { content: "重置题单" }, {
+                        default: vue.withCtx(() => [
+                          vue.createVNode(_component_el_button, {
+                            plain: "",
+                            onClick: handlerDefault,
+                            size: tableButtonSize.value,
+                            disabled: showProcess.value
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode(" 默认 ")
+                            ]),
+                            _: 1
+                          }, 8, ["size", "disabled"])
+                        ]),
+                        _: 1
+                      }),
+                      showAddLocalButton.value ? (vue.openBlock(), vue.createBlock(_component_el_button, {
+                        key: 0,
+                        plain: "",
+                        onClick: _cache[13] || (_cache[13] = ($event) => q1.value = !q1.value),
+                        size: tableButtonSize.value
+                      }, {
+                        default: vue.withCtx(() => [
+                          vue.createTextVNode(" 使用说明 ")
+                        ]),
+                        _: 1
+                      }, 8, ["size"])) : vue.createCommentVNode("", true)
+                    ]),
+                    _: 1
+                  })
+                ]),
+                _: 1
+              })
+            ]),
+            _: 1
+          }, 8, ["modelValue", "title"]),
+          vue.createVNode(_component_el_dialog, {
+            modelValue: asyncVisableDialog.value,
+            "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => asyncVisableDialog.value = $event),
+            width: "35%"
+          }, {
+            default: vue.withCtx(() => [
+              vue.createElementVNode("p", null, [
+                vue.createVNode(_component_el_link, {
+                  href: showProblemsProcessInfo.link,
+                  type: "info",
+                  underline: false
+                }, {
+                  default: vue.withCtx(() => [
+                    vue.createTextVNode(vue.toDisplayString(showProblemsProcessInfo.title), 1)
+                  ]),
+                  _: 1
+                }, 8, ["href"])
+              ]),
+              vue.createElementVNode("div", _hoisted_2, [
                 vue.createVNode(_component_el_progress, {
                   type: "circle",
-                  percentage: finishProcess.value,
+                  percentage: computeProcess(showProblemsProcessInfo.ac, showProblemsProcessInfo.tot),
                   color: processColors
                 }, {
                   default: vue.withCtx(({ percentage }) => [
@@ -843,433 +1490,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   _: 1
                 }, 8, ["percentage"])
               ]),
-              vue.createElementVNode("p", _hoisted_2, vue.toDisplayString(vue.unref(finishProblem)) + " / " + vue.toDisplayString(vue.unref(totProblem)), 1),
-              vue.createCommentVNode("", true),
-              vue.createVNode(_component_el_divider),
-              vue.createVNode(_component_el_form, {
-                "label-position": "left",
-                "label-width": "auto",
-                model: fromData,
-                style: { "max-width": "600px" }
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_el_form_item, { label: "分数区间" }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_col, { span: 10 }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_input, {
-                            modelValue: fromData.min,
-                            "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => fromData.min = $event),
-                            "aria-placeholder": "",
-                            placeholder: " min  "
-                          }, null, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_col, {
-                        class: "text-center",
-                        span: 1,
-                        style: { "margin": "0 0.5rem" }
-                      }, {
-                        default: vue.withCtx(() => [
-                          vue.createTextVNode("-")
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_col, { span: 10 }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_input, {
-                            modelValue: fromData.max,
-                            "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => fromData.max = $event),
-                            "aria-placeholder": "",
-                            placeholder: " max"
-                          }, null, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  }),
-                  vue.createVNode(_component_el_form_item, { label: "显示会员题" }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_switch, {
-                        modelValue: fromData.visiableMember,
-                        "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => fromData.visiableMember = $event)
-                      }, null, 8, ["modelValue"])
-                    ]),
-                    _: 1
-                  }),
-                  vue.createVNode(_component_el_form_item, { label: "隐藏AC题目" }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_switch, {
-                        modelValue: fromData.hiddenAc,
-                        "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => fromData.hiddenAc = $event)
-                      }, null, 8, ["modelValue"])
-                    ]),
-                    _: 1
-                  }),
-                  vue.createVNode(_component_el_form_item, { label: "收藏题单中生效" }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_tooltip, {
-                        content: "插件只在收藏题单中生效，刷新生效 ",
-                        placement: "bottom-end"
-                      }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_switch, {
-                            modelValue: fromData.onlyUrls,
-                            "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => fromData.onlyUrls = $event)
-                          }, null, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  }),
-                  vue.createVNode(_component_el_form_item, { label: "使用题单" }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_switch, {
-                        modelValue: fromData.useDefaultSetting,
-                        "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => fromData.useDefaultSetting = $event)
-                      }, null, 8, ["modelValue"])
-                    ]),
-                    _: 1
-                  })
-                ]),
-                _: 1
-              }, 8, ["model"]),
-              fromData.useDefaultSetting ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
-                vue.createVNode(_component_el_divider),
-                vue.createVNode(_component_el_button, {
-                  plain: "",
-                  onClick: asyncLocalStatus
-                }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode(" 同步本页题目状态 ")
-                  ]),
-                  _: 1
-                }),
-                vue.createVNode(_component_el_button, {
-                  plain: "",
-                  onClick: showProblems
-                }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode(" 查看收藏的题单 ")
-                  ]),
-                  _: 1
-                }),
-                vue.createVNode(_component_el_divider)
-              ], 64)) : vue.createCommentVNode("", true),
-              vue.createVNode(_component_el_button, {
-                plain: "",
-                onClick: _cache[8] || (_cache[8] = ($event) => q1.value = !q1.value)
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createTextVNode(" 问题1 ")
-                ]),
-                _: 1
-              }),
-              vue.createVNode(_component_el_tooltip, { content: "此功能是为了多刷题单，重置题目状态，敬请期待!" }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_el_button, {
-                    plain: "",
-                    type: "warning",
-                    disabled: true
-                  }, {
-                    default: vue.withCtx(() => [
-                      vue.createTextVNode(" 题单重置 ")
-                    ]),
-                    _: 1
-                  })
-                ]),
-                _: 1
-              }),
-              vue.createVNode(_component_el_dialog, {
-                modelValue: q1.value,
-                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => q1.value = $event),
-                title: "关于查询状态会不会被封号 ？"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(Q1)
-                ]),
-                _: 1
-              }, 8, ["modelValue"]),
-              vue.createVNode(_component_el_dialog, {
-                modelValue: q2.value,
-                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => q2.value = $event),
-                title: "相关问题 ？"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(Q2)
-                ]),
-                _: 1
-              }, 8, ["modelValue"]),
-              vue.createVNode(_component_el_dialog, {
-                modelValue: dialogTableVisible.value,
-                "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => dialogTableVisible.value = $event),
-                title: "题单"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_el_row, { gutter: 10 }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_col, { span: 5 }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_input, {
-                            modelValue: keywords.value,
-                            "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => keywords.value = $event),
-                            placeholder: "请输入关键词过滤",
-                            clearable: ""
-                          }, null, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_col, { span: 19 }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_button, {
-                            plain: "",
-                            onClick: addlocal,
-                            disabled: isDisabbled.value
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode(" 添加本页 ")
-                            ]),
-                            _: 1
-                          }, 8, ["disabled"]),
-                          vue.createVNode(_component_el_button, {
-                            plain: "",
-                            onClick: _cache[12] || (_cache[12] = ($event) => handlerProblems("add"))
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode(" 自定义 ")
-                            ]),
-                            _: 1
-                          }),
-                          vue.createVNode(_component_el_button, {
-                            plain: "",
-                            onClick: handlerDefault
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode(" 默认 ")
-                            ]),
-                            _: 1
-                          }),
-                          vue.createVNode(_component_el_button, {
-                            plain: "",
-                            onClick: _cache[13] || (_cache[13] = ($event) => q2.value = !q2.value)
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode(" 相关问题 ")
-                            ]),
-                            _: 1
-                          }),
-                          vue.createVNode(_component_el_select, {
-                            modelValue: sortType.value,
-                            "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => sortType.value = $event),
-                            style: { "margin-left": "5px", "width": "100px" }
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createVNode(_component_el_option, {
-                                label: "默认排序",
-                                value: 0
-                              }, {
-                                default: vue.withCtx(() => [
-                                  vue.createTextVNode("默认排序")
-                                ]),
-                                _: 1
-                              }),
-                              vue.createVNode(_component_el_option, {
-                                label: "题目数量",
-                                value: 1
-                              }, {
-                                default: vue.withCtx(() => [
-                                  vue.createTextVNode("题目数量")
-                                ]),
-                                _: 1
-                              }),
-                              vue.createVNode(_component_el_option, {
-                                label: "AC数量",
-                                value: 2
-                              }, {
-                                default: vue.withCtx(() => [
-                                  vue.createTextVNode("AC数量")
-                                ]),
-                                _: 1
-                              }),
-                              vue.createVNode(_component_el_option, {
-                                label: "完成度",
-                                value: 3
-                              }, {
-                                default: vue.withCtx(() => [
-                                  vue.createTextVNode("完成度")
-                                ]),
-                                _: 1
-                              })
-                            ]),
-                            _: 1
-                          }, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  }),
-                  vue.createVNode(_component_el_table, {
-                    data: vue.unref(urlsData),
-                    height: "300",
-                    style: { "width": "100%", "margin-top": "10px" }
-                  }, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_table_column, {
-                        label: "标题",
-                        width: "auto",
-                        align: "center"
-                      }, {
-                        default: vue.withCtx((scope) => [
-                          vue.createVNode(_component_el_link, {
-                            disabled: scope.row.link == "https://leetcode.cn/u/endlesscheng/",
-                            href: scope.row.link,
-                            target: "_blank",
-                            type: "default"
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode(vue.toDisplayString(scope.row.title), 1)
-                            ]),
-                            _: 2
-                          }, 1032, ["disabled", "href"])
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_table_column, {
-                        label: "AC",
-                        width: "80",
-                        align: "center"
-                      }, {
-                        default: vue.withCtx((scope) => [
-                          vue.createTextVNode(vue.toDisplayString(isNaN(scope.row.ac) ? 0 : scope.row.ac), 1)
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_table_column, {
-                        label: "Total",
-                        width: "80",
-                        align: "center"
-                      }, {
-                        default: vue.withCtx((scope) => [
-                          vue.createTextVNode(vue.toDisplayString(isNaN(scope.row.tot) ? 0 : scope.row.tot), 1)
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_table_column, {
-                        label: "process",
-                        width: "80",
-                        align: "center"
-                      }, {
-                        default: vue.withCtx((scope) => {
-                          var _a, _b, _c;
-                          return [
-                            vue.createTextVNode(vue.toDisplayString(((_a = scope == null ? void 0 : scope.row) == null ? void 0 : _a.tot) == 0 ? 0 : `${computeProcess((_b = scope == null ? void 0 : scope.row) == null ? void 0 : _b.ac, (_c = scope == null ? void 0 : scope.row) == null ? void 0 : _c.tot)}%`), 1)
-                          ];
-                        }),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_table_column, {
-                        label: "操作",
-                        width: "150",
-                        align: "center"
-                      }, {
-                        default: vue.withCtx((scope) => [
-                          vue.createVNode(_component_el_button, {
-                            type: "primary",
-                            size: "small",
-                            disabled: scope.row.link == "https://leetcode.cn/u/endlesscheng/",
-                            onClick: ($event) => handlerProblems("update", scope.row, scope.$index)
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode("编辑")
-                            ]),
-                            _: 2
-                          }, 1032, ["disabled", "onClick"]),
-                          vue.createVNode(_component_el_button, {
-                            disabled: scope.row.link == "https://leetcode.cn/u/endlesscheng/",
-                            type: "danger",
-                            size: "small",
-                            onClick: ($event) => deleteProblems(scope.row.id)
-                          }, {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode("删除")
-                            ]),
-                            _: 2
-                          }, 1032, ["disabled", "onClick"])
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  }, 8, ["data"])
-                ]),
-                _: 1
-              }, 8, ["modelValue"]),
-              vue.createVNode(_component_el_dialog, {
-                modelValue: dialogFormVisible.value,
-                "onUpdate:modelValue": _cache[19] || (_cache[19] = ($event) => dialogFormVisible.value = $event),
-                title: `${info.status == "add" ? "添加" : "编辑"}`,
-                width: "400"
-              }, {
-                footer: vue.withCtx(() => [
-                  vue.createElementVNode("div", _hoisted_3, [
-                    vue.createVNode(_component_el_button, {
-                      onClick: _cache[18] || (_cache[18] = ($event) => dialogFormVisible.value = false)
-                    }, {
-                      default: vue.withCtx(() => [
-                        vue.createTextVNode("取消")
-                      ]),
-                      _: 1
-                    }),
-                    vue.createVNode(_component_el_button, {
-                      type: "primary",
-                      onClick: addOrUpdate
-                    }, {
-                      default: vue.withCtx(() => [
-                        vue.createTextVNode(" 确认 ")
-                      ]),
-                      _: 1
-                    })
-                  ])
-                ]),
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_el_form, null, {
-                    default: vue.withCtx(() => [
-                      vue.createVNode(_component_el_form_item, {
-                        label: "标题",
-                        "label-width": formLabelWidth
-                      }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_input, {
-                            modelValue: info.title,
-                            "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => info.title = $event),
-                            autocomplete: "off"
-                          }, null, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      }),
-                      vue.createVNode(_component_el_form_item, {
-                        label: "链接",
-                        "label-width": formLabelWidth
-                      }, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_el_input, {
-                            modelValue: info.link,
-                            "onUpdate:modelValue": _cache[17] || (_cache[17] = ($event) => info.link = $event),
-                            autocomplete: "off"
-                          }, null, 8, ["modelValue"])
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  })
-                ]),
-                _: 1
-              }, 8, ["modelValue", "title"])
+              vue.createElementVNode("p", _hoisted_3, vue.toDisplayString(showProblemsProcessInfo.ac) + " / " + vue.toDisplayString(showProblemsProcessInfo.tot), 1)
             ]),
             _: 1
           }, 8, ["modelValue"])
@@ -1277,7 +1498,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0d8147ce"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-2f60b425"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
@@ -1321,8 +1542,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const local_url = window.location.href;
   let loadID = 0;
   let submitCnt = 0;
-  function watchDom(dom) {
-    if (!(dom instanceof HTMLElement)) {
+  function watchDom(dom2) {
+    if (!(dom2 instanceof HTMLElement)) {
       return;
     }
     let m = new MutationObserver(() => {
@@ -1331,11 +1552,24 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
       submitCnt++;
     });
-    m.observe(dom, {
+    m.observe(dom2, {
       childList: true,
       attributes: true
     });
   }
+  const randomProblemKey = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]);
+  let Container = null;
+  Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], true, Boolean.name);
+  const start = () => {
+    Container = document.createElement("div");
+    const body = document.querySelector("body");
+    body.append(Container);
+    Container.style.display = "block";
+    return Container;
+  };
+  let dom = start();
+  const VueApp = vue.createApp(App);
+  VueApp.use(ElementPlus).mount(dom);
   function run() {
     loadID++;
     if (isProblem(local_url) || isContest(local_url)) {
@@ -1366,33 +1600,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         }
       }, 3e3);
     } else if (isLeetCodeCircleUrl(local_url)) {
-      let Container = null;
-      let ok = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], true, Boolean.name);
-      const start = () => {
-        Container = document.createElement("div");
-        const body = document.querySelector("body");
-        body.append(Container);
-        Container.style.display = ok && support_plugins() ? "block" : "none";
-        return Container;
-      };
-      let dom = start();
-      const VueApp = vue.createApp(App);
-      _GM_registerMenuCommand(`${ok ? "隐藏按钮" : "显示按钮"}`, () => {
-        ok = !ok;
-        Container.style.display = ok ? "block" : "none";
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], ok);
-      }, { title: "可以手动关闭或者显示按钮 默认显示 刷新生效" });
-      _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"}`, () => {
+      _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();
       }, { title: "AC标记安装位置，默认左侧，刷新生效" });
-      _GM_registerMenuCommand(`清空题目状态缓存`, () => {
+      _GM_registerMenuCommand(`清空题目状态缓存 🚀`, () => {
         Message("确认清空题目状态缓存", () => {
-          Cache$1.remove(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"]);
+          deleteAllACCountKeys();
           window.location.reload();
         });
       }, { title: "如果题目状态出现问题，可以试试,一般情况下不建议使用" });
-      _GM_registerMenuCommand(`同步题目状态`, () => {
+      _GM_registerMenuCommand(`同步题目状态 🚀`, () => {
         Message("确认同步题目状态", () => {
           addProcess(true, void 0, true);
         });
@@ -1405,18 +1623,18 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }, { title: "插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能" });
       _GM_registerMenuCommand(`添加本页`, () => {
         const urls = initUrls();
-        let ok2 = false;
+        let ok = false;
         let url = window.location.href;
         for (let info of urls) {
           if (!info || !(info == null ? void 0 : info.link)) {
             continue;
           }
           if (info.link.indexOf(url) != -1) {
-            ok2 = true;
+            ok = true;
             break;
           }
         }
-        if (ok2) {
+        if (ok) {
           ElementPlus.ElMessage({
             message: "收藏失败,链接已经存在！",
             type: "error"
@@ -1443,10 +1661,23 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           });
         }
       });
-      VueApp.use(ElementPlus).mount(dom);
     }
   }
   run();
   startStopRanking();
+  if (isProblem() || isLeetCodeCircleUrl()) {
+    _GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: "随机一道题目，你可以通过ctrl+atl+j显示一道题目" });
+    _GM_registerMenuCommand(`${randomProblemKey() ? "关闭" : "启用"} 随机题目快捷键 ☕`, () => {
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
+      window.location.reload();
+    }, { title: "该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目" });
+    if (randomProblemKey()) {
+      document.addEventListener("keydown", async function(event) {
+        if (event.ctrlKey && event.altKey && event.key === "j") {
+          randomProblem();
+        }
+      });
+    }
+  }
 
 })(Vue, ElementPlus);
