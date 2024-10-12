@@ -22,8 +22,7 @@ import {
   getAcCountKey,
   randomProblem
 } from './utils/problems'
-import { isHttp, isLeetCodeCircleUrl } from './utils'
-import cache from './utils/cache'
+import { isHttp, isLeetCodeCircleUrl, isDev, sleep } from './utils'
 
 const TARGET_URL = 'https://leetcode.cn/u/endlesscheng/'
 
@@ -69,22 +68,27 @@ let urlsData = computed(() => {
   return infos
 })
 
-const rowIsDisabled = computed(() => (info) => info && info.link == TARGET_URL)
+const rowIsDisabled = computed(() => (info) => asyncButtonLoad.value || info && info.link == TARGET_URL)
 const isDisabbled = computed(() => !!tableData.find(v => v?.link && v?.link.indexOf(window.location.href) != -1))
 
 
 const dialogFormVisible = ref(false)
 const computeProcess = (ac = 0, tot = 0) => {
-  if (isNaN(ac) || isNaN(tot)) return 0
-  if (tot == 0) return 0
-  let p = 0
+  if (isNaN(ac) || isNaN(tot) || tot === 0) return 0;
+  let p = 0;
+  if (tot == ac) {
+    return 100
+  }
+  const s = String(ac / tot);
   try {
-    const s = String(ac / tot)
-    let x1 = s.split('.')[1].padEnd(3).substring(0, 3)
-    p = Math.min(100, Number(x1) / 10)
+    let x1 = s.split('.')[1] || ''
+    x1 = x1.padEnd(3, '0').substring(0, 3);
+    p = Math.min(100, Number(x1) / 10);
   } catch (e) {
+    console.log('calc error', e.message, s == undefined, ac, tot);
     p = (ac / tot).toFixed(3) * 100;
   }
+
   return isNaN(p) ? 0 : p
 }
 
@@ -252,6 +256,7 @@ const selectHandlerChange = (row) => {
 
 // 同步所有题单
 const asyncButtonLoad = ref(false)
+const asyncButtonLoadBreak = ref(false)
 const showProcess = ref(false)
 const allProblemNum = ref(0)
 const asyncProblemNum = ref(0)
@@ -289,9 +294,11 @@ const asyncProblemStatus = async (row = {}) => {
       }
 
       asyncButtonLoad.value = true
+      asyncButtonLoadBreak.value = false
       allProblemNum.value = 0
       asyncProblemNum.value = 0
       showProcess.value = true
+      await sleep(500)
       let jsonInfo = await getProblemsJSON()
       if (!Array.isArray(jsonInfo)) {
         jsonInfo = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], true, Array.name)
@@ -325,33 +332,50 @@ const asyncProblemStatus = async (row = {}) => {
       if (Array.isArray(datas) && datas.length > 0) {
         allProblemNum.value = datas.length
         asyncProblemNum.value = 0
-        for (let info of datas) {
-          let ID = info.titleSlug
-          let key = `${info.origin}`
-          let origin = map.get(key)
 
-          // console.log('origin', origin)
-          if (cache[ID] != 'ac') {
-            let response = await getProblemAcInfo(ID)
-            const status = response?.data?.question?.status
-            cache[ID] = status == null ? 'null' : status
+        let pre = 0
+        for (let i = 0; i < datas.length; i++) {
+          let info = datas[i]
+          try {
+            if (asyncButtonLoadBreak.value) {
+              break
+            }
+            await sleep(200)
+            let ID = info.titleSlug
+            let key = `${info.origin}`
+            let origin = map.get(key)
 
+            // console.log('origin', origin)
+            if (cache[ID] != 'ac') {
+              let response = await getProblemAcInfo(ID)
+              const status = response?.data?.question?.status
+              cache[ID] = status == null ? 'null' : status
+            }
 
-          }
+            if (origin) {
+              if (cache[ID] == 'ac') {
+                origin.ac = origin.ac + 1
+              }
+            }
 
-          if (origin) {
-            if (cache[ID] == 'ac') {
-              origin.ac = origin.ac + 1
+            if (isDev()) {
+              // console.log('process@@@@@@', computeProcess(asyncProblemNum.value, allProblemNum.value))
+            }
+
+            asyncProblemNum.value += 1
+            if (loadProcess.value < pre && isDev()) {
+              console.warn('calc result is error')
+            }
+            pre = loadProcess.value
+          } catch (e) {
+            if (isDev()) {
+              console.log('process error', e.message, 'asyncProblemNum.value', asyncProblemNum.value, 'all', allProblemNum.value)
             }
           }
 
-          asyncProblemNum.value += 1
 
         }
       }
-
-
-
 
     } catch (e) {
       console.log('error', e)
@@ -360,29 +384,33 @@ const asyncProblemStatus = async (row = {}) => {
         rowData.loading = false
       }
       asyncButtonLoad.value = false
+
       for (let i = 0; i < tableData.length; i++) {
         if (getAcCountKey(tableData[i]?.link)) {
           Cache.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac })
+        }
+        if (tableData[i]?.loading) {
+          tableData[i].loading = false
         }
 
       }
       Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], toRaw(tableData))
       Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], Object.assign({}, cache))
+      if (isDev()) {
+        console.log('同步完成🥰', asyncProblemNum.value, allProblemNum.value, loadProcess.value)
+      }
 
-
+      await sleep(500)
       ElMessage({
-        type: 'success',
-        message: `同步完成🥰`,
+        type: allProblemNum.value == asyncProblemNum.value ? 'success' : asyncButtonLoadBreak.value ? 'error' : 'warning',
+        message: allProblemNum.value == asyncProblemNum.value ? `同步完成🥰` : asyncButtonLoadBreak.value ? `同步中断 ${loadProcess.value}% ` : `同步率 ${loadProcess.value}% `,
         duration: 3000,
       })
-      setTimeout(() => {
-
-        allProblemNum.value = 0
-        asyncProblemNum.value = 0
-        showProcess.value = false
-
-      }, 5000);
-
+      await sleep(6000)
+      allProblemNum.value = 0
+      asyncProblemNum.value = 0
+      showProcess.value = false
+      asyncButtonLoadBreak.value = false
     }
   }
   if (row.link == TARGET_URL) {
@@ -424,7 +452,7 @@ const q2 = ref(false)
     </el-dialog>
 
     <el-dialog v-model="dialogTableVisible"
-      :title="showProcess ? loadProcess < 100 ? `统计中...${asyncProblemNum}/${allProblemNum}` : '统计完成' : '题单信息'"
+      :title="asyncButtonLoadBreak ? `同步已中断 ${asyncProblemNum}/${allProblemNum}` : showProcess ? loadProcess < 100 ? `同步中...${asyncProblemNum}/${allProblemNum}` : '统计完成' : '题单信息'"
       width="60%">
       <el-progress v-if="showProcess" :color="processColors" :percentage="loadProcess" :stroke-width="15" striped
         striped-flow style="margin-bottom: 20px;" :status="`${loadProcess == 100 ? 'success' : ''}`" />
@@ -439,7 +467,7 @@ const q2 = ref(false)
           <el-button plain @click="handlerProblems('add')" :size="tableButtonSize" v-if="showAddLocalButton">
             自定义
           </el-button>
- 
+
 
           <el-select v-model="sortType" style="margin:0 5px;width:100px;" :disabled="asyncButtonLoad">
             <el-option label="默认排序" :value="0">默认排序</el-option>
@@ -448,15 +476,21 @@ const q2 = ref(false)
             <el-option label="完成度" :value="3">完成度</el-option>
           </el-select>
           <el-tooltip content="同步所有题单">
-            <el-button type="danger" @click="asyncProblemStatus({ 'link': 'https://leetcode.cn/u/endlesscheng/' })"
+            <el-button :type="asyncButtonLoad ? 'success' : 'danger'" @click="asyncProblemStatus({ 'link': 'https://leetcode.cn/u/endlesscheng/' })"
               :size="tableButtonSize" :loading="asyncButtonLoad">
               {{ asyncButtonLoad ? '同步中' : '同步题单' }}
             </el-button>
           </el-tooltip>
+          <el-tooltip content="点击中断同步" v-if="asyncButtonLoad">
+            <el-button v-if="asyncButtonLoad" type="warning" text @click="asyncButtonLoadBreak = !asyncButtonLoadBreak"
+              :size="tableButtonSize">
+              中断同步
+            </el-button>
+          </el-tooltip>
+
           <el-tooltip content="随机一道灵茶题单中题目,快捷键 Ctrl + Alt + J 可以触发">
-            <el-button type="primary" text @click="randomProblem"
-              :size="tableButtonSize" >
-               随机题目
+            <el-button type="primary" text @click="randomProblem" :size="tableButtonSize">
+              随机题目
             </el-button>
           </el-tooltip>
 
@@ -470,7 +504,7 @@ const q2 = ref(false)
       <el-table :data="urlsData" height="300" style="width: 100%;margin-top: 10px;">
         <el-table-column type="index"></el-table-column>
         <el-table-column label="标题" width="auto" align="center">
-          <template show-overflow-tooltip #default="scope"> <el-link :disabled="rowIsDisabled(scope.row)"
+          <template show-overflow-tooltip #default="scope"> <el-link 
               :href="scope.row.link" target="_blank" type="default">{{
                 scope.row.title
               }}</el-link></template>
@@ -479,7 +513,7 @@ const q2 = ref(false)
         <el-table-column label="随机" width="70" align="center">
           <template #default="scope">
             <el-switch v-model="scope.row.select" @change="selectHandlerChange(scope.row)"
-                :disabled="rowIsDisabled(scope.row)" size="small"></el-switch>
+              :disabled="rowIsDisabled(scope.row)" size="small"></el-switch>
 
           </template>
 
@@ -512,7 +546,7 @@ const q2 = ref(false)
         <el-table-column label="操作" width="200px" align="center">
           <template #default="scope">
             <el-button :loading="scope.row.loading" @click="asyncProblemStatus(scope.row)" size="small" type="success"
-              :disabled="rowIsDisabled(scope.row)" link>同步</el-button>
+              :disabled="rowIsDisabled(scope.row)" link>{{ scope.row.loading ? '' : "同步" }}</el-button>
             <el-button @click="handlerProblems('update', scope.row, scope.$index)" size="small" type="primary"
               :disabled="rowIsDisabled(scope.row)" link>编辑</el-button>
 

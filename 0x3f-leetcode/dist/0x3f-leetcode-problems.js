@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.0
+// @version      0.0.5.1
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-96f24e8f]{color:#000;margin:10px 0}em[data-v-96f24e8f]{color:red}h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-2f60b425]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-2f60b425]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-2f60b425]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-1688f5c1]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-1688f5c1]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-1688f5c1]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -82,6 +82,8 @@
   const isLeetCodeCircleUrl = (url = window.location.href) => url && url.indexOf("https://leetcode.cn/circle") != -1;
   const isProblem = (url = window.location.href) => /^https?:\/\/leetcode.cn\/problems\/.*/i.test(url);
   const isContest = (url = window.location.href) => url.indexOf("https://leetcode.cn/contest/weekly-contest") != -1 || url.indexOf("https://leetcode.cn/contest/biweekly-contest") != -1;
+  const sleep = async (time = 500) => new Promise((resolove) => setTimeout(resolove, time));
+  const isDev = () => false;
   const width = 14;
   const height = 14;
   const problemFinsh = () => `
@@ -278,6 +280,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         u = saveUrls[i];
         if (u["select"] == void 0) u.select = true;
         if (u["title"] == void 0 || u["link"] == void 0) continue;
+        if (u["loading"] == void 0 || u["loading"]) u["loading"] = false;
         let s = Object.values(u).join("");
         if (s == "null" || !Cache$1.get(u.link) || !getAcCountKey(u.link) || !Cache$1.get(getAcCountKey(u.link))) {
           continue;
@@ -386,9 +389,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             cache[ID] = status == null ? "null" : status;
             if (watch2) {
               Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
-              {
-                console.log("save local status :", cache[ID], "status = ", status, "get local status :", Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"])[ID]);
-              }
               window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
                 "id": ID,
                 "status": cache[ID]
@@ -408,7 +408,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     var _a;
     let problems_doms = Array.isArray(doms) ? doms : loadProblems();
     const cache = getLocalProblemStatus();
-    let uid = 0;
     for (let i = 0; i < problems_doms.length; i++) {
       let cur = problems_doms[i].parentElement;
       if (!(cur instanceof HTMLElement)) {
@@ -425,12 +424,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         queryStatus(ID, cache, cur, false);
       } else {
         let status = cache[ID];
-        uid++;
         createStatus(status, cur);
       }
-    }
-    {
-      console.log("cache num :", uid, ",tot:", A.length);
     }
     getProcess();
     if (reload) {
@@ -452,9 +447,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
-      {
-        console.log("ID:", ID, "query status: ", cache[ID]);
-      }
       queryStatus(ID, cache, void 0, true);
     }, timeout);
   };
@@ -468,9 +460,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       return;
     }
     let thisLink = `https://leetcode.cn/problems/${id}`;
-    {
-      console.log("update", thisLink, "status", status);
-    }
     let link = document.querySelector(`${linkCssSelector}[href^="https://leetcode.cn/problems/${id}"]`);
     if (!link || !(link == null ? void 0 : link.parentElement)) {
       let doms = loadProblems();
@@ -519,17 +508,27 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
   }
   function getRandomInfo(array) {
-    if (!Array.isArray(array)) return [];
+    if (!Array.isArray(array)) return void 0;
     return array[Math.floor(Math.random() * array.length)];
   }
   async function randomProblem() {
-    let allProbmems = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
+    let allProbmems;
     if (!Array.isArray(allProbmems) || allProbmems.length == 0) {
       let response = await getProblemsJSON();
       if (Array.isArray(response)) {
         allProbmems = [...response];
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], [...response]);
       }
+    } else {
+      allProbmems = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
+    }
+    if (!Array.isArray(allProbmems)) {
+      ElementPlus.ElMessage({
+        type: "error",
+        message: "随机题目失败获取不到任何信息 ！请如果出现这种情况，请前往 https://github.com/wuxin0011/tampermonkey-script/issues 反馈",
+        duration: 6e3
+      });
+      return;
     }
     let config = initObj();
     let urlsData = initUrls();
@@ -541,25 +540,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     let infos = [];
     let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
-    {
-      console.log("config and set", config, set);
-    }
     for (let info of allProbmems) {
       if (set.has(info == null ? void 0 : info.problemUrl)) {
-        {
-          console.log("info=>", info.problemUrl, info.title);
-        }
         for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
           try {
             let { title, url, member, score, titleSlug } = info.problems[i];
-            if (!config.showAcConfig && acMap[url] == "ac") {
-              continue;
-            }
-            console.log("config.visiableMember && member", !config.visiableMember && member, config.visiableMember, member);
-            if (!config.visiableMember && member) {
-              continue;
-            }
-            if (score != 0 && (score < config.min || score > config.max)) {
+            if (isDev()) ;
+            if (!config.showAcConfig && acMap[url] == "ac" || !config.visiableMember && member || score != 0 && (score < config.min || score > config.max)) {
               continue;
             }
             infos.push({ title, url, member, score, titleSlug });
@@ -569,27 +556,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         }
       }
     }
-    {
-      console.log("filter infos = ", infos);
-    }
     let data = getRandomInfo(infos);
-    {
-      console.log("randomInfo : ", data);
-    }
-    if ((data == null ? void 0 : data.url) && (data == null ? void 0 : data.title)) {
-      ElementPlus.ElMessage({
-        dangerouslyUseHTMLString: true,
-        type: "success",
-        message: `<div>随机题目☕：&nbsp;<a href="${data.url}" target="_blank" style="color:#5d99f2;">${data.title}</a> ${(data == null ? void 0 : data.score) && (data == null ? void 0 : data.score) > 0 ? `&nbsp;分值${data.score}` : ""}</div>`,
-        duration: 6e3
-      });
-    } else {
-      ElementPlus.ElMessage({
-        type: "error",
-        message: `没有符合条件的题目，请重新配置条件`,
-        duration: 3e3
-      });
-    }
+    ElementPlus.ElMessage({
+      dangerouslyUseHTMLString: !!(data && (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title)),
+      type: (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title) ? "success" : "error",
+      message: (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title) ? `<div>随机题目☕：&nbsp;<a href="${data.url}" target="_blank" style="color:#5d99f2;">${data.title}</a> ${(data == null ? void 0 : data.score) && (data == null ? void 0 : data.score) > 0 ? `&nbsp;分值${data.score}` : ""}</div>` : `没有符合条件的题目，请重新配置条件!`,
+      duration: 6e3
+    });
   }
   async function GetHubJSONInfo(url) {
     return fetch(url, {
@@ -621,7 +594,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return target;
   };
   const _sfc_main$1 = {};
-  const _hoisted_1$1 = /* @__PURE__ */ vue.createStaticVNode("<h2 data-v-96f24e8f> 1. 为什么部分题单出现统计数量为 <em data-v-96f24e8f> 0 </em> 情况 ? </h2><p data-v-96f24e8f>防止一次性访问题单太多，对服务器产生压力，所以采用单个题单访问然后保存状态 , 这样避免访问量问题</p><p data-v-96f24e8f>默认情况下会缓存访问的题单情况，对于没有访问的题单，可以手动在对应题单中同步</p><h2 data-v-96f24e8f> 2、题单有时候会出现不同步 </h2><p data-v-96f24e8f>这个没啥问题，题目状态根据用户提交题目情况会实时更新，只会在提交访问一次</p><h2 data-v-96f24e8f> 3、 如何使用随机题目？ </h2><p data-v-96f24e8f>这个可以根据自己喜好来配置，配置好之后，可以使用 <em data-v-96f24e8f> ctrl + alt + j </em> 触发 </p><h2 data-v-96f24e8f> 4、反馈 </h2>", 8);
+  const _hoisted_1$1 = /* @__PURE__ */ vue.createStaticVNode('<h2 style="color:red !important;" data-v-49e5e62d> 0. 同步功能使用前请确保为登录状态 </h2><h2 data-v-49e5e62d> 1. 为什么部分题单出现统计数量为 <em data-v-49e5e62d> 0 </em> 情况 ? </h2><p data-v-49e5e62d>防止一次性访问题单太多，对服务器产生压力，所以采用单个题单访问然后保存状态 , 这样避免访问量问题</p><p data-v-49e5e62d>默认情况下会缓存访问的题单情况，对于没有访问的题单，可以手动在对应题单中同步</p><h2 data-v-49e5e62d> 2.题单有时候会出现不同步 </h2><p data-v-49e5e62d>这个没啥问题，题目状态根据用户提交题目情况会实时更新，只会在提交访问一次</p><h2 data-v-49e5e62d> 3. 如何使用随机题目？ </h2><p data-v-49e5e62d>这个可以根据自己喜好来配置，配置好之后，可以使用 <em data-v-49e5e62d> ctrl + alt + j </em> 触发 </p><h2 data-v-49e5e62d> 4.反馈 </h2>', 9);
   function _sfc_render(_ctx, _cache) {
     const _component_el_link = vue.resolveComponent("el-link");
     return vue.openBlock(), vue.createElementBlock("div", null, [
@@ -654,7 +627,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       ])
     ]);
   }
-  const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-96f24e8f"]]);
+  const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-49e5e62d"]]);
   function Message(title = "确认操作", callback = () => {
   }, canlcelCallback = () => {
   }) {
@@ -717,18 +690,22 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         infos.unshift({ "title": "灵茶题单完成情况", "link": TARGET_URL, "tot": tot, "ac": ac, "id": 67108863 });
         return infos;
       });
-      const rowIsDisabled = vue.computed(() => (info2) => info2 && info2.link == TARGET_URL);
+      const rowIsDisabled = vue.computed(() => (info2) => asyncButtonLoad.value || info2 && info2.link == TARGET_URL);
       const isDisabbled = vue.computed(() => !!tableData.find((v) => (v == null ? void 0 : v.link) && (v == null ? void 0 : v.link.indexOf(window.location.href)) != -1));
       const dialogFormVisible = vue.ref(false);
       const computeProcess = (ac = 0, tot = 0) => {
-        if (isNaN(ac) || isNaN(tot)) return 0;
-        if (tot == 0) return 0;
+        if (isNaN(ac) || isNaN(tot) || tot === 0) return 0;
         let p = 0;
+        if (tot == ac) {
+          return 100;
+        }
+        const s = String(ac / tot);
         try {
-          const s = String(ac / tot);
-          let x1 = s.split(".")[1].padEnd(3).substring(0, 3);
+          let x1 = s.split(".")[1] || "";
+          x1 = x1.padEnd(3, "0").substring(0, 3);
           p = Math.min(100, Number(x1) / 10);
         } catch (e) {
+          console.log("calc error", e.message, s == void 0, ac, tot);
           p = (ac / tot).toFixed(3) * 100;
         }
         return isNaN(p) ? 0 : p;
@@ -858,6 +835,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], infos);
       };
       const asyncButtonLoad = vue.ref(false);
+      const asyncButtonLoadBreak = vue.ref(false);
       const showProcess = vue.ref(false);
       const allProblemNum = vue.ref(0);
       const asyncProblemNum = vue.ref(0);
@@ -878,7 +856,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       const asyncProblemStatus = async (row = {}) => {
         if (!(row == null ? void 0 : row.link)) return;
         let callback = async () => {
-          var _a, _b, _c;
+          var _a, _b, _c, _d;
           let rowData = void 0;
           let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
           let cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
@@ -894,9 +872,11 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               rowData.loading = true;
             }
             asyncButtonLoad.value = true;
+            asyncButtonLoadBreak.value = false;
             allProblemNum.value = 0;
             asyncProblemNum.value = 0;
             showProcess.value = true;
+            await sleep(500);
             let jsonInfo = await getProblemsJSON();
             if (!Array.isArray(jsonInfo)) {
               jsonInfo = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
@@ -929,21 +909,36 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             if (Array.isArray(datas) && datas.length > 0) {
               allProblemNum.value = datas.length;
               asyncProblemNum.value = 0;
-              for (let info2 of datas) {
-                let ID = info2.titleSlug;
-                let key = `${info2.origin}`;
-                let origin = map.get(key);
-                if (cache[ID] != "ac") {
-                  let response = await getProblemAcInfo(ID);
-                  const status = (_b = (_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) == null ? void 0 : _b.status;
-                  cache[ID] = status == null ? "null" : status;
-                }
-                if (origin) {
-                  if (cache[ID] == "ac") {
-                    origin.ac = origin.ac + 1;
+              let pre = 0;
+              for (let i = 0; i < datas.length; i++) {
+                let info2 = datas[i];
+                try {
+                  if (asyncButtonLoadBreak.value) {
+                    break;
                   }
+                  await sleep(200);
+                  let ID = info2.titleSlug;
+                  let key = `${info2.origin}`;
+                  let origin = map.get(key);
+                  if (cache[ID] != "ac") {
+                    let response = await getProblemAcInfo(ID);
+                    const status = (_b = (_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) == null ? void 0 : _b.status;
+                    cache[ID] = status == null ? "null" : status;
+                  }
+                  if (origin) {
+                    if (cache[ID] == "ac") {
+                      origin.ac = origin.ac + 1;
+                    }
+                  }
+                  if (isDev()) ;
+                  asyncProblemNum.value += 1;
+                  if (loadProcess.value < pre && isDev()) {
+                    console.warn("calc result is error");
+                  }
+                  pre = loadProcess.value;
+                } catch (e) {
+                  if (isDev()) ;
                 }
-                asyncProblemNum.value += 1;
               }
             }
           } catch (e) {
@@ -957,19 +952,23 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               if (getAcCountKey((_c = tableData[i]) == null ? void 0 : _c.link)) {
                 Cache$1.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
               }
+              if ((_d = tableData[i]) == null ? void 0 : _d.loading) {
+                tableData[i].loading = false;
+              }
             }
             Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
             Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+            await sleep(500);
             ElementPlus.ElMessage({
-              type: "success",
-              message: `同步完成🥰`,
+              type: allProblemNum.value == asyncProblemNum.value ? "success" : asyncButtonLoadBreak.value ? "error" : "warning",
+              message: allProblemNum.value == asyncProblemNum.value ? `同步完成🥰` : asyncButtonLoadBreak.value ? `同步中断 ${loadProcess.value}% ` : `同步率 ${loadProcess.value}% `,
               duration: 3e3
             });
-            setTimeout(() => {
-              allProblemNum.value = 0;
-              asyncProblemNum.value = 0;
-              showProcess.value = false;
-            }, 5e3);
+            await sleep(6e3);
+            allProblemNum.value = 0;
+            asyncProblemNum.value = 0;
+            showProcess.value = false;
+            asyncButtonLoadBreak.value = false;
           }
         };
         if (row.link == TARGET_URL) {
@@ -1067,8 +1066,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }, 8, ["modelValue", "title"]),
           vue.createVNode(_component_el_dialog, {
             modelValue: dialogTableVisible.value,
-            "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => dialogTableVisible.value = $event),
-            title: showProcess.value ? loadProcess.value < 100 ? `统计中...${asyncProblemNum.value}/${allProblemNum.value}` : "统计完成" : "题单信息",
+            "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => dialogTableVisible.value = $event),
+            title: asyncButtonLoadBreak.value ? `同步已中断 ${asyncProblemNum.value}/${allProblemNum.value}` : showProcess.value ? loadProcess.value < 100 ? `同步中...${asyncProblemNum.value}/${allProblemNum.value}` : "统计完成" : "题单信息",
             width: "60%"
           }, {
             default: vue.withCtx(() => [
@@ -1169,7 +1168,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       vue.createVNode(_component_el_tooltip, { content: "同步所有题单" }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_button, {
-                            type: "danger",
+                            type: asyncButtonLoad.value ? "success" : "danger",
                             onClick: _cache[8] || (_cache[8] = ($event) => asyncProblemStatus({ "link": "https://leetcode.cn/u/endlesscheng/" })),
                             size: tableButtonSize.value,
                             loading: asyncButtonLoad.value
@@ -1178,10 +1177,30 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                               vue.createTextVNode(vue.toDisplayString(asyncButtonLoad.value ? "同步中" : "同步题单"), 1)
                             ]),
                             _: 1
-                          }, 8, ["size", "loading"])
+                          }, 8, ["type", "size", "loading"])
                         ]),
                         _: 1
                       }),
+                      asyncButtonLoad.value ? (vue.openBlock(), vue.createBlock(_component_el_tooltip, {
+                        key: 2,
+                        content: "点击中断同步"
+                      }, {
+                        default: vue.withCtx(() => [
+                          asyncButtonLoad.value ? (vue.openBlock(), vue.createBlock(_component_el_button, {
+                            key: 0,
+                            type: "warning",
+                            text: "",
+                            onClick: _cache[9] || (_cache[9] = ($event) => asyncButtonLoadBreak.value = !asyncButtonLoadBreak.value),
+                            size: tableButtonSize.value
+                          }, {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode(" 中断同步 ")
+                            ]),
+                            _: 1
+                          }, 8, ["size"])) : vue.createCommentVNode("", true)
+                        ]),
+                        _: 1
+                      })) : vue.createCommentVNode("", true),
                       vue.createVNode(_component_el_tooltip, { content: "随机一道灵茶题单中题目,快捷键 Ctrl + Alt + J 可以触发" }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_button, {
@@ -1218,7 +1237,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   }, {
                     default: vue.withCtx((scope) => [
                       vue.createVNode(_component_el_link, {
-                        disabled: rowIsDisabled.value(scope.row),
                         href: scope.row.link,
                         target: "_blank",
                         type: "default"
@@ -1227,7 +1245,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                           vue.createTextVNode(vue.toDisplayString(scope.row.title), 1)
                         ]),
                         _: 2
-                      }, 1032, ["disabled", "href"])
+                      }, 1032, ["href"])
                     ]),
                     _: 1
                   }),
@@ -1322,7 +1340,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         link: ""
                       }, {
                         default: vue.withCtx(() => [
-                          vue.createTextVNode("同步")
+                          vue.createTextVNode(vue.toDisplayString(scope.row.loading ? "" : "同步"), 1)
                         ]),
                         _: 2
                       }, 1032, ["loading", "onClick", "disabled"]),
@@ -1368,7 +1386,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_switch, {
                             modelValue: fromData.visiableMember,
-                            "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => fromData.visiableMember = $event)
+                            "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => fromData.visiableMember = $event)
                           }, null, 8, ["modelValue"])
                         ]),
                         _: 1
@@ -1378,7 +1396,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_switch, {
                             modelValue: fromData.showAcConfig,
-                            "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => fromData.showAcConfig = $event)
+                            "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => fromData.showAcConfig = $event)
                           }, null, 8, ["modelValue"])
                         ]),
                         _: 1
@@ -1406,7 +1424,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       vue.createTextVNode("   "),
                       vue.createVNode(_component_el_input, {
                         modelValue: fromData.min,
-                        "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => fromData.min = $event),
+                        "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => fromData.min = $event),
                         "aria-placeholder": "",
                         placeholder: " min  ",
                         style: { "width": "60px" }
@@ -1414,7 +1432,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       vue.createTextVNode("- "),
                       vue.createVNode(_component_el_input, {
                         modelValue: fromData.max,
-                        "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => fromData.max = $event),
+                        "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => fromData.max = $event),
                         "aria-placeholder": "",
                         placeholder: " max",
                         style: { "width": "60px" }
@@ -1443,7 +1461,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       showAddLocalButton.value ? (vue.openBlock(), vue.createBlock(_component_el_button, {
                         key: 0,
                         plain: "",
-                        onClick: _cache[13] || (_cache[13] = ($event) => q1.value = !q1.value),
+                        onClick: _cache[14] || (_cache[14] = ($event) => q1.value = !q1.value),
                         size: tableButtonSize.value
                       }, {
                         default: vue.withCtx(() => [
@@ -1462,7 +1480,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }, 8, ["modelValue", "title"]),
           vue.createVNode(_component_el_dialog, {
             modelValue: asyncVisableDialog.value,
-            "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => asyncVisableDialog.value = $event),
+            "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => asyncVisableDialog.value = $event),
             width: "35%"
           }, {
             default: vue.withCtx(() => [
@@ -1498,7 +1516,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-2f60b425"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-1688f5c1"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
