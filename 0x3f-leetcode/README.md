@@ -14,13 +14,12 @@
 -  可以根据自己需要是否在收藏题单链接中显示插件
 -  标记题目状态 （显示题目是否做过，实时刷新）
 -  隐藏周赛排行榜
+-  随机一道灵茶题单中题目
 
 
 ### 演示
 
-核心功能
 
-![image.png](https://scriptcat.org/api/v2/resource/image/GBq7tKYecuNgGaNa)
 
 题目ac记录 （在0.0.2 版本开始 ）
 
@@ -44,10 +43,15 @@
 
 
 
-全屏演示
+### 全屏演示
 
+> 打开题单配置可以显示相关配置信息
 
-![image.png](https://scriptcat.org/api/v2/resource/image/GqyZC01mCoSX6OpL)
+![image.png](https://scriptcat.org/api/v2/resource/image/ZQkTcnkpAMShGlGD)
+
+> 题单信息以及配置展示
+![image.png](https://scriptcat.org/api/v2/resource/image/yDJumj8gwK3m2U0W)
+
 
 
 ### 安装地址

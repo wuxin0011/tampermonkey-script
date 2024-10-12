@@ -61,6 +61,27 @@ const VueApp = createApp(App)
 VueApp.use(ElementPlus).mount(dom)
 
 
+if ((isProblem() || isLeetCodeCircleUrl())) {
+
+  GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: '随机一道题目，你可以通过ctrl+atl+j显示一道题目' })
+
+  GM_registerMenuCommand(`${randomProblemKey() ? '关闭' : '启用'} 随机题目快捷键 ☕`, () => {
+    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__'], !randomProblemKey())
+    window.location.reload()
+  }, { title: '该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目' })
+
+  if (randomProblemKey()) {
+    document.addEventListener('keydown', async function (event) {
+      if (event.ctrlKey && event.altKey && event.key === 'j') {
+        // that.isShowContainer()
+        randomProblem()
+      }
+    });
+  }
+
+}
+
+
 function run() {
   loadID++
   if (isProblem(local_url) || isContest(local_url)) {
@@ -203,25 +224,6 @@ startStopRanking()
 
 
 
-if ((isProblem() || isLeetCodeCircleUrl())) {
-
-  GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: '随机一道题目，你可以通过ctrl+atl+j显示一道题目' })
-
-  GM_registerMenuCommand(`${randomProblemKey() ? '关闭' : '启用'} 随机题目快捷键 ☕`, () => {
-    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__'], !randomProblemKey())
-    window.location.reload()
-  }, { title: '该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目' })
-
-  if (randomProblemKey()) {
-    document.addEventListener('keydown', async function (event) {
-      if (event.ctrlKey && event.altKey && event.key === 'j') {
-        // that.isShowContainer()
-        randomProblem()
-      }
-    });
-  }
-
-}
 
 
 
