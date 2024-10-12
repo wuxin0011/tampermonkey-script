@@ -29,7 +29,7 @@ export default defineConfig({
       build: {
         externalGlobals: {
           vue: cdn
-            .jsdelivr('Vue', 'dist/vue.global.prod.js')
+            .unpkg('Vue', 'dist/vue.global.prod.js')
             .concat(util.dataUrl(';window.Vue=Vue;')),
           'element-plus': cdn.unpkg('ElementPlus', 'dist/index.full.js'),
           // 'axios': cdn.unpkg('axios', 'dist/axios.js'),

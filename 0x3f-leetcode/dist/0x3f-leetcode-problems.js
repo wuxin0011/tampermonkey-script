@@ -14,7 +14,7 @@
 // @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
 // @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
-// @require      https://cdn.jsdelivr.net/npm/vue@3.4.31/dist/vue.global.prod.js
+// @require      https://unpkg.com/vue@3.4.31/dist/vue.global.prod.js
 // @require      data:application/javascript,%3Bwindow.Vue%3DVue%3B
 // @require      https://unpkg.com/element-plus@2.7.6/dist/index.full.js
 // @resource     elementPlusCss  https://unpkg.com/element-plus@2.7.6/dist/index.css
