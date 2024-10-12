@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-1688f5c1]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-1688f5c1]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-1688f5c1]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-889583b1]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-889583b1]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-889583b1]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -759,7 +759,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         } else {
           let id = updateIndex.value;
           for (let i = 0; i < tableData.length; i++) {
-            if (tableData[i]["id"] == id) {
+            if (tableData[i] && tableData[i].id && tableData[i]["id"] == id) {
               tableData[i]["title"] = info.title;
               tableData[i]["link"] = info.link;
               break;
@@ -770,7 +770,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
       const deleteProblems = (id) => {
         for (let i = 0; i < tableData.length; i++) {
-          if (tableData[i]["id"] == id) {
+          if (tableData[i] && tableData[i].id && tableData[i]["id"] == id) {
             delete tableData[i];
             break;
           }
@@ -1516,7 +1516,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-1688f5c1"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-889583b1"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;

@@ -154,7 +154,7 @@ const addOrUpdate = () => {
   } else {
     let id = updateIndex.value
     for (let i = 0; i < tableData.length; i++) {
-      if (tableData[i]['id'] == id) {
+      if (tableData[i] && tableData[i].id && tableData[i]['id'] == id) {
         tableData[i]['title'] = info.title
         tableData[i]['link'] = info.link
         break
@@ -167,7 +167,7 @@ const addOrUpdate = () => {
 
 const deleteProblems = (id) => {
   for (let i = 0; i < tableData.length; i++) {
-    if (tableData[i]['id'] == id) {
+    if (tableData[i] && tableData[i].id && tableData[i]['id'] == id) {
       delete tableData[i]
       break
     }
