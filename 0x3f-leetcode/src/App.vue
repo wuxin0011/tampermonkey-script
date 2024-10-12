@@ -1,10 +1,12 @@
 <script setup>
 import { reactive, ref, watch, toRaw, computed, onMounted } from 'vue'
 import Cache from './utils/cache'
+import { getProblemsJSON, getProblemAcInfo } from './api/index'
 import { ElMessage } from 'element-plus'
 import Q1 from './components/Q1.vue'
 import Q2 from './components/Q2.vue'
 import { Message } from './utils/message'
+import { GM_registerMenuCommand } from '$'
 import {
   handlerProblem,
   watchLinkStatusUpdate,
@@ -17,18 +19,26 @@ import {
   queryProblem,
   __0X3F_PROBLEM_KEYS__,
   computeAcInfo,
-  getAcCountKey
+  getAcCountKey,
+  randomProblem
 } from './utils/problems'
+import { isHttp, isLeetCodeCircleUrl } from './utils'
+import cache from './utils/cache'
+
+const TARGET_URL = 'https://leetcode.cn/u/endlesscheng/'
 
 
 const isTest = false
 const sortType = ref(0)
+const tableButtonSize = ref('default')
 let tableData = reactive(initUrls())
 const keywords = ref('')
 const dialogTableVisible = ref(false)
+const showAddLocalButton = computed(() => isLeetCodeCircleUrl())
 
 let urlsData = computed(() => {
-  let infos = computeAcInfo(tableData, false).filter(info => info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
+  // let infos = computeAcInfo(tableData, false).filter(info => info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
+  let infos = tableData.filter(info => info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
   let tot = 0, ac = 0, c = 0
   for (let i = 0, c = info.length; i < infos.length; i++) {
     let info = infos[i]
@@ -55,26 +65,15 @@ let urlsData = computed(() => {
     // 完成度排序
     infos.sort((info1, info2) => computeProcess(info2.ac, info2.tot) - computeProcess(info1.ac, info1.tot))
   }
-  infos.unshift({ 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': tot, 'ac': ac, 'id': c + 10 })
+  infos.unshift({ 'title': '灵茶题单完成情况', 'link': TARGET_URL, 'tot': tot, 'ac': ac, 'id': 0x3ffffff })
   return infos
 })
+
+const rowIsDisabled = computed(() => (info) => info && info.link == TARGET_URL)
 const isDisabbled = computed(() => !!tableData.find(v => v?.link && v?.link.indexOf(window.location.href) != -1))
+
+
 const dialogFormVisible = ref(false)
-let totProblem = ref(0)
-let finishProblem = ref(0)
-const drawer = ref(false)
-
-
-
-const viewSetting = () => {
-  drawer.value = !drawer.value
-  let [cur, tot] = getProcess()
-  finishProblem.value = cur
-  totProblem.value = tot
-  computeAcInfo(tableData, false)
-}
-
-
 const computeProcess = (ac = 0, tot = 0) => {
   if (isNaN(ac) || isNaN(tot)) return 0
   if (tot == 0) return 0
@@ -89,15 +88,12 @@ const computeProcess = (ac = 0, tot = 0) => {
   return isNaN(p) ? 0 : p
 }
 
-
-
-const finishProcess = computed(() => computeProcess(finishProblem.value, totProblem.value))
 const processColors = [
   { color: '#f56c6c', percentage: 20 },
   { color: '#1989fa', percentage: 40 },
   { color: '#e6a23c', percentage: 60 },
   { color: '#6f7ad3', percentage: 80 },
-  { color: '#5cb87a', percentage: 100 },
+  { color: '#67c23a', percentage: 100 },
 ]
 const fromData = reactive(initObj())
 // 处理分数显示逻辑
@@ -124,14 +120,7 @@ const addlocal = () => {
 
 const updateIndex = ref(-1)
 
-const showProblems = () => {
-  dialogTableVisible.value = true
-  let o = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_add_cur__']) == 'true' || Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_add_cur__']) == true
-  if (o) {
-    addlocal()
-  }
-  computeAcInfo(tableData, false)
-}
+
 
 const handlerProblems = (status, updateInfo = { title: '', link: '', id: 0 }, index = -1) => {
   dialogFormVisible.value = true
@@ -139,9 +128,11 @@ const handlerProblems = (status, updateInfo = { title: '', link: '', id: 0 }, in
   updateIndex.value = updateInfo.id
   Object.assign(info, updateInfo)
 }
+
+
 const handlerMessage = (u, title, link) => {
   const a = u ? '添加' : '修改'
-  const error = !title || !/https?:\/\/.*/.test(link)
+  const error = !(!!title && isHttp(link))
   if (error) {
     ElMessage.error(`${a} 失败 请保证标题或者链接有效 `)
   } else {
@@ -166,6 +157,7 @@ const addOrUpdate = () => {
       }
     }
   }
+  // Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], toRaw(tableData).filter(u => u != null && u != undefined))
   dialogFormVisible.value = false
 }
 
@@ -201,9 +193,6 @@ const asyncLocalStatus = () => {
     addProcess(true, undefined, true)
   })
 }
-const repeatProblemsStatus = () => {
-  // TODO ... 
-}
 
 
 window.addEventListener('beforeunload', () => {
@@ -230,12 +219,180 @@ onMounted(() => {
       }
     }, 200);
     // 实时更新 
-    window.addEventListener('storage', (e) => {
-      watchLinkStatusUpdate(e)
-    })
+
   }
+
+  window.addEventListener('storage', (e) => {
+    watchLinkStatusUpdate(e)
+  })
+
+
 })
 
+
+GM_registerMenuCommand(`题单配置信息🛠`, () => {
+  dialogTableVisible.value = !dialogTableVisible.value
+}, { title: 'AC标记安装位置，默认左侧，刷新生效' })
+
+const selectHandlerChange = (row) => {
+  // console.log(':disabled="rowIsDisabled(scope.row)"', row, urlsData.value)
+  let infos = []
+  for (let i = 0; i < urlsData.value.length; i++) {
+    if (urlsData.value[i]['link'] == TARGET_URL) continue
+    infos.push(toRaw(Object.assign({}, urlsData.value[i])))
+  }
+  for (let i = 0; i < tableData.length; i++) {
+    if (row.id == tableData[i].id) {
+      tableData[i].select = row.select
+      break
+    }
+  }
+  Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], infos)
+}
+
+// 同步所有题单
+const asyncButtonLoad = ref(false)
+const showProcess = ref(false)
+const allProblemNum = ref(0)
+const asyncProblemNum = ref(0)
+
+// 显示刷题信息
+const asyncVisableDialog = ref(false)
+const showProblemsProcessInfo = reactive({
+  title: '', link: '', cnt: '', ac: '', id: '', select: true
+})
+const showProblemsInfo = (info = {}) => {
+  asyncVisableDialog.value = !asyncVisableDialog.value
+  Object.assign(showProblemsProcessInfo, info)
+}
+
+const loadProcess = computed(() => computeProcess(asyncProblemNum.value, allProblemNum.value))
+const asyncProblemStatus = async (row = {}) => {
+  if (!row?.link) return
+
+  let callback = async () => {
+    let rowData = undefined
+    let asyncAll = row?.link == TARGET_URL
+    let cache = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
+    let map = new Map()
+    try {
+
+      for (let info of tableData) {
+        if (rowData == undefined && info.id == row.id) {
+          rowData = info
+        }
+        map.set(info.link, info)
+      }
+
+      if (rowData) {
+        rowData.loading = true
+      }
+
+      asyncButtonLoad.value = true
+      allProblemNum.value = 0
+      asyncProblemNum.value = 0
+      showProcess.value = true
+      let jsonInfo = await getProblemsJSON()
+      if (!Array.isArray(jsonInfo)) {
+        jsonInfo = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], true, Array.name)
+      } else {
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], jsonInfo)
+      }
+      let datas = []
+      for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
+        let key = `${jsonInfo[i].problemUrl}`
+        let origin = map.get(key)
+        if (asyncAll) {
+          for (let p of jsonInfo[i].problems) {
+            datas.push(Object.assign({ 'origin': jsonInfo[i].problemUrl }, p))
+          }
+          if (origin) {
+            origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
+            origin.ac = 0
+          }
+
+        } else if (jsonInfo[i].problemUrl == row.link) {
+          for (let p of jsonInfo[i].problems) {
+            datas.push(Object.assign({ 'origin': jsonInfo[i].problemUrl }, p))
+          }
+          if (origin) {
+            origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
+            origin.ac = 0
+          }
+          break
+        }
+      }
+      if (Array.isArray(datas) && datas.length > 0) {
+        allProblemNum.value = datas.length
+        asyncProblemNum.value = 0
+        for (let info of datas) {
+          let ID = info.titleSlug
+          let key = `${info.origin}`
+          let origin = map.get(key)
+
+          // console.log('origin', origin)
+          if (cache[ID] != 'ac') {
+            let response = await getProblemAcInfo(ID)
+            const status = response?.data?.question?.status
+            cache[ID] = status == null ? 'null' : status
+
+
+          }
+
+          if (origin) {
+            if (cache[ID] == 'ac') {
+              origin.ac = origin.ac + 1
+            }
+          }
+
+          asyncProblemNum.value += 1
+
+        }
+      }
+
+
+
+
+    } catch (e) {
+      console.log('error', e)
+    } finally {
+      if (rowData) {
+        rowData.loading = false
+      }
+      asyncButtonLoad.value = false
+      for (let i = 0; i < tableData.length; i++) {
+        if (getAcCountKey(tableData[i]?.link)) {
+          Cache.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac })
+        }
+
+      }
+      Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], toRaw(tableData))
+      Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], Object.assign({}, cache))
+
+
+      ElMessage({
+        type: 'success',
+        message: `同步完成🥰`,
+        duration: 3000,
+      })
+      setTimeout(() => {
+
+        allProblemNum.value = 0
+        asyncProblemNum.value = 0
+        showProcess.value = false
+
+      }, 5000);
+
+    }
+  }
+  if (row.link == TARGET_URL) {
+    Message('该操作将同步所有题单，耗时可能较长 确认操作?', callback)
+  } else {
+    callback()
+  }
+
+
+}
 
 const q1 = ref(false)
 const q2 = ref(false)
@@ -244,158 +401,181 @@ const q2 = ref(false)
 
 <template>
   <div>
-    <el-button type="primary" style="" @click="viewSetting" class="m-setting-button m-button" circle size="large">
-      0X3F
-    </el-button>
-    <el-drawer v-model="drawer" size="30%" :with-header="false" style="position: fixed !important;" direction="rtl">
-      <template #default>
-        <div class="processs-flex">
-          <el-progress type="circle" :percentage="finishProcess" :color="processColors">
-            <template #default="{ percentage }">
-              <p>{{ percentage }}%</p>
-            </template>
-          </el-progress>
+    <el-dialog v-model="q1">
+      <Q1></Q1>
+    </el-dialog>
+    <el-dialog v-model="dialogFormVisible" :title="`${info.status == 'add' ? '添加' : '编辑'}`" width="400">
+      <el-form>
+        <el-form-item label="标题" :label-width="formLabelWidth">
+          <el-input v-model="info.title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="链接" :label-width="formLabelWidth">
+          <el-input v-model="info.link" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button @click="addOrUpdate">
+            确认
+          </el-button>
         </div>
-        <p style="text-align: center;color:#121212;"> {{ finishProblem }} / {{ totProblem }}</p>
-        <template v-if="isTest">
-          <el-button @click="finishProblem += 10">add 10 </el-button>
-          <el-button @click="finishProblem -= 10">del 10</el-button>
-        </template>
-        <el-divider />
-        <el-form label-position="left" label-width="auto" :model="fromData" style="max-width: 600px">
-          <el-form-item label="分数区间">
-            <el-col :span="10">
-              <el-input v-model="fromData.min" aria-placeholder="" placeholder=" min  " />
-            </el-col>
-            <el-col class="text-center" :span="1" style="margin: 0 0.5rem">-</el-col>
-            <el-col :span="10">
-              <el-input v-model="fromData.max" aria-placeholder="" placeholder=" max" />
-            </el-col>
-          </el-form-item>
-          <el-form-item label="显示会员题">
-            <el-switch v-model="fromData.visiableMember" />
-          </el-form-item>
-          <el-form-item label="隐藏AC题目">
-            <el-switch v-model="fromData.hiddenAc" />
-          </el-form-item>
-          <el-form-item label="收藏题单中生效">
-            <el-tooltip content="插件只在收藏题单中生效，刷新生效 " placement="bottom-end">
-              <el-switch v-model="fromData.onlyUrls" />
-            </el-tooltip>
-          </el-form-item>
-          <el-form-item label="使用题单">
-            <el-switch v-model="fromData.useDefaultSetting" />
-          </el-form-item>
-        </el-form>
-        <template v-if="fromData.useDefaultSetting">
-          <el-divider />
-          <el-button plain @click="asyncLocalStatus">
-            同步本页题目状态
-          </el-button>
-          <el-button plain @click="showProblems">
-            查看收藏的题单
-          </el-button>
-          <el-divider />
-        </template>
-        <el-button plain @click="q1 = !q1">
-          问题1
-        </el-button>
-        <el-tooltip content="此功能是为了多刷题单，重置题目状态，敬请期待!">
-          <el-button plain type="warning" :disabled="true">
-            题单重置
-          </el-button>
-        </el-tooltip>
-        <el-dialog v-model="q1" title="关于查询状态会不会被封号 ？">
-          <Q1 />
-        </el-dialog>
-        <el-dialog v-model="q2" title="相关问题 ？">
-          <Q2 />
-        </el-dialog>
-
-
-        <el-dialog v-model="dialogTableVisible" title="题单">
-          <el-row :gutter="10">
-            <el-col :span="5">
-              <el-input v-model="keywords" placeholder="请输入关键词过滤" clearable />
-            </el-col>
-            <el-col :span="19">
-              <el-button plain @click="addlocal" :disabled="isDisabbled">
-                添加本页
-              </el-button>
-              <el-button plain @click="handlerProblems('add')">
-                自定义
-              </el-button>
-              <el-button plain @click="handlerDefault">
-                默认
-              </el-button>
-              <el-button plain @click="q2 = !q2">
-                相关问题
-              </el-button>
-              <el-select v-model="sortType" style="margin-left:5px;width:100px;">
-                <el-option label="默认排序" :value="0">默认排序</el-option>
-                <el-option label="题目数量" :value="1">题目数量</el-option>
-                <el-option label="AC数量" :value="2">AC数量</el-option>
-                <el-option label="完成度" :value="3">完成度</el-option>
-              </el-select>
-            </el-col>
-          </el-row>
-          <el-table :data="urlsData" height="300" style="width: 100%;margin-top: 10px;">
-            <el-table-column label="标题" width="auto" align="center">
-              <template #default="scope"> <el-link :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'"
-                  :href="scope.row.link" target="_blank" type="default">{{
-                    scope.row.title
-                  }}</el-link></template>
-
-            </el-table-column>
-            <el-table-column label="AC" width="80" align="center">
-              <template #default="scope">
-                {{ isNaN(scope.row.ac) ? 0 : scope.row.ac }}
-              </template>
-
-            </el-table-column>
-            <el-table-column label="Total" width="80" align="center">
-              <template #default="scope">
-                {{ isNaN(scope.row.tot) ? 0 : scope.row.tot }}
-              </template>
-            </el-table-column>
-            <el-table-column label="process" width="80" align="center">
-              <template #default="scope">
-                {{ scope?.row?.tot == 0 ? 0 : `${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}
-              </template>
-            </el-table-column>
-
-            <el-table-column label="操作" width="150" align="center">
-              <template #default="scope">
-                <el-button type="primary" size="small"
-                  :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'"
-                  @click="handlerProblems('update', scope.row, scope.$index)">编辑</el-button>
-                <el-button :disabled="scope.row.link == 'https://leetcode.cn/u/endlesscheng/'" type="danger"
-                  size="small" @click="deleteProblems(scope.row.id)">删除</el-button>
-              </template>
-
-            </el-table-column>
-          </el-table>
-        </el-dialog>
-        <el-dialog v-model="dialogFormVisible" :title="`${info.status == 'add' ? '添加' : '编辑'}`" width="400">
-          <el-form>
-            <el-form-item label="标题" :label-width="formLabelWidth">
-              <el-input v-model="info.title" autocomplete="off" />
-            </el-form-item>
-            <el-form-item label="链接" :label-width="formLabelWidth">
-              <el-input v-model="info.link" autocomplete="off" />
-            </el-form-item>
-          </el-form>
-          <template #footer>
-            <div class="dialog-footer">
-              <el-button @click="dialogFormVisible = false">取消</el-button>
-              <el-button type="primary" @click="addOrUpdate">
-                确认
-              </el-button>
-            </div>
-          </template>
-        </el-dialog>
       </template>
-    </el-drawer>
+    </el-dialog>
+
+    <el-dialog v-model="dialogTableVisible"
+      :title="showProcess ? loadProcess < 100 ? `统计中...${asyncProblemNum}/${allProblemNum}` : '统计完成' : '题单信息'"
+      width="60%">
+      <el-progress v-if="showProcess" :color="processColors" :percentage="loadProcess" :stroke-width="15" striped
+        striped-flow style="margin-bottom: 20px;" :status="`${loadProcess == 100 ? 'success' : ''}`" />
+      <el-row :gutter="10">
+        <el-col :span="4">
+          <el-input v-model="keywords" placeholder="请输入关键词过滤" clearable />
+        </el-col>
+        <el-col :span="20">
+          <el-button plain @click="addlocal" :disabled="isDisabbled" :size="tableButtonSize" v-if="showAddLocalButton">
+            添加本页
+          </el-button>
+          <el-button plain @click="handlerProblems('add')" :size="tableButtonSize" v-if="showAddLocalButton">
+            自定义
+          </el-button>
+ 
+
+          <el-select v-model="sortType" style="margin:0 5px;width:100px;" :disabled="asyncButtonLoad">
+            <el-option label="默认排序" :value="0">默认排序</el-option>
+            <el-option label="题目数量" :value="1">题目数量</el-option>
+            <el-option label="AC数量" :value="2">AC数量</el-option>
+            <el-option label="完成度" :value="3">完成度</el-option>
+          </el-select>
+          <el-tooltip content="同步所有题单">
+            <el-button type="danger" @click="asyncProblemStatus({ 'link': 'https://leetcode.cn/u/endlesscheng/' })"
+              :size="tableButtonSize" :loading="asyncButtonLoad">
+              {{ asyncButtonLoad ? '同步中' : '同步题单' }}
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="随机一道灵茶题单中题目,快捷键 Ctrl + Alt + J 可以触发">
+            <el-button type="primary" text @click="randomProblem"
+              :size="tableButtonSize" >
+               随机题目
+            </el-button>
+          </el-tooltip>
+
+
+        </el-col>
+      </el-row>
+
+
+
+      <!--显示信息 -->
+      <el-table :data="urlsData" height="300" style="width: 100%;margin-top: 10px;">
+        <el-table-column type="index"></el-table-column>
+        <el-table-column label="标题" width="auto" align="center">
+          <template show-overflow-tooltip #default="scope"> <el-link :disabled="rowIsDisabled(scope.row)"
+              :href="scope.row.link" target="_blank" type="default">{{
+                scope.row.title
+              }}</el-link></template>
+
+        </el-table-column>
+        <el-table-column label="随机" width="70" align="center">
+          <template #default="scope">
+            <el-switch v-model="scope.row.select" @change="selectHandlerChange(scope.row)"
+                :disabled="rowIsDisabled(scope.row)" size="small"></el-switch>
+
+          </template>
+
+        </el-table-column>
+        <el-table-column label="AC" width="70" align="center">
+          <template #default="scope">
+
+            <el-link type="success" :underline="false" @click="showProblemsInfo(scope.row)"> {{ isNaN(scope.row.ac) ? 0
+              : scope.row.ac }}</el-link>
+
+          </template>
+
+        </el-table-column>
+        <el-table-column label="Total" width="70" align="center">
+          <template #default="scope">
+
+            <el-link type="primary" :underline="false" @click="showProblemsInfo(scope.row)"> {{ isNaN(scope.row.tot) ? 0
+              : scope.row.tot }}</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column label="进度" width="70" align="center">
+          <template #default="scope">
+            <el-link @click="showProblemsInfo(scope.row)" type="warning" :underline="false"> {{ scope?.row?.tot == 0 ? 0
+              :
+              `${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}</el-link>
+
+          </template>
+        </el-table-column>
+
+        <el-table-column label="操作" width="200px" align="center">
+          <template #default="scope">
+            <el-button :loading="scope.row.loading" @click="asyncProblemStatus(scope.row)" size="small" type="success"
+              :disabled="rowIsDisabled(scope.row)" link>同步</el-button>
+            <el-button @click="handlerProblems('update', scope.row, scope.$index)" size="small" type="primary"
+              :disabled="rowIsDisabled(scope.row)" link>编辑</el-button>
+
+            <el-button @click="deleteProblems(scope.row.id)" size="small" type="danger" link
+              :disabled="rowIsDisabled(scope.row)">删除</el-button>
+          </template>
+
+        </el-table-column>
+      </el-table>
+
+
+      <!-- 随机配置信息 -->
+      <el-row :gutter="10" style="margin:10px 0;">
+        <el-col :span="6">
+          会员&nbsp;&nbsp;<el-tooltip content="过滤会员题目，会员题不会出现在随机题目中，默认过滤"><el-switch
+              v-model="fromData.visiableMember" /></el-tooltip>
+          ac&nbsp;&nbsp;<el-tooltip content="过滤AC的题目,AC题目出现在随机题目中，默认不过滤"><el-switch
+              v-model="fromData.showAcConfig" /></el-tooltip>
+        </el-col>
+        <el-col :span="10">
+          &nbsp;&nbsp;<el-tooltip content="随机题目将会随机在这个区间中的题目">
+            <el-link :underline="false" type="primary">分数区间</el-link></el-tooltip>&nbsp;&nbsp;
+          <el-input v-model="fromData.min" aria-placeholder="" placeholder=" min  " style="width:60px;" />-
+          <el-input v-model="fromData.max" aria-placeholder="" placeholder=" max" style="width:60px;" />
+        </el-col>
+
+
+        <el-col :span="8">
+          <el-tooltip content="重置题单">
+            <el-button plain @click="handlerDefault" :size="tableButtonSize" :disabled="showProcess">
+              默认
+            </el-button>
+          </el-tooltip>
+          <el-button plain @click="q1 = !q1" :size="tableButtonSize" v-if="showAddLocalButton">
+            使用说明
+          </el-button>
+        </el-col>
+
+
+
+      </el-row>
+    </el-dialog>
+
+
+    <el-dialog v-model="asyncVisableDialog" width="35%">
+      <p>
+        <el-link :href="showProblemsProcessInfo.link" type="info" :underline="false"> {{
+          showProblemsProcessInfo.title }}</el-link>
+      </p>
+      <div class="processs-flex">
+
+        <el-progress type="circle" :percentage="computeProcess(showProblemsProcessInfo.ac, showProblemsProcessInfo.tot)"
+          :color="processColors">
+          <template #default="{ percentage }">
+            <p>{{ percentage }}%</p>
+          </template>
+        </el-progress>
+      </div>
+
+      <p style="text-align: center;color:#121212;"> {{ showProblemsProcessInfo.ac }} / {{ showProblemsProcessInfo.tot }}
+      </p>
+    </el-dialog>
+
   </div>
 
 

@@ -4,4 +4,4 @@ export const isProblem = (url = window.location.href) => /^https?:\/\/leetcode.c
 export const isContest = (url = window.location.href) => url.indexOf('https://leetcode.cn/contest/weekly-contest') != -1 || url.indexOf('https://leetcode.cn/contest/biweekly-contest') != -1
 
 
-export const isDev = () => false
+export const isDev = () => true

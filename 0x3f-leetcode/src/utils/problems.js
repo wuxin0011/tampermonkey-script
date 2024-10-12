@@ -1,6 +1,8 @@
 import Cache from './cache'
 import { isContest, isDev, isLeetCodeCircleUrl, isProblem } from './index'
 import { createStatus } from './status'
+import { getProblemsJSON } from '../api/index'
+import { ElMessage } from 'element-plus'
 
 const inf = 4000  // 目前最大分数为3100
 const mi = 1000   // 目前最小分数为1100 
@@ -17,6 +19,9 @@ export const __0X3F_PROBLEM_KEYS__ = {
     '__0x3f_problmes_add_cur__': '__0x3f_problmes_add_cur__', // 添加 url
     '__0x3f_problmes_ac_key__': '__local_ok_problem_key__', // ac key
     '__0x3f_problmes_ac_version__': '__0x3f_problmes_ac_version__', // TODO ac key version
+    '__0x3f_problmes_all_problems__': '__0x3f_problmes_all_problems__', // all problems
+    '__0x3f_problmes_random_problems_key__': '__0x3f_problmes_random_problems_key__', //随机题目快捷键
+    '__0x3f_problmes_random_problems__': '__0x3f_problmes_random_problems__', //随机题目
 }
 
 export const STATUS = {
@@ -28,7 +33,7 @@ export const STATUS = {
 
 
 export const defaultObj = {
-    min: mi, max: inf, visiableMember: true, onlyUrls: false, useDefaultSetting: true, hiddenAc: false
+    min: mi, max: inf, visiableMember: true, onlyUrls: false, useDefaultSetting: true, hiddenAc: false, showAcConfig: true
 }
 
 
@@ -139,10 +144,8 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
     for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
         try {
             u = saveUrls[i]
-            if (!u || !u?.link) continue
-            if (!u['id']) {
-                u['id'] = i + 1
-            }
+            if(u['select'] == undefined) u.select = true
+            if(u['title'] == undefined || u['link'] == undefined) continue
             let s = Object.values(u).join('')
             if (s == 'null' || !Cache.get(u.link) || !getAcCountKey(u.link) || !Cache.get(getAcCountKey(u.link))) {
                 continue
@@ -164,16 +167,22 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
             saveUrls.push(info)
         }
     }
+    // console.log('a:', infos)
     return infos
 }
 
 export const initUrls = () => {
     let saveUrls = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true, Boolean.name) ? Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], true, Array.name) : defaultUrls
-    // console.log('infos=>', saveUrls)
+    // console.log('infos=>', sa/veUrls)
     return computeAcInfo(saveUrls)
 }
-export const initObj = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__']) ? Object.assign(defaultObj, Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'])) : defaultObj
-
+export const initObj = () => {
+    let obj = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__']) ? Object.assign(defaultObj, Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'])) : defaultObj
+    if (obj['showAcConfig'] == null || obj['showAcConfig'] == undefined) {
+        obj.showAcConfig = true
+    }
+    return obj
+}
 
 
 // 插件是否生效
@@ -204,91 +213,20 @@ export const support_plugins = () => {
     return false
 }
 
-
-// 默认题单url
 export const defaultUrls = [
-    {
-        title: '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）',
-        link: 'https://leetcode.cn/circle/discuss/IYT3ss/',
-        cnt: 0,
-        ac: 1
-    },
-    {
-        title: '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）',
-        link: 'https://leetcode.cn/circle/discuss/mOr1u6/',
-        cnt: 0,
-        ac: 0,
-        id: 2
-    },
-    {
-        title: '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）',
-        link: 'https://leetcode.cn/circle/discuss/tXLS3i/',
-        cnt: 0,
-        ac: 0,
-        id: 3
-    },
-    {
-        title: '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）',
-        link: 'https://leetcode.cn/circle/discuss/01LUak/',
-        cnt: 0,
-        ac: 0,
-        id: 4
-    },
-    {
-        title: '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）',
-        link: 'https://leetcode.cn/circle/discuss/dHn9Vk/',
-        cnt: 0,
-        ac: 5
-    },
-    {
-        title: '网格图（DFS/BFS/综合应用）',
-        link: 'https://leetcode.cn/circle/discuss/YiXPXW/',
-        cnt: 0,
-        ac: 0,
-        id: 6
-    },
-    {
-        title: '单调栈（矩形面积/贡献法/最小字典序）',
-        link: 'https://leetcode.cn/circle/discuss/9oZFK9/',
-        cnt: 0,
-        ac: 7
-    },
-    {
-        title: '二分算法（二分答案/最小化最大值/最大化最小值/第K小）',
-        link: 'https://leetcode.cn/circle/discuss/SqopEo/',
-        cnt: 0,
-        ac: 0,
-        id: 8
-    },
-    {
-        title: '滑动窗口（定长/不定长/多指针）',
-        link: 'https://leetcode.cn/circle/discuss/0viNMK/',
-        cnt: 0,
-        ac: 0,
-        id: 9
-    },
-    {
-        title: '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）',
-        link: 'https://leetcode.cn/circle/discuss/g6KTKL/',
-        cnt: 0,
-        ac: 0,
-        id: 10
-    },
-    {
-        title: '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）',
-        link: 'https://leetcode.cn/circle/discuss/K0n2gO/',
-        cnt: 0,
-        ac: 0,
-        id: 11
-    },
-    {
-        title: '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）',
-        link: 'https://leetcode.cn/circle/discuss/SJFwQI/',
-        cnt: 0,
-        ac: 0,
-        id: 12
-    },
-
+    { 'title': '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法', 'link': 'https://leetcode.cn/circle/discuss/IYT3ss/', 'tot': 0, 'ac': 0, 'id': 1,'disabled':false,'select':true },
+    { 'title': '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）', 'link': 'https://leetcode.cn/circle/discuss/mOr1u6/', 'tot': 0, 'ac': 0, 'id': 2,'disabled':false,'select':true },
+    { 'title': '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）', 'link': 'https://leetcode.cn/circle/discuss/tXLS3i/', 'tot': 0, 'ac': 0, 'id': 3,'disabled':false,'select':true },
+    { 'title': '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）', 'link': 'https://leetcode.cn/circle/discuss/01LUak/', 'tot': 0, 'ac': 0, 'id': 4,'disabled':false,'select':true },
+    { 'title': '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）', 'link': 'https://leetcode.cn/circle/discuss/dHn9Vk/', 'tot': 0, 'ac': 0, 'id': 5,'disabled':false,'select':true },
+    { 'title': '网格图（DFS/BFS/综合应用)', 'link': 'https://leetcode.cn/circle/discuss/YiXPXW/', 'tot': 0, 'ac': 0, 'id': 6,'disabled':false,'select':true },
+    { 'title': '单调栈（矩形面积/贡献法/最小字典序', 'link': 'https://leetcode.cn/circle/discuss/9oZFK9/', 'tot': 0, 'ac': 0, 'id': 7,'disabled':false,'select':true },
+    { 'title': '二分算法（二分答案/最小化最大值/最大化最小值/第K小', 'link': 'https://leetcode.cn/circle/discuss/SqopEo/', 'tot': 0, 'ac': 0, 'id': 8,'disabled':true,'select':true },
+    { 'title': '滑动窗口（定长/不定长/多指针', 'link': 'https://leetcode.cn/circle/discuss/0viNMK/', 'tot': 0, 'ac': 0, 'id': 9,'disabled':false,'select':true },
+    { 'title': '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）', 'link': 'https://leetcode.cn/circle/discuss/g6KTKL/', 'tot': 0, 'ac': 0, 'id': 10,'disabled':false,'select':true },
+    { 'title': '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）', 'link': 'https://leetcode.cn/circle/discuss/K0n2gO/', 'tot': 0, 'ac': 0, 'id': 11,'disabled':false,'select':true },
+    { 'title': '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）', 'link': 'https://leetcode.cn/circle/discuss/SJFwQI/', 'tot': 0, 'ac': 0, 'id': 12,'disabled':false,'select':true },
+    // { 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': 0, 'ac': 0, 'id': 0x3f3f3f3f,'disabled':true,'select':false },
 ]
 
 function getId(problemUrl) {
@@ -304,7 +242,7 @@ function getId(problemUrl) {
 
 
 
-function postData(ID) {
+export function postData(ID) {
     return {
         "query": "\n    query userQuestionStatus($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    status\n  }\n}\n    ",
         "variables": {
@@ -452,6 +390,18 @@ export function getAcCountKey(k) {
     return `0x3f_ac_key_${k}`
 }
 
+export function deleteAllACCountKeys() {
+    let urls = initUrls()
+    let keys = []
+    for (let urlInfo of urls) {
+        let key = getAcCountKey(urlInfo.link)
+        Cache.remove(key)
+        keys.push(key)
+    }
+    Cache.remove(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])
+    return keys
+}
+
 
 // 查看当前进度
 export function getProcess() {
@@ -473,3 +423,95 @@ function getLocalProblemStatus() {
     return Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
 }
 
+
+function getRandomInfo(array) {
+    if (!Array.isArray(array)) return []
+    return array[Math.floor(Math.random() * array.length)]
+}
+
+
+
+export async function randomProblem() {
+    let allProbmems = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], true, Array.name)
+
+    if (!Array.isArray(allProbmems) || allProbmems.length == 0) {
+        let response = await getProblemsJSON()
+        if (Array.isArray(response)) {
+            allProbmems = [...response]
+            // 缓存题目信息
+            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], [...response])
+        }
+    }
+    let config = initObj()
+    let urlsData = initUrls()
+    let set = new Set()
+    for (let info of urlsData) {
+        if (info.link && info.select) {
+            set.add(info.link)
+        }
+    }
+    let infos = []
+    let acMap = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
+
+    if (isDev()) {
+        console.log('config and set', config, set)
+    }
+
+    for (let info of allProbmems) {
+        // 选择那个题单中的题目
+
+        if (set.has(info?.problemUrl)) {
+            if (isDev()) {
+                console.log("info=>", info.problemUrl, info.title)
+            }
+            for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
+                try {
+                    let { title, url, member, score, titleSlug } = info.problems[i]
+                    // console.log(info.problems[i])
+                    // 如果不显示AC题目，但是该题AC了
+                    if (!config.showAcConfig && acMap[url] == 'ac') {
+                        continue
+                    }
+                    console.log('config.visiableMember && member', !config.visiableMember && member, config.visiableMember, member)
+                    //  如果不显示会员题目，但是该题会员
+                    if (!config.visiableMember && member) {
+                        continue
+                    }
+                    // 如果这题目有分数并且分数不在随机题目的区间
+                    if (score != 0 && (score < config.min || score > config.max)) {
+                        continue
+                    }
+                    infos.push({ title, url, member, score, titleSlug })
+                } catch (e) {
+                    console.log('error', e)
+                }
+            }
+        }
+    }
+    if (isDev()) {
+        console.log('filter infos = ', infos)
+    }
+    let data = getRandomInfo(infos)
+
+    if (isDev()) {
+        console.log('randomInfo : ', data)
+    }
+
+
+    if (data?.url && data?.title) {
+        ElMessage({
+            dangerouslyUseHTMLString: true,
+            type: 'success',
+            message: `<div>随机题目☕：&nbsp;<a href="${data.url}" target="_blank" style="color:#5d99f2;">${data.title}</a> ${data?.score && data?.score > 0 ? `&nbsp;分值${data.score}` : ''}</div>`,
+            duration: 6000,
+        })
+    } else {
+        ElMessage({
+            type: 'error',
+            message: `没有符合条件的题目，请重新配置条件`,
+            duration: 3000,
+        })
+    }
+
+
+}

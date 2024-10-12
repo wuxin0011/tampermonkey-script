@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { computed, createApp } from 'vue';
 import App from './App.vue';
 import CopyTestCase from './copy-run/CopyTestCase.vue';
 import ElementPlus from 'element-plus'
@@ -8,7 +8,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import Cache from './utils/cache'
 import { GM_registerMenuCommand } from '$'
 import { Message } from './utils/message';
-import { submitProblems, install_pos, __0X3F_PROBLEM_KEYS__, support_plugins, initObj, initUrls, addProcess } from './utils/problems'
+import { submitProblems, deleteAllACCountKeys, randomProblem, install_pos, __0X3F_PROBLEM_KEYS__, support_plugins, initObj, initUrls, addProcess } from './utils/problems'
 import {
   isContest,
   isProblem,
@@ -41,6 +41,25 @@ function watchDom(dom) {
 }
 
 const isTest = true
+
+const randomProblemKey = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__']) == undefined ? true : Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__'])
+
+
+let Container = null
+let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], true, Boolean.name)
+const start = () => {
+  Container = document.createElement('div');
+  const body = document.querySelector('body')
+  body.append(Container)
+  // Container.style.height = '100vh'
+  // Container.style.display = ok && support_plugins() ? 'block' : 'none'
+  Container.style.display = 'block'
+  return Container
+}
+let dom = start()
+const VueApp = createApp(App)
+VueApp.use(ElementPlus).mount(dom)
+
 
 function run() {
   loadID++
@@ -91,46 +110,37 @@ function run() {
 
   } else if (isLeetCodeCircleUrl(local_url)) {
 
-    let Container = null
-    let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], true, Boolean.name)
-    const start = () => {
-      Container = document.createElement('div');
-      const body = document.querySelector('body')
-      body.append(Container)
-      // Container.style.height = '100vh'
-      Container.style.display = ok && support_plugins() ? 'block' : 'none'
-      return Container
-    }
-    let dom = start()
 
 
-    const VueApp = createApp(App)
-
-    GM_registerMenuCommand(`${ok ? '隐藏按钮' : '显示按钮'}`, () => {
-      ok = !ok
-      // console.log('ok????', ok)
-      Container.style.display = ok ? 'block' : 'none'
-      Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], ok)
-    }, { title: '可以手动关闭或者显示按钮 默认显示 刷新生效' })
+    // GM_registerMenuCommand(`${ok ? '隐藏按钮' : '显示按钮'}`, () => {
+    //   ok = !ok
+    //   // console.log('ok????', ok)
+    //   Container.style.display = ok ? 'block' : 'none'
+    //   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], ok)
+    // }, { title: '可以手动关闭或者显示按钮 默认显示 刷新生效' })
 
 
-    GM_registerMenuCommand(`安装到${install_pos() ? '右侧' : '左侧'}`, () => {
+    GM_registerMenuCommand(`安装到${install_pos() ? '右侧' : '左侧'} 🎁`, () => {
       Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_insert_pos__'], install_pos())
       window.location.reload()
     }, { title: 'AC标记安装位置，默认左侧，刷新生效' })
 
 
-    GM_registerMenuCommand(`清空题目状态缓存`, () => {
+    GM_registerMenuCommand(`清空题目状态缓存 🚀`, () => {
       Message('确认清空题目状态缓存', () => {
-        Cache.remove(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])
+        deleteAllACCountKeys()
         window.location.reload()
       })
     }, { title: '如果题目状态出现问题，可以试试,一般情况下不建议使用' })
-    GM_registerMenuCommand(`同步题目状态`, () => {
+
+
+
+    GM_registerMenuCommand(`同步题目状态 🚀`, () => {
       Message('确认同步题目状态', () => {
         addProcess(true, undefined, true)
       })
     }, { title: '如果不在同一个浏览器答题，会出现ac题目状态没有及时同步，可以使用此功能' })
+
     GM_registerMenuCommand(`${initObj().onlyUrls ? '仅在收藏题单页面生效' : '所有题单生效'}`, () => {
       const u = initObj()
       u.onlyUrls = !u.onlyUrls
@@ -184,12 +194,37 @@ function run() {
 
     })
 
-    VueApp.use(ElementPlus).mount(dom)
+
   }
 
 }
 run()
 startStopRanking()
+
+
+
+if ((isProblem() || isLeetCodeCircleUrl())) {
+
+  GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: '随机一道题目，你可以通过ctrl+atl+j显示一道题目' })
+
+  GM_registerMenuCommand(`${randomProblemKey() ? '关闭' : '启用'} 随机题目快捷键 ☕`, () => {
+    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__'], !randomProblemKey())
+    window.location.reload()
+  }, { title: '该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目' })
+
+  if (randomProblemKey()) {
+    document.addEventListener('keydown', async function (event) {
+      if (event.ctrlKey && event.altKey && event.key === 'j') {
+        // that.isShowContainer()
+        randomProblem()
+      }
+    });
+  }
+
+}
+
+
+
 
 
 
