@@ -21,38 +21,36 @@ description: 自动标记题目AC，根据分数、会员等信息显示题目�
 -  可以根据自己需要是否在收藏题单链接中显示插件
 -  标记题目状态 （显示题目是否做过，实时刷新）
 -  隐藏周赛排行榜
+-  随机一道灵茶题单中题目（ctrl + alt + j 可以触发也可以在配置中关闭）
 
 
 ### 演示
 
-核心功能
+:::danger 请确保使用该插件之前为登录状态 ！
+:::
 
-![image.png](https://scriptcat.org/api/v2/resource/image/GBq7tKYecuNgGaNa)
+:::tip 同步效果展示 (version >= 0.0.5)
+![/0x3f-problem-solution/demo.gif](/0x3f-problem-solution/demo.gif)
+:::
 
-题目ac记录 （在0.0.2 版本开始 ）
 
 
-右侧（默认 0.0.4）
+::: details 打开面板信息配置
+![image.png](https://scriptcat.org/api/v2/resource/image/ZQkTcnkpAMShGlGD)
+:::
 
+::: details `ctrl + alt + j` 随机一道题目展示
+![/0x3f-problem-solution/demo.gif](/0x3f-problem-solution/random-tea.png)
+:::
+
+
+
+
+
+:::tip 题目ac记录标记
 ![image.png](https://scriptcat.org/api/v2/resource/image/ce3YGVmO085A6oHp)
+:::
 
-
-左侧
-![image.png](https://scriptcat.org/api/v2/resource/image/0KF1mwQjiyKGwO3u)
-
-
-
-
-按钮可显示隐藏 （ 在0.0.3 版本开始 ）
-
-![image.png](https://scriptcat.org/api/v2/resource/image/k2uTTs3i1ZXZSV5d)
-
-
-
-
-全屏演示
-
-![image.png](https://scriptcat.org/api/v2/resource/image/rrnV2e22Fwn4GmNm)
 
 
 
@@ -61,6 +59,11 @@ description: 自动标记题目AC，根据分数、会员等信息显示题目�
 
 - [油猴](https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution)
 - [脚本猫](https://scriptcat.org/zh-CN/script-show-page/1967)
+
+### 其他
+
+- [反馈](https://wuxin0011.github.io/tampermonkey-script/plugins/0x3f-problem-solution.html)
+- [github](https://github.com/wuxin0011/tampermonkey-script/tree/main/0x3f-leetcode)
 
 
 
