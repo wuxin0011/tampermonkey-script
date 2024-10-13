@@ -97,13 +97,7 @@ export function handlerProblem(data) {
         max = Number(max)
         data.min = min
         data.max = max
-        let temp = {}
-        for (let key of Object.keys(data)) {
-            if (defaultObj[`${key}`] != undefined) {
-                temp[`${key}`] = data[`${key}`]
-            }
-        }
-        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], temp)
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], data)
         for (let i = 0; i < A.length; i++) {
             if (!(A[i] instanceof HTMLAnchorElement)) {
                 continue;
@@ -197,7 +191,6 @@ export const initObj = () => {
     for (let key of Object.keys(obj)) {
         if (!isNaN(key) || defaultObj[`${key}`] == undefined) continue
         temp[`${key}`] = obj[`${key}`]
-        console.log('key:',key,defaultObj[`${key}`],isNaN(key))
     }
     return temp
 }
@@ -483,7 +476,7 @@ export async function randomProblem() {
     next:
     for (let info of allProbmems) {
         // 选择那个题单中的题目
-        if (!info?.problemUrl || set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
+        if (!info?.problemUrl || !set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
             continue
         }
 

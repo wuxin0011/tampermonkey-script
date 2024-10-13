@@ -594,7 +594,7 @@ const q2 = ref(false)
               默认
             </el-button>
           </el-tooltip>
-          <el-button plain @click="q1 = !q1" :size="tableButtonSize" v-if="showAddLocalButton">
+          <el-button plain @click="q1 = !q1" :size="tableButtonSize">
             使用说明
           </el-button>
         </el-col>

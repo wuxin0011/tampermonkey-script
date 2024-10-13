@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}.m-setting-button[data-v-2e7068b1]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-2e7068b1]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-2e7068b1]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}.m-setting-button[data-v-003e83a0]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-003e83a0]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-003e83a0]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -83,7 +83,7 @@
   const isProblem = (url = window.location.href) => /^https?:\/\/leetcode.cn\/problems\/.*/i.test(url);
   const isContest = (url = window.location.href) => url.indexOf("https://leetcode.cn/contest/weekly-contest") != -1 || url.indexOf("https://leetcode.cn/contest/biweekly-contest") != -1;
   const sleep = async (time = 500) => new Promise((resolove) => setTimeout(resolove, time));
-  const isDev = () => false;
+  const isDev = () => true;
   const width = 14;
   const height = 14;
   const problemFinsh = () => `
@@ -240,13 +240,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       max = Number(max);
       data.min = min;
       data.max = max;
-      let temp = {};
-      for (let key of Object.keys(data)) {
-        if (defaultObj[`${key}`] != void 0) {
-          temp[`${key}`] = data[`${key}`];
-        }
-      }
-      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], temp);
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], data);
       for (let i = 0; i < A.length; i++) {
         if (!(A[i] instanceof HTMLAnchorElement)) {
           continue;
@@ -325,7 +319,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     for (let key of Object.keys(obj)) {
       if (!isNaN(key) || defaultObj[`${key}`] == void 0) continue;
       temp[`${key}`] = obj[`${key}`];
-      console.log("key:", key, defaultObj[`${key}`], isNaN(key));
     }
     return temp;
   };
@@ -398,6 +391,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           cache[ID] = status == null ? "null" : status;
           if (watch2) {
             Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+            {
+              console.log("save local status :", cache[ID], "status = ", status, "get local status :", Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"])[ID]);
+            }
             window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
               "id": ID,
               "status": cache[ID]
@@ -414,6 +410,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     var _a;
     let problems_doms = Array.isArray(doms) ? doms : loadProblems();
     const cache = getLocalProblemStatus();
+    let uid = 0;
     for (let i = 0; i < problems_doms.length; i++) {
       let cur = problems_doms[i].parentElement;
       if (!(cur instanceof HTMLElement)) {
@@ -431,8 +428,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         await queryStatus(ID, cache, cur, false);
       } else {
         let status = cache[ID];
+        uid++;
         createStatus(status, cur);
       }
+    }
+    {
+      console.log("cache num :", uid, ",tot:", A.length);
     }
     getProcess();
     if (reload) {
@@ -454,6 +455,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
+      {
+        console.log("ID:", ID, "query status: ", cache[ID]);
+      }
       queryStatus(ID, cache, void 0, true);
     }, timeout);
   };
@@ -467,6 +471,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       return;
     }
     let thisLink = `https://leetcode.cn/problems/${id}`;
+    {
+      console.log("update", thisLink, "status", status);
+    }
     let link = document.querySelector(`${linkCssSelector}[href^="https://leetcode.cn/problems/${id}"]`);
     if (!link || !(link == null ? void 0 : link.parentElement)) {
       let doms = loadProblems();
@@ -549,17 +556,25 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     let infos = [];
     let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+    {
+      console.log("config and set", config, set);
+      console.log("acMap", acMap);
+    }
     let count = 0;
     next:
       for (let info of allProbmems) {
-        if (!(info == null ? void 0 : info.problemUrl) || set.has(info == null ? void 0 : info.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
+        if (!(info == null ? void 0 : info.problemUrl) || !set.has(info == null ? void 0 : info.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
           continue;
+        }
+        {
+          console.log("info=>", info.problemUrl, info.title);
         }
         for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
           try {
             let { title, url, member, score, titleSlug } = info.problems[i];
             if (!url || !title) continue;
-            if (isDev()) ;
+            if (isDev()) {
+            }
             if (!(config == null ? void 0 : config.showAcConfig) && acMap[titleSlug] == "ac") {
               continue;
             }
@@ -579,7 +594,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           count += 1;
         }
       }
+    {
+      console.log("filter infos = ", infos);
+    }
     let data = getRandomInfo(infos);
+    {
+      console.log("your config:", config, set);
+      console.log("randomInfo : ", data);
+    }
     ElementPlus.ElMessage({
       dangerouslyUseHTMLString: !!(data && (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title)),
       type: (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title) ? "success" : "error",
@@ -891,6 +913,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           let rowData = void 0;
           let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
           let cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+          {
+            console.log("async ac cache:", cache);
+          }
           let map = /* @__PURE__ */ new Map();
           try {
             for (let info2 of tableData) {
@@ -964,14 +989,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       origin.ac = origin.ac + 1;
                     }
                   }
-                  if (isDev()) ;
+                  if (isDev()) {
+                  }
                   asyncProblemNum.value += 1;
                   if (loadProcess.value < pre && isDev()) {
                     console.warn("calc result is error");
                   }
                   pre = loadProcess.value;
                 } catch (e) {
-                  if (isDev()) ;
+                  if (isDev()) {
+                    console.log("process error", e.message, "asyncProblemNum.value", asyncProblemNum.value, "all", allProblemNum.value);
+                  }
                 }
                 if (i % 100 == 0) {
                   Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
@@ -995,6 +1023,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             }
             Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
             Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+            {
+              console.log("同步完成🥰", asyncProblemNum.value, allProblemNum.value, loadProcess.value);
+            }
             await sleep(500);
             ElementPlus.ElMessage({
               type: allProblemNum.value == asyncProblemNum.value ? "success" : asyncButtonLoadBreak.value ? "error" : "warning",
@@ -1495,8 +1526,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         ]),
                         _: 1
                       }),
-                      showAddLocalButton.value ? (vue.openBlock(), vue.createBlock(_component_el_button, {
-                        key: 0,
+                      vue.createVNode(_component_el_button, {
                         plain: "",
                         onClick: _cache[14] || (_cache[14] = ($event) => q1.value = !q1.value),
                         size: tableButtonSize.value
@@ -1505,7 +1535,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                           vue.createTextVNode(" 使用说明 ")
                         ]),
                         _: 1
-                      }, 8, ["size"])) : vue.createCommentVNode("", true)
+                      }, 8, ["size"])
                     ]),
                     _: 1
                   })
@@ -1553,7 +1583,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-2e7068b1"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-003e83a0"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
