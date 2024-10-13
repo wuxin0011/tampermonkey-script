@@ -4,7 +4,6 @@ import Cache from './utils/cache'
 import { getProblemsJSON, getProblemAcInfo } from './api/index'
 import { ElMessage } from 'element-plus'
 import Q1 from './components/Q1.vue'
-import Q2 from './components/Q2.vue'
 import { Message } from './utils/message'
 import { GM_registerMenuCommand } from '$'
 import {
@@ -37,7 +36,15 @@ const showAddLocalButton = computed(() => isLeetCodeCircleUrl())
 
 let urlsData = computed(() => {
   // let infos = computeAcInfo(tableData, false).filter(info => info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
-  let infos = tableData.filter(info => info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1))
+  let map = new Map()
+  let infos = tableData.filter(info => {
+    if (info?.title && info?.link && !map.has(info.link)) {
+      map.set(info.link, info)
+      return info && (info.title && info.title.indexOf(keywords.value) != -1 || info.link && info.link.indexOf(keywords.value) != -1)
+    } else {
+      return false
+    }
+  })
   let tot = 0, ac = 0, c = 0
   for (let i = 0, c = info.length; i < infos.length; i++) {
     let info = infos[i]
@@ -192,12 +199,6 @@ const handlerDefault = () => {
 }
 
 
-const asyncLocalStatus = () => {
-  Message('确认同步题单', () => {
-    addProcess(true, undefined, true)
-  })
-}
-
 
 window.addEventListener('beforeunload', () => {
   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], toRaw(tableData).filter(u => u != null && u != undefined))
@@ -207,7 +208,7 @@ window.addEventListener('beforeunload', () => {
 
 
 
-onMounted(() => {
+onMounted(async () => {
   if (support_plugins()) {
     let times = 30
     let loadTimeId = setInterval(() => {
@@ -279,14 +280,23 @@ const asyncProblemStatus = async (row = {}) => {
     let rowData = undefined
     let asyncAll = row?.link == TARGET_URL
     let cache = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
+    if (isDev()) {
+      console.log('async ac cache:', cache)
+    }
     let map = new Map()
     try {
 
       for (let info of tableData) {
-        if (rowData == undefined && info.id == row.id) {
-          rowData = info
+        if (info?.link && info?.title && info?.id) {
+          if (rowData == undefined && info?.id == row.id) {
+            rowData = info
+          }
+          if (!map.has(info.link)) {
+            map.set(info.link, info)
+          }
+
         }
-        map.set(info.link, info)
+
       }
 
       if (rowData) {
@@ -307,25 +317,24 @@ const asyncProblemStatus = async (row = {}) => {
       }
       let datas = []
       for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
-        let key = `${jsonInfo[i].problemUrl}`
+        let key = `${jsonInfo[i]?.problemUrl}`
         let origin = map.get(key)
+        if (!origin) {
+          continue
+        }
         if (asyncAll) {
           for (let p of jsonInfo[i].problems) {
             datas.push(Object.assign({ 'origin': jsonInfo[i].problemUrl }, p))
           }
-          if (origin) {
-            origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
-            origin.ac = 0
-          }
+          origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
+          origin.ac = 0
 
         } else if (jsonInfo[i].problemUrl == row.link) {
           for (let p of jsonInfo[i].problems) {
             datas.push(Object.assign({ 'origin': jsonInfo[i].problemUrl }, p))
           }
-          if (origin) {
-            origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
-            origin.ac = 0
-          }
+          origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
+          origin.ac = 0
           break
         }
       }
@@ -371,6 +380,10 @@ const asyncProblemStatus = async (row = {}) => {
             if (isDev()) {
               console.log('process error', e.message, 'asyncProblemNum.value', asyncProblemNum.value, 'all', allProblemNum.value)
             }
+          }
+
+          if (i % 100 == 0) {
+            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], Object.assign({}, cache))
           }
 
 
@@ -476,8 +489,9 @@ const q2 = ref(false)
             <el-option label="完成度" :value="3">完成度</el-option>
           </el-select>
           <el-tooltip content="同步所有题单">
-            <el-button :type="asyncButtonLoad ? 'success' : 'danger'" @click="asyncProblemStatus({ 'link': 'https://leetcode.cn/u/endlesscheng/' })"
-              :size="tableButtonSize" :loading="asyncButtonLoad">
+            <el-button :type="asyncButtonLoad ? 'success' : 'danger'"
+              @click="asyncProblemStatus({ 'link': 'https://leetcode.cn/u/endlesscheng/' })" :size="tableButtonSize"
+              :loading="asyncButtonLoad">
               {{ asyncButtonLoad ? '同步中' : '同步题单' }}
             </el-button>
           </el-tooltip>
@@ -504,8 +518,8 @@ const q2 = ref(false)
       <el-table :data="urlsData" height="300" style="width: 100%;margin-top: 10px;">
         <el-table-column type="index"></el-table-column>
         <el-table-column label="标题" width="auto" align="center">
-          <template show-overflow-tooltip #default="scope"> <el-link 
-              :href="scope.row.link" target="_blank" type="default">{{
+          <template show-overflow-tooltip #default="scope"> <el-link :href="scope.row.link" target="_blank"
+              type="default">{{
                 scope.row.title
               }}</el-link></template>
 

@@ -1,7 +1,7 @@
 import Cache from './cache'
-import { isContest, isDev, isLeetCodeCircleUrl, isProblem } from './index'
+import { isContest, isDev, isLeetCodeCircleUrl, isProblem, sleep } from './index'
 import { createStatus } from './status'
-import { getProblemsJSON } from '../api/index'
+import { getProblemAcInfo, getProblemsJSON, PostLeetCodeApi } from '../api/index'
 import { ElMessage } from 'element-plus'
 
 const inf = 4000  // 目前最大分数为3100
@@ -97,7 +97,13 @@ export function handlerProblem(data) {
         max = Number(max)
         data.min = min
         data.max = max
-        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], data)
+        let temp = {}
+        for (let key of Object.keys(data)) {
+            if (defaultObj[`${key}`] != undefined) {
+                temp[`${key}`] = data[`${key}`]
+            }
+        }
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], temp)
         for (let i = 0; i < A.length; i++) {
             if (!(A[i] instanceof HTMLAnchorElement)) {
                 continue;
@@ -140,13 +146,17 @@ export function handlerProblem(data) {
 
 export function computeAcInfo(saveUrls = [], deleteOk = true) {
     let infos = []
+    let set = new Set()
     // console.log('saveUrls', saveUrls)
     for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
         try {
             u = saveUrls[i]
+            if (!u?.link || !u?.title || !u?.id || set.has(u.link)) {
+                continue
+            }
             if (u['select'] == undefined) u.select = true
-            if (u['title'] == undefined || u['link'] == undefined) continue
             if (u['loading'] == undefined || u['loading']) u['loading'] = false
+
             let s = Object.values(u).join('')
             if (s == 'null' || !Cache.get(u.link) || !getAcCountKey(u.link) || !Cache.get(getAcCountKey(u.link))) {
                 continue
@@ -154,6 +164,7 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
             let o = Cache.get(getAcCountKey(u.link))
             u['ac'] = isNaN(o['ac']) ? 0 : parseInt(o['ac'])
             u['tot'] = isNaN(o['tot']) ? 0 : parseInt(o['tot'])
+            set.add(u.link)
 
         } catch (e) {
 
@@ -182,7 +193,13 @@ export const initObj = () => {
     if (obj['showAcConfig'] == null || obj['showAcConfig'] == undefined) {
         obj.showAcConfig = true
     }
-    return obj
+    let temp = {}
+    for (let key of Object.keys(obj)) {
+        if (!isNaN(key) || defaultObj[`${key}`] == undefined) continue
+        temp[`${key}`] = obj[`${key}`]
+        console.log('key:',key,defaultObj[`${key}`],isNaN(key))
+    }
+    return temp
 }
 
 
@@ -253,44 +270,34 @@ export function postData(ID) {
     }
 }
 
-function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) {
+async function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) {
     if (!ID) {
         return
     }
     if (cache[ID] == undefined || cache[ID] != STATUS['AC']) {
-        fetch('https://leetcode.cn/graphql/', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postData(ID)),
-        }).then(res => res.json()).then(response => {
-            if (response?.data?.question) {
-                const status = response?.data?.question?.status
-                if (cache[ID] == undefined || cache[ID] != status) {
-                    cache[ID] = status == null ? 'null' : status
-                    if (watch) {
-                        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
-                        if (isDev()) {
-                            console.log('save local status :', cache[ID], 'status = ', status, 'get local status :', Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])[ID])
-                        }
-                        window.localStorage.setItem(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_status_update__'], JSON.stringify({
-                            'id': ID,
-                            'status': cache[ID]
-                        }))
+        const response = await getProblemAcInfo(ID)
+        if (response?.data?.question) {
+            const status = response?.data?.question?.status
+            if (cache[ID] == undefined || cache[ID] != status) {
+                cache[ID] = status == null ? 'null' : status
+                if (watch) {
+                    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
+                    if (isDev()) {
+                        console.log('save local status :', cache[ID], 'status = ', status, 'get local status :', Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])[ID])
                     }
-                    createStatus(cache[ID], cur)
+                    window.localStorage.setItem(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_status_update__'], JSON.stringify({
+                        'id': ID,
+                        'status': cache[ID]
+                    }))
                 }
-            } else {
-                console.log('query result is undefined')
+                createStatus(cache[ID], cur)
             }
-        }).catch(ignore => {
-            console.error('query status error : ', ignore)
-        });
+        } else {
+            console.log('query result is undefined')
+        }
     }
 }
-export function addProcess(reload = true, doms = undefined, asyncAc = false) {
+export async function addProcess(reload = true, doms = undefined, asyncAc = false) {
     let problems_doms = Array.isArray(doms) ? doms : loadProblems()
     const cache = getLocalProblemStatus()
     let uid = 0
@@ -313,7 +320,8 @@ export function addProcess(reload = true, doms = undefined, asyncAc = false) {
             // 查询的两个条件
             // 1>首先检查本地是否有缓存 没用缓存查询
             // 2>如果本地有题目状态时不是AC但是需要同步也需要操作
-            queryStatus(ID, cache, cur, false)
+            await sleep(200)
+            await queryStatus(ID, cache, cur, false)
         } else {
             let status = cache[ID]
             uid++
@@ -416,7 +424,9 @@ export function getProcess() {
         }
     }
     let url = window.location.href
-    Cache.set(getAcCountKey(url), { "tot": A.length, "ac": cnt })
+    if(A.length > 0 && getAcCountKey(url)) {
+        Cache.set(getAcCountKey(url), { "tot": A.length, "ac": cnt })
+    }
     return [cnt, A.length]
 }
 
@@ -466,32 +476,47 @@ export async function randomProblem() {
 
     if (isDev()) {
         console.log('config and set', config, set)
+        console.log('acMap', acMap)
     }
 
+    let count = 0
+    next:
     for (let info of allProbmems) {
         // 选择那个题单中的题目
+        if (!info?.problemUrl || set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
+            continue
+        }
 
-        if (set.has(info?.problemUrl)) {
-            if (isDev()) {
-                console.log("info=>", info.problemUrl, info.title)
-            }
-            for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
-                try {
-                    let { title, url, member, score, titleSlug } = info.problems[i]
-                    if (isDev()) {
-                        // 过滤随机题目条件
-                        // 1、 如果不显示AC题目，但是该题AC了
-                        // 2、 如果不显示会员题目，但是该题会员
-                        // 3、 如果这题目有分数并且分数不在随机题目的区间
-                    }
-                    if (!config.showAcConfig && acMap[url] == 'ac' || !config.visiableMember && member || score != 0 && (score < config.min || score > config.max)) {
-                        continue
-                    }
-                    infos.push({ title, url, member, score, titleSlug })
-                } catch (e) {
-                    console.log('error', e)
+        if (isDev()) {
+            console.log("info=>", info.problemUrl, info.title)
+        }
+        for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
+            try {
+                let { title, url, member, score, titleSlug } = info.problems[i]
+                if (!url || !title) continue
+                if (isDev()) {
+                    // 过滤随机题目条件
+                    // 1、 如果不显示AC题目，但是该题AC了
+                    // 2、 如果不显示会员题目，但是该题会员
+                    // 3、 如果这题目有分数并且分数不在随机题目的区间
                 }
+                if ((!config?.showAcConfig && acMap[titleSlug] == 'ac')) {
+                    continue
+                }
+                if ((!config?.visiableMember && member)) {
+                    continue
+                }
+                if (score != 0 && (score < config?.min || score > config?.max)) {
+                    continue
+                }
+                infos.push({ title, url, member, score, titleSlug, 'status': acMap[titleSlug] })
+            } catch (e) {
+                console.log('error', e)
             }
+            if (count >= 100) {
+                break next
+            }
+            count += 1
         }
     }
     if (isDev()) {
@@ -500,6 +525,7 @@ export async function randomProblem() {
     let data = getRandomInfo(infos)
 
     if (isDev()) {
+        console.log('your config:', config, set)
         console.log('randomInfo : ', data)
     }
     ElMessage({

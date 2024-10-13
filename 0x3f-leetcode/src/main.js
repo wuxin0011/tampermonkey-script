@@ -157,15 +157,15 @@ function run() {
 
 
     GM_registerMenuCommand(`同步题目状态 🚀`, () => {
-      Message('确认同步题目状态', () => {
-        addProcess(true, undefined, true)
+      Message('确认同步题目状态', async () => {
+        await addProcess(true, undefined, true)
       })
     }, { title: '如果不在同一个浏览器答题，会出现ac题目状态没有及时同步，可以使用此功能' })
 
     GM_registerMenuCommand(`${initObj().onlyUrls ? '仅在收藏题单页面生效' : '所有题单生效'}`, () => {
       const u = initObj()
       u.onlyUrls = !u.onlyUrls
-      Container.style.display = support_plugins() ? 'block' : 'none'
+      // Container.style.display = support_plugins() ? 'block' : 'none'
       Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], u)
     }, { title: '插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能' })
     GM_registerMenuCommand(`添加本页`, () => {

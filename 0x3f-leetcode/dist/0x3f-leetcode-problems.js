@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}h2[data-v-a8cfbf3e]{color:#000;margin:10px 0}p[data-v-a8cfbf3e]{text-decoration:underline;font-size:14px}em[data-v-a8cfbf3e]{color:red}.m-setting-button[data-v-889583b1]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-889583b1]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-889583b1]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}.m-setting-button[data-v-2e7068b1]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-2e7068b1]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-2e7068b1]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -240,7 +240,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       max = Number(max);
       data.min = min;
       data.max = max;
-      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], data);
+      let temp = {};
+      for (let key of Object.keys(data)) {
+        if (defaultObj[`${key}`] != void 0) {
+          temp[`${key}`] = data[`${key}`];
+        }
+      }
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], temp);
       for (let i = 0; i < A.length; i++) {
         if (!(A[i] instanceof HTMLAnchorElement)) {
           continue;
@@ -275,11 +281,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   function computeAcInfo(saveUrls = [], deleteOk = true) {
     let infos = [];
+    let set = /* @__PURE__ */ new Set();
     for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
       try {
         u = saveUrls[i];
+        if (!(u == null ? void 0 : u.link) || !(u == null ? void 0 : u.title) || !(u == null ? void 0 : u.id) || set.has(u.link)) {
+          continue;
+        }
         if (u["select"] == void 0) u.select = true;
-        if (u["title"] == void 0 || u["link"] == void 0) continue;
         if (u["loading"] == void 0 || u["loading"]) u["loading"] = false;
         let s = Object.values(u).join("");
         if (s == "null" || !Cache$1.get(u.link) || !getAcCountKey(u.link) || !Cache$1.get(getAcCountKey(u.link))) {
@@ -288,6 +297,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         let o = Cache$1.get(getAcCountKey(u.link));
         u["ac"] = isNaN(o["ac"]) ? 0 : parseInt(o["ac"]);
         u["tot"] = isNaN(o["tot"]) ? 0 : parseInt(o["tot"]);
+        set.add(u.link);
       } catch (e) {
       }
       infos.push(Object.assign({}, u));
@@ -311,7 +321,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     if (obj["showAcConfig"] == null || obj["showAcConfig"] == void 0) {
       obj.showAcConfig = true;
     }
-    return obj;
+    let temp = {};
+    for (let key of Object.keys(obj)) {
+      if (!isNaN(key) || defaultObj[`${key}`] == void 0) continue;
+      temp[`${key}`] = obj[`${key}`];
+      console.log("key:", key, defaultObj[`${key}`], isNaN(key));
+    }
+    return temp;
   };
   const support_plugins = () => {
     const u = initObj();
@@ -369,42 +385,32 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       "operationName": "userQuestionStatus"
     };
   }
-  function queryStatus(ID = "", cache = {}, cur = void 0, watch2 = false) {
+  async function queryStatus(ID = "", cache = {}, cur = void 0, watch2 = false) {
+    var _a, _b, _c;
     if (!ID) {
       return;
     }
     if (cache[ID] == void 0 || cache[ID] != STATUS["AC"]) {
-      fetch("https://leetcode.cn/graphql/", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(postData(ID))
-      }).then((res) => res.json()).then((response) => {
-        var _a, _b, _c;
-        if ((_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) {
-          const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
-          if (cache[ID] == void 0 || cache[ID] != status) {
-            cache[ID] = status == null ? "null" : status;
-            if (watch2) {
-              Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
-              window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
-                "id": ID,
-                "status": cache[ID]
-              }));
-            }
-            createStatus(cache[ID], cur);
+      const response = await getProblemAcInfo(ID);
+      if ((_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) {
+        const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
+        if (cache[ID] == void 0 || cache[ID] != status) {
+          cache[ID] = status == null ? "null" : status;
+          if (watch2) {
+            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+            window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
+              "id": ID,
+              "status": cache[ID]
+            }));
           }
-        } else {
-          console.log("query result is undefined");
+          createStatus(cache[ID], cur);
         }
-      }).catch((ignore) => {
-        console.error("query status error : ", ignore);
-      });
+      } else {
+        console.log("query result is undefined");
+      }
     }
   }
-  function addProcess(reload = true, doms = void 0, asyncAc = false) {
+  async function addProcess(reload = true, doms = void 0, asyncAc = false) {
     var _a;
     let problems_doms = Array.isArray(doms) ? doms : loadProblems();
     const cache = getLocalProblemStatus();
@@ -421,7 +427,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         cur.style.listStyleType = "none";
       }
       if (!cache[ID] || cache[ID] != STATUS["AC"] && asyncAc) {
-        queryStatus(ID, cache, cur, false);
+        await sleep(200);
+        await queryStatus(ID, cache, cur, false);
       } else {
         let status = cache[ID];
         createStatus(status, cur);
@@ -501,7 +508,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
     }
     let url = window.location.href;
-    Cache$1.set(getAcCountKey(url), { "tot": A.length, "ac": cnt });
+    if (A.length > 0 && getAcCountKey(url)) {
+      Cache$1.set(getAcCountKey(url), { "tot": A.length, "ac": cnt });
+    }
     return [cnt, A.length];
   }
   function getLocalProblemStatus() {
@@ -540,22 +549,36 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     let infos = [];
     let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
-    for (let info of allProbmems) {
-      if (set.has(info == null ? void 0 : info.problemUrl)) {
+    let count = 0;
+    next:
+      for (let info of allProbmems) {
+        if (!(info == null ? void 0 : info.problemUrl) || set.has(info == null ? void 0 : info.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
+          continue;
+        }
         for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
           try {
             let { title, url, member, score, titleSlug } = info.problems[i];
+            if (!url || !title) continue;
             if (isDev()) ;
-            if (!config.showAcConfig && acMap[url] == "ac" || !config.visiableMember && member || score != 0 && (score < config.min || score > config.max)) {
+            if (!(config == null ? void 0 : config.showAcConfig) && acMap[titleSlug] == "ac") {
               continue;
             }
-            infos.push({ title, url, member, score, titleSlug });
+            if (!(config == null ? void 0 : config.visiableMember) && member) {
+              continue;
+            }
+            if (score != 0 && (score < (config == null ? void 0 : config.min) || score > (config == null ? void 0 : config.max))) {
+              continue;
+            }
+            infos.push({ title, url, member, score, titleSlug, "status": acMap[titleSlug] });
           } catch (e) {
             console.log("error", e);
           }
+          if (count >= 100) {
+            break next;
+          }
+          count += 1;
         }
       }
-    }
     let data = getRandomInfo(infos);
     ElementPlus.ElMessage({
       dangerouslyUseHTMLString: !!(data && (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title)),
@@ -664,7 +687,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       const dialogTableVisible = vue.ref(false);
       const showAddLocalButton = vue.computed(() => isLeetCodeCircleUrl());
       let urlsData = vue.computed(() => {
-        let infos = tableData.filter((info2) => info2 && (info2.title && info2.title.indexOf(keywords.value) != -1 || info2.link && info2.link.indexOf(keywords.value) != -1));
+        let map = /* @__PURE__ */ new Map();
+        let infos = tableData.filter((info2) => {
+          if ((info2 == null ? void 0 : info2.title) && (info2 == null ? void 0 : info2.link) && !map.has(info2.link)) {
+            map.set(info2.link, info2);
+            return info2 && (info2.title && info2.title.indexOf(keywords.value) != -1 || info2.link && info2.link.indexOf(keywords.value) != -1);
+          } else {
+            return false;
+          }
+        });
         let tot = 0, ac = 0;
         for (let i = 0, c = info.length; i < infos.length; i++) {
           let info2 = infos[i];
@@ -797,7 +828,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], false);
       });
-      vue.onMounted(() => {
+      vue.onMounted(async () => {
         if (support_plugins()) {
           let times = 30;
           let loadTimeId = setInterval(() => {
@@ -856,17 +887,21 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       const asyncProblemStatus = async (row = {}) => {
         if (!(row == null ? void 0 : row.link)) return;
         let callback = async () => {
-          var _a, _b, _c, _d;
+          var _a, _b, _c, _d, _e;
           let rowData = void 0;
           let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
           let cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
           let map = /* @__PURE__ */ new Map();
           try {
             for (let info2 of tableData) {
-              if (rowData == void 0 && info2.id == row.id) {
-                rowData = info2;
+              if ((info2 == null ? void 0 : info2.link) && (info2 == null ? void 0 : info2.title) && (info2 == null ? void 0 : info2.id)) {
+                if (rowData == void 0 && (info2 == null ? void 0 : info2.id) == row.id) {
+                  rowData = info2;
+                }
+                if (!map.has(info2.link)) {
+                  map.set(info2.link, info2);
+                }
               }
-              map.set(info2.link, info2);
             }
             if (rowData) {
               rowData.loading = true;
@@ -885,24 +920,23 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             }
             let datas = [];
             for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
-              let key = `${jsonInfo[i].problemUrl}`;
+              let key = `${(_a = jsonInfo[i]) == null ? void 0 : _a.problemUrl}`;
               let origin = map.get(key);
+              if (!origin) {
+                continue;
+              }
               if (asyncAll) {
                 for (let p of jsonInfo[i].problems) {
                   datas.push(Object.assign({ "origin": jsonInfo[i].problemUrl }, p));
                 }
-                if (origin) {
-                  origin.tot = Math.max(jsonInfo[i].problems.length, (origin == null ? void 0 : origin.tot) ?? 0);
-                  origin.ac = 0;
-                }
+                origin.tot = Math.max(jsonInfo[i].problems.length, (origin == null ? void 0 : origin.tot) ?? 0);
+                origin.ac = 0;
               } else if (jsonInfo[i].problemUrl == row.link) {
                 for (let p of jsonInfo[i].problems) {
                   datas.push(Object.assign({ "origin": jsonInfo[i].problemUrl }, p));
                 }
-                if (origin) {
-                  origin.tot = Math.max(jsonInfo[i].problems.length, (origin == null ? void 0 : origin.tot) ?? 0);
-                  origin.ac = 0;
-                }
+                origin.tot = Math.max(jsonInfo[i].problems.length, (origin == null ? void 0 : origin.tot) ?? 0);
+                origin.ac = 0;
                 break;
               }
             }
@@ -922,7 +956,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   let origin = map.get(key);
                   if (cache[ID] != "ac") {
                     let response = await getProblemAcInfo(ID);
-                    const status = (_b = (_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) == null ? void 0 : _b.status;
+                    const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
                     cache[ID] = status == null ? "null" : status;
                   }
                   if (origin) {
@@ -939,6 +973,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                 } catch (e) {
                   if (isDev()) ;
                 }
+                if (i % 100 == 0) {
+                  Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+                }
               }
             }
           } catch (e) {
@@ -949,10 +986,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             }
             asyncButtonLoad.value = false;
             for (let i = 0; i < tableData.length; i++) {
-              if (getAcCountKey((_c = tableData[i]) == null ? void 0 : _c.link)) {
+              if (getAcCountKey((_d = tableData[i]) == null ? void 0 : _d.link)) {
                 Cache$1.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
               }
-              if ((_d = tableData[i]) == null ? void 0 : _d.loading) {
+              if ((_e = tableData[i]) == null ? void 0 : _e.loading) {
                 tableData[i].loading = false;
               }
             }
@@ -1516,7 +1553,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-889583b1"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-2e7068b1"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
@@ -1643,14 +1680,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         });
       }, { title: "如果题目状态出现问题，可以试试,一般情况下不建议使用" });
       _GM_registerMenuCommand(`同步题目状态 🚀`, () => {
-        Message("确认同步题目状态", () => {
-          addProcess(true, void 0, true);
+        Message("确认同步题目状态", async () => {
+          await addProcess(true, void 0, true);
         });
       }, { title: "如果不在同一个浏览器答题，会出现ac题目状态没有及时同步，可以使用此功能" });
       _GM_registerMenuCommand(`${initObj().onlyUrls ? "仅在收藏题单页面生效" : "所有题单生效"}`, () => {
         const u = initObj();
         u.onlyUrls = !u.onlyUrls;
-        Container.style.display = support_plugins() ? "block" : "none";
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], u);
       }, { title: "插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能" });
       _GM_registerMenuCommand(`添加本页`, () => {
