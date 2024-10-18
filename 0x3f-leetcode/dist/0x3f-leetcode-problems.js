@@ -542,36 +542,30 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     let infos = [];
     let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
-    let count = 0;
-    next:
-      for (let info of allProbmems) {
-        if (!(info == null ? void 0 : info.problemUrl) || !set.has(info == null ? void 0 : info.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
-          continue;
-        }
-        for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
-          try {
-            let { title, url, member, score, titleSlug } = info.problems[i];
-            if (!url || !title) continue;
-            if (isDev()) ;
-            if (!(config == null ? void 0 : config.showAcConfig) && acMap[titleSlug] == "ac") {
-              continue;
-            }
-            if (!(config == null ? void 0 : config.visiableMember) && member) {
-              continue;
-            }
-            if (score != 0 && (score < (config == null ? void 0 : config.min) || score > (config == null ? void 0 : config.max))) {
-              continue;
-            }
-            infos.push({ title, url, member, score, titleSlug, "status": acMap[titleSlug] });
-          } catch (e) {
-            console.log("error", e);
+    for (let info of allProbmems) {
+      if (!(info == null ? void 0 : info.problemUrl) || !set.has(info == null ? void 0 : info.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
+        continue;
+      }
+      for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
+        try {
+          let { title, url, member, score, titleSlug } = info.problems[i];
+          if (!url || !title) continue;
+          if (isDev()) ;
+          if (!(config == null ? void 0 : config.showAcConfig) && acMap[titleSlug] == "ac") {
+            continue;
           }
-          if (count >= 100) {
-            break next;
+          if (!(config == null ? void 0 : config.visiableMember) && member) {
+            continue;
           }
-          count += 1;
+          if (score != 0 && (score < (config == null ? void 0 : config.min) || score > (config == null ? void 0 : config.max))) {
+            continue;
+          }
+          infos.push({ title, url, member, score, titleSlug, "status": acMap[titleSlug] });
+        } catch (e) {
+          console.log("error", e);
         }
       }
+    }
     let data = getRandomInfo(infos);
     ElementPlus.ElMessage({
       dangerouslyUseHTMLString: !!(data && (data == null ? void 0 : data.url) && (data == null ? void 0 : data.title)),

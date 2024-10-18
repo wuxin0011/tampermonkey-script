@@ -14,30 +14,10 @@
 -  可以根据自己需要是否在收藏题单链接中显示插件
 -  标记题目状态 （显示题目是否做过，实时刷新）
 -  隐藏周赛排行榜
--  随机一道灵茶题单中题目（ctrl + alt + j 可以触发也可以在配置中关闭）
+-  随机一道灵茶题单中题目
 
 
 ### 演示
-
-
-
-> 题目ac记录 (version >= 0.0.2)
-
-
-> 右侧（(version >= 0.0.4)
-
-![image.png](https://scriptcat.org/api/v2/resource/image/ce3YGVmO085A6oHp)
-
-
-左侧
-![image.png](https://scriptcat.org/api/v2/resource/image/0KF1mwQjiyKGwO3u)
-
-
-
-
-> 按钮可显示隐藏 (version >= 0.0.3)
-
-![image.png](https://scriptcat.org/api/v2/resource/image/k2uTTs3i1ZXZSV5d)
 
 
 
@@ -45,16 +25,21 @@
 
 ### 全屏演示
 
-> 打开题单配置可以显示相关配置信息 (version >= 0.0.5)
+
+
+
+> 演示手动同步
+![demo.gif](https://scriptcat.org/api/v2/resource/image/20XaV0SJbq09c9Mk))
+
+
+
+> 演示AC标记
+
+![image.png](https://scriptcat.org/api/v2/resource/image/ce3YGVmO085A6oHp)
+
+> 打开题单配置可以显示相关配置信息
 
 ![image.png](https://scriptcat.org/api/v2/resource/image/ZQkTcnkpAMShGlGD)
-
-
-> 同步效果展示 (version >= 0.0.5)
-
-![image.png](https://scriptcat.org/api/v2/resource/image/tAgWboKzXWWelLGa)
-
-
 
 ### 安装地址
 
