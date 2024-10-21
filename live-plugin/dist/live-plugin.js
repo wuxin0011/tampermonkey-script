@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.17-2
+// @version      4.1.18
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -177,21 +177,35 @@
       warn("callback is a function!");
       return;
     }
+    let selectors = [];
+    if (!Array.isArray(selector)) {
+      selectors.push(selector);
+    } else {
+      for (let sel of selector) {
+        if (!sel)
+          continue;
+        selectors.push(sel);
+      }
+    }
     loopDo((timer) => {
-      try {
-        let element = selector instanceof HTMLElement ? selector : querySelector(selector);
-        if (element && element instanceof HTMLElement) {
-          if (!element.mark) {
-            callback(element);
-            element.mark = true;
+      if (Array.isArray(selectors)) {
+        for (let sel of selectors) {
+          try {
+            let element = sel instanceof HTMLElement ? sel : querySelector(sel);
+            if (element && element instanceof HTMLElement) {
+              if (!element.mark) {
+                callback(element);
+                element.mark = true;
+                clearInterval(timer);
+              } else {
+                clearInterval(timer);
+              }
+            }
+          } catch (e) {
             clearInterval(timer);
-          } else {
-            clearInterval(timer);
+            error(e);
           }
         }
-      } catch (e) {
-        clearInterval(timer);
-        error(e);
       }
     }, 100, 100);
     setTimeout(() => {
@@ -2757,7 +2771,9 @@ ${root$1}
     index() {
     }
     detailLeftVideoList(sel = ".card-box") {
+      console.log("querySelectorAll('.video-page-card-small')>>>>>>>");
       const scanVideoList = (sc) => {
+        console.log("querySelectorAll('.video-page-card-small')");
         Array.from(querySelectorAll(sel)).forEach((videoDom) => {
           var _a;
           if (videoDom.querySelector(".bili-video-card__info--ad")) {
@@ -2837,33 +2853,41 @@ ${root$1}
       let right_video_list_container = querySelector(".right-container");
       let show = wls.getItem(right_container_key) != "false";
       right_video_list_container.style.display = show ? "" : "none";
+      let show_video = false;
       function scanVideoList() {
-        if (show_video && show) {
-          that.detailLeftVideoList();
-          that.detailLeftVideoList(".video-page-operator-card-small");
-        }
+        that.detailLeftVideoList();
+        that.detailLeftVideoList(".video-page-operator-card-small");
       }
-      GM_registerMenuCommand(`右侧面板👔`, () => {
-        show = !show;
-        wls.setItem(right_container_key, show);
-        scanVideoList();
-        right_video_list_container.style.display = show ? "" : "none";
-      }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
-      let right_video_list_reco_list = querySelector("#reco_list");
-      let show_video = wls.getItem(right_video_list_reco_list_key) != "false";
-      console.log("默认是否显示video ？ ", show_video, "默认是否显示right menu ？ ", show);
-      right_video_list_reco_list.style.display = show_video ? "" : "none";
-      GM_registerMenuCommand(`视频推荐🎬`, () => {
-        if (!show && !show_video) {
-          show = !show;
-          wls.setItem(right_container_key, show);
-          right_video_list_container.style.display = show ? "" : "none";
+      let addCommand = false;
+      findMark(["#reco_list", "[class^=recommend-list]"], (element) => {
+        let right_video_list_reco_list = element;
+        if (addCommand)
+          return;
+        if (right_video_list_reco_list) {
+          show_video = wls.getItem(right_video_list_reco_list_key) != "false";
+          log("默认是否显示video ？ ", show_video, "默认是否显示right menu ？ ", show);
+          right_video_list_reco_list.style.display = show_video ? "" : "none";
+          GM_registerMenuCommand(`右侧面板👔`, () => {
+            show = !show;
+            wls.setItem(right_container_key, show);
+            scanVideoList();
+            right_video_list_container.style.display = show ? "" : "none";
+          }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
+          GM_registerMenuCommand(`视频推荐🎬`, () => {
+            log("click 视频推荐🎬");
+            if (!show && !show_video) {
+              show = !show;
+              wls.setItem(right_container_key, show);
+              right_video_list_container.style.display = show ? "" : "none";
+            }
+            show_video = !show_video;
+            scanVideoList();
+            wls.setItem(right_video_list_reco_list_key, show_video);
+            right_video_list_reco_list.style.display = show_video ? "" : "none";
+          }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
+          addCommand = true;
         }
-        show_video = !show_video;
-        scanVideoList();
-        wls.setItem(right_video_list_reco_list_key, show_video);
-        right_video_list_reco_list.style.display = show_video ? "" : "none";
-      }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
+      }, 20);
       scanVideoList();
     }
   }
@@ -5599,6 +5623,7 @@ html {
 .dark .ai-summary-popup,
 .dark .bpx-player-auxiliary .bpx-player-dm-management,
 .dark .ai-summary-popup *,
+.dark [class^=recommend-list],
 .dark .mini-header {
   background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;

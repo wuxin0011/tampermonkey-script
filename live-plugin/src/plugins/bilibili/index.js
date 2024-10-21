@@ -172,7 +172,9 @@ export default class BiliBili extends LivePlugin {
                     }
                     feed.ok = true
                 })
+
             }
+
             const createSpan = (container, place, id, name = id, message = '确认屏蔽up主 ', remove = true) => {
                 if (!container || !place || !id || !name) {
                     return;
@@ -196,8 +198,13 @@ export default class BiliBili extends LivePlugin {
                 scanVideo()
             }, 10, 500)
 
+
+
         }
+
         scan()
+
+
         window.addEventListener('scroll', throttle(500, scan))
         findMark('.feed-roll-btn .roll-btn', (btn) => {
             addEventListener(btn, 'click', () => {
@@ -246,7 +253,41 @@ export default class BiliBili extends LivePlugin {
     }
 
     detailLeftVideoList(sel = '.card-box') {
+        console.log("querySelectorAll('.video-page-card-small')>>>>>>>")
         const scanVideoList = (sc) => {
+            console.log("querySelectorAll('.video-page-card-small')")
+            // Array.from(querySelectorAll('.video-page-card-small')).forEach(feed => {
+
+            //     console.log('feed.ok && isMark && !sc', feed.ok && isMark && !sc)
+            //     const isMark = !!querySelector(feed, '.m-span-text')
+            //     if (feed.querySelector('.bili-video-card__info--ad')) {
+            //         removeDOM(feed)// 广告
+            //         return
+            //     }
+            //     if (feed.ok && isMark && !sc) {
+            //         return;
+            //     }
+            //     feed.setAttribute('mark', true)
+            //     // console.log('feed', feed)
+            //     let item = querySelector(feed, '[class^=card-box]')
+            //     let playinfo = querySelector(feed, '.playinfo')
+            //     const name = querySelector(item, '.upname .name')?.textContent
+            //     const href = querySelector(item, '.upname a')?.href
+            //     const id = this.getBilibiliRoomId(href)
+            //     if (this.userIsExist(id) || this.userIsExist(name)) {
+            //         removeDOM(feed, true)
+            //         log('up主', name, '已经被移除！UUID=>', id)
+            //     } else if (!isMark) {
+            //         const span = createElement('span')
+            //         span.classList = 'm-span-text'
+            //         addEventListener(span, 'click', () => {
+            //             this.addUser(id, name)
+            //             // 遍历一遍 删除所有相关视频
+            //             scanVideoList(true)
+            //         })
+            //         appendChild(playinfo, span)
+            //     }
+            // })
             Array.from(querySelectorAll(sel)).forEach(videoDom => {
 
                 // 广告部分
@@ -281,6 +322,9 @@ export default class BiliBili extends LivePlugin {
                     appendChild(playinfo, span)
                 }
             })
+
+
+
         }
         setTimeout(() => {
             scanVideoList(false)
@@ -356,44 +400,51 @@ export default class BiliBili extends LivePlugin {
         let right_video_list_container = querySelector('.right-container')
         let show = wls.getItem(right_container_key) != 'false'
         right_video_list_container.style.display = show ? "" : 'none'
-
-
+        let show_video = false
         function scanVideoList() {
-            if (show_video && show) {
-                that.detailLeftVideoList()
-                that.detailLeftVideoList('.video-page-operator-card-small')
-            }
+            that.detailLeftVideoList()
+            that.detailLeftVideoList('.video-page-operator-card-small')
         }
 
 
-        GM_registerMenuCommand(`右侧面板👔`, () => {
-            show = !show
-            wls.setItem(right_container_key, show)
-            scanVideoList()
-            right_video_list_container.style.display = show ? "" : 'none'
-        }, { title: '如果你认为右侧视频推荐不想看，点我关闭,默认开启' })
-
-
         // id = reco_list
-        let right_video_list_reco_list = querySelector('#reco_list')
+        let addCommand = false
 
-        let show_video = wls.getItem(right_video_list_reco_list_key) != 'false'
-        console.log('默认是否显示video ？ ', show_video, '默认是否显示right menu ？ ', show)
-        right_video_list_reco_list.style.display = show_video ? "" : 'none'
+        findMark(['#reco_list', '[class^=recommend-list]'], (element) => {
+            let right_video_list_reco_list = element
+            if (addCommand) return
 
-        GM_registerMenuCommand(`视频推荐🎬`, () => {
-            if (!show && !show_video) {
-                show = !show
-                wls.setItem(right_container_key, show)
-                right_video_list_container.style.display = show ? "" : 'none'
+            // console.log('right_video_list_reco_list',right_video_list_reco_list)
+            if (right_video_list_reco_list) {
+                show_video = wls.getItem(right_video_list_reco_list_key) != 'false'
+                log('默认是否显示video ？ ', show_video, '默认是否显示right menu ？ ', show)
+                right_video_list_reco_list.style.display = show_video ? "" : 'none'
+
+                GM_registerMenuCommand(`右侧面板👔`, () => {
+                    show = !show
+                    wls.setItem(right_container_key, show)
+                    scanVideoList()
+                    right_video_list_container.style.display = show ? "" : 'none'
+                }, { title: '如果你认为右侧视频推荐不想看，点我关闭,默认开启' })
+
+
+                GM_registerMenuCommand(`视频推荐🎬`, () => {
+                    log('click 视频推荐🎬')
+                    if (!show && !show_video) {
+                        show = !show
+                        wls.setItem(right_container_key, show)
+                        right_video_list_container.style.display = show ? "" : 'none'
+                    }
+                    show_video = !show_video
+                    scanVideoList()
+                    wls.setItem(right_video_list_reco_list_key, show_video)
+                    right_video_list_reco_list.style.display = show_video ? "" : 'none'
+                }, { title: '如果你认为右侧视频推荐不想看，点我关闭,默认开启' })
+
+
+                addCommand = true
             }
-            show_video = !show_video
-            scanVideoList()
-            wls.setItem(right_video_list_reco_list_key, show_video)
-            right_video_list_reco_list.style.display = show_video ? "" : 'none'
-        }, { title: '如果你认为右侧视频推荐不想看，点我关闭,默认开启' })
-
-
+        }, 20);
         scanVideoList()
     }
 

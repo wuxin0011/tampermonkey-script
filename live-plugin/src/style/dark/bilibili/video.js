@@ -56,6 +56,7 @@ html {
 .dark .ai-summary-popup,
 .dark .bpx-player-auxiliary .bpx-player-dm-management,
 .dark .ai-summary-popup *,
+.dark [class^=recommend-list],
 .dark .mini-header {
   background-color:var(--w-bg-darker) !important;
   color:var(--w-text) !important;

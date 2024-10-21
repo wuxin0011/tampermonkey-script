@@ -188,22 +188,40 @@ export const findMark = (selector, callback, count = 5, wait = 1000) => {
         warn('callback is a function!')
         return;
     }
+    let selectors = []
+    if(!Array.isArray(selector)) {
+        selectors.push(selector)
+    }else{
+        for(let sel of selector) {
+            if(!sel) continue
+            selectors.push(sel)
+        }
+    }
     loopDo((timer) => {
-        try {
-            let element = selector instanceof HTMLElement ? selector : querySelector(selector)
-            if (element && element instanceof HTMLElement) {
-                if (!element.mark) {
-                    callback(element)
-                    element.mark = true
+        
+        
+        if (Array.isArray(selectors)) {
+            for (let sel of selectors) {
+                
+                try {
+                    let element = sel instanceof HTMLElement ? sel : querySelector(sel)
+                    if (element && element instanceof HTMLElement) {
+                        if (!element.mark) {
+                            callback(element)
+                            element.mark = true
+                            clearInterval(timer)
+                        } else {
+                            clearInterval(timer)
+                        }
+                    }
+                } catch (e) {
                     clearInterval(timer)
-                } else {
-                    clearInterval(timer)
+                    error(e)
                 }
             }
-        } catch (e) {
-            clearInterval(timer)
-            error(e)
+
         }
+
 
     }, 100, 100)
 
