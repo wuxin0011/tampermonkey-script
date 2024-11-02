@@ -28,12 +28,14 @@ export const STATUS = {
     "AC": "ac",
     "NO": "null",
     "notac": "notac",
+    "Accepted": "ac",
+    "Wrong Answer": "notac",
 }
 
 
 
 export const defaultObj = {
-    min: mi, max: inf, visiableMember: true, onlyUrls: false, useDefaultSetting: true, hiddenAc: false, showAcConfig: true
+    min: mi, max: inf, visiableMember: true, onlyUrls: false, useDefaultSetting: true, hiddenAc: false, showAcConfig: true, sortedType: 0
 }
 
 
@@ -187,6 +189,9 @@ export const initObj = () => {
     if (obj['showAcConfig'] == null || obj['showAcConfig'] == undefined) {
         obj.showAcConfig = true
     }
+    if (obj['sortedType'] == null || obj['sortedType'] == undefined) {
+        obj.sortedType = 0
+    }
     let temp = {}
     for (let key of Object.keys(obj)) {
         if (!isNaN(key) || defaultObj[`${key}`] == undefined) continue
@@ -240,7 +245,7 @@ export const defaultUrls = [
     // { 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': 0, 'ac': 0, 'id': 0x3f3f3f3f,'disabled':true,'select':false },
 ]
 
-function getId(problemUrl) {
+export function getId(problemUrl) {
     if (isContest(problemUrl) || isProblem(problemUrl)) {
         try {
             return problemUrl.split('problems')[1].split('/')[1]
@@ -274,14 +279,10 @@ async function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) 
             if (cache[ID] == undefined || cache[ID] != status) {
                 cache[ID] = status == null ? 'null' : status
                 if (watch) {
-                    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
                     if (isDev()) {
                         console.log('save local status :', cache[ID], 'status = ', status, 'get local status :', Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'])[ID])
                     }
-                    window.localStorage.setItem(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_status_update__'], JSON.stringify({
-                        'id': ID,
-                        'status': cache[ID]
-                    }))
+                    watchSaveStatus(ID, cache[ID])
                 }
                 createStatus(cache[ID], cur)
             }
@@ -294,7 +295,6 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
     let problems_doms = Array.isArray(doms) ? doms : loadProblems()
     const cache = getLocalProblemStatus()
     let uid = 0
-    let updateCnt = 0
     for (let i = 0; i < problems_doms.length; i++) {
         let cur = problems_doms[i].parentElement
         if (!(cur instanceof HTMLElement)) {
@@ -326,18 +326,7 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
         console.log('cache num :', uid, ',tot:', A.length)
     }
     getProcess()
-    if (reload) {
-        let cnt = 10;
-        let timeId = setInterval(() => {
-            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
-            getProcess()
-            cnt--
-            if (cnt == 0) {
-                window.clearInterval(timeId)
-            }
-        }, 3000);
-    }
-
+    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
 }
 
 // 监听题目提交状态
@@ -349,12 +338,30 @@ export const submitProblems = (url = window.location.href, timeout = 500) => {
     setTimeout(() => {
         // console.log('watching ...', GM_getValue(local_ok_problem_key))
         const cache = getLocalProblemStatus()
-        if (isDev()) {
-            console.log('ID:', ID, 'query status: ', cache[ID])
-        }
+        // if (isDev()) {
+        //     console.log('ID:', ID, 'query status: ', cache[ID])
+        // }
+        console.log('ID:', ID, 'query status: ', cache[ID])
         // 对于ac状态题目不必查询
         queryStatus(ID, cache, undefined, true)
     }, timeout);
+
+}
+
+
+
+export const watchSaveStatus = (ID, status) => {
+    const cache = getLocalProblemStatus()
+    console.log('watchSaveStatus', cache[ID], status)
+    if (cache[ID] != 'ac') {
+        cache[ID] = status
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
+        window.localStorage.setItem(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_status_update__'], JSON.stringify({
+            'id': ID,
+            'status': status
+        }))
+    }
+
 
 }
 
@@ -417,7 +424,7 @@ export function getProcess() {
         }
     }
     let url = window.location.href
-    if(A.length > 0 && getAcCountKey(url)) {
+    if (A.length > 0 && getAcCountKey(url)) {
         Cache.set(getAcCountKey(url), { "tot": A.length, "ac": cnt })
     }
     return [cnt, A.length]

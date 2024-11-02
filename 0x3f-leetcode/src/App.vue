@@ -25,9 +25,8 @@ import { isHttp, isLeetCodeCircleUrl, isDev, sleep } from './utils'
 
 const TARGET_URL = 'https://leetcode.cn/u/endlesscheng/'
 
-
+const fromData = reactive(initObj())
 const isTest = false
-const sortType = ref(0)
 const tableButtonSize = ref('default')
 let tableData = reactive(initUrls())
 const keywords = ref('')
@@ -57,7 +56,7 @@ let urlsData = computed(() => {
       c++
     }
   }
-  let type = sortType.value
+  let type = isNaN(fromData.sortType) ? 0 : fromData.sortType
   if (type == 0) {
     // 默认排序
     infos.sort((info1, info2) => info2.id - info1.id)
@@ -106,7 +105,7 @@ const processColors = [
   { color: '#6f7ad3', percentage: 80 },
   { color: '#67c23a', percentage: 100 },
 ]
-const fromData = reactive(initObj())
+
 // 处理分数显示逻辑
 watch(fromData, () => {
   handlerProblem(toRaw(Object.assign({}, fromData)))
@@ -349,7 +348,7 @@ const asyncProblemStatus = async (row = {}) => {
             if (asyncButtonLoadBreak.value) {
               break
             }
-            await sleep(200)
+            await sleep(100)
             let ID = info.titleSlug
             let key = `${info.origin}`
             let origin = map.get(key)
@@ -482,7 +481,7 @@ const q2 = ref(false)
           </el-button>
 
 
-          <el-select v-model="sortType" style="margin:0 5px;width:100px;" :disabled="asyncButtonLoad">
+          <el-select v-model="fromData.sortType" style="margin:0 5px;width:100px;" :disabled="asyncButtonLoad">
             <el-option label="默认排序" :value="0">默认排序</el-option>
             <el-option label="题目数量" :value="1">题目数量</el-option>
             <el-option label="AC数量" :value="2">AC数量</el-option>
@@ -574,21 +573,27 @@ const q2 = ref(false)
 
       <!-- 随机配置信息 -->
       <el-row :gutter="10" style="margin:10px 0;">
-        <el-col :span="6">
-          会员&nbsp;&nbsp;<el-tooltip content="过滤会员题目，会员题不会出现在随机题目中，默认过滤"><el-switch
-              v-model="fromData.visiableMember" /></el-tooltip>
-          ac&nbsp;&nbsp;<el-tooltip content="过滤AC的题目,AC题目出现在随机题目中，默认不过滤"><el-switch
-              v-model="fromData.showAcConfig" /></el-tooltip>
-        </el-col>
         <el-col :span="10">
-          &nbsp;&nbsp;<el-tooltip content="随机题目将会随机在这个区间中的题目">
+          会员&nbsp;&nbsp;<el-tooltip content="过滤会员题目，会员题不会出现在随机题目中和讨论区显示，默认显示"><el-switch
+              v-model="fromData.visiableMember" /></el-tooltip>
+          <template v-if="showAddLocalButton">
+            隐藏AC&nbsp;&nbsp;<el-tooltip content="是否在讨论区显示AC题目，默认显示 "><el-switch
+                v-model="fromData.hiddenAc" /></el-tooltip>
+          </template>
+
+          随机ac&nbsp;&nbsp;<el-tooltip content="随机题目配置: 过滤AC的题目,AC题目出现在随机题目中，默认不过滤"><el-switch
+              v-model="fromData.showAcConfig" /></el-tooltip>
+
+        </el-col>
+        <el-col :span="8">
+          &nbsp;&nbsp;<el-tooltip content="随机题目和讨论区题目将会在这个区间（没有分数题目无法操作）">
             <el-link :underline="false" type="primary">分数区间</el-link></el-tooltip>&nbsp;&nbsp;
           <el-input v-model="fromData.min" aria-placeholder="" placeholder=" min  " style="width:60px;" />-
           <el-input v-model="fromData.max" aria-placeholder="" placeholder=" max" style="width:60px;" />
         </el-col>
 
 
-        <el-col :span="8">
+        <el-col :span="6">
           <el-tooltip content="重置题单">
             <el-button plain @click="handlerDefault" :size="tableButtonSize" :disabled="showProcess">
               默认

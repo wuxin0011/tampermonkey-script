@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.1
+// @version      0.0.5.2
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -26,7 +26,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}.m-setting-button[data-v-003e83a0]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-003e83a0]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-003e83a0]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}.m-setting-button[data-v-333abb74]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-333abb74]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-333abb74]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (vue, ElementPlus) {
   'use strict';
@@ -180,7 +180,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const STATUS = {
     "AC": "ac",
     "NO": "null",
-    "notac": "notac"
+    "notac": "notac",
+    "Accepted": "ac",
+    "Wrong Answer": "notac"
   };
   const defaultObj = {
     min: mi,
@@ -189,7 +191,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     onlyUrls: false,
     useDefaultSetting: true,
     hiddenAc: false,
-    showAcConfig: true
+    showAcConfig: true,
+    sortedType: 0
   };
   function install_pos() {
     return !Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], false, Boolean.name);
@@ -315,6 +318,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     if (obj["showAcConfig"] == null || obj["showAcConfig"] == void 0) {
       obj.showAcConfig = true;
     }
+    if (obj["sortedType"] == null || obj["sortedType"] == void 0) {
+      obj.sortedType = 0;
+    }
     let temp = {};
     for (let key of Object.keys(obj)) {
       if (!isNaN(key) || defaultObj[`${key}`] == void 0) continue;
@@ -390,11 +396,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (cache[ID] == void 0 || cache[ID] != status) {
           cache[ID] = status == null ? "null" : status;
           if (watch2) {
-            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
-            window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
-              "id": ID,
-              "status": cache[ID]
-            }));
+            watchSaveStatus(ID, cache[ID]);
           }
           createStatus(cache[ID], cur);
         }
@@ -428,17 +430,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
     }
     getProcess();
-    if (reload) {
-      let cnt = 10;
-      let timeId = setInterval(() => {
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
-        getProcess();
-        cnt--;
-        if (cnt == 0) {
-          window.clearInterval(timeId);
-        }
-      }, 3e3);
-    }
+    Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
   }
   const submitProblems = (url = window.location.href, timeout = 500) => {
     const ID = getId(url);
@@ -447,8 +439,21 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
+      console.log("ID:", ID, "query status: ", cache[ID]);
       queryStatus(ID, cache, void 0, true);
     }, timeout);
+  };
+  const watchSaveStatus = (ID, status) => {
+    const cache = getLocalProblemStatus();
+    console.log("watchSaveStatus", cache[ID], status);
+    if (cache[ID] != "ac") {
+      cache[ID] = status;
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+      window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
+        "id": ID,
+        "status": status
+      }));
+    }
   };
   const watchLinkStatusUpdate = (e) => {
     var _a;
@@ -667,7 +672,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const _sfc_main = {
     __name: "App",
     setup(__props) {
-      const sortType = vue.ref(0);
+      const fromData = vue.reactive(initObj());
       const tableButtonSize = vue.ref("default");
       let tableData = vue.reactive(initUrls());
       const keywords = vue.ref("");
@@ -695,7 +700,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             c++;
           }
         }
-        let type = sortType.value;
+        let type = isNaN(fromData.sortType) ? 0 : fromData.sortType;
         if (type == 0) {
           infos.sort((info1, info2) => info2.id - info1.id);
         } else if (type == 1) {
@@ -735,7 +740,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         { color: "#6f7ad3", percentage: 80 },
         { color: "#67c23a", percentage: 100 }
       ];
-      const fromData = vue.reactive(initObj());
       vue.watch(fromData, () => {
         handlerProblem(vue.toRaw(Object.assign({}, fromData)));
       });
@@ -937,7 +941,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   if (asyncButtonLoadBreak.value) {
                     break;
                   }
-                  await sleep(200);
+                  await sleep(100);
                   let ID = info2.titleSlug;
                   let key = `${info2.origin}`;
                   let origin = map.get(key);
@@ -1090,7 +1094,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }, 8, ["modelValue", "title"]),
           vue.createVNode(_component_el_dialog, {
             modelValue: dialogTableVisible.value,
-            "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => dialogTableVisible.value = $event),
+            "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => dialogTableVisible.value = $event),
             title: asyncButtonLoadBreak.value ? `同步已中断 ${asyncProblemNum.value}/${allProblemNum.value}` : showProcess.value ? loadProcess.value < 100 ? `同步中...${asyncProblemNum.value}/${allProblemNum.value}` : "统计完成" : "题单信息",
             width: "60%"
           }, {
@@ -1144,8 +1148,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         _: 1
                       }, 8, ["size"])) : vue.createCommentVNode("", true),
                       vue.createVNode(_component_el_select, {
-                        modelValue: sortType.value,
-                        "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => sortType.value = $event),
+                        modelValue: fromData.sortType,
+                        "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => fromData.sortType = $event),
                         style: { "margin": "0 5px", "width": "100px" },
                         disabled: asyncButtonLoad.value
                       }, {
@@ -1403,10 +1407,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                 style: { "margin": "10px 0" }
               }, {
                 default: vue.withCtx(() => [
-                  vue.createVNode(_component_el_col, { span: 6 }, {
+                  vue.createVNode(_component_el_col, { span: 10 }, {
                     default: vue.withCtx(() => [
                       vue.createTextVNode(" 会员  "),
-                      vue.createVNode(_component_el_tooltip, { content: "过滤会员题目，会员题不会出现在随机题目中，默认过滤" }, {
+                      vue.createVNode(_component_el_tooltip, { content: "过滤会员题目，会员题不会出现在随机题目中和讨论区显示，默认显示" }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_switch, {
                             modelValue: fromData.visiableMember,
@@ -1415,12 +1419,24 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                         ]),
                         _: 1
                       }),
-                      vue.createTextVNode(" ac  "),
-                      vue.createVNode(_component_el_tooltip, { content: "过滤AC的题目,AC题目出现在随机题目中，默认不过滤" }, {
+                      showAddLocalButton.value ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
+                        vue.createTextVNode(" 隐藏AC  "),
+                        vue.createVNode(_component_el_tooltip, { content: "是否在讨论区显示AC题目，默认显示 " }, {
+                          default: vue.withCtx(() => [
+                            vue.createVNode(_component_el_switch, {
+                              modelValue: fromData.hiddenAc,
+                              "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => fromData.hiddenAc = $event)
+                            }, null, 8, ["modelValue"])
+                          ]),
+                          _: 1
+                        })
+                      ], 64)) : vue.createCommentVNode("", true),
+                      vue.createTextVNode(" 随机ac  "),
+                      vue.createVNode(_component_el_tooltip, { content: "随机题目配置: 过滤AC的题目,AC题目出现在随机题目中，默认不过滤" }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_switch, {
                             modelValue: fromData.showAcConfig,
-                            "onUpdate:modelValue": _cache[11] || (_cache[11] = ($event) => fromData.showAcConfig = $event)
+                            "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => fromData.showAcConfig = $event)
                           }, null, 8, ["modelValue"])
                         ]),
                         _: 1
@@ -1428,10 +1444,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                     ]),
                     _: 1
                   }),
-                  vue.createVNode(_component_el_col, { span: 10 }, {
+                  vue.createVNode(_component_el_col, { span: 8 }, {
                     default: vue.withCtx(() => [
                       vue.createTextVNode("   "),
-                      vue.createVNode(_component_el_tooltip, { content: "随机题目将会随机在这个区间中的题目" }, {
+                      vue.createVNode(_component_el_tooltip, { content: "随机题目和讨论区题目将会在这个区间（没有分数题目无法操作）" }, {
                         default: vue.withCtx(() => [
                           vue.createVNode(_component_el_link, {
                             underline: false,
@@ -1448,7 +1464,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       vue.createTextVNode("   "),
                       vue.createVNode(_component_el_input, {
                         modelValue: fromData.min,
-                        "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => fromData.min = $event),
+                        "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => fromData.min = $event),
                         "aria-placeholder": "",
                         placeholder: " min  ",
                         style: { "width": "60px" }
@@ -1456,7 +1472,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       vue.createTextVNode("- "),
                       vue.createVNode(_component_el_input, {
                         modelValue: fromData.max,
-                        "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => fromData.max = $event),
+                        "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => fromData.max = $event),
                         "aria-placeholder": "",
                         placeholder: " max",
                         style: { "width": "60px" }
@@ -1464,7 +1480,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                     ]),
                     _: 1
                   }),
-                  vue.createVNode(_component_el_col, { span: 8 }, {
+                  vue.createVNode(_component_el_col, { span: 6 }, {
                     default: vue.withCtx(() => [
                       vue.createVNode(_component_el_tooltip, { content: "重置题单" }, {
                         default: vue.withCtx(() => [
@@ -1484,7 +1500,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                       }),
                       vue.createVNode(_component_el_button, {
                         plain: "",
-                        onClick: _cache[14] || (_cache[14] = ($event) => q1.value = !q1.value),
+                        onClick: _cache[15] || (_cache[15] = ($event) => q1.value = !q1.value),
                         size: tableButtonSize.value
                       }, {
                         default: vue.withCtx(() => [
@@ -1503,7 +1519,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }, 8, ["modelValue", "title"]),
           vue.createVNode(_component_el_dialog, {
             modelValue: asyncVisableDialog.value,
-            "onUpdate:modelValue": _cache[16] || (_cache[16] = ($event) => asyncVisableDialog.value = $event),
+            "onUpdate:modelValue": _cache[17] || (_cache[17] = ($event) => asyncVisableDialog.value = $event),
             width: "35%"
           }, {
             default: vue.withCtx(() => [
@@ -1539,7 +1555,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-003e83a0"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-333abb74"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
@@ -1582,35 +1598,21 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   const local_url = window.location.href;
   let loadID = 0;
-  let submitCnt = 0;
-  function watchDom(dom2) {
-    if (!(dom2 instanceof HTMLElement)) {
-      return;
-    }
-    let m = new MutationObserver(() => {
-      if (submitCnt % 2 == 1) {
-        submitProblems(local_url);
-      }
-      submitCnt++;
-    });
-    m.observe(dom2, {
-      childList: true,
-      attributes: true
-    });
-  }
   const randomProblemKey = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]);
   let Container = null;
   Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], true, Boolean.name);
-  const start = () => {
-    Container = document.createElement("div");
-    const body = document.querySelector("body");
-    body.append(Container);
-    Container.style.display = "block";
-    return Container;
-  };
-  let dom = start();
-  const VueApp = vue.createApp(App);
-  VueApp.use(ElementPlus).mount(dom);
+  if (isProblem() || isLeetCodeCircleUrl()) {
+    const start = () => {
+      Container = document.createElement("div");
+      const body = document.querySelector("body");
+      body.append(Container);
+      Container.style.display = "block";
+      return Container;
+    };
+    let dom = start();
+    const VueApp = vue.createApp(App);
+    VueApp.use(ElementPlus).mount(dom);
+  }
   if (isProblem() || isLeetCodeCircleUrl()) {
     _GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: "随机一道题目，你可以通过ctrl+atl+j显示一道题目" });
     _GM_registerMenuCommand(`${randomProblemKey() ? "关闭" : "启用"} 随机题目快捷键 ☕`, () => {
@@ -1625,35 +1627,34 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       });
     }
   }
-  function run() {
+  if (isProblem()) {
+    var originalFetch = fetch;
+    window.unsafeWindow.fetch = function() {
+      return originalFetch.apply(this, arguments).then(function(response) {
+        let res = response.clone();
+        res.text().then(function(bodyText) {
+          let url = res.url;
+          if (!/https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
+            return;
+          }
+          if (res.status == 200 && res.ok) {
+            let result = JSON.parse(bodyText);
+            const ID = getId(local_url);
+            const status = (result == null ? void 0 : result.status_msg) == "Accepted" ? "ac" : (result == null ? void 0 : result.status_msg) == "Wrong Answer" ? "notac" : "null";
+            watchSaveStatus(ID, status);
+          }
+        });
+        return response;
+      });
+    };
+  }
+  async function run() {
     loadID++;
-    if (isProblem(local_url) || isContest(local_url)) {
+    if (isProblem(local_url)) {
+      await sleep(3e3);
       if (isProblem(local_url) && loadID == 1) {
         submitProblems(local_url);
       }
-      setTimeout(() => {
-        let submitbutton = null;
-        const isNext = !!document.querySelector("#__next");
-        if (isProblem(local_url) || isNext) {
-          submitbutton = document.querySelector("div [data-e2e-locator=console-submit-button]");
-        } else {
-          let buttons = Array.from(document.querySelectorAll(".question-detail-bottom  .pull-right button"));
-          for (let i = buttons.length - 1; i >= 0; i--) {
-            if (buttons[i].textContent.indexOf("提交解答") != -1) {
-              submitbutton = buttons[i];
-              break;
-            }
-          }
-        }
-        if (submitbutton) {
-          submitbutton.addEventListener("click", () => {
-            submitProblems(local_url, 10 * 1e3);
-          });
-          watchDom(submitbutton);
-        } else if (loadID < 10) {
-          run();
-        }
-      }, 3e3);
     } else if (isLeetCodeCircleUrl(local_url)) {
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
         Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], install_pos());

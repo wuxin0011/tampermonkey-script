@@ -551,6 +551,46 @@ url : https://leetcode.cn/graphql/
         }
     }
 }
+
+
 ```
 
 
+### 拦截状态请求
+
+> /https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/
+
+结果示例
+
+```json
+
+{
+  "status_code": 10,
+  "lang": "python3",
+  "run_success": true,
+  "status_runtime": "0 ms",
+  "memory": 17096000,
+  "display_runtime": "0",
+  "question_id": "70",
+  "elapsed_time": 55,
+  "compare_result": "111111111111111111111111111111111111111111111",
+  "code_output": "",
+  "std_output": "",
+  "last_testcase": "",
+  "expected_output": "",
+  "task_finish_time": 1730556041069,
+  "task_name": "judger.judgetask.Judge",
+  "finished": true,
+  "status_msg": "Accepted",
+  "state": "SUCCESS",
+  "fast_submit": false,
+  "total_correct": 45,
+  "total_testcases": 45,
+  "submission_id": "577680663",
+  "runtime_percentile": 100,
+  "status_memory": "16.7 MB",
+  "memory_percentile": 5.246900000000006,
+  "pretty_lang": "Python3"
+}
+
+```

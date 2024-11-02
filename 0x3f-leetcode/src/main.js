@@ -8,11 +8,12 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import Cache from './utils/cache'
 import { GM_registerMenuCommand } from '$'
 import { Message } from './utils/message';
-import { submitProblems, deleteAllACCountKeys, randomProblem, install_pos, __0X3F_PROBLEM_KEYS__, support_plugins, initObj, initUrls, addProcess } from './utils/problems'
+import { getId, watchSaveStatus, submitProblems, deleteAllACCountKeys, randomProblem, install_pos, __0X3F_PROBLEM_KEYS__, support_plugins, initObj, initUrls, addProcess } from './utils/problems'
 import {
   isContest,
   isProblem,
   isLeetCodeCircleUrl,
+  sleep,
 } from './utils/index'
 
 import {
@@ -23,22 +24,23 @@ const local_url = window.location.href
 let loadID = 0
 let submitCnt = 0
 
-function watchDom(dom) {
-  if (!(dom instanceof HTMLElement)) {
-    return;
-  }
+// function watchDom(dom) {
+//   if (!(dom instanceof HTMLElement)) {
+//     return;
+//   }
 
-  let m = new MutationObserver(() => {
-    if (submitCnt % 2 == 1) {
-      submitProblems(local_url)
-    }
-    submitCnt++;
-  })
-  m.observe(dom, {
-    childList: true,
-    attributes: true
-  })
-}
+//   let m = new MutationObserver(() => {
+//     if (submitCnt % 2 == 1) {
+//       console.log('watch dom', dom.innerText)
+//       submitProblems(local_url)
+//     }
+//     submitCnt++;
+//   })
+//   m.observe(dom, {
+//     childList: true,
+//     attributes: true
+//   })
+// }
 
 const isTest = true
 
@@ -47,21 +49,27 @@ const randomProblemKey = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_
 
 let Container = null
 let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], true, Boolean.name)
-const start = () => {
-  Container = document.createElement('div');
-  const body = document.querySelector('body')
-  body.append(Container)
-  // Container.style.height = '100vh'
-  // Container.style.display = ok && support_plugins() ? 'block' : 'none'
-  Container.style.display = 'block'
-  return Container
+
+// 安装操作容器
+if (isProblem() || isLeetCodeCircleUrl()) {
+  const start = () => {
+    Container = document.createElement('div');
+    const body = document.querySelector('body')
+    body.append(Container)
+    // Container.style.height = '100vh'
+    // Container.style.display = ok && support_plugins() ? 'block' : 'none'
+    Container.style.display = 'block'
+    return Container
+  }
+  let dom = start()
+  const VueApp = createApp(App)
+  VueApp.use(ElementPlus).mount(dom)
 }
-let dom = start()
-const VueApp = createApp(App)
-VueApp.use(ElementPlus).mount(dom)
 
 
-if ((isProblem() || isLeetCodeCircleUrl())) {
+
+// 安装命令
+if ((isProblem()) || isLeetCodeCircleUrl()) {
 
   GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: '随机一道题目，你可以通过ctrl+atl+j显示一道题目' })
 
@@ -80,16 +88,41 @@ if ((isProblem() || isLeetCodeCircleUrl())) {
   }
 
 }
+// submission-detail_tabbar_outer
+// 监听提交状态
+if (isProblem()) {
+  // 拦截题目状态请求
+  var originalFetch = fetch;
+  window.unsafeWindow.fetch = function () {
+    return originalFetch.apply(this, arguments).then(function (response) {
+      let res = response.clone();
+      res.text().then(function (bodyText) {
+        let url = res.url
+        if (!/https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
+          return
+        }
+        if (res.status == 200 && res.ok) {
+          let result = JSON.parse(bodyText);
+          const ID = getId(local_url)
+          const status = result?.status_msg == 'Accepted' ? 'ac' : result?.status_msg == 'Wrong Answer' ? 'notac' : 'null';
+          watchSaveStatus(ID, status)
+        }
+      });
+      return response;
+    });
+  };
+}
 
 
-function run() {
+
+async function run() {
   loadID++
-  if (isProblem(local_url) || isContest(local_url)) {
+  if (isProblem(local_url)) {
     // 首次加载访问
+    await sleep(3000)
     if (isProblem(local_url) && loadID == 1) {
       submitProblems(local_url)
     }
-
 
 
     if (!isTest && isProblem() && !document.querySelector('.copy-run-container')) {
@@ -102,32 +135,8 @@ function run() {
       VueApp.use(ElementPlus).mount(con)
     }
 
-    setTimeout(() => {
-      let submitbutton = null
-      const isNext = !!document.querySelector('#__next')
-      if (isProblem(local_url) || isNext) {
-        submitbutton = document.querySelector('div [data-e2e-locator=console-submit-button]')
-      } else {
-        let buttons = Array.from(document.querySelectorAll('.question-detail-bottom  .pull-right button'))
-        for (let i = buttons.length - 1; i >= 0; i--) {
-          if (buttons[i].textContent.indexOf('提交解答') != -1) {
-            submitbutton = buttons[i]
-            break
-          }
-        }
-      }
-      // console.log('submitbutton', submitbutton)
-      if (submitbutton) {
-        // 网络延迟问题
-        submitbutton.addEventListener('click', () => {
-          // console.log('click submit button')
-          submitProblems(local_url, 10 * 1000)
-        })
-        watchDom(submitbutton)
-      } else if (loadID < 10) {
-        run()
-      }
-    }, 3000);
+
+
 
   } else if (isLeetCodeCircleUrl(local_url)) {
 
@@ -221,12 +230,6 @@ function run() {
 }
 run()
 startStopRanking()
-
-
-
-
-
-
 
 
 
