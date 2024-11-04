@@ -12,8 +12,7 @@
 // @updateURL    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
 // @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/problems/*
-// @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
-// @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
+// @match        https://leetcode.cn/contest/*/problems/*
 // @require      https://unpkg.com/vue@3.4.31/dist/vue.global.prod.js
 // @require      data:application/javascript,%3Bwindow.Vue%3DVue%3B
 // @require      https://unpkg.com/element-plus@2.7.6/dist/index.full.js
@@ -28,14 +27,14 @@
 
 (t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const e=document.createElement("style");e.textContent=t,document.head.append(e)})(" h2[data-v-49e5e62d]{color:#000;margin:10px 0}em[data-v-49e5e62d]{color:red}.m-setting-button[data-v-333abb74]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-333abb74]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-333abb74]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
-(function (vue, ElementPlus) {
+(function (ElementPlus, vue) {
   'use strict';
 
   var _GM_deleteValue = /* @__PURE__ */ (() => typeof GM_deleteValue != "undefined" ? GM_deleteValue : void 0)();
   var _GM_getValue = /* @__PURE__ */ (() => typeof GM_getValue != "undefined" ? GM_getValue : void 0)();
   var _GM_registerMenuCommand = /* @__PURE__ */ (() => typeof GM_registerMenuCommand != "undefined" ? GM_registerMenuCommand : void 0)();
   var _GM_setValue = /* @__PURE__ */ (() => typeof GM_setValue != "undefined" ? GM_setValue : void 0)();
-  class Cache {
+  let Cache$1 = class Cache2 {
     set(k, v) {
       _GM_setValue(k, v);
     }
@@ -76,19 +75,51 @@
     remove(k) {
       _GM_deleteValue(k);
     }
-  }
-  const Cache$1 = new Cache();
+  };
+  const Cache$2 = new Cache$1();
   const isHttp = (url) => /^https?:\/\/.*$/.test(url);
-  const isLeetCodeCircleUrl = (url = window.location.href) => url && url.indexOf("https://leetcode.cn/circle") != -1;
-  const isProblem = (url = window.location.href) => /^https?:\/\/leetcode.cn\/problems\/.*/i.test(url);
-  const isContest = (url = window.location.href) => url.indexOf("https://leetcode.cn/contest/weekly-contest") != -1 || url.indexOf("https://leetcode.cn/contest/biweekly-contest") != -1;
+  const isLeetCodeCircleUrl = (url = window.location.href) => /^https?:\/\/leetcode\.cn\/circle\/discuss\/.*/i.test(url);
+  const isProblem = (url = window.location.href) => /^https?:\/\/leetcode\.cn\/problems\/.*/i.test(url);
+  const isContest = (url = window.location.href) => /^https?:\/\/leetcode\.cn\/contest\/.*\/problems\/.*/.test(url);
+  const isBilibili = (url = window.location.href) => /.*bilibili.*/.test(url);
   const sleep = async (time = 500) => new Promise((resolove) => setTimeout(resolove, time));
   const isDev = () => false;
   const width = 14;
   const height = 14;
+  const bilibiliSVG = () => {
+    return `<svg width="${width}px" height="${height}px" status="bilibili" title="bilibili" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#00a3d9">
+  <path fill="none" d="M0 0h24v24H0z"></path>
+  <path d="M18.223 3.086a1.25 1.25 0 0 1 0 1.768L17.08 5.996h1.17A3.75 3.75 0 0 1 22 9.747v7.5a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 17.247v-7.5a3.75 3.75 0 0 1 3.75-3.75h1.166L5.775 4.855a1.25 1.25 0 1 1 1.767-1.768l2.652 2.652q.119.119.198.257h3.213q.08-.14.199-.258l2.651-2.652a1.25 1.25 0 0 1 1.768 0m.027 5.42H5.75a1.25 1.25 0 0 0-1.247 1.157l-.003.094v7.5c0 .659.51 1.199 1.157 1.246l.093.004h12.5a1.25 1.25 0 0 0 1.247-1.157l.003-.093v-7.5c0-.69-.56-1.25-1.25-1.25zm-10 2.5c.69 0 1.25.56 1.25 1.25v1.25a1.25 1.25 0 1 1-2.5 0v-1.25c0-.69.56-1.25 1.25-1.25m7.5 0c.69 0 1.25.56 1.25 1.25v1.25a1.25 1.25 0 1 1-2.5 0v-1.25c0-.69.56-1.25 1.25-1.25"></path>
+</svg>
+`;
+  };
+  const problemContenst = () => `
+<svg width="${width}px" height="${height}px" status="contest" title="竞赛题目专属图标" viewBox="-3.5 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.73795 18.8436L12.9511 20.6987L6.42625 32L4.55349 27.8233L9.73795 18.8436Z" fill="#CE4444"/>
+<path d="M9.73795 18.8436L6.52483 16.9885L0 28.2898L4.55349 27.8233L9.73795 18.8436Z" fill="#983535"/>
+<path d="M14.322 18.8436L11.1088 20.6987L17.6337 32L19.5064 27.8233L14.322 18.8436Z" fill="#983535"/>
+<path d="M14.322 18.8436L17.5351 16.9885L24.0599 28.2898L19.5064 27.8233L14.322 18.8436Z" fill="#CE4444"/>
+<path d="M22.9936 11.0622C22.9936 17.1716 18.0409 22.1243 11.9314 22.1243C5.82194 22.1243 0.869249 17.1716 0.869249 11.0622C0.869249 4.9527 5.82194 0 11.9314 0C18.0409 0 22.9936 4.9527 22.9936 11.0622Z" fill="url(#paint0_linear_103_1801)"/>
+<path d="M20.5665 11.0621C20.5665 15.8311 16.7004 19.6972 11.9315 19.6972C7.16247 19.6972 3.29645 15.8311 3.29645 11.0621C3.29645 6.29315 7.16247 2.42713 11.9315 2.42713C16.7004 2.42713 20.5665 6.29315 20.5665 11.0621Z" fill="#A88300"/>
+<path d="M21.0477 11.984C21.0477 16.7641 17.1727 20.6391 12.3926 20.6391C7.61251 20.6391 3.73748 16.7641 3.73748 11.984C3.73748 7.20389 7.61251 3.32887 12.3926 3.32887C17.1727 3.32887 21.0477 7.20389 21.0477 11.984Z" fill="#C28B37"/>
+<path d="M20.5868 11.0621C20.5868 15.8422 16.7118 19.7172 11.9317 19.7172C7.15159 19.7172 3.27656 15.8422 3.27656 11.0621C3.27656 6.28205 7.15159 2.40702 11.9317 2.40702C16.7118 2.40702 20.5868 6.28205 20.5868 11.0621Z" fill="#C09525"/>
+<path d="M11.9781 5.04096L13.8451 8.77502L17.5792 9.24178L15.0151 12.117L15.7122 16.2431L11.9781 14.3761L8.24404 16.2431L8.94729 12.117L6.37701 9.24178L10.1111 8.77502L11.9781 5.04096Z" fill="url(#paint1_linear_103_1801)"/>
+<defs>
+<linearGradient id="paint0_linear_103_1801" x1="11.1804" y1="4.03192" x2="12.6813" y2="31.965" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFC600"/>
+<stop offset="1" stop-color="#FFDE69"/>
+</linearGradient>
+<linearGradient id="paint1_linear_103_1801" x1="11.9783" y1="5.04096" x2="11.9783" y2="16.2431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFFCDD"/>
+<stop offset="1" stop-color="#FFE896"/>
+</linearGradient>
+</defs>
+</svg>
+
+`;
   const problemFinsh = () => `
 
-<svg width="${width}px" height="${height}px" status="ac" viewBox="0 0 1024 1024"  version="1.1"
+<svg width="${width}px" height="${height}px" status="ac" title="AC专属图标" viewBox="0 0 1024 1024"  version="1.1"
 xmlns="http://www.w3.org/2000/svg">
 <path d="M512 512m-448 0a448 448 0 1 0 896 0 448 448 0 1 0-896 0Z" fill="#4CAF50" />
 <path
@@ -98,7 +129,7 @@ xmlns="http://www.w3.org/2000/svg">
 
 `;
   const problemsTry = () => `
-<svg width="${width}px" height="${height}px" status="notac" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+<svg width="${width}px" height="${height}px" status="notac" title="尝试过" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
 style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <path style="fill:#FEDEA1;" d="M256,12.8C121.899,12.8,12.8,121.899,12.8,256S121.899,499.2,256,499.2S499.2,390.101,499.2,256
@@ -117,26 +148,33 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
 
 `;
   const problemsNo = () => install_pos() ? `
-<svg width="${width}px" height="${height}px" status="null" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
+<svg width="${width}px" height="${height}px" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 ` : ``;
   const createStatus = (status, link) => {
+    var _a;
     let node;
     if (!link) {
       return;
     }
+    const curUrl = (link == null ? void 0 : link.href) ?? ((_a = link.querySelector("a")) == null ? void 0 : _a.href);
     node = link instanceof HTMLAnchorElement ? link.parentElement : link;
     if (node) {
       node.status = status;
     }
     let installSVG = "";
-    if (status == STATUS["AC"]) {
-      installSVG = problemFinsh();
-    } else if (status == STATUS["notac"]) {
-      installSVG = problemsTry();
-    } else if (status == STATUS["NO"]) {
-      installSVG = problemsNo();
+    if (isContest(curUrl)) {
+      installSVG = problemContenst();
+    } else if (isLeetCodeCircleUrl(curUrl)) ;
+    else if (isBilibili(curUrl)) {
+      installSVG = bilibiliSVG();
     } else {
-      installSVG = "";
+      if (status == STATUS["AC"]) {
+        installSVG = problemFinsh();
+      } else if (status == STATUS["notac"]) {
+        installSVG = problemsTry();
+      } else if (status == STATUS["NO"]) {
+        installSVG = problemsNo();
+      }
     }
     let svg = node.querySelector("svg");
     if (svg) {
@@ -145,12 +183,16 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
       svg.remove();
     }
-    node.innerHTML = install_pos() ? installSVG + node.innerHTML : node.innerHTML + installSVG;
+    if (isBilibili(curUrl)) {
+      node.innerHTML = node.innerHTML + "&nbsp;" + installSVG;
+    } else {
+      node.innerHTML = install_pos() ? installSVG + node.innerHTML : node.innerHTML + installSVG;
+    }
     return true;
   };
   const inf = 4e3;
   const mi = 1e3;
-  const __0X3F_PROBLEM_KEYS__ = {
+  const __0X3F_PROBLEM_KEYS__$1 = {
     "__0x3f_problmes_solution__": "__0x3f_problmes_solution__",
     // 基本信息
     "__0x3f_problmes_urls__": "__0x3f_problmes_urls__",
@@ -195,7 +237,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     sortedType: 0
   };
   function install_pos() {
-    return !Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], false, Boolean.name);
+    return !Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], false, Boolean.name);
   }
   function isShow(text, min, max) {
     if (!text) {
@@ -219,7 +261,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   let A = void 0;
   const linkCssSelector = `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] li>a`;
-  const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter((item) => item && item instanceof HTMLAnchorElement && isProblem(item.href));
+  const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter((item) => item && item instanceof HTMLAnchorElement && (isProblem(item.href) || isContest(item.href)));
   function loadProblems() {
     A = queryProblem();
     return A;
@@ -243,7 +285,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       max = Number(max);
       data.min = min;
       data.max = max;
-      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], data);
+      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"], data);
       for (let i = 0; i < A.length; i++) {
         if (!(A[i] instanceof HTMLAnchorElement)) {
           continue;
@@ -288,10 +330,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (u["select"] == void 0) u.select = true;
         if (u["loading"] == void 0 || u["loading"]) u["loading"] = false;
         let s = Object.values(u).join("");
-        if (s == "null" || !Cache$1.get(u.link) || !getAcCountKey(u.link) || !Cache$1.get(getAcCountKey(u.link))) {
+        if (s == "null" || !Cache$2.get(u.link) || !getAcCountKey(u.link) || !Cache$2.get(getAcCountKey(u.link))) {
           continue;
         }
-        let o = Cache$1.get(getAcCountKey(u.link));
+        let o = Cache$2.get(getAcCountKey(u.link));
         u["ac"] = isNaN(o["ac"]) ? 0 : parseInt(o["ac"]);
         u["tot"] = isNaN(o["tot"]) ? 0 : parseInt(o["tot"]);
         set.add(u.link);
@@ -310,11 +352,11 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return infos;
   }
   const initUrls = () => {
-    let saveUrls = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
+    let saveUrls = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
     return computeAcInfo(saveUrls);
   };
   const initObj = () => {
-    let obj = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"])) : defaultObj;
+    let obj = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"])) : defaultObj;
     if (obj["showAcConfig"] == null || obj["showAcConfig"] == void 0) {
       obj.showAcConfig = true;
     }
@@ -375,33 +417,34 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     return "";
   }
-  function postData(ID) {
+  function postData(ID2) {
     return {
       "query": "\n    query userQuestionStatus($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    status\n  }\n}\n    ",
       "variables": {
-        "titleSlug": ID
+        "titleSlug": ID2
       },
       "operationName": "userQuestionStatus"
     };
   }
-  async function queryStatus(ID = "", cache = {}, cur = void 0, watch2 = false) {
+  async function queryStatus(ID2 = "", cache = {}, cur = void 0, watch2 = false) {
     var _a, _b, _c;
-    if (!ID) {
+    if (!ID2) {
       return;
     }
-    if (cache[ID] == void 0 || cache[ID] != STATUS["AC"]) {
-      const response = await getProblemAcInfo(ID);
+    if (cache[ID2] == void 0 || cache[ID2] != STATUS["AC"]) {
+      const response = await getProblemAcInfo(ID2);
       if ((_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) {
         const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
-        if (cache[ID] == void 0 || cache[ID] != status) {
-          cache[ID] = status == null ? "null" : status;
+        if (cache[ID2] == void 0 || cache[ID2] != status) {
+          cache[ID2] = status == null ? "null" : status;
           if (watch2) {
-            watchSaveStatus(ID, cache[ID]);
+            watchSaveStatus(ID2, cache[ID2]);
           }
-          createStatus(cache[ID], cur);
+          createStatus(cache[ID2], cur);
         }
       } else {
-        console.log("query result is undefined");
+        console.warn("query result is undefined");
+        createStatus(cache[ID2], cur);
       }
     }
   }
@@ -409,55 +452,63 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     var _a;
     let problems_doms = Array.isArray(doms) ? doms : loadProblems();
     const cache = getLocalProblemStatus();
+    let query_cnt = 0;
     for (let i = 0; i < problems_doms.length; i++) {
       let cur = problems_doms[i].parentElement;
       if (!(cur instanceof HTMLElement)) {
         continue;
       }
-      const ID = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
-      if (!ID) {
+      const ID2 = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
+      if (!ID2) {
         continue;
       }
       if (install_pos()) {
         cur.style.listStyleType = "none";
       }
-      if (!cache[ID] || cache[ID] != STATUS["AC"] && asyncAc) {
-        await sleep(200);
-        await queryStatus(ID, cache, cur, false);
+      if (!cache[ID2] || cache[ID2] != STATUS["AC"] && asyncAc) {
+        await sleep(50);
+        await queryStatus(ID2, cache, cur, false);
+        query_cnt++;
+        if (query_cnt % 10 == 0) {
+          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+        }
       } else {
-        let status = cache[ID];
+        let status = cache[ID2];
         createStatus(status, cur);
       }
     }
     getProcess();
-    Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+    Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+    let other = Array.from(document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] p>a')).filter((item) => item && item instanceof HTMLAnchorElement && isBilibili(item.href));
+    for (let i = 0; i < other.length; i++) {
+      createStatus("null", other[i]);
+    }
   }
   const submitProblems = (url = window.location.href, timeout = 500) => {
-    const ID = getId(url);
-    if (!ID) {
+    const ID2 = getId(url);
+    if (!ID2) {
       return;
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
-      console.log("ID:", ID, "query status: ", cache[ID]);
-      queryStatus(ID, cache, void 0, true);
+      console.log("ID:", ID2, "query status: ", cache[ID2]);
+      queryStatus(ID2, cache, void 0, true);
     }, timeout);
   };
-  const watchSaveStatus = (ID, status) => {
+  const watchSaveStatus = (ID2, status) => {
     const cache = getLocalProblemStatus();
-    console.log("watchSaveStatus", cache[ID], status);
-    if (cache[ID] != "ac") {
-      cache[ID] = status;
-      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
-      window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
-        "id": ID,
+    if (cache[ID2] != "ac") {
+      cache[ID2] = status;
+      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+      window.localStorage.setItem(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_status_update__"], JSON.stringify({
+        "id": ID2,
         "status": status
       }));
     }
   };
   const watchLinkStatusUpdate = (e) => {
     var _a;
-    if (e.key != __0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"]) {
+    if (e.key != __0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_status_update__"]) {
       return;
     }
     let { id, status } = JSON.parse(e.newValue);
@@ -489,10 +540,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     let keys = [];
     for (let urlInfo of urls) {
       let key = getAcCountKey(urlInfo.link);
-      Cache$1.remove(key);
+      Cache$2.remove(key);
       keys.push(key);
     }
-    Cache$1.remove(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"]);
+    Cache$2.remove(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"]);
     return keys;
   }
   function getProcess() {
@@ -500,19 +551,19 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     const cache = getLocalProblemStatus();
     let cnt = 0;
     for (let i = 0; i < A.length; i++) {
-      let ID = getId(A[i].href);
-      if (ID && cache[ID] == STATUS["AC"]) {
+      let ID2 = getId(A[i].href);
+      if (ID2 && cache[ID2] == STATUS["AC"]) {
         cnt++;
       }
     }
     let url = window.location.href;
     if (A.length > 0 && getAcCountKey(url)) {
-      Cache$1.set(getAcCountKey(url), { "tot": A.length, "ac": cnt });
+      Cache$2.set(getAcCountKey(url), { "tot": A.length, "ac": cnt });
     }
     return [cnt, A.length];
   }
   function getLocalProblemStatus() {
-    return Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+    return Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
   }
   function getRandomInfo(array) {
     if (!Array.isArray(array)) return void 0;
@@ -524,10 +575,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       let response = await getProblemsJSON();
       if (Array.isArray(response)) {
         allProbmems = [...response];
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], [...response]);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_all_problems__"], [...response]);
       }
     } else {
-      allProbmems = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
+      allProbmems = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_all_problems__"], true, Array.name);
     }
     if (!Array.isArray(allProbmems)) {
       ElementPlus.ElMessage({
@@ -546,7 +597,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
     }
     let infos = [];
-    let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+    let acMap = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
     for (let info of allProbmems) {
       if (!(info == null ? void 0 : info.problemUrl) || !set.has(info == null ? void 0 : info.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
         continue;
@@ -797,7 +848,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             break;
           }
         }
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData));
       };
       const handlerDefault = () => {
         Message("确认使用默认题单，将会重置题单", () => {
@@ -815,9 +866,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         });
       };
       window.addEventListener("beforeunload", () => {
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData).filter((u) => u != null && u != void 0));
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], false);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData).filter((u) => u != null && u != void 0));
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_add_cur__"], false);
       });
       vue.onMounted(async () => {
         if (support_plugins()) {
@@ -854,7 +905,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             break;
           }
         }
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], infos);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], infos);
       };
       const asyncButtonLoad = vue.ref(false);
       const asyncButtonLoadBreak = vue.ref(false);
@@ -881,7 +932,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           var _a, _b, _c, _d, _e;
           let rowData = void 0;
           let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
-          let cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+          let cache = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
           let map = /* @__PURE__ */ new Map();
           try {
             for (let info2 of tableData) {
@@ -905,9 +956,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             await sleep(500);
             let jsonInfo = await getProblemsJSON();
             if (!Array.isArray(jsonInfo)) {
-              jsonInfo = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
+              jsonInfo = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_all_problems__"], true, Array.name);
             } else {
-              Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], jsonInfo);
+              Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_all_problems__"], jsonInfo);
             }
             let datas = [];
             for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
@@ -942,16 +993,16 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                     break;
                   }
                   await sleep(100);
-                  let ID = info2.titleSlug;
+                  let ID2 = info2.titleSlug;
                   let key = `${info2.origin}`;
                   let origin = map.get(key);
-                  if (cache[ID] != "ac") {
-                    let response = await getProblemAcInfo(ID);
+                  if (cache[ID2] != "ac") {
+                    let response = await getProblemAcInfo(ID2);
                     const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
-                    cache[ID] = status == null ? "null" : status;
+                    cache[ID2] = status == null ? "null" : status;
                   }
                   if (origin) {
-                    if (cache[ID] == "ac") {
+                    if (cache[ID2] == "ac") {
                       origin.ac = origin.ac + 1;
                     }
                   }
@@ -965,7 +1016,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   if (isDev()) ;
                 }
                 if (i % 100 == 0) {
-                  Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+                  Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
                 }
               }
             }
@@ -978,14 +1029,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             asyncButtonLoad.value = false;
             for (let i = 0; i < tableData.length; i++) {
               if (getAcCountKey((_d = tableData[i]) == null ? void 0 : _d.link)) {
-                Cache$1.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
+                Cache$2.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
               }
               if ((_e = tableData[i]) == null ? void 0 : _e.loading) {
                 tableData[i].loading = false;
               }
             }
-            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
-            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+            Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData));
+            Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
             await sleep(500);
             ElementPlus.ElMessage({
               type: allProblemNum.value == asyncProblemNum.value ? "success" : asyncButtonLoadBreak.value ? "error" : "warning",
@@ -1585,22 +1636,101 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     if (isNext) {
       return;
     }
-    const use = Cache$1.get(stopRankingKey);
+    const use = Cache$2.get(stopRankingKey);
     if (use) {
       conetstTimeId = setInterval(() => {
         run$1();
       }, 10);
     }
     _GM_registerMenuCommand(`${use ? "使用" : "关闭"} 排行榜`, () => {
-      Cache$1.set(stopRankingKey, !use);
+      Cache$2.set(stopRankingKey, !use);
       window.location.reload();
     }, { title: "对于不想看到排行榜的可以使用此功能 默认开启" });
   }
+  const local_url$1 = window.location.href;
+  let loadID$1 = 0;
+  let submitCnt = 0;
+  let submitbutton = null;
+  function watchDom(dom) {
+    if (!(dom instanceof HTMLElement)) {
+      return;
+    }
+    let m = new MutationObserver(() => {
+      if (submitCnt % 2 == 1) {
+        submitProblems(local_url$1);
+      }
+      submitCnt++;
+    });
+    m.observe(dom, {
+      childList: true,
+      attributes: true
+    });
+  }
+  function handler() {
+    loadID$1++;
+    let findSubmitButton = function(sel) {
+      if (!sel) return null;
+      return Array.from(document.querySelectorAll(sel && { length: 0 })).find((e) => {
+        return e && e.innerText == "提交解答" || e.innerText == "提交";
+      });
+    };
+    const isNext = !!document.querySelector("#__next");
+    submitbutton = findSubmitButton(isProblem(local_url$1) || isNext ? "" : ".question-detail-bottom  .pull-right button");
+    if (!submitbutton) {
+      submitbutton = document.querySelector('[data-e2e-locator="console-submit-button"]');
+    }
+    if (submitbutton) {
+      watchDom(submitbutton);
+      submitbutton.addEventListener("click", () => {
+        submitProblems(local_url$1, 10 * 1e3);
+      });
+    } else if (loadID$1 < 10) {
+      setTimeout(() => {
+        handlerNotFound();
+      }, 3e3);
+    }
+  }
+  function watchSubmit() {
+    if (!isProblem()) {
+      return;
+    }
+    try {
+      if ((window == null ? void 0 : window.fetch) && (window == null ? void 0 : window.unsafeWindow)) {
+        let originalFetch = window == null ? void 0 : window.fetch;
+        window.unsafeWindow.fetch = function() {
+          return originalFetch.apply(this, arguments).then(function(response) {
+            let res = response.clone();
+            res.text().then(function(bodyText) {
+              let url = res.url;
+              if (!/https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
+                return;
+              }
+              if (res.status == 200 && res.ok) {
+                let result = JSON.parse(bodyText);
+                const ID2 = getId(local_url$1);
+                const status = (result == null ? void 0 : result.status_msg) == "Accepted" ? "ac" : (result == null ? void 0 : result.status_msg) == "Wrong Answer" ? "notac" : "null";
+                watchSaveStatus(ID2, status);
+              }
+              const cache = Cache.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+              if (cache[ID] == null || cache[Id] == void 0) {
+                submitProblems(local_url$1);
+              }
+            });
+            return response;
+          });
+        };
+      } else {
+        console.warn("浏览器当前环境不支持 unsafeWindow 将做兼容处理  ");
+        handler();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
   const local_url = window.location.href;
-  let loadID = 0;
-  const randomProblemKey = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]);
+  const randomProblemKey = () => Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"]);
   let Container = null;
-  Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_button_is_none__"], true, Boolean.name);
+  Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_button_is_none__"], true, Boolean.name);
   if (isProblem() || isLeetCodeCircleUrl()) {
     const start = () => {
       Container = document.createElement("div");
@@ -1616,7 +1746,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   if (isProblem() || isLeetCodeCircleUrl()) {
     _GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: "随机一道题目，你可以通过ctrl+atl+j显示一道题目" });
     _GM_registerMenuCommand(`${randomProblemKey() ? "关闭" : "启用"} 随机题目快捷键 ☕`, () => {
-      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
+      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
       window.location.reload();
     }, { title: "该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目" });
     if (randomProblemKey()) {
@@ -1627,27 +1757,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       });
     }
   }
-  if (isProblem()) {
-    var originalFetch = fetch;
-    window.unsafeWindow.fetch = function() {
-      return originalFetch.apply(this, arguments).then(function(response) {
-        let res = response.clone();
-        res.text().then(function(bodyText) {
-          let url = res.url;
-          if (!/https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
-            return;
-          }
-          if (res.status == 200 && res.ok) {
-            let result = JSON.parse(bodyText);
-            const ID = getId(local_url);
-            const status = (result == null ? void 0 : result.status_msg) == "Accepted" ? "ac" : (result == null ? void 0 : result.status_msg) == "Wrong Answer" ? "notac" : "null";
-            watchSaveStatus(ID, status);
-          }
-        });
-        return response;
-      });
-    };
-  }
+  let loadID = 0;
   async function run() {
     loadID++;
     if (isProblem(local_url)) {
@@ -1657,7 +1767,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
     } else if (isLeetCodeCircleUrl(local_url)) {
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], install_pos());
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();
       }, { title: "AC标记安装位置，默认左侧，刷新生效" });
       _GM_registerMenuCommand(`清空题目状态缓存 🚀`, () => {
@@ -1674,7 +1784,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       _GM_registerMenuCommand(`${initObj().onlyUrls ? "仅在收藏题单页面生效" : "所有题单生效"}`, () => {
         const u = initObj();
         u.onlyUrls = !u.onlyUrls;
-        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], u);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"], u);
       }, { title: "插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能" });
       _GM_registerMenuCommand(`添加本页`, () => {
         const urls = initUrls();
@@ -1707,9 +1817,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             link: url
           });
           Container.style.display = "block";
-          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], urls);
-          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
-          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], true);
+          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], urls);
+          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true);
+          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_add_cur__"], true);
           ElementPlus.ElMessage({
             message: "收藏成功！刷新生效",
             type: "success"
@@ -1718,7 +1828,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       });
     }
   }
+  watchSubmit();
   run();
   startStopRanking();
 
-})(Vue, ElementPlus);
+})(ElementPlus, Vue);

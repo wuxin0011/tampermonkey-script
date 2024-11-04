@@ -1,47 +1,26 @@
-import { computed, createApp } from 'vue';
+import ElementPlus from 'element-plus';
+import { createApp } from 'vue';
 import App from './App.vue';
 import CopyTestCase from './copy-run/CopyTestCase.vue';
-import ElementPlus from 'element-plus'
 
-import 'element-plus/dist/index.css'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import Cache from './utils/cache'
-import { GM_registerMenuCommand } from '$'
-import { Message } from './utils/message';
-import { getId, watchSaveStatus, submitProblems, deleteAllACCountKeys, randomProblem, install_pos, __0X3F_PROBLEM_KEYS__, support_plugins, initObj, initUrls, addProcess } from './utils/problems'
+import { GM_registerMenuCommand } from '$';
+import { ElMessage } from 'element-plus';
+import 'element-plus/dist/index.css';
+import Cache from './utils/cache';
 import {
-  isContest,
-  isProblem,
   isLeetCodeCircleUrl,
-  sleep,
-} from './utils/index'
+  isProblem,
+  sleep
+} from './utils/index';
+import { Message } from './utils/message';
+import { __0X3F_PROBLEM_KEYS__, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
 
 import {
   startStopRanking
-} from './utils/contest'
+} from './utils/contest';
+import { watchSubmit } from './utils/watch-submit';
 
 const local_url = window.location.href
-let loadID = 0
-let submitCnt = 0
-
-// function watchDom(dom) {
-//   if (!(dom instanceof HTMLElement)) {
-//     return;
-//   }
-
-//   let m = new MutationObserver(() => {
-//     if (submitCnt % 2 == 1) {
-//       console.log('watch dom', dom.innerText)
-//       submitProblems(local_url)
-//     }
-//     submitCnt++;
-//   })
-//   m.observe(dom, {
-//     childList: true,
-//     attributes: true
-//   })
-// }
-
 const isTest = true
 
 const randomProblemKey = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__']) == undefined ? true : Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_random_problems_key__'])
@@ -88,33 +67,8 @@ if ((isProblem()) || isLeetCodeCircleUrl()) {
   }
 
 }
-// submission-detail_tabbar_outer
-// 监听提交状态
-if (isProblem()) {
-  // 拦截题目状态请求
-  var originalFetch = fetch;
-  window.unsafeWindow.fetch = function () {
-    return originalFetch.apply(this, arguments).then(function (response) {
-      let res = response.clone();
-      res.text().then(function (bodyText) {
-        let url = res.url
-        if (!/https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
-          return
-        }
-        if (res.status == 200 && res.ok) {
-          let result = JSON.parse(bodyText);
-          const ID = getId(local_url)
-          const status = result?.status_msg == 'Accepted' ? 'ac' : result?.status_msg == 'Wrong Answer' ? 'notac' : 'null';
-          watchSaveStatus(ID, status)
-        }
-      });
-      return response;
-    });
-  };
-}
 
-
-
+let loadID = 0
 async function run() {
   loadID++
   if (isProblem(local_url)) {
@@ -228,6 +182,8 @@ async function run() {
   }
 
 }
+
+watchSubmit()
 run()
 startStopRanking()
 

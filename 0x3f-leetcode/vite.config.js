@@ -17,7 +17,7 @@ export default defineConfig({
       entry: 'src/main.js',
       userscript: {
         icon: 'https://assets.leetcode.cn/aliyun-lc-upload/users/endlesscheng/avatar_1690721039.png',
-        match: ['https://leetcode.cn/circle/discuss/*','https://leetcode.cn/problems/*','https://leetcode.cn/contest/weekly-contest-*/problems/*','https://leetcode.cn/contest/biweekly-contest-*/problems/*'],
+        match: ['https://leetcode.cn/circle/discuss/*','https://leetcode.cn/problems/*','https://leetcode.cn/contest/*/problems/*'],
         namespace: config.repository.downloadURL,
         source: config.repository.url,
         version: config.version,

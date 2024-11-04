@@ -1,5 +1,5 @@
 import Cache from './cache'
-import { isContest, isDev, isLeetCodeCircleUrl, isProblem, sleep } from './index'
+import { isBilibili, isContest, isDev, isLeetCodeCircleUrl, isProblem, sleep } from './index'
 import { createStatus } from './status'
 import { getProblemAcInfo, getProblemsJSON, PostLeetCodeApi } from '../api/index'
 import { ElMessage } from 'element-plus'
@@ -71,7 +71,8 @@ let A = undefined
 const linkCssSelector = `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] li>a`
 // document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class$="MarkdownContent"]')
 
-export const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter(item => item && item instanceof HTMLAnchorElement && isProblem(item.href))
+export const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter(item => item && item instanceof HTMLAnchorElement && (isProblem(item.href) || isContest(item.href)))
+export const queryOther = () => Array.from(document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] p>a')).filter(item => item && item instanceof HTMLAnchorElement && (isBilibili(item.href)))
 
 function loadProblems() {
     A = queryProblem()
@@ -287,14 +288,15 @@ async function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) 
                 createStatus(cache[ID], cur)
             }
         } else {
-            console.log('query result is undefined')
+            console.warn('query result is undefined')
+            createStatus(cache[ID], cur)
         }
     }
 }
 export async function addProcess(reload = true, doms = undefined, asyncAc = false) {
     let problems_doms = Array.isArray(doms) ? doms : loadProblems()
     const cache = getLocalProblemStatus()
-    let uid = 0
+    let uid = 0, query_cnt = 0
     for (let i = 0; i < problems_doms.length; i++) {
         let cur = problems_doms[i].parentElement
         if (!(cur instanceof HTMLElement)) {
@@ -304,17 +306,23 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
         if (!ID) {
             continue;
         }
+
         if (install_pos()) {
             cur.style.listStyleType = 'none'
         }
+
         // console.log('query ID', cache[ID])
 
         if (!cache[ID] || cache[ID] != STATUS['AC'] && asyncAc) {
             // 查询的两个条件
             // 1>首先检查本地是否有缓存 没用缓存查询
             // 2>如果本地有题目状态时不是AC但是需要同步也需要操作
-            await sleep(200)
+            await sleep(50)
             await queryStatus(ID, cache, cur, false)
+            query_cnt++
+            if (query_cnt % 10 == 0) {
+                Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
+            }
         } else {
             let status = cache[ID]
             uid++
@@ -327,6 +335,11 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
     }
     getProcess()
     Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
+
+    let other = Array.from(document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] p>a')).filter(item => item && item instanceof HTMLAnchorElement && (isBilibili(item.href)))
+    for (let i = 0; i < other.length; i++) {
+        createStatus("null", other[i])
+    }
 }
 
 // 监听题目提交状态
@@ -352,7 +365,7 @@ export const submitProblems = (url = window.location.href, timeout = 500) => {
 
 export const watchSaveStatus = (ID, status) => {
     const cache = getLocalProblemStatus()
-    console.log('watchSaveStatus', cache[ID], status)
+    // console.log('watchSaveStatus', cache[ID], status)
     if (cache[ID] != 'ac') {
         cache[ID] = status
         Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
@@ -361,8 +374,6 @@ export const watchSaveStatus = (ID, status) => {
             'status': status
         }))
     }
-
-
 }
 
 
