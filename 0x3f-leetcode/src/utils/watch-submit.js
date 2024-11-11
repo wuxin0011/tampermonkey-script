@@ -5,6 +5,8 @@ import {
 } from './index';
 import { getId, submitProblems, watchSaveStatus } from './problems';
 
+import { isDev } from './index'
+
 
 
 const local_url = window.location.href
@@ -72,9 +74,13 @@ export function watchSubmit() {
                     let res = response.clone();
                     res.text().then(function (bodyText) {
                         let url = res.url
-                        if (!/https:\/\/leetcode\.cn\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
+                        if (isDev()) {
+                            console.log('query result', bodyText)
+                        }
+                        if (!/https:\/\/leetcode\.(cn|com)\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
                             return
                         }
+
                         if (res.status == 200 && res.ok) {
                             let result = JSON.parse(bodyText);
                             const ID = getId(local_url)

@@ -1,9 +1,9 @@
 import Cache from './cache'
-import { isBilibili, isContest, isDev, isLeetCodeCircleUrl, isProblem, sleep } from './index'
+import { CUR_URL, EN_URL, isBilibili, isContest, isDev, isEnglishENV, isLeetCodeCircleUrl, isProblem, sleep, ZH_URL } from './index'
 import { createStatus } from './status'
 import { getProblemAcInfo, getProblemsJSON, PostLeetCodeApi } from '../api/index'
 import { ElMessage } from 'element-plus'
-
+import { GM_registerMenuCommand } from '$';
 const inf = 4000  // 目前最大分数为3100
 const mi = 1000   // 目前最小分数为1100 
 
@@ -22,6 +22,8 @@ export const __0X3F_PROBLEM_KEYS__ = {
     '__0x3f_problmes_all_problems__': '__0x3f_problmes_all_problems__', // all problems
     '__0x3f_problmes_random_problems_key__': '__0x3f_problmes_random_problems_key__', //随机题目快捷键
     '__0x3f_problmes_random_problems__': '__0x3f_problmes_random_problems__', //随机题目
+    '__0x3f_problme_support_type__': '__0x3f_problme_support_type__', //是否替换到com 默认cn
+    '__0x3f_problme_support_type_tips__': '__0x3f_problme_support_type_tips__', //是否替换到com 默认cn 不再提示key
 }
 
 export const STATUS = {
@@ -68,11 +70,11 @@ function isShow(text, min, max) {
 }
 
 let A = undefined
-const linkCssSelector = `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] li>a`
+const linkCssSelector_pre = () => isEnglishENV() ? '.discuss-markdown-container' : `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]`
+const linkCssSelector = `${linkCssSelector_pre()} li>a`
 // document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class$="MarkdownContent"]')
 
 export const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter(item => item && item instanceof HTMLAnchorElement && (isProblem(item.href) || isContest(item.href)))
-export const queryOther = () => Array.from(document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] p>a')).filter(item => item && item instanceof HTMLAnchorElement && (isBilibili(item.href)))
 
 function loadProblems() {
     A = queryProblem()
@@ -275,6 +277,9 @@ async function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) 
     }
     if (cache[ID] == undefined || cache[ID] != STATUS['AC']) {
         const response = await getProblemAcInfo(ID)
+        if (isDev()) {
+            console.log('query result response:', response)
+        }
         if (response?.data?.question) {
             const status = response?.data?.question?.status
             if (cache[ID] == undefined || cache[ID] != status) {
@@ -297,6 +302,7 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
     let problems_doms = Array.isArray(doms) ? doms : loadProblems()
     const cache = getLocalProblemStatus()
     let uid = 0, query_cnt = 0
+    const isReplaceEnglish = isEnglish()
     for (let i = 0; i < problems_doms.length; i++) {
         let cur = problems_doms[i].parentElement
         if (!(cur instanceof HTMLElement)) {
@@ -310,6 +316,12 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
         if (install_pos()) {
             cur.style.listStyleType = 'none'
         }
+
+        // 替换题目链接是国服还是美服
+        if (isReplaceEnglish && problems_doms[i].href) {
+            problems_doms[i].href = problems_doms[i].href.replace('leetcode.cn', 'leetcode.com')
+        }
+
 
         // console.log('query ID', cache[ID])
 
@@ -336,7 +348,7 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
     getProcess()
     Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
 
-    let other = Array.from(document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"] p>a')).filter(item => item && item instanceof HTMLAnchorElement && (isBilibili(item.href)))
+    let other = Array.from(document.querySelectorAll(`${linkCssSelector_pre()} p>a`)).filter(item => item && item instanceof HTMLAnchorElement && (isBilibili(item.href)))
     for (let i = 0; i < other.length; i++) {
         createStatus("null", other[i])
     }
@@ -385,11 +397,11 @@ export const watchLinkStatusUpdate = (e) => {
     if (!id || !status) {
         return
     }
-    let thisLink = `https://leetcode.cn/problems/${id}`
+    let thisLink = `${CUR_URL}/problems/${id}`
     if (isDev()) {
         console.log('update', thisLink, 'status', status)
     }
-    let link = document.querySelector(`${linkCssSelector}[href^="https://leetcode.cn/problems/${id}"]`)
+    let link = document.querySelector(`${linkCssSelector}[href^="${CUR_URL}/problems/${id}"]`)
     if (!link || !link?.parentElement) {
         let doms = loadProblems()
         for (let i = 0; i < doms.length; i++) {
@@ -424,21 +436,30 @@ export function deleteAllACCountKeys() {
 
 
 // 查看当前进度
-export function getProcess() {
+export async function getProcess() {
     loadProblems()
     const cache = getLocalProblemStatus()
+    const config = initObj()
+
+    const response = await githubProblem(true)
+    const mapInfo = response[1]
     let cnt = 0
+    let tot = 0
     for (let i = 0; i < A.length; i++) {
         let ID = getId(A[i].href)
+        if ((!config?.visiableMember && mapInfo.get(ID)?.member)) {
+            continue
+        }
         if (ID && cache[ID] == STATUS['AC']) {
             cnt++
         }
+        tot++
     }
     let url = window.location.href
     if (A.length > 0 && getAcCountKey(url)) {
-        Cache.set(getAcCountKey(url), { "tot": A.length, "ac": cnt })
+        Cache.set(getAcCountKey(url), { "tot": tot, "ac": cnt })
     }
-    return [cnt, A.length]
+    return [cnt, tot]
 }
 
 function getLocalProblemStatus() {
@@ -451,9 +472,39 @@ function getRandomInfo(array) {
     return array[Math.floor(Math.random() * array.length)]
 }
 
+/**
+ * 链接是否替换成English
+ * @returns 
+ */
+export function isEnglish() {
+    return Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_support_type__'], Boolean.name) == true
+}
+
+export function changeEnglishType() {
+    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_support_type__'], !isEnglish())
+    if (Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_support_type_tips__'], String.name) != 'NO') {
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_support_type_tips__'], "OK")
+    }
+    window.location.reload()
+}
+
+export function changeEnglish() {
+    GM_registerMenuCommand(`题目链接切换到${isEnglish() ? '国服🎈' : '美服🌎'}`, () => {
+        changeEnglishType()
+    }, { title: '将题单链接替换为国服或者替换为美服' })
+}
 
 
-export async function randomProblem() {
+
+
+
+/**
+ * 从远程获取题目信息 返回封装好的信息 以获取信息为准 如果远程获取失败尝试从本地获取
+ * 然后更新信息保存到本地
+ * @param {*} filter_member 是否过滤会员题目
+ * @returns 
+ */
+export async function githubProblem(not_filter_member = true) {
     let allProbmems;
 
     if (!Array.isArray(allProbmems) || allProbmems.length == 0) {
@@ -466,6 +517,7 @@ export async function randomProblem() {
     } else {
         allProbmems = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], true, Array.name)
     }
+    // console.log(allProbmems)
     if (!Array.isArray(allProbmems)) {
         ElMessage({
             type: 'error',
@@ -482,63 +534,91 @@ export async function randomProblem() {
             set.add(info.link)
         }
     }
-    let infos = []
     let acMap = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
 
     if (isDev()) {
         console.log('config and set', config, set)
         console.log('acMap', acMap)
     }
-
-    let count = 0
-    next:
+    let infos = []
+    let mapInfo = new Map()
+    let totInfo = []
     for (let info of allProbmems) {
         // 选择那个题单中的题目
         if (!info?.problemUrl || !set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
             continue
         }
-
-        if (isDev()) {
-            console.log("info=>", info.problemUrl, info.title)
-        }
+        let cur_infos = []
         for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
             try {
                 let { title, url, member, score, titleSlug } = info.problems[i]
                 if (!url || !title) continue
-                if (isDev()) {
-                    // 过滤随机题目条件
-                    // 1、 如果不显示AC题目，但是该题AC了
-                    // 2、 如果不显示会员题目，但是该题会员
-                    // 3、 如果这题目有分数并且分数不在随机题目的区间
-                }
-                if ((!config?.showAcConfig && acMap[titleSlug] == 'ac')) {
+                if ((!config?.visiableMember && member || (!not_filter_member && member))) {
                     continue
                 }
-                if ((!config?.visiableMember && member)) {
-                    continue
-                }
-                if (score != 0 && (score < config?.min || score > config?.max)) {
-                    continue
-                }
-                infos.push({ title, url, member, score, titleSlug, 'status': acMap[titleSlug] })
+                let new_obj = { title, url, member, score, titleSlug, 'status': acMap[titleSlug] }
+                infos.push(new_obj)
+                cur_infos.push(new_obj)
+                mapInfo.set(titleSlug, new_obj)
             } catch (e) {
                 console.log('error', e)
             }
-            if (count >= 100) {
-                // break next
+        }
+        info.problems = cur_infos
+        totInfo.push(info)
+    }
+    return [infos, mapInfo, totInfo]
+}
+
+
+// 随机题目
+export async function randomProblem() {
+    // 获取前置信息
+    let responseDatas = await githubProblem()
+    let acMap = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
+    let config = initObj()
+    let problems = responseDatas[0]
+    let infos = []
+
+    // 按照要求过滤题目
+    for (let i = 0; Array.isArray(problems) && i < problems.length; i++) {
+        try {
+            let { title, url, member, score, titleSlug } = problems[i]
+            if (!url || !title) continue
+            if (isDev()) {
+                // 过滤随机题目条件
+                // 1、 如果不显示AC题目，但是该题AC了
+                // 2、 如果不显示会员题目，但是该题会员
+                // 3、 如果这题目有分数并且分数不在随机题目的区间
             }
-            count += 1
+            if ((!config?.showAcConfig && acMap[titleSlug] == 'ac')) {
+                continue
+            }
+            if ((!config?.visiableMember && member)) {
+                continue
+            }
+            if (score != 0 && (score < config?.min || score > config?.max)) {
+                continue
+            }
+            infos.push({ title, url, member, score, titleSlug, 'status': acMap[titleSlug] })
+        } catch (e) {
+            console.log('error', e)
         }
     }
-    if (isDev()) {
-        console.log('filter infos = ', infos)
-    }
+
+
+    // 已经过滤好的题目随机
     let data = getRandomInfo(infos)
 
-    if (isDev()) {
-        console.log('your config:', config, set)
-        console.log('randomInfo : ', data)
+
+    // 将链接替换为美服
+    if (data.url && isEnglish()) {
+        data.url = data.url.replace(ZH_URL, EN_URL)
     }
+
+
+
+    // 显示题目链接
     ElMessage({
         dangerouslyUseHTMLString: !!(data && data?.url && data?.title),
         type: data?.url && data?.title ? 'success' : "error",

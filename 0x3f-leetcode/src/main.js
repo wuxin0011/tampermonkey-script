@@ -10,10 +10,11 @@ import Cache from './utils/cache';
 import {
   isLeetCodeCircleUrl,
   isProblem,
-  sleep
+  sleep,
+  isZH
 } from './utils/index';
-import { Message } from './utils/message';
-import { __0X3F_PROBLEM_KEYS__, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
+import { Message, tips_message } from './utils/message';
+import { __0X3F_PROBLEM_KEYS__, isEnglish, changeEnglish, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
 
 import {
   startStopRanking
@@ -28,6 +29,12 @@ const randomProblemKey = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_
 
 let Container = null
 let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], true, Boolean.name)
+
+
+
+
+
+
 
 // 安装操作容器
 if (isProblem() || isLeetCodeCircleUrl()) {
@@ -57,6 +64,7 @@ if ((isProblem()) || isLeetCodeCircleUrl()) {
     window.location.reload()
   }, { title: '该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目' })
 
+  changeEnglish()
   if (randomProblemKey()) {
     document.addEventListener('keydown', async function (event) {
       if (event.ctrlKey && event.altKey && event.key === 'j') {
@@ -182,6 +190,12 @@ async function run() {
   }
 
 }
+
+
+
+tips_message()
+
+
 
 watchSubmit()
 run()

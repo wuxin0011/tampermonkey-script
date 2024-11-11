@@ -19,7 +19,8 @@ import {
   __0X3F_PROBLEM_KEYS__,
   computeAcInfo,
   getAcCountKey,
-  randomProblem
+  randomProblem,
+  githubProblem
 } from './utils/problems'
 import { isHttp, isLeetCodeCircleUrl, isDev, sleep } from './utils'
 
@@ -120,11 +121,11 @@ const info = reactive({
 })
 
 
-const addlocal = () => {
+const addlocal = async () => {
   if (!isDisabbled) {
     return
   }
-  let [cur, tot] = getProcess()
+  let [cur, tot] = await getProcess()
   tableData.unshift({ title: document.title, link: window.location.href, 'ac': cur, 'tot': tot, 'id': tableData.length + 10 })
 }
 
@@ -302,22 +303,28 @@ const asyncProblemStatus = async (row = {}) => {
         rowData.loading = true
       }
 
+
+      // 设置按钮状态
       asyncButtonLoad.value = true
       asyncButtonLoadBreak.value = false
       allProblemNum.value = 0
       asyncProblemNum.value = 0
       showProcess.value = true
+
+
+
+      // 请求远程信息
       await sleep(500)
-      let jsonInfo = await getProblemsJSON()
-      if (!Array.isArray(jsonInfo)) {
-        jsonInfo = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], true, Array.name)
-      } else {
-        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], jsonInfo)
-      }
+      let githubInfo = await githubProblem(fromData.visiableMember)
+      let jsonInfo = githubInfo[2]
+
+
+
       let datas = []
       for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
         let key = `${jsonInfo[i]?.problemUrl}`
         let origin = map.get(key)
+        // console.log('key', key, origin)
         if (!origin) {
           continue
         }
@@ -325,18 +332,20 @@ const asyncProblemStatus = async (row = {}) => {
           for (let p of jsonInfo[i].problems) {
             datas.push(Object.assign({ 'origin': jsonInfo[i].problemUrl }, p))
           }
-          origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
+          origin.tot = Math.max(jsonInfo[i].problems.length, 0)
           origin.ac = 0
 
         } else if (jsonInfo[i].problemUrl == row.link) {
           for (let p of jsonInfo[i].problems) {
             datas.push(Object.assign({ 'origin': jsonInfo[i].problemUrl }, p))
           }
-          origin.tot = Math.max(jsonInfo[i].problems.length, origin?.tot ?? 0)
+          origin.tot = Math.max(jsonInfo[i].problems.length, 0)
           origin.ac = 0
           break
         }
       }
+
+
       if (Array.isArray(datas) && datas.length > 0) {
         allProblemNum.value = datas.length
         asyncProblemNum.value = 0
@@ -348,7 +357,7 @@ const asyncProblemStatus = async (row = {}) => {
             if (asyncButtonLoadBreak.value) {
               break
             }
-            await sleep(100)
+            await sleep(80)
             let ID = info.titleSlug
             let key = `${info.origin}`
             let origin = map.get(key)
@@ -366,10 +375,6 @@ const asyncProblemStatus = async (row = {}) => {
               }
             }
 
-            if (isDev()) {
-              // console.log('process@@@@@@', computeProcess(asyncProblemNum.value, allProblemNum.value))
-            }
-
             asyncProblemNum.value += 1
             if (loadProcess.value < pre && isDev()) {
               console.warn('calc result is error')
@@ -384,8 +389,6 @@ const asyncProblemStatus = async (row = {}) => {
           if (i % 100 == 0) {
             Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], Object.assign({}, cache))
           }
-
-
         }
       }
 
@@ -397,15 +400,7 @@ const asyncProblemStatus = async (row = {}) => {
       }
       asyncButtonLoad.value = false
 
-      for (let i = 0; i < tableData.length; i++) {
-        if (getAcCountKey(tableData[i]?.link)) {
-          Cache.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac })
-        }
-        if (tableData[i]?.loading) {
-          tableData[i].loading = false
-        }
 
-      }
       Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], toRaw(tableData))
       Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], Object.assign({}, cache))
       if (isDev()) {
@@ -423,6 +418,17 @@ const asyncProblemStatus = async (row = {}) => {
       asyncProblemNum.value = 0
       showProcess.value = false
       asyncButtonLoadBreak.value = false
+
+
+      for (let i = 0; i < tableData.length; i++) {
+        if (getAcCountKey(tableData[i]?.link)) {
+          Cache.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac })
+        }
+        if (tableData[i]?.loading) {
+          tableData[i].loading = false
+        }
+
+      }
     }
   }
   if (row.link == TARGET_URL) {
@@ -574,7 +580,7 @@ const q2 = ref(false)
       <!-- 随机配置信息 -->
       <el-row :gutter="10" style="margin:10px 0;">
         <el-col :span="10">
-          会员&nbsp;&nbsp;<el-tooltip content="过滤会员题目，会员题不会出现在随机题目中和讨论区显示，默认显示"><el-switch
+          会员&nbsp;&nbsp;<el-tooltip content="过滤会员题目，会员题不会出现在随机题目中和讨论区显示。另外会员题目将不参与进度统计，默认显示"><el-switch
               v-model="fromData.visiableMember" /></el-tooltip>
           <template v-if="showAddLocalButton">
             隐藏AC&nbsp;&nbsp;<el-tooltip content="是否在讨论区显示AC题目，默认显示 "><el-switch
