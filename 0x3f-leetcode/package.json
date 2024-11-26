@@ -1,14 +1,14 @@
 {
   "name": "0x3f-problem-solution",
   "private": false,
-  "version": "0.0.5.3",
+  "version": "0.0.5.4",
   "author": "wuxin0011",
   "type": "module",
   "description": "自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --mode development",
+    "build": "vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {

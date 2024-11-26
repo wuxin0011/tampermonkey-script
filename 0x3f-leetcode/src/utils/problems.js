@@ -488,7 +488,10 @@ export function changeEnglishType() {
     window.location.reload()
 }
 
-export function changeEnglish() {
+export function installEnglishLinkChangeCommand() {
+    if (!isLeetCodeCircleUrl() || isEnglishENV()) {
+        return;
+    }
     GM_registerMenuCommand(`题目链接切换到${isEnglish() ? '国服🎈' : '美服🌎'}`, () => {
         changeEnglishType()
     }, { title: '将题单链接替换为国服或者替换为美服' })

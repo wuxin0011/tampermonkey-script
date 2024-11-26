@@ -1,7 +1,7 @@
 import { isEnglish } from "./problems"
 
 export function isEnglishENV() {
-    return isEnglish() && window.location.href.indexOf('https://leetcode.com') != -1
+    return window.location.href.indexOf('https://leetcode.com') != -1
 }
 export const isHttp = (url) => /^https?:\/\/.*$/.test(url)
 export const isLeetCodeCircleUrl = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn).*\/discuss\/.*/i.test(url)
@@ -17,7 +17,7 @@ export const EN_SOLUTION_DEMO = 'https://leetcode.com/discuss/interview-question
 
 export const CUR_URL = isEnglishENV() ? EN_URL : ZH_URL
 
-export const isDev = () => true
+export const isDev = () => JSON.parse(import.meta.env.VITE_CONSOLE_LOG_DEGUG)
 
 
 

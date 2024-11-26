@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.3
+// @version      0.0.5.4
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -435,7 +435,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     if (cache[ID2] == void 0 || cache[ID2] != STATUS["AC"]) {
       const response = await getProblemAcInfo(ID2);
-      {
+      if (isDev()) {
         console.log("query result response:", response);
       }
       if ((_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) {
@@ -443,7 +443,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (cache[ID2] == void 0 || cache[ID2] != status) {
           cache[ID2] = status == null ? "null" : status;
           if (watch2) {
-            {
+            if (isDev()) {
               console.log("save local status :", cache[ID2], "status = ", status, "get local status :", Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"])[ID2]);
             }
             watchSaveStatus(ID2, cache[ID2]);
@@ -490,7 +490,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         createStatus(status, cur);
       }
     }
-    {
+    if (isDev()) {
       console.log("cache num :", uid, ",tot:", A.length);
     }
     getProcess();
@@ -532,7 +532,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       return;
     }
     let thisLink = `${CUR_URL}/problems/${id}`;
-    {
+    if (isDev()) {
       console.log("update", thisLink, "status", status);
     }
     let link = document.querySelector(`${linkCssSelector}[href^="${CUR_URL}/problems/${id}"]`);
@@ -607,7 +607,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     window.location.reload();
   }
-  function changeEnglish() {
+  function installEnglishLinkChangeCommand() {
+    if (!isLeetCodeCircleUrl() || isEnglishENV()) {
+      return;
+    }
     _GM_registerMenuCommand(`题目链接切换到${isEnglish() ? "国服🎈" : "美服🌎"}`, () => {
       changeEnglishType();
     }, { title: "将题单链接替换为国服或者替换为美服" });
@@ -640,7 +643,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
     }
     let acMap = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
-    {
+    if (isDev()) {
       console.log("config and set", config, set);
       console.log("acMap", acMap);
     }
@@ -710,7 +713,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     });
   }
   function isEnglishENV() {
-    return isEnglish() && window.location.href.indexOf("https://leetcode.com") != -1;
+    return window.location.href.indexOf("https://leetcode.com") != -1;
   }
   const isHttp = (url) => /^https?:\/\/.*$/.test(url);
   const isLeetCodeCircleUrl = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn).*\/discuss\/.*/i.test(url);
@@ -724,7 +727,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const LC_COPY_HTML_PLUGIN = "https://greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html";
   const EN_SOLUTION_DEMO = "https://leetcode.com/discuss/interview-question/6032972/leetcode";
   const CUR_URL = isEnglishENV() ? EN_URL : ZH_URL;
-  const isDev = () => true;
+  const isDev = () => JSON.parse("false");
   async function GetHubJSONInfo(url) {
     return fetch(url, {
       method: "get",
@@ -1134,7 +1137,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           let rowData = void 0;
           let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
           let cache = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
-          {
+          if (isDev()) {
             console.log("async ac cache:", cache);
           }
           let map = /* @__PURE__ */ new Map();
@@ -1230,7 +1233,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             asyncButtonLoad.value = false;
             Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData));
             Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
-            {
+            if (isDev()) {
               console.log("同步完成🥰", asyncProblemNum.value, allProblemNum.value, loadProcess.value);
             }
             await sleep(500);
@@ -1956,7 +1959,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
       window.location.reload();
     }, { title: "该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目" });
-    changeEnglish();
+    if (isLeetCodeCircleUrl()) {
+      installEnglishLinkChangeCommand();
+    }
     if (randomProblemKey()) {
       document.addEventListener("keydown", async function(event) {
         if (event.ctrlKey && event.altKey && event.key === "j") {

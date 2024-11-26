@@ -14,7 +14,7 @@ import {
   isZH
 } from './utils/index';
 import { Message, tips_message } from './utils/message';
-import { __0X3F_PROBLEM_KEYS__, isEnglish, changeEnglish, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
+import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
 
 import {
   startStopRanking
@@ -64,7 +64,9 @@ if ((isProblem()) || isLeetCodeCircleUrl()) {
     window.location.reload()
   }, { title: '该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目' })
 
-  changeEnglish()
+  if (isLeetCodeCircleUrl()) {
+    installEnglishLinkChangeCommand()
+  }
   if (randomProblemKey()) {
     document.addEventListener('keydown', async function (event) {
       if (event.ctrlKey && event.altKey && event.key === 'j') {
@@ -192,11 +194,7 @@ async function run() {
 }
 
 
-
 tips_message()
-
-
-
 watchSubmit()
 run()
 startStopRanking()
