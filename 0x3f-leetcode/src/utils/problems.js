@@ -366,7 +366,9 @@ export const submitProblems = (url = window.location.href, timeout = 500) => {
         // if (isDev()) {
         //     console.log('ID:', ID, 'query status: ', cache[ID])
         // }
-        console.log('ID:', ID, 'query status: ', cache[ID])
+        if(isDev()) {
+            console.log('ID:', ID, 'query status: ', cache[ID])
+        }
         // 对于ac状态题目不必查询
         queryStatus(ID, cache, undefined, true)
     }, timeout);
