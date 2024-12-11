@@ -65,6 +65,7 @@ import { LivePluginElement } from "@/ui";
 import iconLogo from '@/utils/logo';
 import cssUpdate from '../../style/dark/dark.image';
 import { isShowBg, is_douyin } from '../../utils';
+import { GM_registerMenuCommand } from '$'
 
 /**
  * 直播插件，要求所有直播插件继承该类，并实现要求重写的方法！
@@ -880,6 +881,10 @@ export default class LivePlugin {
         }
         if (!container) {
             container = querySelector('body')
+            
+        }
+        if(local_url.indexOf('https://www.bilibili.com/list/') != -1) {
+            // container = querySelector('#app')
         }
         if (!container || !(container instanceof HTMLElement)) {
             warn('壁纸设置失败 获取不到 container ！')
@@ -887,6 +892,7 @@ export default class LivePlugin {
         }
         if (isShowBg()) {
             url = !!url ? url : (wls.getItem(this.bg_key) && isShowBg() ? wls.getItem(this.bg_key) : this.default_background_image)
+            container.style.background = 'none'
             container.style.backgroundSize = "cover"
             container.style.backgroundRepeat = 'no-repeat '
             container.style.backgroundAttachment = 'fixed'

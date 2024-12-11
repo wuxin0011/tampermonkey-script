@@ -1,6 +1,6 @@
 // https://raw.githubusercontent.com/${owner}/${repo}/${Branch}/${path}
 // https://raw.githubusercontent.com//${repo}/${Branch}/${path}
-// https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/0x3f.json
+// https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/0x3f.json
 
 async function totJson(){
 	return fetch('https://zerotrac.github.io/leetcode_problem_rating/data.json',{

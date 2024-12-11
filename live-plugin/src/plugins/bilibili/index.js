@@ -17,6 +17,7 @@ import Logo from '@/utils/logo';
 import { handlerDisplay, isShowHotSearch, log, querySelectorAll, throttle, warn } from "../../utils";
 import LivePlugin from '../live';
 import cssUpdate from '../../style/dark/dark.image';
+import { GM_registerMenuCommand } from '$'
 
 
 
@@ -255,7 +256,6 @@ export default class BiliBili extends LivePlugin {
     detailLeftVideoList(sel = '.card-box') {
         console.log("querySelectorAll('.video-page-card-small')>>>>>>>")
         const scanVideoList = (sc) => {
-            console.log("querySelectorAll('.video-page-card-small')")
             // Array.from(querySelectorAll('.video-page-card-small')).forEach(feed => {
 
             //     console.log('feed.ok && isMark && !sc', feed.ok && isMark && !sc)
@@ -302,12 +302,14 @@ export default class BiliBili extends LivePlugin {
                 if (isMark && isAdd && !sc) {
                     return;
                 }
+                // console.log(videoDom)
                 // 添加标记 下次不用添加了
                 videoDom.setAttribute('mark', true)
                 const playinfo = querySelector(videoDom, '.playinfo')
-                const link = querySelector(videoDom, '.upname a')
+                let link = querySelector(videoDom, '.upname') ?? querySelector(videoDom, '.upname a')
                 const id = !!link && link?.href && this.getBilibiliRoomId(link.href)
                 const name = querySelector(videoDom, '.upname .name')?.textContent
+                // console.log(playinfo,link,id)
                 if (this.userIsExist(id) || this.userIsExist(name)) {
                     removeDOM(videoDom, true)
                     log('up主', name, '已经被移除！UUID=>', id)
@@ -338,7 +340,8 @@ export default class BiliBili extends LivePlugin {
 
     async detail() {
         const that = this
-        if (!/https:\/\/www\.bilibili\.com\/video\/(.*)/.test(local_url)) {
+        // console.log('/https:\/\/www\.bilibili\.com\/[video|list]/.test(local_url)', /https:\/\/www\.bilibili\.com\/[video|list]/.test(local_url))
+        if (!/https:\/\/www\.bilibili\.com\/[video|list]/.test(local_url)) {
             return;
         }
 
@@ -397,9 +400,11 @@ export default class BiliBili extends LivePlugin {
         let that = this
         const right_container_key = '__right_container_key__'
         const right_video_list_reco_list_key = '__right_video_list_reco_list_key__'
-        let right_video_list_container = querySelector('.right-container')
+        let right_video_list_container = querySelector('.right-container') ?? querySelector('.playlist-container--right')
         let show = wls.getItem(right_container_key) != 'false'
-        right_video_list_container.style.display = show ? "" : 'none'
+        if (right_video_list_container) {
+            right_video_list_container.style.display = show ? "" : 'none'
+        }
         let show_video = false
         function scanVideoList() {
             that.detailLeftVideoList()
@@ -409,12 +414,14 @@ export default class BiliBili extends LivePlugin {
 
         // id = reco_list
         let addCommand = false
+        console.log('[class^=recommend-list]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', document.querySelector('[class^=recommend-list]'))
 
-        findMark(['#reco_list', '[class^=recommend-list]'], (element) => {
+        findMark(['#reco_list', '[class^=recommend-list]', '[class^=recommend-list-container]'], (element) => {
             let right_video_list_reco_list = element
+            // console.log('right_video_list_reco_list', right_video_list_reco_list)
             if (addCommand) return
 
-            // console.log('right_video_list_reco_list',right_video_list_reco_list)
+            // console.log('right_video_list_reco_list', right_video_list_reco_list)
             if (right_video_list_reco_list) {
                 show_video = wls.getItem(right_video_list_reco_list_key) != 'false'
                 log('默认是否显示video ？ ', show_video, '默认是否显示right menu ？ ', show)
@@ -444,7 +451,7 @@ export default class BiliBili extends LivePlugin {
 
                 addCommand = true
             }
-        }, 20);
+        }, 20, 2000);
         scanVideoList()
     }
 

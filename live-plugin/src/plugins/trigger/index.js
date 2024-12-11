@@ -17,6 +17,7 @@ import {
 } from '../../utils';
 
 import LivePlugin from "../live";
+import { GM_registerMenuCommand } from '$'
 
 /**
  * 虎牙直播插件

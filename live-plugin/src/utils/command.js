@@ -27,6 +27,7 @@ import {
   local_url,
 } from "./index";
 
+import { GM_registerMenuCommand } from '$'
 
 
 

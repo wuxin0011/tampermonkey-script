@@ -189,20 +189,20 @@ export const findMark = (selector, callback, count = 5, wait = 1000) => {
         return;
     }
     let selectors = []
-    if(!Array.isArray(selector)) {
+    if (!Array.isArray(selector)) {
         selectors.push(selector)
-    }else{
-        for(let sel of selector) {
-            if(!sel) continue
+    } else {
+        for (let sel of selector) {
+            if (!sel) continue
             selectors.push(sel)
         }
     }
     loopDo((timer) => {
-        
-        
+
+
         if (Array.isArray(selectors)) {
             for (let sel of selectors) {
-                
+
                 try {
                     let element = sel instanceof HTMLElement ? sel : querySelector(sel)
                     if (element && element instanceof HTMLElement) {
@@ -448,7 +448,16 @@ export const support = {
     },
     supportBg() {
         if (is_bilibili) {
-            return local_url === 'https://www.bilibili.com' || local_url === 'https://www.bilibili.com/' || local_url.indexOf('https://www.bilibili.com/?') != -1 || local_url.indexOf('https://www.bilibili.com/video') != -1
+            let T = 'https://www.bilibili.com'
+            if ([`${T}`].find(url => url == local_url)) {
+                return true
+            }
+            // /* `${T}/list`,  */
+            let S = [`${T}/video`].find(url => {
+                return local_url.indexOf(url) != -1
+            })
+            
+            return !!S
         }
         return !is_douyin
     },

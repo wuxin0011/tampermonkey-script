@@ -358,7 +358,14 @@
     },
     supportBg() {
       if (is_bilibili) {
-        return local_url === "https://www.bilibili.com" || local_url === "https://www.bilibili.com/" || local_url.indexOf("https://www.bilibili.com/?") != -1 || local_url.indexOf("https://www.bilibili.com/video") != -1;
+        let T = "https://www.bilibili.com";
+        if ([`${T}`].find((url) => url == local_url)) {
+          return true;
+        }
+        let S = [`${T}/video`].find((url) => {
+          return local_url.indexOf(url) != -1;
+        });
+        return !!S;
       }
       return !is_douyin;
     },
@@ -1214,6 +1221,7 @@ ${root$1}
     }
     return logo;
   };
+  var _GM_registerMenuCommand = /* @__PURE__ */ (() => typeof GM_registerMenuCommand != "undefined" ? GM_registerMenuCommand : void 0)();
   class LivePlugin {
     constructor() {
       this.baseUrl = "/";
@@ -1886,12 +1894,15 @@ ${root$1}
       if (!container) {
         container = querySelector("body");
       }
+      if (local_url.indexOf("https://www.bilibili.com/list/") != -1)
+        ;
       if (!container || !(container instanceof HTMLElement)) {
         warn("壁纸设置失败 获取不到 container ！");
         return;
       }
       if (isShowBg()) {
         url = !!url ? url : wls.getItem(this.bg_key) && isShowBg() ? wls.getItem(this.bg_key) : this.default_background_image;
+        container.style.background = "none";
         container.style.backgroundSize = "cover";
         container.style.backgroundRepeat = "no-repeat ";
         container.style.backgroundAttachment = "fixed";
@@ -2131,7 +2142,7 @@ ${root$1}
         log("是否显示粉丝徽章 : ", showMessage(isShowFansIcon()));
         log("================================================================");
       }
-      GM_registerMenuCommand(`功能面板💎`, () => {
+      _GM_registerMenuCommand(`功能面板💎`, () => {
         that.isShowContainer();
       }, { title: "点击显示或者关闭插件菜单,默认关闭，也可以使用 Ctrl + alt + j 查看" });
     }
@@ -2773,7 +2784,6 @@ ${root$1}
     detailLeftVideoList(sel = ".card-box") {
       console.log("querySelectorAll('.video-page-card-small')>>>>>>>");
       const scanVideoList = (sc) => {
-        console.log("querySelectorAll('.video-page-card-small')");
         Array.from(querySelectorAll(sel)).forEach((videoDom) => {
           var _a;
           if (videoDom.querySelector(".bili-video-card__info--ad")) {
@@ -2787,7 +2797,7 @@ ${root$1}
           }
           videoDom.setAttribute("mark", true);
           const playinfo = querySelector(videoDom, ".playinfo");
-          const link = querySelector(videoDom, ".upname a");
+          let link = querySelector(videoDom, ".upname") ?? querySelector(videoDom, ".upname a");
           const id = !!link && (link == null ? void 0 : link.href) && this.getBilibiliRoomId(link.href);
           const name = (_a = querySelector(videoDom, ".upname .name")) == null ? void 0 : _a.textContent;
           if (this.userIsExist(id) || this.userIsExist(name)) {
@@ -2813,7 +2823,7 @@ ${root$1}
       }, 5e3);
     }
     async detail() {
-      if (!/https:\/\/www\.bilibili\.com\/video\/(.*)/.test(local_url)) {
+      if (!/https:\/\/www\.bilibili\.com\/[video|list]/.test(local_url)) {
         return;
       }
       this.rightMenuVideoOperation();
@@ -2850,16 +2860,19 @@ ${root$1}
       let that = this;
       const right_container_key = "__right_container_key__";
       const right_video_list_reco_list_key = "__right_video_list_reco_list_key__";
-      let right_video_list_container = querySelector(".right-container");
+      let right_video_list_container = querySelector(".right-container") ?? querySelector(".playlist-container--right");
       let show = wls.getItem(right_container_key) != "false";
-      right_video_list_container.style.display = show ? "" : "none";
+      if (right_video_list_container) {
+        right_video_list_container.style.display = show ? "" : "none";
+      }
       let show_video = false;
       function scanVideoList() {
         that.detailLeftVideoList();
         that.detailLeftVideoList(".video-page-operator-card-small");
       }
       let addCommand = false;
-      findMark(["#reco_list", "[class^=recommend-list]"], (element) => {
+      console.log("[class^=recommend-list]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", document.querySelector("[class^=recommend-list]"));
+      findMark(["#reco_list", "[class^=recommend-list]", "[class^=recommend-list-container]"], (element) => {
         let right_video_list_reco_list = element;
         if (addCommand)
           return;
@@ -2867,13 +2880,13 @@ ${root$1}
           show_video = wls.getItem(right_video_list_reco_list_key) != "false";
           log("默认是否显示video ？ ", show_video, "默认是否显示right menu ？ ", show);
           right_video_list_reco_list.style.display = show_video ? "" : "none";
-          GM_registerMenuCommand(`右侧面板👔`, () => {
+          _GM_registerMenuCommand(`右侧面板👔`, () => {
             show = !show;
             wls.setItem(right_container_key, show);
             scanVideoList();
             right_video_list_container.style.display = show ? "" : "none";
           }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
-          GM_registerMenuCommand(`视频推荐🎬`, () => {
+          _GM_registerMenuCommand(`视频推荐🎬`, () => {
             log("click 视频推荐🎬");
             if (!show && !show_video) {
               show = !show;
@@ -2887,7 +2900,7 @@ ${root$1}
           }, { title: "如果你认为右侧视频推荐不想看，点我关闭,默认开启" });
           addCommand = true;
         }
-      }, 20);
+      }, 20, 2e3);
       scanVideoList();
     }
   }
@@ -3064,7 +3077,7 @@ ${root$1}
     if (!is_douyu) {
       return;
     }
-    GM_registerMenuCommand(`${isShowPk() ? "显示" : "关闭"} pk 条📣`, () => {
+    _GM_registerMenuCommand(`${isShowPk() ? "显示" : "关闭"} pk 条📣`, () => {
       addLocalStore(isShowPkKey, !isShowPk(), Boolean.name);
     }, { title: "关闭或者显示PK条,默认关闭" });
   };
@@ -3072,23 +3085,23 @@ ${root$1}
     if (!is_huya) {
       return;
     }
-    GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息📣`, () => {
+    _GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息📣`, () => {
       changeSysMsg();
     }, { title: "关闭或显示房管操作或主播等操作信息,默认关闭" });
-    GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜🧧`, () => {
+    _GM_registerMenuCommand(`${isShowGiftRank() ? "关闭" : "显示"}礼物排行榜🧧`, () => {
       changeRank();
     }, { title: "关闭或显示礼物排行，默认关闭" });
-    GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章🎫`, () => {
+    _GM_registerMenuCommand(`${isShowFansIcon() ? "关闭" : "显示"}粉丝徽章🎫`, () => {
       changeFansIcon();
     }, { title: "关闭或显示粉丝徽章，默认关闭" });
-    GM_registerMenuCommand(`${isShowColorDm() ? "关闭" : "显示"}彩色弹幕🎈`, () => {
+    _GM_registerMenuCommand(`${isShowColorDm() ? "关闭" : "显示"}彩色弹幕🎈`, () => {
       changeColorDm();
     }, { title: "关闭或显示彩色弹幕，默认关闭 仅在黑夜模式下生效" });
   };
   const bilibiliCommand = () => {
     if (!is_bilibili)
       return;
-    GM_registerMenuCommand(`${isShowHotSearch() ? "关闭" : "开启"}热搜🍳`, () => {
+    _GM_registerMenuCommand(`${isShowHotSearch() ? "关闭" : "开启"}热搜🍳`, () => {
       addLocalStore(isShowHotSearchKey, !isShowHotSearch(), Boolean.name);
       reload();
     }, { title: "如果不想看到热搜请点击，默认开启" });
@@ -3097,7 +3110,7 @@ ${root$1}
   };
   const installCommand = () => {
     log("install command ...");
-    GM_registerMenuCommand(`${isAutoPlugin() ? "关闭😵" : "启用🤣"} 插件`, () => {
+    _GM_registerMenuCommand(`${isAutoPlugin() ? "关闭😵" : "启用🤣"} 插件`, () => {
       addLocalStore(isAutoPluginkey, !isAutoPlugin(), Boolean.name);
       window.location.reload();
     }, { title: "如果不想在该网址使用插件请点击这里😀" });
@@ -6054,9 +6067,6 @@ ${dark}
     }
     if (is_exculues) {
       return;
-    }
-    if (!is_localhost) {
-      console.clear();
     }
     customElements.define("live-plugin-element", LivePluginElement);
     try {

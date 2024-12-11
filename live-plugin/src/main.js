@@ -53,7 +53,7 @@ import './style/index.css.js';
     }
 
     if (!is_localhost) {
-        console.clear()
+        // console.clear()
     }
 
 
