@@ -14,6 +14,10 @@ import {
   is_bilibili,
   isShowHotSearchKey,
   isShowHotSearch,
+  isShowMainBg,
+  isMainBg,
+  isShowMainRoom,
+  isMainRoom,
   is_douyin,
   isShowHotInstContent,
   isShowHotInstKey,
@@ -69,6 +73,14 @@ const huyaCommand = () => {
   if (!is_huya) {
     return
   }
+  GM_registerMenuCommand(`${isShowMainBg() ? '关闭' : '显示'}顶部大页图🏆`, () => {
+    addLocalStore(isMainBg, !isShowMainBg(), Boolean.name)
+    reload()
+  }, { title: '关闭或显示顶部大页图，默认关闭' })
+  GM_registerMenuCommand(`${isShowMainRoom() ? '关闭' : '显示'}顶部其他房间⛺`, () => {
+    addLocalStore(isMainRoom, !isShowMainRoom(), Boolean.name)
+    reload()
+  }, { title: '关闭或显示顶部连接的其他房间，默认关闭' })
   GM_registerMenuCommand(`${isShowSysMsg() ? '关闭' : '显示'}系统消息📣`, () => {
     changeSysMsg()
   }, { title: '关闭或显示房管操作或主播等操作信息,默认关闭' })
@@ -91,11 +103,11 @@ const bilibiliCommand = () => {
     reload()
   }, { title: '如果不想看到热搜请点击，默认开启' })
 
-  
-  if(local_url.indexOf('https://live.bilibili.com/') != -1){
+
+  if (local_url.indexOf('https://live.bilibili.com/') != -1) {
 
 
-  
+
 
   }
 

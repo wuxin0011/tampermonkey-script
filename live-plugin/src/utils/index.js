@@ -456,7 +456,7 @@ export const support = {
             let S = [`${T}/video`].find(url => {
                 return local_url.indexOf(url) != -1
             })
-            
+
             return !!S
         }
         return !is_douyin
@@ -500,6 +500,8 @@ export const isShowHotInstKey = '__is_show_hot_inst_content_key__' // 是否关�
 export const isAutoAddClickEvent = '__is_auto_add_event__' // 是否开启自动添加关闭主播功能
 export const isAutoPluginkey = '__is_auto_plugins__' // 插件是否在支持网址启用 默认启用
 export const isShowPkKey = '__is_show_pk_key__' // 是否显示pk条 （斗鱼)
+export const isMainBg = '__isMainBg__' // 大头背景
+export const isMainRoom = '__isMainRoom__' // 其他直播间
 
 
 
@@ -541,6 +543,22 @@ export const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name)
  * @returns boolean
  */
 export const isShowColorDm = () => getLocalStore(isShowColorDmKey, Boolean.name)
+
+
+/**
+ * 是否显示主页背景
+ * 默认不显示
+ * @returns boolean
+ */
+export const isShowMainBg = () => getLocalStore(isMainBg, Boolean.name)
+
+
+/**
+ * 是否显示主页背景房间
+ * 默认不显示 
+ * @returns boolean
+ */
+export const isShowMainRoom = () => getLocalStore(isMainRoom, Boolean.name)
 
 
 /**

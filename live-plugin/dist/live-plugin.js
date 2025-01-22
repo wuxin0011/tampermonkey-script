@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.18
+// @version      4.1.19
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -153,6 +153,23 @@
       lastArgs = null;
     };
     return throttled;
+  };
+  const intervalRemoveElement = (selectors, time = 160, maxCount = 1e3) => {
+    if (!isArray(selectors)) {
+      warn(`selectors 必须是数组 : ${selectors}`);
+      return;
+    }
+    let count = 0;
+    let timer = setInterval(() => {
+      selectors.forEach((sel) => {
+        removeDOM(sel, true);
+      });
+      if (count >= maxCount) {
+        clearInterval(timer);
+        return;
+      }
+      count = count + 1;
+    }, time);
   };
   const loopDo = (callback, count = 100, wait = 100) => {
     if (typeof callback != "function") {
@@ -402,11 +419,15 @@
   const isShowHotSearchInputKey = "__is_show_hot_search_input_key__";
   const isAutoPluginkey = "__is_auto_plugins__";
   const isShowPkKey = "__is_show_pk_key__";
+  const isMainBg = "__isMainBg__";
+  const isMainRoom = "__isMainRoom__";
   const isShowBg = () => is_bilibili ? getLocalStore("bg_show_key", Boolean.name) : wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
   const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name);
   const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name);
   const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name);
   const isShowColorDm = () => getLocalStore(isShowColorDmKey, Boolean.name);
+  const isShowMainBg = () => getLocalStore(isMainBg, Boolean.name);
+  const isShowMainRoom = () => getLocalStore(isMainRoom, Boolean.name);
   const isShowHotSearch = () => wls.getItem(isShowHotSearchKey) != "false";
   const isShowHotSearchInputKeyword = () => wls.getItem(isShowHotSearchInputKey) != "false";
   const isAutoPlugin = () => wls.getItem(isAutoPluginkey) != "false";
@@ -2519,6 +2540,11 @@ ${root$1}
       if (new RegExp(/.*douyu.*(\/(\d+)).*/).test(local_url)) {
         removeDOM(".layout-Main .ToTopBtn", true);
       }
+      const ritghtADs = [
+        ".side-top-uspension-box",
+        ".js-player-asideTopSuspension"
+      ];
+      intervalRemoveElement(ritghtADs, 500, 30);
       this.isFullScreen();
       if (this.is_use_click_event) {
         this.isAutoMaxVideoPro();
@@ -3085,6 +3111,14 @@ ${root$1}
     if (!is_huya) {
       return;
     }
+    _GM_registerMenuCommand(`${isShowMainBg() ? "关闭" : "显示"}顶部大页图🏆`, () => {
+      addLocalStore(isMainBg, !isShowMainBg(), Boolean.name);
+      reload();
+    }, { title: "关闭或显示顶部大页图，默认关闭" });
+    _GM_registerMenuCommand(`${isShowMainRoom() ? "关闭" : "显示"}顶部其他房间⛺`, () => {
+      addLocalStore(isMainRoom, !isShowMainRoom(), Boolean.name);
+      reload();
+    }, { title: "关闭或显示顶部连接的其他房间，默认关闭" });
     _GM_registerMenuCommand(`${isShowSysMsg() ? "关闭" : "显示"}系统消息📣`, () => {
       changeSysMsg();
     }, { title: "关闭或显示房管操作或主播等操作信息,默认关闭" });
@@ -3515,6 +3549,9 @@ ${dataLayoutItmeDarkCss}
   width:55px !important;
 }
 
+.aside-top-uspension-box,
+.js-player-asideTopSuspension,
+[class*=aside-top-uspension],
 #js-room-top-banner,
 [class^=elevatorHolder] [class^=elevatorItem]:not(:last-child),
 [class^=recommendCategoryContainer],
@@ -4150,6 +4187,18 @@ ${dark_dm_color()}
 
 
 `;
+  const main_bg = isShowMainBg() ? "" : `
+#main_col #matchComponent2
+{
+  display:none !important;
+}
+`;
+  const main_room_user = isShowMainRoom() ? "" : `
+ .match-room .match-nav
+ {
+   display:none !important;
+}
+`;
   const sys_msg = isShowSysMsg() ? "" : `
 .treasureChest-winningRecord,
 .chat-room__list .msg-auditorSys,
@@ -4224,16 +4273,16 @@ ${dark_dm_color()}
 .room-footer,
 #J_profileNotice,
  #match-cms-content,
- #matchComponent2,
+
 .hy-nav-item,
 .list-adx,
 .layout-Banner,
  #J_duyaHeaderRight>div>div>div,
  .nav-expand-list .third-clickstat,
- #main_col .special-bg,
+ 
  .player-recommend.recommend-ab-mode .end-ab-wrap,
  .chat-wrap-panel.wrap-income,
- .match-room .match-nav,
+
  .host-detail.J_roomHdDetail span,
  .host-detail.J_roomHdDetail .host-video,
  .room-hd-r .jump-to-phone,
@@ -4246,25 +4295,27 @@ ${dark_dm_color()}
  .room-backToTop.j_room-backToTop,
  .end-ab-banner,
  .player-app-qrcode,
- .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix,
- #main_col #matchComponent2{
+ .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix
+ {
     display:none !important;
  }
  
- .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap {
+ .ssr-wrapper .mod-sidebar, 
+ .room-core #player-gift-wrap {
    display:none;
  }
  
  .hy-nav-item:nth-child(1),
  .hy-nav-item:nth-child(2),
  .hy-nav-item:nth-child(3),
- #J_duyaHeaderRight>div>div>div:nth-child(3),
- #J_duyaHeaderRight>div>div>div:nth-child(4)
+  #J_duyaHeaderRight>div>div>div:has([class*=NavIcon-fav]),
+  #J_duyaHeaderRight>div>div>div:has([class*=NavIcon-history])
  {
    display:inline-block !important;
  }
+
  .mod-index-wrap .mod-index-list{
-   margin-top:80px !important;
+/*    margin-top:80px !important; */
  }
  .duya-header{
    background: hsla(0,0%,100%,.95)  !important;
@@ -4275,8 +4326,9 @@ ${dark_dm_color()}
   color:#000 !important;
  }
 
- #main_col,
-#J_mainRoom{
+ #J_mainRoom,
+ #main_col
+{
    background:none !important;
  }
 
@@ -4303,9 +4355,10 @@ ${dark_dm_color()}
     opacity:0 !important;
 }
 
+[class^=NavItem][class*=NavDownload],
 .mod-sidebar,
 .room-core #player-gift-wrap{
-    display:none ;
+    display:none !important;
 }
  
 #player-ctrl-wrap {
@@ -4344,8 +4397,9 @@ ${dark_dm_color()}
  ${fans_img}
  ${sys_msg}
  ${ranking}
-
-${darkCss}
+ ${main_bg}
+ ${main_room_user}
+ ${darkCss}
 
 ` : "";
   const inputKeywords = () => isShowHotSearchInputKeyword() ? `` : `

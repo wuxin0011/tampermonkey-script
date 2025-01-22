@@ -42,6 +42,9 @@ const css = is_douyu ? `
   width:55px !important;
 }
 
+.aside-top-uspension-box,
+.js-player-asideTopSuspension,
+[class*=aside-top-uspension],
 #js-room-top-banner,
 [class^=elevatorHolder] [class^=elevatorItem]:not(:last-child),
 [class^=recommendCategoryContainer],

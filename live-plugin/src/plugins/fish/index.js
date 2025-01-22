@@ -10,6 +10,7 @@ import {
     querySelectorAll,
     removeDOM,
     removeVideo,
+    intervalRemoveElement,
     throttle,
     wls
 } from '../../utils';
@@ -244,10 +245,15 @@ export default class FishLive extends LivePlugin {
             let ads = [
                 "#player-above-controller+div"
             ]
-            // intervalRemoveElement(ads, 500, 20)
+            
             removeDOM('.layout-Main .ToTopBtn', true)
 
         }
+        const ritghtADs = [
+            '.side-top-uspension-box',
+            '.js-player-asideTopSuspension',
+        ]
+        intervalRemoveElement(ritghtADs, 500, 30)
 
         this.isFullScreen()
 

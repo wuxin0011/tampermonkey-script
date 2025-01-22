@@ -1,7 +1,25 @@
 
-import { is_huya, isShowGiftRank, isShowFansIcon, isShowSysMsg } from "../utils"
+import { is_huya, isShowGiftRank, isShowFansIcon, isShowSysMsg,isShowMainBg,isShowMainRoom} from "../utils"
 import dark from './dark/trigger.css.dark'
 
+
+/* 大头背景 */
+const main_bg = isShowMainBg() ? "" :
+`
+#main_col #matchComponent2
+{
+  display:none !important;
+}
+`
+
+/* 链接其他直播间 */
+const main_room_user = isShowMainRoom() ? '' : 
+`
+ .match-room .match-nav
+ {
+   display:none !important;
+}
+`
 
 
 // 系统消息
@@ -15,6 +33,8 @@ const sys_msg = isShowSysMsg() ? '' :
 }
 
 `
+
+
 
 
 
@@ -92,16 +112,16 @@ const css = is_huya ? `
 .room-footer,
 #J_profileNotice,
  #match-cms-content,
- #matchComponent2,
+
 .hy-nav-item,
 .list-adx,
 .layout-Banner,
  #J_duyaHeaderRight>div>div>div,
  .nav-expand-list .third-clickstat,
- #main_col .special-bg,
+ 
  .player-recommend.recommend-ab-mode .end-ab-wrap,
  .chat-wrap-panel.wrap-income,
- .match-room .match-nav,
+
  .host-detail.J_roomHdDetail span,
  .host-detail.J_roomHdDetail .host-video,
  .room-hd-r .jump-to-phone,
@@ -114,25 +134,27 @@ const css = is_huya ? `
  .room-backToTop.j_room-backToTop,
  .end-ab-banner,
  .player-app-qrcode,
- .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix,
- #main_col #matchComponent2{
+ .player-play-big, .chat-room__list .msg-nobleSpeak-decorationPrefix
+ {
     display:none !important;
  }
  
- .ssr-wrapper .mod-sidebar, .room-core #player-gift-wrap {
+ .ssr-wrapper .mod-sidebar, 
+ .room-core #player-gift-wrap {
    display:none;
  }
  
  .hy-nav-item:nth-child(1),
  .hy-nav-item:nth-child(2),
  .hy-nav-item:nth-child(3),
- #J_duyaHeaderRight>div>div>div:nth-child(3),
- #J_duyaHeaderRight>div>div>div:nth-child(4)
+  #J_duyaHeaderRight>div>div>div:has([class*=NavIcon-fav]),
+  #J_duyaHeaderRight>div>div>div:has([class*=NavIcon-history])
  {
    display:inline-block !important;
  }
+
  .mod-index-wrap .mod-index-list{
-   margin-top:80px !important;
+/*    margin-top:80px !important; */
  }
  .duya-header{
    background: hsla(0,0%,100%,.95)  !important;
@@ -143,8 +165,9 @@ const css = is_huya ? `
   color:#000 !important;
  }
 
- #main_col,
-#J_mainRoom{
+ #J_mainRoom,
+ #main_col
+{
    background:none !important;
  }
 
@@ -171,9 +194,10 @@ const css = is_huya ? `
     opacity:0 !important;
 }
 
+[class^=NavItem][class*=NavDownload],
 .mod-sidebar,
 .room-core #player-gift-wrap{
-    display:none ;
+    display:none !important;
 }
  
 #player-ctrl-wrap {
@@ -212,8 +236,9 @@ const css = is_huya ? `
  ${fans_img}
  ${sys_msg}
  ${ranking}
-
-${dark}
+ ${main_bg}
+ ${main_room_user}
+ ${dark}
 
 `: ''
 export default css

@@ -2,7 +2,7 @@
   "name": "live-plugin",
   "private": true,
   "author": "wuxin0011",
-  "version": "4.1.18",
+  "version": "4.1.19",
   "type": "module",
   "license": "MIT",
   "description": "虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板",
