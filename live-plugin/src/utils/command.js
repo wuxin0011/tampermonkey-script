@@ -1,37 +1,37 @@
 
 import {
-  log,
-  is_huya,
   addLocalStore,
-  isShowFansIconKey,
-  isShowSysMsgKey,
-  isShowGiftRankKey,
-  isShowColorDmKey,
-  isShowSysMsg,
-  isShowGiftRank,
-  isShowFansIcon,
-  isShowColorDm,
-  is_bilibili,
-  isShowHotSearchKey,
-  isShowHotSearch,
-  isShowMainBg,
-  isMainBg,
-  isShowMainRoom,
-  isMainRoom,
-  is_douyin,
-  isShowHotInstContent,
-  isShowHotInstKey,
-  isShowHotSearchInputKey,
-  isShowHotSearchInputKeyword,
   isAutoPlugin,
   isAutoPluginkey,
-  isShowPkKey,
+  isMainRoom,
+  isShowColorDm,
+  isShowColorDmKey,
+  isShowFansIcon,
+  isShowFansIconKey,
+  isShowGiftRank,
+  isShowGiftRankKey,
+  isShowHotInstContent,
+  isShowHotInstKey,
+  isShowHotSearch,
+  isShowHotSearchInputKey,
+  isShowHotSearchInputKeyword,
+  isShowHotSearchKey,
+  isShowMainRoom,
+  isShowMatchContent,
+  isShowMatchContentKey,
   isShowPk,
+  isShowPkKey,
+  isShowSysMsg,
+  isShowSysMsgKey,
+  is_bilibili,
+  is_douyin,
   is_douyu,
+  is_huya,
   local_url,
+  log
 } from "./index";
 
-import { GM_registerMenuCommand } from '$'
+import { GM_registerMenuCommand } from '$';
 
 
 
@@ -73,8 +73,8 @@ const huyaCommand = () => {
   if (!is_huya) {
     return
   }
-  GM_registerMenuCommand(`${isShowMainBg() ? '关闭' : '显示'}顶部大页图🏆`, () => {
-    addLocalStore(isMainBg, !isShowMainBg(), Boolean.name)
+  GM_registerMenuCommand(`${isShowMatchContent() ? '关闭' : '显示'} 赛事数据🏆`, () => {
+    addLocalStore(isShowMatchContentKey, !isShowMatchContent(), Boolean.name)
     reload()
   }, { title: '关闭或显示顶部大页图，默认关闭' })
   GM_registerMenuCommand(`${isShowMainRoom() ? '关闭' : '显示'}顶部其他房间⛺`, () => {

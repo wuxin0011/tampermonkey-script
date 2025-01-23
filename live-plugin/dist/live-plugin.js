@@ -419,14 +419,14 @@
   const isShowHotSearchInputKey = "__is_show_hot_search_input_key__";
   const isAutoPluginkey = "__is_auto_plugins__";
   const isShowPkKey = "__is_show_pk_key__";
-  const isMainBg = "__isMainBg__";
   const isMainRoom = "__isMainRoom__";
+  const isShowMatchContentKey = "__isShowMatchContentKey__";
   const isShowBg = () => is_bilibili ? getLocalStore("bg_show_key", Boolean.name) : wls.getItem("bg_is_first_key") === null ? true : getLocalStore("bg_show_key", Boolean.name);
   const isShowFansIcon = () => getLocalStore(isShowFansIconKey, Boolean.name);
   const isShowGiftRank = () => getLocalStore(isShowGiftRankKey, Boolean.name);
+  const isShowMatchContent = () => getLocalStore(isShowMatchContentKey, Boolean.name);
   const isShowSysMsg = () => getLocalStore(isShowSysMsgKey, Boolean.name);
   const isShowColorDm = () => getLocalStore(isShowColorDmKey, Boolean.name);
-  const isShowMainBg = () => getLocalStore(isMainBg, Boolean.name);
   const isShowMainRoom = () => getLocalStore(isMainRoom, Boolean.name);
   const isShowHotSearch = () => wls.getItem(isShowHotSearchKey) != "false";
   const isShowHotSearchInputKeyword = () => wls.getItem(isShowHotSearchInputKey) != "false";
@@ -3111,8 +3111,8 @@ ${root$1}
     if (!is_huya) {
       return;
     }
-    _GM_registerMenuCommand(`${isShowMainBg() ? "关闭" : "显示"}顶部大页图🏆`, () => {
-      addLocalStore(isMainBg, !isShowMainBg(), Boolean.name);
+    _GM_registerMenuCommand(`${isShowMatchContent() ? "关闭" : "显示"} 赛事数据🏆`, () => {
+      addLocalStore(isShowMatchContentKey, !isShowMatchContent(), Boolean.name);
       reload();
     }, { title: "关闭或显示顶部大页图，默认关闭" });
     _GM_registerMenuCommand(`${isShowMainRoom() ? "关闭" : "显示"}顶部其他房间⛺`, () => {
@@ -4187,8 +4187,9 @@ ${dark_dm_color()}
 
 
 `;
-  const main_bg = isShowMainBg() ? "" : `
-#main_col #matchComponent2
+  const match_cms_content = isShowMatchContent() ? "" : `
+#main_col #matchComponent2,
+#match-cms-content
 {
   display:none !important;
 }
@@ -4273,7 +4274,7 @@ ${dark_dm_color()}
 .liveList-header-r,
 .room-footer,
 #J_profileNotice,
- #match-cms-content,
+
 .hy-nav-item,
 .list-adx,
 .layout-Banner,
@@ -4391,8 +4392,8 @@ ${dark_dm_color()}
  ${fans_img}
  ${sys_msg}
  ${ranking}
- ${main_bg}
  ${main_room_user}
+ ${match_cms_content}
  ${darkCss}
 
 ` : "";

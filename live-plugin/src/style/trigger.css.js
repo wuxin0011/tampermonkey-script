@@ -1,25 +1,28 @@
 
-import { is_huya, isShowGiftRank, isShowFansIcon, isShowSysMsg,isShowMainBg,isShowMainRoom} from "../utils"
+import { is_huya, isShowGiftRank, isShowFansIcon, isShowSysMsg,isShowMatchContent, isShowMainRoom } from "../utils"
 import dark from './dark/trigger.css.dark'
 
 
-/* 大头背景 */
-const main_bg = isShowMainBg() ? "" :
-`
-#main_col #matchComponent2
+// 赛事数据
+
+const match_cms_content = isShowMatchContent() ? "" :
+  `
+#main_col #matchComponent2,
+#match-cms-content
 {
   display:none !important;
 }
 `
 
 /* 链接其他直播间 */
-const main_room_user = isShowMainRoom() ? '' : 
-`
+const main_room_user = isShowMainRoom() ? '' :
+  `
  .match-room .match-nav
  {
    display:none !important;
 }
 `
+
 
 
 // 系统消息
@@ -33,6 +36,7 @@ const sys_msg = isShowSysMsg() ? '' :
 }
 
 `
+
 
 
 
@@ -112,7 +116,7 @@ const css = is_huya ? `
 .liveList-header-r,
 .room-footer,
 #J_profileNotice,
- #match-cms-content,
+
 .hy-nav-item,
 .list-adx,
 .layout-Banner,
@@ -230,8 +234,8 @@ const css = is_huya ? `
  ${fans_img}
  ${sys_msg}
  ${ranking}
- ${main_bg}
  ${main_room_user}
+ ${match_cms_content}
  ${dark}
 
 `: ''
