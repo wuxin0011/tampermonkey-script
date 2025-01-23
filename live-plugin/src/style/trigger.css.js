@@ -82,6 +82,7 @@ const css = is_huya ? `
  
 /* NONE */
 #ab-item,
+.common-popup,
 #J_playerMain .room-player-gift-placeholder,
 .pre-ab-wrap,#pre-ab-wrap,.pre-ab-video,#pre-ab-video,#player-resource-wrap,
 [class^=GuangG],.J_ad,#public-screen-ab, #ab-banner,.room-hd #ProfileGroup,
@@ -195,7 +196,6 @@ const css = is_huya ? `
 }
 
 [class^=NavItem][class*=NavDownload],
-.mod-sidebar,
 .room-core #player-gift-wrap{
     display:none !important;
 }

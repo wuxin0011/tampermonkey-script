@@ -40,6 +40,8 @@ import './style/index.css.js';
 (function () {
     'use strict';
 
+   
+
     if (typeof window == 'undefined') {
         return;
     }
@@ -60,7 +62,7 @@ import './style/index.css.js';
     // 注册自定义组件
     customElements.define('live-plugin-element', LivePluginElement);
 
-    
+
     try {
         installCommand()
     } catch (error) {
@@ -127,7 +129,6 @@ import './style/index.css.js';
             'background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%); padding: 2px; border-radius: 0 20px 20px 0; color: #fff;font-size:16px;',
             source_code_url,
         )
-
     }
 
 })()
