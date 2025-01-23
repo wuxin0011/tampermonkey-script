@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.19
+// @version      4.1.20
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -4274,16 +4274,14 @@ ${dark_dm_color()}
 .room-footer,
 #J_profileNotice,
  #match-cms-content,
-
 .hy-nav-item,
 .list-adx,
 .layout-Banner,
  #J_duyaHeaderRight>div>div>div,
  .nav-expand-list .third-clickstat,
- 
  .player-recommend.recommend-ab-mode .end-ab-wrap,
  .chat-wrap-panel.wrap-income,
-
+  [class^=NavItem][class*=NavDownload],
  .host-detail.J_roomHdDetail span,
  .host-detail.J_roomHdDetail .host-video,
  .room-hd-r .jump-to-phone,
@@ -4356,10 +4354,6 @@ ${dark_dm_color()}
     opacity:0 !important;
 }
 
-[class^=NavItem][class*=NavDownload],
-.room-core #player-gift-wrap{
-    display:none !important;
-}
  
 #player-ctrl-wrap {
   opacity: 0;

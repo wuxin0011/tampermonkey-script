@@ -113,16 +113,14 @@ const css = is_huya ? `
 .room-footer,
 #J_profileNotice,
  #match-cms-content,
-
 .hy-nav-item,
 .list-adx,
 .layout-Banner,
  #J_duyaHeaderRight>div>div>div,
  .nav-expand-list .third-clickstat,
- 
  .player-recommend.recommend-ab-mode .end-ab-wrap,
  .chat-wrap-panel.wrap-income,
-
+  [class^=NavItem][class*=NavDownload],
  .host-detail.J_roomHdDetail span,
  .host-detail.J_roomHdDetail .host-video,
  .room-hd-r .jump-to-phone,
@@ -195,10 +193,6 @@ const css = is_huya ? `
     opacity:0 !important;
 }
 
-[class^=NavItem][class*=NavDownload],
-.room-core #player-gift-wrap{
-    display:none !important;
-}
  
 #player-ctrl-wrap {
   opacity: 0;
