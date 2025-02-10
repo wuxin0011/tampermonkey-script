@@ -48,7 +48,7 @@
       </li>
       <li>
         如果想使用美服，请复制一份题单到美服中
-        <el-link :underline="false" href="https://greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html"
+        <el-link :underline="false" href="https://cn-greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html"
           type="primary" target="_blank">lc-to-markdown-txt-html</el-link>
         这个插件来复制题单
       </li>
@@ -65,15 +65,15 @@
     <ul>
       <li>
         你可以在
-        <el-link :underline="false" href="https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback"
+        <el-link :underline="false" href="https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback"
           type="success" target="_blank">油猴</el-link>
         &nbsp;
-        <el-link :underline="false" href="https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback"
+        <el-link :underline="false" href="https://scriptcat.org/zh-CN/script-show-page/1967"
           type="success" target="_blank">脚本猫</el-link>
         中更新或下载
       </li>
       <li>
-        <el-link :underline="false" href="https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback"
+        <el-link :underline="false" href="https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback"
           type="primary" target="_blank">点击</el-link>这里反馈
         或者
         <el-link target="_blank" :underline="false" href="https://github.com/wuxin0011/tampermonkey-script/issues"

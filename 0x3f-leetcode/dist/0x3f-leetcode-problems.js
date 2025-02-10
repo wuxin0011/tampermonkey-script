@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
-// @namespace    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
+// @namespace    https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
 // @version      0.0.5.4
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
 // @icon         https://assets.leetcode.cn/aliyun-lc-upload/users/endlesscheng/avatar_1690721039.png
 // @source       https://github.com/wuxin0011/tampermonkey-script/tree/main/0x3f-leetcode
-// @supportURL   https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback
-// @downloadURL  https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
-// @updateURL    https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
+// @supportURL   https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback
+// @downloadURL  https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
+// @updateURL    https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution
 // @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.cn/contest/*/problems/*
@@ -724,7 +724,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const sleep = async (time = 500) => new Promise((resolove) => setTimeout(resolove, time));
   const EN_URL = "https://leetcode.com";
   const ZH_URL = "https://leetcode.cn";
-  const LC_COPY_HTML_PLUGIN = "https://greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html";
+  const LC_COPY_HTML_PLUGIN = "https://cn-greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html";
   const EN_SOLUTION_DEMO = "https://leetcode.com/discuss/interview-question/6032972/leetcode";
   const CUR_URL = isEnglishENV() ? EN_URL : ZH_URL;
   const isDev = () => JSON.parse("false");
@@ -786,7 +786,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           vue.createTextVNode(" 如果想使用美服，请复制一份题单到美服中 "),
           vue.createVNode(_component_el_link, {
             underline: false,
-            href: "https://greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html",
+            href: "https://cn-greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html",
             type: "primary",
             target: "_blank"
           }, {
@@ -817,7 +817,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           vue.createTextVNode(" 你可以在 "),
           vue.createVNode(_component_el_link, {
             underline: false,
-            href: "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
+            href: "https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
             type: "success",
             target: "_blank"
           }, {
@@ -829,7 +829,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           vue.createTextVNode("   "),
           vue.createVNode(_component_el_link, {
             underline: false,
-            href: "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
+            href: "https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
             type: "success",
             target: "_blank"
           }, {
@@ -843,7 +843,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         vue.createElementVNode("li", null, [
           vue.createVNode(_component_el_link, {
             underline: false,
-            href: "https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
+            href: "https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution/feedback",
             type: "primary",
             target: "_blank"
           }, {

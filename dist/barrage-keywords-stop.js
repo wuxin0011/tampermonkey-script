@@ -251,7 +251,7 @@
       <div class="m-dm-all-keywords-button" title="当前弹幕仅在房间内生效,点击切换到全房间">房间</div>
       <div class="m-dm-delete-keywords-button">清空</div>
       <span title="收起 使用 ctrl+alt+k可唤醒 我哦" class="m-dm-close-btn" id="m-dm-close-btn"> &times </span>
-      <a href="https://greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>
+      <a href="https://cn-greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>
     </div>
     <div class="m-dm-container-body"></div>
     <div class="m-dm-container-footer">
