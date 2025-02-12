@@ -13,7 +13,7 @@ description: 复制题目描述转换为 html markdown txt 等
 
 
 
-[点击安装](https://cn-greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html)
+[点击安装](https://greasyfork.org//zh-CN/scripts/491969-lc-to-markdown-txt-html)
 
 
 

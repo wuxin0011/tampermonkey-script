@@ -46,7 +46,7 @@
 ### 安装地址
 
 
-- [油猴](https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution)
+- [油猴](https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution)
 - [脚本猫](https://scriptcat.org/zh-CN/script-show-page/1967)
 
 ### 其他

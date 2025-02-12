@@ -25,7 +25,7 @@ export const is_douyin = douyin_address_pattern.test(local_url) // douyin
 export const is_localhost = localhost.test(local_url) // 本地环境
 export const wd = window.document
 export const wls = window.localStorage
-export const download_plugin_url = 'https://cn-greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
+export const download_plugin_url = 'https://greasyfork.org//zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD' // 下载地址
 export const source_code_url = 'https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin' // 源码地址
 export const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file)
 export const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : (el ? wd.querySelector(el) : emptyMethod)

@@ -57,7 +57,7 @@ description: 自动标记题目AC，根据分数、会员等信息显示题目�
 ### 安装地址
 
 
-- [油猴](https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution)
+- [油猴](https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution)
 - [脚本猫](https://scriptcat.org/zh-CN/script-show-page/1967)
 
 ### 其他
@@ -69,4 +69,4 @@ description: 自动标记题目AC，根据分数、会员等信息显示题目�
 
 ### 注意
 
-如果使用了[LeetCodeRating](https://cn-greasyfork.org/zh-CN/scripts/450890-leetcoderating-%E6%98%BE%E7%A4%BA%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B%E9%9A%BE%E5%BA%A6%E5%88%86)这个插件，可能会与本插件冲突，但是本插件功能更全面，可以再`LeetCodeRating`这个插件的设置**不开启**题目AC功能，这样既能使用 `0x3f-problem-solution` 的题单完整功能，又能看到题目分数
+如果使用了[LeetCodeRating](https://greasyfork.org//zh-CN/scripts/450890-leetcoderating-%E6%98%BE%E7%A4%BA%E5%8A%9B%E6%89%A3%E5%91%A8%E8%B5%9B%E9%9A%BE%E5%BA%A6%E5%88%86)这个插件，可能会与本插件冲突，但是本插件功能更全面，可以再`LeetCodeRating`这个插件的设置**不开启**题目AC功能，这样既能使用 `0x3f-problem-solution` 的题单完整功能，又能看到题目分数

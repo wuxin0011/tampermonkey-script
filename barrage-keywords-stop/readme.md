@@ -20,7 +20,7 @@
 # 安装
 
 
-[点击安装](https://cn-greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop)
+[点击安装](https://greasyfork.org//zh-CN/scripts/475878-barrage-keywords-stop)
 
 
 # 反馈

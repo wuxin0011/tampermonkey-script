@@ -1,6 +1,6 @@
 ## 前言
 
-最近无聊看直播，虎牙广告是真多，~~**ghs直播间更是泛滥**~~，不想看到这些直播间,于是想屏蔽，[greasyfork](https://cn-greasyfork.org/)倒是找到许多直播间简化的插件，不过好像没有屏蔽直播间功能。于是自己弄了一个。
+最近无聊看直播，虎牙广告是真多，~~**ghs直播间更是泛滥**~~，不想看到这些直播间,于是想屏蔽，[greasyfork](https://greasyfork.org//)倒是找到许多直播间简化的插件，不过好像没有屏蔽直播间功能。于是自己弄了一个。
 
 ## 关于广告
 
@@ -167,7 +167,7 @@ b站演示
 ## 安装地址
 
 
-- [油猴地址](https://cn-greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
+- [油猴地址](https://greasyfork.org//zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD)
 - [脚本猫地址](https://scriptcat.org/zh-CN/script-show-page/1679)
 
 

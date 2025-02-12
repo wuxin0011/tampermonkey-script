@@ -56,7 +56,7 @@
   const is_localhost = localhost.test(local_url);
   const wd = window.document;
   const wls = window.localStorage;
-  const download_plugin_url = "https://cn-greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD";
+  const download_plugin_url = "https://greasyfork.org//zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD";
   const source_code_url = "https://github.com/wuxin0011/tampermonkey-script/live-plugin";
   const isImage = (file) => /.*(\.(png|jpg|jpeg|apng|avif|bmp|gif|ico|cur|svg|tiff|webp))$/.test(file);
   const querySelector = (el, sel) => !!el && !!sel && el instanceof HTMLElement ? el.querySelector(sel) : el ? wd.querySelector(el) : emptyMethod;
@@ -1148,7 +1148,7 @@ ${root$1}
             ${support.supportTheme() ? `<select class="m-dark-type-select" id="m-dark-select">
                                             ${themeOptions()}
                                         </select>` : ``}
-            <a class="m-link" href="https://cn-greasyfork.org/zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
+            <a class="m-link" href="https://greasyfork.org//zh-CN/scripts/449261-%E8%99%8E%E7%89%99%E7%9B%B4%E6%92%AD" target="_blank" title="更新、反馈">更新</a>
             <button class="btn btn-info btn-close-container" title="关闭 , ctrl+alt+j 可唤醒" >关闭</button>
         </div>
         <table ${support.supportTable() ? "" : 'style="display:none !important;"'}>

@@ -13,7 +13,7 @@
    - [lccn.lbao.site](https://lccn.lbao.site/)
      第三方插件这么多, 社区也蛮活跃的，感谢大佬们的贡献，但目前没有灵佬说的这个需求插件，这个功能实现起来也简单，我也尽一点微薄之力,上周其实就发布了，但是测试阶段有些bug😥
    
-3. 最后为了感谢灵佬，插件命名为 [0x3f-problem-solution](https://cn-greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution) 
+3. 最后为了感谢灵佬，插件命名为 [0x3f-problem-solution](https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution) 
    
 ## 功能介绍
 
@@ -54,4 +54,4 @@ ps : 绿色表示AC题目，黄色表示尝试过
 
 ## 更多插件
 
-- [lc-to-markdown-txt-html](https://cn-greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html)
+- [lc-to-markdown-txt-html](https://greasyfork.org//zh-CN/scripts/491969-lc-to-markdown-txt-html)

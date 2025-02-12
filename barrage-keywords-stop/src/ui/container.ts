@@ -12,7 +12,7 @@ const containerDOMStr = `
     <div class="m-dm-container-body"></div>
     <div class="m-dm-container-footer">
        <p class="message-tip"></p>
-      <a href="https://cn-greasyfork.org/zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>
+      <a href="https://greasyfork.org//zh-CN/scripts/475878-barrage-keywords-stop"  target="_blank" title="更新" class="m-dm-install-link">反馈</a>
     </div>
 `
 export default containerDOMStr
