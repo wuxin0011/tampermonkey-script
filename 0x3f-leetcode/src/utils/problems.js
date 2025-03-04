@@ -24,6 +24,7 @@ export const __0X3F_PROBLEM_KEYS__ = {
     '__0x3f_problmes_random_problems__': '__0x3f_problmes_random_problems__', //随机题目
     '__0x3f_problme_support_type__': '__0x3f_problme_support_type__', //是否替换到com 默认cn
     '__0x3f_problme_support_type_tips__': '__0x3f_problme_support_type_tips__', //是否替换到com 默认cn 不再提示key
+    '__0x3f_problme_stop_discuss_': '__0x3f_problme_stop_discuss_', //屏蔽讨论区
 }
 
 export const STATUS = {
@@ -45,6 +46,8 @@ export function install_pos() {
     // 默认安装到左边
     return !Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_insert_pos__'], false, Boolean.name)
 }
+
+
 function isShow(text, min, max) {
     if (!text) {
         return true

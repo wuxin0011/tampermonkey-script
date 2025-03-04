@@ -1,8 +1,9 @@
 
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { GM_addStyle } from '$'
 import Cache from './cache'
 import { __0X3F_PROBLEM_KEYS__, isEnglish } from './problems'
-import { LC_COPY_HTML_PLUGIN, EN_SOLUTION_DEMO, isZH } from './index.js'
+import { LC_COPY_HTML_PLUGIN, EN_SOLUTION_DEMO, isZH, isLeetCodeCircleUrl } from './index.js'
 export function Message(title = '确认操作', callback = () => { }, canlcelCallback = () => { }) {
     ElMessageBox.confirm(
         `${title} ?`,
@@ -54,29 +55,43 @@ export function tips_message() {
             }
         })
     }
-
-
 }
 
-
 export function update_version() {
-    ElMessageBox.alert(
-        `<div>
-          <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
-          <br/>
-          <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
-          <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
-          <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
-          <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
-         
-         <div>`,
-        '更新☕',
-        {
-            dangerouslyUseHTMLString: true,
-            showCancelButton: true,
-            cancelButtonText: '取消',
-            confirmButtonText: '确认'
+    GM_registerMenuCommand(`更新脚本🔗`, () => {
+        ElMessageBox.alert(
+            `<div>
+              <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
+              <br/>
+              <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
+              <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
+              <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
+              <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
+             
+             <div>`,
+            '更新☕',
+            {
+                dangerouslyUseHTMLString: true,
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonText: '确认'
+            }
+        )
+    }, { title: '点击更新更新脚本' })
+}
+
+export function stop_disscuss_command() {
+    if ((isZH() && isLeetCodeCircleUrl())) {
+        const is_stop = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], false, Boolean.name)
+        if (is_stop) {
+            GM_addStyle('.t6Fde{ display:none !important;}')
         }
-    )
+        GM_registerMenuCommand(`${is_stop ? '开启' : '关闭'}右侧讨论区📣`, () => {
+            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], !is_stop)
+            window.location.reload()
+        }, { title: '如果认为右侧讨论区太难看可以直接屏蔽😅' })
+    }
+
+
 
 }

@@ -35,6 +35,7 @@
 (function (ElementPlus, vue) {
   'use strict';
 
+  var _GM_addStyle = /* @__PURE__ */ (() => typeof GM_addStyle != "undefined" ? GM_addStyle : void 0)();
   var _GM_deleteValue = /* @__PURE__ */ (() => typeof GM_deleteValue != "undefined" ? GM_deleteValue : void 0)();
   var _GM_getValue = /* @__PURE__ */ (() => typeof GM_getValue != "undefined" ? GM_getValue : void 0)();
   var _GM_registerMenuCommand = /* @__PURE__ */ (() => typeof GM_registerMenuCommand != "undefined" ? GM_registerMenuCommand : void 0)();
@@ -219,8 +220,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     //随机题目
     "__0x3f_problme_support_type__": "__0x3f_problme_support_type__",
     //是否替换到com 默认cn
-    "__0x3f_problme_support_type_tips__": "__0x3f_problme_support_type_tips__"
+    "__0x3f_problme_support_type_tips__": "__0x3f_problme_support_type_tips__",
     //是否替换到com 默认cn 不再提示key
+    "__0x3f_problme_stop_discuss_": "__0x3f_problme_stop_discuss_"
+    //屏蔽讨论区
   };
   const STATUS = {
     "AC": "ac",
@@ -924,24 +927,38 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
   }
   function update_version() {
-    ElementPlus.ElMessageBox.alert(
-      `<div>
-          <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
-          <br/>
-          <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
-          <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
-          <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
-          <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
-         
-         <div>`,
-      "更新☕",
-      {
-        dangerouslyUseHTMLString: true,
-        showCancelButton: true,
-        cancelButtonText: "取消",
-        confirmButtonText: "确认"
+    GM_registerMenuCommand(`更新脚本🔗`, () => {
+      ElementPlus.ElMessageBox.alert(
+        `<div>
+              <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
+              <br/>
+              <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
+              <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
+              <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
+              <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
+             
+             <div>`,
+        "更新☕",
+        {
+          dangerouslyUseHTMLString: true,
+          showCancelButton: true,
+          cancelButtonText: "取消",
+          confirmButtonText: "确认"
+        }
+      );
+    }, { title: "点击更新更新脚本" });
+  }
+  function stop_disscuss_command() {
+    if (isZH() && isLeetCodeCircleUrl()) {
+      const is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], false, Boolean.name);
+      if (is_stop) {
+        _GM_addStyle(".t6Fde{ display:none !important;}");
       }
-    );
+      GM_registerMenuCommand(`${is_stop ? "开启" : "关闭"}右侧讨论区📣`, () => {
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], !is_stop);
+        window.location.reload();
+      }, { title: "如果认为右侧讨论区太难看可以直接屏蔽😅" });
+    }
   }
   const _hoisted_1 = { class: "dialog-footer" };
   const _hoisted_2 = { class: "processs-flex" };
@@ -2003,9 +2020,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         submitProblems(local_url);
       }
     } else if (isLeetCodeCircleUrl(local_url)) {
-      _GM_registerMenuCommand(`更新脚本📣`, () => {
-        update_version();
-      }, { title: "点击更新更新脚本" });
+      stop_disscuss_command();
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
         Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();
@@ -2069,6 +2084,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
   }
   tips_message();
+  update_version();
   watchSubmit();
   run();
   startStopRanking();

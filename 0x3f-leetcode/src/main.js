@@ -13,7 +13,7 @@ import {
   sleep,
   isZH
 } from './utils/index';
-import { Message, tips_message,update_version } from './utils/message';
+import { Message, tips_message, update_version,stop_disscuss_command } from './utils/message';
 import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
 
 import {
@@ -103,7 +103,7 @@ async function run() {
 
 
   } else if (isLeetCodeCircleUrl(local_url)) {
-
+    
 
 
     // GM_registerMenuCommand(`${ok ? '隐藏按钮' : '显示按钮'}`, () => {
@@ -113,9 +113,7 @@ async function run() {
     //   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], ok)
     // }, { title: '可以手动关闭或者显示按钮 默认显示 刷新生效' })
 
-    GM_registerMenuCommand(`更新脚本📣`, () => {
-      update_version()
-    }, { title: '点击更新更新脚本' })
+    stop_disscuss_command()
 
 
     GM_registerMenuCommand(`安装到${install_pos() ? '右侧' : '左侧'} 🎁`, () => {
@@ -199,6 +197,7 @@ async function run() {
 
 
 tips_message()
+update_version()
 watchSubmit()
 run()
 startStopRanking()

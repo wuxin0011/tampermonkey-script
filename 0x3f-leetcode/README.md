@@ -16,7 +16,7 @@
 -  题目进度统计 (v >= 0.0.5.0)
 -  随机一道灵茶题单中题目 (v >= 0.0.5.2)
 -  支持题目链接替换美服以及支持美服题单 (v >= 0.0.5.3)
-
+-  支持屏蔽新UI右侧讨论排行 (v >= 0.0.5.5)
 
 ### 演示
 
@@ -47,6 +47,7 @@
 
 
 - [油猴](https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution)
+- [油猴镜像](https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution)
 - [脚本猫](https://scriptcat.org/zh-CN/script-show-page/1967)
 
 ### 其他
