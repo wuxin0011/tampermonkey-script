@@ -19,6 +19,7 @@ export default defineConfig({
         icon: 'https://assets.leetcode.cn/aliyun-lc-upload/users/endlesscheng/avatar_1690721039.png',
         match: [
           'https://leetcode.cn/circle/discuss/*',
+          'https://leetcode.cn/discuss/*',
           'https://leetcode.cn/problems/*',
           'https://leetcode.cn/contest/*/problems/*',
           'https://leetcode.com/circle/discuss/*',
@@ -32,7 +33,7 @@ export default defineConfig({
         description: config.description,
         author: config.author,
         downloadURL: config.repository.downloadURL,
-        updateURL: config.repository.updateURL,
+        updateURL: config.repository.updateURL2,
       },
       build: {
         externalGlobals: {

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.4
+// @version      0.0.5.5
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -9,8 +9,9 @@
 // @source       https://github.com/wuxin0011/tampermonkey-script/tree/main/0x3f-leetcode
 // @supportURL   https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution/feedback
 // @downloadURL  https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @updateURL    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
+// @updateURL    https://scriptcat.org/zh-CN/script-show-page/1967/
 // @match        https://leetcode.cn/circle/discuss/*
+// @match        https://leetcode.cn/discuss/*
 // @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.cn/contest/*/problems/*
 // @match        https://leetcode.com/circle/discuss/*
@@ -29,7 +30,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const n=document.createElement("style");n.textContent=t,document.head.append(n)})(" h2[data-v-d1230ce3]{color:#000!important;margin:10px 0!important;font-size:20px!important}.m-setting-button[data-v-76dd1ba0]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-76dd1ba0]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-76dd1ba0]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const n=document.createElement("style");n.textContent=t,document.head.append(n)})(" h2[data-v-6b5a9c54]{color:#000!important;margin:10px 0!important;font-size:20px!important}.m-setting-button[data-v-76dd1ba0]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-76dd1ba0]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-76dd1ba0]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (ElementPlus, vue) {
   'use strict';
@@ -83,15 +84,16 @@
   const Cache$2 = new Cache$1();
   const width = 14;
   const height = 14;
+  const svg_css_style = () => isEnglishENV() ? "" : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? ` ` : "display:inline;margin-bottom:3px;";
   const bilibiliSVG = () => {
-    return `<svg width="${width}px" height="${height}px" status="bilibili" title="bilibili" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#00a3d9">
+    return `<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="bilibili" title="bilibili" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#00a3d9">
   <path fill="none" d="M0 0h24v24H0z"></path>
   <path d="M18.223 3.086a1.25 1.25 0 0 1 0 1.768L17.08 5.996h1.17A3.75 3.75 0 0 1 22 9.747v7.5a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 17.247v-7.5a3.75 3.75 0 0 1 3.75-3.75h1.166L5.775 4.855a1.25 1.25 0 1 1 1.767-1.768l2.652 2.652q.119.119.198.257h3.213q.08-.14.199-.258l2.651-2.652a1.25 1.25 0 0 1 1.768 0m.027 5.42H5.75a1.25 1.25 0 0 0-1.247 1.157l-.003.094v7.5c0 .659.51 1.199 1.157 1.246l.093.004h12.5a1.25 1.25 0 0 0 1.247-1.157l.003-.093v-7.5c0-.69-.56-1.25-1.25-1.25zm-10 2.5c.69 0 1.25.56 1.25 1.25v1.25a1.25 1.25 0 1 1-2.5 0v-1.25c0-.69.56-1.25 1.25-1.25m7.5 0c.69 0 1.25.56 1.25 1.25v1.25a1.25 1.25 0 1 1-2.5 0v-1.25c0-.69.56-1.25 1.25-1.25"></path>
 </svg>
 `;
   };
   const problemContenst = () => `
-<svg width="${width}px" height="${height}px" status="contest" title="竞赛题目专属图标" viewBox="-3.5 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="contest" title="竞赛题目专属图标" viewBox="-3.5 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9.73795 18.8436L12.9511 20.6987L6.42625 32L4.55349 27.8233L9.73795 18.8436Z" fill="#CE4444"/>
 <path d="M9.73795 18.8436L6.52483 16.9885L0 28.2898L4.55349 27.8233L9.73795 18.8436Z" fill="#983535"/>
 <path d="M14.322 18.8436L11.1088 20.6987L17.6337 32L19.5064 27.8233L14.322 18.8436Z" fill="#983535"/>
@@ -116,7 +118,7 @@
 `;
   const problemFinsh = () => `
 
-<svg width="${width}px" height="${height}px" status="ac" title="AC专属图标" viewBox="0 0 1024 1024"  version="1.1"
+<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="ac" title="AC专属图标" viewBox="0 0 1024 1024"  version="1.1"
 xmlns="http://www.w3.org/2000/svg">
 <path d="M512 512m-448 0a448 448 0 1 0 896 0 448 448 0 1 0-896 0Z" fill="#4CAF50" />
 <path
@@ -126,7 +128,7 @@ xmlns="http://www.w3.org/2000/svg">
 
 `;
   const problemsTry = () => `
-<svg width="${width}px" height="${height}px" status="notac" title="尝试过" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+<svg width="${width}px" height="${height}px"  style="${svg_css_style()}" status="notac" title="尝试过" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
 style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <path style="fill:#FEDEA1;" d="M256,12.8C121.899,12.8,12.8,121.899,12.8,256S121.899,499.2,256,499.2S499.2,390.101,499.2,256
@@ -145,7 +147,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
 
 `;
   const problemsNo = () => install_pos() ? `
-<svg width="${width}px" height="${height}px" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
+<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 ` : ``;
   const createStatus = (status, link) => {
     var _a;
@@ -261,7 +263,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return true;
   }
   let A = void 0;
-  const linkCssSelector_pre = () => isEnglishENV() ? ".discuss-markdown-container" : `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]`;
+  const linkCssSelector_pre = () => isEnglishENV() ? ".discuss-markdown-container" : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]` : `.break-words`;
   const linkCssSelector = `${linkCssSelector_pre()} li>a`;
   const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter((item) => item && item instanceof HTMLAnchorElement && (isProblem(item.href) || isContest(item.href)));
   function loadProblems() {
@@ -507,7 +509,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
-      console.log("ID:", ID2, "query status: ", cache[ID2]);
+      if (isDev()) {
+        console.log("ID:", ID2, "query status: ", cache[ID2]);
+      }
       queryStatus(ID2, cache, void 0, true);
     }, timeout);
   };
@@ -759,8 +763,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return target;
   };
   const _sfc_main$1 = {};
-  const _withScopeId = (n) => (vue.pushScopeId("data-v-d1230ce3"), n = n(), vue.popScopeId(), n);
-  const _hoisted_1$1 = /* @__PURE__ */ vue.createStaticVNode('<h2 data-v-d1230ce3> 🎈必读内容 </h2><ul data-v-d1230ce3><li style="color:red !important;" data-v-d1230ce3> 同步功能使用前请确保为登录状态 </li></ul><h2 data-v-d1230ce3> ❓ 题单进度不一致 </h2><ul data-v-d1230ce3><li data-v-d1230ce3> 防止一次性访问题单太多，对服务器产生压力，所以采用单个题单访问然后保存状态 , 这样避免访问量问题 </li><li data-v-d1230ce3> 默认情况下会缓存访问的题单情况，对于没有访问的题单，可以手动在对应题单中同步 </li><li data-v-d1230ce3> 题目状态根据用户提交题目情况会实时更新，只会在提交访问一次 </li></ul><h2 data-v-d1230ce3> ❓ 如何使用随机题目？ </h2><ul data-v-d1230ce3><li data-v-d1230ce3> 这个可以根据自己要求，配置好之后，可以使用 <em data-v-d1230ce3> ctrl + alt + j </em> 触发 </li><li data-v-d1230ce3> 如果这个快捷键影响，可以在命令设置中关闭 </li></ul><h2 data-v-d1230ce3> ❓ 如何使用美服 </h2>', 7);
+  const _withScopeId = (n) => (vue.pushScopeId("data-v-6b5a9c54"), n = n(), vue.popScopeId(), n);
+  const _hoisted_1$1 = /* @__PURE__ */ vue.createStaticVNode('<h2 data-v-6b5a9c54> 🎈必读内容 </h2><ul data-v-6b5a9c54><li style="color:red !important;" data-v-6b5a9c54> 同步功能使用前请确保为登录状态 </li></ul><h2 data-v-6b5a9c54> ❓ 题单进度不一致 </h2><ul data-v-6b5a9c54><li data-v-6b5a9c54> 防止一次性访问题单太多，对服务器产生压力，所以采用单个题单访问然后保存状态 , 这样避免访问量问题 </li><li data-v-6b5a9c54> 默认情况下会缓存访问的题单情况，对于没有访问的题单，可以手动在对应题单中同步 </li><li data-v-6b5a9c54> 题目状态根据用户提交题目情况会实时更新，只会在提交访问一次 </li></ul><h2 data-v-6b5a9c54> ❓ 如何使用随机题目？ </h2><ul data-v-6b5a9c54><li data-v-6b5a9c54> 这个可以根据自己要求，配置好之后，可以使用 <em data-v-6b5a9c54> ctrl + alt + j </em> 触发 </li><li data-v-6b5a9c54> 如果这个快捷键影响，可以在命令设置中关闭 </li></ul><h2 data-v-6b5a9c54> ❓ 如何使用美服 </h2>', 7);
   const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ vue.createElementVNode("h2", null, " 🔗 反馈更新 ", -1));
   function _sfc_render(_ctx, _cache) {
     const _component_el_link = vue.resolveComponent("el-link");
@@ -829,7 +833,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           vue.createTextVNode("   "),
           vue.createVNode(_component_el_link, {
             underline: false,
-            href: "https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution/feedback",
+            href: "https://scriptcat.org/zh-CN/script-show-page/1967",
             type: "success",
             target: "_blank"
           }, {
@@ -868,7 +872,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       ])
     ]);
   }
-  const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d1230ce3"]]);
+  const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-6b5a9c54"]]);
   function Message(title = "确认操作", callback = () => {
   }, canlcelCallback = () => {
   }) {
@@ -918,6 +922,26 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         }
       });
     }
+  }
+  function update_version() {
+    ElementPlus.ElMessageBox.alert(
+      `<div>
+          <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
+          <br/>
+          <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
+          <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
+          <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
+          <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
+         
+         <div>`,
+      "更新☕",
+      {
+        dangerouslyUseHTMLString: true,
+        showCancelButton: true,
+        cancelButtonText: "取消",
+        confirmButtonText: "确认"
+      }
+    );
   }
   const _hoisted_1 = { class: "dialog-footer" };
   const _hoisted_2 = { class: "processs-flex" };
@@ -1979,6 +2003,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         submitProblems(local_url);
       }
     } else if (isLeetCodeCircleUrl(local_url)) {
+      _GM_registerMenuCommand(`更新脚本📣`, () => {
+        update_version();
+      }, { title: "点击更新更新脚本" });
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
         Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();

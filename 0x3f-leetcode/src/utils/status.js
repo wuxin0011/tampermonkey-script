@@ -1,13 +1,16 @@
 
-import { isBilibili, isContest, isLeetCodeCircleUrl } from '.'
+import { isBilibili, isContest, isLeetCodeCircleUrl,isEnglishENV } from '.'
 import { install_pos, STATUS } from './problems'
 const width = 14
 const height = 14
 
+// svg css
+const svg_css_style = ()=>isEnglishENV() ? '' : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? ` ` :  "display:inline;margin-bottom:3px;";
+
 // svg: https://www.svgviewer.dev/
 
 export const bilibiliSVG = () => {
-    return `<svg width="${width}px" height="${height}px" status="bilibili" title="bilibili" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#00a3d9">
+    return `<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="bilibili" title="bilibili" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#00a3d9">
   <path fill="none" d="M0 0h24v24H0z"></path>
   <path d="M18.223 3.086a1.25 1.25 0 0 1 0 1.768L17.08 5.996h1.17A3.75 3.75 0 0 1 22 9.747v7.5a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 17.247v-7.5a3.75 3.75 0 0 1 3.75-3.75h1.166L5.775 4.855a1.25 1.25 0 1 1 1.767-1.768l2.652 2.652q.119.119.198.257h3.213q.08-.14.199-.258l2.651-2.652a1.25 1.25 0 0 1 1.768 0m.027 5.42H5.75a1.25 1.25 0 0 0-1.247 1.157l-.003.094v7.5c0 .659.51 1.199 1.157 1.246l.093.004h12.5a1.25 1.25 0 0 0 1.247-1.157l.003-.093v-7.5c0-.69-.56-1.25-1.25-1.25zm-10 2.5c.69 0 1.25.56 1.25 1.25v1.25a1.25 1.25 0 1 1-2.5 0v-1.25c0-.69.56-1.25 1.25-1.25m7.5 0c.69 0 1.25.56 1.25 1.25v1.25a1.25 1.25 0 1 1-2.5 0v-1.25c0-.69.56-1.25 1.25-1.25"></path>
 </svg>
@@ -18,7 +21,7 @@ export const bilibiliSVG = () => {
 
 export const problemContenst = () =>
     `
-<svg width="${width}px" height="${height}px" status="contest" title="竞赛题目专属图标" viewBox="-3.5 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="contest" title="竞赛题目专属图标" viewBox="-3.5 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9.73795 18.8436L12.9511 20.6987L6.42625 32L4.55349 27.8233L9.73795 18.8436Z" fill="#CE4444"/>
 <path d="M9.73795 18.8436L6.52483 16.9885L0 28.2898L4.55349 27.8233L9.73795 18.8436Z" fill="#983535"/>
 <path d="M14.322 18.8436L11.1088 20.6987L17.6337 32L19.5064 27.8233L14.322 18.8436Z" fill="#983535"/>
@@ -44,7 +47,7 @@ export const problemContenst = () =>
 
 export const problemFinsh = () => `
 
-<svg width="${width}px" height="${height}px" status="ac" title="AC专属图标" viewBox="0 0 1024 1024"  version="1.1"
+<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="ac" title="AC专属图标" viewBox="0 0 1024 1024"  version="1.1"
 xmlns="http://www.w3.org/2000/svg">
 <path d="M512 512m-448 0a448 448 0 1 0 896 0 448 448 0 1 0-896 0Z" fill="#4CAF50" />
 <path
@@ -55,7 +58,7 @@ xmlns="http://www.w3.org/2000/svg">
 `
 
 export const problemsTry = () => `
-<svg width="${width}px" height="${height}px" status="notac" title="尝试过" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+<svg width="${width}px" height="${height}px"  style="${svg_css_style()}" status="notac" title="尝试过" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
 style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <path style="fill:#FEDEA1;" d="M256,12.8C121.899,12.8,12.8,121.899,12.8,256S121.899,499.2,256,499.2S499.2,390.101,499.2,256
@@ -75,7 +78,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
 `
 
 export const problemsNo = () => install_pos() ? `
-<svg width="${width}px" height="${height}px" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
+<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 `
     :
     ``

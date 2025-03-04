@@ -13,7 +13,7 @@ import {
   sleep,
   isZH
 } from './utils/index';
-import { Message, tips_message } from './utils/message';
+import { Message, tips_message,update_version } from './utils/message';
 import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
 
 import {
@@ -112,6 +112,10 @@ async function run() {
     //   Container.style.display = ok ? 'block' : 'none'
     //   Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], ok)
     // }, { title: '可以手动关闭或者显示按钮 默认显示 刷新生效' })
+
+    GM_registerMenuCommand(`更新脚本📣`, () => {
+      update_version()
+    }, { title: '点击更新更新脚本' })
 
 
     GM_registerMenuCommand(`安装到${install_pos() ? '右侧' : '左侧'} 🎁`, () => {

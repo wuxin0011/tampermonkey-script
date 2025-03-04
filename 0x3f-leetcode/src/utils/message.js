@@ -57,3 +57,26 @@ export function tips_message() {
 
 
 }
+
+
+export function update_version() {
+    ElMessageBox.alert(
+        `<div>
+          <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
+          <br/>
+          <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
+          <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
+          <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
+          <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
+         
+         <div>`,
+        '更新☕',
+        {
+            dangerouslyUseHTMLString: true,
+            showCancelButton: true,
+            cancelButtonText: '取消',
+            confirmButtonText: '确认'
+        }
+    )
+
+}

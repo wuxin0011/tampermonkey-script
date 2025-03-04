@@ -70,7 +70,9 @@ function isShow(text, min, max) {
 }
 
 let A = undefined
-const linkCssSelector_pre = () => isEnglishENV() ? '.discuss-markdown-container' : `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]`
+// const linkCssSelector_pre = () => isEnglishENV() ? '.discuss-markdown-container' : `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]`
+// 2025.3.4 兼容新UI
+const linkCssSelector_pre = () => isEnglishENV() ? '.discuss-markdown-container' : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]` : `.break-words`
 const linkCssSelector = `${linkCssSelector_pre()} li>a`
 // document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class$="MarkdownContent"]')
 
