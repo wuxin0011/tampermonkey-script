@@ -1,11 +1,11 @@
 
 import { isBilibili, isContest, isLeetCodeCircleUrl,isEnglishENV } from '.'
-import { install_pos, STATUS } from './problems'
+import { install_pos, STATUS,isNewUI } from './problems'
 const width = 14
 const height = 14
 
 // svg css
-const svg_css_style = ()=>isEnglishENV() ? '' : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? ` ` :  "display:inline;margin-bottom:3px;";
+const svg_css_style = ()=> isNewUI() ?  "display:inline;margin-bottom:3px;" : ''
 
 // svg: https://www.svgviewer.dev/
 

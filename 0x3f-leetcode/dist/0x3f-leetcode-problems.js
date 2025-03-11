@@ -85,7 +85,7 @@
   const Cache$2 = new Cache$1();
   const width = 14;
   const height = 14;
-  const svg_css_style = () => isEnglishENV() ? "" : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? ` ` : "display:inline;margin-bottom:3px;";
+  const svg_css_style = () => isNewUI() ? "display:inline;margin-bottom:3px;" : "";
   const bilibiliSVG = () => {
     return `<svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="bilibili" title="bilibili" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#00a3d9">
   <path fill="none" d="M0 0h24v24H0z"></path>
@@ -266,7 +266,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return true;
   }
   let A = void 0;
-  const linkCssSelector_pre = () => isEnglishENV() ? ".discuss-markdown-container" : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]` : `.break-words`;
+  const isNewUI = () => !document.querySelector(isEnglishENV() ? ".discuss-markdown-container" : '#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]');
+  const linkCssSelector_pre = () => {
+    if (isEnglishENV()) {
+      return isNewUI() ? ".break-words" : ".discuss-markdown-container";
+    }
+    return isNewUI() ? ".break-words" : `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]`;
+  };
   const linkCssSelector = `${linkCssSelector_pre()} li>a`;
   const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter((item) => item && item instanceof HTMLAnchorElement && (isProblem(item.href) || isContest(item.href)));
   function loadProblems() {
@@ -934,7 +940,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               <br/>
               <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
               <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
-              <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
+              <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134/"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
               <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
              
              <div>`,
@@ -949,7 +955,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }, { title: "点击更新更新脚本" });
   }
   function stop_disscuss_command() {
-    if (isZH() && isLeetCodeCircleUrl()) {
+    if (isLeetCodeCircleUrl()) {
       const is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], false, Boolean.name);
       if (is_stop) {
         _GM_addStyle(".t6Fde{ display:none !important;}");

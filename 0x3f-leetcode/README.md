@@ -47,7 +47,7 @@
 
 
 - [油猴](https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution)
-- [油猴镜像](https://gfork.dahi.icu/zh-CN/scripts/501134-0x3f-problem-solution)
+- [油猴镜像](https://gfork.dahi.icu/zh-CN/scripts/501134/)
 - [脚本猫](https://scriptcat.org/zh-CN/script-show-page/1967)
 
 ### 其他

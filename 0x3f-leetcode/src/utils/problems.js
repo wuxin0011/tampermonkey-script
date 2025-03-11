@@ -75,9 +75,14 @@ function isShow(text, min, max) {
 let A = undefined
 // const linkCssSelector_pre = () => isEnglishENV() ? '.discuss-markdown-container' : `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]`
 // 2025.3.4 兼容新UI
-const linkCssSelector_pre = () => isEnglishENV() ? '.discuss-markdown-container' : document.querySelector('#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]') ? `#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]` : `.break-words`
+export const isNewUI = () => !document.querySelector(isEnglishENV() ? '.discuss-markdown-container': '#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]')
+const linkCssSelector_pre = () => {
+    if(isEnglishENV()) {
+        return isNewUI() ? '.break-words':'.discuss-markdown-container'
+    }
+    return isNewUI() ? '.break-words' :`#lc-content [class*="CollapsibleMarkdownContent"] [class*="MarkdownContent"]` 
+}
 const linkCssSelector = `${linkCssSelector_pre()} li>a`
-// document.querySelectorAll('#lc-content [class*="CollapsibleMarkdownContent"] [class$="MarkdownContent"]')
 
 export const queryProblem = () => Array.from(document.querySelectorAll(linkCssSelector)).filter(item => item && item instanceof HTMLAnchorElement && (isProblem(item.href) || isContest(item.href)))
 
@@ -371,7 +376,7 @@ export const submitProblems = (url = window.location.href, timeout = 500) => {
         // if (isDev()) {
         //     console.log('ID:', ID, 'query status: ', cache[ID])
         // }
-        if(isDev()) {
+        if (isDev()) {
             console.log('ID:', ID, 'query status: ', cache[ID])
         }
         // 对于ac状态题目不必查询
