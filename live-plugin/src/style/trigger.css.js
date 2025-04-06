@@ -231,6 +231,11 @@ const css = is_huya ? `
   background : transparent !important;
  }
 
+
+ #wrap-recGameLive {
+    margin-top:50px !important;
+ }
+
  ${fans_img}
  ${sys_msg}
  ${ranking}

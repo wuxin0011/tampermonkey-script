@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.20
+// @version      4.1.21
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -1357,6 +1357,10 @@ ${root$1}
       if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
         return;
       }
+      if (is_huya) {
+        this.autoSeletMax();
+        return;
+      }
       log("查找播放视频画质列表", that.auto_max_pro_class_or_id_list);
       loopDo((timer) => {
         let items = querySelectorAll(that.auto_max_pro_class_or_id_list);
@@ -2138,13 +2142,11 @@ ${root$1}
         }
       });
       const core_room = querySelector(this.video_room_selector);
-      console.log("room:", core_room);
       addEventListener(core_room, "mouseover", (event) => {
         const gift = querySelector(this.gift_tool);
         if (gift instanceof HTMLElement) {
           gift.classList.add("m-container-display-block");
           gift.style.display = "block";
-          log("enter:", gift);
         }
       });
       addEventListener(core_room, "mouseout", (event) => {
@@ -2152,7 +2154,6 @@ ${root$1}
         if (gift instanceof HTMLElement) {
           gift.classList.remove("m-container-display-block");
           gift.style.display = "none";
-          log("leave:", gift);
         }
       });
       const showMessage = (bool) => !bool ? "YES" : "NO";
@@ -2166,6 +2167,72 @@ ${root$1}
       _GM_registerMenuCommand(`功能面板💎`, () => {
         that.isShowContainer();
       }, { title: "点击显示或者关闭插件菜单,默认关闭，也可以使用 Ctrl + alt + j 查看" });
+    }
+    autoSeletMax() {
+      (function() {
+        let _first_tip_max_video_key_ = "_first_tip_max_video_key_";
+        let lastAlertTime = 0;
+        const alertCooldown = 1e3;
+        setInterval(() => {
+          try {
+            const targetElement = document.querySelectorAll(".player-videotype-list li");
+            if (targetElement) {
+              targetElement.forEach((element) => {
+                try {
+                  var isFlag = false;
+                  if ($(element).data("data").status !== 9) {
+                    $(element).data("data").status = 9;
+                    isFlag = true;
+                  }
+                  if (isFlag) {
+                    const now = Date.now();
+                    if (now - lastAlertTime > alertCooldown) {
+                      if (!getLocalStore(_first_tip_max_video_key_, Boolean.name, false)) {
+                        alert("成功解锁扫码限制！请选择自己需要的最高画质 后续该消息不再提示");
+                      }
+                      addLocalStore(_first_tip_max_video_key_, true, Boolean.name);
+                      log("成功解锁扫码限制！");
+                      lastAlertTime = now;
+                    }
+                  }
+                } catch (e) {
+                }
+              });
+            }
+          } catch (error2) {
+          }
+        }, 500);
+        const intervalId = setInterval(() => {
+          const targetNode = document.querySelector(".player-videotype-list");
+          if (targetNode) {
+            clearInterval(intervalId);
+            observeListChanges(targetNode);
+          }
+        }, 500);
+        function observeListChanges(targetNode) {
+          const config = { childList: true, subtree: false };
+          const observer = new MutationObserver((mutationsList) => {
+            mutationsList.forEach((mutation) => {
+              if (mutation.type === "childList") {
+                const list = document.querySelector(".player-videotype-list");
+                const items = list.querySelectorAll("li");
+                if (items.length > 0) {
+                  if (list.querySelector('li[data-cloned="true"]')) {
+                    return;
+                  }
+                  const firstLiClone = items[0].cloneNode(true);
+                  firstLiClone.setAttribute("data-cloned", "true");
+                  firstLiClone.classList.remove("on");
+                  firstLiClone.classList.add("on");
+                  firstLiClone.setAttribute("style", "display: none !important;");
+                  list.insertBefore(firstLiClone, list.firstChild);
+                }
+              }
+            });
+          });
+          observer.observe(targetNode, config);
+        }
+      })();
     }
   }
   class TriggerLive extends LivePlugin {
@@ -2236,7 +2303,7 @@ ${root$1}
         });
       });
       this.isFullScreen();
-      this.isAutoMaxVideoPro();
+      this.autoSeletMax();
       findMark("#J-room-chat-shield", (item) => {
         if (item.className.indexOf("shield-on") === -1) {
           item.click();
@@ -4387,6 +4454,11 @@ ${dark_dm_color()}
 
  .room-player-wrap .room-player-main {
   background : transparent !important;
+ }
+
+
+ #wrap-recGameLive {
+    margin-top:50px !important;
  }
 
  ${fans_img}

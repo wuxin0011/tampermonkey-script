@@ -125,7 +125,7 @@ export default class TriggerLive extends LivePlugin {
         // 对于直播间黑屏的可以调整下检查次数
         // intervalRemoveElement(ads, 1500, 1)
         this.isFullScreen()
-        this.isAutoMaxVideoPro()
+        this.autoSeletMax()
 
         // 礼物工具
         // 默认全部选择
@@ -249,9 +249,6 @@ export default class TriggerLive extends LivePlugin {
     }
 
 
-
-
-
-
+   
 
 }
