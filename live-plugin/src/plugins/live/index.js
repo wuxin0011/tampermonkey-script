@@ -194,15 +194,18 @@ export default class LivePlugin {
      */
     isAutoMaxVideoPro() {
         let that = this
+         // 虎牙触发自动最高画质选项
+         if (is_huya) {
+            setTimeout(() => {
+                this.autoSeletMax();
+            }, 2000);
+            return;
+        }
+
         if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
             return;
         }
 
-
-        if (is_huya) {
-            this.autoSeletMax();
-            return;
-        }
 
 
         const check = () => {
@@ -210,8 +213,12 @@ export default class LivePlugin {
             // this.auto_max_pro_class_or_id_list = this.auto_max_pro_class_or_id_list
         }
         log('查找播放视频画质列表', that.auto_max_pro_class_or_id_list)
+        
+        
+       
         loopDo((timer) => {
             let items = querySelectorAll(that.auto_max_pro_class_or_id_list);
+            log('画质:',items)
             if (isArray(items)) {
                 for (let item of items) {
                     let result = that.auto_max_pro_keywords.findIndex(key => item.innerText.indexOf(key) !== -1)
@@ -229,7 +236,7 @@ export default class LivePlugin {
             } else {
                 check()
             }
-        }, 100, 500)
+        }, 100,1000)
     }
 
     updateHeaderIcon() {
@@ -1195,11 +1202,13 @@ export default class LivePlugin {
         (function () {
             'use strict';
             let _first_tip_max_video_key_ = "_first_tip_max_video_key_"
-
+            let maxVideo = (wls.getItem('is_first_auto_max_pro_key') === null ? true : getLocalStore('auto_max_pro_key', Boolean.name))
+            log(maxVideo ? '自动最高画质':'不是最高画质')
             // 记录上次 alert 时间
             let lastAlertTime = 0;
             // 设置 1 秒冷却时间
             const alertCooldown = 1000;
+            let clickMAX = false
 
             // 修改属性值
             const checkElement = setInterval(() => {
@@ -1223,6 +1232,18 @@ export default class LivePlugin {
                                         addLocalStore(_first_tip_max_video_key_, true, Boolean.name)
                                         log('成功解锁扫码限制！')
                                         lastAlertTime = now; // 更新上次 alert 时间
+                                        if(!maxVideo)return;
+                                        setTimeout(() => {
+                                            let items = querySelectorAll('.player-videoline-videotype .player-videotype-list li');
+                                            let item = items.length > 1 ? items[1] : items[0]
+                                            if(!clickMAX && item){
+                                                clickMAX = true
+                                                item =item.querySelector('span')
+                                                item.click()
+                                            }
+                                     
+                                        }, 2000);
+                                       
                                     }
                                 }
                             } catch (e) {

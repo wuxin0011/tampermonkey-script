@@ -150,10 +150,9 @@ export default class TriggerLive extends LivePlugin {
 
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
+        url = decodeURIComponent(url)
         try {
-
             let m = url.match(/https?:\/\/www\.huya\.com\/(\S+)\?&/)
-            log('match url Id', m, url)
             if (Array.isArray(m) && m.length > 1) {
                 return m[1]
             }
@@ -180,7 +179,7 @@ export default class TriggerLive extends LivePlugin {
         for (let room of rooms) {
             const a = querySelector(room, 'a')
             if (a && a.href) {
-                const id = that.getRoomIdByUrl(a.href)
+                const id = that.getRoomIdByUrl(a.getAttribute('data-url'))
                 const user = querySelector(room, '.txt i')
                 if (id === roomId) {
                     hostName = user
@@ -196,6 +195,7 @@ export default class TriggerLive extends LivePlugin {
         const that = this
         const addClick = () => {
             Array.from(querySelectorAll('.game-live-item:not([mark=true])')).forEach(li => {
+                
                 if (!(li instanceof HTMLElement) || li.mark) {
                     return;
                 }
@@ -203,9 +203,11 @@ export default class TriggerLive extends LivePlugin {
                 if (!a) {
                     return
                 }
-                const roomId = that.getRoomIdByUrl(a.href)
-                const user = querySelector(li, '.txt i')
+                
+                const roomId = that.getRoomIdByUrl(a.getAttribute('data-url'))
+                const user = querySelector(li, '.txt .nick')
                 const name = user?.textContent || ''
+                // console.log(a['data-url'],a.getAttribute('data-url'))
                 if (!roomId || !user || !name) return;
                 user.title = `点击屏蔽主播【${name}】 🧹`
                 li.mark = true

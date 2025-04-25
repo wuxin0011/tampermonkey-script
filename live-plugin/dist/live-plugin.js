@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.21
+// @version      4.1.22
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -1354,16 +1354,19 @@ ${root$1}
      */
     isAutoMaxVideoPro() {
       let that = this;
-      if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
+      if (is_huya) {
+        setTimeout(() => {
+          this.autoSeletMax();
+        }, 2e3);
         return;
       }
-      if (is_huya) {
-        this.autoSeletMax();
+      if (!(wls.getItem(that.is_first_auto_max_pro_key) === null ? true : getLocalStore(that.auto_max_pro_key, Boolean.name))) {
         return;
       }
       log("查找播放视频画质列表", that.auto_max_pro_class_or_id_list);
       loopDo((timer) => {
         let items = querySelectorAll(that.auto_max_pro_class_or_id_list);
+        log("画质:", items);
         if (isArray(items)) {
           for (let item of items) {
             let result = that.auto_max_pro_keywords.findIndex((key) => item.innerText.indexOf(key) !== -1);
@@ -1378,7 +1381,7 @@ ${root$1}
             }
           }
         }
-      }, 100, 500);
+      }, 100, 1e3);
     }
     updateHeaderIcon() {
     }
@@ -2171,8 +2174,11 @@ ${root$1}
     autoSeletMax() {
       (function() {
         let _first_tip_max_video_key_ = "_first_tip_max_video_key_";
+        let maxVideo = wls.getItem("is_first_auto_max_pro_key") === null ? true : getLocalStore("auto_max_pro_key", Boolean.name);
+        log(maxVideo ? "自动最高画质" : "不是最高画质");
         let lastAlertTime = 0;
         const alertCooldown = 1e3;
+        let clickMAX = false;
         setInterval(() => {
           try {
             const targetElement = document.querySelectorAll(".player-videotype-list li");
@@ -2193,6 +2199,17 @@ ${root$1}
                       addLocalStore(_first_tip_max_video_key_, true, Boolean.name);
                       log("成功解锁扫码限制！");
                       lastAlertTime = now;
+                      if (!maxVideo)
+                        return;
+                      setTimeout(() => {
+                        let items = querySelectorAll(".player-videoline-videotype .player-videotype-list li");
+                        let item = items.length > 1 ? items[1] : items[0];
+                        if (!clickMAX && item) {
+                          clickMAX = true;
+                          item = item.querySelector("span");
+                          item.click();
+                        }
+                      }, 2e3);
                     }
                   }
                 } catch (e) {
@@ -2319,9 +2336,9 @@ ${root$1}
     }
     // 通过地址获取房间号
     getRoomIdByUrl(url = local_url) {
+      url = decodeURIComponent(url);
       try {
         let m = url.match(/https?:\/\/www\.huya\.com\/(\S+)\?&/);
-        log("match url Id", m, url);
         if (Array.isArray(m) && m.length > 1) {
           return m[1];
         }
@@ -2346,7 +2363,7 @@ ${root$1}
       for (let room of rooms) {
         const a = querySelector(room, "a");
         if (a && a.href) {
-          const id = that.getRoomIdByUrl(a.href);
+          const id = that.getRoomIdByUrl(a.getAttribute("data-url"));
           const user = querySelector(room, ".txt i");
           if (id === roomId) {
             hostName = user;
@@ -2367,8 +2384,8 @@ ${root$1}
           if (!a) {
             return;
           }
-          const roomId = that.getRoomIdByUrl(a.href);
-          const user = querySelector(li, ".txt i");
+          const roomId = that.getRoomIdByUrl(a.getAttribute("data-url"));
+          const user = querySelector(li, ".txt .nick");
           const name = (user == null ? void 0 : user.textContent) || "";
           if (!roomId || !user || !name)
             return;
