@@ -21,7 +21,7 @@ for(let info of json) {
 }
 
 
-const all = Array.from(document.querySelector('.e2v1tt3.css-1ayia3m-MarkdownContent').querySelectorAll('a'))
+const all = Array.from(document.querySelector('.break-words').querySelectorAll('a'))
 const isProblems = (url)=>url && url.startsWith('https://leetcode.cn/problems/')
 const isMember = (txt)=>txt && txt.indexOf('会员题') != -1
 const getTitleSlug = (url)=>{
