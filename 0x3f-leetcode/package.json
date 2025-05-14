@@ -1,7 +1,7 @@
 {
   "name": "0x3f-problem-solution",
   "private": false,
-  "version": "0.0.5.5",
+  "version": "0.0.5.6",
   "author": "wuxin0011",
   "type": "module",
   "description": "自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题",

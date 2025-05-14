@@ -1,6 +1,6 @@
 
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { GM_addStyle } from '$'
+import { GM_addStyle,GM_registerMenuCommand } from '$'
 import Cache from './cache'
 import { __0X3F_PROBLEM_KEYS__, isEnglish } from './problems'
 import { LC_COPY_HTML_PLUGIN, EN_SOLUTION_DEMO, isZH, isLeetCodeCircleUrl } from './index.js'

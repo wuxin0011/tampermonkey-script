@@ -20,7 +20,8 @@ import {
   computeAcInfo,
   getAcCountKey,
   randomProblem,
-  githubProblem
+  githubProblem,
+  old_url_map
 } from './utils/problems'
 import { isHttp, isLeetCodeCircleUrl, isDev, sleep } from './utils'
 
@@ -275,6 +276,10 @@ const showProblemsInfo = (info = {}) => {
 const loadProcess = computed(() => computeProcess(asyncProblemNum.value, allProblemNum.value))
 const asyncProblemStatus = async (row = {}) => {
   if (!row?.link) return
+  let cur_url = row.link
+  if(old_url_map[row.link]) {
+    cur_url = old_url_map[row.link]
+  }
 
   let callback = async () => {
     let rowData = undefined
@@ -317,6 +322,7 @@ const asyncProblemStatus = async (row = {}) => {
       await sleep(500)
       let githubInfo = await githubProblem(fromData.visiableMember)
       let jsonInfo = githubInfo[2]
+      console.log('githubInfo',githubInfo)
 
 
 
@@ -602,7 +608,7 @@ const q2 = ref(false)
         <el-col :span="6">
           <el-tooltip content="重置题单">
             <el-button plain @click="handlerDefault" :size="tableButtonSize" :disabled="showProcess">
-              默认
+              重置
             </el-button>
           </el-tooltip>
           <el-button plain @click="q1 = !q1" :size="tableButtonSize">

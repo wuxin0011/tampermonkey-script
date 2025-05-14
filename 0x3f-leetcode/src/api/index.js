@@ -9,7 +9,7 @@ export async function GetHubJSONInfo(url) {
 
 
 export async function getProblemsJSON() {
-    return GetHubJSONInfo('https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/0x3f.json')
+    return GetHubJSONInfo('https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/new_0x3f.json')
 }
 
 export async function getVersion() {

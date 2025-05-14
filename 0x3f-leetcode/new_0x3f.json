@@ -1,7 +1,7 @@
 [
     {
         "title": "分享丨【算法题单】字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/",
         "problems": [
             {
                 "title": "28. 找出字符串中第一个匹配项的下标",
@@ -553,7 +553,7 @@
     },
     {
         "title": "分享丨【算法题单】链表、二叉树与回溯（前后指针/快慢指针/DFS/BFS/直径/LCA/一般树）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/",
         "problems": [
             {
                 "title": "1290. 二进制链表转整数",
@@ -3233,7 +3233,7 @@
     },
     {
         "title": "分享丨【算法题单】贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/",
         "problems": [
             {
                 "title": "3074. 重新分装苹果",
@@ -5745,7 +5745,7 @@
     },
     {
         "title": "分享丨【算法题单】滑动窗口与双指针（定长/不定长/单序列/双序列/三指针/分组循环）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
         "problems": [
             {
                 "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -7249,7 +7249,7 @@
     },
     {
         "title": "分享丨【算法题单】二分算法（二分答案/最小化最大值/最大化最小值/第K小）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
         "problems": [
             {
                 "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -8102,7 +8102,7 @@
     },
     {
         "title": "分享｜【算法题单】单调栈（矩形面积/贡献法/最小字典序）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
         "problems": [
             {
                 "title": "739. 每日温度",
@@ -8416,7 +8416,7 @@
     },
     {
         "title": "分享丨【算法题单】网格图（DFS/BFS/综合应用）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/YiXPXW/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3580195/fen-xiang-gun-ti-dan-wang-ge-tu-dfsbfszo-l3pa/",
         "problems": [
             {
                 "title": "1210. 穿过迷宫的最少移动次数",
@@ -8877,7 +8877,7 @@
     },
     {
         "title": "分享丨【算法题单】位运算（基础/性质/拆位/试填/恒等式/思维）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
         "problems": [
             {
                 "title": "3370. 仅含置位位的最小整数",
@@ -9604,7 +9604,7 @@
     },
     {
         "title": "分享丨【算法题单】动态规划（入门/背包/划分/状态机/区间/状压/数位/树形/优化）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
         "problems": [
             {
                 "title": "讲解",
@@ -13880,7 +13880,7 @@
     },
     {
         "title": "分享丨【算法题单】常用数据结构（前缀和/栈/队列/堆/字典树/并查集/树状数组/线段树）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/",
         "problems": [
             {
                 "title": "讲解",
@@ -17519,7 +17519,7 @@
     },
     {
         "title": "分享丨【算法题单】数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）- 讨论 - 力扣（LeetCode）",
-        "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
+        "problemUrl": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/",
         "problems": [
             {
                 "title": "模板",

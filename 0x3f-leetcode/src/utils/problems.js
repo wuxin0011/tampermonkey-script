@@ -160,6 +160,9 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
     for (let i = 0, u = null; Array.isArray(saveUrls) && i < saveUrls.length; i++) {
         try {
             u = saveUrls[i]
+            if(u?.link && old_url_map[u?.link]){
+                u.link = old_url_map[u.link]
+            }
             if (!u?.link || !u?.title || !u?.id || set.has(u.link)) {
                 continue
             }
@@ -243,20 +246,35 @@ export const support_plugins = () => {
 }
 
 export const defaultUrls = [
-    { 'title': '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法', 'link': 'https://leetcode.cn/circle/discuss/IYT3ss/', 'tot': 0, 'ac': 0, 'id': 1, 'disabled': false, 'select': true },
-    { 'title': '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）', 'link': 'https://leetcode.cn/circle/discuss/mOr1u6/', 'tot': 0, 'ac': 0, 'id': 2, 'disabled': false, 'select': true },
-    { 'title': '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）', 'link': 'https://leetcode.cn/circle/discuss/tXLS3i/', 'tot': 0, 'ac': 0, 'id': 3, 'disabled': false, 'select': true },
-    { 'title': '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）', 'link': 'https://leetcode.cn/circle/discuss/01LUak/', 'tot': 0, 'ac': 0, 'id': 4, 'disabled': false, 'select': true },
-    { 'title': '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）', 'link': 'https://leetcode.cn/circle/discuss/dHn9Vk/', 'tot': 0, 'ac': 0, 'id': 5, 'disabled': false, 'select': true },
-    { 'title': '网格图（DFS/BFS/综合应用)', 'link': 'https://leetcode.cn/circle/discuss/YiXPXW/', 'tot': 0, 'ac': 0, 'id': 6, 'disabled': false, 'select': true },
-    { 'title': '单调栈（矩形面积/贡献法/最小字典序', 'link': 'https://leetcode.cn/circle/discuss/9oZFK9/', 'tot': 0, 'ac': 0, 'id': 7, 'disabled': false, 'select': true },
-    { 'title': '二分算法（二分答案/最小化最大值/最大化最小值/第K小', 'link': 'https://leetcode.cn/circle/discuss/SqopEo/', 'tot': 0, 'ac': 0, 'id': 8, 'disabled': true, 'select': true },
-    { 'title': '滑动窗口（定长/不定长/多指针', 'link': 'https://leetcode.cn/circle/discuss/0viNMK/', 'tot': 0, 'ac': 0, 'id': 9, 'disabled': false, 'select': true },
-    { 'title': '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）', 'link': 'https://leetcode.cn/circle/discuss/g6KTKL/', 'tot': 0, 'ac': 0, 'id': 10, 'disabled': false, 'select': true },
-    { 'title': '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）', 'link': 'https://leetcode.cn/circle/discuss/K0n2gO/', 'tot': 0, 'ac': 0, 'id': 11, 'disabled': false, 'select': true },
-    { 'title': '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）', 'link': 'https://leetcode.cn/circle/discuss/SJFwQI/', 'tot': 0, 'ac': 0, 'id': 12, 'disabled': false, 'select': true },
+    { 'title': '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法', 'link': 'https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/', 'tot': 0, 'ac': 0, 'id': 1, 'disabled': false, 'select': true },
+    { 'title': '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）', 'link': 'https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/', 'tot': 0, 'ac': 0, 'id': 2, 'disabled': false, 'select': true },
+    { 'title': '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）', 'link': 'https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/', 'tot': 0, 'ac': 0, 'id': 3, 'disabled': false, 'select': true },
+    { 'title': '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）', 'link': 'https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/', 'tot': 0, 'ac': 0, 'id': 4, 'disabled': false, 'select': true },
+    { 'title': '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）', 'link': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/', 'tot': 0, 'ac': 0, 'id': 5, 'disabled': false, 'select': true },
+    { 'title': '网格图（DFS/BFS/综合应用)', 'link': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/', 'tot': 0, 'ac': 0, 'id': 6, 'disabled': false, 'select': true },
+    { 'title': '单调栈（矩形面积/贡献法/最小字典序', 'link': 'https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/', 'tot': 0, 'ac': 0, 'id': 7, 'disabled': false, 'select': true },
+    { 'title': '二分算法（二分答案/最小化最大值/最大化最小值/第K小', 'link': 'https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/', 'tot': 0, 'ac': 0, 'id': 8, 'disabled': true, 'select': true },
+    { 'title': '滑动窗口（定长/不定长/多指针', 'link': 'https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/', 'tot': 0, 'ac': 0, 'id': 9, 'disabled': false, 'select': true },
+    { 'title': '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）', 'link': 'https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/', 'tot': 0, 'ac': 0, 'id': 10, 'disabled': false, 'select': true },
+    { 'title': '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）', 'link': 'https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/', 'tot': 0, 'ac': 0, 'id': 11, 'disabled': false, 'select': true },
+    { 'title': '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）', 'link': 'https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/', 'tot': 0, 'ac': 0, 'id': 12, 'disabled': false, 'select': true },
     // { 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': 0, 'ac': 0, 'id': 0x3f3f3f3f,'disabled':true,'select':false },
 ]
+
+export const old_url_map = {
+    'https://leetcode.cn/discuss/post/IYT3ss/': 'https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/',
+    'https://leetcode.cn/discuss/post/mOr1u6/': 'https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/',
+    'https://leetcode.cn/discuss/post/tXLS3i/': 'https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/',
+    'https://leetcode.cn/discuss/post/01LUak/': 'https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/',
+    'https://leetcode.cn/discuss/post/dHn9Vk/': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/',
+    'https://leetcode.cn/discuss/post/YiXPXW/': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/',
+    'https://leetcode.cn/discuss/post/9oZFK9/': 'https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/',
+    'https://leetcode.cn/discuss/post/SqopEo/': 'https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/',
+    'https://leetcode.cn/discuss/post/0viNMK/': 'https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/',
+    'https://leetcode.cn/discuss/post/g6KTKL/': 'https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/',
+    'https://leetcode.cn/discuss/post/K0n2gO/': 'https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/',
+    'https://leetcode.cn/discuss/post/SJFwQI/': 'https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/'
+}
 
 export function getId(problemUrl) {
     if (isContest(problemUrl) || isProblem(problemUrl)) {
@@ -529,8 +547,14 @@ export async function githubProblem(not_filter_member = true) {
             // 缓存题目信息
             Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], [...response])
         }
+        if(isDev()){
+            console.log("response allProbmems",response,allProbmems)
+        }
     } else {
         allProbmems = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_all_problems__'], true, Array.name)
+        if(isDev()){
+            console.log("else allProbmems",allProbmems)
+        }
     }
     // console.log(allProbmems)
     if (!Array.isArray(allProbmems)) {
@@ -559,9 +583,16 @@ export async function githubProblem(not_filter_member = true) {
     let mapInfo = new Map()
     let totInfo = []
     for (let info of allProbmems) {
+
+        if(isDev()) {
+            console.log('url = ',info?.problemUrl,'check1',!info?.problemUrl || !set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0,'xxx',info.problems)
+        }
         // 选择那个题单中的题目
         if (!info?.problemUrl || !set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0) {
             continue
+        }
+        if(isDev()) {
+            console.log('check2')
         }
         let cur_infos = []
         for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
@@ -581,6 +612,9 @@ export async function githubProblem(not_filter_member = true) {
         }
         info.problems = cur_infos
         totInfo.push(info)
+    }
+    if(isDev()) {
+        console.log('github api result:',infos, mapInfo, totInfo)
     }
     return [infos, mapInfo, totInfo]
 }
