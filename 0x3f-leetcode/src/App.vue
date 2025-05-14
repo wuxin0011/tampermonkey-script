@@ -276,11 +276,6 @@ const showProblemsInfo = (info = {}) => {
 const loadProcess = computed(() => computeProcess(asyncProblemNum.value, allProblemNum.value))
 const asyncProblemStatus = async (row = {}) => {
   if (!row?.link) return
-  let cur_url = row.link
-  if(old_url_map[row.link]) {
-    cur_url = old_url_map[row.link]
-  }
-
   let callback = async () => {
     let rowData = undefined
     let asyncAll = row?.link == TARGET_URL
