@@ -394,16 +394,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return infos;
   }
   const initUrls = () => {
-    var _a, _b;
+    var _a;
     let saveUrls = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
-    console.log("old_url_map", old_url_map, old_url_map["https://leetcode.cn/circle/discuss/SJFwQI/"]);
     for (let i = 0; i < saveUrls.length; i++) {
-      console.log("saveUrls[i]?.link && old_url_map[saveUrls[i].link]", (_a = saveUrls[i]) == null ? void 0 : _a.link, old_url_map[`${saveUrls[i].link}`], `${saveUrls[i].link}`);
-      if (((_b = saveUrls[i]) == null ? void 0 : _b.link) && old_url_map[`${saveUrls[i].link}`]) {
+      if (((_a = saveUrls[i]) == null ? void 0 : _a.link) && old_url_map[`${saveUrls[i].link}`]) {
         saveUrls[i].link = old_url_map[saveUrls[i].link];
       }
     }
-    console.log("infos=>", saveUrls);
     return computeAcInfo(saveUrls);
   };
   const initObj = () => {

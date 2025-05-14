@@ -227,14 +227,11 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
 
 export const initUrls = () => {
     let saveUrls = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_update__'], true, Boolean.name) ? Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_urls__'], true, Array.name) : defaultUrls
-    console.log('old_url_map',old_url_map,old_url_map['https://leetcode.cn/circle/discuss/SJFwQI/'])
     for(let i = 0;i <  saveUrls.length;i++){
-        console.log('saveUrls[i]?.link && old_url_map[saveUrls[i].link]',saveUrls[i]?.link,old_url_map[`${saveUrls[i].link}`],`${saveUrls[i].link}`)
         if(saveUrls[i]?.link && old_url_map[`${saveUrls[i].link}`]) {
             saveUrls[i].link = old_url_map[saveUrls[i].link]
         }
     }
-    console.log('infos=>', saveUrls)
     return computeAcInfo(saveUrls)
 }
 export const initObj = () => {
