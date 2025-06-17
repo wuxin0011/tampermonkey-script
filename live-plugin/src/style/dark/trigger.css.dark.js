@@ -114,6 +114,7 @@ ${dark_dm_color()}
 .dark #player-gift-tip .make-friend-people-switch,
 .dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
 .dark .game-live-item .txt .room,
+.dark #messageboard,
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -307,6 +308,7 @@ ${dark_dm_color()}
 .dark .ixyGIy,.dark .room-weeklyRankList-content.room-weeklyRankList-content-loading,
 .dark .danmu-add--3lwPBnzV90glJnZ1h6GpeS>div,
 .dark [class^=danmu-add],
+.dark [class^=messageBoard] [class^=btn],
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;

@@ -24,7 +24,8 @@ div#i_cecream .adblock-tips,
 div.video-container-v1 div.pop-live-small-mode.part-undefined,
 .recommended-swipe.grid-anchor,
 .desktop-download-tip,
-.video-page-special-card-small
+.video-page-special-card-small,
+.recommended-swipe
 {
    display:none !important;
 }

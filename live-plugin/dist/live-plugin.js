@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         直播插件
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/live-plugin
-// @version      4.1.22
+// @version      4.1.23
 // @author       wuxin0011
 // @description  虎牙、斗鱼、哔哔哔里、抖音 页面美化！新增虎牙、斗鱼、哔哩哔哩的护眼主题🚀,ctrl+alt+j 查看菜单面板
 // @license      MIT
@@ -3924,6 +3924,7 @@ ${dark_dm_color()}
 .dark #player-gift-tip .make-friend-people-switch,
 .dark [class^=ucard],.dark .msg-bubble,.dark .chat-room__wrap,
 .dark .game-live-item .txt .room,
+.dark #messageboard,
 .dark .huya-footer{
   background-color: var(--w-bg-darker) !important;
   color: var(--w-text-light) !important;
@@ -4117,6 +4118,7 @@ ${dark_dm_color()}
 .dark .ixyGIy,.dark .room-weeklyRankList-content.room-weeklyRankList-content-loading,
 .dark .danmu-add--3lwPBnzV90glJnZ1h6GpeS>div,
 .dark [class^=danmu-add],
+.dark [class^=messageBoard] [class^=btn],
 .dark .laypageskin_default a:hover {
   color: var(--w-text);
   border-color:var(--w-text) !important;
@@ -6106,7 +6108,8 @@ div#i_cecream .adblock-tips,
 div.video-container-v1 div.pop-live-small-mode.part-undefined,
 .recommended-swipe.grid-anchor,
 .desktop-download-tip,
-.video-page-special-card-small
+.video-page-special-card-small,
+.recommended-swipe
 {
    display:none !important;
 }
