@@ -2,54 +2,48 @@ name: Weekly Data Update
 
 on:
   schedule:
-    # 每7天在UTC时间00:00运行一次 (北京时间08:00)
     # - cron: '0 0 */7 * *'
-    # 每5分钟执行一次（测试用）
-    - cron: '*/5 * * * *'
-  workflow_dispatch:  # 保留手动触发选项
+    - cron: '*/5 * * * *'  # 测试用5分钟间隔
+  workflow_dispatch:
+
 permissions:
-  contents: write
+  contents: write  # 必须要有写权限
+
 env:
   NODE_ENV: production
   PROJECT_DIR: 0x3f-problem-datasources
-  TZ: Asia/Shanghai 
+  TZ: Asia/Shanghai
 
 jobs:
   update-data:
-    name: Update Problem Data
     runs-on: ubuntu-latest
     
     steps:
-      # 1. 检出代码
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 检出完整历史记录
-          
-      # 2. 设置 Node.js 环境
+          fetch-depth: 0
+          token: ${{ secrets.ACCESS_TOKEN  }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # 指定 Node.js 版本
-          cache: 'npm'  # 启用 npm 缓存
+          node-version: '18'
+          cache: 'npm'
           cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
-          
-      # 3. 安装依赖
+
       - name: Install dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: npm ci
-          
-      # 4. 执行更新脚本（会写入文件）
+
       - name: Run update script
         working-directory: ${{ env.PROJECT_DIR }}
         run: node dev
-        
-      # 5. 自动提交变更（如果需要保存写入的文件）
+
       - name: Commit and push changes
-        working-directory: ${{ env.PROJECT_DIR }}
         run: |
           git config --global user.name "wuxin0011"
           git config --global user.email "2191377759@qq.com"
           git add .
           git diff-index --quiet HEAD || git commit -m "Auto-update data [skip ci]"
-          git push
+          git push origin HEAD:main
