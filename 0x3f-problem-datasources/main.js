@@ -322,7 +322,12 @@ async function start() {
       let data = await get_topic(getTopicID(info.link));
       let html = marked.parse(data.data.qaQuestion.content);
       let res = await fetchAndProcessData(ratingMap, html, info);
-      results.push(res);
+      if(res){
+        results.push(res);
+      }else{
+        throw new Error('parse error')
+      }
+   
     } catch (e) {
       console.error(
         "解析失败:",
