@@ -37,7 +37,7 @@ jobs:
 
       - name: Run update script
         working-directory: ${{ env.PROJECT_DIR }}
-        run: node dev
+        run: npm dev
 
       - name: Commit and push changes
         env:
