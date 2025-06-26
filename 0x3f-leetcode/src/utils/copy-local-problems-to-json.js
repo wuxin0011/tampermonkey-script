@@ -2,6 +2,7 @@
 // https://raw.githubusercontent.com//${repo}/${Branch}/${path}
 // https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/0x3f.json
 
+/*
 (async function(){
 	async function totJson(){
 		return fetch('https://zerotrac.github.io/leetcode_problem_rating/data.json',{
@@ -61,3 +62,7 @@
 	}
 	console.log(obj)
 }())
+
+*/
+
+// 该功能有 https://github.com/wuxin0011/tampermonkey-script/tree/main/0x3f-problem-datasources 这个部分接管 以后为自动化处理数据源
