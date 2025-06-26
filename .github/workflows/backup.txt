@@ -2,7 +2,7 @@ name: 0x3f-problem-datasources Updater
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # 测试用5分钟间隔
+    - cron: '*/5 * * * *'  # 测试用5分钟间隔
   workflow_dispatch:
 
 permissions:
