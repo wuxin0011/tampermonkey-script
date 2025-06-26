@@ -23,25 +23,28 @@ jobs:
         with:
           fetch-depth: 0
 
+      # 必须先安装 pnpm 再 setup-node
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false  # 我们稍后会手动安装依赖
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'pnpm'  # 使用 pnpm 缓存
-          cache-dependency-path: ${{ env.PROJECT_DIR }}/pnpm-lock.yaml  # 指向 pnpm 锁文件
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8  # 指定 pnpm 版本
+          cache: 'pnpm'
+          cache-dependency-path: ${{ env.PROJECT_DIR }}/pnpm-lock.yaml
 
       - name: Install dependencies
         working-directory: ${{ env.PROJECT_DIR }}
-        run: pnpm install --frozen-lockfile  # pnpm 等价于 npm ci
+        run: |
+          pnpm install --frozen-lockfile
 
       - name: Run update script
         working-directory: ${{ env.PROJECT_DIR }}
-        run: pnpm dev  # 使用 pnpm 运行脚本
+        run: pnpm dev
 
       - name: Commit and push changes
         env:
