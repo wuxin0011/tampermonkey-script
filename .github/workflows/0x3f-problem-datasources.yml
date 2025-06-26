@@ -2,12 +2,11 @@ name: Weekly Data Update
 
 on:
   schedule:
-    # - cron: '0 0 */7 * *'
     - cron: '*/5 * * * *'  # 测试用5分钟间隔
   workflow_dispatch:
 
 permissions:
-  contents: write  # 必须要有写权限
+  contents: write
 
 env:
   NODE_ENV: production
@@ -23,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.ACCESS_TOKEN  }}
+          # 移除手动token配置，使用自动的GITHUB_TOKEN
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -41,9 +40,11 @@ jobs:
         run: node dev
 
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 显式传递token
         run: |
           git config --global user.name "wuxin0011"
           git config --global user.email "2191377759@qq.com"
           git add .
           git diff-index --quiet HEAD || git commit -m "Auto-update data [skip ci]"
-          git push origin HEAD:main
+          git push origin HEAD:${{ github.ref_name }}
