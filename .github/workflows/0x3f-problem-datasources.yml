@@ -22,26 +22,30 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # 移除手动token配置，使用自动的GITHUB_TOKEN
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
+          cache: 'pnpm'  # 使用 pnpm 缓存
+          cache-dependency-path: ${{ env.PROJECT_DIR }}/pnpm-lock.yaml  # 指向 pnpm 锁文件
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8  # 指定 pnpm 版本
 
       - name: Install dependencies
         working-directory: ${{ env.PROJECT_DIR }}
-        run: npm ci
+        run: pnpm install --frozen-lockfile  # pnpm 等价于 npm ci
 
       - name: Run update script
         working-directory: ${{ env.PROJECT_DIR }}
-        run: npm run dev
+        run: pnpm dev  # 使用 pnpm 运行脚本
 
       - name: Commit and push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 显式传递token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "wuxin0011"
           git config --global user.email "2191377759@qq.com"
