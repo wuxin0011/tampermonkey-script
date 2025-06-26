@@ -1,8 +1,8 @@
-name: 0x3f-problem-datasources Updater
+name: 0x3f-problem-datasources
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # 测试用5分钟间隔
+    - cron: '0 0 */7 * *'
   workflow_dispatch:
 
 permissions:
@@ -18,23 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout main branch
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Create or switch to target branch
-        run: |
-          if git show-ref --verify --quiet refs/heads/0x3f-problem-datasources; then
-            git checkout 0x3f-problem-datasources
-          else
-            git checkout --orphan 0x3f-problem-datasources
-            git rm -rf .
-            # 可选：添加初始文件
-            echo "# 0x3f Problem Datasources" > README.md
-            git add README.md
-            git commit -m "Initialize 0x3f-problem-datasources branch"
-          fi
+          # 移除手动token配置，使用自动的GITHUB_TOKEN
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,14 +41,10 @@ jobs:
 
       - name: Commit and push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 显式传递token
         run: |
           git config --global user.name "wuxin0011"
           git config --global user.email "2191377759@qq.com"
           git add .
-          if git diff-index --quiet HEAD; then
-            echo "No changes to commit"
-          else
-            git commit -m "Auto-update data [skip ci]"
-            git push origin 0x3f-problem-datasources
-          fi
+          git diff-index --quiet HEAD || git commit -m "Auto-update data [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
