@@ -54,18 +54,18 @@ export const defaultUrls = [
 
 // 旧版本题单网址需要替换
 export const old_url_map = {
-    'https://leetcode.cn/circle/discuss/IYT3ss/': 'https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/',
-    'https://leetcode.cn/circle/discuss/mOr1u6/': 'https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/',
-    'https://leetcode.cn/circle/discuss/tXLS3i/': 'https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/',
-    'https://leetcode.cn/circle/discuss/01LUak/': 'https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/',
-    'https://leetcode.cn/circle/discuss/dHn9Vk/': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/',
-    'https://leetcode.cn/circle/discuss/YiXPXW/': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/',
-    'https://leetcode.cn/circle/discuss/9oZFK9/': 'https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/',
-    'https://leetcode.cn/circle/discuss/SqopEo/': 'https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/',
-    'https://leetcode.cn/circle/discuss/0viNMK/': 'https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/',
-    'https://leetcode.cn/circle/discuss/g6KTKL/': 'https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/',
-    'https://leetcode.cn/circle/discuss/K0n2gO/': 'https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/',
-    'https://leetcode.cn/circle/discuss/SJFwQI/': 'https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/'
+  'https://leetcode.cn/circle/discuss/IYT3ss/': 'https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/',
+  'https://leetcode.cn/circle/discuss/mOr1u6/': 'https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/',
+  'https://leetcode.cn/circle/discuss/tXLS3i/': 'https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/',
+  'https://leetcode.cn/circle/discuss/01LUak/': 'https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/',
+  'https://leetcode.cn/circle/discuss/dHn9Vk/': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/',
+  'https://leetcode.cn/circle/discuss/YiXPXW/': 'https://leetcode.cn/discuss/post/3580195/fen-xiang-gun-ti-dan-wang-ge-tu-dfsbfszo-l3pa/',
+  'https://leetcode.cn/circle/discuss/9oZFK9/': 'https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/',
+  'https://leetcode.cn/circle/discuss/SqopEo/': 'https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/',
+  'https://leetcode.cn/circle/discuss/0viNMK/': 'https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/',
+  'https://leetcode.cn/circle/discuss/g6KTKL/': 'https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/',
+  'https://leetcode.cn/circle/discuss/K0n2gO/': 'https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/',
+  'https://leetcode.cn/circle/discuss/SJFwQI/': 'https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/'
 }
 
 
