@@ -3,7 +3,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { GM_addStyle,GM_registerMenuCommand } from '$'
 import Cache from './cache'
 import { __0X3F_PROBLEM_KEYS__, isEnglish } from './problems'
-import { LC_COPY_HTML_PLUGIN, EN_SOLUTION_DEMO, isZH, isLeetCodeCircleUrl } from './index.js'
+import { LC_COPY_HTML_PLUGIN, EN_SOLUTION_DEMO, isZH, isLeetCodeCircleUrl,isDev} from './index.js'
 export function Message(title = '确认操作', callback = () => { }, canlcelCallback = () => { }) {
     ElMessageBox.confirm(
         `${title} ?`,
@@ -82,9 +82,14 @@ export function update_version() {
 
 export function stop_disscuss_command() {
     if ((isLeetCodeCircleUrl())) {
-        const is_stop = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], false, Boolean.name)
+        // 默认屏蔽讨论区右侧内容
+        let is_stop = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], true, String.name)
+        is_stop = is_stop != 'false' && is_stop != false
         if (is_stop) {
             GM_addStyle('.t6Fde{ display:none !important;}')
+        }
+        if(isDev()) {
+            console.log('is_stop ',is_stop)
         }
         GM_registerMenuCommand(`${is_stop ? '开启' : '关闭'}右侧讨论区📣`, () => {
             Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], !is_stop)

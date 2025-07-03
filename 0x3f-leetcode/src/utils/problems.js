@@ -24,7 +24,7 @@ export const __0X3F_PROBLEM_KEYS__ = {
     '__0x3f_problmes_random_problems__': '__0x3f_problmes_random_problems__', //随机题目
     '__0x3f_problme_support_type__': '__0x3f_problme_support_type__', //是否替换到com 默认cn
     '__0x3f_problme_support_type_tips__': '__0x3f_problme_support_type_tips__', //是否替换到com 默认cn 不再提示key
-    '__0x3f_problme_stop_discuss_': '__0x3f_problme_stop_discuss_', //屏蔽讨论区
+    '__0x3f_problme_stop_discuss_': '__0x3f_problme_default_stop_discuss_', //屏蔽讨论区 默认屏蔽
 }
 
 export const STATUS = {
@@ -146,6 +146,10 @@ export function handlerProblem(data) {
         data.min = min
         data.max = max
         Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_solution__'], data)
+        const cache = getLocalProblemStatus()
+        if(isDev()) {
+            console.log('data',data.hiddenAc)
+        }
         for (let i = 0; i < A.length; i++) {
             if (!(A[i] instanceof HTMLAnchorElement)) {
                 continue;
@@ -154,19 +158,17 @@ export function handlerProblem(data) {
             if (!d) {
                 continue
             }
-            let none = false;
-            // console.log('d', A[i], A[i]?.parentNode)
             let Nohidden = isShow(d.textContent, min, max)
-            // console.log("flag", flag)
             d.style.display = Nohidden ? '' : 'none'
+            
+            
             if (!Nohidden) {
                 continue;
             }
             if (hiddenAc) {
+                const a = d.querySelector('a')
                 const svg = d.querySelector('svg')
-                if (svg && svg.getAttribute('status')) {
-                    d.style.display = svg.getAttribute('status') == STATUS['AC'] ? 'none' : ''
-                }
+                d.style.display = a && a.href && STATUS['AC'] == cache[getId(a.href)] || svg && svg.getAttribute('status') && svg.getAttribute('status') == STATUS['AC'] ? 'none' : ''
             } else {
                 d.style.display = ''
             }

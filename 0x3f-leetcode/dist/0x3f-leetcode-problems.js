@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.6
+// @version      0.0.5.7
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -222,8 +222,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     //是否替换到com 默认cn
     "__0x3f_problme_support_type_tips__": "__0x3f_problme_support_type_tips__",
     //是否替换到com 默认cn 不再提示key
-    "__0x3f_problme_stop_discuss_": "__0x3f_problme_stop_discuss_"
-    //屏蔽讨论区
+    "__0x3f_problme_stop_discuss_": "__0x3f_problme_default_stop_discuss_"
+    //屏蔽讨论区 默认屏蔽
   };
   const STATUS = {
     "AC": "ac",
@@ -253,7 +253,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     "https://leetcode.cn/circle/discuss/tXLS3i/": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
     "https://leetcode.cn/circle/discuss/01LUak/": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/",
     "https://leetcode.cn/circle/discuss/dHn9Vk/": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "https://leetcode.cn/circle/discuss/YiXPXW/": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
+    "https://leetcode.cn/circle/discuss/YiXPXW/": "https://leetcode.cn/discuss/post/3580195/fen-xiang-gun-ti-dan-wang-ge-tu-dfsbfszo-l3pa/",
     "https://leetcode.cn/circle/discuss/9oZFK9/": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
     "https://leetcode.cn/circle/discuss/SqopEo/": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
     "https://leetcode.cn/circle/discuss/0viNMK/": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
@@ -328,6 +328,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       data.min = min;
       data.max = max;
       Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"], data);
+      const cache = getLocalProblemStatus();
+      if (isDev()) {
+        console.log("data", data.hiddenAc);
+      }
       for (let i = 0; i < A.length; i++) {
         if (!(A[i] instanceof HTMLAnchorElement)) {
           continue;
@@ -336,17 +340,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (!d) {
           continue;
         }
-        let none = false;
         let Nohidden = isShow(d.textContent, min, max);
         d.style.display = Nohidden ? "" : "none";
         if (!Nohidden) {
           continue;
         }
         if (hiddenAc) {
+          const a = d.querySelector("a");
           const svg = d.querySelector("svg");
-          if (svg && svg.getAttribute("status")) {
-            d.style.display = svg.getAttribute("status") == STATUS["AC"] ? "none" : "";
-          }
+          d.style.display = a && a.href && STATUS["AC"] == cache[getId(a.href)] || svg && svg.getAttribute("status") && svg.getAttribute("status") == STATUS["AC"] ? "none" : "";
         } else {
           d.style.display = "";
         }
@@ -985,9 +987,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   function stop_disscuss_command() {
     if (isLeetCodeCircleUrl()) {
-      const is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], false, Boolean.name);
+      let is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], true, String.name);
+      is_stop = is_stop != "false" && is_stop != false;
       if (is_stop) {
         _GM_addStyle(".t6Fde{ display:none !important;}");
+      }
+      if (isDev()) {
+        console.log("is_stop ", is_stop);
       }
       _GM_registerMenuCommand(`${is_stop ? "开启" : "关闭"}右侧讨论区📣`, () => {
         Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], !is_stop);
