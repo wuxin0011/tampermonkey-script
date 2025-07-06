@@ -2,15 +2,8 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/",
-    "createTime": "6/29/2025, 9:00:13 AM",
+    "createTime": "7/6/2025, 8:59:25 AM",
     "problems": [
-      {
-        "title": "模板",
-        "url": "https://leetcode.cn/problems/prime-in-diagonal/solutions/2216347/pan-duan-zhi-shu-by-endlesscheng-m6nt/",
-        "member": false,
-        "score": 1375,
-        "titleSlug": "prime-in-diagonal"
-      },
       {
         "title": "更快的模板（写法二）",
         "url": "https://leetcode.cn/problems/sum-of-largest-prime-substrings/solutions/3685356/pan-duan-zhi-shu-pythonjavacgo-by-endles-0w8f/",
@@ -59,13 +52,6 @@
         "member": false,
         "score": 1938,
         "titleSlug": "prime-palindrome"
-      },
-      {
-        "title": "模板（埃氏筛和欧拉筛）",
-        "url": "https://leetcode.cn/problems/closest-prime-numbers-in-range/solutions/2040087/yu-chu-li-zhi-shu-mei-ju-by-endlesscheng-uw2b/",
-        "member": false,
-        "score": 1649,
-        "titleSlug": "closest-prime-numbers-in-range"
       },
       {
         "title": "204. 计数质数",
@@ -1955,7 +1941,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/",
-    "createTime": "6/29/2025, 9:00:15 AM",
+    "createTime": "7/6/2025, 8:59:28 AM",
     "problems": [
       {
         "title": "讲解",
@@ -5588,7 +5574,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
-    "createTime": "6/29/2025, 9:00:17 AM",
+    "createTime": "7/6/2025, 8:59:30 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6562,6 +6548,13 @@
         "member": false,
         "score": 1936,
         "titleSlug": "largest-sum-of-averages"
+      },
+      {
+        "title": "3599. 划分数组得到最小 XOR",
+        "url": "https://leetcode.cn/problems/partition-array-to-minimize-xor/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "partition-array-to-minimize-xor"
       },
       {
         "title": "410. 分割数组的最大值",
@@ -8713,11 +8706,11 @@
         "titleSlug": "word-break"
       },
       {
-        "title": "140. 单词拆分 II",
-        "url": "https://leetcode.cn/problems/word-break-ii/",
+        "title": "2707. 字符串中的额外字符",
+        "url": "https://leetcode.cn/problems/extra-characters-in-a-string/",
         "member": false,
-        "score": 0,
-        "titleSlug": "word-break-ii"
+        "score": 1735,
+        "titleSlug": "extra-characters-in-a-string"
       },
       {
         "title": "面试题 17.13. 恢复空格",
@@ -9483,6 +9476,13 @@
         "titleSlug": "encode-string-with-shortest-length"
       },
       {
+        "title": "238. 除自身以外数组的乘积",
+        "url": "https://leetcode.cn/problems/product-of-array-except-self/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "product-of-array-except-self"
+      },
+      {
         "title": "724. 寻找数组的中心下标",
         "url": "https://leetcode.cn/problems/find-pivot-index/",
         "member": false,
@@ -9579,6 +9579,13 @@
         "member": false,
         "score": 1583,
         "titleSlug": "maximum-value-of-an-ordered-triplet-ii"
+      },
+      {
+        "title": "3598. 相邻字符串之间的最长公共前缀",
+        "url": "https://leetcode.cn/problems/longest-common-prefix-between-adjacent-strings-after-removals/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-common-prefix-between-adjacent-strings-after-removals"
       },
       {
         "title": "123. 买卖股票的最佳时机 III",
@@ -9684,13 +9691,6 @@
         "member": false,
         "score": 1912,
         "titleSlug": "minimum-number-of-removals-to-make-mountain-array"
-      },
-      {
-        "title": "238. 除自身以外数组的乘积",
-        "url": "https://leetcode.cn/problems/product-of-array-except-self/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "product-of-array-except-self"
       },
       {
         "title": "2906. 构造乘积矩阵",
@@ -9984,7 +9984,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/",
-    "createTime": "6/29/2025, 9:00:19 AM",
+    "createTime": "7/6/2025, 8:59:31 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -10957,7 +10957,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "6/29/2025, 9:00:21 AM",
+    "createTime": "7/6/2025, 8:59:33 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -11415,13 +11415,6 @@
         "titleSlug": "sum-of-digit-differences-of-all-pairs"
       },
       {
-        "title": "3007. 价值和小于等于 K 的最大数字",
-        "url": "https://leetcode.cn/problems/maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k/",
-        "member": false,
-        "score": 2258,
-        "titleSlug": "maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k"
-      },
-      {
         "title": "421. 数组中两个数的最大异或值",
         "url": "https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/",
         "member": false,
@@ -11434,6 +11427,13 @@
         "member": false,
         "score": 2348,
         "titleSlug": "maximum-strong-pair-xor-ii"
+      },
+      {
+        "title": "3007. 价值和小于等于 K 的最大数字",
+        "url": "https://leetcode.cn/problems/maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k/",
+        "member": false,
+        "score": 2258,
+        "titleSlug": "maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k"
       },
       {
         "title": "3145. 大数组元素的乘积",
@@ -11706,7 +11706,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "6/29/2025, 9:00:22 AM",
+    "createTime": "7/6/2025, 8:59:34 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12164,13 +12164,6 @@
         "titleSlug": "sum-of-digit-differences-of-all-pairs"
       },
       {
-        "title": "3007. 价值和小于等于 K 的最大数字",
-        "url": "https://leetcode.cn/problems/maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k/",
-        "member": false,
-        "score": 2258,
-        "titleSlug": "maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k"
-      },
-      {
         "title": "421. 数组中两个数的最大异或值",
         "url": "https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/",
         "member": false,
@@ -12183,6 +12176,13 @@
         "member": false,
         "score": 2348,
         "titleSlug": "maximum-strong-pair-xor-ii"
+      },
+      {
+        "title": "3007. 价值和小于等于 K 的最大数字",
+        "url": "https://leetcode.cn/problems/maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k/",
+        "member": false,
+        "score": 2258,
+        "titleSlug": "maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k"
       },
       {
         "title": "3145. 大数组元素的乘积",
@@ -12455,7 +12455,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
-    "createTime": "6/29/2025, 9:00:23 AM",
+    "createTime": "7/6/2025, 8:59:36 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -12798,7 +12798,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
-    "createTime": "6/29/2025, 9:00:25 AM",
+    "createTime": "7/6/2025, 8:59:37 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -13326,6 +13326,13 @@
         "titleSlug": "maximize-the-minimum-powered-city"
       },
       {
+        "title": "3600. 升级后最大生成树稳定性",
+        "url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "maximize-spanning-tree-stability-with-upgrades"
+      },
+      {
         "title": "3449. 最大化游戏分数的最小值",
         "url": "https://leetcode.cn/problems/maximize-the-minimum-game-score/",
         "member": false,
@@ -13652,7 +13659,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
-    "createTime": "6/29/2025, 9:00:27 AM",
+    "createTime": "7/6/2025, 8:59:39 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -15192,7 +15199,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/",
-    "createTime": "6/29/2025, 9:00:29 AM",
+    "createTime": "7/6/2025, 8:59:40 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -17768,7 +17775,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/",
-    "createTime": "6/29/2025, 9:00:30 AM",
+    "createTime": "7/6/2025, 8:59:42 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -19682,6 +19689,13 @@
         "titleSlug": "number-of-ways-to-assign-edge-weights-i"
       },
       {
+        "title": "3593. 使叶子路径成本相等的最小增量",
+        "url": "https://leetcode.cn/problems/minimum-increments-to-equalize-leaf-paths/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-increments-to-equalize-leaf-paths"
+      },
+      {
         "title": "2872. 可以被 K 整除连通块的最大数目",
         "url": "https://leetcode.cn/problems/maximum-number-of-k-divisible-components/",
         "member": false,
@@ -19722,6 +19736,13 @@
         "member": true,
         "score": 0,
         "titleSlug": "maximum-subtree-of-the-same-color"
+      },
+      {
+        "title": "3593. 使叶子路径成本相等的最小增量",
+        "url": "https://leetcode.cn/problems/minimum-increments-to-equalize-leaf-paths/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-increments-to-equalize-leaf-paths"
       },
       {
         "title": "3331. 修改后子树的大小",
@@ -19773,6 +19794,20 @@
         "titleSlug": "find-the-last-marked-nodes-in-tree"
       },
       {
+        "title": "310. 最小高度树",
+        "url": "https://leetcode.cn/problems/minimum-height-trees/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-height-trees"
+      },
+      {
+        "title": "2603. 收集树中金币",
+        "url": "https://leetcode.cn/problems/collect-coins-in-a-tree/",
+        "member": false,
+        "score": 2711,
+        "titleSlug": "collect-coins-in-a-tree"
+      },
+      {
         "title": "3515. 带权树中的最短路径",
         "url": "https://leetcode.cn/problems/shortest-path-in-a-weighted-tree/",
         "member": false,
@@ -19801,18 +19836,11 @@
         "titleSlug": "check-if-dfs-strings-are-palindromes"
       },
       {
-        "title": "310. 最小高度树",
-        "url": "https://leetcode.cn/problems/minimum-height-trees/",
+        "title": "3590. 第 K 小的路径异或和",
+        "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
         "member": false,
         "score": 0,
-        "titleSlug": "minimum-height-trees"
-      },
-      {
-        "title": "2603. 收集树中金币",
-        "url": "https://leetcode.cn/problems/collect-coins-in-a-tree/",
-        "member": false,
-        "score": 2711,
-        "titleSlug": "collect-coins-in-a-tree"
+        "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
         "title": "讲解",
@@ -19871,6 +19899,13 @@
         "titleSlug": "path-existence-queries-in-a-graph-ii"
       },
       {
+        "title": "2836. 在传球游戏中最大化函数值",
+        "url": "https://leetcode.cn/problems/maximize-value-of-function-in-a-ball-passing-game",
+        "member": false,
+        "score": 2768,
+        "titleSlug": "maximize-value-of-function-in-a-ball-passing-game"
+      },
+      {
         "title": "3464. 正方形上的点之间的最大距离",
         "url": "https://leetcode.cn/problems/maximize-the-distance-between-points-on-a-square/",
         "member": false,
@@ -19897,6 +19932,13 @@
         "member": false,
         "score": 2415,
         "titleSlug": "smallest-missing-genetic-value-in-each-subtree"
+      },
+      {
+        "title": "3590. 第 K 小的路径异或和",
+        "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
         "title": "3575. 最大好子树分数",
@@ -20568,7 +20610,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/",
-    "createTime": "6/29/2025, 9:00:32 AM",
+    "createTime": "7/6/2025, 8:59:43 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
