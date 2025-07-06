@@ -317,8 +317,9 @@ const asyncProblemStatus = async (row = {}) => {
       await sleep(500)
       let githubInfo = await githubProblem(fromData.visiableMember)
       let jsonInfo = githubInfo[2]
-      console.log('githubInfo',githubInfo)
-
+      if(isDev()) {
+        console.log('githubInfo',githubInfo)
+      }
 
 
       let datas = []

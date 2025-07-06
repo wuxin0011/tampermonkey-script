@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.7
+// @version      0.0.5.8
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -30,7 +30,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const n=document.createElement("style");n.textContent=t,document.head.append(n)})(" h2[data-v-6b5a9c54]{color:#000!important;margin:10px 0!important;font-size:20px!important}.m-setting-button[data-v-bec7f78f]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-bec7f78f]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-bec7f78f]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const n=document.createElement("style");n.textContent=t,document.head.append(n)})(" h2[data-v-6b5a9c54]{color:#000!important;margin:10px 0!important;font-size:20px!important}.m-setting-button[data-v-35776517]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-35776517]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-35776517]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (ElementPlus, vue) {
   'use strict';
@@ -190,8 +190,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     return true;
   };
-  const inf = 4e3;
-  const mi = 1e3;
+  const inf = 5e3;
+  const mi = 800;
   const __0X3F_PROBLEM_KEYS__$1 = {
     "__0x3f_problmes_solution__": "__0x3f_problmes_solution__",
     // 基本信息
@@ -222,8 +222,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     //是否替换到com 默认cn
     "__0x3f_problme_support_type_tips__": "__0x3f_problme_support_type_tips__",
     //是否替换到com 默认cn 不再提示key
-    "__0x3f_problme_stop_discuss_": "__0x3f_problme_default_stop_discuss_"
+    "__0x3f_problme_stop_discuss_": "__0x3f_problme_default_stop_discuss_",
     //屏蔽讨论区 默认屏蔽
+    "__0x3f_problme_score_": "__0x3f_problme_score_",
+    // 显示题目分数 默认不显示
+    "__0x3f_problme_score_tot_key": "__0x3f_problme_score_tot_key",
+    // 题目分数 缓存
+    "__0x3f_problme_rating": "__0x3f_problme_rating"
+    // 0神分数rating
   };
   const STATUS = {
     "AC": "ac",
@@ -756,6 +762,86 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       duration: 6e3
     });
   }
+  function getDom() {
+    for (let target of ["easy", "medium", "hard"]) {
+      let t = document.querySelector(`.gap-1 .text-difficulty-${target}`);
+      if (t) return t;
+    }
+    return void 0;
+  }
+  async function handlerScore() {
+    let ok = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_"], true, String.name);
+    ok = ok != "false" && ok != false;
+    _GM_registerMenuCommand(`${ok ? "关闭" : "显示"} 题目分数 🍳`, function() {
+      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_"], !ok);
+      window.location.reload();
+    }, { title: "默认显示题目分数" });
+    if (!ok) return;
+    let url = window.location.href;
+    if (!isProblem(url)) return;
+    await sleep(1e3);
+    let problemDom = getDom();
+    if (!problemDom) return;
+    let id = getId(url);
+    let score = 0;
+    let contestUrl = isEnglishENV() ? `https://leetcode.com/contest/` : `https://leetcode.cn/contest/`;
+    let contestUrlFind = false;
+    let curRating = null;
+    try {
+      let problemMap = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_tot_key"], true) ?? {};
+      let problem = problemMap[id];
+      if (!problem) {
+        let p = await githubProblem(true);
+        let new_temp = {};
+        for (let obj of p[1]) {
+          let k = obj[0];
+          let v = obj[1];
+          new_temp[k] = v;
+        }
+        problemMap = Object.assign({}, new_temp);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_tot_key"], problemMap);
+        if (isDev()) {
+          console.log("save __0x3f_problme_score_tot_key : 😺");
+        }
+      }
+      problem = problemMap[id];
+      score = problem == null ? void 0 : problem.score;
+      let rating = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_rating"], true) ?? {};
+      if (!rating[id]) {
+        let p = await getRating();
+        let temp = {};
+        for (let i = 0; Array.isArray(p) && i < p.length; i++) {
+          temp[p[i]["TitleSlug"]] = p[i];
+        }
+        rating = Object.assign({}, temp);
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_rating"], rating);
+        if (isDev()) {
+          console.log("save __0x3f_problme_rating : 😺");
+        }
+      }
+      if (rating[id]) {
+        curRating = rating[id];
+        contestUrlFind = true;
+        contestUrl = contestUrl + rating[id]["ContestSlug"];
+        if (!score) {
+          score = Math.floor(rating[id]["Rating"]);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    if (isDev()) {
+      console.log("problemDom", problemDom);
+      console.log("score", score);
+    }
+    if (score != void 0 && score != null && score > 0 && problemDom) {
+      if (contestUrlFind) {
+        problemDom.innerHTML = `<a href="${contestUrl}" target="_blank" title="${isEnglishENV() ? curRating.ContestID_en : curRating.ContestID_zh} ${curRating.ProblemIndex}">${score}</a>`;
+      } else {
+        problemDom.textContent = score;
+      }
+    }
+  }
   function isEnglishENV() {
     return window.location.href.indexOf("https://leetcode.com") != -1;
   }
@@ -780,6 +866,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   async function getProblemsJSON() {
     return GetHubJSONInfo("https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/new_0x3f.json");
+  }
+  async function getRating() {
+    return GetHubJSONInfo("https://raw.githubusercontent.com/zerotrac/leetcode_problem_rating/main/data.json");
   }
   const LEETCODE_PROBLEM_API = `${CUR_URL}/graphql/`;
   async function PostLeetCodeApi(data) {
@@ -1245,7 +1334,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             await sleep(500);
             let githubInfo = await githubProblem(fromData.visiableMember);
             let jsonInfo = githubInfo[2];
-            console.log("githubInfo", githubInfo);
+            if (isDev()) {
+              console.log("githubInfo", githubInfo);
+            }
             let datas = [];
             for (let i = 0; Array.isArray(jsonInfo) && i < jsonInfo.length; i++) {
               let key = `${(_a = jsonInfo[i]) == null ? void 0 : _a.problemUrl}`;
@@ -1896,7 +1987,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-bec7f78f"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-35776517"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
@@ -2130,5 +2221,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   watchSubmit();
   run();
   startStopRanking();
+  handlerScore();
 
 })(ElementPlus, Vue);

@@ -16,6 +16,10 @@ export async function getVersion() {
     return GetHubJSONInfo('https://raw.githubusercontent.com/wuxin0011/tampermonkey-script/main/0x3f-leetcode/package.json')
 }
 
+export async function getRating() {
+    return GetHubJSONInfo('https://raw.githubusercontent.com/zerotrac/leetcode_problem_rating/main/data.json')
+}
+
 const LEETCODE_PROBLEM_API = `${CUR_URL}/graphql/`
 
 export async function PostLeetCodeApi(data) {

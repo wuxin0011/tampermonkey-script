@@ -14,7 +14,7 @@ import {
   isZH
 } from './utils/index';
 import { Message, tips_message, update_version,stop_disscuss_command } from './utils/message';
-import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems } from './utils/problems';
+import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems,handlerScore } from './utils/problems';
 
 import {
   startStopRanking
@@ -195,12 +195,13 @@ async function run() {
 
 }
 
-
 tips_message()
 update_version()
 watchSubmit()
 run()
 startStopRanking()
+handlerScore()
+
 
 
 

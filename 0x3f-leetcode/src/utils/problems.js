@@ -1,11 +1,11 @@
 import Cache from './cache'
 import { CUR_URL, EN_URL, isBilibili, isContest, isDev, isEnglishENV, isLeetCodeCircleUrl, isProblem, sleep, ZH_URL } from './index'
 import { createStatus } from './status'
-import { getProblemAcInfo, getProblemsJSON, PostLeetCodeApi } from '../api/index'
+import { getProblemAcInfo, getProblemsJSON, PostLeetCodeApi,getRating } from '../api/index'
 import { ElMessage } from 'element-plus'
 import { GM_registerMenuCommand } from '$';
-const inf = 4000  // 目前最大分数为3100
-const mi = 1000   // 目前最小分数为1100 
+const inf = 5000  // 目前最大分数为3100
+const mi = 800  // 目前最小分数为1100 
 
 
 export const __0X3F_PROBLEM_KEYS__ = {
@@ -25,6 +25,9 @@ export const __0X3F_PROBLEM_KEYS__ = {
     '__0x3f_problme_support_type__': '__0x3f_problme_support_type__', //是否替换到com 默认cn
     '__0x3f_problme_support_type_tips__': '__0x3f_problme_support_type_tips__', //是否替换到com 默认cn 不再提示key
     '__0x3f_problme_stop_discuss_': '__0x3f_problme_default_stop_discuss_', //屏蔽讨论区 默认屏蔽
+    '__0x3f_problme_score_': '__0x3f_problme_score_', // 显示题目分数 默认不显示
+    '__0x3f_problme_score_tot_key': '__0x3f_problme_score_tot_key', // 题目分数 缓存
+    '__0x3f_problme_rating': '__0x3f_problme_rating', // 0神分数rating
 }
 
 export const STATUS = {
@@ -682,4 +685,99 @@ export async function randomProblem() {
     })
 
 
+}
+
+
+// 拿到题目标签
+function getDom(){
+    for(let target of ['easy','medium','hard']) {
+        let t = document.querySelector(`.gap-1 .text-difficulty-${target}`)
+        if(t) return t
+    }
+    return undefined
+}
+
+
+// 显示题目分数 周赛信息
+// 2025/07/06
+export async function handlerScore() {
+    let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_score_'],true,String.name)
+    ok = ok != 'false' && ok != false
+    GM_registerMenuCommand(`${ok ? '关闭':'显示'} 题目分数 🍳`, function() {
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_score_'],!ok)
+        window.location.reload()
+    }, { title: '默认显示题目分数' })
+    if(!ok) return
+    let url = window.location.href
+    if(!isProblem(url)) return;
+    await sleep(1000)
+    let problemDom = getDom()
+    if(!problemDom)return
+    let id = getId(url)
+    let score = 0
+    let contestUrl = isEnglishENV() ? `https://leetcode.com/contest/` :  `https://leetcode.cn/contest/`
+    let contestUrlFind = false
+    let curRating = null
+    try{
+        let problemMap = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_score_tot_key'],true) ?? {}
+        let problem = problemMap[id]
+        if(!problem) {
+            let p = await githubProblem(true)
+            let new_temp = {}
+            for(let obj of p[1]) {
+                let k  = obj[0]
+                let v  = obj[1]
+                new_temp[k] = v
+            }
+            problemMap = Object.assign({},new_temp)
+            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_score_tot_key'],problemMap)
+            if(isDev()) {
+                console.log('save __0x3f_problme_score_tot_key : 😺')
+            }
+        }
+        problem = problemMap[id]
+        score = problem?.score
+
+
+        let rating = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_rating'],true) ?? {}
+        if(!rating[id]) {
+            let p = await getRating()
+            let temp = {}
+            for(let i = 0;Array.isArray(p)&& i<p.length;i++) {
+                temp[p[i]['TitleSlug']] = p[i]
+            }
+            rating = Object.assign({},temp)
+            Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problme_rating'],rating)
+            if(isDev()) {
+                console.log('save __0x3f_problme_rating : 😺')
+            }
+        }
+
+        if(rating[id]) {
+            curRating = rating[id]
+            contestUrlFind = true
+            contestUrl = contestUrl + rating[id]['ContestSlug']
+            if(!score) {
+                score = Math.floor(rating[id]['Rating'])
+            }
+
+        }
+    }catch(e){
+        console.error(e)
+    }
+
+    
+    if(isDev()){
+        console.log('problemDom',problemDom)
+        console.log('score',score)
+    }
+    if(score != undefined && score != null && score > 0 && problemDom) {
+
+        if(contestUrlFind) {
+            problemDom.innerHTML = `<a href="${contestUrl}" target="_blank" title="${isEnglishENV() ? curRating.ContestID_en : curRating.ContestID_zh} ${curRating.ProblemIndex}">${score}</a>`
+        }else{
+            problemDom.textContent = score
+        }
+        
+    }
 }
