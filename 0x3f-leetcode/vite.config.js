@@ -20,8 +20,10 @@ export default defineConfig({
         match: [
           'https://leetcode.cn/circle/discuss/*',
           'https://leetcode.cn/discuss/*',
+          'https://leetcode.cn/',
           'https://leetcode.cn/problems/*',
           'https://leetcode.cn/contest/*/problems/*',
+          'https://leetcode.com',
           'https://leetcode.com/circle/discuss/*',
           'https://leetcode.com/discuss/*',
           'https://leetcode.com/problems/*',

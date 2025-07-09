@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.8
+// @version      0.0.5.9
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -12,8 +12,10 @@
 // @updateURL    https://scriptcat.org/zh-CN/script-show-page/1967/
 // @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/discuss/*
+// @match        https://leetcode.cn/
 // @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.cn/contest/*/problems/*
+// @match        https://leetcode.com
 // @match        https://leetcode.com/circle/discuss/*
 // @match        https://leetcode.com/discuss/*
 // @match        https://leetcode.com/problems/*
@@ -30,7 +32,7 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
-(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const n=document.createElement("style");n.textContent=t,document.head.append(n)})(" h2[data-v-6b5a9c54]{color:#000!important;margin:10px 0!important;font-size:20px!important}.m-setting-button[data-v-35776517]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-35776517]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-35776517]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
+(t=>{if(typeof GM_addStyle=="function"){GM_addStyle(t);return}const n=document.createElement("style");n.textContent=t,document.head.append(n)})(" h2[data-v-6b5a9c54]{color:#000!important;margin:10px 0!important;font-size:20px!important}.m-setting-button[data-v-3d821394]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-3d821394]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-3d821394]{display:flex;justify-content:center;align-items:center}.m-setting-button[data-v-6868725a]{position:fixed;top:200px;right:0;z-index:100000}.m-button[data-v-6868725a]{margin-left:16px!important;padding:5px!important;font-size:14px!important}.processs-flex[data-v-6868725a]{display:flex;justify-content:center;align-items:center} ");
 
 (function (ElementPlus, vue) {
   'use strict';
@@ -83,6 +85,23 @@
     }
   };
   const Cache$2 = new Cache$1();
+  function isEnglishENV() {
+    return window.location.href.indexOf("https://leetcode.com") != -1;
+  }
+  const isHttp = (url) => /^https?:\/\/.*$/.test(url);
+  const isLeetCodeCircleUrl = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn).*\/discuss\/.*/i.test(url);
+  const isProblem = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn)\/problems\/.*/i.test(url);
+  const isContest = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn)\/contest\/.*\/problems\/.*/.test(url);
+  const isBilibili = (url = window.location.href) => /.*bilibili.*/.test(url);
+  const isHome = () => window.location.href == "https://leetcode.cn/" || window.location.href == "https://leetcode.com/";
+  const isZH = (url = window.location.href) => /^https?:\/\/leetcode\.cn/.test(url);
+  const sleep = async (time = 500) => new Promise((resolove) => setTimeout(resolove, time));
+  const EN_URL = "https://leetcode.com";
+  const ZH_URL = "https://leetcode.cn";
+  const LC_COPY_HTML_PLUGIN = "https://greasyfork.org//zh-CN/scripts/491969-lc-to-markdown-txt-html";
+  const EN_SOLUTION_DEMO = "https://leetcode.com/discuss/interview-question/6032972/leetcode";
+  const CUR_URL = isEnglishENV() ? EN_URL : ZH_URL;
+  const isDev = () => JSON.parse("false");
   const width = 14;
   const height = 14;
   const svg_css_style = () => isNewUI() ? "display:inline;margin-bottom:3px;" : "";
@@ -147,10 +166,19 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
 </svg>
 
 `;
+  const resetSVG = (size = 20) => `
+<svg width="${size}px" height="${size}px" style="${svg_css_style()} 'cursor':'pointer'; " viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><path d="m4.5 1.5c-2.4138473 1.37729434-4 4.02194088-4 7 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"/><path d="m4.5 5.5v-4h-4"/></g></svg>
+
+`;
+  const updateSVG = (size = 20) => `
+<svg width="${size}px" height="${size}px" style="${svg_css_style()} 'cursor':'pointer'; " viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<path d="M16.592 1.152c-0.053-0.010-1.321-0.244-2.981-0.244-2.105 0-3.828 0.366-5.125 1.088-1.518-0.765-3.264-1.152-5.196-1.152-1.681 0-2.866 0.302-2.915 0.315l-0.375 0.098 0.001 13.906 0.624-0.161c0.011-0.002 1.12-0.283 2.665-0.283 1.447 0 2.771 0.24 3.96 0.703v0.828h2.5v-0.856c1.281-0.488 2.747-0.611 3.86-0.611 1.562 0 2.786 0.225 2.798 0.227l0.592 0.11v-13.891l-0.408-0.077zM1 13.907v-11.858c0.451-0.084 1.277-0.205 2.29-0.205 1.761 0 3.339 0.36 4.71 1.044v11.776c-1.403-0.617-2.977-0.945-4.71-0.945-0.969 0-1.773 0.101-2.29 0.188zM16 13.938c-0.536-0.070-1.393-0.154-2.39-0.154-1.848 0-3.381 0.298-4.61 0.855v-11.773c1.422-0.78 3.271-0.958 4.61-0.958 1.023 0 1.902 0.097 2.39 0.164v11.866z" fill="#121212" />
+</svg>
+`;
   const problemsNo = () => install_pos() ? `
 <svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 ` : ``;
-  const createStatus = (status, link) => {
+  const createStatus = (status, link, removeSvg = false) => {
     var _a;
     let node;
     if (!link) {
@@ -160,6 +188,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     node = link instanceof HTMLAnchorElement ? link.parentElement : link;
     if (node) {
       node.status = status;
+    }
+    if (removeSvg) {
+      let svg2 = node.querySelector("svg");
+      if (svg2) {
+        svg2.remove();
+      }
     }
     let installSVG = "";
     if (isContest(curUrl)) {
@@ -190,6 +224,94 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     return true;
   };
+  function Message(title = "确认操作", callback = () => {
+  }, canlcelCallback = () => {
+  }) {
+    ElementPlus.ElMessageBox.confirm(
+      `${title} ?`,
+      "警告",
+      {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning"
+      }
+    ).then(() => {
+      callback();
+    }).catch(() => {
+      ElementPlus.ElMessage({
+        type: "info",
+        message: "已取消"
+      });
+      canlcelCallback();
+    });
+  }
+  function tips_message() {
+    if (isEnglish() && isZH() && Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"]) == "OK") {
+      ElementPlus.ElMessageBox.alert(
+        `<div>
+              <p>检查到当前环境为国服,如果需要同步功能需要切换到美服，或者复制一份题单到美服自己使用 否则仅保留替换链接功能，没有同步功能 </p>
+              <ul>
+                <li>你可以使用<a style="color:blue;" target="_blank" href="${LC_COPY_HTML_PLUGIN}">lc-to-markdown-txt-html</a> 来复制题单 </li>
+                <li><a style="color:red;" target="_blank" href="${EN_SOLUTION_DEMO}">查看美服题单示例</a> </li>
+              <ul>
+             <div>`,
+        "提示",
+        {
+          dangerouslyUseHTMLString: true,
+          showCancelButton: true,
+          cancelButtonText: "下次再说",
+          confirmButtonText: "不再提示"
+        }
+      ).then((e) => {
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"], "NO");
+      }).catch((e) => {
+        if (e == "cancel") {
+          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"]) == "OK_1";
+          ElementPlus.ElMessage.warning({
+            message: "下次切换到美服环境提示"
+          });
+        }
+      });
+    }
+  }
+  function update_version() {
+    _GM_registerMenuCommand(`更新脚本🔗`, () => {
+      ElementPlus.ElMessageBox.alert(
+        `<div>
+              <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
+              <br/>
+              <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
+              <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
+              <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134/"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
+              <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
+             
+             <div>`,
+        "更新☕",
+        {
+          dangerouslyUseHTMLString: true,
+          showCancelButton: true,
+          cancelButtonText: "取消",
+          confirmButtonText: "确认"
+        }
+      );
+    }, { title: "点击更新更新脚本" });
+  }
+  function stop_disscuss_command() {
+    if (isLeetCodeCircleUrl()) {
+      let is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], true, String.name);
+      is_stop = is_stop != "false" && is_stop != false;
+      if (is_stop) {
+        _GM_addStyle(".t6Fde{ display:none !important;}");
+      }
+      if (isDev()) {
+        console.log("is_stop ", is_stop);
+      }
+      _GM_registerMenuCommand(`${is_stop ? "开启" : "关闭"}右侧讨论区📣`, () => {
+        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], !is_stop);
+        window.location.reload();
+      }, { title: "如果认为右侧讨论区太难看可以直接屏蔽😅" });
+    }
+  }
   const inf = 5e3;
   const mi = 800;
   const __0X3F_PROBLEM_KEYS__$1 = {
@@ -239,18 +361,18 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     "Wrong Answer": "notac"
   };
   const defaultUrls = [
-    { "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法", "link": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/", "tot": 0, "ac": 0, "id": 1, "disabled": false, "select": true },
-    { "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）", "link": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/", "tot": 0, "ac": 0, "id": 2, "disabled": false, "select": true },
-    { "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）", "link": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/", "tot": 0, "ac": 0, "id": 3, "disabled": false, "select": true },
-    { "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）", "link": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/", "tot": 0, "ac": 0, "id": 4, "disabled": false, "select": true },
-    { "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）", "link": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/", "tot": 0, "ac": 0, "id": 5, "disabled": false, "select": true },
-    { "title": "网格图（DFS/BFS/综合应用)", "link": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/", "tot": 0, "ac": 0, "id": 6, "disabled": false, "select": true },
-    { "title": "单调栈（矩形面积/贡献法/最小字典序", "link": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/", "tot": 0, "ac": 0, "id": 7, "disabled": false, "select": true },
-    { "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小", "link": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/", "tot": 0, "ac": 0, "id": 8, "disabled": true, "select": true },
-    { "title": "滑动窗口（定长/不定长/多指针", "link": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/", "tot": 0, "ac": 0, "id": 9, "disabled": false, "select": true },
-    { "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）", "link": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/", "tot": 0, "ac": 0, "id": 10, "disabled": false, "select": true },
-    { "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）", "link": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/", "tot": 0, "ac": 0, "id": 11, "disabled": false, "select": true },
-    { "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）", "link": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/", "tot": 0, "ac": 0, "id": 12, "disabled": false, "select": true }
+    { "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法", "link": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/", "tot": 0, "ac": 0, "id": 1, "disabled": false, "select": true, "version": 1 },
+    { "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）", "link": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/", "tot": 0, "ac": 0, "id": 2, "disabled": false, "select": true, "version": 1 },
+    { "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）", "link": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/", "tot": 0, "ac": 0, "id": 3, "disabled": false, "select": true, "version": 1 },
+    { "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）", "link": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/", "tot": 0, "ac": 0, "id": 4, "disabled": false, "select": true, "version": 1 },
+    { "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）", "link": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/", "tot": 0, "ac": 0, "id": 5, "disabled": false, "select": true, "version": 1 },
+    { "title": "网格图（DFS/BFS/综合应用)", "link": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/", "tot": 0, "ac": 0, "id": 6, "disabled": false, "select": true, "version": 1 },
+    { "title": "单调栈（矩形面积/贡献法/最小字典序", "link": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/", "tot": 0, "ac": 0, "id": 7, "disabled": false, "select": true, "version": 1 },
+    { "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小", "link": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/", "tot": 0, "ac": 0, "id": 8, "disabled": true, "select": true, "version": 1 },
+    { "title": "滑动窗口（定长/不定长/多指针", "link": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/", "tot": 0, "ac": 0, "id": 9, "disabled": false, "select": true, "version": 1 },
+    { "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）", "link": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/", "tot": 0, "ac": 0, "id": 10, "disabled": false, "select": true, "version": 1 },
+    { "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）", "link": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/", "tot": 0, "ac": 0, "id": 11, "disabled": false, "select": true, "version": 1 },
+    { "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）", "link": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/", "tot": 0, "ac": 0, "id": 12, "disabled": false, "select": true, "version": 1 }
     // { 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': 0, 'ac': 0, 'id': 0x3f3f3f3f,'disabled':true,'select':false },
   ];
   const old_url_map = {
@@ -386,6 +508,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         let o = Cache$2.get(getAcCountKey(u.link));
         u["ac"] = isNaN(o["ac"]) ? 0 : parseInt(o["ac"]);
         u["tot"] = isNaN(o["tot"]) ? 0 : parseInt(o["tot"]);
+        u["version"] = isNaN(u["version"]) ? 1 : parseInt(u["version"]);
         set.add(u.link);
       } catch (e) {
       }
@@ -398,6 +521,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       for (let info of infos) {
         saveUrls.push(info);
       }
+    }
+    if (isDev()) {
+      console.log("{{ scope.row }}", infos);
     }
     return infos;
   }
@@ -517,7 +643,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         problems_doms[i].href = problems_doms[i].href.replace("leetcode.cn", "leetcode.com");
       }
       if (!cache[ID2] || cache[ID2] != STATUS["AC"] && asyncAc) {
-        await sleep(50);
+        await sleep(20);
         await queryStatus(ID2, cache, cur, false);
         query_cnt++;
         if (query_cnt % 10 == 0) {
@@ -562,6 +688,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         "status": status
       }));
     }
+    showProblemSolve();
   };
   const watchLinkStatusUpdate = (e) => {
     var _a;
@@ -594,17 +721,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   function getAcCountKey(k) {
     if (!k) return "";
     return `0x3f_ac_key_${k}`;
-  }
-  function deleteAllACCountKeys() {
-    let urls = initUrls();
-    let keys = [];
-    for (let urlInfo of urls) {
-      let key = getAcCountKey(urlInfo.link);
-      Cache$2.remove(key);
-      keys.push(key);
-    }
-    Cache$2.remove(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"]);
-    return keys;
   }
   async function getProcess() {
     var _a;
@@ -707,15 +823,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       let cur_infos = [];
       for (let i = 0; Array.isArray(info.problems) && i < info.problems.length; i++) {
         try {
-          let { title, url, member, score, titleSlug } = info.problems[i];
+          let { title, url, member, score, titleSlug: titleSlug2 } = info.problems[i];
           if (!url || !title) continue;
           if (!(config == null ? void 0 : config.visiableMember) && member || !not_filter_member && member) {
             continue;
           }
-          let new_obj = { title, url, member, score, titleSlug, "status": acMap[titleSlug] };
+          let new_obj = { title, url, member, score, titleSlug: titleSlug2, "status": acMap[titleSlug2] };
           infos.push(new_obj);
           cur_infos.push(new_obj);
-          mapInfo.set(titleSlug, new_obj);
+          mapInfo.set(titleSlug2, new_obj);
         } catch (e) {
           console.log("error", e);
         }
@@ -733,11 +849,11 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     let infos = [];
     for (let i = 0; Array.isArray(problems) && i < problems.length; i++) {
       try {
-        let { title, url, member, score, titleSlug } = problems[i];
+        let { title, url, member, score, titleSlug: titleSlug2 } = problems[i];
         if (!url || !title) continue;
         if (isDev()) {
         }
-        if (!(config == null ? void 0 : config.showAcConfig) && acMap[titleSlug] == "ac") {
+        if (!(config == null ? void 0 : config.showAcConfig) && acMap[titleSlug2] == "ac") {
           continue;
         }
         if (!(config == null ? void 0 : config.visiableMember) && member) {
@@ -746,7 +862,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (score != 0 && (score < (config == null ? void 0 : config.min) || score > (config == null ? void 0 : config.max))) {
           continue;
         }
-        infos.push({ title, url, member, score, titleSlug, "status": acMap[titleSlug] });
+        infos.push({ title, url, member, score, titleSlug: titleSlug2, "status": acMap[titleSlug2] });
       } catch (e) {
         console.log("error", e);
       }
@@ -842,22 +958,224 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       }
     }
   }
-  function isEnglishENV() {
-    return window.location.href.indexOf("https://leetcode.com") != -1;
+  const LANG_LIST = [
+    "java",
+    "cpp",
+    "python",
+    "python3",
+    "go",
+    "javascript",
+    "js",
+    "c",
+    "C",
+    "C++",
+    "ts",
+    "typescript",
+    "TypeScript",
+    "Rust",
+    "rust",
+    "Go",
+    "php",
+    "PHP",
+    "C#",
+    "Python3",
+    "Java",
+    "Swift",
+    "swift",
+    "Kotion",
+    "kotion",
+    "dart",
+    "Dart",
+    "Ruby",
+    "ruby",
+    "scala",
+    "Scala",
+    "Racket",
+    "racket",
+    "Erlang",
+    "erlang",
+    "Elixir",
+    "elixir",
+    "Cangjie",
+    "cangjie"
+  ];
+  function showProblemSolve() {
+    let url = window.location.href;
+    if (!isProblem(url)) return;
+    let t = document.querySelector("#qd-content .text-body.flex.flex-none.items-center");
+    if (isDev()) {
+      console.log("show", t.textContent);
+    }
+    if (!t) return;
+    let c = getLocalProblemStatus();
+    let id = getId(url);
+    if ((c[id] == "null" || c[id] == null) && t.textContent == "已解答") {
+      t.style.display = "none";
+    } else {
+      t.style.display = "inline-block";
+    }
   }
-  const isHttp = (url) => /^https?:\/\/.*$/.test(url);
-  const isLeetCodeCircleUrl = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn).*\/discuss\/.*/i.test(url);
-  const isProblem = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn)\/problems\/.*/i.test(url);
-  const isContest = (url = window.location.href) => /^https?:\/\/leetcode\.(com|cn)\/contest\/.*\/problems\/.*/.test(url);
-  const isBilibili = (url = window.location.href) => /.*bilibili.*/.test(url);
-  const isZH = (url = window.location.href) => /^https?:\/\/leetcode\.cn/.test(url);
-  const sleep = async (time = 500) => new Promise((resolove) => setTimeout(resolove, time));
-  const EN_URL = "https://leetcode.com";
-  const ZH_URL = "https://leetcode.cn";
-  const LC_COPY_HTML_PLUGIN = "https://greasyfork.org//zh-CN/scripts/491969-lc-to-markdown-txt-html";
-  const EN_SOLUTION_DEMO = "https://leetcode.com/discuss/interview-question/6032972/leetcode";
-  const CUR_URL = isEnglishENV() ? EN_URL : ZH_URL;
-  const isDev = () => JSON.parse("false");
+  async function resetProblemStatus(url, click) {
+    showProblemSolve();
+    function deleteAcLocalStorage(title) {
+      try {
+        let No = title.match(/\d+/)[0];
+        let keys = [];
+        for (let lang of LANG_LIST) {
+          keys.push(`${No}_0_${lang}`);
+        }
+        for (let key of keys) {
+          window.localStorage.removeItem(key);
+        }
+      } catch (_) {
+      }
+    }
+    async function fun(discuss_url, force = false) {
+      var _a;
+      let cache = getLocalProblemStatus();
+      if (isLeetCodeCircleUrl()) {
+        let problems_doms = loadProblems();
+        for (let i = 0; i < problems_doms.length; i++) {
+          let cur = problems_doms[i].parentElement;
+          if (!(cur instanceof HTMLElement)) {
+            continue;
+          }
+          const ID2 = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
+          if (!ID2) continue;
+          if (force) {
+            delete cache[ID2];
+          } else {
+            cache[ID2] = "null";
+            deleteAcLocalStorage(problems_doms[i].textContent);
+          }
+        }
+      } else {
+        let tot = await githubProblem();
+        tot = tot[0];
+        for (let p of tot) {
+          if (p["problemUrl"].indexOf(discuss_url) == -1) continue;
+          for (let info of p["problems"]) {
+            if (!(info == null ? void 0 : info.titleSlug)) continue;
+            let ID2 = titleSlug;
+            if (force) {
+              delete cache[ID2];
+            } else {
+              cache[ID2] = "null";
+              deleteAcLocalStorage(info == null ? void 0 : info.title);
+            }
+          }
+          break;
+        }
+      }
+      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+    }
+    if (isLeetCodeCircleUrl()) {
+      _GM_registerMenuCommand(`重置进度 ⏱`, () => {
+        Message("确认重置进度?该操作不可恢复", async () => {
+          await fun(window.location.href, false);
+          window.location.reload();
+        });
+      }, { title: "如果需要重做题单，可以执行该操作" });
+      let tag = document.querySelector(".flex .flex-wrap.gap-1 .no-underline");
+      if (!tag) {
+        await sleep(3e3);
+        tag = document.querySelector(".flex .flex-wrap.gap-1 .no-underline");
+      }
+      if (tag) {
+        let createTag = function() {
+          let a = document.createElement("a");
+          a.className = `no-underline truncate bg-sd-accent text-sd-muted-foreground hover:text-sd-foreground dark:hover:text-sd-foreground items-center rounded-full px-2 py-1 text-xs`;
+          return a;
+        };
+        let p = tag.parentElement;
+        let reset = createTag();
+        reset.innerHTML = resetSVG(16);
+        reset.style.cursor = "pointer";
+        reset.title = "重置题单进度，如果需要多刷可以试试";
+        reset.addEventListener("click", async (e) => {
+          e.preventDefault();
+          Message("确认重置进度?该操作不可恢复", async () => {
+            await fun(window.location.href, false);
+            window.location.reload();
+          });
+        });
+        p.appendChild(reset);
+        let update = createTag();
+        update.innerHTML = updateSVG(16);
+        update.title = "强制更新题单,该操作会将历史ac记录统计其中";
+        update.style.cursor = "pointer";
+        update.addEventListener("click", async (e) => {
+          e.preventDefault();
+          Message("确认强制更新进度？", async () => {
+            await fun(window.location.href, true);
+            window.location.reload();
+          });
+        });
+        p.appendChild(update);
+      }
+      let dom = document.querySelector(".break-words");
+      if (dom) {
+        let get = function(index, runClear) {
+          var _a;
+          if (index + 1 >= titles.length) return;
+          let curCache = getLocalProblemStatus();
+          const currentH2 = titles[index];
+          const nextH2 = titles[index + 1];
+          const aLinks = [];
+          let nextSibling = currentH2.nextElementSibling;
+          while (nextSibling && nextSibling !== nextH2) {
+            if (nextSibling.tagName === "A") {
+              if (isProblem(nextSibling.href)) {
+                aLinks.push(nextSibling);
+              }
+            } else {
+              for (let a of Array.from(nextSibling.querySelectorAll("a") ?? { length: 0 })) {
+                if (a && isProblem(a.href)) {
+                  aLinks.push(a);
+                }
+              }
+            }
+            nextSibling = nextSibling.nextElementSibling;
+          }
+          if (aLinks.length > 0 && runClear) {
+            for (let i = 0; i < aLinks.length; i++) {
+              const ID2 = getId((_a = aLinks[i]) == null ? void 0 : _a.href);
+              if (!ID2) continue;
+              curCache[ID2] = "null";
+              createStatus("null", aLinks[i], true);
+              deleteAcLocalStorage(aLinks[i].textContent);
+            }
+            Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], curCache);
+          }
+          return aLinks;
+        };
+        let titles = Array.from(dom.querySelectorAll("h2"));
+        let uls = Array.from(dom.querySelectorAll("ul"));
+        if (isDev()) {
+          console.log("titles", titles.length, "uls", uls.length);
+        }
+        for (let i = 0; i < titles.length - 1; i++) {
+          let aLinks = get(i, false);
+          if (aLinks.length != 0) {
+            const span = document.createElement("span");
+            span.style.cursor = "pointer";
+            span.style.marginLeft = "20px";
+            span.title = `重刷《${titles[i].textContent}》章节 `;
+            span.addEventListener("click", () => {
+              Message(`确认${span.title}进度?该操作不可恢复`, () => {
+                get(i, true);
+              });
+            });
+            span.innerHTML = resetSVG(17);
+            titles[i].appendChild(span);
+          }
+        }
+      }
+    }
+    if (click) {
+      await fun(url, false);
+    }
+  }
   async function GetHubJSONInfo(url) {
     return fetch(url, {
       method: "get",
@@ -881,8 +1199,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       body: JSON.stringify(data)
     }).then((res) => res.json());
   }
-  async function getProblemAcInfo(titleSlug) {
-    return PostLeetCodeApi(postData(titleSlug));
+  async function getProblemAcInfo(titleSlug2) {
+    return PostLeetCodeApi(postData(titleSlug2));
   }
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
@@ -1002,94 +1320,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     ]);
   }
   const Q1 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-6b5a9c54"]]);
-  function Message(title = "确认操作", callback = () => {
-  }, canlcelCallback = () => {
-  }) {
-    ElementPlus.ElMessageBox.confirm(
-      `${title} ?`,
-      "警告",
-      {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }
-    ).then(() => {
-      callback();
-    }).catch(() => {
-      ElementPlus.ElMessage({
-        type: "info",
-        message: "已取消"
-      });
-      canlcelCallback();
-    });
-  }
-  function tips_message() {
-    if (isEnglish() && isZH() && Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"]) == "OK") {
-      ElementPlus.ElMessageBox.alert(
-        `<div>
-              <p>检查到当前环境为国服,如果需要同步功能需要切换到美服，或者复制一份题单到美服自己使用 否则仅保留替换链接功能，没有同步功能 </p>
-              <ul>
-                <li>你可以使用<a style="color:blue;" target="_blank" href="${LC_COPY_HTML_PLUGIN}">lc-to-markdown-txt-html</a> 来复制题单 </li>
-                <li><a style="color:red;" target="_blank" href="${EN_SOLUTION_DEMO}">查看美服题单示例</a> </li>
-              <ul>
-             <div>`,
-        "提示",
-        {
-          dangerouslyUseHTMLString: true,
-          showCancelButton: true,
-          cancelButtonText: "下次再说",
-          confirmButtonText: "不再提示"
-        }
-      ).then((e) => {
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"], "NO");
-      }).catch((e) => {
-        if (e == "cancel") {
-          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"]) == "OK_1";
-          ElementPlus.ElMessage.warning({
-            message: "下次切换到美服环境提示"
-          });
-        }
-      });
-    }
-  }
-  function update_version() {
-    _GM_registerMenuCommand(`更新脚本🔗`, () => {
-      ElementPlus.ElMessageBox.alert(
-        `<div>
-              <p>📣 提示:最近油猴需要科学工具才能访问，如果你使用油猴，可以到脚本猫中找到源代码，复制覆盖当前脚本也能更新  </p>
-              <br/>
-              <p><a style="color:blue;" target="_blank" href="https://scriptcat.org/zh-CN/script-show-page/1967/"> 脚本猫🐱 </a></p>
-              <p><a style="color:blue;" target="_blank" href="https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution"> 油猴🐒 </a>【需要科学工具访问】</p>
-              <p><a style="color:blue;" target="_blank" href="https://gfork.dahi.icu/zh-CN/scripts/501134/"> 油猴镜像🐒  </a> 【不保证镜像存在】</p>
-              <p><a style="color:blue;" target="_blank" href="https://github.com/wuxin0011/tampermonkey-script/blob/main/0x3f-leetcode/dist/0x3f-leetcode-problems.js"> github 源代码更新 </a> 【最直接方式】</p>
-             
-             <div>`,
-        "更新☕",
-        {
-          dangerouslyUseHTMLString: true,
-          showCancelButton: true,
-          cancelButtonText: "取消",
-          confirmButtonText: "确认"
-        }
-      );
-    }, { title: "点击更新更新脚本" });
-  }
-  function stop_disscuss_command() {
-    if (isLeetCodeCircleUrl()) {
-      let is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], true, String.name);
-      is_stop = is_stop != "false" && is_stop != false;
-      if (is_stop) {
-        _GM_addStyle(".t6Fde{ display:none !important;}");
-      }
-      if (isDev()) {
-        console.log("is_stop ", is_stop);
-      }
-      _GM_registerMenuCommand(`${is_stop ? "开启" : "关闭"}右侧讨论区📣`, () => {
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], !is_stop);
-        window.location.reload();
-      }, { title: "如果认为右侧讨论区太难看可以直接屏蔽😅" });
-    }
-  }
   const _hoisted_1 = { class: "dialog-footer" };
   const _hoisted_2 = { class: "processs-flex" };
   const _hoisted_3 = { style: { "text-align": "center", "color": "#121212" } };
@@ -1136,7 +1366,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         } else if (type == 3) {
           infos.sort((info1, info2) => computeProcess(info2.ac, info2.tot) - computeProcess(info1.ac, info1.tot));
         }
-        infos.unshift({ "title": "灵茶题单完成情况", "link": TARGET_URL, "tot": tot, "ac": ac, "id": 67108863 });
+        infos.unshift({ "title": "灵茶题单完成情况", "link": TARGET_URL, "tot": tot, "ac": ac, "id": 67108863, "version": 1 });
         return infos;
       });
       const rowIsDisabled = vue.computed(() => (info2) => asyncButtonLoad.value || info2 && info2.link == TARGET_URL);
@@ -1369,7 +1599,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   if (asyncButtonLoadBreak.value) {
                     break;
                   }
-                  await sleep(80);
+                  await sleep(20);
                   let ID2 = info2.titleSlug;
                   let key = `${info2.origin}`;
                   let origin = map.get(key);
@@ -1469,7 +1699,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             modelValue: dialogFormVisible.value,
             "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => dialogFormVisible.value = $event),
             title: `${info.status == "add" ? "添加" : "编辑"}`,
-            width: "400"
+            width: "700"
           }, {
             footer: vue.withCtx(() => [
               vue.createElementVNode("div", _hoisted_1, [
@@ -1987,7 +2217,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       };
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-35776517"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-3d821394"]]);
   const cssLoader = (e) => {
     const t = GM_getResourceText(e);
     return GM_addStyle(t), t;
@@ -2029,7 +2259,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }, { title: "对于不想看到排行榜的可以使用此功能 默认开启" });
   }
   const local_url$1 = window.location.href;
-  let loadID$1 = 0;
+  let loadID = 0;
   let submitCnt = 0;
   let submitbutton = null;
   function watchDom(dom) {
@@ -2048,7 +2278,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     });
   }
   function handler() {
-    loadID$1++;
+    loadID++;
     let findSubmitButton = function(sel) {
       if (!sel) return null;
       return Array.from(document.querySelectorAll(sel && { length: 0 })).find((e) => {
@@ -2065,7 +2295,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       submitbutton.addEventListener("click", () => {
         submitProblems(local_url$1, 10 * 1e3);
       });
-    } else if (loadID$1 < 10) {
+    } else if (loadID < 10) {
       setTimeout(() => {
         handlerNotFound();
       }, 3e3);
@@ -2096,7 +2326,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                 watchSaveStatus(ID2, status);
               }
               const cache = Cache.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
-              if (cache[ID] == null || cache[Id] == void 0) {
+              if (cache[ID] == "null" || cache[ID] == null || cache[Id] == void 0) {
                 submitProblems(local_url$1);
               }
             });
@@ -2114,8 +2344,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   const local_url = window.location.href;
   const randomProblemKey = () => Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"]);
   let Container = null;
-  Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_button_is_none__"], true, Boolean.name);
-  if (isProblem() || isLeetCodeCircleUrl()) {
+  if (isProblem() || isLeetCodeCircleUrl() || isHome()) {
+    if (isDev()) {
+      console.log("isHome================>");
+    }
     const start = () => {
       Container = document.createElement("div");
       const body = document.querySelector("body");
@@ -2127,7 +2359,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     const VueApp = vue.createApp(App);
     VueApp.use(ElementPlus).mount(dom);
   }
-  if (isProblem() || isLeetCodeCircleUrl()) {
+  if (isProblem() || isLeetCodeCircleUrl() || isHome()) {
     _GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: "随机一道题目，你可以通过ctrl+atl+j显示一道题目" });
     _GM_registerMenuCommand(`${randomProblemKey() ? "关闭" : "启用"} 随机题目快捷键 ☕`, () => {
       Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
@@ -2144,26 +2376,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       });
     }
   }
-  let loadID = 0;
   async function run() {
-    loadID++;
     if (isProblem(local_url)) {
       await sleep(3e3);
-      if (isProblem(local_url) && loadID == 1) {
-        submitProblems(local_url);
-      }
     } else if (isLeetCodeCircleUrl(local_url)) {
       stop_disscuss_command();
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
         Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();
       }, { title: "AC标记安装位置，默认左侧，刷新生效" });
-      _GM_registerMenuCommand(`清空题目状态缓存 🚀`, () => {
-        Message("确认清空题目状态缓存", () => {
-          deleteAllACCountKeys();
-          window.location.reload();
-        });
-      }, { title: "如果题目状态出现问题，可以试试,一般情况下不建议使用" });
       _GM_registerMenuCommand(`同步题目状态 🚀`, () => {
         Message("确认同步题目状态", async () => {
           await addProcess(true, void 0, true);
@@ -2216,11 +2437,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       });
     }
   }
-  tips_message();
-  update_version();
-  watchSubmit();
-  run();
-  startStopRanking();
-  handlerScore();
+  async function startMain() {
+    for (let callback of [showProblemSolve, tips_message, update_version, watchSubmit, run, startStopRanking, handlerScore, resetProblemStatus]) {
+      try {
+        callback();
+      } catch (_) {
+        if (isDev()) {
+          console.error(_);
+        }
+      }
+    }
+  }
+  startMain();
 
 })(ElementPlus, Vue);

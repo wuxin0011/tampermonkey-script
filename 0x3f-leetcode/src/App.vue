@@ -21,11 +21,13 @@ import {
   getAcCountKey,
   randomProblem,
   githubProblem,
-  old_url_map
+  old_url_map,
+  resetProblemStatus
 } from './utils/problems'
+
 import { isHttp, isLeetCodeCircleUrl, isDev, sleep } from './utils'
 
-const TARGET_URL = 'https://leetcode.cn/u/endlesscheng/'
+const TARGET_URL = 'https://leetcode.cn/u/endlesscheng/';
 
 const fromData = reactive(initObj())
 const isTest = false
@@ -72,7 +74,7 @@ let urlsData = computed(() => {
     // 完成度排序
     infos.sort((info1, info2) => computeProcess(info2.ac, info2.tot) - computeProcess(info1.ac, info1.tot))
   }
-  infos.unshift({ 'title': '灵茶题单完成情况', 'link': TARGET_URL, 'tot': tot, 'ac': ac, 'id': 0x3ffffff })
+  infos.unshift({ 'title': '灵茶题单完成情况', 'link': TARGET_URL, 'tot': tot, 'ac': ac, 'id': 0x3ffffff,'version':1 })
   return infos
 })
 
@@ -359,7 +361,7 @@ const asyncProblemStatus = async (row = {}) => {
             if (asyncButtonLoadBreak.value) {
               break
             }
-            await sleep(80)
+            await sleep(20)
             let ID = info.titleSlug
             let key = `${info.origin}`
             let origin = map.get(key)
@@ -445,6 +447,10 @@ const asyncProblemStatus = async (row = {}) => {
 const q1 = ref(false)
 const q2 = ref(false)
 
+const restProblemStatus = (info)=> {
+    
+}
+
 </script>
 
 <template>
@@ -452,7 +458,7 @@ const q2 = ref(false)
     <el-dialog v-model="q1">
       <Q1></Q1>
     </el-dialog>
-    <el-dialog v-model="dialogFormVisible" :title="`${info.status == 'add' ? '添加' : '编辑'}`" width="400">
+    <el-dialog v-model="dialogFormVisible" :title="`${info.status == 'add' ? '添加' : '编辑'}`" width="700">
       <el-form>
         <el-form-item label="标题" :label-width="formLabelWidth">
           <el-input v-model="info.title" autocomplete="off" />
@@ -557,13 +563,10 @@ const q2 = ref(false)
         </el-table-column>
         <el-table-column label="进度" width="70" align="center">
           <template #default="scope">
-            <el-link @click="showProblemsInfo(scope.row)" type="warning" :underline="false"> {{ scope?.row?.tot == 0 ? 0
-              :
-              `${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}</el-link>
+            <el-link @click="showProblemsInfo(scope.row)" type="warning" :underline="false"> {{ scope?.row?.tot == 0 ? 0:`${computeProcess(scope?.row?.ac, scope?.row?.tot)}%` }}</el-link>
 
           </template>
         </el-table-column>
-
         <el-table-column label="操作" width="200px" align="center">
           <template #default="scope">
             <el-button :loading="scope.row.loading" @click="asyncProblemStatus(scope.row)" size="small" type="success"

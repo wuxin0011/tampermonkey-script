@@ -77,6 +77,18 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
 
 `
 
+
+export const resetSVG = (size = 20) => `
+<svg width="${size}px" height="${size}px" style="${svg_css_style()} 'cursor':'pointer'; " viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><path d="m4.5 1.5c-2.4138473 1.37729434-4 4.02194088-4 7 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"/><path d="m4.5 5.5v-4h-4"/></g></svg>
+
+`
+export const updateSVG = (size = 20) =>
+`
+<svg width="${size}px" height="${size}px" style="${svg_css_style()} 'cursor':'pointer'; " viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<path d="M16.592 1.152c-0.053-0.010-1.321-0.244-2.981-0.244-2.105 0-3.828 0.366-5.125 1.088-1.518-0.765-3.264-1.152-5.196-1.152-1.681 0-2.866 0.302-2.915 0.315l-0.375 0.098 0.001 13.906 0.624-0.161c0.011-0.002 1.12-0.283 2.665-0.283 1.447 0 2.771 0.24 3.96 0.703v0.828h2.5v-0.856c1.281-0.488 2.747-0.611 3.86-0.611 1.562 0 2.786 0.225 2.798 0.227l0.592 0.11v-13.891l-0.408-0.077zM1 13.907v-11.858c0.451-0.084 1.277-0.205 2.29-0.205 1.761 0 3.339 0.36 4.71 1.044v11.776c-1.403-0.617-2.977-0.945-4.71-0.945-0.969 0-1.773 0.101-2.29 0.188zM16 13.938c-0.536-0.070-1.393-0.154-2.39-0.154-1.848 0-3.381 0.298-4.61 0.855v-11.773c1.422-0.78 3.271-0.958 4.61-0.958 1.023 0 1.902 0.097 2.39 0.164v11.866z" fill="#121212" />
+</svg>
+`
+
 export const problemsNo = () => install_pos() ? `
 <svg width="${width}px" height="${height}px" style="${svg_css_style()}" status="null" title="未尝试" viewBox="0 0 24 24" id="meteor-icon-kit__regular-circle" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12Z" fill="#758CA3"/></svg>
 `
@@ -84,11 +96,7 @@ export const problemsNo = () => install_pos() ? `
     ``
 
 
-
-
-
-
-export const createStatus = (status, link) => {
+export const createStatus = (status, link,removeSvg=false) => {
     let node;
     status == null ? 'null' : status
     if (!link) {
@@ -98,6 +106,12 @@ export const createStatus = (status, link) => {
     node = link instanceof HTMLAnchorElement ? link.parentElement : link
     if (node) {
         node.status = status
+    }
+    if(removeSvg) {
+        let svg = node.querySelector('svg')
+        if(svg){
+            svg.remove()
+        }
     }
     let installSVG = ''
     // add v.0.5.2 竞赛

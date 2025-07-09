@@ -1,9 +1,10 @@
 import Cache from './cache'
 import { CUR_URL, EN_URL, isBilibili, isContest, isDev, isEnglishENV, isLeetCodeCircleUrl, isProblem, sleep, ZH_URL } from './index'
-import { createStatus } from './status'
+import { createStatus, resetSVG, updateSVG } from './status'
 import { getProblemAcInfo, getProblemsJSON, PostLeetCodeApi,getRating } from '../api/index'
 import { ElMessage } from 'element-plus'
 import { GM_registerMenuCommand } from '$';
+import { Message } from './message'
 const inf = 5000  // 目前最大分数为3100
 const mi = 800  // 目前最小分数为1100 
 
@@ -39,18 +40,18 @@ export const STATUS = {
 }
 
 export const defaultUrls = [
-    { 'title': '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法', 'link': 'https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/', 'tot': 0, 'ac': 0, 'id': 1, 'disabled': false, 'select': true },
-    { 'title': '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）', 'link': 'https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/', 'tot': 0, 'ac': 0, 'id': 2, 'disabled': false, 'select': true },
-    { 'title': '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）', 'link': 'https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/', 'tot': 0, 'ac': 0, 'id': 3, 'disabled': false, 'select': true },
-    { 'title': '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）', 'link': 'https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/', 'tot': 0, 'ac': 0, 'id': 4, 'disabled': false, 'select': true },
-    { 'title': '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）', 'link': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/', 'tot': 0, 'ac': 0, 'id': 5, 'disabled': false, 'select': true },
-    { 'title': '网格图（DFS/BFS/综合应用)', 'link': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/', 'tot': 0, 'ac': 0, 'id': 6, 'disabled': false, 'select': true },
-    { 'title': '单调栈（矩形面积/贡献法/最小字典序', 'link': 'https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/', 'tot': 0, 'ac': 0, 'id': 7, 'disabled': false, 'select': true },
-    { 'title': '二分算法（二分答案/最小化最大值/最大化最小值/第K小', 'link': 'https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/', 'tot': 0, 'ac': 0, 'id': 8, 'disabled': true, 'select': true },
-    { 'title': '滑动窗口（定长/不定长/多指针', 'link': 'https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/', 'tot': 0, 'ac': 0, 'id': 9, 'disabled': false, 'select': true },
-    { 'title': '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）', 'link': 'https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/', 'tot': 0, 'ac': 0, 'id': 10, 'disabled': false, 'select': true },
-    { 'title': '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）', 'link': 'https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/', 'tot': 0, 'ac': 0, 'id': 11, 'disabled': false, 'select': true },
-    { 'title': '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）', 'link': 'https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/', 'tot': 0, 'ac': 0, 'id': 12, 'disabled': false, 'select': true },
+    { 'title': '数学算法（数论/组合/概率期望/博弈/计算几何/随机算法', 'link': 'https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/', 'tot': 0, 'ac': 0, 'id': 1, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）', 'link': 'https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/', 'tot': 0, 'ac': 0, 'id': 2, 'disabled': false, 'select': true,'version':1 },
+    { 'title': '动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）', 'link': 'https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/', 'tot': 0, 'ac': 0, 'id': 3, 'disabled': false, 'select': true,'version':1 },
+    { 'title': '图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）', 'link': 'https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/', 'tot': 0, 'ac': 0, 'id': 4, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）', 'link': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/', 'tot': 0, 'ac': 0, 'id': 5, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '网格图（DFS/BFS/综合应用)', 'link': 'https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/', 'tot': 0, 'ac': 0, 'id': 6, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '单调栈（矩形面积/贡献法/最小字典序', 'link': 'https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/', 'tot': 0, 'ac': 0, 'id': 7, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '二分算法（二分答案/最小化最大值/最大化最小值/第K小', 'link': 'https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/', 'tot': 0, 'ac': 0, 'id': 8, 'disabled': true, 'select': true ,'version':1},
+    { 'title': '滑动窗口（定长/不定长/多指针', 'link': 'https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/', 'tot': 0, 'ac': 0, 'id': 9, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）', 'link': 'https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/', 'tot': 0, 'ac': 0, 'id': 10, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）', 'link': 'https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/', 'tot': 0, 'ac': 0, 'id': 11, 'disabled': false, 'select': true ,'version':1},
+    { 'title': '字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）', 'link': 'https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/', 'tot': 0, 'ac': 0, 'id': 12, 'disabled': false, 'select': true ,'version':1},
     // { 'title': '灵茶题单完成情况', 'link': 'https://leetcode.cn/u/endlesscheng/', 'tot': 0, 'ac': 0, 'id': 0x3f3f3f3f,'disabled':true,'select':false },
 ]
 
@@ -128,6 +129,8 @@ function loadProblems() {
 }
 
 
+
+
 export function handlerProblem(data) {
 
     try {
@@ -164,7 +167,6 @@ export function handlerProblem(data) {
             let Nohidden = isShow(d.textContent, min, max)
             d.style.display = Nohidden ? '' : 'none'
             
-            
             if (!Nohidden) {
                 continue;
             }
@@ -191,6 +193,9 @@ export function handlerProblem(data) {
 }
 
 
+
+
+
 export function computeAcInfo(saveUrls = [], deleteOk = true) {
     let infos = []
     let set = new Set()
@@ -211,8 +216,8 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
             let o = Cache.get(getAcCountKey(u.link))
             u['ac'] = isNaN(o['ac']) ? 0 : parseInt(o['ac'])
             u['tot'] = isNaN(o['tot']) ? 0 : parseInt(o['tot'])
+            u['version'] = isNaN(u['version']) ? 1 : parseInt(u['version'])
             set.add(u.link)
-
         } catch (e) {
 
         }
@@ -226,7 +231,9 @@ export function computeAcInfo(saveUrls = [], deleteOk = true) {
             saveUrls.push(info)
         }
     }
-    // console.log('a:', infos)
+    if(isDev()){
+        console.log('{{ scope.row }}',infos)
+    }
     return infos
 }
 
@@ -335,6 +342,9 @@ async function queryStatus(ID = '', cache = {}, cur = undefined, watch = false) 
         }
     }
 }
+
+
+
 export async function addProcess(reload = true, doms = undefined, asyncAc = false) {
     let problems_doms = Array.isArray(doms) ? doms : loadProblems()
     const cache = getLocalProblemStatus()
@@ -360,31 +370,28 @@ export async function addProcess(reload = true, doms = undefined, asyncAc = fals
         }
 
 
-        // console.log('query ID', cache[ID])
-
         if (!cache[ID] || cache[ID] != STATUS['AC'] && asyncAc) {
             // 查询的两个条件
             // 1>首先检查本地是否有缓存 没用缓存查询
             // 2>如果本地有题目状态时不是AC但是需要同步也需要操作
-            await sleep(50)
+            await sleep(20)
             await queryStatus(ID, cache, cur, false)
             query_cnt++
             if (query_cnt % 10 == 0) {
                 Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
             }
         } else {
+            
             let status = cache[ID]
             uid++
             createStatus(status, cur)
         }
-
     }
     if (isDev()) {
         console.log('cache num :', uid, ',tot:', A.length)
     }
     getProcess()
     Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], cache)
-
     let other = Array.from(document.querySelectorAll(`${linkCssSelector_pre()} p>a`)).filter(item => item && item instanceof HTMLAnchorElement && (isBilibili(item.href)))
     for (let i = 0; i < other.length; i++) {
         createStatus("null", other[i])
@@ -425,6 +432,7 @@ export const watchSaveStatus = (ID, status) => {
             'status': status
         }))
     }
+    showProblemSolve()
 }
 
 
@@ -592,7 +600,6 @@ export async function githubProblem(not_filter_member = true) {
     let mapInfo = new Map()
     let totInfo = []
     for (let info of allProbmems) {
-
         // if(isDev()) {
         //     console.log('url = ',info?.problemUrl,'check1',!info?.problemUrl || !set.has(info?.problemUrl) || !Array.isArray(info.problems) || info.problems.length == 0,'xxx',info.problems)
         // }
@@ -779,5 +786,210 @@ export async function handlerScore() {
             problemDom.textContent = score
         }
         
+    }
+}
+
+
+
+// 重置题目进度
+// 2025/07/09
+const LANG_LIST = ['java','cpp','python','python3','go','javascript','js','c','C','C++','ts','typescript','TypeScript','Rust','rust','Go','php','PHP','C#',
+    'Python3','Java','Swift','swift','Kotion','kotion','dart','Dart','Ruby','ruby','scala','Scala','Racket','racket','Erlang','erlang','Elixir','elixir','Cangjie','cangjie'
+]
+
+
+export function showProblemSolve() {
+    let url = window.location.href
+    if(!isProblem(url)) return
+    let t = document.querySelector('#qd-content .text-body.flex.flex-none.items-center')
+    if(isDev()) {
+        console.log('show',t.textContent)
+    }
+    if(!t) return
+    let c = getLocalProblemStatus()
+    let id = getId(url)
+    if((c[id] == 'null' || c[id] == null) && t.textContent == '已解答') {
+        // console.log('none')
+        t.style.display = 'none'
+    }else{
+        t.style.display = 'inline-block'
+    }
+}
+
+export async function resetProblemStatus(url,click) {
+
+
+
+    showProblemSolve()
+
+    
+
+    function deleteAcLocalStorage(title) {
+        try{
+            let No = title.match(/\d+/)[0]
+            let keys = []
+            for (let lang of LANG_LIST) {
+                keys.push(`${No}_0_${lang}`)
+            }
+            for(let key of keys) {
+                window.localStorage.removeItem(key)
+            }
+        }catch(_){}
+    }
+
+    async function fun(discuss_url,force = false) {
+        let cache = getLocalProblemStatus()
+        if(isLeetCodeCircleUrl()) {
+            let problems_doms = loadProblems()
+            for (let i = 0; i < problems_doms.length; i++) {
+                let cur = problems_doms[i].parentElement
+                if (!(cur instanceof HTMLElement)) {
+                    continue;
+                }
+                const ID = getId(problems_doms[i]?.href)
+                
+                if(!ID) continue;
+                if(force) {
+                    delete cache[ID]
+                }else{
+                    cache[ID] = "null"
+                    deleteAcLocalStorage(problems_doms[i].textContent)
+                }
+            }
+        }else{
+            let tot = await githubProblem()
+            tot = tot[0]
+            for(let p of tot) {
+                if(p['problemUrl'].indexOf(discuss_url) == -1) continue;
+                for(let info of p['problems']) {
+                    if(!info?.titleSlug) continue
+                    let ID = titleSlug
+                    if(force) {
+                        delete cache[ID]
+                    }else{
+                        cache[ID] = "null"
+                        deleteAcLocalStorage(info?.title)
+                    }
+                }
+                break
+            }
+        }
+
+        Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'],cache)
+    }
+
+    
+    
+    if(isLeetCodeCircleUrl()) {
+        GM_registerMenuCommand(`重置进度 ⏱`, () => {
+            Message('确认重置进度?该操作不可恢复', async () => {
+              await fun(window.location.href,false);
+              window.location.reload()
+            })
+          }, { title: '如果需要重做题单，可以执行该操作' })
+
+        
+        let tag = document.querySelector('.flex .flex-wrap.gap-1 .no-underline')
+        if(!tag) {
+            await sleep(3000)
+            tag = document.querySelector('.flex .flex-wrap.gap-1 .no-underline')
+        }
+        if(tag) {
+            let p = tag.parentElement
+            function createTag() {
+                let a = document.createElement('a')
+                a.className =  `no-underline truncate bg-sd-accent text-sd-muted-foreground hover:text-sd-foreground dark:hover:text-sd-foreground items-center rounded-full px-2 py-1 text-xs`
+                return a
+            }
+            let reset = createTag()
+            reset.innerHTML = resetSVG(16)
+            reset.style.cursor='pointer'
+            reset.title = '重置题单进度，如果需要多刷可以试试'
+            reset.addEventListener('click',async (e)=>{
+                    e.preventDefault()
+                    Message('确认重置进度?该操作不可恢复', async () => {
+                        await fun(window.location.href,false);
+                        window.location.reload()
+                    })
+             })
+             p.appendChild(reset)
+
+            let update = createTag()
+            // update.textContent = '🚀'
+            update.innerHTML = updateSVG(16)
+            update.title = '强制更新题单,该操作会将历史ac记录统计其中'
+            update.style.cursor='pointer'
+            update.addEventListener('click',async (e)=>{
+                    e.preventDefault()
+                    Message('确认强制更新进度？', async () => {
+                        await fun(window.location.href,true);
+                        window.location.reload()
+                    })
+             })
+             p.appendChild(update)
+        }
+        let dom = document.querySelector('.break-words')
+
+        if(dom) {
+            let titles = Array.from(dom.querySelectorAll('h2'))
+            let uls = Array.from(dom.querySelectorAll('ul'))
+            if(isDev()) {
+                console.log('titles',titles.length,'uls',uls.length)
+            }
+            function get(index,runClear) {
+                if(index + 1>=titles.length)return
+                let curCache = getLocalProblemStatus()
+                const currentH2 = titles[index];
+                const nextH2 = titles[index + 1];
+                const aLinks = [];
+                let nextSibling = currentH2.nextElementSibling;
+                while (nextSibling && nextSibling !== nextH2) {
+                    if(nextSibling.tagName === 'A') {
+                        if(isProblem(nextSibling.href)) {
+                            aLinks.push(nextSibling);
+                        }
+                    }else{
+                        for(let a of Array.from(nextSibling.querySelectorAll('a') ?? {length:0})) {
+                            if(a && isProblem(a.href)) {
+                                aLinks.push(a);
+                            }
+                        }
+                    }
+                    nextSibling = nextSibling.nextElementSibling;
+                }
+                if(aLinks.length> 0 && runClear) {
+                    for (let i = 0; i < aLinks.length; i++) {
+                        const ID = getId(aLinks[i]?.href)
+                        if(!ID) continue;
+                        curCache[ID] = 'null'
+                        createStatus('null', aLinks[i],true) 
+                        deleteAcLocalStorage(aLinks[i].textContent)
+                    }
+                    Cache.set(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'],curCache)
+                }
+                return aLinks
+                
+            }
+            for(let i = 0;i < titles.length - 1;i++) {
+                let aLinks = get(i,false)
+                if(aLinks.length != 0) {
+                    const span = document.createElement('span')
+                    span.style.cursor='pointer'
+                    span.style.marginLeft='20px'
+                    span.title = `重刷《${titles[i].textContent}》章节 `
+                    span.addEventListener('click',()=>{
+                        Message(`确认${span.title}进度?该操作不可恢复`,() => {
+                            get(i,true)
+                        })
+                    })
+                    span.innerHTML = resetSVG(17)
+                    titles[i].appendChild(span)
+                }
+            }
+        }
+    }
+
+    if(click) {
+        await fun(url,false)
     }
 }

@@ -11,10 +11,12 @@ import {
   isLeetCodeCircleUrl,
   isProblem,
   sleep,
-  isZH
+  isZH,
+  isHome,
+  isDev
 } from './utils/index';
 import { Message, tips_message, update_version,stop_disscuss_command } from './utils/message';
-import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, deleteAllACCountKeys, initObj, initUrls, install_pos, randomProblem, submitProblems,handlerScore } from './utils/problems';
+import { __0X3F_PROBLEM_KEYS__, isEnglish, installEnglishLinkChangeCommand, addProcess, resetProblemStatus, initObj, initUrls, install_pos, randomProblem, showProblemSolve,handlerScore } from './utils/problems';
 
 import {
   startStopRanking
@@ -28,16 +30,15 @@ const randomProblemKey = () => Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_
 
 
 let Container = null
-let ok = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_button_is_none__'], true, Boolean.name)
-
-
-
-
-
-
 
 // 安装操作容器
-if (isProblem() || isLeetCodeCircleUrl()) {
+// 题目页
+// 讨论发布页
+// 主页
+if (isProblem() || isLeetCodeCircleUrl() || isHome() ) {
+  if(isDev()) {
+    console.log('isHome================>')
+  }
   const start = () => {
     Container = document.createElement('div');
     const body = document.querySelector('body')
@@ -55,7 +56,7 @@ if (isProblem() || isLeetCodeCircleUrl()) {
 
 
 // 安装命令
-if ((isProblem()) || isLeetCodeCircleUrl()) {
+if ((isProblem()) || isLeetCodeCircleUrl() || isHome()) {
 
   GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: '随机一道题目，你可以通过ctrl+atl+j显示一道题目' })
 
@@ -85,7 +86,7 @@ async function run() {
     // 首次加载访问
     await sleep(3000)
     if (isProblem(local_url) && loadID == 1) {
-      submitProblems(local_url)
+      // submitProblems(local_url)
     }
 
 
@@ -121,13 +122,6 @@ async function run() {
       window.location.reload()
     }, { title: 'AC标记安装位置，默认左侧，刷新生效' })
 
-
-    GM_registerMenuCommand(`清空题目状态缓存 🚀`, () => {
-      Message('确认清空题目状态缓存', () => {
-        deleteAllACCountKeys()
-        window.location.reload()
-      })
-    }, { title: '如果题目状态出现问题，可以试试,一般情况下不建议使用' })
 
 
 
@@ -195,14 +189,17 @@ async function run() {
 
 }
 
-tips_message()
-update_version()
-watchSubmit()
-run()
-startStopRanking()
-handlerScore()
+async function startMain() {
+  for(let callback of [showProblemSolve,tips_message,update_version,watchSubmit,run,startStopRanking,handlerScore,resetProblemStatus]) {
+    try{callback()}catch(_){
+      if(isDev()) {
+        console.error(_)
+      }
+    }
+  }
+}
 
-
+startMain()
 
 
 

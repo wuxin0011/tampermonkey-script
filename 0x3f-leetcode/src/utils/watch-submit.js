@@ -88,7 +88,7 @@ export function watchSubmit() {
                             watchSaveStatus(ID, status)
                         }
                         const cache = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
-                        if (cache[ID] == null || cache[Id] == undefined) {
+                        if (cache[ID] == 'null' || cache[ID] == null || cache[Id] == undefined) {
                             submitProblems(local_url)
                         }
                     });
