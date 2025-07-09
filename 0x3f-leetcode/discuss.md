@@ -13,7 +13,7 @@
    - [lccn.lbao.site](https://lccn.lbao.site/)
      第三方插件这么多, 社区也蛮活跃的，感谢大佬们的贡献，但目前没有灵佬说的这个需求插件，这个功能实现起来也简单，我也尽一点微薄之力,上周其实就发布了，但是测试阶段有些bug😥
    
-3. 最后为了感谢灵佬，插件命名为 [0x3f-problem-solution](https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution) 
+3. 最后为了感谢灵佬，插件命名为 [0x3f-problem-solution](https://greasyfork.org/zh-CN/scripts/501134-0x3f-problem-solution)，如果链接访问不了这里有[备份😺](https://scriptcat.org/zh-CN/script-show-page/1967)
    
 ## 功能介绍
 
@@ -25,25 +25,27 @@
 
 ps : 绿色表示AC题目，黄色表示尝试过
 
-### 其他功能
 
-上面单个功能可能太单一，因此补充了其他功能
+> 补充: 经过反馈大家更喜欢在左侧
 
-![image.png](https://pic.leetcode.cn/1722003936-MFQfbt-image.png){:width=400}
-
-截图就见名之意文字就不用描述了……
-
-效果预览
-
-![image.png](https://pic.leetcode.cn/1722004004-esAAox-image.png){:width=400}
+![image.png](https://pic.leetcode.cn/1722164433-lWzVmE-image.png){:width=400}
 
 
-如果不想显示按钮可以在这里关闭哦
+> 同步效果展示
+
+![image.png](https://pic.leetcode.cn/1728766096-oQkWPB-image.png){:width=400}
 
 
-![image.png](https://pic.leetcode.cn/1722004120-LrwLne-image.png){:width=400}
+## 更新日志
 
-
+- 2025-07-09 新增题单重刷
+- 2025-07-05 补充题目分数显示
+- 2025-06-20 修复屏蔽ac问题之后刷新显示问题
+- 2025-05-04 修复新ui
+- 2024-10-12 随机一题
+- 2024-10-08 添加进度统计功能
+- 2024-07-28 修改ac标记自定义位置
+- 2024-07-19 第一个版本发布
 
 ## 问题
 
@@ -54,4 +56,4 @@ ps : 绿色表示AC题目，黄色表示尝试过
 
 ## 更多插件
 
-- [lc-to-markdown-txt-html](https://greasyfork.org//zh-CN/scripts/491969-lc-to-markdown-txt-html)
+- [lc-to-markdown-txt-html](https://greasyfork.org/zh-CN/scripts/491969-lc-to-markdown-txt-html)
