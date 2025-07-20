@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "7/13/2025, 9:01:11 AM",
+    "createTime": "7/20/2025, 9:02:27 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -1941,7 +1941,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "7/13/2025, 9:01:13 AM",
+    "createTime": "7/20/2025, 9:02:29 AM",
     "problems": [
       {
         "title": "讲解",
@@ -5637,7 +5637,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "7/13/2025, 9:01:15 AM",
+    "createTime": "7/20/2025, 9:02:31 AM",
     "problems": [
       {
         "title": "讲解",
@@ -5841,6 +5841,13 @@
         "member": false,
         "score": 1573,
         "titleSlug": "minimum-falling-path-sum"
+      },
+      {
+        "title": "3603. 交替方向的最小路径代价 II",
+        "url": "https://leetcode.cn/problems/minimum-cost-path-with-alternating-directions-ii/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-cost-path-with-alternating-directions-ii"
       },
       {
         "title": "2684. 矩阵中移动的最大次数",
@@ -8055,6 +8062,13 @@
         "titleSlug": "maximum-number-of-moves-to-kill-all-pawns"
       },
       {
+        "title": "3615. 图中的最长回文路径",
+        "url": "https://leetcode.cn/problems/longest-palindromic-path-in-graph/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-path-in-graph"
+      },
+      {
         "title": "3149. 找出分数最低的排列",
         "url": "https://leetcode.cn/problems/find-the-minimum-cost-array-permutation/",
         "member": false,
@@ -10047,7 +10061,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "7/13/2025, 9:01:17 AM",
+    "createTime": "7/20/2025, 9:02:32 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -11062,7 +11076,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "7/13/2025, 9:01:18 AM",
+    "createTime": "7/20/2025, 9:02:34 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -11811,7 +11825,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "7/13/2025, 9:01:20 AM",
+    "createTime": "7/20/2025, 9:02:35 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12560,7 +12574,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "7/13/2025, 9:01:21 AM",
+    "createTime": "7/20/2025, 9:02:37 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -12903,7 +12917,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "7/13/2025, 9:01:22 AM",
+    "createTime": "7/20/2025, 9:02:38 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -13764,7 +13778,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "7/13/2025, 9:01:24 AM",
+    "createTime": "7/20/2025, 9:02:40 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -15304,7 +15318,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "7/13/2025, 9:01:26 AM",
+    "createTime": "7/20/2025, 9:02:42 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -17880,7 +17894,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "7/13/2025, 9:01:27 AM",
+    "createTime": "7/20/2025, 9:02:43 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -20709,13 +20723,41 @@
         "member": false,
         "score": 1541,
         "titleSlug": "fill-a-special-grid"
+      },
+      {
+        "title": "3307. 找出第 K 个字符 II",
+        "url": "https://leetcode.cn/problems/find-the-k-th-character-in-string-game-ii/",
+        "member": false,
+        "score": 2232,
+        "titleSlug": "find-the-k-th-character-in-string-game-ii"
+      },
+      {
+        "title": "880. 索引处的解码字符串",
+        "url": "https://leetcode.cn/problems/decoded-string-at-index/",
+        "member": false,
+        "score": 2010,
+        "titleSlug": "decoded-string-at-index"
+      },
+      {
+        "title": "3614. 用特殊操作处理字符串 II",
+        "url": "https://leetcode.cn/problems/process-string-with-special-operations-ii/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "process-string-with-special-operations-ii"
+      },
+      {
+        "title": "1545. 找出第 N 个二进制字符串中的第 K 位",
+        "url": "https://leetcode.cn/problems/find-kth-bit-in-nth-binary-string/",
+        "member": false,
+        "score": 1479,
+        "titleSlug": "find-kth-bit-in-nth-binary-string"
       }
     ]
   },
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "7/13/2025, 9:01:29 AM",
+    "createTime": "7/20/2025, 9:02:45 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
@@ -20765,6 +20807,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "repeated-substring-pattern"
+      },
+      {
+        "title": "2800. 包含三个字符串的最短字符串",
+        "url": "https://leetcode.cn/problems/shortest-string-that-contains-three-strings/",
+        "member": false,
+        "score": 1855,
+        "titleSlug": "shortest-string-that-contains-three-strings"
       },
       {
         "title": "3008. 找出数组中的美丽下标 II",
@@ -20886,6 +20935,13 @@
         "titleSlug": "number-of-ways-to-separate-numbers"
       },
       {
+        "title": "模板代码",
+        "url": "https://leetcode.cn/problems/longest-palindromic-substring/solutions/2958179/mo-ban-on-manacher-suan-fa-pythonjavacgo-t6cx/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-substring"
+      },
+      {
         "title": "5. 最长回文子串",
         "url": "https://leetcode.cn/problems/longest-palindromic-substring/",
         "member": false,
@@ -20933,6 +20989,48 @@
         "member": false,
         "score": 2397,
         "titleSlug": "longest-palindrome-after-substring-concatenation-ii"
+      },
+      {
+        "title": "模板代码",
+        "url": "https://leetcode.cn/problems/longest-palindromic-substring/solutions/2958179/mo-ban-on-manacher-suan-fa-pythonjavacgo-t6cx/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-substring"
+      },
+      {
+        "title": "5. 最长回文子串",
+        "url": "https://leetcode.cn/problems/longest-palindromic-substring/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-substring"
+      },
+      {
+        "title": "2472. 不重叠回文子字符串的最大数目",
+        "url": "https://leetcode.cn/problems/maximum-number-of-non-overlapping-palindrome-substrings/",
+        "member": false,
+        "score": 2013,
+        "titleSlug": "maximum-number-of-non-overlapping-palindrome-substrings"
+      },
+      {
+        "title": "3504. 子字符串连接后的最长回文串 II",
+        "url": "https://leetcode.cn/problems/longest-palindrome-after-substring-concatenation-ii/",
+        "member": false,
+        "score": 2397,
+        "titleSlug": "longest-palindrome-after-substring-concatenation-ii"
+      },
+      {
+        "title": "3579. 字符串转换需要的最小操作数",
+        "url": "https://leetcode.cn/problems/minimum-steps-to-convert-string-with-operations/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-steps-to-convert-string-with-operations"
+      },
+      {
+        "title": "3615. 图中的最长回文路径",
+        "url": "https://leetcode.cn/problems/longest-palindromic-path-in-graph/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-path-in-graph"
       },
       {
         "title": "2156. 查找给定哈希值的子串",
