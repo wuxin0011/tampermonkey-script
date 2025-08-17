@@ -1892,6 +1892,17 @@
     "ContestID_zh": "第 430 场周赛"
   },
   {
+    "Rating": 2445.0201515301,
+    "ID": 3646,
+    "Title": "Next Special Palindrome Number",
+    "TitleZH": "下一个特殊回文数",
+    "TitleSlug": "next-special-palindrome-number",
+    "ContestSlug": "weekly-contest-462",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 462",
+    "ContestID_zh": "第 462 场周赛"
+  },
+  {
     "Rating": 2444.7192647604,
     "ID": 2949,
     "Title": "Count Beautiful Substrings II",
@@ -6490,6 +6501,17 @@
     "ContestID_zh": "第 103 场周赛"
   },
   {
+    "Rating": 2018.8785710598,
+    "ID": 3645,
+    "Title": "Maximum Total from Optimal Activation Order",
+    "TitleZH": "最优激活顺序得到的最大总和",
+    "TitleSlug": "maximum-total-from-optimal-activation-order",
+    "ContestSlug": "weekly-contest-462",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 462",
+    "ContestID_zh": "第 462 场周赛"
+  },
+  {
     "Rating": 2016.2085876254,
     "ID": 3008,
     "Title": "Find Beautiful Indices in the Given Array II",
@@ -10217,6 +10239,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 327",
     "ContestID_zh": "第 327 场周赛"
+  },
+  {
+    "Rating": 1775.4474231706,
+    "ID": 3644,
+    "Title": "Maximum K to Sort a Permutation",
+    "TitleZH": "排序排列",
+    "TitleSlug": "maximum-k-to-sort-a-permutation",
+    "ContestSlug": "weekly-contest-462",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 462",
+    "ContestID_zh": "第 462 场周赛"
   },
   {
     "Rating": 1774.8764591297,
@@ -22262,6 +22295,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 143",
     "ContestID_zh": "第 143 场双周赛"
+  },
+  {
+    "Rating": 1234.9818183966,
+    "ID": 3643,
+    "Title": "Flip Square Submatrix Vertically",
+    "TitleZH": "垂直翻转子矩阵",
+    "TitleSlug": "flip-square-submatrix-vertically",
+    "ContestSlug": "weekly-contest-462",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 462",
+    "ContestID_zh": "第 462 场周赛"
   },
   {
     "Rating": 1234.8049089605,
