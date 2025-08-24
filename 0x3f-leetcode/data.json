@@ -1804,6 +1804,17 @@
     "ContestID_zh": "第 318 场周赛"
   },
   {
+    "Rating": 2453.8851399002,
+    "ID": 3655,
+    "Title": "XOR After Range Multiplication Queries II",
+    "TitleZH": "区间乘法查询后的异或 II",
+    "TitleSlug": "xor-after-range-multiplication-queries-ii",
+    "ContestSlug": "weekly-contest-463",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 463",
+    "ContestID_zh": "第 463 场周赛"
+  },
+  {
     "Rating": 2451.1558771446,
     "ID": 3134,
     "Title": "Find the Median of the Uniqueness Array",
@@ -2209,6 +2220,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 421",
     "ContestID_zh": "第 421 场周赛"
+  },
+  {
+    "Rating": 2411.2349692232,
+    "ID": 3651,
+    "Title": "Minimum Cost Path with Teleportations",
+    "TitleZH": "带传送的最小路径成本",
+    "TitleSlug": "minimum-cost-path-with-teleportations",
+    "ContestSlug": "biweekly-contest-163",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 163",
+    "ContestID_zh": "第 163 场双周赛"
   },
   {
     "Rating": 2410.8337079997,
@@ -6127,6 +6149,17 @@
     "ContestID_zh": "第 35 场双周赛"
   },
   {
+    "Rating": 2038.7608654182,
+    "ID": 3654,
+    "Title": "Minimum Sum After Divisible Sum Deletions",
+    "TitleZH": "删除可整除和后的最小数组和",
+    "TitleSlug": "minimum-sum-after-divisible-sum-deletions",
+    "ContestSlug": "weekly-contest-463",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 463",
+    "ContestID_zh": "第 463 场周赛"
+  },
+  {
     "Rating": 2037.6527962599,
     "ID": 2116,
     "Title": "Check if a Parentheses String Can Be Valid",
@@ -8833,6 +8866,17 @@
     "ContestID_zh": "第 164 场周赛"
   },
   {
+    "Rating": 1853.6535583817,
+    "ID": 3650,
+    "Title": "Minimum Cost Path with Edge Reversals",
+    "TitleZH": "边反转的最小路径总成本",
+    "TitleSlug": "minimum-cost-path-with-edge-reversals",
+    "ContestSlug": "biweekly-contest-163",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 163",
+    "ContestID_zh": "第 163 场双周赛"
+  },
+  {
     "Rating": 1853.2804713723,
     "ID": 3639,
     "Title": "Minimum Time to Activate String",
@@ -11218,6 +11262,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 284",
     "ContestID_zh": "第 284 场周赛"
+  },
+  {
+    "Rating": 1715.6363607628,
+    "ID": 3649,
+    "Title": "Number of Perfect Pairs",
+    "TitleZH": "完美对的数目",
+    "TitleSlug": "number-of-perfect-pairs",
+    "ContestSlug": "biweekly-contest-163",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 163",
+    "ContestID_zh": "第 163 场双周赛"
   },
   {
     "Rating": 1714.992763701,
@@ -14254,6 +14309,28 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 69",
     "ContestID_zh": "第 69 场双周赛"
+  },
+  {
+    "Rating": 1556.7777620299,
+    "ID": 3652,
+    "Title": "Best Time to Buy and Sell Stock using Strategy",
+    "TitleZH": "按策略买卖股票的最佳时机",
+    "TitleSlug": "best-time-to-buy-and-sell-stock-using-strategy",
+    "ContestSlug": "weekly-contest-463",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 463",
+    "ContestID_zh": "第 463 场周赛"
+  },
+  {
+    "Rating": 1556.3092642778,
+    "ID": 3653,
+    "Title": "XOR After Range Multiplication Queries I",
+    "TitleZH": "区间乘法查询后的异或 I",
+    "TitleSlug": "xor-after-range-multiplication-queries-i",
+    "ContestSlug": "weekly-contest-463",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 463",
+    "ContestID_zh": "第 463 场周赛"
   },
   {
     "Rating": 1553.2232121523,
@@ -17697,6 +17774,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 98",
     "ContestID_zh": "第 98 场双周赛"
+  },
+  {
+    "Rating": 1395.9815411672,
+    "ID": 3648,
+    "Title": "Minimum Sensors to Cover Grid",
+    "TitleZH": "覆盖网格的最少传感器数目",
+    "TitleSlug": "minimum-sensors-to-cover-grid",
+    "ContestSlug": "biweekly-contest-163",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 163",
+    "ContestID_zh": "第 163 场双周赛"
   },
   {
     "Rating": 1395.9639246414,
