@@ -1386,6 +1386,17 @@
     "ContestID_zh": "第 212 场周赛"
   },
   {
+    "Rating": 2525.0244230374,
+    "ID": 3661,
+    "Title": "Maximum Walls Destroyed by Robots",
+    "TitleZH": "可以被机器人摧毁的最大墙壁数目",
+    "TitleSlug": "maximum-walls-destroyed-by-robots",
+    "ContestSlug": "weekly-contest-464",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 464",
+    "ContestID_zh": "第 464 场周赛"
+  },
+  {
     "Rating": 2521.5876597895,
     "ID": 3241,
     "Title": "Time Taken to Mark All Nodes",
@@ -4310,6 +4321,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 139",
     "ContestID_zh": "第 139 场周赛"
+  },
+  {
+    "Rating": 2187.3539422195,
+    "ID": 3660,
+    "Title": "Jump Game IX",
+    "TitleZH": "跳跃游戏 IX",
+    "TitleSlug": "jump-game-ix",
+    "ContestSlug": "weekly-contest-464",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 464",
+    "ContestID_zh": "第 464 场周赛"
   },
   {
     "Rating": 2186.3802199168,
@@ -16687,6 +16709,17 @@
     "ContestID_zh": "第 142 场周赛"
   },
   {
+    "Rating": 1439.8218998149,
+    "ID": 3659,
+    "Title": "Partition Array Into K-Distinct Groups",
+    "TitleZH": "数组元素分组",
+    "TitleSlug": "partition-array-into-k-distinct-groups",
+    "ContestSlug": "weekly-contest-464",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 464",
+    "ContestID_zh": "第 464 场周赛"
+  },
+  {
     "Rating": 1439.5656079032,
     "ID": 1261,
     "Title": "Find Elements in a Contaminated Binary Tree",
@@ -22801,6 +22834,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 435",
     "ContestID_zh": "第 435 场周赛"
+  },
+  {
+    "Rating": 1220.0626125523,
+    "ID": 3658,
+    "Title": "GCD of Odd and Even Sums",
+    "TitleZH": "奇数和与偶数和的最大公约数",
+    "TitleSlug": "gcd-of-odd-and-even-sums",
+    "ContestSlug": "weekly-contest-464",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 464",
+    "ContestID_zh": "第 464 场周赛"
   },
   {
     "Rating": 1219.5284561367,
