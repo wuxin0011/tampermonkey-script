@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/",
-    "createTime": "7/6/2025, 8:59:25 AM",
+    "createTime": "8/31/2025, 8:53:32 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -61,10 +61,17 @@
         "titleSlug": "count-primes"
       },
       {
+        "title": "3618. 根据质数下标分割数组",
+        "url": "https://leetcode.cn/problems/split-array-by-prime-indices/",
+        "member": false,
+        "score": 1227,
+        "titleSlug": "split-array-by-prime-indices"
+      },
+      {
         "title": "3591. 检查元素频次是否为质数",
         "url": "https://leetcode.cn/problems/check-if-any-element-has-prime-frequency/",
         "member": false,
-        "score": 0,
+        "score": 1234,
         "titleSlug": "check-if-any-element-has-prime-frequency"
       },
       {
@@ -117,6 +124,13 @@
         "titleSlug": "minimum-division-operations-to-make-array-non-decreasing"
       },
       {
+        "title": "3629. 通过质数传送到达终点的最少跳跃次数",
+        "url": "https://leetcode.cn/problems/minimum-jumps-to-reach-end-via-prime-teleportation/",
+        "member": false,
+        "score": 2139,
+        "titleSlug": "minimum-jumps-to-reach-end-via-prime-teleportation"
+      },
+      {
         "title": "2584. 分割数组使乘积互质",
         "url": "https://leetcode.cn/problems/split-the-array-to-make-coprime-products/",
         "member": false,
@@ -164,6 +178,13 @@
         "member": false,
         "score": 2615,
         "titleSlug": "count-the-number-of-ideal-arrays"
+      },
+      {
+        "title": "LCP 14. 切分数组",
+        "url": "https://leetcode.cn/problems/qie-fen-shu-zu/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "qie-fen-shu-zu"
       },
       {
         "title": "172. 阶乘后的零",
@@ -299,6 +320,13 @@
         "titleSlug": "find-greatest-common-divisor-of-array"
       },
       {
+        "title": "3658. 奇数和与偶数和的最大公约数",
+        "url": "https://leetcode.cn/problems/gcd-of-odd-and-even-sums/",
+        "member": false,
+        "score": 1220,
+        "titleSlug": "gcd-of-odd-and-even-sums"
+      },
+      {
         "title": "2807. 在链表中插入最大公约数",
         "url": "https://leetcode.cn/problems/insert-greatest-common-divisors-in-linked-list/",
         "member": false,
@@ -332,13 +360,6 @@
         "member": false,
         "score": 0,
         "titleSlug": "water-and-jug-problem"
-      },
-      {
-        "title": "858. 镜面反射",
-        "url": "https://leetcode.cn/problems/mirror-reflection/",
-        "member": false,
-        "score": 1880,
-        "titleSlug": "mirror-reflection"
       },
       {
         "title": "2654. 使数组所有元素变成 1 的最少操作次数",
@@ -386,7 +407,7 @@
         "title": "3574. 最大子数组 GCD 分数",
         "url": "https://leetcode.cn/problems/maximize-subarray-gcd-score/",
         "member": false,
-        "score": 0,
+        "score": 2257,
         "titleSlug": "maximize-subarray-gcd-score"
       },
       {
@@ -402,13 +423,6 @@
         "member": false,
         "score": 2539,
         "titleSlug": "number-of-different-subsequences-gcds"
-      },
-      {
-        "title": "LCP 14. 切分数组",
-        "url": "https://leetcode.cn/problems/qie-fen-shu-zu/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "qie-fen-shu-zu"
       },
       {
         "title": "2436. 使子数组最大公约数大于一的最小分割数",
@@ -444,6 +458,13 @@
         "member": false,
         "score": 1518,
         "titleSlug": "find-the-maximum-factor-score-of-array"
+      },
+      {
+        "title": "858. 镜面反射",
+        "url": "https://leetcode.cn/problems/mirror-reflection/",
+        "member": false,
+        "score": 1880,
+        "titleSlug": "mirror-reflection"
       },
       {
         "title": "2197. 替换数组中的非互质数",
@@ -1412,6 +1433,13 @@
         "titleSlug": "minimum-area-rectangle-ii"
       },
       {
+        "title": "3625. 统计梯形的数目 II",
+        "url": "https://leetcode.cn/problems/count-number-of-trapezoids-ii/",
+        "member": false,
+        "score": 2643,
+        "titleSlug": "count-number-of-trapezoids-ii"
+      },
+      {
         "title": "469. 凸多边形",
         "url": "https://leetcode.cn/problems/convex-polygon/",
         "member": true,
@@ -1601,6 +1629,13 @@
         "titleSlug": "find-the-closest-palindrome"
       },
       {
+        "title": "3646. 下一个特殊回文数",
+        "url": "https://leetcode.cn/problems/next-special-palindrome-number/",
+        "member": false,
+        "score": 2445,
+        "titleSlug": "next-special-palindrome-number"
+      },
+      {
         "title": "479. 最大回文数乘积",
         "url": "https://leetcode.cn/problems/largest-palindrome-product/",
         "member": false,
@@ -1671,11 +1706,32 @@
         "titleSlug": "beautiful-pairs"
       },
       {
+        "title": "3630. 划分数组得到最大异或运算和与运算之和",
+        "url": "https://leetcode.cn/problems/partition-array-for-maximum-xor-and-and/",
+        "member": false,
+        "score": 2743,
+        "titleSlug": "partition-array-for-maximum-xor-and-and"
+      },
+      {
+        "title": "835. 图像重叠",
+        "url": "https://leetcode.cn/problems/image-overlap/",
+        "member": false,
+        "score": 1969,
+        "titleSlug": "image-overlap"
+      },
+      {
         "title": "3549. 两个多项式相乘",
         "url": "https://leetcode.cn/problems/multiply-two-polynomials/",
         "member": true,
         "score": 0,
         "titleSlug": "multiply-two-polynomials"
+      },
+      {
+        "title": "3078. 矩阵中的字母数字模式匹配 I",
+        "url": "https://leetcode.cn/problems/match-alphanumerical-pattern-in-matrix-i/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "match-alphanumerical-pattern-in-matrix-i"
       },
       {
         "title": "3400. 右移后的最大匹配索引数",
@@ -1711,6 +1767,13 @@
         "member": false,
         "score": 1356,
         "titleSlug": "count-total-number-of-colored-cells"
+      },
+      {
+        "title": "3648. 覆盖网格的最少传感器数目",
+        "url": "https://leetcode.cn/problems/minimum-sensors-to-cover-grid/",
+        "member": false,
+        "score": 1395,
+        "titleSlug": "minimum-sensors-to-cover-grid"
       },
       {
         "title": "2834. 找出美丽数组的最小和",
@@ -1802,6 +1865,13 @@
         "member": false,
         "score": 1697,
         "titleSlug": "convert-to-base-2"
+      },
+      {
+        "title": "3649. 完美对的数目",
+        "url": "https://leetcode.cn/problems/number-of-perfect-pairs/",
+        "member": false,
+        "score": 1715,
+        "titleSlug": "number-of-perfect-pairs"
       },
       {
         "title": "1954. 收集足够苹果的最小花园周长",
@@ -1941,7 +2011,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/",
-    "createTime": "7/6/2025, 8:59:28 AM",
+    "createTime": "8/31/2025, 8:53:35 AM",
     "problems": [
       {
         "title": "讲解",
@@ -2042,6 +2112,13 @@
         "titleSlug": "pairs-with-sum-lcci"
       },
       {
+        "title": "3623. 统计梯形的数目 I",
+        "url": "https://leetcode.cn/problems/count-number-of-trapezoids-i/",
+        "member": false,
+        "score": 1579,
+        "titleSlug": "count-number-of-trapezoids-i"
+      },
+      {
         "title": "3371. 识别数组中的最大异常值",
         "url": "https://leetcode.cn/problems/identify-the-largest-outlier-in-an-array/",
         "member": false,
@@ -2077,18 +2154,18 @@
         "titleSlug": "count-nice-pairs-in-an-array"
       },
       {
+        "title": "3584. 子序列首尾元素的最大乘积",
+        "url": "https://leetcode.cn/problems/maximum-product-of-first-and-last-elements-of-a-subsequence/",
+        "member": false,
+        "score": 1763,
+        "titleSlug": "maximum-product-of-first-and-last-elements-of-a-subsequence"
+      },
+      {
         "title": "2905. 找出满足差值条件的下标 II",
         "url": "https://leetcode.cn/problems/find-indices-with-index-and-value-difference-ii/",
         "member": false,
         "score": 1763,
         "titleSlug": "find-indices-with-index-and-value-difference-ii"
-      },
-      {
-        "title": "3584. 子序列首尾元素的最大乘积",
-        "url": "https://leetcode.cn/problems/maximum-product-of-first-and-last-elements-of-a-subsequence/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "maximum-product-of-first-and-last-elements-of-a-subsequence"
       },
       {
         "title": "1010. 总持续时间可被 60 整除的歌曲",
@@ -2161,6 +2238,13 @@
         "titleSlug": "count-almost-equal-pairs-ii"
       },
       {
+        "title": "3480. 删除一个冲突对后最大子数组数目",
+        "url": "https://leetcode.cn/problems/maximize-subarrays-after-removing-one-conflicting-pair/",
+        "member": false,
+        "score": 2763,
+        "titleSlug": "maximize-subarrays-after-removing-one-conflicting-pair"
+      },
+      {
         "title": "1214. 查找两棵二叉搜索树之和",
         "url": "https://leetcode.cn/problems/two-sum-bsts/",
         "member": true,
@@ -2206,7 +2290,7 @@
         "title": "3583. 统计特殊三元组",
         "url": "https://leetcode.cn/problems/count-special-triplets/",
         "member": false,
-        "score": 0,
+        "score": 1509,
         "titleSlug": "count-special-triplets"
       },
       {
@@ -2341,6 +2425,13 @@
         "member": false,
         "score": 1541,
         "titleSlug": "maximum-absolute-sum-of-any-subarray"
+      },
+      {
+        "title": "3652. 按策略买卖股票的最佳时机",
+        "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-using-strategy/",
+        "member": false,
+        "score": 1556,
+        "titleSlug": "best-time-to-buy-and-sell-stock-using-strategy"
       },
       {
         "title": "2389. 和有限的最长子序列",
@@ -2700,13 +2791,6 @@
         "titleSlug": "xor-queries-of-a-subarray"
       },
       {
-        "title": "2438. 二的幂数组中查询范围内的乘积",
-        "url": "https://leetcode.cn/problems/range-product-queries-of-powers/",
-        "member": false,
-        "score": 1609,
-        "titleSlug": "range-product-queries-of-powers"
-      },
-      {
         "title": "1895. 最大的幻方",
         "url": "https://leetcode.cn/problems/largest-magic-square/",
         "member": false,
@@ -3064,6 +3148,13 @@
         "titleSlug": "zero-array-transformation-iii"
       },
       {
+        "title": "3655. 区间乘法查询后的异或 II",
+        "url": "https://leetcode.cn/problems/xor-after-range-multiplication-queries-ii/",
+        "member": false,
+        "score": 2453,
+        "titleSlug": "xor-after-range-multiplication-queries-ii"
+      },
+      {
         "title": "3017. 按距离统计房屋对数目 II",
         "url": "https://leetcode.cn/problems/count-the-number-of-houses-at-a-certain-distance-ii/",
         "member": false,
@@ -3335,13 +3426,6 @@
         "member": false,
         "score": 1541,
         "titleSlug": "remove-all-adjacent-duplicates-in-string-ii"
-      },
-      {
-        "title": "2211. 统计道路上的碰撞次数",
-        "url": "https://leetcode.cn/problems/count-collisions-on-a-road/",
-        "member": false,
-        "score": 1581,
-        "titleSlug": "count-collisions-on-a-road"
       },
       {
         "title": "735. 小行星碰撞",
@@ -3736,6 +3820,13 @@
         "titleSlug": "maximum-number-of-robots-within-budget"
       },
       {
+        "title": "3589. 计数质数间隔平衡子数组",
+        "url": "https://leetcode.cn/problems/count-prime-gap-balanced-subarrays/",
+        "member": false,
+        "score": 2235,
+        "titleSlug": "count-prime-gap-balanced-subarrays"
+      },
+      {
         "title": "862. 和至少为 K 的最短子数组",
         "url": "https://leetcode.cn/problems/shortest-subarray-with-sum-at-least-k/",
         "member": false,
@@ -3748,6 +3839,13 @@
         "member": false,
         "score": 2456,
         "titleSlug": "max-value-of-equation"
+      },
+      {
+        "title": "为什么堆化的时间复杂度是 O(n)？",
+        "url": "https://leetcode.cn/problems/take-gifts-from-the-richest-pile/solutions/2501655/yuan-di-dui-hua-o1-kong-jian-fu-ti-dan-p-fzdh/",
+        "member": false,
+        "score": 1276,
+        "titleSlug": "take-gifts-from-the-richest-pile"
       },
       {
         "title": "1046. 最后一块石头的重量",
@@ -4128,6 +4226,20 @@
         "titleSlug": "find-time-required-to-eliminate-bacterial-strains-ii"
       },
       {
+        "title": "1348. 推文计数",
+        "url": "https://leetcode.cn/problems/tweet-counts-per-frequency/",
+        "member": false,
+        "score": 2036,
+        "titleSlug": "tweet-counts-per-frequency"
+      },
+      {
+        "title": "855. 考场就座",
+        "url": "https://leetcode.cn/problems/exam-room/",
+        "member": false,
+        "score": 2067,
+        "titleSlug": "exam-room"
+      },
+      {
         "title": "984. 不含 AAA 或 BBB 的字符串",
         "url": "https://leetcode.cn/problems/string-without-aaa-or-bbb/",
         "member": false,
@@ -4289,6 +4401,13 @@
         "titleSlug": "design-a-number-container-system"
       },
       {
+        "title": "3607. 电网维护",
+        "url": "https://leetcode.cn/problems/power-grid-maintenance/",
+        "member": false,
+        "score": 1699,
+        "titleSlug": "power-grid-maintenance"
+      },
+      {
         "title": "2353. 设计食物评分系统",
         "url": "https://leetcode.cn/problems/design-a-food-rating-system/",
         "member": false,
@@ -4427,6 +4546,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "implement-trie-prefix-tree"
+      },
+      {
+        "title": "3597. 分割字符串",
+        "url": "https://leetcode.cn/problems/partition-string/",
+        "member": false,
+        "score": 1347,
+        "titleSlug": "partition-string"
       },
       {
         "title": "648. 单词替换",
@@ -4695,6 +4821,13 @@
         "titleSlug": "maximum-genetic-difference-query"
       },
       {
+        "title": "3632. 子数组异或至少为 K 的数目",
+        "url": "https://leetcode.cn/problems/subarrays-with-xor-at-least-k/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "subarrays-with-xor-at-least-k"
+      },
+      {
         "title": "2479. 两个不重叠子树的最大异或值",
         "url": "https://leetcode.cn/problems/maximum-xor-of-two-non-overlapping-subtrees/",
         "member": true,
@@ -4786,6 +4919,20 @@
         "titleSlug": "minimize-hamming-distance-after-swap-operations"
       },
       {
+        "title": "3608. 包含 K 个连通分量需要的最小时间",
+        "url": "https://leetcode.cn/problems/minimum-time-for-k-connected-components/",
+        "member": false,
+        "score": 1892,
+        "titleSlug": "minimum-time-for-k-connected-components"
+      },
+      {
+        "title": "3613. 最小化连通分量的最大成本",
+        "url": "https://leetcode.cn/problems/minimize-maximum-component-cost/",
+        "member": false,
+        "score": 1641,
+        "titleSlug": "minimize-maximum-component-cost"
+      },
+      {
         "title": "765. 情侣牵手",
         "url": "https://leetcode.cn/problems/couples-holding-hands/",
         "member": false,
@@ -4861,6 +5008,13 @@
         "member": false,
         "score": 2195,
         "titleSlug": "maximum-number-of-points-from-grid-queries"
+      },
+      {
+        "title": "3600. 升级后最大生成树稳定性",
+        "url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
+        "member": false,
+        "score": 2301,
+        "titleSlug": "maximize-spanning-tree-stability-with-upgrades"
       },
       {
         "title": "2867. 统计树中的合法路径数目",
@@ -4975,6 +5129,13 @@
         "titleSlug": "avoid-flood-in-the-city"
       },
       {
+        "title": "1353. 最多可以参加的会议数目",
+        "url": "https://leetcode.cn/problems/maximum-number-of-events-that-can-be-attended/",
+        "member": false,
+        "score": 2015,
+        "titleSlug": "maximum-number-of-events-that-can-be-attended"
+      },
+      {
         "title": "2382. 删除操作后的最大子段和",
         "url": "https://leetcode.cn/problems/maximum-segment-sum-after-removals/",
         "member": false,
@@ -5050,6 +5211,13 @@
         "member": false,
         "score": 2052,
         "titleSlug": "distribute-elements-into-two-arrays-ii"
+      },
+      {
+        "title": "3624. 位计数深度为 K 的整数数目 II",
+        "url": "https://leetcode.cn/problems/number-of-integers-with-popcount-depth-equal-to-k-ii/",
+        "member": false,
+        "score": 2085,
+        "titleSlug": "number-of-integers-with-popcount-depth-equal-to-k-ii"
       },
       {
         "title": "3187. 数组中的峰值",
@@ -5155,6 +5323,13 @@
         "member": false,
         "score": 2722,
         "titleSlug": "maximum-area-rectangle-with-point-constraints-ii"
+      },
+      {
+        "title": "3590. 第 K 小的路径异或和",
+        "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
+        "member": false,
+        "score": 2645,
+        "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
         "title": "3245. 交替组 III",
@@ -5283,7 +5458,7 @@
         "titleSlug": "minimum-depth-of-binary-tree"
       },
       {
-        "title": "3479. 将水果装入篮子 III",
+        "title": "3479. 水果成篮 III",
         "url": "https://leetcode.cn/problems/fruits-into-baskets-iii/",
         "member": false,
         "score": 2178,
@@ -5402,13 +5577,6 @@
         "titleSlug": "minimum-cost-to-split-an-array"
       },
       {
-        "title": "3569. 分割数组后不同质数的最大数目",
-        "url": "https://leetcode.cn/problems/maximize-count-of-distinct-primes-after-split/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "maximize-count-of-distinct-primes-after-split"
-      },
-      {
         "title": "850. 矩形面积 II",
         "url": "https://leetcode.cn/problems/rectangle-area-ii/",
         "member": false,
@@ -5421,6 +5589,13 @@
         "member": false,
         "score": 2671,
         "titleSlug": "separate-squares-ii"
+      },
+      {
+        "title": "3569. 分割数组后不同质数的最大数目",
+        "url": "https://leetcode.cn/problems/maximize-count-of-distinct-primes-after-split/",
+        "member": false,
+        "score": 2697,
+        "titleSlug": "maximize-count-of-distinct-primes-after-split"
       },
       {
         "title": "2916. 子数组不同元素数目的平方和 II",
@@ -5472,11 +5647,11 @@
         "titleSlug": "count-integers-in-intervals"
       },
       {
-        "title": "2770. 达到末尾下标所需的最大跳跃次数",
-        "url": "https://leetcode.cn/problems/maximum-number-of-jumps-to-reach-the-last-index/",
+        "title": "3590. 第 K 小的路径异或和",
+        "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
         "member": false,
-        "score": 1533,
-        "titleSlug": "maximum-number-of-jumps-to-reach-the-last-index"
+        "score": 2645,
+        "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
         "title": "2296. 设计一个文本编辑器",
@@ -5493,11 +5668,46 @@
         "titleSlug": "range-xor-queries-with-subarray-reversals"
       },
       {
+        "title": "3655. 区间乘法查询后的异或 II",
+        "url": "https://leetcode.cn/problems/xor-after-range-multiplication-queries-ii/",
+        "member": false,
+        "score": 2453,
+        "titleSlug": "xor-after-range-multiplication-queries-ii"
+      },
+      {
+        "title": "LCP 16. 游乐园的游览计划",
+        "url": "https://leetcode.cn/problems/you-le-yuan-de-you-lan-ji-hua/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "you-le-yuan-de-you-lan-ji-hua"
+      },
+      {
+        "title": "3636. 查询超过阈值频率最高元素",
+        "url": "https://leetcode.cn/problems/threshold-majority-queries/",
+        "member": false,
+        "score": 2451,
+        "titleSlug": "threshold-majority-queries"
+      },
+      {
+        "title": "3590. 第 K 小的路径异或和",
+        "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
+        "member": false,
+        "score": 2645,
+        "titleSlug": "kth-smallest-path-xor-sum"
+      },
+      {
         "title": "2343. 裁剪数字后查询第 K 小的数字",
         "url": "https://leetcode.cn/problems/query-kth-smallest-trimmed-number/",
         "member": false,
         "score": 1651,
         "titleSlug": "query-kth-smallest-trimmed-number"
+      },
+      {
+        "title": "3607. 电网维护",
+        "url": "https://leetcode.cn/problems/power-grid-maintenance/",
+        "member": false,
+        "score": 1699,
+        "titleSlug": "power-grid-maintenance"
       },
       {
         "title": "2070. 每一个查询的最大美丽值",
@@ -5563,6 +5773,13 @@
         "titleSlug": "maximum-sum-queries"
       },
       {
+        "title": "3590. 第 K 小的路径异或和",
+        "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
+        "member": false,
+        "score": 2645,
+        "titleSlug": "kth-smallest-path-xor-sum"
+      },
+      {
         "title": "3382. 用点构造面积最大的矩形 II",
         "url": "https://leetcode.cn/problems/maximum-area-rectangle-with-point-constraints-ii/",
         "member": false,
@@ -5574,7 +5791,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
-    "createTime": "7/6/2025, 8:59:30 AM",
+    "createTime": "8/31/2025, 8:53:37 AM",
     "problems": [
       {
         "title": "讲解",
@@ -5731,6 +5948,13 @@
         "titleSlug": "maximum-product-subarray"
       },
       {
+        "title": "1186. 删除一次得到子数组最大和",
+        "url": "https://leetcode.cn/problems/maximum-subarray-sum-with-one-deletion/",
+        "member": false,
+        "score": 1799,
+        "titleSlug": "maximum-subarray-sum-with-one-deletion"
+      },
+      {
         "title": "讲解",
         "url": "https://leetcode.cn/problems/minimum-path-sum/solutions/3045828/jiao-ni-yi-bu-bu-si-kao-dpcong-ji-yi-hua-zfb2/",
         "member": false,
@@ -5785,6 +6009,13 @@
         "member": false,
         "score": 1625,
         "titleSlug": "maximum-number-of-moves-in-a-grid"
+      },
+      {
+        "title": "3603. 交替方向的最小路径代价 II",
+        "url": "https://leetcode.cn/problems/minimum-cost-path-with-alternating-directions-ii/",
+        "member": false,
+        "score": 1639,
+        "titleSlug": "minimum-cost-path-with-alternating-directions-ii"
       },
       {
         "title": "2304. 网格中的最小路径代价",
@@ -6032,6 +6263,13 @@
         "titleSlug": "maximize-total-tastiness-of-purchased-fruits"
       },
       {
+        "title": "3647. 两个袋子中的最大重量",
+        "url": "https://leetcode.cn/problems/maximum-weight-in-two-bags/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-weight-in-two-bags"
+      },
+      {
         "title": "2189. 建造纸牌屋的方法数",
         "url": "https://leetcode.cn/problems/number-of-ways-to-build-house-of-cards/",
         "member": true,
@@ -6060,11 +6298,11 @@
         "titleSlug": "perfect-squares"
       },
       {
-        "title": "1449. 数位成本和为目标值的最大数字",
-        "url": "https://leetcode.cn/problems/form-largest-integer-with-digits-that-add-up-to-target/",
-        "member": false,
-        "score": 1927,
-        "titleSlug": "form-largest-integer-with-digits-that-add-up-to-target"
+        "title": "3610. 目标和所需的最小质数个数",
+        "url": "https://leetcode.cn/problems/minimum-number-of-primes-to-sum-to-target/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "minimum-number-of-primes-to-sum-to-target"
       },
       {
         "title": "3183. 达到总和的方法数量",
@@ -6077,8 +6315,15 @@
         "title": "3592. 硬币面值还原",
         "url": "https://leetcode.cn/problems/inverse-coin-change/",
         "member": false,
-        "score": 0,
+        "score": 1700,
         "titleSlug": "inverse-coin-change"
+      },
+      {
+        "title": "1449. 数位成本和为目标值的最大数字",
+        "url": "https://leetcode.cn/problems/form-largest-integer-with-digits-that-add-up-to-target/",
+        "member": false,
+        "score": 1927,
+        "titleSlug": "form-largest-integer-with-digits-that-add-up-to-target"
       },
       {
         "title": "2585. 获得分数的方法数",
@@ -6198,6 +6443,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "distinct-subsequences"
+      },
+      {
+        "title": "3628. 插入一个字母的最大子序列数",
+        "url": "https://leetcode.cn/problems/maximum-number-of-subsequences-after-one-inserting/",
+        "member": false,
+        "score": 1753,
+        "titleSlug": "maximum-number-of-subsequences-after-one-inserting"
       },
       {
         "title": "3316. 从原字符串里进行删除操作的最多次数",
@@ -6483,7 +6735,7 @@
         "title": "3578. 统计极差最大为 K 的分割方式数",
         "url": "https://leetcode.cn/problems/count-partitions-with-max-min-difference-at-most-k/",
         "member": false,
-        "score": 0,
+        "score": 2032,
         "titleSlug": "count-partitions-with-max-min-difference-at-most-k"
       },
       {
@@ -6494,18 +6746,18 @@
         "titleSlug": "maximum-deletions-on-a-string"
       },
       {
-        "title": "3579. 字符串转换需要的最小操作数",
-        "url": "https://leetcode.cn/problems/minimum-steps-to-convert-string-with-operations/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "minimum-steps-to-convert-string-with-operations"
-      },
-      {
         "title": "2463. 最小移动总距离",
         "url": "https://leetcode.cn/problems/minimum-total-distance-traveled/",
         "member": false,
         "score": 2453,
         "titleSlug": "minimum-total-distance-traveled"
+      },
+      {
+        "title": "3579. 字符串转换需要的最小操作数",
+        "url": "https://leetcode.cn/problems/minimum-steps-to-convert-string-with-operations/",
+        "member": false,
+        "score": 2492,
+        "titleSlug": "minimum-steps-to-convert-string-with-operations"
       },
       {
         "title": "3500. 将数组分割为子数组的最小代价",
@@ -6553,7 +6805,7 @@
         "title": "3599. 划分数组得到最小 XOR",
         "url": "https://leetcode.cn/problems/partition-array-to-minimize-xor/",
         "member": false,
-        "score": 0,
+        "score": 1954,
         "titleSlug": "partition-array-to-minimize-xor"
       },
       {
@@ -6693,7 +6945,7 @@
         "title": "3573. 买卖股票的最佳时机 V",
         "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-v/",
         "member": false,
-        "score": 0,
+        "score": 1777,
         "titleSlug": "best-time-to-buy-and-sell-stock-v"
       },
       {
@@ -6716,6 +6968,13 @@
         "member": false,
         "score": 1483,
         "titleSlug": "maximum-energy-boost-from-two-drinks"
+      },
+      {
+        "title": "2222. 选择建筑的方案数",
+        "url": "https://leetcode.cn/problems/number-of-ways-to-select-buildings/",
+        "member": false,
+        "score": 1656,
+        "titleSlug": "number-of-ways-to-select-buildings"
       },
       {
         "title": "2708. 一个小组的最大实力值",
@@ -6758,6 +7017,13 @@
         "member": true,
         "score": 0,
         "titleSlug": "maximum-coin-collection"
+      },
+      {
+        "title": "3628. 插入一个字母的最大子序列数",
+        "url": "https://leetcode.cn/problems/maximum-number-of-subsequences-after-one-inserting/",
+        "member": false,
+        "score": 1753,
+        "titleSlug": "maximum-number-of-subsequences-after-one-inserting"
       },
       {
         "title": "2771. 构造最长非递减子数组",
@@ -6837,11 +7103,25 @@
         "titleSlug": "find-the-maximum-sum-of-node-values"
       },
       {
+        "title": "3640. 三段式数组 II",
+        "url": "https://leetcode.cn/problems/trionic-array-ii/",
+        "member": false,
+        "score": 2277,
+        "titleSlug": "trionic-array-ii"
+      },
+      {
         "title": "2272. 最大波动的子字符串",
         "url": "https://leetcode.cn/problems/substring-with-largest-variance/",
         "member": false,
         "score": 2515,
         "titleSlug": "substring-with-largest-variance"
+      },
+      {
+        "title": "3661. 可以被机器人摧毁的最大墙壁数目",
+        "url": "https://leetcode.cn/problems/maximum-walls-destroyed-by-robots/",
+        "member": false,
+        "score": 2525,
+        "titleSlug": "maximum-walls-destroyed-by-robots"
       },
       {
         "title": "LCP 19. 秋叶收藏集",
@@ -6933,6 +7213,13 @@
         "member": false,
         "score": 2074,
         "titleSlug": "minimum-number-of-refueling-stops"
+      },
+      {
+        "title": "32. 最长有效括号",
+        "url": "https://leetcode.cn/problems/longest-valid-parentheses/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-valid-parentheses"
       },
       {
         "title": "2896. 执行操作使两个字符串相等",
@@ -7957,11 +8244,11 @@
         "titleSlug": "campus-bikes-ii"
       },
       {
-        "title": "讲解：从全排列到状压 DP",
-        "url": "https://leetcode.cn/problems/find-the-minimum-cost-array-permutation/solution/zhuang-ya-dpcong-ji-yi-hua-sou-suo-dao-d-s9t5/",
+        "title": "2741. 特别的排列",
+        "url": "https://leetcode.cn/problems/special-permutations/",
         "member": false,
-        "score": 2641,
-        "titleSlug": "find-the-minimum-cost-array-permutation"
+        "score": 2020,
+        "titleSlug": "special-permutations"
       },
       {
         "title": "996. 平方数组的数目",
@@ -7971,18 +8258,18 @@
         "titleSlug": "number-of-squareful-arrays"
       },
       {
-        "title": "2741. 特别的排列",
-        "url": "https://leetcode.cn/problems/special-permutations/",
-        "member": false,
-        "score": 2020,
-        "titleSlug": "special-permutations"
-      },
-      {
         "title": "1681. 最小不兼容性",
         "url": "https://leetcode.cn/problems/minimum-incompatibility/",
         "member": false,
         "score": 2389,
         "titleSlug": "minimum-incompatibility"
+      },
+      {
+        "title": "3615. 图中的最长回文路径",
+        "url": "https://leetcode.cn/problems/longest-palindromic-path-in-graph/",
+        "member": false,
+        "score": 2463,
+        "titleSlug": "longest-palindromic-path-in-graph"
       },
       {
         "title": "3283. 吃掉所有兵需要的最多移动次数",
@@ -8030,7 +8317,7 @@
         "title": "3568. 清理教室的最少移动",
         "url": "https://leetcode.cn/problems/minimum-moves-to-clean-the-classroom/",
         "member": false,
-        "score": 0,
+        "score": 2143,
         "titleSlug": "minimum-moves-to-clean-the-classroom"
       },
       {
@@ -8083,6 +8370,13 @@
         "titleSlug": "minimum-increments-for-target-multiples-in-an-array"
       },
       {
+        "title": "3575. 最大好子树分数",
+        "url": "https://leetcode.cn/problems/maximum-good-subtree-score/",
+        "member": false,
+        "score": 2359,
+        "titleSlug": "maximum-good-subtree-score"
+      },
+      {
         "title": "1349. 参加考试的最大学生数",
         "url": "https://leetcode.cn/problems/maximum-students-taking-exam/",
         "member": false,
@@ -8095,13 +8389,6 @@
         "member": false,
         "score": 2389,
         "titleSlug": "minimum-incompatibility"
-      },
-      {
-        "title": "3575. 最大好子树分数",
-        "url": "https://leetcode.cn/problems/maximum-good-subtree-score/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "maximum-good-subtree-score"
       },
       {
         "title": "2572. 无平方子集计数",
@@ -8156,7 +8443,7 @@
         "title": "3594. 所有人渡河所需的最短时间",
         "url": "https://leetcode.cn/problems/minimum-time-to-transport-all-individuals/",
         "member": false,
-        "score": 0,
+        "score": 2604,
         "titleSlug": "minimum-time-to-transport-all-individuals"
       },
       {
@@ -8249,6 +8536,20 @@
         "member": false,
         "score": 2655,
         "titleSlug": "maximize-grid-happiness"
+      },
+      {
+        "title": "2732. 找到矩阵中的好子集",
+        "url": "https://leetcode.cn/problems/find-a-good-subset-of-the-matrix/",
+        "member": false,
+        "score": 2239,
+        "titleSlug": "find-a-good-subset-of-the-matrix"
+      },
+      {
+        "title": "980. 不同路径 III",
+        "url": "https://leetcode.cn/problems/unique-paths-iii/",
+        "member": false,
+        "score": 1830,
+        "titleSlug": "unique-paths-iii"
       },
       {
         "title": "LCP 69. Hello LeetCode!",
@@ -8391,6 +8692,13 @@
         "titleSlug": "count-k-reducible-numbers-less-than-n"
       },
       {
+        "title": "3621. 位计数深度为 K 的整数数目 I",
+        "url": "https://leetcode.cn/problems/number-of-integers-with-popcount-depth-equal-to-k-i/",
+        "member": false,
+        "score": 2330,
+        "titleSlug": "number-of-integers-with-popcount-depth-equal-to-k-i"
+      },
+      {
         "title": "3490. 统计美丽整数的数目",
         "url": "https://leetcode.cn/problems/count-beautiful-numbers/",
         "member": false,
@@ -8403,13 +8711,6 @@
         "member": false,
         "score": 2666,
         "titleSlug": "find-all-good-strings"
-      },
-      {
-        "title": "3348. 最小可整除数位乘积 II",
-        "url": "https://leetcode.cn/problems/smallest-divisible-digit-product-ii/",
-        "member": false,
-        "score": 3101,
-        "titleSlug": "smallest-divisible-digit-product-ii"
       },
       {
         "title": "1215. 步进数",
@@ -8452,6 +8753,20 @@
         "member": false,
         "score": 2258,
         "titleSlug": "maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k"
+      },
+      {
+        "title": "3646. 下一个特殊回文数",
+        "url": "https://leetcode.cn/problems/next-special-palindrome-number/",
+        "member": false,
+        "score": 2445,
+        "titleSlug": "next-special-palindrome-number"
+      },
+      {
+        "title": "3348. 最小可整除数位乘积 II",
+        "url": "https://leetcode.cn/problems/smallest-divisible-digit-product-ii/",
+        "member": false,
+        "score": 3101,
+        "titleSlug": "smallest-divisible-digit-product-ii"
       },
       {
         "title": "2327. 知道秘密的人数",
@@ -8604,7 +8919,7 @@
         "title": "3578. 统计极差最大为 K 的分割方式数",
         "url": "https://leetcode.cn/problems/count-partitions-with-max-min-difference-at-most-k/",
         "member": false,
-        "score": 0,
+        "score": 2032,
         "titleSlug": "count-partitions-with-max-min-difference-at-most-k"
       },
       {
@@ -8853,6 +9168,13 @@
         "titleSlug": "minimum-white-tiles-after-covering-with-carpets"
       },
       {
+        "title": "3654. 删除可整除和后的最小数组和",
+        "url": "https://leetcode.cn/problems/minimum-sum-after-divisible-sum-deletions/",
+        "member": false,
+        "score": 2038,
+        "titleSlug": "minimum-sum-after-divisible-sum-deletions"
+      },
+      {
         "title": "1937. 扣分后的最大得分",
         "url": "https://leetcode.cn/problems/maximum-number-of-points-with-cost/",
         "member": false,
@@ -8865,6 +9187,13 @@
         "member": false,
         "score": 2387,
         "titleSlug": "maximum-strictly-increasing-cells-in-a-matrix"
+      },
+      {
+        "title": "3651. 带传送的最小路径成本",
+        "url": "https://leetcode.cn/problems/minimum-cost-path-with-teleportations/",
+        "member": false,
+        "score": 2411,
+        "titleSlug": "minimum-cost-path-with-teleportations"
       },
       {
         "title": "2318. 不同骰子序列的数目",
@@ -8900,6 +9229,13 @@
         "member": false,
         "score": 2661,
         "titleSlug": "minimum-number-of-valid-strings-to-form-target-ii"
+      },
+      {
+        "title": "LCP 14. 切分数组",
+        "url": "https://leetcode.cn/problems/qie-fen-shu-zu/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "qie-fen-shu-zu"
       },
       {
         "title": "LCP 59. 搭桥过河",
@@ -9108,7 +9444,7 @@
         "title": "3575. 最大好子树分数",
         "url": "https://leetcode.cn/problems/maximum-good-subtree-score/",
         "member": false,
-        "score": 0,
+        "score": 2359,
         "titleSlug": "maximum-good-subtree-score"
       },
       {
@@ -9187,6 +9523,13 @@
         "member": false,
         "score": 2084,
         "titleSlug": "parallel-courses-iii"
+      },
+      {
+        "title": "3620. 恢复网络路径",
+        "url": "https://leetcode.cn/problems/network-recovery-pathways/",
+        "member": false,
+        "score": 1998,
+        "titleSlug": "network-recovery-pathways"
       },
       {
         "title": "1976. 到达目的地的方案数",
@@ -9563,7 +9906,7 @@
         "title": "3583. 统计特殊三元组",
         "url": "https://leetcode.cn/problems/count-special-triplets/",
         "member": false,
-        "score": 0,
+        "score": 1509,
         "titleSlug": "count-special-triplets"
       },
       {
@@ -9581,18 +9924,18 @@
         "titleSlug": "maximum-value-of-an-ordered-triplet-ii"
       },
       {
-        "title": "3598. 相邻字符串之间的最长公共前缀",
-        "url": "https://leetcode.cn/problems/longest-common-prefix-between-adjacent-strings-after-removals/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "longest-common-prefix-between-adjacent-strings-after-removals"
-      },
-      {
         "title": "123. 买卖股票的最佳时机 III",
         "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/",
         "member": false,
         "score": 0,
         "titleSlug": "best-time-to-buy-and-sell-stock-iii"
+      },
+      {
+        "title": "3598. 相邻字符串之间的最长公共前缀",
+        "url": "https://leetcode.cn/problems/longest-common-prefix-between-adjacent-strings-after-removals/",
+        "member": false,
+        "score": 1655,
+        "titleSlug": "longest-common-prefix-between-adjacent-strings-after-removals"
       },
       {
         "title": "2222. 选择建筑的方案数",
@@ -9971,20 +10314,13 @@
         "member": false,
         "score": 2531,
         "titleSlug": "minimum-cost-to-change-the-final-value-of-expression"
-      },
-      {
-        "title": "LCP 14. 切分数组",
-        "url": "https://leetcode.cn/problems/qie-fen-shu-zu/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "qie-fen-shu-zu"
       }
     ]
   },
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/",
-    "createTime": "7/6/2025, 8:59:31 AM",
+    "createTime": "8/31/2025, 8:53:39 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -10197,32 +10533,11 @@
         "titleSlug": "course-schedule-ii"
       },
       {
-        "title": "1462. 课程表 IV",
-        "url": "https://leetcode.cn/problems/course-schedule-iv/",
-        "member": false,
-        "score": 1692,
-        "titleSlug": "course-schedule-iv"
-      },
-      {
         "title": "2115. 从给定原材料中找到所有可以做出的菜",
         "url": "https://leetcode.cn/problems/find-all-possible-recipes-from-given-supplies/",
         "member": false,
         "score": 1678,
         "titleSlug": "find-all-possible-recipes-from-given-supplies"
-      },
-      {
-        "title": "851. 喧闹和富有",
-        "url": "https://leetcode.cn/problems/loud-and-rich/",
-        "member": false,
-        "score": 1783,
-        "titleSlug": "loud-and-rich"
-      },
-      {
-        "title": "310. 最小高度树",
-        "url": "https://leetcode.cn/problems/minimum-height-trees/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "minimum-height-trees"
       },
       {
         "title": "2392. 给定条件下构造矩阵",
@@ -10267,6 +10582,13 @@
         "titleSlug": "Jf1JuT"
       },
       {
+        "title": "444. 序列重建",
+        "url": "https://leetcode.cn/problems/sequence-reconstruction/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "sequence-reconstruction"
+      },
+      {
         "title": "3481. 应用替换",
         "url": "https://leetcode.cn/problems/apply-substitutions/",
         "member": true,
@@ -10281,13 +10603,6 @@
         "titleSlug": "alien-dictionary"
       },
       {
-        "title": "444. 序列重建",
-        "url": "https://leetcode.cn/problems/sequence-reconstruction/",
-        "member": true,
-        "score": 0,
-        "titleSlug": "sequence-reconstruction"
-      },
-      {
         "title": "1059. 从始点到终点的所有路径",
         "url": "https://leetcode.cn/problems/all-paths-from-source-lead-to-destination/",
         "member": true,
@@ -10295,11 +10610,18 @@
         "titleSlug": "all-paths-from-source-lead-to-destination"
       },
       {
-        "title": "1136. 并行课程",
-        "url": "https://leetcode.cn/problems/parallel-courses/",
-        "member": true,
-        "score": 1710,
-        "titleSlug": "parallel-courses"
+        "title": "310. 最小高度树",
+        "url": "https://leetcode.cn/problems/minimum-height-trees/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-height-trees"
+      },
+      {
+        "title": "851. 喧闹和富有",
+        "url": "https://leetcode.cn/problems/loud-and-rich/",
+        "member": false,
+        "score": 1783,
+        "titleSlug": "loud-and-rich"
       },
       {
         "title": "2050. 并行课程 III",
@@ -10309,11 +10631,25 @@
         "titleSlug": "parallel-courses-iii"
       },
       {
+        "title": "3620. 恢复网络路径",
+        "url": "https://leetcode.cn/problems/network-recovery-pathways/",
+        "member": false,
+        "score": 1998,
+        "titleSlug": "network-recovery-pathways"
+      },
+      {
         "title": "1857. 有向图中最大颜色值",
         "url": "https://leetcode.cn/problems/largest-color-value-in-a-directed-graph/",
         "member": false,
         "score": 2312,
         "titleSlug": "largest-color-value-in-a-directed-graph"
+      },
+      {
+        "title": "1136. 并行课程",
+        "url": "https://leetcode.cn/problems/parallel-courses/",
+        "member": true,
+        "score": 1710,
+        "titleSlug": "parallel-courses"
       },
       {
         "title": "基环树介绍",
@@ -10421,11 +10757,25 @@
         "titleSlug": "design-graph-with-shortest-path-calculator"
       },
       {
+        "title": "3604. 有向图中到达终点的最少时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-reach-destination-in-directed-graph/",
+        "member": false,
+        "score": 1844,
+        "titleSlug": "minimum-time-to-reach-destination-in-directed-graph"
+      },
+      {
         "title": "1514. 概率最大的路径",
         "url": "https://leetcode.cn/problems/path-with-maximum-probability/",
         "member": false,
         "score": 1846,
         "titleSlug": "path-with-maximum-probability"
+      },
+      {
+        "title": "3650. 边反转的最小路径总成本",
+        "url": "https://leetcode.cn/problems/minimum-cost-path-with-edge-reversals/",
+        "member": false,
+        "score": 1853,
+        "titleSlug": "minimum-cost-path-with-edge-reversals"
       },
       {
         "title": "3342. 到达最后一个房间的最少时间 II",
@@ -10582,6 +10932,20 @@
         "titleSlug": "DFPeFJ"
       },
       {
+        "title": "3599. 划分数组得到最小 XOR",
+        "url": "https://leetcode.cn/problems/partition-array-to-minimize-xor/",
+        "member": false,
+        "score": 1954,
+        "titleSlug": "partition-array-to-minimize-xor"
+      },
+      {
+        "title": "3594. 所有人渡河所需的最短时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-transport-all-individuals/",
+        "member": false,
+        "score": 2604,
+        "titleSlug": "minimum-time-to-transport-all-individuals"
+      },
+      {
         "title": "2714. 找到 K 次跨越的最短路径",
         "url": "https://leetcode.cn/problems/find-shortest-path-with-k-hops/",
         "member": true,
@@ -10631,6 +10995,13 @@
         "titleSlug": "minimum-cost-to-convert-string-ii"
       },
       {
+        "title": "1462. 课程表 IV",
+        "url": "https://leetcode.cn/problems/course-schedule-iv/",
+        "member": false,
+        "score": 1692,
+        "titleSlug": "course-schedule-iv"
+      },
+      {
         "title": "2101. 引爆最多的炸弹",
         "url": "https://leetcode.cn/problems/detonate-the-maximum-bombs/",
         "member": false,
@@ -10643,6 +11014,13 @@
         "member": false,
         "score": 1857,
         "titleSlug": "min-cost-to-connect-all-points"
+      },
+      {
+        "title": "3600. 升级后最大生成树稳定性",
+        "url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
+        "member": false,
+        "score": 2301,
+        "titleSlug": "maximize-spanning-tree-stability-with-upgrades"
       },
       {
         "title": "1489. 找到最小生成树里的关键边和伪关键边",
@@ -10925,6 +11303,20 @@
         "titleSlug": "frequencies-of-shortest-supersequences"
       },
       {
+        "title": "466. 统计重复个数",
+        "url": "https://leetcode.cn/problems/count-the-repetitions/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "count-the-repetitions"
+      },
+      {
+        "title": "LCP 46. 志愿者调配",
+        "url": "https://leetcode.cn/problems/05ZEDJ/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "05ZEDJ"
+      },
+      {
         "title": "LCP 16. 游乐园的游览计划",
         "url": "https://leetcode.cn/problems/you-le-yuan-de-you-lan-ji-hua/",
         "member": false,
@@ -10957,7 +11349,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "7/6/2025, 8:59:33 AM",
+    "createTime": "8/31/2025, 8:53:40 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -11282,18 +11674,39 @@
         "titleSlug": "maximum-number-that-makes-result-of-bitwise-and-zero"
       },
       {
-        "title": "讲解",
+        "title": "26. 删除有序数组中的重复项",
+        "url": "https://leetcode.cn/problems/remove-duplicates-from-sorted-array/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "remove-duplicates-from-sorted-array"
+      },
+      {
+        "title": "我的题解",
+        "url": "https://leetcode.cn/problems/remove-duplicates-from-sorted-array/solutions/2807162/gen-zhao-wo-guo-yi-bian-shi-li-2ni-jiu-m-rvyk/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "remove-duplicates-from-sorted-array"
+      },
+      {
+        "title": "原理讲解（方法二）",
         "url": "https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/solutions/2798206/li-yong-and-de-xing-zhi-pythonjavacgo-by-gg4d/",
         "member": false,
         "score": 2162,
         "titleSlug": "find-subarray-with-bitwise-or-closest-to-k"
       },
       {
-        "title": "讲解（方法二）",
-        "url": "https://leetcode.cn/problems/smallest-subarrays-with-maximum-bitwise-or/solution/by-endlesscheng-zai1/",
+        "title": "3171. 找到按位或最接近 K 的子数组",
+        "url": "https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/",
         "member": false,
-        "score": 1938,
-        "titleSlug": "smallest-subarrays-with-maximum-bitwise-or"
+        "score": 2162,
+        "titleSlug": "find-subarray-with-bitwise-or-closest-to-k"
+      },
+      {
+        "title": "1521. 找到最接近目标值的函数值",
+        "url": "https://leetcode.cn/problems/find-a-value-of-a-mysterious-function-closest-to-target/",
+        "member": false,
+        "score": 2383,
+        "titleSlug": "find-a-value-of-a-mysterious-function-closest-to-target"
       },
       {
         "title": "3097. 或值至少为 K 的最短子数组 II",
@@ -11317,20 +11730,6 @@
         "titleSlug": "number-of-subarrays-with-and-value-of-k"
       },
       {
-        "title": "3171. 找到按位或最接近 K 的子数组",
-        "url": "https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/",
-        "member": false,
-        "score": 2162,
-        "titleSlug": "find-subarray-with-bitwise-or-closest-to-k"
-      },
-      {
-        "title": "1521. 找到最接近目标值的函数值",
-        "url": "https://leetcode.cn/problems/find-a-value-of-a-mysterious-function-closest-to-target/",
-        "member": false,
-        "score": 2383,
-        "titleSlug": "find-a-value-of-a-mysterious-function-closest-to-target"
-      },
-      {
         "title": "898. 子数组按位或操作",
         "url": "https://leetcode.cn/problems/bitwise-ors-of-subarrays/",
         "member": false,
@@ -11352,10 +11751,17 @@
         "titleSlug": "minimum-number-of-operations-to-make-all-array-elements-equal-to-1"
       },
       {
+        "title": "3605. 数组的最小稳定性因子",
+        "url": "https://leetcode.cn/problems/minimum-stability-factor-of-array/",
+        "member": false,
+        "score": 2409,
+        "titleSlug": "minimum-stability-factor-of-array"
+      },
+      {
         "title": "3574. 最大子数组 GCD 分数",
         "url": "https://leetcode.cn/problems/maximize-subarray-gcd-score/",
         "member": false,
-        "score": 0,
+        "score": 2257,
         "titleSlug": "maximize-subarray-gcd-score"
       },
       {
@@ -11469,6 +11875,13 @@
         "member": false,
         "score": 2075,
         "titleSlug": "number-of-excellent-pairs"
+      },
+      {
+        "title": "3630. 划分数组得到最大异或运算和与运算之和",
+        "url": "https://leetcode.cn/problems/partition-array-for-maximum-xor-and-and/",
+        "member": false,
+        "score": 2743,
+        "titleSlug": "partition-array-for-maximum-xor-and-and"
       },
       {
         "title": "2546. 执行逐位运算使字符串相等",
@@ -11618,13 +12031,6 @@
         "titleSlug": "bitwise-and-of-numbers-range"
       },
       {
-        "title": "2044. 统计按位或能得到最大值的子集数目",
-        "url": "https://leetcode.cn/problems/count-number-of-maximum-bitwise-or-subsets/",
-        "member": false,
-        "score": 1567,
-        "titleSlug": "count-number-of-maximum-bitwise-or-subsets"
-      },
-      {
         "title": "2438. 二的幂数组中查询范围内的乘积",
         "url": "https://leetcode.cn/problems/range-product-queries-of-powers/",
         "member": false,
@@ -11681,6 +12087,13 @@
         "titleSlug": "minimum-one-bit-operations-to-make-integers-zero"
       },
       {
+        "title": "3514. 不同 XOR 三元组的数目 II",
+        "url": "https://leetcode.cn/problems/number-of-unique-xor-triplets-ii/",
+        "member": false,
+        "score": 1883,
+        "titleSlug": "number-of-unique-xor-triplets-ii"
+      },
+      {
         "title": "LCP 81. 与非的谜题",
         "url": "https://leetcode.cn/problems/ryfUiz/",
         "member": false,
@@ -11693,6 +12106,13 @@
         "member": true,
         "score": 2025,
         "titleSlug": "ip-to-cidr"
+      },
+      {
+        "title": "3595. 一次或两次",
+        "url": "https://leetcode.cn/problems/once-twice/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "once-twice"
       },
       {
         "title": "3141. 最大汉明距离",
@@ -11706,7 +12126,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "7/6/2025, 8:59:34 AM",
+    "createTime": "8/31/2025, 8:53:42 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12031,18 +12451,39 @@
         "titleSlug": "maximum-number-that-makes-result-of-bitwise-and-zero"
       },
       {
-        "title": "讲解",
+        "title": "26. 删除有序数组中的重复项",
+        "url": "https://leetcode.cn/problems/remove-duplicates-from-sorted-array/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "remove-duplicates-from-sorted-array"
+      },
+      {
+        "title": "我的题解",
+        "url": "https://leetcode.cn/problems/remove-duplicates-from-sorted-array/solutions/2807162/gen-zhao-wo-guo-yi-bian-shi-li-2ni-jiu-m-rvyk/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "remove-duplicates-from-sorted-array"
+      },
+      {
+        "title": "原理讲解（方法二）",
         "url": "https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/solutions/2798206/li-yong-and-de-xing-zhi-pythonjavacgo-by-gg4d/",
         "member": false,
         "score": 2162,
         "titleSlug": "find-subarray-with-bitwise-or-closest-to-k"
       },
       {
-        "title": "讲解（方法二）",
-        "url": "https://leetcode.cn/problems/smallest-subarrays-with-maximum-bitwise-or/solution/by-endlesscheng-zai1/",
+        "title": "3171. 找到按位或最接近 K 的子数组",
+        "url": "https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/",
         "member": false,
-        "score": 1938,
-        "titleSlug": "smallest-subarrays-with-maximum-bitwise-or"
+        "score": 2162,
+        "titleSlug": "find-subarray-with-bitwise-or-closest-to-k"
+      },
+      {
+        "title": "1521. 找到最接近目标值的函数值",
+        "url": "https://leetcode.cn/problems/find-a-value-of-a-mysterious-function-closest-to-target/",
+        "member": false,
+        "score": 2383,
+        "titleSlug": "find-a-value-of-a-mysterious-function-closest-to-target"
       },
       {
         "title": "3097. 或值至少为 K 的最短子数组 II",
@@ -12066,20 +12507,6 @@
         "titleSlug": "number-of-subarrays-with-and-value-of-k"
       },
       {
-        "title": "3171. 找到按位或最接近 K 的子数组",
-        "url": "https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/",
-        "member": false,
-        "score": 2162,
-        "titleSlug": "find-subarray-with-bitwise-or-closest-to-k"
-      },
-      {
-        "title": "1521. 找到最接近目标值的函数值",
-        "url": "https://leetcode.cn/problems/find-a-value-of-a-mysterious-function-closest-to-target/",
-        "member": false,
-        "score": 2383,
-        "titleSlug": "find-a-value-of-a-mysterious-function-closest-to-target"
-      },
-      {
         "title": "898. 子数组按位或操作",
         "url": "https://leetcode.cn/problems/bitwise-ors-of-subarrays/",
         "member": false,
@@ -12101,10 +12528,17 @@
         "titleSlug": "minimum-number-of-operations-to-make-all-array-elements-equal-to-1"
       },
       {
+        "title": "3605. 数组的最小稳定性因子",
+        "url": "https://leetcode.cn/problems/minimum-stability-factor-of-array/",
+        "member": false,
+        "score": 2409,
+        "titleSlug": "minimum-stability-factor-of-array"
+      },
+      {
         "title": "3574. 最大子数组 GCD 分数",
         "url": "https://leetcode.cn/problems/maximize-subarray-gcd-score/",
         "member": false,
-        "score": 0,
+        "score": 2257,
         "titleSlug": "maximize-subarray-gcd-score"
       },
       {
@@ -12218,6 +12652,13 @@
         "member": false,
         "score": 2075,
         "titleSlug": "number-of-excellent-pairs"
+      },
+      {
+        "title": "3630. 划分数组得到最大异或运算和与运算之和",
+        "url": "https://leetcode.cn/problems/partition-array-for-maximum-xor-and-and/",
+        "member": false,
+        "score": 2743,
+        "titleSlug": "partition-array-for-maximum-xor-and-and"
       },
       {
         "title": "2546. 执行逐位运算使字符串相等",
@@ -12367,13 +12808,6 @@
         "titleSlug": "bitwise-and-of-numbers-range"
       },
       {
-        "title": "2044. 统计按位或能得到最大值的子集数目",
-        "url": "https://leetcode.cn/problems/count-number-of-maximum-bitwise-or-subsets/",
-        "member": false,
-        "score": 1567,
-        "titleSlug": "count-number-of-maximum-bitwise-or-subsets"
-      },
-      {
         "title": "2438. 二的幂数组中查询范围内的乘积",
         "url": "https://leetcode.cn/problems/range-product-queries-of-powers/",
         "member": false,
@@ -12430,6 +12864,13 @@
         "titleSlug": "minimum-one-bit-operations-to-make-integers-zero"
       },
       {
+        "title": "3514. 不同 XOR 三元组的数目 II",
+        "url": "https://leetcode.cn/problems/number-of-unique-xor-triplets-ii/",
+        "member": false,
+        "score": 1883,
+        "titleSlug": "number-of-unique-xor-triplets-ii"
+      },
+      {
         "title": "LCP 81. 与非的谜题",
         "url": "https://leetcode.cn/problems/ryfUiz/",
         "member": false,
@@ -12444,6 +12885,13 @@
         "titleSlug": "ip-to-cidr"
       },
       {
+        "title": "3595. 一次或两次",
+        "url": "https://leetcode.cn/problems/once-twice/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "once-twice"
+      },
+      {
         "title": "3141. 最大汉明距离",
         "url": "https://leetcode.cn/problems/maximum-hamming-distances/",
         "member": true,
@@ -12455,7 +12903,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
-    "createTime": "7/6/2025, 8:59:36 AM",
+    "createTime": "8/31/2025, 8:53:44 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -12505,6 +12953,13 @@
         "member": false,
         "score": 1570,
         "titleSlug": "next-greater-node-in-linked-list"
+      },
+      {
+        "title": "768. 最多能完成排序的块 II",
+        "url": "https://leetcode.cn/problems/max-chunks-to-make-sorted-ii/",
+        "member": false,
+        "score": 1787,
+        "titleSlug": "max-chunks-to-make-sorted-ii"
       },
       {
         "title": "654. 最大二叉树",
@@ -12568,6 +13023,13 @@
         "member": false,
         "score": 2530,
         "titleSlug": "car-fleet-ii"
+      },
+      {
+        "title": "2736. 最大和查询",
+        "url": "https://leetcode.cn/problems/maximum-sum-queries/",
+        "member": false,
+        "score": 2533,
+        "titleSlug": "maximum-sum-queries"
       },
       {
         "title": "3420. 统计 K 次操作以内得到非递减子数组的数目",
@@ -12798,7 +13260,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
-    "createTime": "7/6/2025, 8:59:37 AM",
+    "createTime": "8/31/2025, 8:53:45 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -13002,6 +13464,13 @@
         "member": false,
         "score": 1694,
         "titleSlug": "minimum-number-of-seconds-to-make-mountain-height-zero"
+      },
+      {
+        "title": "3639. 变为活跃状态的最小时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-activate-string/",
+        "member": false,
+        "score": 1853,
+        "titleSlug": "minimum-time-to-activate-string"
       },
       {
         "title": "475. 供暖器",
@@ -13214,6 +13683,13 @@
         "titleSlug": "minimized-maximum-of-products-distributed-to-any-store"
       },
       {
+        "title": "3613. 最小化连通分量的最大成本",
+        "url": "https://leetcode.cn/problems/minimize-maximum-component-cost/",
+        "member": false,
+        "score": 1641,
+        "titleSlug": "minimize-maximum-component-cost"
+      },
+      {
         "title": "1760. 袋子里最少数目的球",
         "url": "https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/",
         "member": false,
@@ -13277,6 +13753,13 @@
         "titleSlug": "smallest-substring-with-identical-characters-ii"
       },
       {
+        "title": "3605. 数组的最小稳定性因子",
+        "url": "https://leetcode.cn/problems/minimum-stability-factor-of-array/",
+        "member": false,
+        "score": 2409,
+        "titleSlug": "minimum-stability-factor-of-array"
+      },
+      {
         "title": "LCP 12. 小张刷题计划",
         "url": "https://leetcode.cn/problems/xiao-zhang-shua-ti-ji-hua/",
         "member": false,
@@ -13296,6 +13779,13 @@
         "member": false,
         "score": 1768,
         "titleSlug": "maximize-score-of-numbers-in-ranges"
+      },
+      {
+        "title": "3620. 恢复网络路径",
+        "url": "https://leetcode.cn/problems/network-recovery-pathways/",
+        "member": false,
+        "score": 1998,
+        "titleSlug": "network-recovery-pathways"
       },
       {
         "title": "2517. 礼盒的最大甜蜜度",
@@ -13329,7 +13819,7 @@
         "title": "3600. 升级后最大生成树稳定性",
         "url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
         "member": false,
-        "score": 0,
+        "score": 2301,
         "titleSlug": "maximize-spanning-tree-stability-with-upgrades"
       },
       {
@@ -13659,7 +14149,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
-    "createTime": "7/6/2025, 8:59:39 AM",
+    "createTime": "8/31/2025, 8:53:47 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -13732,13 +14222,6 @@
         "titleSlug": "grumpy-bookstore-owner"
       },
       {
-        "title": "1652. 拆炸弹",
-        "url": "https://leetcode.cn/problems/defuse-the-bomb/",
-        "member": false,
-        "score": 1416,
-        "titleSlug": "defuse-the-bomb"
-      },
-      {
         "title": "1176. 健身计划评估",
         "url": "https://leetcode.cn/problems/diet-plan-performance/",
         "member": true,
@@ -13774,6 +14257,13 @@
         "titleSlug": "number-of-unique-flavors-after-sharing-k-candies"
       },
       {
+        "title": "3652. 按策略买卖股票的最佳时机",
+        "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-using-strategy/",
+        "member": false,
+        "score": 1556,
+        "titleSlug": "best-time-to-buy-and-sell-stock-using-strategy"
+      },
+      {
         "title": "3439. 重新安排会议得到最多空余时间 I",
         "url": "https://leetcode.cn/problems/reschedule-meetings-for-maximum-free-time-i/",
         "member": false,
@@ -13786,6 +14276,13 @@
         "member": false,
         "score": 1748,
         "titleSlug": "minimum-swaps-to-group-all-1s-together-ii"
+      },
+      {
+        "title": "1652. 拆炸弹",
+        "url": "https://leetcode.cn/problems/defuse-the-bomb/",
+        "member": false,
+        "score": 1416,
+        "titleSlug": "defuse-the-bomb"
       },
       {
         "title": "1297. 子串的最大出现次数",
@@ -13872,6 +14369,13 @@
         "titleSlug": "maximum-frequency-score-of-a-subarray"
       },
       {
+        "title": "2200. 找出数组中的所有 K 近邻下标",
+        "url": "https://leetcode.cn/problems/find-all-k-distant-indices-in-an-array/",
+        "member": false,
+        "score": 1266,
+        "titleSlug": "find-all-k-distant-indices-in-an-array"
+      },
+      {
         "title": "2269. 找到一个数字的 K 美丽值",
         "url": "https://leetcode.cn/problems/find-the-k-beauty-of-a-number/",
         "member": false,
@@ -13921,6 +14425,13 @@
         "titleSlug": "longest-subarray-of-1s-after-deleting-one-element"
       },
       {
+        "title": "3634. 使数组平衡的最少移除数目",
+        "url": "https://leetcode.cn/problems/minimum-removals-to-balance-array/",
+        "member": false,
+        "score": 1453,
+        "titleSlug": "minimum-removals-to-balance-array"
+      },
+      {
         "title": "1208. 尽可能使字符串相等",
         "url": "https://leetcode.cn/problems/get-equal-substrings-within-budget/",
         "member": false,
@@ -13968,6 +14479,13 @@
         "member": false,
         "score": 1817,
         "titleSlug": "minimum-operations-to-reduce-x-to-zero"
+      },
+      {
+        "title": "3641. 最长半重复子数组",
+        "url": "https://leetcode.cn/problems/longest-semi-repeating-subarray/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "longest-semi-repeating-subarray"
       },
       {
         "title": "2730. 找到最长的半重复子字符串",
@@ -14152,55 +14670,6 @@
         "titleSlug": "smallest-range-covering-elements-from-k-lists"
       },
       {
-        "title": "1358. 包含所有三种字符的子字符串数目",
-        "url": "https://leetcode.cn/problems/number-of-substrings-containing-all-three-characters/",
-        "member": false,
-        "score": 1646,
-        "titleSlug": "number-of-substrings-containing-all-three-characters"
-      },
-      {
-        "title": "2962. 统计最大元素出现至少 K 次的子数组",
-        "url": "https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/",
-        "member": false,
-        "score": 1700,
-        "titleSlug": "count-subarrays-where-max-element-appears-at-least-k-times"
-      },
-      {
-        "title": "3325. 字符至少出现 K 次的子字符串 I",
-        "url": "https://leetcode.cn/problems/count-substrings-with-k-frequency-characters-i/",
-        "member": false,
-        "score": 1454,
-        "titleSlug": "count-substrings-with-k-frequency-characters-i"
-      },
-      {
-        "title": "2799. 统计完全子数组的数目",
-        "url": "https://leetcode.cn/problems/count-complete-subarrays-in-an-array/",
-        "member": false,
-        "score": 1397,
-        "titleSlug": "count-complete-subarrays-in-an-array"
-      },
-      {
-        "title": "2537. 统计好子数组的数目",
-        "url": "https://leetcode.cn/problems/count-the-number-of-good-subarrays/",
-        "member": false,
-        "score": 1891,
-        "titleSlug": "count-the-number-of-good-subarrays"
-      },
-      {
-        "title": "3298. 统计重新排列后包含另一个字符串的子字符串数目 II",
-        "url": "https://leetcode.cn/problems/count-substrings-that-can-be-rearranged-to-contain-a-string-ii/",
-        "member": false,
-        "score": 1909,
-        "titleSlug": "count-substrings-that-can-be-rearranged-to-contain-a-string-ii"
-      },
-      {
-        "title": "2495. 乘积为偶数的子数组数",
-        "url": "https://leetcode.cn/problems/number-of-subarrays-having-even-product/",
-        "member": true,
-        "score": 0,
-        "titleSlug": "number-of-subarrays-having-even-product"
-      },
-      {
         "title": "713. 乘积小于 K 的子数组",
         "url": "https://leetcode.cn/problems/subarray-product-less-than-k/",
         "member": false,
@@ -14257,6 +14726,55 @@
         "titleSlug": "count-substrings-that-satisfy-k-constraint-ii"
       },
       {
+        "title": "1358. 包含所有三种字符的子字符串数目",
+        "url": "https://leetcode.cn/problems/number-of-substrings-containing-all-three-characters/",
+        "member": false,
+        "score": 1646,
+        "titleSlug": "number-of-substrings-containing-all-three-characters"
+      },
+      {
+        "title": "2962. 统计最大元素出现至少 K 次的子数组",
+        "url": "https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/",
+        "member": false,
+        "score": 1700,
+        "titleSlug": "count-subarrays-where-max-element-appears-at-least-k-times"
+      },
+      {
+        "title": "3325. 字符至少出现 K 次的子字符串 I",
+        "url": "https://leetcode.cn/problems/count-substrings-with-k-frequency-characters-i/",
+        "member": false,
+        "score": 1454,
+        "titleSlug": "count-substrings-with-k-frequency-characters-i"
+      },
+      {
+        "title": "2799. 统计完全子数组的数目",
+        "url": "https://leetcode.cn/problems/count-complete-subarrays-in-an-array/",
+        "member": false,
+        "score": 1397,
+        "titleSlug": "count-complete-subarrays-in-an-array"
+      },
+      {
+        "title": "2537. 统计好子数组的数目",
+        "url": "https://leetcode.cn/problems/count-the-number-of-good-subarrays/",
+        "member": false,
+        "score": 1891,
+        "titleSlug": "count-the-number-of-good-subarrays"
+      },
+      {
+        "title": "3298. 统计重新排列后包含另一个字符串的子字符串数目 II",
+        "url": "https://leetcode.cn/problems/count-substrings-that-can-be-rearranged-to-contain-a-string-ii/",
+        "member": false,
+        "score": 1909,
+        "titleSlug": "count-substrings-that-can-be-rearranged-to-contain-a-string-ii"
+      },
+      {
+        "title": "2495. 乘积为偶数的子数组数",
+        "url": "https://leetcode.cn/problems/number-of-subarrays-having-even-product/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "number-of-subarrays-having-even-product"
+      },
+      {
         "title": "930. 和相同的二元子数组",
         "url": "https://leetcode.cn/problems/binary-subarrays-with-sum/",
         "member": false,
@@ -14283,13 +14801,6 @@
         "member": false,
         "score": 2210,
         "titleSlug": "subarrays-with-k-different-integers"
-      },
-      {
-        "title": "1438. 绝对差不超过限制的最长连续子数组",
-        "url": "https://leetcode.cn/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/",
-        "member": false,
-        "score": 1672,
-        "titleSlug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit"
       },
       {
         "title": "825. 适龄的朋友",
@@ -14346,6 +14857,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "reverse-string"
+      },
+      {
+        "title": "3643. 垂直翻转子矩阵",
+        "url": "https://leetcode.cn/problems/flip-square-submatrix-vertically/",
+        "member": false,
+        "score": 1234,
+        "titleSlug": "flip-square-submatrix-vertically"
       },
       {
         "title": "125. 验证回文串",
@@ -14544,6 +15062,13 @@
         "titleSlug": "valid-triangle-number"
       },
       {
+        "title": "3649. 完美对的数目",
+        "url": "https://leetcode.cn/problems/number-of-perfect-pairs/",
+        "member": false,
+        "score": 1715,
+        "titleSlug": "number-of-perfect-pairs"
+      },
+      {
         "title": "1574. 删除最短的子数组使剩余数组有序",
         "url": "https://leetcode.cn/problems/shortest-subarray-to-be-removed-to-make-array-sorted/",
         "member": false,
@@ -14584,6 +15109,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "shortest-unsorted-continuous-subarray"
+      },
+      {
+        "title": "3555. 排序每个滑动窗口中最小的子数组",
+        "url": "https://leetcode.cn/problems/smallest-subarray-to-sort-in-every-sliding-window/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "smallest-subarray-to-sort-in-every-sliding-window"
       },
       {
         "title": "1793. 好子数组的最大分数",
@@ -14999,6 +15531,13 @@
         "titleSlug": "find-special-substring-of-length-k"
       },
       {
+        "title": "2348. 全 0 子数组的数目",
+        "url": "https://leetcode.cn/problems/number-of-zero-filled-subarrays/",
+        "member": false,
+        "score": 1315,
+        "titleSlug": "number-of-zero-filled-subarrays"
+      },
+      {
         "title": "1957. 删除字符使字符串变好",
         "url": "https://leetcode.cn/problems/delete-characters-to-make-fancy-string/",
         "member": false,
@@ -15153,6 +15692,13 @@
         "titleSlug": "maximize-active-section-with-trade-i"
       },
       {
+        "title": "413. 等差数列划分",
+        "url": "https://leetcode.cn/problems/arithmetic-slices/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "arithmetic-slices"
+      },
+      {
         "title": "2948. 交换得到字典序最小的数组",
         "url": "https://leetcode.cn/problems/make-lexicographically-smallest-array-by-swapping-elements/",
         "member": false,
@@ -15165,6 +15711,13 @@
         "member": false,
         "score": 1665,
         "titleSlug": "find-score-of-an-array-after-marking-all-elements"
+      },
+      {
+        "title": "3640. 三段式数组 II",
+        "url": "https://leetcode.cn/problems/trionic-array-ii/",
+        "member": false,
+        "score": 2277,
+        "titleSlug": "trionic-array-ii"
       },
       {
         "title": "2393. 严格递增的子数组个数",
@@ -15199,7 +15752,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/",
-    "createTime": "7/6/2025, 8:59:40 AM",
+    "createTime": "8/31/2025, 8:53:49 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -15312,6 +15865,13 @@
         "member": false,
         "score": 1405,
         "titleSlug": "maximum-number-of-coins-you-can-get"
+      },
+      {
+        "title": "3627. 中位数之和的最大值",
+        "url": "https://leetcode.cn/problems/maximum-median-sum-of-subsequences-of-size-3/",
+        "member": false,
+        "score": 1262,
+        "titleSlug": "maximum-median-sum-of-subsequences-of-size-3"
       },
       {
         "title": "3462. 提取至多 K 个元素的最大总和",
@@ -15438,6 +15998,13 @@
         "member": false,
         "score": 2011,
         "titleSlug": "minimum-sum-of-squared-difference"
+      },
+      {
+        "title": "3645. 最优激活顺序得到的最大总和",
+        "url": "https://leetcode.cn/problems/maximum-total-from-optimal-activation-order/",
+        "member": false,
+        "score": 2018,
+        "titleSlug": "maximum-total-from-optimal-activation-order"
       },
       {
         "title": "2141. 同时运行 N 台电脑的最长时间",
@@ -15685,13 +16252,6 @@
         "titleSlug": "can-place-flowers"
       },
       {
-        "title": "3576. 数组元素相等转换",
-        "url": "https://leetcode.cn/problems/transform-array-to-all-equal-elements/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "transform-array-to-all-equal-elements"
-      },
-      {
         "title": "3111. 覆盖所有点的最少矩形数目",
         "url": "https://leetcode.cn/problems/minimum-rectangles-to-cover-points/",
         "member": false,
@@ -15713,6 +16273,13 @@
         "titleSlug": "minimum-operations-to-make-binary-array-elements-equal-to-one-ii"
       },
       {
+        "title": "1529. 最少的后缀翻转次数",
+        "url": "https://leetcode.cn/problems/minimum-suffix-flips/",
+        "member": false,
+        "score": 1392,
+        "titleSlug": "minimum-suffix-flips"
+      },
+      {
         "title": "2789. 合并后数组中的最大元素",
         "url": "https://leetcode.cn/problems/largest-element-in-an-array-after-merge-operations/",
         "member": false,
@@ -15720,11 +16287,11 @@
         "titleSlug": "largest-element-in-an-array-after-merge-operations"
       },
       {
-        "title": "1529. 最少的后缀翻转次数",
-        "url": "https://leetcode.cn/problems/minimum-suffix-flips/",
+        "title": "3576. 数组元素相等转换",
+        "url": "https://leetcode.cn/problems/transform-array-to-all-equal-elements/",
         "member": false,
-        "score": 1392,
-        "titleSlug": "minimum-suffix-flips"
+        "score": 1489,
+        "titleSlug": "transform-array-to-all-equal-elements"
       },
       {
         "title": "1144. 递减元素使数组呈锯齿状",
@@ -15965,6 +16532,13 @@
         "titleSlug": "earliest-possible-day-of-full-bloom"
       },
       {
+        "title": "2561. 重排水果",
+        "url": "https://leetcode.cn/problems/rearranging-fruits/",
+        "member": false,
+        "score": 2221,
+        "titleSlug": "rearranging-fruits"
+      },
+      {
         "title": "179. 最大数",
         "url": "https://leetcode.cn/problems/largest-number/",
         "member": false,
@@ -15986,15 +16560,8 @@
         "titleSlug": "minimum-money-required-before-transactions"
       },
       {
-        "title": "证明",
-        "url": "https://leetcode.cn/problems/maximum-number-of-weeks-for-which-you-can-work/solution/tan-xin-ju-ti-gou-zao-fang-an-pythonjava-3xyq/",
-        "member": false,
-        "score": 1803,
-        "titleSlug": "maximum-number-of-weeks-for-which-you-can-work"
-      },
-      {
-        "title": "输出具体构造",
-        "url": "https://leetcode.cn/problems/reorganize-string/solution/tan-xin-gou-zao-pai-xu-bu-pai-xu-liang-c-h9jg/",
+        "title": "证明+具体构造方案",
+        "url": "https://leetcode.cn/problems/reorganize-string/solutions/2779462/tan-xin-gou-zao-pai-xu-bu-pai-xu-liang-c-h9jg/",
         "member": false,
         "score": 1681,
         "titleSlug": "reorganize-string"
@@ -16005,6 +16572,13 @@
         "member": false,
         "score": 1360,
         "titleSlug": "minimum-amount-of-time-to-fill-cups"
+      },
+      {
+        "title": "3659. 数组元素分组",
+        "url": "https://leetcode.cn/problems/partition-array-into-k-distinct-groups/",
+        "member": false,
+        "score": 1439,
+        "titleSlug": "partition-array-into-k-distinct-groups"
       },
       {
         "title": "1753. 移除石子的最大得分",
@@ -16833,6 +17407,13 @@
         "titleSlug": "minimum-number-of-keypresses"
       },
       {
+        "title": "2561. 重排水果",
+        "url": "https://leetcode.cn/problems/rearranging-fruits/",
+        "member": false,
+        "score": 2221,
+        "titleSlug": "rearranging-fruits"
+      },
+      {
         "title": "3547. 图中边值的最大和",
         "url": "https://leetcode.cn/problems/maximum-sum-of-edge-values-in-a-graph/",
         "member": false,
@@ -16866,13 +17447,6 @@
         "member": false,
         "score": 2301,
         "titleSlug": "apply-operations-on-array-to-maximize-sum-of-squares"
-      },
-      {
-        "title": "两种证明方法",
-        "url": "https://leetcode.cn/problems/5TxKeK/solution/zhuan-huan-zhong-wei-shu-tan-xin-dui-din-7r9b/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "5TxKeK"
       },
       {
         "title": "462. 最小操作次数使数组元素相等 II",
@@ -17078,6 +17652,13 @@
         "titleSlug": "shortest-impossible-sequence-of-rolls"
       },
       {
+        "title": "3660. 跳跃游戏 IX",
+        "url": "https://leetcode.cn/problems/jump-game-ix/",
+        "member": false,
+        "score": 2187,
+        "titleSlug": "jump-game-ix"
+      },
+      {
         "title": "517. 超级洗衣机",
         "url": "https://leetcode.cn/problems/super-washing-machines/",
         "member": false,
@@ -17169,6 +17750,13 @@
         "titleSlug": "vowels-game-in-a-string"
       },
       {
+        "title": "3638. 平衡装运的最大数量",
+        "url": "https://leetcode.cn/problems/maximum-balanced-shipments/",
+        "member": false,
+        "score": 1463,
+        "titleSlug": "maximum-balanced-shipments"
+      },
+      {
         "title": "2419. 按位与最大的最长子数组",
         "url": "https://leetcode.cn/problems/longest-subarray-with-maximum-bitwise-and/",
         "member": false,
@@ -17202,6 +17790,13 @@
         "member": false,
         "score": 1543,
         "titleSlug": "check-if-it-is-possible-to-split-array"
+      },
+      {
+        "title": "463. 岛屿的周长",
+        "url": "https://leetcode.cn/problems/island-perimeter/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "island-perimeter"
       },
       {
         "title": "2211. 统计道路上的碰撞次数",
@@ -17260,13 +17855,6 @@
         "titleSlug": "maximum-matrix-sum"
       },
       {
-        "title": "3577. 统计计算机解锁顺序排列数",
-        "url": "https://leetcode.cn/problems/count-the-number-of-computer-unlocking-permutations/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "count-the-number-of-computer-unlocking-permutations"
-      },
-      {
         "title": "1145. 二叉树着色游戏",
         "url": "https://leetcode.cn/problems/binary-tree-coloring-game/",
         "member": false,
@@ -17281,11 +17869,25 @@
         "titleSlug": "maximum-number-of-occurrences-of-a-substring"
       },
       {
+        "title": "3577. 统计计算机解锁顺序排列数",
+        "url": "https://leetcode.cn/problems/count-the-number-of-computer-unlocking-permutations/",
+        "member": false,
+        "score": 1749,
+        "titleSlug": "count-the-number-of-computer-unlocking-permutations"
+      },
+      {
         "title": "3282. 到达数组末尾的最大得分",
         "url": "https://leetcode.cn/problems/reach-end-of-array-with-max-score/",
         "member": false,
         "score": 1771,
         "titleSlug": "reach-end-of-array-with-max-score"
+      },
+      {
+        "title": "3644. 排序排列",
+        "url": "https://leetcode.cn/problems/maximum-k-to-sort-a-permutation/",
+        "member": false,
+        "score": 1775,
+        "titleSlug": "maximum-k-to-sort-a-permutation"
       },
       {
         "title": "2712. 使所有字符相等的最小成本",
@@ -17337,6 +17939,13 @@
         "titleSlug": "disconnect-path-in-a-binary-matrix-by-at-most-one-flip"
       },
       {
+        "title": "3596. 最小花费路径交替方向 I",
+        "url": "https://leetcode.cn/problems/minimum-cost-path-with-alternating-directions-i/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "minimum-cost-path-with-alternating-directions-i"
+      },
+      {
         "title": "3496. 最大化配对删除后的得分",
         "url": "https://leetcode.cn/problems/maximize-score-after-pair-deletions/",
         "member": true,
@@ -17365,6 +17974,13 @@
         "titleSlug": "minimum-moves-to-reach-target-score"
       },
       {
+        "title": "869. 重新排序得到 2 的幂",
+        "url": "https://leetcode.cn/problems/reordered-power-of-2/",
+        "member": false,
+        "score": 1504,
+        "titleSlug": "reordered-power-of-2"
+      },
+      {
         "title": "1558. 得到目标数组的最少函数调用次数",
         "url": "https://leetcode.cn/problems/minimum-numbers-of-function-calls-to-make-target-array/",
         "member": false,
@@ -17379,11 +17995,11 @@
         "titleSlug": "brick-wall"
       },
       {
-        "title": "2718. 查询后矩阵的和",
-        "url": "https://leetcode.cn/problems/sum-of-matrix-after-queries/",
+        "title": "780. 到达终点",
+        "url": "https://leetcode.cn/problems/reaching-points/",
         "member": false,
-        "score": 1768,
-        "titleSlug": "sum-of-matrix-after-queries"
+        "score": 1897,
+        "titleSlug": "reaching-points"
       },
       {
         "title": "417. 太平洋大西洋水流问题",
@@ -17407,6 +18023,20 @@
         "titleSlug": "encrypt-and-decrypt-strings"
       },
       {
+        "title": "3307. 找出第 K 个字符 II",
+        "url": "https://leetcode.cn/problems/find-the-k-th-character-in-string-game-ii/",
+        "member": false,
+        "score": 2232,
+        "titleSlug": "find-the-k-th-character-in-string-game-ii"
+      },
+      {
+        "title": "3614. 用特殊操作处理字符串 II",
+        "url": "https://leetcode.cn/problems/process-string-with-special-operations-ii/",
+        "member": false,
+        "score": 2010,
+        "titleSlug": "process-string-with-special-operations-ii"
+      },
+      {
         "title": "3419. 图的最大边权的最小值",
         "url": "https://leetcode.cn/problems/minimize-the-maximum-edge-weight-of-graph/",
         "member": false,
@@ -17414,11 +18044,39 @@
         "titleSlug": "minimize-the-maximum-edge-weight-of-graph"
       },
       {
+        "title": "3609. 到达目标点的最小移动次数",
+        "url": "https://leetcode.cn/problems/minimum-moves-to-reach-target-in-grid/",
+        "member": false,
+        "score": 2419,
+        "titleSlug": "minimum-moves-to-reach-target-in-grid"
+      },
+      {
         "title": "936. 戳印序列",
         "url": "https://leetcode.cn/problems/stamping-the-sequence/",
         "member": false,
         "score": 2583,
         "titleSlug": "stamping-the-sequence"
+      },
+      {
+        "title": "3607. 电网维护",
+        "url": "https://leetcode.cn/problems/power-grid-maintenance/",
+        "member": false,
+        "score": 1699,
+        "titleSlug": "power-grid-maintenance"
+      },
+      {
+        "title": "2718. 查询后矩阵的和",
+        "url": "https://leetcode.cn/problems/sum-of-matrix-after-queries/",
+        "member": false,
+        "score": 1768,
+        "titleSlug": "sum-of-matrix-after-queries"
+      },
+      {
+        "title": "3639. 变为活跃状态的最小时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-activate-string/",
+        "member": false,
+        "score": 1853,
+        "titleSlug": "minimum-time-to-activate-string"
       },
       {
         "title": "3375. 使数组的值全部为 K 的最少操作次数",
@@ -17491,6 +18149,13 @@
         "titleSlug": "maximum-number-of-ones"
       },
       {
+        "title": "1304. 和为零的 N 个不同整数",
+        "url": "https://leetcode.cn/problems/find-n-unique-integers-sum-up-to-zero/",
+        "member": false,
+        "score": 1167,
+        "titleSlug": "find-n-unique-integers-sum-up-to-zero"
+      },
+      {
         "title": "942. 增减字符串匹配",
         "url": "https://leetcode.cn/problems/di-string-match/",
         "member": false,
@@ -17519,6 +18184,13 @@
         "titleSlug": "reconstruct-a-2-row-binary-matrix"
       },
       {
+        "title": "1317. 将整数转换为两个无零整数的和",
+        "url": "https://leetcode.cn/problems/convert-integer-to-the-sum-of-two-no-zero-integers/",
+        "member": false,
+        "score": 1277,
+        "titleSlug": "convert-integer-to-the-sum-of-two-no-zero-integers"
+      },
+      {
         "title": "3513. 不同 XOR 三元组的数目 I",
         "url": "https://leetcode.cn/problems/number-of-unique-xor-triplets-i/",
         "member": false,
@@ -17531,6 +18203,13 @@
         "member": false,
         "score": 1680,
         "titleSlug": "construct-string-with-repeat-limit"
+      },
+      {
+        "title": "3592. 硬币面值还原",
+        "url": "https://leetcode.cn/problems/inverse-coin-change/",
+        "member": false,
+        "score": 1700,
+        "titleSlug": "inverse-coin-change"
       },
       {
         "title": "969. 煎饼排序",
@@ -17603,6 +18282,13 @@
         "titleSlug": "find-array-given-subset-sums"
       },
       {
+        "title": "1900. 最佳运动员的比拼回合",
+        "url": "https://leetcode.cn/problems/the-earliest-and-latest-rounds-where-players-compete/",
+        "member": false,
+        "score": 2454,
+        "titleSlug": "the-earliest-and-latest-rounds-where-players-compete"
+      },
+      {
         "title": "280. 摆动排序",
         "url": "https://leetcode.cn/problems/wiggle-sort/",
         "member": true,
@@ -17652,6 +18338,13 @@
         "titleSlug": "rabbits-in-forest"
       },
       {
+        "title": "3587. 最小相邻交换至奇偶交替",
+        "url": "https://leetcode.cn/problems/minimum-adjacent-swaps-to-alternate-parity/",
+        "member": false,
+        "score": 1548,
+        "titleSlug": "minimum-adjacent-swaps-to-alternate-parity"
+      },
+      {
         "title": "1864. 构成交替字符串需要的最小交换次数",
         "url": "https://leetcode.cn/problems/minimum-number-of-swaps-to-make-the-binary-string-alternating/",
         "member": false,
@@ -17687,6 +18380,13 @@
         "titleSlug": "maximum-manhattan-distance-after-k-changes"
       },
       {
+        "title": "3635. 最早完成陆地和水上游乐设施的时间 II",
+        "url": "https://leetcode.cn/problems/earliest-finish-time-for-land-and-water-rides-ii/",
+        "member": false,
+        "score": 1869,
+        "titleSlug": "earliest-finish-time-for-land-and-water-rides-ii"
+      },
+      {
         "title": "3002. 移除后集合的最多元素数",
         "url": "https://leetcode.cn/problems/maximum-size-of-a-set-after-removals/",
         "member": false,
@@ -17713,13 +18413,6 @@
         "member": false,
         "score": 2619,
         "titleSlug": "maximum-number-of-groups-with-increasing-length"
-      },
-      {
-        "title": "3480. 删除一个冲突对后最大子数组数目",
-        "url": "https://leetcode.cn/problems/maximize-subarrays-after-removing-one-conflicting-pair/",
-        "member": false,
-        "score": 2763,
-        "titleSlug": "maximize-subarrays-after-removing-one-conflicting-pair"
       },
       {
         "title": "782. 变为棋盘",
@@ -17775,7 +18468,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/",
-    "createTime": "7/6/2025, 8:59:42 AM",
+    "createTime": "8/31/2025, 8:53:50 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -19692,7 +20385,7 @@
         "title": "3593. 使叶子路径成本相等的最小增量",
         "url": "https://leetcode.cn/problems/minimum-increments-to-equalize-leaf-paths/",
         "member": false,
-        "score": 0,
+        "score": 1959,
         "titleSlug": "minimum-increments-to-equalize-leaf-paths"
       },
       {
@@ -19741,7 +20434,7 @@
         "title": "3593. 使叶子路径成本相等的最小增量",
         "url": "https://leetcode.cn/problems/minimum-increments-to-equalize-leaf-paths/",
         "member": false,
-        "score": 0,
+        "score": 1959,
         "titleSlug": "minimum-increments-to-equalize-leaf-paths"
       },
       {
@@ -19839,7 +20532,7 @@
         "title": "3590. 第 K 小的路径异或和",
         "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
         "member": false,
-        "score": 0,
+        "score": 2645,
         "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
@@ -19874,7 +20567,7 @@
         "title": "3585. 树中找到带权中位节点",
         "url": "https://leetcode.cn/problems/find-weighted-median-node-in-tree/",
         "member": false,
-        "score": 0,
+        "score": 2428,
         "titleSlug": "find-weighted-median-node-in-tree"
       },
       {
@@ -19883,6 +20576,13 @@
         "member": false,
         "score": 2507,
         "titleSlug": "minimum-edge-weight-equilibrium-queries-in-a-tree"
+      },
+      {
+        "title": "2646. 最小化旅行的价格总和",
+        "url": "https://leetcode.cn/problems/minimize-the-total-price-of-the-trips/",
+        "member": false,
+        "score": 2238,
+        "titleSlug": "minimize-the-total-price-of-the-trips"
       },
       {
         "title": "2277. 树中最接近路径的节点",
@@ -19937,14 +20637,14 @@
         "title": "3590. 第 K 小的路径异或和",
         "url": "https://leetcode.cn/problems/kth-smallest-path-xor-sum/",
         "member": false,
-        "score": 0,
+        "score": 2645,
         "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
         "title": "3575. 最大好子树分数",
         "url": "https://leetcode.cn/problems/maximum-good-subtree-score/",
         "member": false,
-        "score": 0,
+        "score": 2359,
         "titleSlug": "maximum-good-subtree-score"
       },
       {
@@ -20011,25 +20711,18 @@
         "titleSlug": "letter-case-permutation"
       },
       {
-        "title": "1286. 字母组合迭代器",
-        "url": "https://leetcode.cn/problems/iterator-for-combination/",
-        "member": false,
-        "score": 1591,
-        "titleSlug": "iterator-for-combination"
-      },
-      {
-        "title": "494. 目标和",
-        "url": "https://leetcode.cn/problems/target-sum/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "target-sum"
-      },
-      {
         "title": "3566. 等积子集的划分方案",
         "url": "https://leetcode.cn/problems/partition-array-into-two-equal-product-subsets/",
         "member": false,
-        "score": 0,
+        "score": 1459,
         "titleSlug": "partition-array-into-two-equal-product-subsets"
+      },
+      {
+        "title": "2044. 统计按位或能得到最大值的子集数目",
+        "url": "https://leetcode.cn/problems/count-number-of-maximum-bitwise-or-subsets/",
+        "member": false,
+        "score": 1567,
+        "titleSlug": "count-number-of-maximum-bitwise-or-subsets"
       },
       {
         "title": "LCP 51. 烹饪料理",
@@ -20214,6 +20907,13 @@
         "titleSlug": "combination-sum-iii"
       },
       {
+        "title": "1286. 字母组合迭代器",
+        "url": "https://leetcode.cn/problems/iterator-for-combination/",
+        "member": false,
+        "score": 1591,
+        "titleSlug": "iterator-for-combination"
+      },
+      {
         "title": "22. 括号生成",
         "url": "https://leetcode.cn/problems/generate-parentheses/",
         "member": false,
@@ -20277,6 +20977,13 @@
         "titleSlug": "verbal-arithmetic-puzzle"
       },
       {
+        "title": "37. 解数独",
+        "url": "https://leetcode.cn/problems/sudoku-solver/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "sudoku-solver"
+      },
+      {
         "title": "3437. 全排列 III",
         "url": "https://leetcode.cn/problems/permutations-iii/",
         "member": true,
@@ -20324,6 +21031,13 @@
         "member": false,
         "score": 1740,
         "titleSlug": "letter-tile-possibilities"
+      },
+      {
+        "title": "3646. 下一个特殊回文数",
+        "url": "https://leetcode.cn/problems/next-special-palindrome-number/",
+        "member": false,
+        "score": 2445,
+        "titleSlug": "next-special-palindrome-number"
       },
       {
         "title": "2014. 重复 K 次的最长子序列",
@@ -20408,13 +21122,6 @@
         "member": false,
         "score": 0,
         "titleSlug": "word-search-ii"
-      },
-      {
-        "title": "37. 解数独",
-        "url": "https://leetcode.cn/problems/sudoku-solver/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "sudoku-solver"
       },
       {
         "title": "638. 大礼包",
@@ -20567,7 +21274,7 @@
         "title": "3566. 等积子集的划分方案",
         "url": "https://leetcode.cn/problems/partition-array-into-two-equal-product-subsets/",
         "member": false,
-        "score": 0,
+        "score": 1459,
         "titleSlug": "partition-array-into-two-equal-product-subsets"
       },
       {
@@ -20576,6 +21283,13 @@
         "member": false,
         "score": 2363,
         "titleSlug": "closest-subsequence-sum"
+      },
+      {
+        "title": "956. 最高的广告牌",
+        "url": "https://leetcode.cn/problems/tallest-billboard/",
+        "member": false,
+        "score": 2381,
+        "titleSlug": "tallest-billboard"
       },
       {
         "title": "2035. 将数组分成两个数组并最小化数组和的差",
@@ -20604,13 +21318,41 @@
         "member": false,
         "score": 1541,
         "titleSlug": "fill-a-special-grid"
+      },
+      {
+        "title": "3307. 找出第 K 个字符 II",
+        "url": "https://leetcode.cn/problems/find-the-k-th-character-in-string-game-ii/",
+        "member": false,
+        "score": 2232,
+        "titleSlug": "find-the-k-th-character-in-string-game-ii"
+      },
+      {
+        "title": "880. 索引处的解码字符串",
+        "url": "https://leetcode.cn/problems/decoded-string-at-index/",
+        "member": false,
+        "score": 2010,
+        "titleSlug": "decoded-string-at-index"
+      },
+      {
+        "title": "3614. 用特殊操作处理字符串 II",
+        "url": "https://leetcode.cn/problems/process-string-with-special-operations-ii/",
+        "member": false,
+        "score": 2010,
+        "titleSlug": "process-string-with-special-operations-ii"
+      },
+      {
+        "title": "1545. 找出第 N 个二进制字符串中的第 K 位",
+        "url": "https://leetcode.cn/problems/find-kth-bit-in-nth-binary-string/",
+        "member": false,
+        "score": 1479,
+        "titleSlug": "find-kth-bit-in-nth-binary-string"
       }
     ]
   },
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/",
-    "createTime": "7/6/2025, 8:59:43 AM",
+    "createTime": "8/31/2025, 8:53:52 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
@@ -20660,6 +21402,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "repeated-substring-pattern"
+      },
+      {
+        "title": "2800. 包含三个字符串的最短字符串",
+        "url": "https://leetcode.cn/problems/shortest-string-that-contains-three-strings/",
+        "member": false,
+        "score": 1855,
+        "titleSlug": "shortest-string-that-contains-three-strings"
       },
       {
         "title": "3008. 找出数组中的美丽下标 II",
@@ -20781,6 +21530,13 @@
         "titleSlug": "number-of-ways-to-separate-numbers"
       },
       {
+        "title": "模板代码",
+        "url": "https://leetcode.cn/problems/longest-palindromic-substring/solutions/2958179/mo-ban-on-manacher-suan-fa-pythonjavacgo-t6cx/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-substring"
+      },
+      {
         "title": "5. 最长回文子串",
         "url": "https://leetcode.cn/problems/longest-palindromic-substring/",
         "member": false,
@@ -20828,6 +21584,48 @@
         "member": false,
         "score": 2397,
         "titleSlug": "longest-palindrome-after-substring-concatenation-ii"
+      },
+      {
+        "title": "模板代码",
+        "url": "https://leetcode.cn/problems/longest-palindromic-substring/solutions/2958179/mo-ban-on-manacher-suan-fa-pythonjavacgo-t6cx/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-substring"
+      },
+      {
+        "title": "5. 最长回文子串",
+        "url": "https://leetcode.cn/problems/longest-palindromic-substring/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "longest-palindromic-substring"
+      },
+      {
+        "title": "2472. 不重叠回文子字符串的最大数目",
+        "url": "https://leetcode.cn/problems/maximum-number-of-non-overlapping-palindrome-substrings/",
+        "member": false,
+        "score": 2013,
+        "titleSlug": "maximum-number-of-non-overlapping-palindrome-substrings"
+      },
+      {
+        "title": "3504. 子字符串连接后的最长回文串 II",
+        "url": "https://leetcode.cn/problems/longest-palindrome-after-substring-concatenation-ii/",
+        "member": false,
+        "score": 2397,
+        "titleSlug": "longest-palindrome-after-substring-concatenation-ii"
+      },
+      {
+        "title": "3615. 图中的最长回文路径",
+        "url": "https://leetcode.cn/problems/longest-palindromic-path-in-graph/",
+        "member": false,
+        "score": 2463,
+        "titleSlug": "longest-palindromic-path-in-graph"
+      },
+      {
+        "title": "3579. 字符串转换需要的最小操作数",
+        "url": "https://leetcode.cn/problems/minimum-steps-to-convert-string-with-operations/",
+        "member": false,
+        "score": 2492,
+        "titleSlug": "minimum-steps-to-convert-string-with-operations"
       },
       {
         "title": "2156. 查找给定哈希值的子串",
