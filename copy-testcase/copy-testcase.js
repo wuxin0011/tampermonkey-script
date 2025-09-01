@@ -134,7 +134,7 @@
         return str.replace(/\\n\\n\\n/g, '\n\n').replace(/\\n\\n$/g, '')
     }
 
-    function copyTestCase() {
+    function copyAllTestCase() {
         let selectors = ['div[data-track-load="description_content"]','.question-content.source-content','#qd-content .FN9Jv']
         let ok = false
         for(let selector of selectors ) {
@@ -152,9 +152,117 @@
             timeout: 2000
         }).show();
         return ok
-        
+
     }
-    GM_registerMenuCommand("复制样例", copyTestCase);
+
+
+
+
+
+    function findCase() {
+        let set = new Set()
+        let tempcase = ""
+        for(let  button of document.querySelectorAll('button')) {
+            if(button.textContent.indexOf('Case') != -1) {
+                let con = button.parentElement.parentElement.parentElement
+                let dom = con.querySelector('div.space-y-4')
+                let pre = ''
+                let size = 0
+                let doms = []
+                for(let div of dom.querySelectorAll('div')) {
+                    if(!div.getAttribute('spellcheck')) {
+                        continue;
+                    }
+                    doms.push(div)
+                    size++
+                }
+                for(let div of doms) {
+                    if(!div.getAttribute('spellcheck')) {
+                        continue;
+                    }
+                    pre += div.textContent
+                    pre += '\n'
+                }
+                if(!set.has(pre)) {
+                    tempcase += pre
+                }
+                set.add(pre)
+            }
+        }
+        return tempcase
+    }
+
+
+
+    function findErrorCase() {
+        let t = null;
+        for(let dom of Array.from(document.querySelectorAll('h3') || {length : 0})) {
+            if(dom.textContent.indexOf('解答错误') != -1 && dom.textContent.indexOf('测试用例') != -1) {
+                t = dom;
+                break;
+            }
+        }
+
+        // console.log('t',t)
+
+
+        let text = ''
+        if(t) {
+            let container = t.parentElement.parentElement.parentElement
+            let d = container.querySelector('div.flex.w-full.flex-col.gap-4 .space-y-4 .relative')
+
+            for(let dom of d.querySelectorAll('div.space-y-2 div.align-middle')) {
+                text += dom.textContent
+                text += '\n'
+            }
+
+            let ds = Array.from(container.querySelectorAll('div.flex.w-full.flex-col.gap-4 .space-y-4 .flex') || {length:0})
+            for(let dom of ds){
+                if(dom.querySelector('span.text-green-s')){
+                    text += dom.querySelector('span.text-green-s').textContent
+                    text += '\n'
+                    break;
+                }
+            }
+
+        }
+        return text
+    }
+
+
+
+
+    function copyTestCase(cur_case) {
+        if(cur_case) {
+            GM_setClipboard(cur_case);
+        }
+        new Noty({
+            type: `${cur_case ? 'success' : 'error'}`,
+            layout: "topRight",
+            text: `复制${cur_case ? '成功🥰' : '失败😥'}`,
+            timeout: 2000
+        }).show();
+        if(cur_case){
+            new Noty({
+                type: `info`,
+                layout: "topRight",
+                text: `${cur_case}`,
+                timeout: 2000
+            }).show();
+        }
+        return cur_case
+    }
+
+
+    function copycurCase() {
+        let case0 = findCase()
+        copyTestCase(case0)
+    }
+    function copycurErrorCase() {
+        let case0 = findErrorCase()
+        copyTestCase(case0)
+    }
+     GM_registerMenuCommand("复制当前样例😜", copycurCase);
+     GM_registerMenuCommand("复制错误样例😭", copycurErrorCase);
+     GM_registerMenuCommand("复制全部样例😍", copyAllTestCase);
 })();
-
-
