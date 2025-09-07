@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "8/31/2025, 8:53:32 AM",
+    "createTime": "9/7/2025, 8:53:00 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2011,7 +2011,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "8/31/2025, 8:53:35 AM",
+    "createTime": "9/7/2025, 8:53:03 AM",
     "problems": [
       {
         "title": "讲解",
@@ -5791,7 +5791,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "8/31/2025, 8:53:37 AM",
+    "createTime": "9/7/2025, 8:53:05 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6058,6 +6058,13 @@
         "member": false,
         "score": 1853,
         "titleSlug": "number-of-paths-with-max-score"
+      },
+      {
+        "title": "3665. 统计镜子反射路径数目",
+        "url": "https://leetcode.cn/problems/twisted-mirror-path-count/",
+        "member": false,
+        "score": 1883,
+        "titleSlug": "twisted-mirror-path-count"
       },
       {
         "title": "2435. 矩阵中和能被 K 整除的路径",
@@ -8349,6 +8356,13 @@
         "titleSlug": "minimum-number-of-work-sessions-to-finish-the-tasks"
       },
       {
+        "title": "3670. 没有公共位的整数最大乘积",
+        "url": "https://leetcode.cn/problems/maximum-product-of-two-integers-with-no-common-bits/",
+        "member": false,
+        "score": 2233,
+        "titleSlug": "maximum-product-of-two-integers-with-no-common-bits"
+      },
+      {
         "title": "1723. 完成所有工作的最短时间",
         "url": "https://leetcode.cn/problems/find-minimum-time-to-finish-all-jobs/",
         "member": false,
@@ -8447,6 +8461,20 @@
         "titleSlug": "minimum-time-to-transport-all-individuals"
       },
       {
+        "title": "3670. 没有公共位的整数最大乘积",
+        "url": "https://leetcode.cn/problems/maximum-product-of-two-integers-with-no-common-bits/",
+        "member": false,
+        "score": 2233,
+        "titleSlug": "maximum-product-of-two-integers-with-no-common-bits"
+      },
+      {
+        "title": "2732. 找到矩阵中的好子集",
+        "url": "https://leetcode.cn/problems/find-a-good-subset-of-the-matrix/",
+        "member": false,
+        "score": 2239,
+        "titleSlug": "find-a-good-subset-of-the-matrix"
+      },
+      {
         "title": "1411. 给 N x 3 网格图涂色的方案数",
         "url": "https://leetcode.cn/problems/number-of-ways-to-paint-n-3-grid/",
         "member": false,
@@ -8536,13 +8564,6 @@
         "member": false,
         "score": 2655,
         "titleSlug": "maximize-grid-happiness"
-      },
-      {
-        "title": "2732. 找到矩阵中的好子集",
-        "url": "https://leetcode.cn/problems/find-a-good-subset-of-the-matrix/",
-        "member": false,
-        "score": 2239,
-        "titleSlug": "find-a-good-subset-of-the-matrix"
       },
       {
         "title": "980. 不同路径 III",
@@ -9005,6 +9026,13 @@
         "member": false,
         "score": 2019,
         "titleSlug": "minimum-cost-to-split-an-array"
+      },
+      {
+        "title": "3671. 子序列美丽值求和",
+        "url": "https://leetcode.cn/problems/sum-of-beautiful-subsequences/",
+        "member": false,
+        "score": 2647,
+        "titleSlug": "sum-of-beautiful-subsequences"
       },
       {
         "title": "2916. 子数组不同元素数目的平方和 II",
@@ -10320,7 +10348,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "8/31/2025, 8:53:39 AM",
+    "createTime": "9/7/2025, 8:53:06 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -10953,6 +10981,13 @@
         "titleSlug": "find-shortest-path-with-k-hops"
       },
       {
+        "title": "2589. 完成所有任务的最少时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-complete-all-tasks/",
+        "member": false,
+        "score": 2380,
+        "titleSlug": "minimum-time-to-complete-all-tasks"
+      },
+      {
         "title": "带你发明 Floyd 算法：从记忆化搜索到递推",
         "url": "https://leetcode.cn/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/solution/dai-ni-fa-ming-floyd-suan-fa-cong-ji-yi-m8s51/",
         "member": false,
@@ -11296,6 +11331,20 @@
         "titleSlug": "count-pairs-of-nodes"
       },
       {
+        "title": "3666. 使二进制字符串全为 1 的最少操作次数",
+        "url": "https://leetcode.cn/problems/minimum-operations-to-equalize-binary-string/",
+        "member": false,
+        "score": 2476,
+        "titleSlug": "minimum-operations-to-equalize-binary-string"
+      },
+      {
+        "title": "2612. 最少翻转操作数",
+        "url": "https://leetcode.cn/problems/minimum-reverse-operations/",
+        "member": false,
+        "score": 2824,
+        "titleSlug": "minimum-reverse-operations"
+      },
+      {
         "title": "3435. 最短公共超序列的字母出现频率",
         "url": "https://leetcode.cn/problems/frequencies-of-shortest-supersequences/",
         "member": false,
@@ -11343,13 +11392,20 @@
         "member": true,
         "score": 0,
         "titleSlug": "paths-in-maze-that-lead-to-same-room"
+      },
+      {
+        "title": "3656. 判断是否存在简单图",
+        "url": "https://leetcode.cn/problems/determine-if-a-simple-graph-exists/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "determine-if-a-simple-graph-exists"
       }
     ]
   },
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "8/31/2025, 8:53:40 AM",
+    "createTime": "9/7/2025, 8:53:08 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12126,7 +12182,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "8/31/2025, 8:53:42 AM",
+    "createTime": "9/7/2025, 8:53:09 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12903,7 +12959,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "8/31/2025, 8:53:44 AM",
+    "createTime": "9/7/2025, 8:53:11 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -13260,7 +13316,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "8/31/2025, 8:53:45 AM",
+    "createTime": "9/7/2025, 8:53:12 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -14149,7 +14205,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "8/31/2025, 8:53:47 AM",
+    "createTime": "9/7/2025, 8:53:14 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -15752,7 +15808,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "8/31/2025, 8:53:49 AM",
+    "createTime": "9/7/2025, 8:53:16 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -16560,13 +16616,6 @@
         "titleSlug": "minimum-money-required-before-transactions"
       },
       {
-        "title": "证明+具体构造方案",
-        "url": "https://leetcode.cn/problems/reorganize-string/solutions/2779462/tan-xin-gou-zao-pai-xu-bu-pai-xu-liang-c-h9jg/",
-        "member": false,
-        "score": 1681,
-        "titleSlug": "reorganize-string"
-      },
-      {
         "title": "2335. 装满杯子需要的最短总时长",
         "url": "https://leetcode.cn/problems/minimum-amount-of-time-to-fill-cups/",
         "member": false,
@@ -16586,6 +16635,13 @@
         "member": false,
         "score": 1487,
         "titleSlug": "maximum-score-from-removing-stones"
+      },
+      {
+        "title": "767. 重构字符串",
+        "url": "https://leetcode.cn/problems/reorganize-string/",
+        "member": false,
+        "score": 1681,
+        "titleSlug": "reorganize-string"
       },
       {
         "title": "1054. 距离相等的条形码",
@@ -16609,11 +16665,11 @@
         "titleSlug": "maximum-number-of-weeks-for-which-you-can-work"
       },
       {
-        "title": "767. 重构字符串",
-        "url": "https://leetcode.cn/problems/reorganize-string/",
+        "title": "3664. 两个字母卡牌游戏",
+        "url": "https://leetcode.cn/problems/two-letter-card-game/",
         "member": false,
-        "score": 1681,
-        "titleSlug": "reorganize-string"
+        "score": 2157,
+        "titleSlug": "two-letter-card-game"
       },
       {
         "title": "3495. 使数组元素都变为零的最少操作次数",
@@ -18468,7 +18524,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "8/31/2025, 8:53:50 AM",
+    "createTime": "9/7/2025, 8:53:18 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -21352,7 +21408,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "8/31/2025, 8:53:52 AM",
+    "createTime": "9/7/2025, 8:53:19 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",

@@ -726,6 +726,17 @@
     "ContestID_zh": "第 307 场周赛"
   },
   {
+    "Rating": 2647.1423924149,
+    "ID": 3671,
+    "Title": "Sum of Beautiful Subsequences",
+    "TitleZH": "子序列美丽值求和",
+    "TitleSlug": "sum-of-beautiful-subsequences",
+    "ContestSlug": "weekly-contest-465",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 465",
+    "ContestID_zh": "第 465 场周赛"
+  },
+  {
     "Rating": 2645.836955523,
     "ID": 3590,
     "Title": "Kth Smallest Path XOR Sum",
@@ -1626,6 +1637,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 68",
     "ContestID_zh": "第 68 场双周赛"
+  },
+  {
+    "Rating": 2476.6133828534,
+    "ID": 3666,
+    "Title": "Minimum Operations to Equalize Binary String",
+    "TitleZH": "使二进制字符串全为 1 的最少操作次数",
+    "TitleSlug": "minimum-operations-to-equalize-binary-string",
+    "ContestSlug": "biweekly-contest-164",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 164",
+    "ContestID_zh": "第 164 场双周赛"
   },
   {
     "Rating": 2476.451764287,
@@ -3872,6 +3894,17 @@
     "ContestID_zh": "第 152 场周赛"
   },
   {
+    "Rating": 2233.8134907095,
+    "ID": 3670,
+    "Title": "Maximum Product of Two Integers With No Common Bits",
+    "TitleZH": "没有公共位的整数最大乘积",
+    "TitleSlug": "maximum-product-of-two-integers-with-no-common-bits",
+    "ContestSlug": "weekly-contest-465",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 465",
+    "ContestID_zh": "第 465 场周赛"
+  },
+  {
     "Rating": 2232.067965725,
     "ID": 3307,
     "Title": "Find the K-th Character in String Game II",
@@ -4607,6 +4640,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 67",
     "ContestID_zh": "第 67 场双周赛"
+  },
+  {
+    "Rating": 2157.9393136944,
+    "ID": 3664,
+    "Title": "Two-Letter Card Game",
+    "TitleZH": "两个字母卡牌游戏",
+    "TitleSlug": "two-letter-card-game",
+    "ContestSlug": "biweekly-contest-164",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 164",
+    "ContestID_zh": "第 164 场双周赛"
   },
   {
     "Rating": 2157.5814371481,
@@ -7843,6 +7887,17 @@
     "ContestID_zh": "第 344 场周赛"
   },
   {
+    "Rating": 1917.0816751666,
+    "ID": 3669,
+    "Title": "Balanced K-Factor Decomposition",
+    "TitleZH": "K 因数分解",
+    "TitleSlug": "balanced-k-factor-decomposition",
+    "ContestSlug": "weekly-contest-465",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 465",
+    "ContestID_zh": "第 465 场周赛"
+  },
+  {
     "Rating": 1916.1432350156,
     "ID": 3394,
     "Title": "Check if Grid can be Cut into Sections",
@@ -8369,6 +8424,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 64",
     "ContestID_zh": "第 64 场双周赛"
+  },
+  {
+    "Rating": 1883.0162485547,
+    "ID": 3665,
+    "Title": "Twisted Mirror Path Count",
+    "TitleZH": "统计镜子反射路径数目",
+    "TitleSlug": "twisted-mirror-path-count",
+    "ContestSlug": "biweekly-contest-164",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 164",
+    "ContestID_zh": "第 164 场双周赛"
   },
   {
     "Rating": 1882.0842446557,
@@ -20845,6 +20911,17 @@
     "ContestID_zh": "第 223 场周赛"
   },
   {
+    "Rating": 1284.3905284099,
+    "ID": 3663,
+    "Title": "Find The Least Frequent Digit",
+    "TitleZH": "出现频率最低的数字",
+    "TitleSlug": "find-the-least-frequent-digit",
+    "ContestSlug": "biweekly-contest-164",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 164",
+    "ContestID_zh": "第 164 场双周赛"
+  },
+  {
     "Rating": 1284.3625733813,
     "ID": 1481,
     "Title": "Least Number of Unique Integers after K Removals",
@@ -21800,6 +21877,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 132",
     "ContestID_zh": "第 132 场双周赛"
+  },
+  {
+    "Rating": 1255.1757310257,
+    "ID": 3668,
+    "Title": "Restore Finishing Order",
+    "TitleZH": "重排完成顺序",
+    "TitleSlug": "restore-finishing-order",
+    "ContestSlug": "weekly-contest-465",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 465",
+    "ContestID_zh": "第 465 场周赛"
   },
   {
     "Rating": 1254.8626139269,
