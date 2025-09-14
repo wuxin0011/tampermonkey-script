@@ -3993,6 +3993,17 @@
     "ContestID_zh": "第 92 场双周赛"
   },
   {
+    "Rating": 2222.8219267536,
+    "ID": 3677,
+    "Title": "Count Binary Palindromic Numbers",
+    "TitleZH": "统计二进制回文数字的数目",
+    "TitleSlug": "count-binary-palindromic-numbers",
+    "ContestSlug": "weekly-contest-466",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 466",
+    "ContestID_zh": "第 466 场周赛"
+  },
+  {
     "Rating": 2222.4805422748,
     "ID": 2276,
     "Title": "Count Integers in Intervals",
@@ -9095,6 +9106,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 152",
     "ContestID_zh": "第 152 场周赛"
+  },
+  {
+    "Rating": 1847.5451577224,
+    "ID": 3676,
+    "Title": "Count Bowl Subarrays",
+    "TitleZH": "碗子数组的数目",
+    "TitleSlug": "count-bowl-subarrays",
+    "ContestSlug": "weekly-contest-466",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 466",
+    "ContestID_zh": "第 466 场周赛"
   },
   {
     "Rating": 1847.3433772442,
@@ -17424,6 +17446,17 @@
     "ContestID_zh": "第 256 场周赛"
   },
   {
+    "Rating": 1414.0229382338,
+    "ID": 3675,
+    "Title": "Minimum Operations to Transform String",
+    "TitleZH": "转换字符串的最小操作次数",
+    "TitleSlug": "minimum-operations-to-transform-string",
+    "ContestSlug": "weekly-contest-466",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 466",
+    "ContestID_zh": "第 466 场周赛"
+  },
+  {
     "Rating": 1413.4238697034,
     "ID": 2383,
     "Title": "Minimum Hours of Training to Win a Competition",
@@ -18599,6 +18632,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 209",
     "ContestID_zh": "第 209 场周赛"
+  },
+  {
+    "Rating": 1369.08311155,
+    "ID": 3674,
+    "Title": "Minimum Operations to Equalize Array",
+    "TitleZH": "数组元素相等的最小操作次数",
+    "TitleSlug": "minimum-operations-to-equalize-array",
+    "ContestSlug": "weekly-contest-466",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 466",
+    "ContestID_zh": "第 466 场周赛"
   },
   {
     "Rating": 1369.0113807552,
