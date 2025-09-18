@@ -1,29 +1,34 @@
 // ==UserScript==
 // @name         lc-to-markdown-txt-html
 // @author       wuxin0011
-// @version      0.0.7
+// @version      0.0.8
 // @namespace    https://github.com/wuxin0011/tampermonkey-script/tree/main/lc-to-markdown-txt-html
-// @description  力扣题目描述、题解,讨论发布内容复制 复制为 markdown、txt、html 等格式
+// @description  力扣题目描述,讨论发布内容复制 复制为 markdown、txt、html 等格式
 // @icon         data:image/png;base64,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
 // @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/discuss/post/*
-// @match        https://leetcode.com/discuss/post/*
 // @match        https://leetcode.cn/problems/*
+// @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
+// @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js
 // @require      https://unpkg.com/turndown@7.2.0/dist/turndown.js
 // @grant        GM_registerMenuCommand
 // @grant        GM_unregisterMenuCommand
+// @grant        GM_setClipboard
+// @grant        GM_addStyle
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @grant        GM_cookie
+// @grant        GM_getResourceText
+// @require      https://cdn.jsdelivr.net/npm/noty@3.1.4/lib/noty.min.js
+// @resource     notycss https://cdn.jsdelivr.net/npm/noty@3.1.4/lib/noty.min.css
+// @downloadURL https://update.greasyfork.org/scripts/491969/lc-to-markdown-txt-html.user.js
+// @updateURL https://update.greasyfork.org/scripts/491969/lc-to-markdown-txt-html.meta.js
 // @license      MIT
 // ==/UserScript==
 
 (function () {
     'use strict';
-    // 如果需要周赛中启用将下面两个复制到上面
-    // @match        https://leetcode.cn/contest/weekly-contest-*/problems/*
-    // @match        https://leetcode.cn/contest/biweekly-contest-*/problems/*
+    GM_addStyle(GM_getResourceText('notycss'));
     const url = window.location.href
     const HTML_CONVERT = '__HTML_CONVERT__'
     const TXT_CONVERT = '__TXT_CONVERT__'
@@ -40,7 +45,7 @@
         }
         console.log('lx-md-html-txt tip:', ...args)
     }
-    const isDiscuss = () => url.indexOf('https://leetcode.cn/circle/discuss') != -1 || url.indexOf('https://leetcode.cn/discuss') != -1
+    const isDiscuss = () => url.indexOf('https://leetcode.cn/circle/discuss') != -1
     const isProblem = () => url.indexOf('https://leetcode.cn/problems') != -1
     const isContest = () => url.indexOf('https://leetcode.cn/contest/weekly-contest') != -1 || url.indexOf('https://leetcode.cn/contest/biweekly-contest') != -1
 
@@ -111,7 +116,7 @@
     }
 
 
-    function runQuestionActionsContainer() {
+     function runQuestionActionsContainer() {
         const className = '.break-words';
         const questionActionsContainer = document.querySelector('.sticky.bottom-0')
         // console.log('questionActionsContainer',questionActionsContainer)
@@ -136,8 +141,6 @@
         runCopy(questionActionsContainer, markdownButton, htmlContent, SUPPORT_TYPE['md'])
         runCopy(questionActionsContainer, htmlButton, htmlContent, SUPPORT_TYPE['html'])
     }
-
-
 
 
 
@@ -166,7 +169,7 @@
     }
 
     function runProblems() {
-        // log('~~~ run problem ~~~~', url)
+        // console.log('~~~ run problem ~~~~', url)
         addSolutionButton()
         addClickWatch()
         let buttonClassName = 'relative inline-flex items-center justify-center text-caption px-2 py-1 gap-1 rounded-full bg-fill-secondary text-difficulty-easy dark:text-difficulty-easy'
@@ -243,6 +246,8 @@
 
             loadSolution(document)
         }
+
+        // console.log('container',container)
         if (!container) {
             if (times >= MAX_CNT - 2) {
                 log('找不到 容器，将手动创建容器！', url)
@@ -252,6 +257,7 @@
             if (loadOk) {
                 return
             }
+            console.log('install contianer ....')
             markdownButton.className = buttonClassName
             txtButton.className = buttonClassName
             htmlButton.className = buttonClassName
@@ -313,6 +319,17 @@
         buttonContainer.style.marginTop = '10px'
         buttonContainer.style.marginBottom = '10px'
         buttonContainer.className = solutionClass
+        if(solutionContainer.querySelector('span')) {
+            for(let span of Array.from(solutionContainer.querySelectorAll('span') ?? {length : 0})) {
+                let cur = span.textContent
+                cur = cur.toLowerCase() 
+                if(cur.indexOf('create the variable') != -1) {
+                    span.textContent = ''
+                    span.remove()
+                    // console.log('del')
+                }
+            }
+        }
         let t = solutionContainer.innerHTML
         let buttons = loadButton()
         runCopy(buttonContainer, buttons[0], t, SUPPORT_TYPE['md'])
@@ -396,6 +413,12 @@
 
 
 
+   let CARRAY = ['','','']
+
+
+
+
+
 
     function runCopy(container, ele, htmlContent, type = SUPPORT_TYPE['md'], title = '') {
 
@@ -418,14 +441,17 @@
 
         if (type == SUPPORT_TYPE['md']) {
             const markdown = toMarkdown(htmlContent)
+            CARRAY[1] = markdown
             copy(markdown, ele)
         } else if (type == SUPPORT_TYPE['txt']) {
             const d = document.createElement('div')
             d.innerHTML = htmlContent
             const txt = handlerText(d.textContent, title)
+            CARRAY[0] = txt
             copy(txt, ele)
         } else if (type == SUPPORT_TYPE['html']) {
             // html
+            CARRAY[2] = htmlContent
             copy(htmlContent, ele)
         } else {
             console.warn('no support format ' + type)
@@ -503,6 +529,19 @@
 
 
 
+            for(let i = 0;i<3;i++) {
+                let flag = i == 0 ? 'txt' : i == 1 ? 'markdown' : 'html'
+                GM_registerMenuCommand(`复制为${flag}`, () => {
+                    GM_setClipboard(CARRAY[i])
+                    new Noty({
+                        type: `${CARRAY[i] ? 'success' : 'error'}`,
+                        layout: "topRight",
+                        text: `${flag}复制${CARRAY[i] ? '成功🥰' : '失败😥'}`,
+                        timeout: 2000
+                    }).show();
+                }, { title: `复制为${flag}`})
+            }
+
             const html_to_markdown_web = GM_registerMenuCommand('html转换markdown网站', () => {
                 window.open(markdownURL, '_blank')
             }, { title: '如果格式转换有问题，请复制为 html 然后用这个网站转换' })
@@ -522,8 +561,8 @@
     }
 
     let times = 0
-    const MAX_CNT = 15
-    const TIME_OUT = 1500
+    const MAX_CNT = 6
+    const TIME_OUT = 1000
     initConmand()
 
 
@@ -593,16 +632,21 @@
     }
 
 
-    window.onload = () => {
+    function core() {
         times = 0
-        start()
         try {
-            // loadOK();
+            start()
         } catch (e) {
-
+            console.log('start error',e)
         }
-        addClickWatch()
+        try {
+            addClickWatch()
+        } catch (e) {
+            console.log('addClickWatch error',e)
+        }
     }
+
+    core()
 
     // 监听地址改变
     // 重新修改描述
