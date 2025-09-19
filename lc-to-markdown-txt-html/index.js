@@ -330,11 +330,16 @@
                 }
             }
         }
-        let t = solutionContainer.innerHTML
         let buttons = loadButton()
-        runCopy(buttonContainer, buttons[0], t, SUPPORT_TYPE['md'])
-        runCopy(buttonContainer, buttons[1], t, SUPPORT_TYPE['txt'], '')
-        runCopy(buttonContainer, buttons[2], t, SUPPORT_TYPE['html'])
+        let title = isProblem() || isContest() ? document.querySelector('#qd-content a') : ""
+        const titleTxt = title?.textContent
+        title = title ? '<h2>' + (title?.textContent) + '</h2>' : ''
+        let u = window.location.href
+        let orginUrl = title ? `<a href="${u}">` + (u) + '</a>' : ''
+        let htmlContent = title + solutionContainer.innerHTML + orginUrl
+        runCopy(buttonContainer, buttons[0], htmlContent, SUPPORT_TYPE['md'])
+        runCopy(buttonContainer, buttons[1], htmlContent, SUPPORT_TYPE['txt'], '')
+        runCopy(buttonContainer, buttons[2], htmlContent, SUPPORT_TYPE['html'])
         p.insertBefore(buttonContainer, solutionContainer)
         solutionContainer.setAttribute(mark, 'ok')
         urlChangeLoadOk = true
