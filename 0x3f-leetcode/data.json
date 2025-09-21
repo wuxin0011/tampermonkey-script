@@ -2596,6 +2596,17 @@
     "ContestID_zh": "第 65 场周赛"
   },
   {
+    "Rating": 2377.8578983802,
+    "ID": 3680,
+    "Title": "Generate Schedule",
+    "TitleZH": "生成赛程",
+    "TitleSlug": "generate-schedule",
+    "ContestSlug": "biweekly-contest-165",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 165",
+    "ContestID_zh": "第 165 场双周赛"
+  },
+  {
     "Rating": 2377.3895801187,
     "ID": 854,
     "Title": "K-Similar Strings",
@@ -5731,6 +5742,17 @@
     "ContestID_zh": "第 93 场周赛"
   },
   {
+    "Rating": 2073.3665301195,
+    "ID": 3685,
+    "Title": "Subsequence Sum After Capping Elements",
+    "TitleZH": "含上限元素的子序列和",
+    "TitleSlug": "subsequence-sum-after-capping-elements",
+    "ContestSlug": "weekly-contest-467",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 467",
+    "ContestID_zh": "第 467 场周赛"
+  },
+  {
     "Rating": 2073.048019317,
     "ID": 2845,
     "Title": "Count of Interesting Subarrays",
@@ -6466,6 +6488,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 183",
     "ContestID_zh": "第 183 场周赛"
+  },
+  {
+    "Rating": 2026.8452856653,
+    "ID": 3681,
+    "Title": "Maximum XOR of Subsequences",
+    "TitleZH": "子序列最大 XOR 值",
+    "TitleSlug": "maximum-xor-of-subsequences",
+    "ContestSlug": "biweekly-contest-165",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 165",
+    "ContestID_zh": "第 165 场双周赛"
   },
   {
     "Rating": 2025.1529365814,
@@ -7214,6 +7247,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 84",
     "ContestID_zh": "第 84 场周赛"
+  },
+  {
+    "Rating": 1969.2668024554,
+    "ID": 3686,
+    "Title": "Number of Stable Subsequences",
+    "TitleZH": "稳定子序列的数量",
+    "TitleSlug": "number-of-stable-subsequences",
+    "ContestSlug": "weekly-contest-467",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 467",
+    "ContestID_zh": "第 467 场周赛"
   },
   {
     "Rating": 1969.2019235672,
@@ -12945,6 +12989,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 160",
     "ContestID_zh": "第 160 场双周赛"
+  },
+  {
+    "Rating": 1638.8790725205,
+    "ID": 3679,
+    "Title": " Minimum Discards to Balance Inventory",
+    "TitleZH": "使库存平衡的最少丢弃次数",
+    "TitleSlug": "minimum-discards-to-balance-inventory",
+    "ContestSlug": "biweekly-contest-165",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 165",
+    "ContestID_zh": "第 165 场双周赛"
   },
   {
     "Rating": 1638.4147703093,
@@ -20262,6 +20317,17 @@
     "ContestID_zh": "第 256 场周赛"
   },
   {
+    "Rating": 1306.0704191448,
+    "ID": 3678,
+    "Title": "Smallest Absent Positive Greater Than Average",
+    "TitleZH": "大于平均值的最小未出现正整数",
+    "TitleSlug": "smallest-absent-positive-greater-than-average",
+    "ContestSlug": "biweekly-contest-165",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 165",
+    "ContestID_zh": "第 165 场双周赛"
+  },
+  {
     "Rating": 1305.3350602668,
     "ID": 3602,
     "Title": "Hexadecimal and Hexatrigesimal Conversion",
@@ -20524,6 +20590,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 423",
     "ContestID_zh": "第 423 场周赛"
+  },
+  {
+    "Rating": 1298.7710723173,
+    "ID": 3684,
+    "Title": "Maximize Sum of At Most K Distinct Elements",
+    "TitleZH": "至多 K 个不同元素的最大和",
+    "TitleSlug": "maximize-sum-of-at-most-k-distinct-elements",
+    "ContestSlug": "weekly-contest-467",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 467",
+    "ContestID_zh": "第 467 场周赛"
   },
   {
     "Rating": 1298.5921473119,
@@ -23659,6 +23736,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 104",
     "ContestID_zh": "第 104 场双周赛"
+  },
+  {
+    "Rating": 1198.7859616956,
+    "ID": 3683,
+    "Title": "Earliest Time to Finish One Task",
+    "TitleZH": "完成一个任务的最早时间",
+    "TitleSlug": "earliest-time-to-finish-one-task",
+    "ContestSlug": "weekly-contest-467",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 467",
+    "ContestID_zh": "第 467 场周赛"
   },
   {
     "Rating": 1198.5705825982,
