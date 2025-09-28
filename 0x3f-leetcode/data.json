@@ -1705,6 +1705,17 @@
     "ContestID_zh": "第 79 场双周赛"
   },
   {
+    "Rating": 2469.013888267,
+    "ID": 3691,
+    "Title": "Maximum Total Subarray Value II",
+    "TitleZH": "最大子数组总值 II",
+    "TitleSlug": "maximum-total-subarray-value-ii",
+    "ContestSlug": "weekly-contest-468",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 468",
+    "ContestID_zh": "第 468 场周赛"
+  },
+  {
     "Rating": 2466.8891773908,
     "ID": 1703,
     "Title": "Minimum Adjacent Swaps for K Consecutive Ones",
@@ -7115,6 +7126,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 77",
     "ContestID_zh": "第 77 场周赛"
+  },
+  {
+    "Rating": 1982.4524895112,
+    "ID": 3690,
+    "Title": "Split and Merge Array Transformation",
+    "TitleZH": "拆分合并数组",
+    "TitleSlug": "split-and-merge-array-transformation",
+    "ContestSlug": "weekly-contest-468",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 468",
+    "ContestID_zh": "第 468 场周赛"
   },
   {
     "Rating": 1981.3072959787,
@@ -18656,6 +18678,17 @@
     "ContestID_zh": "第 289 场周赛"
   },
   {
+    "Rating": 1370.6850302415,
+    "ID": 3689,
+    "Title": "Maximum Total Subarray Value I",
+    "TitleZH": "最大子数组总值 I",
+    "TitleSlug": "maximum-total-subarray-value-i",
+    "ContestSlug": "weekly-contest-468",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 468",
+    "ContestID_zh": "第 468 场周赛"
+  },
+  {
     "Rating": 1370.6144908238,
     "ID": 914,
     "Title": "X of a Kind in a Deck of Cards",
@@ -23483,6 +23516,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 242",
     "ContestID_zh": "第 242 场周赛"
+  },
+  {
+    "Rating": 1204.8779687384,
+    "ID": 3688,
+    "Title": "Bitwise OR of Even Numbers in an Array",
+    "TitleZH": "偶数的按位或运算",
+    "TitleSlug": "bitwise-or-of-even-numbers-in-an-array",
+    "ContestSlug": "weekly-contest-468",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 468",
+    "ContestID_zh": "第 468 场周赛"
   },
   {
     "Rating": 1203.7972421795,
