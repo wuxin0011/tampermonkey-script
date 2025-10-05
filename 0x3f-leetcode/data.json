@@ -2013,6 +2013,17 @@
     "ContestID_zh": "第 242 场周赛"
   },
   {
+    "Rating": 2435.1048370891,
+    "ID": 3700,
+    "Title": "Number of ZigZag Arrays II",
+    "TitleZH": "锯齿形数组的总数 II",
+    "TitleSlug": "number-of-zigzag-arrays-ii",
+    "ContestSlug": "weekly-contest-469",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 469",
+    "ContestID_zh": "第 469 场周赛"
+  },
+  {
     "Rating": 2434.6549114916,
     "ID": 3425,
     "Title": "Longest Special Path",
@@ -5082,6 +5093,17 @@
     "ContestID_zh": "第 254 场周赛"
   },
   {
+    "Rating": 2123.1049463895,
+    "ID": 3699,
+    "Title": "Number of ZigZag Arrays I",
+    "TitleZH": "锯齿形数组的总数 I",
+    "TitleSlug": "number-of-zigzag-arrays-i",
+    "ContestSlug": "weekly-contest-469",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 469",
+    "ContestID_zh": "第 469 场周赛"
+  },
+  {
     "Rating": 2121.3147151648,
     "ID": 972,
     "Title": "Equal Rational Numbers",
@@ -7093,6 +7115,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 375",
     "ContestID_zh": "第 375 场周赛"
+  },
+  {
+    "Rating": 1984.157304677,
+    "ID": 3695,
+    "Title": "Maximize Alternating Sum Using Swaps",
+    "TitleZH": "交换元素后的最大交替和",
+    "TitleSlug": "maximize-alternating-sum-using-swaps",
+    "ContestSlug": "biweekly-contest-166",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 166",
+    "ContestID_zh": "第 166 场双周赛"
   },
   {
     "Rating": 1983.70440706,
@@ -11121,6 +11154,17 @@
     "ContestID_zh": "第 207 场周赛"
   },
   {
+    "Rating": 1739.3005043887,
+    "ID": 3694,
+    "Title": "Distinct Points Reachable After Substring Removal",
+    "TitleZH": "删除子字符串后不同的终点",
+    "TitleSlug": "distinct-points-reachable-after-substring-removal",
+    "ContestSlug": "biweekly-contest-166",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 166",
+    "ContestID_zh": "第 166 场双周赛"
+  },
+  {
     "Rating": 1737.8431142688,
     "ID": 1814,
     "Title": "Count Nice Pairs in an Array",
@@ -12848,6 +12892,17 @@
     "ContestID_zh": "第 333 场周赛"
   },
   {
+    "Rating": 1648.808948421,
+    "ID": 3698,
+    "Title": "Split Array With Minimum Difference",
+    "TitleZH": "分割数组得到最小绝对差",
+    "TitleSlug": "split-array-with-minimum-difference",
+    "ContestSlug": "weekly-contest-469",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 469",
+    "ContestID_zh": "第 469 场周赛"
+  },
+  {
     "Rating": 1648.3540381514,
     "ID": 2423,
     "Title": "Remove Letter To Equalize Frequency",
@@ -14408,6 +14463,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 179",
     "ContestID_zh": "第 179 场周赛"
+  },
+  {
+    "Rating": 1560.2611098329,
+    "ID": 3693,
+    "Title": "Climbing Stairs II",
+    "TitleZH": "爬楼梯 II",
+    "TitleSlug": "climbing-stairs-ii",
+    "ContestSlug": "biweekly-contest-166",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 166",
+    "ContestID_zh": "第 166 场双周赛"
   },
   {
     "Rating": 1559.9709348417,
@@ -18247,6 +18313,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 402",
     "ContestID_zh": "第 402 场周赛"
+  },
+  {
+    "Rating": 1384.416242131,
+    "ID": 3692,
+    "Title": "Majority Frequency Characters",
+    "TitleZH": "众数频率字符",
+    "TitleSlug": "majority-frequency-characters",
+    "ContestSlug": "biweekly-contest-166",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 166",
+    "ContestID_zh": "第 166 场双周赛"
   },
   {
     "Rating": 1384.4078082338,
@@ -22141,6 +22218,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 81",
     "ContestID_zh": "第 81 场双周赛"
+  },
+  {
+    "Rating": 1250.7682878113,
+    "ID": 3697,
+    "Title": "Compute Decimal Representation",
+    "TitleZH": "计算十进制表示",
+    "TitleSlug": "compute-decimal-representation",
+    "ContestSlug": "weekly-contest-469",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 469",
+    "ContestID_zh": "第 469 场周赛"
   },
   {
     "Rating": 1250.0975318308,
