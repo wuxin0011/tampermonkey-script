@@ -46,6 +46,14 @@
 
 ![image.png](https://scriptcat.org/api/v2/resource/image/ZQkTcnkpAMShGlGD)
 
+> 题单章节重刷
+
+![image.png](https://scriptcat.org/api/v2/resource/image/TJQ7H6dg8Q4aiB1C)
+
+>强制刷新和整个题单重刷
+
+![image.png](https://scriptcat.org/api/v2/resource/image/k0L1fY7xZUEBeRq0)
+
 ### 安装地址
 
 
