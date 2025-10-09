@@ -49,14 +49,12 @@ description: 自动标记题目AC，根据分数、会员等信息显示题目�
 
 
 
-:::tip 题目ac记录标记
+:::details 题目ac记录标记
 ![image.png](https://scriptcat.org/api/v2/resource/image/ce3YGVmO085A6oHp)
 :::
 
 
-:::tip 题目分数显示
-![image.png](https://scriptcat.org/api/v2/resource/image/ce3YGVmO085A6oHp)
-:::
+
 
 > 题单重刷
 
@@ -65,7 +63,7 @@ description: 自动标记题目AC，根据分数、会员等信息显示题目�
 ![image.png](https://scriptcat.org/api/v2/resource/image/TJQ7H6dg8Q4aiB1C)
 :::
 
-:::details 全部重刷，最上面tag会有箭头指的两个按钮
+:::tip 全部重刷，最上面tag会有箭头指的两个按钮
 ![image.png](https://scriptcat.org/api/v2/resource/image/k0L1fY7xZUEBeRq0)
 :::
 
