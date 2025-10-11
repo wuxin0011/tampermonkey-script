@@ -41,6 +41,7 @@ export default defineConfig({
           { text: '力扣内容转换插件', link: '/plugins/lc-to-markdown-txt-html' },
           { text: '案例复制', link: '/plugins/copy-testcase' },
           { text: '灵茶题单插件', link: '/plugins/0x3f-problem-solution' },
+          { text: '力扣讨论区目录', link: '/plugins/leetcode-discuss-docs' },
         ]
       },
       {
