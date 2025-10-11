@@ -1,21 +1,16 @@
 // ==UserScript==
 // @name         leetcode-discuss-docs
 // @namespace    leetcode-discuss-docs
-// @version      0.0.1
+// @version      0.0.1-test6
 // @author       wuxin0011
 // @description  讨论区添加目录导航
 // @license      MIT
-// @supportURL   https://github.com/wuxin0011/tampermonkey-script/
-// @downloadURL  https://scriptcat.org/zh-CN/script-show-page/4374
+// @supportURL   https://scriptcat.org/zh-CN/script-show-page/4374
 // @icon         https://pic.leetcode.cn/1760157013-KiWvys-book-bookmark-icon_34486.png
 // @match        https://leetcode.cn/circle/discuss/*
 // @match        https://leetcode.cn/discuss/*
-// @match        https://leetcode.cn/
-// @match        https://leetcode.cn/problems/*
 // @match        https://leetcode.com/circle/discuss/*
 // @match        https://leetcode.com/discuss/*
-// @match        https://leetcode.com/problems/*
-// @match        https://leetcode.com
 // @resource     tobotcss https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.32.2/tocbot.css
 // @require      https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.32.2/tocbot.min.js
 // @grant        GM_addStyle
@@ -28,6 +23,9 @@
 
 (function() {
     'use strict';
+    if(window.location.href == 'https://leetcode.cn/discuss/' || window.location.href == 'https://leetcode.com/discuss/') {
+        return
+    }
 
     // 添加 Tocbot CSS
     GM_addStyle(GM_getResourceText('tobotcss'));
@@ -37,23 +35,37 @@
 
     install_left = install_left == undefined ||install_left == 'undefined' || install_left == 'null' || install_left == false ? false : true
 
-    GM_registerMenuCommand('切换目录安装位置',()=>{
+    GM_registerMenuCommand(`目录安装到${install_left ? '右侧':'左侧'}`,()=>{
         GM_setValue(key,!install_left)
         window.location.reload()
+    })
+
+
+    GM_registerMenuCommand('更新',()=>{
+        window.open('https://scriptcat.org/zh-CN/script-show-page/4374','_blank')
     })
 
     // 自定义样式 - 修复空白、固定位置和暗色模式
     GM_addStyle(`
         /* 屏蔽讨论区目录 */
-        .t6Fde{ display:none !important;}
+         /* .t6Fde{ display:none !important;}*/
+        /* 屏蔽讨论区目录 */
+        ${install_left ?
+        ` .t6Fde{
+            display:none !important;
+        }`:
+        ` .t6Fde{
+            visibility: hidden !important;
+            display:inline-block !important;
+        }`}
         .tocbot-sidebar {
             position: fixed;
-            top: 60px;
+            top: 0;
             ${install_left ? "left : 0px;": "right: 0px;"}
             width:auto;
-            max-width:280px;
-            min-width:200px;
-            max-height: calc(100vh - 120px);
+            max-width:300px;
+            min-width:230px;
+            max-height: calc(100vh - 20px);
             background: white;
             border-radius: 8px;
             padding: 16px;
@@ -391,6 +403,15 @@
            width:0px !important;
         }
     `);
+
+    function f0() {
+        if(!install_left) return;
+        let dom = document.querySelector('.t6Fde').previousElementSibling
+        dom.className = "relative flex flex-1 justify-end mr-10"
+    }
+    setTimeout(() => {
+        f0()
+    }, 1000);
 
     function initTocbot() {
         // 移除已存在的目录
