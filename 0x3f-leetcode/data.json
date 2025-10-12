@@ -2178,6 +2178,17 @@
     "ContestID_zh": "第 333 场周赛"
   },
   {
+    "Rating": 2419.2873599122,
+    "ID": 3704,
+    "Title": "Count No-Zero Pairs That Sum to N",
+    "TitleZH": "统计和为 N 的无零数对",
+    "TitleSlug": "count-no-zero-pairs-that-sum-to-n",
+    "ContestSlug": "weekly-contest-470",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 470",
+    "ContestID_zh": "第 470 场周赛"
+  },
+  {
     "Rating": 2419.2738036027,
     "ID": 3609,
     "Title": "Minimum Moves to Reach Target in Grid",
@@ -9944,6 +9955,17 @@
     "ContestID_zh": "第 217 场周赛"
   },
   {
+    "Rating": 1802.0481850881,
+    "ID": 3703,
+    "Title": "Remove K-Balanced Substrings",
+    "TitleZH": "移除K-平衡子字符串",
+    "TitleSlug": "remove-k-balanced-substrings",
+    "ContestSlug": "weekly-contest-470",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 470",
+    "ContestID_zh": "第 470 场周赛"
+  },
+  {
     "Rating": 1799.4635458535,
     "ID": 1186,
     "Title": "Maximum Subarray Sum with One Deletion",
@@ -15970,6 +15992,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 103",
     "ContestID_zh": "第 103 场双周赛"
+  },
+  {
+    "Rating": 1489.4925546669,
+    "ID": 3702,
+    "Title": "Longest Subsequence With Non-Zero Bitwise XOR",
+    "TitleZH": "按位异或非零的最长子序列",
+    "TitleSlug": "longest-subsequence-with-non-zero-bitwise-xor",
+    "ContestSlug": "weekly-contest-470",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 470",
+    "ContestID_zh": "第 470 场周赛"
   },
   {
     "Rating": 1489.2529299032,
@@ -22955,6 +22988,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 154",
     "ContestID_zh": "第 154 场双周赛"
+  },
+  {
+    "Rating": 1228.2540685683,
+    "ID": 3701,
+    "Title": "Compute Alternating Sum",
+    "TitleZH": "计算交替和",
+    "TitleSlug": "compute-alternating-sum",
+    "ContestSlug": "weekly-contest-470",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 470",
+    "ContestID_zh": "第 470 场周赛"
   },
   {
     "Rating": 1227.91037348,

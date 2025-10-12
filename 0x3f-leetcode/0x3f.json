@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "10/5/2025, 8:53:32 AM",
+    "createTime": "10/12/2025, 8:51:21 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -381,6 +381,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "max-points-on-a-line"
+      },
+      {
+        "title": "1625. 执行操作后字典序最小的字符串",
+        "url": "https://leetcode.cn/problems/lexicographically-smallest-string-after-applying-operations/",
+        "member": false,
+        "score": 1992,
+        "titleSlug": "lexicographically-smallest-string-after-applying-operations"
       },
       {
         "title": "2607. 使子数组元素和相等",
@@ -1130,13 +1137,6 @@
         "member": false,
         "score": 2628,
         "titleSlug": "find-the-original-typed-string-ii"
-      },
-      {
-        "title": "3700. 锯齿形数组的总数 II",
-        "url": "https://leetcode.cn/problems/number-of-zigzag-arrays-ii/",
-        "member": false,
-        "score": 2435,
-        "titleSlug": "number-of-zigzag-arrays-ii"
       },
       {
         "title": "1227. 飞机座位分配概率",
@@ -2112,6 +2112,13 @@
         "titleSlug": "05ZEDJ"
       },
       {
+        "title": "800. 相似 RGB 颜色",
+        "url": "https://leetcode.cn/problems/similar-rgb-color/",
+        "member": true,
+        "score": 1563,
+        "titleSlug": "similar-rgb-color"
+      },
+      {
         "title": "660. 移除 9",
         "url": "https://leetcode.cn/problems/remove-9/",
         "member": true,
@@ -2137,7 +2144,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "10/5/2025, 8:53:34 AM",
+    "createTime": "10/12/2025, 8:51:24 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6092,7 +6099,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "10/5/2025, 8:53:36 AM",
+    "createTime": "10/12/2025, 8:51:26 AM",
     "problems": [
       {
         "title": "讲解",
@@ -10754,7 +10761,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "10/5/2025, 8:53:38 AM",
+    "createTime": "10/12/2025, 8:51:27 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -11965,7 +11972,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "10/5/2025, 8:53:39 AM",
+    "createTime": "10/12/2025, 8:51:29 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12052,6 +12059,13 @@
         "titleSlug": "find-the-prefix-common-array-of-two-arrays"
       },
       {
+        "title": "面试题 05.01. 插入",
+        "url": "https://leetcode.cn/problems/insert-into-bits-lcci/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "insert-into-bits-lcci"
+      },
+      {
         "title": "231. 2 的幂",
         "url": "https://leetcode.cn/problems/power-of-two/",
         "member": false,
@@ -12099,6 +12113,13 @@
         "member": false,
         "score": 1352,
         "titleSlug": "generate-binary-strings-without-adjacent-zeros"
+      },
+      {
+        "title": "3690. 拆分合并数组",
+        "url": "https://leetcode.cn/problems/split-and-merge-array-transformation/",
+        "member": false,
+        "score": 1982,
+        "titleSlug": "split-and-merge-array-transformation"
       },
       {
         "title": "1486. 数组异或操作",
@@ -12423,6 +12444,13 @@
         "titleSlug": "find-xor-sum-of-all-pairs-bitwise-and"
       },
       {
+        "title": "3688. 偶数的按位或运算",
+        "url": "https://leetcode.cn/problems/bitwise-or-of-even-numbers-in-an-array/",
+        "member": false,
+        "score": 1204,
+        "titleSlug": "bitwise-or-of-even-numbers-in-an-array"
+      },
+      {
         "title": "2505. 所有子序列和的按位或",
         "url": "https://leetcode.cn/problems/bitwise-or-of-all-subsequence-sums/",
         "member": true,
@@ -12477,6 +12505,13 @@
         "member": false,
         "score": 2545,
         "titleSlug": "find-the-maximum-sequence-value-of-array"
+      },
+      {
+        "title": "3344. 最大尺寸数组",
+        "url": "https://leetcode.cn/problems/maximum-sized-array/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-sized-array"
       },
       {
         "title": "1835. 所有数对按位与结果的异或和",
@@ -12756,7 +12791,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "10/5/2025, 8:53:41 AM",
+    "createTime": "10/12/2025, 8:51:30 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12843,6 +12878,13 @@
         "titleSlug": "find-the-prefix-common-array-of-two-arrays"
       },
       {
+        "title": "面试题 05.01. 插入",
+        "url": "https://leetcode.cn/problems/insert-into-bits-lcci/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "insert-into-bits-lcci"
+      },
+      {
         "title": "231. 2 的幂",
         "url": "https://leetcode.cn/problems/power-of-two/",
         "member": false,
@@ -12890,6 +12932,13 @@
         "member": false,
         "score": 1352,
         "titleSlug": "generate-binary-strings-without-adjacent-zeros"
+      },
+      {
+        "title": "3690. 拆分合并数组",
+        "url": "https://leetcode.cn/problems/split-and-merge-array-transformation/",
+        "member": false,
+        "score": 1982,
+        "titleSlug": "split-and-merge-array-transformation"
       },
       {
         "title": "1486. 数组异或操作",
@@ -13214,6 +13263,13 @@
         "titleSlug": "find-xor-sum-of-all-pairs-bitwise-and"
       },
       {
+        "title": "3688. 偶数的按位或运算",
+        "url": "https://leetcode.cn/problems/bitwise-or-of-even-numbers-in-an-array/",
+        "member": false,
+        "score": 1204,
+        "titleSlug": "bitwise-or-of-even-numbers-in-an-array"
+      },
+      {
         "title": "2505. 所有子序列和的按位或",
         "url": "https://leetcode.cn/problems/bitwise-or-of-all-subsequence-sums/",
         "member": true,
@@ -13268,6 +13324,13 @@
         "member": false,
         "score": 2545,
         "titleSlug": "find-the-maximum-sequence-value-of-array"
+      },
+      {
+        "title": "3344. 最大尺寸数组",
+        "url": "https://leetcode.cn/problems/maximum-sized-array/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-sized-array"
       },
       {
         "title": "1835. 所有数对按位与结果的异或和",
@@ -13547,7 +13610,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "10/5/2025, 8:53:43 AM",
+    "createTime": "10/12/2025, 8:51:32 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -13904,7 +13967,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "10/5/2025, 8:53:44 AM",
+    "createTime": "10/12/2025, 8:51:33 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -14793,7 +14856,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "10/5/2025, 8:53:46 AM",
+    "createTime": "10/12/2025, 8:51:35 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -14859,13 +14922,6 @@
         "titleSlug": "maximum-points-you-can-obtain-from-cards"
       },
       {
-        "title": "3679. 使库存平衡的最少丢弃次数",
-        "url": "https://leetcode.cn/problems/minimum-discards-to-balance-inventory/",
-        "member": false,
-        "score": 1638,
-        "titleSlug": "minimum-discards-to-balance-inventory"
-      },
-      {
         "title": "1176. 健身计划评估",
         "url": "https://leetcode.cn/problems/diet-plan-performance/",
         "member": true,
@@ -14901,6 +14957,20 @@
         "titleSlug": "number-of-unique-flavors-after-sharing-k-candies"
       },
       {
+        "title": "1989. 捉迷藏中可捕获的最大人数",
+        "url": "https://leetcode.cn/problems/maximum-number-of-people-that-can-be-caught-in-tag/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-number-of-people-that-can-be-caught-in-tag"
+      },
+      {
+        "title": "3679. 使库存平衡的最少丢弃次数",
+        "url": "https://leetcode.cn/problems/minimum-discards-to-balance-inventory/",
+        "member": false,
+        "score": 1638,
+        "titleSlug": "minimum-discards-to-balance-inventory"
+      },
+      {
         "title": "1052. 爱生气的书店老板",
         "url": "https://leetcode.cn/problems/grumpy-bookstore-owner/",
         "member": false,
@@ -14920,6 +14990,13 @@
         "member": false,
         "score": 1728,
         "titleSlug": "reschedule-meetings-for-maximum-free-time-i"
+      },
+      {
+        "title": "3694. 删除子字符串后不同的终点",
+        "url": "https://leetcode.cn/problems/distinct-points-reachable-after-substring-removal/",
+        "member": false,
+        "score": 1739,
+        "titleSlug": "distinct-points-reachable-after-substring-removal"
       },
       {
         "title": "2134. 最少交换次数来组合所有的 1 II",
@@ -15503,6 +15580,13 @@
         "titleSlug": "ways-to-split-array-into-three-subarrays"
       },
       {
+        "title": "LCR 180. 文件组合",
+        "url": "https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof"
+      },
+      {
         "title": "1918. 第 K 小的子数组和",
         "url": "https://leetcode.cn/problems/kth-smallest-subarray-sum/",
         "member": true,
@@ -15907,13 +15991,6 @@
         "member": false,
         "score": 0,
         "titleSlug": "first-missing-positive"
-      },
-      {
-        "title": "287. 寻找重复数",
-        "url": "https://leetcode.cn/problems/find-the-duplicate-number/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "find-the-duplicate-number"
       },
       {
         "title": "2109. 向字符串添加空格",
@@ -16459,7 +16536,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "10/5/2025, 8:53:48 AM",
+    "createTime": "10/12/2025, 8:51:36 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -19343,7 +19420,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "10/5/2025, 8:53:49 AM",
+    "createTime": "10/12/2025, 8:51:38 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -22262,7 +22339,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "10/5/2025, 8:53:51 AM",
+    "createTime": "10/12/2025, 8:51:39 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
