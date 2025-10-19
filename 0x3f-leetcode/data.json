@@ -3905,6 +3905,17 @@
     "ContestID_zh": "第 95 场双周赛"
   },
   {
+    "Rating": 2235.444767608,
+    "ID": 3715,
+    "Title": "Sum of Perfect Square Ancestors",
+    "TitleZH": "完全平方数的祖先个数总和",
+    "TitleSlug": "sum-of-perfect-square-ancestors",
+    "ContestSlug": "weekly-contest-471",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 471",
+    "ContestID_zh": "第 471 场周赛"
+  },
+  {
     "Rating": 2235.2155688741,
     "ID": 3589,
     "Title": "Count Prime-Gap Balanced Subarrays",
@@ -4288,6 +4299,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 12",
     "ContestID_zh": "第 12 场双周赛"
+  },
+  {
+    "Rating": 2201.8256032743,
+    "ID": 3714,
+    "Title": "Longest Balanced Substring II",
+    "TitleZH": "最长的平衡子串 II",
+    "TitleSlug": "longest-balanced-substring-ii",
+    "ContestSlug": "weekly-contest-471",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 471",
+    "ContestID_zh": "第 471 场周赛"
   },
   {
     "Rating": 2201.8209584221,
@@ -4915,6 +4937,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 115",
     "ContestID_zh": "第 115 场周赛"
+  },
+  {
+    "Rating": 2135.1002785041,
+    "ID": 3710,
+    "Title": "Maximum Partition Factor",
+    "TitleZH": "最大划分因子",
+    "TitleSlug": "maximum-partition-factor",
+    "ContestSlug": "biweekly-contest-167",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 167",
+    "ContestID_zh": "第 167 场双周赛"
   },
   {
     "Rating": 2134.5448970405,
@@ -12958,6 +12991,17 @@
     "ContestID_zh": "第 59 场双周赛"
   },
   {
+    "Rating": 1647.51871302,
+    "ID": 3709,
+    "Title": "Design Exam Scores Tracker",
+    "TitleZH": "设计考试分数记录器",
+    "TitleSlug": "design-exam-scores-tracker",
+    "ContestSlug": "biweekly-contest-167",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 167",
+    "ContestID_zh": "第 167 场双周赛"
+  },
+  {
     "Rating": 1646.1943237127,
     "ID": 1358,
     "Title": "Number of Substrings Containing All Three Characters",
@@ -15983,6 +16027,17 @@
     "ContestID_zh": "第 168 场周赛"
   },
   {
+    "Rating": 1490.1757703883,
+    "ID": 3713,
+    "Title": "Longest Balanced Substring I",
+    "TitleZH": "最长的平衡子串 I",
+    "TitleSlug": "longest-balanced-substring-i",
+    "ContestSlug": "weekly-contest-471",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 471",
+    "ContestID_zh": "第 471 场周赛"
+  },
+  {
     "Rating": 1489.7210915287,
     "ID": 2658,
     "Title": "Maximum Number of Fish in a Grid",
@@ -18489,6 +18544,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 87",
     "ContestID_zh": "第 87 场双周赛"
+  },
+  {
+    "Rating": 1380.867602471,
+    "ID": 3708,
+    "Title": "Longest Fibonacci Subarray",
+    "TitleZH": "最长斐波那契子数组",
+    "TitleSlug": "longest-fibonacci-subarray",
+    "ContestSlug": "biweekly-contest-167",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 167",
+    "ContestID_zh": "第 167 场双周赛"
   },
   {
     "Rating": 1380.1541980647,
@@ -21802,6 +21868,17 @@
     "ContestID_zh": "第 141 场周赛"
   },
   {
+    "Rating": 1262.4367018598,
+    "ID": 3707,
+    "Title": "Equal Score Substrings",
+    "TitleZH": "相等子字符串分数",
+    "TitleSlug": "equal-score-substrings",
+    "ContestSlug": "biweekly-contest-167",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 167",
+    "ContestID_zh": "第 167 场双周赛"
+  },
+  {
     "Rating": 1262.1554079997,
     "ID": 3627,
     "Title": "Maximum Median Sum of Subsequences of Size 3",
@@ -23923,6 +24000,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 467",
     "ContestID_zh": "第 467 场周赛"
+  },
+  {
+    "Rating": 1198.7127779903,
+    "ID": 3712,
+    "Title": "Sum of Elements With Frequency Divisible by K",
+    "TitleZH": "出现次数能被 K 整除的元素总和",
+    "TitleSlug": "sum-of-elements-with-frequency-divisible-by-k",
+    "ContestSlug": "weekly-contest-471",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 471",
+    "ContestID_zh": "第 471 场周赛"
   },
   {
     "Rating": 1198.5705825982,
