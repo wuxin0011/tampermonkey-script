@@ -429,6 +429,17 @@
     "ContestID_zh": "第 393 场周赛"
   },
   {
+    "Rating": 2723.5212649775,
+    "ID": 3721,
+    "Title": "Longest Balanced Subarray II",
+    "TitleZH": "最长平衡子数组 II",
+    "TitleSlug": "longest-balanced-subarray-ii",
+    "ContestSlug": "weekly-contest-472",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 472",
+    "ContestID_zh": "第 472 场周赛"
+  },
+  {
     "Rating": 2723.2974277194,
     "ID": 3414,
     "Title": "Maximum Score of Non-overlapping Intervals",
@@ -7500,6 +7511,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 455",
     "ContestID_zh": "第 455 场周赛"
+  },
+  {
+    "Rating": 1958.1499109036,
+    "ID": 3720,
+    "Title": "Lexicographically Smallest Permutation Greater Than Target",
+    "TitleZH": "大于目标字符串的最小字典序排列",
+    "TitleSlug": "lexicographically-smallest-permutation-greater-than-target",
+    "ContestSlug": "weekly-contest-472",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 472",
+    "ContestID_zh": "第 472 场周赛"
   },
   {
     "Rating": 1956.7059585934,
@@ -16500,6 +16522,17 @@
     "ContestID_zh": "第 63 场双周赛"
   },
   {
+    "Rating": 1467.0171625203,
+    "ID": 3719,
+    "Title": "Longest Balanced Subarray I",
+    "TitleZH": "最长平衡子数组 I",
+    "TitleSlug": "longest-balanced-subarray-i",
+    "ContestSlug": "weekly-contest-472",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 472",
+    "ContestID_zh": "第 472 场周赛"
+  },
+  {
     "Rating": 1465.7023558248,
     "ID": 1414,
     "Title": "Find the Minimum Number of Fibonacci Numbers Whose Sum Is K",
@@ -23098,6 +23131,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 87",
     "ContestID_zh": "第 87 场周赛"
+  },
+  {
+    "Rating": 1227.6337833819,
+    "ID": 3718,
+    "Title": "Smallest Missing Multiple of K",
+    "TitleZH": "缺失的最小倍数",
+    "TitleSlug": "smallest-missing-multiple-of-k",
+    "ContestSlug": "weekly-contest-472",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 472",
+    "ContestID_zh": "第 472 场周赛"
   },
   {
     "Rating": 1227.3485530532,

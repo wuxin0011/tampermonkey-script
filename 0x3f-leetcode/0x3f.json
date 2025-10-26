@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "10/19/2025, 8:55:43 AM",
+    "createTime": "10/26/2025, 8:54:11 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2144,7 +2144,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "10/19/2025, 8:55:46 AM",
+    "createTime": "10/26/2025, 8:54:13 AM",
     "problems": [
       {
         "title": "讲解",
@@ -2728,13 +2728,6 @@
         "titleSlug": "continuous-subarray-sum"
       },
       {
-        "title": "437. 路径总和 III",
-        "url": "https://leetcode.cn/problems/path-sum-iii/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "path-sum-iii"
-      },
-      {
         "title": "2588. 统计美丽子数组数目",
         "url": "https://leetcode.cn/problems/count-the-number-of-beautiful-subarrays/",
         "member": false,
@@ -2887,6 +2880,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "max-sum-of-rectangle-no-larger-than-k"
+      },
+      {
+        "title": "437. 路径总和 III",
+        "url": "https://leetcode.cn/problems/path-sum-iii/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "path-sum-iii"
       },
       {
         "title": "2025. 分割数组的最多方案数",
@@ -6155,7 +6155,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "10/19/2025, 8:55:47 AM",
+    "createTime": "10/26/2025, 8:54:15 AM",
     "problems": [
       {
         "title": "讲解",
@@ -10852,7 +10852,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "10/19/2025, 8:55:49 AM",
+    "createTime": "10/26/2025, 8:54:17 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -12084,7 +12084,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "10/19/2025, 8:55:51 AM",
+    "createTime": "10/26/2025, 8:54:18 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -12903,7 +12903,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "10/19/2025, 8:55:52 AM",
+    "createTime": "10/26/2025, 8:54:20 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -13722,7 +13722,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "10/19/2025, 8:55:54 AM",
+    "createTime": "10/26/2025, 8:54:21 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -14079,7 +14079,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "10/19/2025, 8:55:56 AM",
+    "createTime": "10/26/2025, 8:54:22 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -14968,7 +14968,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "10/19/2025, 8:55:57 AM",
+    "createTime": "10/26/2025, 8:54:24 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -15090,13 +15090,6 @@
         "titleSlug": "grumpy-bookstore-owner"
       },
       {
-        "title": "3652. 按策略买卖股票的最佳时机",
-        "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-using-strategy/",
-        "member": false,
-        "score": 1556,
-        "titleSlug": "best-time-to-buy-and-sell-stock-using-strategy"
-      },
-      {
         "title": "3439. 重新安排会议得到最多空余时间 I",
         "url": "https://leetcode.cn/problems/reschedule-meetings-for-maximum-free-time-i/",
         "member": false,
@@ -15109,6 +15102,13 @@
         "member": false,
         "score": 1739,
         "titleSlug": "distinct-points-reachable-after-substring-removal"
+      },
+      {
+        "title": "3652. 按策略买卖股票的最佳时机",
+        "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-using-strategy/",
+        "member": false,
+        "score": 1556,
+        "titleSlug": "best-time-to-buy-and-sell-stock-using-strategy"
       },
       {
         "title": "2134. 最少交换次数来组合所有的 1 II",
@@ -15426,20 +15426,6 @@
         "titleSlug": "maximum-coins-from-k-consecutive-bags"
       },
       {
-        "title": "2968. 执行操作使频率分数最大",
-        "url": "https://leetcode.cn/problems/apply-operations-to-maximize-frequency-score/",
-        "member": false,
-        "score": 2444,
-        "titleSlug": "apply-operations-to-maximize-frequency-score"
-      },
-      {
-        "title": "1040. 移动石子直到连续 II",
-        "url": "https://leetcode.cn/problems/moving-stones-until-consecutive-ii/",
-        "member": false,
-        "score": 2455,
-        "titleSlug": "moving-stones-until-consecutive-ii"
-      },
-      {
         "title": "395. 至少有 K 个重复字符的最长子串",
         "url": "https://leetcode.cn/problems/longest-substring-with-at-least-k-repeating-characters/",
         "member": false,
@@ -15452,6 +15438,20 @@
         "member": false,
         "score": 1521,
         "titleSlug": "longest-nice-substring"
+      },
+      {
+        "title": "2968. 执行操作使频率分数最大",
+        "url": "https://leetcode.cn/problems/apply-operations-to-maximize-frequency-score/",
+        "member": false,
+        "score": 2444,
+        "titleSlug": "apply-operations-to-maximize-frequency-score"
+      },
+      {
+        "title": "1040. 移动石子直到连续 II",
+        "url": "https://leetcode.cn/problems/moving-stones-until-consecutive-ii/",
+        "member": false,
+        "score": 2455,
+        "titleSlug": "moving-stones-until-consecutive-ii"
       },
       {
         "title": "487. 最大连续 1 的个数 II",
@@ -16441,6 +16441,13 @@
         "titleSlug": "longest-continuous-increasing-subsequence"
       },
       {
+        "title": "3708. 最长斐波那契子数组",
+        "url": "https://leetcode.cn/problems/longest-fibonacci-subarray/",
+        "member": false,
+        "score": 1380,
+        "titleSlug": "longest-fibonacci-subarray"
+      },
+      {
         "title": "696. 计数二进制子串",
         "url": "https://leetcode.cn/problems/count-binary-substrings/",
         "member": false,
@@ -16648,7 +16655,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "10/19/2025, 8:55:59 AM",
+    "createTime": "10/26/2025, 8:54:26 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -18023,6 +18030,13 @@
         "titleSlug": "using-a-robot-to-print-the-lexicographically-smallest-string"
       },
       {
+        "title": "3720. 大于目标字符串的最小字典序排列",
+        "url": "https://leetcode.cn/problems/lexicographically-smallest-permutation-greater-than-target/",
+        "member": false,
+        "score": 1958,
+        "titleSlug": "lexicographically-smallest-permutation-greater-than-target"
+      },
+      {
         "title": "2948. 交换得到字典序最小的数组",
         "url": "https://leetcode.cn/problems/make-lexicographically-smallest-array-by-swapping-elements/",
         "member": false,
@@ -18051,18 +18065,32 @@
         "titleSlug": "lexicographically-smallest-beautiful-string"
       },
       {
-        "title": "3302. 字典序最小的合法序列",
-        "url": "https://leetcode.cn/problems/find-the-lexicographically-smallest-valid-sequence/",
-        "member": false,
-        "score": 2473,
-        "titleSlug": "find-the-lexicographically-smallest-valid-sequence"
-      },
-      {
         "title": "3474. 字典序最小的生成字符串",
         "url": "https://leetcode.cn/problems/lexicographically-smallest-generated-string/",
         "member": false,
         "score": 2605,
         "titleSlug": "lexicographically-smallest-generated-string"
+      },
+      {
+        "title": "2048. 下一个更大的数值平衡数",
+        "url": "https://leetcode.cn/problems/next-greater-numerically-balanced-number/",
+        "member": false,
+        "score": 1734,
+        "titleSlug": "next-greater-numerically-balanced-number"
+      },
+      {
+        "title": "3646. 下一个特殊回文数",
+        "url": "https://leetcode.cn/problems/next-special-palindrome-number/",
+        "member": false,
+        "score": 2445,
+        "titleSlug": "next-special-palindrome-number"
+      },
+      {
+        "title": "3348. 最小可整除数位乘积 II",
+        "url": "https://leetcode.cn/problems/smallest-divisible-digit-product-ii/",
+        "member": false,
+        "score": 3101,
+        "titleSlug": "smallest-divisible-digit-product-ii"
       },
       {
         "title": "555. 分割连接字符串",
@@ -19595,7 +19623,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "10/19/2025, 8:56:01 AM",
+    "createTime": "10/26/2025, 8:54:28 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -22514,7 +22542,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "10/19/2025, 8:56:02 AM",
+    "createTime": "10/26/2025, 8:54:29 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
