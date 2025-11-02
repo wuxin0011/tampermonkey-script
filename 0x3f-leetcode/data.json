@@ -3795,6 +3795,17 @@
     "ContestID_zh": "第 169 场周赛"
   },
   {
+    "Rating": 2248.0468276972,
+    "ID": 3729,
+    "Title": "Count Distinct Subarrays Divisible by K in Sorted Array",
+    "TitleZH": "统计有序数组中可被 K 整除的子数组数量",
+    "TitleSlug": "count-distinct-subarrays-divisible-by-k-in-sorted-array",
+    "ContestSlug": "weekly-contest-473",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 473",
+    "ContestID_zh": "第 473 场周赛"
+  },
+  {
     "Rating": 2246.8671174565,
     "ID": 960,
     "Title": "Delete Columns to Make Sorted III",
@@ -7227,6 +7238,17 @@
     "ContestID_zh": "第 468 场周赛"
   },
   {
+    "Rating": 1981.8184570058,
+    "ID": 3725,
+    "Title": "Count Ways to Choose Coprime Integers from Rows",
+    "TitleZH": "统计每一行选择互质整数的方案数",
+    "TitleSlug": "count-ways-to-choose-coprime-integers-from-rows",
+    "ContestSlug": "biweekly-contest-168",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 168",
+    "ContestID_zh": "第 168 场双周赛"
+  },
+  {
     "Rating": 1981.3072959787,
     "ID": 2861,
     "Title": "Maximum Number of Alloys",
@@ -8270,6 +8292,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 125",
     "ContestID_zh": "第 125 场双周赛"
+  },
+  {
+    "Rating": 1908.8920524591,
+    "ID": 3728,
+    "Title": "Stable Subarrays With Equal Boundary and Interior Sum",
+    "TitleZH": "边界与内部和相等的稳定子数组",
+    "TitleSlug": "stable-subarrays-with-equal-boundary-and-interior-sum",
+    "ContestSlug": "weekly-contest-473",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 473",
+    "ContestID_zh": "第 473 场周赛"
   },
   {
     "Rating": 1908.3866125757,
@@ -10228,6 +10261,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 299",
     "ContestID_zh": "第 299 场周赛"
+  },
+  {
+    "Rating": 1789.9076553122,
+    "ID": 3724,
+    "Title": "Minimum Operations to Transform Array",
+    "TitleZH": "转换数组的最少操作次数",
+    "TitleSlug": "minimum-operations-to-transform-array",
+    "ContestSlug": "biweekly-contest-168",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 168",
+    "ContestID_zh": "第 168 场双周赛"
   },
   {
     "Rating": 1789.3681547685,
@@ -15070,6 +15114,17 @@
     "ContestID_zh": "第 371 场周赛"
   },
   {
+    "Rating": 1536.5526318546,
+    "ID": 3723,
+    "Title": "Maximize Sum of Squares of Digits",
+    "TitleZH": "数位平方和的最大值",
+    "TitleSlug": "maximize-sum-of-squares-of-digits",
+    "ContestSlug": "biweekly-contest-168",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 168",
+    "ContestID_zh": "第 168 场双周赛"
+  },
+  {
     "Rating": 1535.3680469616,
     "ID": 2958,
     "Title": "Length of Longest Subarray With at Most K Frequency",
@@ -16731,6 +16786,17 @@
     "ContestID_zh": "第 308 场周赛"
   },
   {
+    "Rating": 1454.9306123736,
+    "ID": 3727,
+    "Title": "Maximum Alternating Sum of Squares",
+    "TitleZH": "最大交替平方和",
+    "TitleSlug": "maximum-alternating-sum-of-squares",
+    "ContestSlug": "weekly-contest-473",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 473",
+    "ContestID_zh": "第 473 场周赛"
+  },
+  {
     "Rating": 1454.7459647138,
     "ID": 2094,
     "Title": "Finding 3-Digit Even Numbers",
@@ -17708,6 +17774,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 256",
     "ContestID_zh": "第 256 场周赛"
+  },
+  {
+    "Rating": 1414.30097998,
+    "ID": 3722,
+    "Title": "Lexicographically Smallest String After Reverse",
+    "TitleZH": "反转后字典序最小的字符串",
+    "TitleSlug": "lexicographically-smallest-string-after-reverse",
+    "ContestSlug": "biweekly-contest-168",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 168",
+    "ContestID_zh": "第 168 场双周赛"
   },
   {
     "Rating": 1414.0229382338,
@@ -24539,6 +24616,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 25",
     "ContestID_zh": "第 25 场双周赛"
+  },
+  {
+    "Rating": 1175.637563525,
+    "ID": 3726,
+    "Title": "Remove Zeros in Decimal Representation",
+    "TitleZH": "移除十进制表示中的所有零",
+    "TitleSlug": "remove-zeros-in-decimal-representation",
+    "ContestSlug": "weekly-contest-473",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 473",
+    "ContestID_zh": "第 473 场周赛"
   },
   {
     "Rating": 1175.5552151972,
