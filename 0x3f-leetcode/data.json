@@ -3080,6 +3080,17 @@
     "ContestID_zh": "第 161 场双周赛"
   },
   {
+    "Rating": 2330.0340161395,
+    "ID": 3734,
+    "Title": "Lexicographically Smallest Palindromic Permutation Greater Than Target",
+    "TitleZH": "大于目标字符串的最小字典序回文排列",
+    "TitleSlug": "lexicographically-smallest-palindromic-permutation-greater-than-target",
+    "ContestSlug": "weekly-contest-474",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 474",
+    "ContestID_zh": "第 474 场周赛"
+  },
+  {
     "Rating": 2328.4294689238,
     "ID": 882,
     "Title": "Reachable Nodes In Subdivided Graph",
@@ -7357,6 +7368,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 194",
     "ContestID_zh": "第 194 场周赛"
+  },
+  {
+    "Rating": 1972.7630060106,
+    "ID": 3733,
+    "Title": "Minimum Time to Complete All Deliveries",
+    "TitleZH": "完成所有送货任务的最少时间",
+    "TitleSlug": "minimum-time-to-complete-all-deliveries",
+    "ContestSlug": "weekly-contest-474",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 474",
+    "ContestID_zh": "第 474 场周赛"
   },
   {
     "Rating": 1970.4608098164,
@@ -15277,6 +15299,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 96",
     "ContestID_zh": "第 96 场周赛"
+  },
+  {
+    "Rating": 1529.058042147,
+    "ID": 3732,
+    "Title": "Maximum Product of Three Elements After One Replacement",
+    "TitleZH": "一次替换后的三元素最大乘积",
+    "TitleSlug": "maximum-product-of-three-elements-after-one-replacement",
+    "ContestSlug": "weekly-contest-474",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 474",
+    "ContestID_zh": "第 474 场周赛"
   },
   {
     "Rating": 1528.7183829005,
@@ -23472,6 +23505,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 216",
     "ContestID_zh": "第 216 场周赛"
+  },
+  {
+    "Rating": 1217.1140041501,
+    "ID": 3731,
+    "Title": "Find Missing Elements",
+    "TitleZH": "找出缺失的元素",
+    "TitleSlug": "find-missing-elements",
+    "ContestSlug": "weekly-contest-474",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 474",
+    "ContestID_zh": "第 474 场周赛"
   },
   {
     "Rating": 1217.0003384199,
