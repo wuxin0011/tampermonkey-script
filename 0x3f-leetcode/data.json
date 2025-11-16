@@ -11,6 +11,17 @@
     "ContestID_zh": "第 408 场周赛"
   },
   {
+    "Rating": 3124.5016688063,
+    "ID": 3743,
+    "Title": "Maximize Cyclic Partition Score",
+    "TitleZH": "循环划分的最大得分",
+    "TitleSlug": "maximize-cyclic-partition-score",
+    "ContestSlug": "weekly-contest-475",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 475",
+    "ContestID_zh": "第 475 场周赛"
+  },
+  {
     "Rating": 3112.0402038423,
     "ID": 3245,
     "Title": "Alternating Groups III",
@@ -5533,6 +5544,17 @@
     "ContestID_zh": "第 81 场双周赛"
   },
   {
+    "Rating": 2089.8733559225,
+    "ID": 3739,
+    "Title": "Count Subarrays With Majority Element II",
+    "TitleZH": "统计主要元素子数组数目 II",
+    "TitleSlug": "count-subarrays-with-majority-element-ii",
+    "ContestSlug": "biweekly-contest-169",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 169",
+    "ContestID_zh": "第 169 场双周赛"
+  },
+  {
     "Rating": 2087.2049275667,
     "ID": 1563,
     "Title": "Stone Game V",
@@ -9878,6 +9900,17 @@
     "ContestID_zh": "第 69 场周赛"
   },
   {
+    "Rating": 1811.01876511,
+    "ID": 3738,
+    "Title": "Longest Non-Decreasing Subarray After Replacing at Most One Element",
+    "TitleZH": "替换至多一个元素后最长非递减子数组",
+    "TitleSlug": "longest-non-decreasing-subarray-after-replacing-at-most-one-element",
+    "ContestSlug": "biweekly-contest-169",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 169",
+    "ContestID_zh": "第 169 场双周赛"
+  },
+  {
     "Rating": 1810.7690062079,
     "ID": 1284,
     "Title": "Minimum Number of Flips to Convert Binary Matrix to Zero Matrix",
@@ -10030,6 +10063,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 270",
     "ContestID_zh": "第 270 场周赛"
+  },
+  {
+    "Rating": 1804.017515039,
+    "ID": 3742,
+    "Title": "Maximum Path Score in a Grid",
+    "TitleZH": "网格中得分最大的路径",
+    "TitleSlug": "maximum-path-score-in-a-grid",
+    "ContestSlug": "weekly-contest-475",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 475",
+    "ContestID_zh": "第 475 场周赛"
   },
   {
     "Rating": 1803.7518552874,
@@ -16973,6 +17017,17 @@
     "ContestID_zh": "第 94 场双周赛"
   },
   {
+    "Rating": 1449.8103614815,
+    "ID": 3741,
+    "Title": "Minimum Distance Between Three Equal Elements II",
+    "TitleZH": "三个相等元素之间的最小距离 II",
+    "TitleSlug": "minimum-distance-between-three-equal-elements-ii",
+    "ContestSlug": "weekly-contest-475",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 475",
+    "ContestID_zh": "第 475 场周赛"
+  },
+  {
     "Rating": 1448.2251797153,
     "ID": 3301,
     "Title": "Maximize the Total Height of Unique Towers",
@@ -17598,6 +17653,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 29",
     "ContestID_zh": "第 29 场双周赛"
+  },
+  {
+    "Rating": 1422.8776815753,
+    "ID": 3737,
+    "Title": "Count Subarrays With Majority Element I",
+    "TitleZH": "统计主要元素子数组数目 I",
+    "TitleSlug": "count-subarrays-with-majority-element-i",
+    "ContestSlug": "biweekly-contest-169",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 169",
+    "ContestID_zh": "第 169 场双周赛"
   },
   {
     "Rating": 1422.7125559974,
@@ -21285,6 +21351,17 @@
     "ContestID_zh": "第 94 场周赛"
   },
   {
+    "Rating": 1287.859116077,
+    "ID": 3740,
+    "Title": "Minimum Distance Between Three Equal Elements I",
+    "TitleZH": "三个相等元素之间的最小距离 I",
+    "TitleSlug": "minimum-distance-between-three-equal-elements-i",
+    "ContestSlug": "weekly-contest-475",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 475",
+    "ContestID_zh": "第 475 场周赛"
+  },
+  {
     "Rating": 1287.1053917452,
     "ID": 1103,
     "Title": "Distribute Candies to People",
@@ -22460,6 +22537,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 83",
     "ContestID_zh": "第 83 场周赛"
+  },
+  {
+    "Rating": 1251.75475589,
+    "ID": 3736,
+    "Title": "Minimum Moves to Equal Array Elements III",
+    "TitleZH": "最小操作次数使数组元素相等 III",
+    "TitleSlug": "minimum-moves-to-equal-array-elements-iii",
+    "ContestSlug": "biweekly-contest-169",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 169",
+    "ContestID_zh": "第 169 场双周赛"
   },
   {
     "Rating": 1250.8974254752,
