@@ -4257,6 +4257,17 @@
     "ContestID_zh": "第 365 场周赛"
   },
   {
+    "Rating": 2209.0960361447,
+    "ID": 3748,
+    "Title": "Count Stable Subarrays",
+    "TitleZH": "统计稳定子数组的数目",
+    "TitleSlug": "count-stable-subarrays",
+    "ContestSlug": "weekly-contest-476",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 476",
+    "ContestID_zh": "第 476 场周赛"
+  },
+  {
     "Rating": 2208.5532172086,
     "ID": 1568,
     "Title": "Minimum Number of Days to Disconnect Island",
@@ -9337,6 +9348,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 401",
     "ContestID_zh": "第 401 场周赛"
+  },
+  {
+    "Rating": 1848.1765176884,
+    "ID": 3747,
+    "Title": "Count Distinct Integers After Removing Zeros",
+    "TitleZH": "统计移除零后不同整数的数目",
+    "TitleSlug": "count-distinct-integers-after-removing-zeros",
+    "ContestSlug": "weekly-contest-476",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 476",
+    "ContestID_zh": "第 476 场周赛"
   },
   {
     "Rating": 1848.0912848518,
@@ -20152,6 +20174,17 @@
     "ContestID_zh": "第 2 场双周赛"
   },
   {
+    "Rating": 1326.8902674772,
+    "ID": 3746,
+    "Title": "Minimum String Length After Balanced Removals",
+    "TitleZH": "等量移除后的字符串最小长度",
+    "TitleSlug": "minimum-string-length-after-balanced-removals",
+    "ContestSlug": "weekly-contest-476",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 476",
+    "ContestID_zh": "第 476 场周赛"
+  },
+  {
     "Rating": 1326.4047670018,
     "ID": 1476,
     "Title": "Subrectangle Queries",
@@ -23571,6 +23604,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 315",
     "ContestID_zh": "第 315 场周赛"
+  },
+  {
+    "Rating": 1218.425100913,
+    "ID": 3745,
+    "Title": "Maximize Expression of Three Elements",
+    "TitleZH": "三元素表达式的最大值",
+    "TitleSlug": "maximize-expression-of-three-elements",
+    "ContestSlug": "weekly-contest-476",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 476",
+    "ContestID_zh": "第 476 场周赛"
   },
   {
     "Rating": 1218.1083231462,

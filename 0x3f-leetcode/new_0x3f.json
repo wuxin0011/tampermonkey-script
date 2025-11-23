@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/",
-    "createTime": "11/16/2025, 8:56:43 AM",
+    "createTime": "11/23/2025, 8:59:41 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2144,7 +2144,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/",
-    "createTime": "11/16/2025, 8:56:45 AM",
+    "createTime": "11/23/2025, 8:59:43 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6372,7 +6372,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
-    "createTime": "11/16/2025, 8:56:47 AM",
+    "createTime": "11/23/2025, 8:59:45 AM",
     "problems": [
       {
         "title": "讲解",
@@ -8167,6 +8167,13 @@
         "titleSlug": "number-of-unique-good-subsequences"
       },
       {
+        "title": "730. 统计不同回文子序列",
+        "url": "https://leetcode.cn/problems/count-different-palindromic-subsequences/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "count-different-palindromic-subsequences"
+      },
+      {
         "title": "3148. 矩阵中的最大得分",
         "url": "https://leetcode.cn/problems/maximum-difference-score-in-a-grid/",
         "member": false,
@@ -8657,13 +8664,6 @@
         "titleSlug": "longest-palindromic-subsequence"
       },
       {
-        "title": "730. 统计不同回文子序列",
-        "url": "https://leetcode.cn/problems/count-different-palindromic-subsequences/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "count-different-palindromic-subsequences"
-      },
-      {
         "title": "1312. 让字符串成为回文串的最少插入次数",
         "url": "https://leetcode.cn/problems/minimum-insertion-steps-to-make-a-string-palindrome/",
         "member": false,
@@ -8683,6 +8683,13 @@
         "member": false,
         "score": 2182,
         "titleSlug": "maximize-palindrome-length-from-subsequences"
+      },
+      {
+        "title": "730. 统计不同回文子序列",
+        "url": "https://leetcode.cn/problems/count-different-palindromic-subsequences/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "count-different-palindromic-subsequences"
       },
       {
         "title": "1682. 最长回文子序列 II",
@@ -9292,6 +9299,13 @@
         "member": true,
         "score": 0,
         "titleSlug": "number-of-ways-to-build-sturdy-brick-wall"
+      },
+      {
+        "title": "3747. 统计移除零后不同整数的数目",
+        "url": "https://leetcode.cn/problems/count-distinct-integers-after-removing-zeros/",
+        "member": false,
+        "score": 1848,
+        "titleSlug": "count-distinct-integers-after-removing-zeros"
       },
       {
         "title": "2719. 统计整数数目",
@@ -9938,11 +9952,25 @@
         "titleSlug": "best-time-to-buy-and-sell-stock-iv"
       },
       {
+        "title": "3573. 买卖股票的最佳时机 V",
+        "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-v/",
+        "member": false,
+        "score": 1777,
+        "titleSlug": "best-time-to-buy-and-sell-stock-v"
+      },
+      {
         "title": "2209. 用地毯覆盖后的最少白色砖块",
         "url": "https://leetcode.cn/problems/minimum-white-tiles-after-covering-with-carpets/",
         "member": false,
         "score": 2105,
         "titleSlug": "minimum-white-tiles-after-covering-with-carpets"
+      },
+      {
+        "title": "3743. 循环划分的最大得分",
+        "url": "https://leetcode.cn/problems/maximize-cyclic-partition-score/",
+        "member": false,
+        "score": 3124,
+        "titleSlug": "maximize-cyclic-partition-score"
       },
       {
         "title": "3654. 删除可整除和后的最小数组和",
@@ -11146,7 +11174,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/",
-    "createTime": "11/16/2025, 8:56:48 AM",
+    "createTime": "11/23/2025, 8:59:47 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -12378,7 +12406,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "11/16/2025, 8:56:50 AM",
+    "createTime": "11/23/2025, 8:59:48 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -13197,7 +13225,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "11/16/2025, 8:56:51 AM",
+    "createTime": "11/23/2025, 8:59:50 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -14016,7 +14044,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
-    "createTime": "11/16/2025, 8:56:53 AM",
+    "createTime": "11/23/2025, 8:59:51 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -14373,7 +14401,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
-    "createTime": "11/16/2025, 8:56:54 AM",
+    "createTime": "11/23/2025, 8:59:52 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -15297,7 +15325,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
-    "createTime": "11/16/2025, 8:56:56 AM",
+    "createTime": "11/23/2025, 8:59:54 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -16714,6 +16742,13 @@
         "titleSlug": "longest-even-odd-subarray-with-threshold"
       },
       {
+        "title": "485. 最大连续 1 的个数",
+        "url": "https://leetcode.cn/problems/max-consecutive-ones/description/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "max-consecutive-ones"
+      },
+      {
         "title": "1446. 连续字符",
         "url": "https://leetcode.cn/problems/consecutive-characters/",
         "member": false,
@@ -16998,7 +17033,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/",
-    "createTime": "11/16/2025, 8:56:57 AM",
+    "createTime": "11/23/2025, 8:59:56 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -18058,6 +18093,20 @@
         "titleSlug": "set-intersection-size-at-least-two"
       },
       {
+        "title": "2589. 完成所有任务的最少时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-complete-all-tasks/",
+        "member": false,
+        "score": 2380,
+        "titleSlug": "minimum-time-to-complete-all-tasks"
+      },
+      {
+        "title": "LCP 32. 批量处理任务",
+        "url": "https://leetcode.cn/problems/t3fKg1/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "t3fKg1"
+      },
+      {
         "title": "图解",
         "url": "https://leetcode.cn/problems/jump-game-ii/solutions/2926993/tu-jie-yi-zhang-tu-miao-dong-tiao-yue-yo-h2d4/",
         "member": false,
@@ -18210,13 +18259,6 @@
         "member": false,
         "score": 2015,
         "titleSlug": "maximum-number-of-events-that-can-be-attended"
-      },
-      {
-        "title": "2589. 完成所有任务的最少时间",
-        "url": "https://leetcode.cn/problems/minimum-time-to-complete-all-tasks/",
-        "member": false,
-        "score": 2380,
-        "titleSlug": "minimum-time-to-complete-all-tasks"
       },
       {
         "title": "1323. 6 和 9 组成的最大数字",
@@ -19402,6 +19444,13 @@
         "titleSlug": "encrypt-and-decrypt-strings"
       },
       {
+        "title": "1354. 多次求和构造目标数组",
+        "url": "https://leetcode.cn/problems/construct-target-array-with-multiple-sums/",
+        "member": false,
+        "score": 2014,
+        "titleSlug": "construct-target-array-with-multiple-sums"
+      },
+      {
         "title": "2543. 判断一个点是否可以到达",
         "url": "https://leetcode.cn/problems/check-if-point-is-reachable/",
         "member": false,
@@ -19428,6 +19477,13 @@
         "member": false,
         "score": 2243,
         "titleSlug": "minimize-the-maximum-edge-weight-of-graph"
+      },
+      {
+        "title": "1611. 使整数变为 0 的最少操作次数",
+        "url": "https://leetcode.cn/problems/minimum-one-bit-operations-to-make-integers-zero/",
+        "member": false,
+        "score": 2345,
+        "titleSlug": "minimum-one-bit-operations-to-make-integers-zero"
       },
       {
         "title": "3609. 到达目标点的最小移动次数",
@@ -19477,6 +19533,27 @@
         "member": false,
         "score": 2123,
         "titleSlug": "last-day-where-you-can-still-cross"
+      },
+      {
+        "title": "2382. 删除操作后的最大子段和",
+        "url": "https://leetcode.cn/problems/maximum-segment-sum-after-removals/",
+        "member": false,
+        "score": 2136,
+        "titleSlug": "maximum-segment-sum-after-removals"
+      },
+      {
+        "title": "803. 打砖块",
+        "url": "https://leetcode.cn/problems/bricks-falling-when-hit/",
+        "member": false,
+        "score": 2765,
+        "titleSlug": "bricks-falling-when-hit"
+      },
+      {
+        "title": "453. 最小操作次数使数组元素相等",
+        "url": "https://leetcode.cn/problems/minimum-moves-to-equal-array-elements/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "minimum-moves-to-equal-array-elements"
       },
       {
         "title": "3375. 使数组的值全部为 K 的最少操作次数",
@@ -19969,13 +20046,6 @@
         "titleSlug": "find-a-good-subset-of-the-matrix"
       },
       {
-        "title": "1611. 使整数变为 0 的最少操作次数",
-        "url": "https://leetcode.cn/problems/minimum-one-bit-operations-to-make-integers-zero/",
-        "member": false,
-        "score": 2345,
-        "titleSlug": "minimum-one-bit-operations-to-make-integers-zero"
-      },
-      {
         "title": "2790. 长度递增组的最大数目",
         "url": "https://leetcode.cn/problems/maximum-number-of-groups-with-increasing-length/",
         "member": false,
@@ -20036,7 +20106,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/",
-    "createTime": "11/16/2025, 8:56:59 AM",
+    "createTime": "11/23/2025, 8:59:57 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -22955,7 +23025,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/",
-    "createTime": "11/16/2025, 8:57:00 AM",
+    "createTime": "11/23/2025, 8:59:59 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
