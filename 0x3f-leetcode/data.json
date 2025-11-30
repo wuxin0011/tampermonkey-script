@@ -1441,6 +1441,17 @@
     "ContestID_zh": "第 136 场双周赛"
   },
   {
+    "Rating": 2519.499932424,
+    "ID": 3757,
+    "Title": "Number of Effective Subsequences",
+    "TitleZH": "有效子序列的数量",
+    "TitleSlug": "number-of-effective-subsequences",
+    "ContestSlug": "weekly-contest-477",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 477",
+    "ContestID_zh": "第 477 场周赛"
+  },
+  {
     "Rating": 2517.6829964848,
     "ID": 2040,
     "Title": "Kth Smallest Product of Two Sorted Arrays",
@@ -3364,6 +3375,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 163",
     "ContestID_zh": "第 163 场周赛"
+  },
+  {
+    "Rating": 2296.6278785716,
+    "ID": 3753,
+    "Title": "Total Waviness of Numbers in Range II",
+    "TitleZH": "范围内总波动值 II",
+    "TitleSlug": "total-waviness-of-numbers-in-range-ii",
+    "ContestSlug": "biweekly-contest-170",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 170",
+    "ContestID_zh": "第 170 场双周赛"
   },
   {
     "Rating": 2294.8289305714,
@@ -7458,6 +7480,17 @@
     "ContestID_zh": "第 57 场双周赛"
   },
   {
+    "Rating": 1968.4923703271,
+    "ID": 3756,
+    "Title": "Concatenate Non-Zero Digits and Multiply by Sum II",
+    "TitleZH": "连接非零数字并乘以其数字和 II",
+    "TitleSlug": "concatenate-non-zero-digits-and-multiply-by-sum-ii",
+    "ContestSlug": "weekly-contest-477",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 477",
+    "ContestID_zh": "第 477 场周赛"
+  },
+  {
     "Rating": 1967.5589835406,
     "ID": 2872,
     "Title": "Maximum Number of K-Divisible Components",
@@ -9689,6 +9722,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 142",
     "ContestID_zh": "第 142 场双周赛"
+  },
+  {
+    "Rating": 1827.3300819992,
+    "ID": 3752,
+    "Title": "Lexicographically Smallest Negated Permutation that Sums to Target",
+    "TitleZH": "字典序最小和为目标值且绝对值是排列的数组",
+    "TitleSlug": "lexicographically-smallest-negated-permutation-that-sums-to-target",
+    "ContestSlug": "biweekly-contest-170",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 170",
+    "ContestID_zh": "第 170 场双周赛"
   },
   {
     "Rating": 1827.090740222,
@@ -12769,6 +12813,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 266",
     "ContestID_zh": "第 266 场周赛"
+  },
+  {
+    "Rating": 1663.3612679416,
+    "ID": 3755,
+    "Title": "Find Maximum Balanced XOR Subarray Length",
+    "TitleZH": "最大平衡异或子数组的长度",
+    "TitleSlug": "find-maximum-balanced-xor-subarray-length",
+    "ContestSlug": "weekly-contest-477",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 477",
+    "ContestID_zh": "第 477 场周赛"
   },
   {
     "Rating": 1663.2612318917,
@@ -18194,6 +18249,17 @@
     "ContestID_zh": "第 42 场双周赛"
   },
   {
+    "Rating": 1404.0641967249,
+    "ID": 3751,
+    "Title": "Total Waviness of Numbers in Range I",
+    "TitleZH": "范围内总波动值 I",
+    "TitleSlug": "total-waviness-of-numbers-in-range-i",
+    "ContestSlug": "biweekly-contest-170",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 170",
+    "ContestID_zh": "第 170 场双周赛"
+  },
+  {
     "Rating": 1402.0863615706,
     "ID": 1508,
     "Title": "Range Sum of Sorted Subarray Sums",
@@ -21340,6 +21406,17 @@
     "ContestID_zh": "第 417 场周赛"
   },
   {
+    "Rating": 1288.6032644265,
+    "ID": 3750,
+    "Title": "Minimum Number of Flips to Reverse Binary String",
+    "TitleZH": "最少反转次数得到翻转二进制字符串",
+    "TitleSlug": "minimum-number-of-flips-to-reverse-binary-string",
+    "ContestSlug": "biweekly-contest-170",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 170",
+    "ContestID_zh": "第 170 场双周赛"
+  },
+  {
     "Rating": 1288.5621697906,
     "ID": 1684,
     "Title": "Count the Number of Consistent Strings",
@@ -22735,6 +22812,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 53",
     "ContestID_zh": "第 53 场双周赛"
+  },
+  {
+    "Rating": 1247.9346797909,
+    "ID": 3754,
+    "Title": "Concatenate Non-Zero Digits and Multiply by Sum I",
+    "TitleZH": "连接非零数字并乘以其数字和 I",
+    "TitleSlug": "concatenate-non-zero-digits-and-multiply-by-sum-i",
+    "ContestSlug": "weekly-contest-477",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 477",
+    "ContestID_zh": "第 477 场周赛"
   },
   {
     "Rating": 1247.3575940876,
