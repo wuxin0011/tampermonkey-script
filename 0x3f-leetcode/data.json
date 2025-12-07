@@ -1584,6 +1584,17 @@
     "ContestID_zh": "第 278 场周赛"
   },
   {
+    "Rating": 2497.2253203914,
+    "ID": 3762,
+    "Title": "Minimum Operations to Equalize Subarrays",
+    "TitleZH": "使数组元素相等的最小操作次数",
+    "TitleSlug": "minimum-operations-to-equalize-subarrays",
+    "ContestSlug": "weekly-contest-478",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 478",
+    "ContestID_zh": "第 478 场周赛"
+  },
+  {
     "Rating": 2492.7039894164,
     "ID": 3579,
     "Title": "Minimum Steps to Convert String with Operations",
@@ -12727,6 +12738,17 @@
     "ContestID_zh": "第 225 场周赛"
   },
   {
+    "Rating": 1668.9941164204,
+    "ID": 3761,
+    "Title": "Minimum Absolute Distance Between Mirror Pairs",
+    "TitleZH": "镜像对之间最小绝对距离",
+    "TitleSlug": "minimum-absolute-distance-between-mirror-pairs",
+    "ContestSlug": "weekly-contest-478",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 478",
+    "ContestID_zh": "第 478 场周赛"
+  },
+  {
     "Rating": 1666.346990979,
     "ID": 1162,
     "Title": "As Far from Land as Possible",
@@ -19096,6 +19118,17 @@
     "ContestID_zh": "第 436 场周赛"
   },
   {
+    "Rating": 1372.7471551838,
+    "ID": 3759,
+    "Title": "Count Elements With at Least K Greater Values",
+    "TitleZH": "统计合格元素的数目",
+    "TitleSlug": "count-elements-with-at-least-k-greater-values",
+    "ContestSlug": "weekly-contest-478",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 478",
+    "ContestID_zh": "第 478 场周赛"
+  },
+  {
     "Rating": 1372.7398808669,
     "ID": 748,
     "Title": "Shortest Completing Word",
@@ -19314,6 +19347,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 59",
     "ContestID_zh": "第 59 场双周赛"
+  },
+  {
+    "Rating": 1364.0551746266,
+    "ID": 3760,
+    "Title": "Maximum Substrings With Distinct Start",
+    "TitleZH": "不同首字母的子字符串数目",
+    "TitleSlug": "maximum-substrings-with-distinct-start",
+    "ContestSlug": "weekly-contest-478",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 478",
+    "ContestID_zh": "第 478 场周赛"
   },
   {
     "Rating": 1363.7443380057,

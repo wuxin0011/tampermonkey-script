@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "11/30/2025, 8:59:32 AM",
+    "createTime": "12/7/2025, 8:59:36 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -334,11 +334,11 @@
         "titleSlug": "gcd-of-odd-and-even-sums"
       },
       {
-        "title": "2807. 在链表中插入最大公约数",
-        "url": "https://leetcode.cn/problems/insert-greatest-common-divisors-in-linked-list/",
+        "title": "2169. 得到 0 的操作数",
+        "url": "https://leetcode.cn/problems/count-operations-to-obtain-zero/",
         "member": false,
-        "score": 1279,
-        "titleSlug": "insert-greatest-common-divisors-in-linked-list"
+        "score": 1199,
+        "titleSlug": "count-operations-to-obtain-zero"
       },
       {
         "title": "914. 卡牌分组",
@@ -432,6 +432,13 @@
         "titleSlug": "sorted-gcd-pair-queries"
       },
       {
+        "title": "3725. 统计每一行选择互质整数的方案数",
+        "url": "https://leetcode.cn/problems/count-ways-to-choose-coprime-integers-from-rows/",
+        "member": false,
+        "score": 1981,
+        "titleSlug": "count-ways-to-choose-coprime-integers-from-rows"
+      },
+      {
         "title": "1819. 序列中不同最大公约数的数目",
         "url": "https://leetcode.cn/problems/number-of-different-subsequences-gcds/",
         "member": false,
@@ -465,6 +472,13 @@
         "member": true,
         "score": 0,
         "titleSlug": "maximum-gcd-sum-of-a-subarray"
+      },
+      {
+        "title": "2807. 在链表中插入最大公约数",
+        "url": "https://leetcode.cn/problems/insert-greatest-common-divisors-in-linked-list/",
+        "member": false,
+        "score": 1279,
+        "titleSlug": "insert-greatest-common-divisors-in-linked-list"
       },
       {
         "title": "2413. 最小偶倍数",
@@ -551,11 +565,39 @@
         "titleSlug": "make-sum-divisible-by-p"
       },
       {
+        "title": "1925. 统计平方和三元组的数目",
+        "url": "https://leetcode.cn/problems/count-square-sum-triples/",
+        "member": false,
+        "score": 1323,
+        "titleSlug": "count-square-sum-triples"
+      },
+      {
+        "title": "1018. 可被 5 整除的二进制前缀",
+        "url": "https://leetcode.cn/problems/binary-prefix-divisible-by-5/",
+        "member": false,
+        "score": 1376,
+        "titleSlug": "binary-prefix-divisible-by-5"
+      },
+      {
         "title": "326. 3 的幂",
         "url": "https://leetcode.cn/problems/power-of-three/",
         "member": false,
         "score": 0,
         "titleSlug": "power-of-three"
+      },
+      {
+        "title": "372. 超级次方",
+        "url": "https://leetcode.cn/problems/super-pow/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "super-pow"
+      },
+      {
+        "title": "1015. 可被 K 整除的最小整数",
+        "url": "https://leetcode.cn/problems/smallest-integer-divisible-by-k/",
+        "member": false,
+        "score": 1874,
+        "titleSlug": "smallest-integer-divisible-by-k"
       },
       {
         "title": "633. 平方数之和",
@@ -570,13 +612,6 @@
         "member": false,
         "score": 0,
         "titleSlug": "perfect-squares"
-      },
-      {
-        "title": "1015. 可被 K 整除的最小整数",
-        "url": "https://leetcode.cn/problems/smallest-integer-divisible-by-k/",
-        "member": false,
-        "score": 1874,
-        "titleSlug": "smallest-integer-divisible-by-k"
       },
       {
         "title": "2240. 买钢笔和铅笔的方案数",
@@ -1006,11 +1041,25 @@
         "titleSlug": "minimize-the-maximum-of-two-arrays"
       },
       {
+        "title": "3733. 完成所有送货任务的最少时间",
+        "url": "https://leetcode.cn/problems/minimum-time-to-complete-all-deliveries/",
+        "member": false,
+        "score": 1972,
+        "titleSlug": "minimum-time-to-complete-all-deliveries"
+      },
+      {
         "title": "3116. 单面值组合的第 K 小金额",
         "url": "https://leetcode.cn/problems/kth-smallest-amount-with-single-denomination-combination/",
         "member": false,
         "score": 2387,
         "titleSlug": "kth-smallest-amount-with-single-denomination-combination"
+      },
+      {
+        "title": "3757. 有效子序列的数量",
+        "url": "https://leetcode.cn/problems/number-of-effective-subsequences/",
+        "member": false,
+        "score": 2519,
+        "titleSlug": "number-of-effective-subsequences"
       },
       {
         "title": "3130. 找出所有稳定的二进制数组 II",
@@ -1860,6 +1909,13 @@
         "titleSlug": "count-odd-numbers-in-an-interval-range"
       },
       {
+        "title": "1716. 计算力扣银行的钱",
+        "url": "https://leetcode.cn/problems/calculate-money-in-leetcode-bank/",
+        "member": false,
+        "score": 1294,
+        "titleSlug": "calculate-money-in-leetcode-bank"
+      },
+      {
         "title": "2829. k-avoiding 数组的最小总和",
         "url": "https://leetcode.cn/problems/determine-the-minimum-sum-of-a-k-avoiding-array/",
         "member": false,
@@ -1949,6 +2005,13 @@
         "member": false,
         "score": 1619,
         "titleSlug": "minimum-operations-to-make-array-equal-ii"
+      },
+      {
+        "title": "1502. 判断能否形成等差数列",
+        "url": "https://leetcode.cn/problems/can-make-arithmetic-progression-from-sequence/",
+        "member": false,
+        "score": 1154,
+        "titleSlug": "can-make-arithmetic-progression-from-sequence"
       },
       {
         "title": "2195. 向数组中追加 K 个整数",
@@ -2144,7 +2207,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "11/30/2025, 8:59:34 AM",
+    "createTime": "12/7/2025, 8:59:38 AM",
     "problems": [
       {
         "title": "讲解",
@@ -2161,13 +2224,6 @@
         "titleSlug": "two-sum"
       },
       {
-        "title": "2441. 与对应负数同时存在的最大正整数",
-        "url": "https://leetcode.cn/problems/largest-positive-integer-that-exists-with-its-negative/",
-        "member": false,
-        "score": 1167,
-        "titleSlug": "largest-positive-integer-that-exists-with-its-negative"
-      },
-      {
         "title": "1512. 好数对的数目",
         "url": "https://leetcode.cn/problems/number-of-good-pairs/",
         "member": false,
@@ -2175,18 +2231,11 @@
         "titleSlug": "number-of-good-pairs"
       },
       {
-        "title": "2001. 可互换矩形的组数",
-        "url": "https://leetcode.cn/problems/number-of-pairs-of-interchangeable-rectangles/",
+        "title": "2441. 与对应负数同时存在的最大正整数",
+        "url": "https://leetcode.cn/problems/largest-positive-integer-that-exists-with-its-negative/",
         "member": false,
-        "score": 1435,
-        "titleSlug": "number-of-pairs-of-interchangeable-rectangles"
-      },
-      {
-        "title": "1128. 等价多米诺骨牌对的数量",
-        "url": "https://leetcode.cn/problems/number-of-equivalent-domino-pairs/description/",
-        "member": false,
-        "score": 1332,
-        "titleSlug": "number-of-equivalent-domino-pairs"
+        "score": 1167,
+        "titleSlug": "largest-positive-integer-that-exists-with-its-negative"
       },
       {
         "title": "121. 买卖股票的最佳时机",
@@ -2203,25 +2252,11 @@
         "titleSlug": "maximum-difference-between-increasing-elements"
       },
       {
-        "title": "219. 存在重复元素 II",
-        "url": "https://leetcode.cn/problems/contains-duplicate-ii/",
+        "title": "624. 数组列表中的最大距离",
+        "url": "https://leetcode.cn/problems/maximum-distance-in-arrays/",
         "member": false,
         "score": 0,
-        "titleSlug": "contains-duplicate-ii"
-      },
-      {
-        "title": "2260. 必须拿起的最小连续卡牌数",
-        "url": "https://leetcode.cn/problems/minimum-consecutive-cards-to-pick-up/",
-        "member": false,
-        "score": 1364,
-        "titleSlug": "minimum-consecutive-cards-to-pick-up"
-      },
-      {
-        "title": "2815. 数组中的最大数对和",
-        "url": "https://leetcode.cn/problems/max-pair-sum-in-an-array/",
-        "member": false,
-        "score": 1295,
-        "titleSlug": "max-pair-sum-in-an-array"
+        "titleSlug": "maximum-distance-in-arrays"
       },
       {
         "title": "2342. 数位和相等数对的最大和",
@@ -2229,6 +2264,13 @@
         "member": false,
         "score": 1308,
         "titleSlug": "max-sum-of-a-pair-with-equal-sum-of-digits"
+      },
+      {
+        "title": "1128. 等价多米诺骨牌对的数量",
+        "url": "https://leetcode.cn/problems/number-of-equivalent-domino-pairs/description/",
+        "member": false,
+        "score": 1332,
+        "titleSlug": "number-of-equivalent-domino-pairs"
       },
       {
         "title": "1679. K 和数对的最大数目",
@@ -2245,11 +2287,46 @@
         "titleSlug": "pairs-with-sum-lcci"
       },
       {
+        "title": "219. 存在重复元素 II",
+        "url": "https://leetcode.cn/problems/contains-duplicate-ii/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "contains-duplicate-ii"
+      },
+      {
+        "title": "2260. 必须拿起的最小连续卡牌数",
+        "url": "https://leetcode.cn/problems/minimum-consecutive-cards-to-pick-up/",
+        "member": false,
+        "score": 1364,
+        "titleSlug": "minimum-consecutive-cards-to-pick-up"
+      },
+      {
+        "title": "2001. 可互换矩形的组数",
+        "url": "https://leetcode.cn/problems/number-of-pairs-of-interchangeable-rectangles/",
+        "member": false,
+        "score": 1435,
+        "titleSlug": "number-of-pairs-of-interchangeable-rectangles"
+      },
+      {
+        "title": "2815. 数组中的最大数对和",
+        "url": "https://leetcode.cn/problems/max-pair-sum-in-an-array/",
+        "member": false,
+        "score": 1295,
+        "titleSlug": "max-pair-sum-in-an-array"
+      },
+      {
         "title": "3623. 统计梯形的数目 I",
         "url": "https://leetcode.cn/problems/count-number-of-trapezoids-i/",
         "member": false,
         "score": 1579,
         "titleSlug": "count-number-of-trapezoids-i"
+      },
+      {
+        "title": "2364. 统计坏数对的数目",
+        "url": "https://leetcode.cn/problems/count-number-of-bad-pairs/",
+        "member": false,
+        "score": 1622,
+        "titleSlug": "count-number-of-bad-pairs"
       },
       {
         "title": "3371. 识别数组中的最大异常值",
@@ -2259,18 +2336,11 @@
         "titleSlug": "identify-the-largest-outlier-in-an-array"
       },
       {
-        "title": "624. 数组列表中的最大距离",
-        "url": "https://leetcode.cn/problems/maximum-distance-in-arrays/",
+        "title": "3761. 镜像对之间最小绝对距离",
+        "url": "https://leetcode.cn/problems/minimum-absolute-distance-between-mirror-pairs/",
         "member": false,
-        "score": 0,
-        "titleSlug": "maximum-distance-in-arrays"
-      },
-      {
-        "title": "2364. 统计坏数对的数目",
-        "url": "https://leetcode.cn/problems/count-number-of-bad-pairs/",
-        "member": false,
-        "score": 1622,
-        "titleSlug": "count-number-of-bad-pairs"
+        "score": 1668,
+        "titleSlug": "minimum-absolute-distance-between-mirror-pairs"
       },
       {
         "title": "1014. 最佳观光组合",
@@ -2728,6 +2798,13 @@
         "titleSlug": "find-longest-subarray-lcci"
       },
       {
+        "title": "3755. 最大平衡异或子数组的长度",
+        "url": "https://leetcode.cn/problems/find-maximum-balanced-xor-subarray-length/",
+        "member": false,
+        "score": 1663,
+        "titleSlug": "find-maximum-balanced-xor-subarray-length"
+      },
+      {
         "title": "3026. 最大好子数组和",
         "url": "https://leetcode.cn/problems/maximum-good-subarray-sum/",
         "member": false,
@@ -3048,6 +3125,13 @@
         "member": false,
         "score": 1897,
         "titleSlug": "get-biggest-three-rhombus-sums-in-a-grid"
+      },
+      {
+        "title": "3756. 连接非零数字并乘以其数字和 II",
+        "url": "https://leetcode.cn/problems/concatenate-non-zero-digits-and-multiply-by-sum-ii/",
+        "member": false,
+        "score": 1968,
+        "titleSlug": "concatenate-non-zero-digits-and-multiply-by-sum-ii"
       },
       {
         "title": "1031. 两个无重叠子数组的最大和",
@@ -4828,6 +4912,13 @@
         "titleSlug": "sliding-window-median"
       },
       {
+        "title": "2653. 滑动子数组的美丽值",
+        "url": "https://leetcode.cn/problems/sliding-subarray-beauty/",
+        "member": false,
+        "score": 1785,
+        "titleSlug": "sliding-subarray-beauty"
+      },
+      {
         "title": "1825. 求出 MK 平均值",
         "url": "https://leetcode.cn/problems/finding-mk-average/",
         "member": false,
@@ -6074,6 +6165,13 @@
         "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
+        "title": "3762. 使数组元素相等的最小操作次数",
+        "url": "https://leetcode.cn/problems/minimum-operations-to-equalize-subarrays/",
+        "member": false,
+        "score": 2497,
+        "titleSlug": "minimum-operations-to-equalize-subarrays"
+      },
+      {
         "title": "3691. 最大子数组总值 II",
         "url": "https://leetcode.cn/problems/maximum-total-subarray-value-ii/",
         "member": false,
@@ -6407,7 +6505,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "11/30/2025, 8:59:36 AM",
+    "createTime": "12/7/2025, 8:59:40 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6576,6 +6674,13 @@
         "member": false,
         "score": 1799,
         "titleSlug": "maximum-subarray-sum-with-one-deletion"
+      },
+      {
+        "title": "3381. 长度可被 K 整除的子数组的最大元素和",
+        "url": "https://leetcode.cn/problems/maximum-subarray-sum-with-length-divisible-by-k/",
+        "member": false,
+        "score": 1943,
+        "titleSlug": "maximum-subarray-sum-with-length-divisible-by-k"
       },
       {
         "title": "讲解",
@@ -7171,6 +7276,13 @@
         "member": false,
         "score": 0,
         "titleSlug": "longest-increasing-subsequence"
+      },
+      {
+        "title": "334. 递增的三元子序列",
+        "url": "https://leetcode.cn/problems/increasing-triplet-subsequence/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "increasing-triplet-subsequence"
       },
       {
         "title": "2826. 将三个组排序",
@@ -9063,13 +9175,6 @@
         "titleSlug": "shortest-path-to-get-all-keys"
       },
       {
-        "title": "1349 题解",
-        "url": "https://leetcode.cn/problems/maximum-students-taking-exam/solution/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-9y5k/",
-        "member": false,
-        "score": 2385,
-        "titleSlug": "maximum-students-taking-exam"
-      },
-      {
         "title": "2305. 公平分发饼干",
         "url": "https://leetcode.cn/problems/fair-distribution-of-cookies/",
         "member": false,
@@ -9189,6 +9294,62 @@
         "titleSlug": "minimum-time-to-transport-all-individuals"
       },
       {
+        "title": "1411. 给 N x 3 网格图涂色的方案数",
+        "url": "https://leetcode.cn/problems/number-of-ways-to-paint-n-3-grid/",
+        "member": false,
+        "score": 1844,
+        "titleSlug": "number-of-ways-to-paint-n-3-grid"
+      },
+      {
+        "title": "1931. 用三种不同颜色为网格涂色",
+        "url": "https://leetcode.cn/problems/painting-a-grid-with-three-different-colors/",
+        "member": false,
+        "score": 2170,
+        "titleSlug": "painting-a-grid-with-three-different-colors"
+      },
+      {
+        "title": "1349. 参加考试的最大学生数",
+        "url": "https://leetcode.cn/problems/maximum-students-taking-exam/",
+        "member": false,
+        "score": 2385,
+        "titleSlug": "maximum-students-taking-exam"
+      },
+      {
+        "title": "1659. 最大化网格幸福感",
+        "url": "https://leetcode.cn/problems/maximize-grid-happiness/",
+        "member": false,
+        "score": 2655,
+        "titleSlug": "maximize-grid-happiness"
+      },
+      {
+        "title": "980. 不同路径 III",
+        "url": "https://leetcode.cn/problems/unique-paths-iii/",
+        "member": false,
+        "score": 1830,
+        "titleSlug": "unique-paths-iii"
+      },
+      {
+        "title": "LCP 04. 覆盖",
+        "url": "https://leetcode.cn/problems/broken-board-dominoes/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "broken-board-dominoes"
+      },
+      {
+        "title": "LCP 76. 魔法棋盘",
+        "url": "https://leetcode.cn/problems/1ybDKD/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "1ybDKD"
+      },
+      {
+        "title": "2184. 建造坚实的砖墙的方法数",
+        "url": "https://leetcode.cn/problems/number-of-ways-to-build-sturdy-brick-wall/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "number-of-ways-to-build-sturdy-brick-wall"
+      },
+      {
         "title": "原理讲解（方法二）",
         "url": "https://leetcode.cn/problems/maximum-product-of-two-integers-with-no-common-bits/solutions/3768219/mo-ban-gao-wei-qian-zhui-he-sos-dppython-78fz/",
         "member": false,
@@ -9224,11 +9385,11 @@
         "titleSlug": "number-of-effective-subsequences"
       },
       {
-        "title": "1411. 给 N x 3 网格图涂色的方案数",
-        "url": "https://leetcode.cn/problems/number-of-ways-to-paint-n-3-grid/",
+        "title": "473. 火柴拼正方形",
+        "url": "https://leetcode.cn/problems/matchsticks-to-square/",
         "member": false,
-        "score": 1844,
-        "titleSlug": "number-of-ways-to-paint-n-3-grid"
+        "score": 0,
+        "titleSlug": "matchsticks-to-square"
       },
       {
         "title": "698. 划分为k个相等的子集",
@@ -9243,20 +9404,6 @@
         "member": false,
         "score": 1869,
         "titleSlug": "maximum-product-of-the-length-of-two-palindromic-subsequences"
-      },
-      {
-        "title": "473. 火柴拼正方形",
-        "url": "https://leetcode.cn/problems/matchsticks-to-square/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "matchsticks-to-square"
-      },
-      {
-        "title": "1931. 用三种不同颜色为网格涂色",
-        "url": "https://leetcode.cn/problems/painting-a-grid-with-three-different-colors/",
-        "member": false,
-        "score": 2170,
-        "titleSlug": "painting-a-grid-with-three-different-colors"
       },
       {
         "title": "1125. 最小的必要团队",
@@ -9308,32 +9455,11 @@
         "titleSlug": "maximum-number-of-groups-getting-fresh-donuts"
       },
       {
-        "title": "1659. 最大化网格幸福感",
-        "url": "https://leetcode.cn/problems/maximize-grid-happiness/",
-        "member": false,
-        "score": 2655,
-        "titleSlug": "maximize-grid-happiness"
-      },
-      {
-        "title": "980. 不同路径 III",
-        "url": "https://leetcode.cn/problems/unique-paths-iii/",
-        "member": false,
-        "score": 1830,
-        "titleSlug": "unique-paths-iii"
-      },
-      {
         "title": "LCP 69. Hello LeetCode!",
         "url": "https://leetcode.cn/problems/rMeRt2/",
         "member": false,
         "score": 0,
         "titleSlug": "rMeRt2"
-      },
-      {
-        "title": "LCP 76. 魔法棋盘",
-        "url": "https://leetcode.cn/problems/1ybDKD/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "1ybDKD"
       },
       {
         "title": "LCP 82. 万灵之树",
@@ -9348,13 +9474,6 @@
         "member": true,
         "score": 0,
         "titleSlug": "android-unlock-patterns"
-      },
-      {
-        "title": "2184. 建造坚实的砖墙的方法数",
-        "url": "https://leetcode.cn/problems/number-of-ways-to-build-sturdy-brick-wall/",
-        "member": true,
-        "score": 0,
-        "titleSlug": "number-of-ways-to-build-sturdy-brick-wall"
       },
       {
         "title": "3747. 统计移除零后不同整数的数目",
@@ -11237,7 +11356,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "11/30/2025, 8:59:38 AM",
+    "createTime": "12/7/2025, 8:59:42 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -12469,7 +12588,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "11/30/2025, 8:59:39 AM",
+    "createTime": "12/7/2025, 8:59:43 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -13288,7 +13407,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "11/30/2025, 8:59:41 AM",
+    "createTime": "12/7/2025, 8:59:45 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -14107,7 +14226,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "11/30/2025, 8:59:42 AM",
+    "createTime": "12/7/2025, 8:59:46 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -14464,7 +14583,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "11/30/2025, 8:59:44 AM",
+    "createTime": "12/7/2025, 8:59:48 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -15388,7 +15507,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "11/30/2025, 8:59:45 AM",
+    "createTime": "12/7/2025, 8:59:49 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -17117,7 +17236,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "11/30/2025, 8:59:47 AM",
+    "createTime": "12/7/2025, 8:59:51 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -20190,7 +20309,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "11/30/2025, 8:59:48 AM",
+    "createTime": "12/7/2025, 8:59:52 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -23095,7 +23214,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "11/30/2025, 8:59:50 AM",
+    "createTime": "12/7/2025, 8:59:54 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
