@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "12/7/2025, 8:59:36 AM",
+    "createTime": "12/14/2025, 8:59:56 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2207,7 +2207,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "12/7/2025, 8:59:38 AM",
+    "createTime": "12/14/2025, 8:59:58 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6505,7 +6505,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "12/7/2025, 8:59:40 AM",
+    "createTime": "12/14/2025, 9:00:01 AM",
     "problems": [
       {
         "title": "讲解",
@@ -10386,6 +10386,13 @@
         "titleSlug": "count-number-of-possible-root-nodes"
       },
       {
+        "title": "3772. 子图的最大得分",
+        "url": "https://leetcode.cn/problems/maximum-subgraph-score-in-a-tree/",
+        "member": false,
+        "score": 2234,
+        "titleSlug": "maximum-subgraph-score-in-a-tree"
+      },
+      {
         "title": "2858. 可以到达每一个节点的最少边反转次数",
         "url": "https://leetcode.cn/problems/minimum-edge-reversals-so-every-node-is-reachable/",
         "member": false,
@@ -11356,7 +11363,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "12/7/2025, 8:59:42 AM",
+    "createTime": "12/14/2025, 9:00:03 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -12588,7 +12595,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "12/7/2025, 8:59:43 AM",
+    "createTime": "12/14/2025, 9:00:04 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -13407,7 +13414,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "12/7/2025, 8:59:45 AM",
+    "createTime": "12/14/2025, 9:00:05 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -14226,7 +14233,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "12/7/2025, 8:59:46 AM",
+    "createTime": "12/14/2025, 9:00:07 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -14583,7 +14590,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "12/7/2025, 8:59:48 AM",
+    "createTime": "12/14/2025, 9:00:08 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -15507,7 +15514,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "12/7/2025, 8:59:49 AM",
+    "createTime": "12/14/2025, 9:00:10 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -17236,7 +17243,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "12/7/2025, 8:59:51 AM",
+    "createTime": "12/14/2025, 9:00:12 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -20309,7 +20316,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "12/7/2025, 8:59:52 AM",
+    "createTime": "12/14/2025, 9:00:13 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -23214,7 +23221,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "12/7/2025, 8:59:54 AM",
+    "createTime": "12/14/2025, 9:00:15 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
@@ -23504,6 +23511,13 @@
         "titleSlug": "find-substring-with-given-hash-value"
       },
       {
+        "title": "3756. 连接非零数字并乘以其数字和 II",
+        "url": "https://leetcode.cn/problems/concatenate-non-zero-digits-and-multiply-by-sum-ii/",
+        "member": false,
+        "score": 1968,
+        "titleSlug": "concatenate-non-zero-digits-and-multiply-by-sum-ii"
+      },
+      {
         "title": "我的题解",
         "url": "https://leetcode.cn/problems/construct-string-with-minimum-cost/solutions/2833949/hou-zhui-shu-zu-by-endlesscheng-32h9/",
         "member": false,
@@ -23698,6 +23712,13 @@
         "member": false,
         "score": 2661,
         "titleSlug": "minimum-number-of-valid-strings-to-form-target-ii"
+      },
+      {
+        "title": "3758. 将数字词转换为数字",
+        "url": "https://leetcode.cn/problems/convert-number-words-to-digits/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "convert-number-words-to-digits"
       },
       {
         "title": "1163. 按字典序排在最后的子串",

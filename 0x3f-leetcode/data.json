@@ -4004,6 +4004,17 @@
     "ContestID_zh": "第 159 场双周赛"
   },
   {
+    "Rating": 2234.9322506925,
+    "ID": 3772,
+    "Title": "Maximum Subgraph Score in a Tree",
+    "TitleZH": "树中子图的最大得分",
+    "TitleSlug": "maximum-subgraph-score-in-a-tree",
+    "ContestSlug": "weekly-contest-479",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 479",
+    "ContestID_zh": "第 479 场周赛"
+  },
+  {
     "Rating": 2234.9191877602,
     "ID": 1915,
     "Title": "Number of Wonderful Substrings",
@@ -4816,6 +4827,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 164",
     "ContestID_zh": "第 164 场双周赛"
+  },
+  {
+    "Rating": 2157.7545069067,
+    "ID": 3768,
+    "Title": "Minimum Inversion Count in Subarrays of Fixed Length",
+    "TitleZH": "固定长度子数组中的最小逆序对数目",
+    "TitleSlug": "minimum-inversion-count-in-subarrays-of-fixed-length",
+    "ContestSlug": "biweekly-contest-171",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 171",
+    "ContestID_zh": "第 171 场双周赛"
   },
   {
     "Rating": 2157.5814371481,
@@ -7324,6 +7346,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 168",
     "ContestID_zh": "第 168 场双周赛"
+  },
+  {
+    "Rating": 1981.4460440375,
+    "ID": 3771,
+    "Title": "Total Score of Dungeon Runs",
+    "TitleZH": "探索地牢的得分",
+    "TitleSlug": "total-score-of-dungeon-runs",
+    "ContestSlug": "weekly-contest-479",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 479",
+    "ContestID_zh": "第 479 场周赛"
   },
   {
     "Rating": 1981.3072959787,
@@ -12045,6 +12078,17 @@
     "ContestID_zh": "第 437 场周赛"
   },
   {
+    "Rating": 1703.8928183911,
+    "ID": 3767,
+    "Title": "Maximize Points After Choosing K Tasks",
+    "TitleZH": "选择 K 个任务的最大总分数",
+    "TitleSlug": "maximize-points-after-choosing-k-tasks",
+    "ContestSlug": "biweekly-contest-171",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 171",
+    "ContestID_zh": "第 171 场双周赛"
+  },
+  {
     "Rating": 1702.8035923458,
     "ID": 958,
     "Title": "Check Completeness of a Binary Tree",
@@ -13033,6 +13077,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 161",
     "ContestID_zh": "第 161 场周赛"
+  },
+  {
+    "Rating": 1656.9357672079,
+    "ID": 3766,
+    "Title": "Minimum Operations to Make Binary Palindrome",
+    "TitleZH": "将数字变成二进制回文数的最少操作",
+    "TitleSlug": "minimum-operations-to-make-binary-palindrome",
+    "ContestSlug": "biweekly-contest-171",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 171",
+    "ContestID_zh": "第 171 场双周赛"
   },
   {
     "Rating": 1656.5588918365,
@@ -15024,6 +15079,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 66",
     "ContestID_zh": "第 66 场周赛"
+  },
+  {
+    "Rating": 1546.5755826126,
+    "ID": 3770,
+    "Title": "Largest Prime from Consecutive Prime Sum",
+    "TitleZH": "可表示为连续质数和的最大质数",
+    "TitleSlug": "largest-prime-from-consecutive-prime-sum",
+    "ContestSlug": "weekly-contest-479",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 479",
+    "ContestID_zh": "第 479 场周赛"
   },
   {
     "Rating": 1545.9654593951,
@@ -18942,6 +19008,17 @@
     "ContestID_zh": "第 141 场双周赛"
   },
   {
+    "Rating": 1378.316399102,
+    "ID": 3765,
+    "Title": "Complete Prime Number",
+    "TitleZH": "完全质数",
+    "TitleSlug": "complete-prime-number",
+    "ContestSlug": "biweekly-contest-171",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 171",
+    "ContestID_zh": "第 171 场双周赛"
+  },
+  {
     "Rating": 1377.6120218199,
     "ID": 811,
     "Title": "Subdomain Visit Count",
@@ -19358,6 +19435,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 478",
     "ContestID_zh": "第 478 场周赛"
+  },
+  {
+    "Rating": 1363.9436268732,
+    "ID": 3769,
+    "Title": "Sort Integers by Binary Reflection",
+    "TitleZH": "二进制反射排序",
+    "TitleSlug": "sort-integers-by-binary-reflection",
+    "ContestSlug": "weekly-contest-479",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 479",
+    "ContestID_zh": "第 479 场周赛"
   },
   {
     "Rating": 1363.7443380057,
