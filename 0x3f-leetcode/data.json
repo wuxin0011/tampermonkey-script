@@ -4422,6 +4422,17 @@
     "ContestID_zh": "第 189 场周赛"
   },
   {
+    "Rating": 2201.668658533,
+    "ID": 3777,
+    "Title": "Minimum Deletions to Make Alternating Substring",
+    "TitleZH": "使子字符串变交替的最少删除次数",
+    "TitleSlug": "minimum-deletions-to-make-alternating-substring",
+    "ContestSlug": "weekly-contest-480",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 480",
+    "ContestID_zh": "第 480 场周赛"
+  },
+  {
     "Rating": 2201.6219336792,
     "ID": 2045,
     "Title": "Second Minimum Time to Reach Destination",
@@ -11438,6 +11449,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 140",
     "ContestID_zh": "第 140 场周赛"
+  },
+  {
+    "Rating": 1739.7696741336,
+    "ID": 3776,
+    "Title": "Minimum Moves to Balance Circular Array",
+    "TitleZH": "使循环数组余额非负的最少移动次数",
+    "TitleSlug": "minimum-moves-to-balance-circular-array",
+    "ContestSlug": "weekly-contest-480",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 480",
+    "ContestID_zh": "第 480 场周赛"
   },
   {
     "Rating": 1739.5831401172,
@@ -18634,6 +18656,17 @@
     "ContestID_zh": "第 115 场周赛"
   },
   {
+    "Rating": 1391.9600023546,
+    "ID": 3775,
+    "Title": "Reverse Words With Same Vowel Count",
+    "TitleZH": "反转元音数相同的单词",
+    "TitleSlug": "reverse-words-with-same-vowel-count",
+    "ContestSlug": "weekly-contest-480",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 480",
+    "ContestID_zh": "第 480 场周赛"
+  },
+  {
     "Rating": 1391.7243180131,
     "ID": 1222,
     "Title": "Queens That Can Attack the King",
@@ -24165,6 +24198,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 337",
     "ContestID_zh": "第 337 场周赛"
+  },
+  {
+    "Rating": 1206.166674051,
+    "ID": 3774,
+    "Title": "Absolute Difference Between Maximum and Minimum K Elements",
+    "TitleZH": "最大和最小 K 个元素的绝对差",
+    "TitleSlug": "absolute-difference-between-maximum-and-minimum-k-elements",
+    "ContestSlug": "weekly-contest-480",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 480",
+    "ContestID_zh": "第 480 场周赛"
   },
   {
     "Rating": 1206.1240971343,
