@@ -70,7 +70,9 @@ if ((isProblem()) || isLeetCodeCircleUrl() || isHome()) {
   }
   if (randomProblemKey()) {
     document.addEventListener('keydown', async function (event) {
-      if (event.ctrlKey && event.altKey && event.key === 'j') {
+      // 在MacOS里Alt+J是一个特殊字符 ∆，所以需要使用code来判断
+      const isJ = event.code === 'KeyJ' || event.key === 'j'
+      if (event.ctrlKey && event.altKey && isJ) {
         // that.isShowContainer()
         randomProblem()
       }
