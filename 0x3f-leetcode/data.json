@@ -5016,6 +5016,17 @@
     "ContestID_zh": "第 102 场周赛"
   },
   {
+    "Rating": 2139.3332541502,
+    "ID": 3786,
+    "Title": "Total Sum of Interaction Cost in Tree Groups",
+    "TitleZH": "树组的交互代价总和",
+    "TitleSlug": "total-sum-of-interaction-cost-in-tree-groups",
+    "ContestSlug": "weekly-contest-481",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 481",
+    "ContestID_zh": "第 481 场周赛"
+  },
+  {
     "Rating": 2139.3079901181,
     "ID": 3629,
     "Title": "Minimum Jumps to Reach End via Prime Teleportation",
@@ -5951,6 +5962,17 @@
     "ContestID_zh": "第 93 场周赛"
   },
   {
+    "Rating": 2074.3323025363,
+    "ID": 3782,
+    "Title": "Last Remaining Integer After Alternating Deletion Operations",
+    "TitleZH": "交替删除操作后最后剩下的整数",
+    "TitleSlug": "last-remaining-integer-after-alternating-deletion-operations",
+    "ContestSlug": "biweekly-contest-172",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 172",
+    "ContestID_zh": "第 172 场双周赛"
+  },
+  {
     "Rating": 2073.3665301195,
     "ID": 3685,
     "Title": "Subsequence Sum After Capping Elements",
@@ -6279,6 +6301,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 387",
     "ContestID_zh": "第 387 场周赛"
+  },
+  {
+    "Rating": 2051.519347574,
+    "ID": 3785,
+    "Title": "Minimum Swaps to Avoid Forbidden Values",
+    "TitleZH": "避免禁用值的最小交换次数",
+    "TitleSlug": "minimum-swaps-to-avoid-forbidden-values",
+    "ContestSlug": "weekly-contest-481",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 481",
+    "ContestID_zh": "第 481 场周赛"
   },
   {
     "Rating": 2051.0879431258,
@@ -9865,6 +9898,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 190",
     "ContestID_zh": "第 190 场周赛"
+  },
+  {
+    "Rating": 1823.2995711696,
+    "ID": 3781,
+    "Title": "Maximum Score After Binary Swaps",
+    "TitleZH": "二进制交换后的最大分数",
+    "TitleSlug": "maximum-score-after-binary-swaps",
+    "ContestSlug": "biweekly-contest-172",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 172",
+    "ContestID_zh": "第 172 场双周赛"
   },
   {
     "Rating": 1822.9768689716,
@@ -14410,6 +14454,17 @@
     "ContestID_zh": "第 133 场周赛"
   },
   {
+    "Rating": 1584.7266259671,
+    "ID": 3780,
+    "Title": "Maximum Sum of Three Numbers Divisible by Three",
+    "TitleZH": "能被 3 整除的三元组最大和",
+    "TitleSlug": "maximum-sum-of-three-numbers-divisible-by-three",
+    "ContestSlug": "biweekly-contest-172",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 172",
+    "ContestID_zh": "第 172 场双周赛"
+  },
+  {
     "Rating": 1583.3117784523,
     "ID": 2536,
     "Title": "Increment Submatrices by One",
@@ -17347,6 +17402,17 @@
     "ContestID_zh": "第 111 场周赛"
   },
   {
+    "Rating": 1444.1650334711,
+    "ID": 3779,
+    "Title": "Minimum Number of Operations to Have Distinct Elements",
+    "TitleZH": "得到互不相同元素的最少操作次数",
+    "TitleSlug": "minimum-number-of-operations-to-have-distinct-elements",
+    "ContestSlug": "biweekly-contest-172",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 172",
+    "ContestID_zh": "第 172 场双周赛"
+  },
+  {
     "Rating": 1443.2353621969,
     "ID": 1560,
     "Title": "Most Visited Sector in  a Circular Track",
@@ -18742,6 +18808,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 136",
     "ContestID_zh": "第 136 场双周赛"
+  },
+  {
+    "Rating": 1387.7988712766,
+    "ID": 3784,
+    "Title": "Minimum Deletion Cost to Make All Characters Equal",
+    "TitleZH": "使所有字符相等的最小删除代价",
+    "TitleSlug": "minimum-deletion-cost-to-make-all-characters-equal",
+    "ContestSlug": "weekly-contest-481",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 481",
+    "ContestID_zh": "第 481 场周赛"
   },
   {
     "Rating": 1387.7347071166,
@@ -25177,6 +25254,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 410",
     "ContestID_zh": "第 410 场周赛"
+  },
+  {
+    "Rating": 1170.7936743933,
+    "ID": 3783,
+    "Title": "Mirror Distance of an Integer",
+    "TitleZH": "整数的镜像距离",
+    "TitleSlug": "mirror-distance-of-an-integer",
+    "ContestSlug": "weekly-contest-481",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 481",
+    "ContestID_zh": "第 481 场周赛"
   },
   {
     "Rating": 1169.4209117977,
