@@ -2431,6 +2431,17 @@
     "ContestID_zh": "第 105 场周赛"
   },
   {
+    "Rating": 2398.613631879,
+    "ID": 3801,
+    "Title": "Minimum Cost to Merge Sorted Lists",
+    "TitleZH": "合并有序列表的最小成本",
+    "TitleSlug": "minimum-cost-to-merge-sorted-lists",
+    "ContestSlug": "weekly-contest-483",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 483",
+    "ContestID_zh": "第 483 场周赛"
+  },
+  {
     "Rating": 2397.9722495587,
     "ID": 2538,
     "Title": "Difference Between Maximum and Minimum Price Sum",
@@ -2715,6 +2726,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 429",
     "ContestID_zh": "第 429 场周赛"
+  },
+  {
+    "Rating": 2375.5647445059,
+    "ID": 3797,
+    "Title": "Count Routes to Climb a Rectangular Grid",
+    "TitleZH": "统计在矩形格子里移动的路径数目",
+    "TitleSlug": "count-routes-to-climb-a-rectangular-grid",
+    "ContestSlug": "biweekly-contest-173",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 173",
+    "ContestID_zh": "第 173 场双周赛"
   },
   {
     "Rating": 2375.0917527641,
@@ -5113,6 +5135,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 100",
     "ContestID_zh": "第 100 场周赛"
+  },
+  {
+    "Rating": 2132.2407826356,
+    "ID": 3791,
+    "Title": "Number of Balanced Integers in a Range",
+    "TitleZH": "给定范围内平衡整数的数目",
+    "TitleSlug": "number-of-balanced-integers-in-a-range",
+    "ContestSlug": "weekly-contest-482",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 482",
+    "ContestID_zh": "第 482 场周赛"
   },
   {
     "Rating": 2132.1944636902,
@@ -9636,6 +9669,17 @@
     "ContestID_zh": "第 259 场周赛"
   },
   {
+    "Rating": 1840.9502412278,
+    "ID": 3800,
+    "Title": "Minimum Cost to Make Two Binary Strings Equal",
+    "TitleZH": "使二进制字符串相等的最小成本",
+    "TitleSlug": "minimum-cost-to-make-two-binary-strings-equal",
+    "ContestSlug": "weekly-contest-483",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 483",
+    "ContestID_zh": "第 483 场周赛"
+  },
+  {
     "Rating": 1840.9122452886,
     "ID": 2332,
     "Title": "The Latest Time to Catch a Bus",
@@ -9722,6 +9766,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 305",
     "ContestID_zh": "第 305 场周赛"
+  },
+  {
+    "Rating": 1832.8086148249,
+    "ID": 3796,
+    "Title": "Find Maximum Value in a Constrained Sequence",
+    "TitleZH": "找到带限制序列的最大值",
+    "TitleSlug": "find-maximum-value-in-a-constrained-sequence",
+    "ContestSlug": "biweekly-contest-173",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 173",
+    "ContestID_zh": "第 173 场双周赛"
   },
   {
     "Rating": 1832.7167755024,
@@ -14069,6 +14124,17 @@
     "ContestID_zh": "第 36 场双周赛"
   },
   {
+    "Rating": 1606.0736676327,
+    "ID": 3799,
+    "Title": "Word Squares II",
+    "TitleZH": "单词方块 II",
+    "TitleSlug": "word-squares-ii",
+    "ContestSlug": "weekly-contest-483",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 483",
+    "ContestID_zh": "第 483 场周赛"
+  },
+  {
     "Rating": 1604.9805572557,
     "ID": 3107,
     "Title": "Minimum Operations to Make Median of Array Equal to K",
@@ -14311,6 +14377,17 @@
     "ContestID_zh": "第 407 场周赛"
   },
   {
+    "Rating": 1593.2313178073,
+    "ID": 3790,
+    "Title": "Smallest All-Ones Multiple",
+    "TitleZH": "最小全 1 倍数",
+    "TitleSlug": "smallest-all-ones-multiple",
+    "ContestSlug": "weekly-contest-482",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 482",
+    "ContestID_zh": "第 482 场周赛"
+  },
+  {
     "Rating": 1591.5492530876,
     "ID": 930,
     "Title": "Binary Subarrays With Sum",
@@ -14551,6 +14628,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 459",
     "ContestID_zh": "第 459 场周赛"
+  },
+  {
+    "Rating": 1579.7469658937,
+    "ID": 3789,
+    "Title": "Minimum Cost to Acquire Required Items",
+    "TitleZH": "采购的最小花费",
+    "TitleSlug": "minimum-cost-to-acquire-required-items",
+    "ContestSlug": "weekly-contest-482",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 482",
+    "ContestID_zh": "第 482 场周赛"
   },
   {
     "Rating": 1579.2309881035,
@@ -16102,6 +16190,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 93",
     "ContestID_zh": "第 93 场周赛"
+  },
+  {
+    "Rating": 1504.5241924054,
+    "ID": 3795,
+    "Title": "Minimum Subarray Length With Distinct Sum At Least K",
+    "TitleZH": "不同元素和至少为 K 的最短子数组长度",
+    "TitleSlug": "minimum-subarray-length-with-distinct-sum-at-least-k",
+    "ContestSlug": "biweekly-contest-173",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 173",
+    "ContestID_zh": "第 173 场双周赛"
   },
   {
     "Rating": 1504.2133321504,
@@ -19514,6 +19613,17 @@
     "ContestID_zh": "第 288 场周赛"
   },
   {
+    "Rating": 1365.0489201345,
+    "ID": 3798,
+    "Title": "Largest Even Number",
+    "TitleZH": "最大的偶数",
+    "TitleSlug": "largest-even-number",
+    "ContestSlug": "weekly-contest-483",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 483",
+    "ContestID_zh": "第 483 场周赛"
+  },
+  {
     "Rating": 1364.6787168645,
     "ID": 2260,
     "Title": "Minimum Consecutive Cards to Pick Up",
@@ -21063,6 +21173,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 93",
     "ContestID_zh": "第 93 场周赛"
+  },
+  {
+    "Rating": 1306.3856807921,
+    "ID": 3788,
+    "Title": "Maximum Score of a Split",
+    "TitleZH": "分割的最大得分",
+    "TitleSlug": "maximum-score-of-a-split",
+    "ContestSlug": "weekly-contest-482",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 482",
+    "ContestID_zh": "第 482 场周赛"
   },
   {
     "Rating": 1306.2821637677,
@@ -23604,6 +23725,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 362",
     "ContestID_zh": "第 362 场周赛"
+  },
+  {
+    "Rating": 1229.6563395275,
+    "ID": 3794,
+    "Title": "Reverse String Prefix",
+    "TitleZH": "反转字符串前缀",
+    "TitleSlug": "reverse-string-prefix",
+    "ContestSlug": "biweekly-contest-173",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 173",
+    "ContestID_zh": "第 173 场双周赛"
   },
   {
     "Rating": 1229.4850365142,
