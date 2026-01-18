@@ -3795,6 +3795,17 @@
     "ContestID_zh": "第 90 场周赛"
   },
   {
+    "Rating": 2259.1651451394,
+    "ID": 3806,
+    "Title": "Maximum Bitwise AND After Increment Operations",
+    "TitleZH": "增加操作后最大按位与的结果",
+    "TitleSlug": "maximum-bitwise-and-after-increment-operations",
+    "ContestSlug": "weekly-contest-484",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 484",
+    "ContestID_zh": "第 484 场周赛"
+  },
+  {
     "Rating": 2258.6371797452,
     "ID": 864,
     "Title": "Shortest Path to Get All Keys",
@@ -13827,6 +13838,17 @@
     "ContestID_zh": "第 104 场周赛"
   },
   {
+    "Rating": 1624.2918903909,
+    "ID": 3805,
+    "Title": "Count Caesar Cipher Pairs",
+    "TitleZH": "统计凯撒加密对数目",
+    "TitleSlug": "count-caesar-cipher-pairs",
+    "ContestSlug": "weekly-contest-484",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 484",
+    "ContestID_zh": "第 484 场周赛"
+  },
+  {
     "Rating": 1623.9443250479,
     "ID": 1248,
     "Title": "Count Number of Nice Subarrays",
@@ -18788,6 +18810,17 @@
     "ContestID_zh": "第 117 场双周赛"
   },
   {
+    "Rating": 1393.2533223078,
+    "ID": 3804,
+    "Title": "Number of Centered Subarrays",
+    "TitleZH": "中心子数组的数量",
+    "TitleSlug": "number-of-centered-subarrays",
+    "ContestSlug": "weekly-contest-484",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 484",
+    "ContestID_zh": "第 484 场周赛"
+  },
+  {
     "Rating": 1392.6601629182,
     "ID": 1529,
     "Title": "Bulb Switcher IV",
@@ -23175,6 +23208,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 53",
     "ContestID_zh": "第 53 场双周赛"
+  },
+  {
+    "Rating": 1248.1930285148,
+    "ID": 3803,
+    "Title": "Count Residue Prefixes",
+    "TitleZH": "统计残差前缀",
+    "TitleSlug": "count-residue-prefixes",
+    "ContestSlug": "weekly-contest-484",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 484",
+    "ContestID_zh": "第 484 场周赛"
   },
   {
     "Rating": 1247.9346797909,
