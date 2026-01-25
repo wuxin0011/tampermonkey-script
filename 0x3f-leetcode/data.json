@@ -2717,6 +2717,17 @@
     "ContestID_zh": "第 97 场周赛"
   },
   {
+    "Rating": 2376.616945774,
+    "ID": 3816,
+    "Title": "Lexicographically Smallest String After Deleting Duplicate Characters",
+    "TitleZH": "删除重复字符后的字典序最小字符串",
+    "TitleSlug": "lexicographically-smallest-string-after-deleting-duplicate-characters",
+    "ContestSlug": "weekly-contest-485",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 485",
+    "ContestID_zh": "第 485 场周赛"
+  },
+  {
     "Rating": 2375.9062896615,
     "ID": 3399,
     "Title": "Smallest Substring With Identical Characters II",
@@ -4651,6 +4662,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 55",
     "ContestID_zh": "第 55 场双周赛"
+  },
+  {
+    "Rating": 2178.6491499415,
+    "ID": 3812,
+    "Title": "Minimum Edge Toggles on a Tree",
+    "TitleZH": "翻转树上最少边",
+    "TitleSlug": "minimum-edge-toggles-on-a-tree",
+    "ContestSlug": "biweekly-contest-174",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 174",
+    "ContestID_zh": "第 174 场双周赛"
   },
   {
     "Rating": 2178.4249114144,
@@ -7095,6 +7117,17 @@
     "ContestID_zh": "第 446 场周赛"
   },
   {
+    "Rating": 2005.6235019774,
+    "ID": 3811,
+    "Title": "Number of Alternating XOR Partitions",
+    "TitleZH": "交替按位异或分割的数目",
+    "TitleSlug": "number-of-alternating-xor-partitions",
+    "ContestSlug": "biweekly-contest-174",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 174",
+    "ContestID_zh": "第 174 场双周赛"
+  },
+  {
     "Rating": 2005.5862669078,
     "ID": 1888,
     "Title": "Minimum Number of Flips to Make the Binary String Alternating",
@@ -9383,6 +9416,17 @@
     "ContestID_zh": "第 164 场周赛"
   },
   {
+    "Rating": 1853.8452529101,
+    "ID": 3815,
+    "Title": "Design Auction System",
+    "TitleZH": "设计拍卖系统",
+    "TitleSlug": "design-auction-system",
+    "ContestSlug": "weekly-contest-485",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 485",
+    "ContestID_zh": "第 485 场周赛"
+  },
+  {
     "Rating": 1853.6535583817,
     "ID": 3650,
     "Title": "Minimum Cost Path with Edge Reversals",
@@ -10426,6 +10470,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 379",
     "ContestID_zh": "第 379 场周赛"
+  },
+  {
+    "Rating": 1796.1227580681,
+    "ID": 3814,
+    "Title": "Maximum Capacity Within Budget",
+    "TitleZH": "预算下的最大总容量",
+    "TitleSlug": "maximum-capacity-within-budget",
+    "ContestSlug": "weekly-contest-485",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 485",
+    "ContestID_zh": "第 485 场周赛"
   },
   {
     "Rating": 1795.0422250815,
@@ -16500,6 +16555,17 @@
     "ContestID_zh": "第 92 场双周赛"
   },
   {
+    "Rating": 1492.2307525794,
+    "ID": 3810,
+    "Title": "Minimum Operations to Reach Target Array",
+    "TitleZH": "变成目标数组的最少操作次数",
+    "TitleSlug": "minimum-operations-to-reach-target-array",
+    "ContestSlug": "biweekly-contest-174",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 174",
+    "ContestID_zh": "第 174 场双周赛"
+  },
+  {
     "Rating": 1491.4638194905,
     "ID": 1806,
     "Title": "Minimum Number of Operations to Reinitialize a Permutation",
@@ -19809,6 +19875,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 85",
     "ContestID_zh": "第 85 场双周赛"
+  },
+  {
+    "Rating": 1358.8885414219,
+    "ID": 3809,
+    "Title": "Best Reachable Tower",
+    "TitleZH": "最好可到达的塔",
+    "TitleSlug": "best-reachable-tower",
+    "ContestSlug": "biweekly-contest-174",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 174",
+    "ContestID_zh": "第 174 场双周赛"
   },
   {
     "Rating": 1358.3561730566,
@@ -24198,6 +24275,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 97",
     "ContestID_zh": "第 97 场双周赛"
+  },
+  {
+    "Rating": 1216.4439953203,
+    "ID": 3813,
+    "Title": "Vowel-Consonant Score",
+    "TitleZH": "元音辅音得分",
+    "TitleSlug": "vowel-consonant-score",
+    "ContestSlug": "weekly-contest-485",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 485",
+    "ContestID_zh": "第 485 场周赛"
   },
   {
     "Rating": 1215.7827321325,
