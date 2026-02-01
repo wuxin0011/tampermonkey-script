@@ -6149,6 +6149,17 @@
     "ContestID_zh": "第 7 场双周赛"
   },
   {
+    "Rating": 2069.1534510743,
+    "ID": 3821,
+    "Title": "Find Nth Smallest Integer With K One Bits",
+    "TitleZH": "二进制中恰好K个1的第N小整数",
+    "TitleSlug": "find-nth-smallest-integer-with-k-one-bits",
+    "ContestSlug": "weekly-contest-486",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 486",
+    "ContestID_zh": "第 486 场周赛"
+  },
+  {
     "Rating": 2068.806637566,
     "ID": 1368,
     "Title": "Minimum Cost to Make at Least One Valid Path in a Grid",
@@ -11812,6 +11823,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 128",
     "ContestID_zh": "第 128 场周赛"
+  },
+  {
+    "Rating": 1725.2721958375,
+    "ID": 3820,
+    "Title": "Pythagorean Distance Nodes in a Tree",
+    "TitleZH": "树上的勾股距离节点",
+    "TitleSlug": "pythagorean-distance-nodes-in-a-tree",
+    "ContestSlug": "weekly-contest-486",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 486",
+    "ContestID_zh": "第 486 场周赛"
   },
   {
     "Rating": 1725.1995150882,
@@ -19217,6 +19239,17 @@
     "ContestID_zh": "第 153 场周赛"
   },
   {
+    "Rating": 1381.4199385224,
+    "ID": 3819,
+    "Title": "Rotate Non Negative Elements",
+    "TitleZH": "非负元素轮替",
+    "TitleSlug": "rotate-non-negative-elements",
+    "ContestSlug": "weekly-contest-486",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 486",
+    "ContestID_zh": "第 486 场周赛"
+  },
+  {
     "Rating": 1381.2168789318,
     "ID": 1881,
     "Title": "Maximum Value after Insertion",
@@ -24550,6 +24583,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 480",
     "ContestID_zh": "第 480 场周赛"
+  },
+  {
+    "Rating": 1206.1460383757,
+    "ID": 3818,
+    "Title": "Minimum Prefix Removal to Make Array Strictly Increasing",
+    "TitleZH": "移除前缀使数组严格递增",
+    "TitleSlug": "minimum-prefix-removal-to-make-array-strictly-increasing",
+    "ContestSlug": "weekly-contest-486",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 486",
+    "ContestID_zh": "第 486 场周赛"
   },
   {
     "Rating": 1206.1240971343,
