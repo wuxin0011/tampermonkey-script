@@ -3047,6 +3047,17 @@
     "ContestID_zh": "第 209 场周赛"
   },
   {
+    "Rating": 2345.1150536403,
+    "ID": 3826,
+    "Title": "Minimum Partition Score",
+    "TitleZH": "最小分割分数",
+    "TitleSlug": "minimum-partition-score",
+    "ContestSlug": "biweekly-contest-175",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 175",
+    "ContestID_zh": "第 175 场双周赛"
+  },
+  {
     "Rating": 2344.3664724791,
     "ID": 2478,
     "Title": "Number of Beautiful Partitions",
@@ -4838,6 +4849,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 400",
     "ContestID_zh": "第 400 场周赛"
+  },
+  {
+    "Rating": 2162.0729079623,
+    "ID": 3830,
+    "Title": "Longest Alternating Subarray After Removing At Most One Element",
+    "TitleZH": "移除至多一个元素后的最长交替子数组",
+    "TitleSlug": "longest-alternating-subarray-after-removing-at-most-one-element",
+    "ContestSlug": "weekly-contest-487",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 487",
+    "ContestID_zh": "第 487 场周赛"
   },
   {
     "Rating": 2161.6248796745,
@@ -9658,6 +9680,17 @@
     "ContestID_zh": "第 94 场周赛"
   },
   {
+    "Rating": 1845.77150935,
+    "ID": 3825,
+    "Title": "Longest Strictly Increasing Subsequence With Non-Zero Bitwise AND",
+    "TitleZH": "按位与结果非零的最长上升子序列",
+    "TitleSlug": "longest-strictly-increasing-subsequence-with-non-zero-bitwise-and",
+    "ContestSlug": "biweekly-contest-175",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 175",
+    "ContestID_zh": "第 175 场双周赛"
+  },
+  {
     "Rating": 1845.6611654401,
     "ID": 2598,
     "Title": "Smallest Missing Non-negative Integer After Operations",
@@ -14454,6 +14487,17 @@
     "ContestID_zh": "第 81 场周赛"
   },
   {
+    "Rating": 1593.9561579617,
+    "ID": 3829,
+    "Title": "Design Ride Sharing System",
+    "TitleZH": "设计共享出行系统",
+    "TitleSlug": "design-ride-sharing-system",
+    "ContestSlug": "weekly-contest-487",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 487",
+    "ContestID_zh": "第 487 场周赛"
+  },
+  {
     "Rating": 1593.8926580448,
     "ID": 1577,
     "Title": "Number of Ways Where Square of Number Is Equal to Product of Two Numbers",
@@ -14529,6 +14573,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 134",
     "ContestID_zh": "第 134 场双周赛"
+  },
+  {
+    "Rating": 1591.216420723,
+    "ID": 3828,
+    "Title": "Final Element After Subarray Deletions",
+    "TitleZH": "删除子数组后的最终元素",
+    "TitleSlug": "final-element-after-subarray-deletions",
+    "ContestSlug": "weekly-contest-487",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 487",
+    "ContestID_zh": "第 487 场周赛"
   },
   {
     "Rating": 1590.5791055102,
@@ -15717,6 +15772,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 101",
     "ContestID_zh": "第 101 场周赛"
+  },
+  {
+    "Rating": 1531.0213602106,
+    "ID": 3824,
+    "Title": "Minimum K to Reduce Array Within Limit",
+    "TitleZH": "减小数组使其满足条件的最小 K 值",
+    "TitleSlug": "minimum-k-to-reduce-array-within-limit",
+    "ContestSlug": "biweekly-contest-175",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 175",
+    "ContestID_zh": "第 175 场双周赛"
   },
   {
     "Rating": 1530.6451141787,
@@ -23188,6 +23254,17 @@
     "ContestID_zh": "第 469 场周赛"
   },
   {
+    "Rating": 1250.1561837398,
+    "ID": 3823,
+    "Title": "Reverse Letters Then Special Characters in a String",
+    "TitleZH": "反转一个字符串里的字母后反转特殊字符",
+    "TitleSlug": "reverse-letters-then-special-characters-in-a-string",
+    "ContestSlug": "biweekly-contest-175",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 175",
+    "ContestID_zh": "第 175 场双周赛"
+  },
+  {
     "Rating": 1250.0975318308,
     "ID": 2465,
     "Title": "Number of Distinct Averages",
@@ -25111,6 +25188,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 353",
     "ContestID_zh": "第 353 场周赛"
+  },
+  {
+    "Rating": 1190.8529051552,
+    "ID": 3827,
+    "Title": "Count Monobit Integers",
+    "TitleZH": "统计单比特整数",
+    "TitleSlug": "count-monobit-integers",
+    "ContestSlug": "weekly-contest-487",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 487",
+    "ContestID_zh": "第 487 场周赛"
   },
   {
     "Rating": 1190.6856174464,

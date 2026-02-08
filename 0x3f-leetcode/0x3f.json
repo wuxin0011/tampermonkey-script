@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/circle/discuss/IYT3ss/",
-    "createTime": "2/1/2026, 9:18:07 AM",
+    "createTime": "2/8/2026, 9:28:50 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2235,7 +2235,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/circle/discuss/mOr1u6/",
-    "createTime": "2/1/2026, 9:18:09 AM",
+    "createTime": "2/8/2026, 9:28:52 AM",
     "problems": [
       {
         "title": "讲解",
@@ -6561,7 +6561,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/circle/discuss/tXLS3i/",
-    "createTime": "2/1/2026, 9:18:12 AM",
+    "createTime": "2/8/2026, 9:28:54 AM",
     "problems": [
       {
         "title": "讲解",
@@ -11419,7 +11419,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/circle/discuss/01LUak/",
-    "createTime": "2/1/2026, 9:18:14 AM",
+    "createTime": "2/8/2026, 9:28:56 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -12651,7 +12651,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "2/1/2026, 9:18:15 AM",
+    "createTime": "2/8/2026, 9:28:58 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -13512,7 +13512,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/circle/discuss/dHn9Vk/",
-    "createTime": "2/1/2026, 9:18:17 AM",
+    "createTime": "2/8/2026, 9:28:59 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -14373,7 +14373,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/circle/discuss/9oZFK9/",
-    "createTime": "2/1/2026, 9:18:18 AM",
+    "createTime": "2/8/2026, 9:29:00 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -14425,6 +14425,13 @@
         "titleSlug": "next-greater-node-in-linked-list"
       },
       {
+        "title": "654. 最大二叉树",
+        "url": "https://leetcode.cn/problems/maximum-binary-tree/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "maximum-binary-tree"
+      },
+      {
         "title": "768. 最多能完成排序的块 II",
         "url": "https://leetcode.cn/problems/max-chunks-to-make-sorted-ii/",
         "member": false,
@@ -14432,11 +14439,25 @@
         "titleSlug": "max-chunks-to-make-sorted-ii"
       },
       {
-        "title": "654. 最大二叉树",
-        "url": "https://leetcode.cn/problems/maximum-binary-tree/",
+        "title": "3814. 预算下的最大总容量",
+        "url": "https://leetcode.cn/problems/maximum-capacity-within-budget/",
         "member": false,
-        "score": 0,
-        "titleSlug": "maximum-binary-tree"
+        "score": 1796,
+        "titleSlug": "maximum-capacity-within-budget"
+      },
+      {
+        "title": "3676. 碗子数组的数目",
+        "url": "https://leetcode.cn/problems/count-bowl-subarrays/",
+        "member": false,
+        "score": 1847,
+        "titleSlug": "count-bowl-subarrays"
+      },
+      {
+        "title": "2054. 两个最好的不重叠活动",
+        "url": "https://leetcode.cn/problems/two-best-non-overlapping-events/",
+        "member": false,
+        "score": 1883,
+        "titleSlug": "two-best-non-overlapping-events"
       },
       {
         "title": "456. 132 模式",
@@ -14458,6 +14479,13 @@
         "member": false,
         "score": 2071,
         "titleSlug": "beautiful-towers-ii"
+      },
+      {
+        "title": "975. 奇偶跳",
+        "url": "https://leetcode.cn/problems/odd-even-jump/",
+        "member": false,
+        "score": 2079,
+        "titleSlug": "odd-even-jump"
       },
       {
         "title": "1944. 队列中可以看到的人数",
@@ -14530,6 +14558,20 @@
         "titleSlug": "maximal-range-that-each-element-is-maximum-in-it"
       },
       {
+        "title": "1063. 有效子数组的数目",
+        "url": "https://leetcode.cn/problems/number-of-valid-subarrays/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "number-of-valid-subarrays"
+      },
+      {
+        "title": "1950. 所有子数组最小值中的最大值",
+        "url": "https://leetcode.cn/problems/maximum-of-minimum-values-in-all-subarrays/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-of-minimum-values-in-all-subarrays"
+      },
+      {
         "title": "2282. 在一个网格中可以看到的人数",
         "url": "https://leetcode.cn/problems/number-of-people-that-can-be-seen-in-a-grid/",
         "member": true,
@@ -14542,6 +14584,13 @@
         "member": true,
         "score": 0,
         "titleSlug": "smallest-subarray-to-sort-in-every-sliding-window"
+      },
+      {
+        "title": "2355. 你能拿走的最大图书数量",
+        "url": "https://leetcode.cn/problems/maximum-number-of-books-you-can-take/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-number-of-books-you-can-take"
       },
       {
         "title": "962. 最大宽度坡",
@@ -14563,6 +14612,13 @@
         "member": false,
         "score": 1908,
         "titleSlug": "longest-well-performing-interval"
+      },
+      {
+        "title": "2863. 最长半递减子数组的长度",
+        "url": "https://leetcode.cn/problems/maximum-length-of-semi-decreasing-subarrays/",
+        "member": true,
+        "score": 0,
+        "titleSlug": "maximum-length-of-semi-decreasing-subarrays"
       },
       {
         "title": "84. 柱状图中最大的矩形",
@@ -14712,6 +14768,13 @@
         "titleSlug": "smallest-subsequence-of-distinct-characters"
       },
       {
+        "title": "3816. 删除重复字符后的字典序最小字符串",
+        "url": "https://leetcode.cn/problems/lexicographically-smallest-string-after-deleting-duplicate-characters/",
+        "member": false,
+        "score": 2376,
+        "titleSlug": "lexicographically-smallest-string-after-deleting-duplicate-characters"
+      },
+      {
         "title": "321. 拼接最大数",
         "url": "https://leetcode.cn/problems/create-maximum-number/",
         "member": false,
@@ -14730,7 +14793,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/circle/discuss/SqopEo/",
-    "createTime": "2/1/2026, 9:18:20 AM",
+    "createTime": "2/8/2026, 9:29:02 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -15654,7 +15717,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/circle/discuss/0viNMK/",
-    "createTime": "2/1/2026, 9:18:22 AM",
+    "createTime": "2/8/2026, 9:29:03 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -17474,7 +17537,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/circle/discuss/g6KTKL/",
-    "createTime": "2/1/2026, 9:18:24 AM",
+    "createTime": "2/8/2026, 9:29:05 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -20981,7 +21044,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/circle/discuss/K0n2gO/",
-    "createTime": "2/1/2026, 9:18:25 AM",
+    "createTime": "2/8/2026, 9:29:07 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -23886,7 +23949,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/circle/discuss/SJFwQI/",
-    "createTime": "2/1/2026, 9:18:27 AM",
+    "createTime": "2/8/2026, 9:29:08 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
