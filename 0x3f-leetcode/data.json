@@ -7403,6 +7403,17 @@
     "ContestID_zh": "第 101 场周赛"
   },
   {
+    "Rating": 1987.9947081035,
+    "ID": 3836,
+    "Title": "Maximum Score Using Exactly K Pairs",
+    "TitleZH": "恰好 K 个下标对的最大得分",
+    "TitleSlug": "maximum-score-using-exactly-k-pairs",
+    "ContestSlug": "weekly-contest-488",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 488",
+    "ContestID_zh": "第 488 场周赛"
+  },
+  {
     "Rating": 1985.2504512337,
     "ID": 928,
     "Title": "Minimize Malware Spread II",
@@ -11262,6 +11273,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 267",
     "ContestID_zh": "第 267 场周赛"
+  },
+  {
+    "Rating": 1759.0629543156,
+    "ID": 3835,
+    "Title": "Count Subarrays With Cost Less Than or Equal to K",
+    "TitleZH": "开销小于等于 K 的子数组数目",
+    "TitleSlug": "count-subarrays-with-cost-less-than-or-equal-to-k",
+    "ContestSlug": "weekly-contest-488",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 488",
+    "ContestID_zh": "第 488 场周赛"
   },
   {
     "Rating": 1759.0470795449,
@@ -18049,6 +18071,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 51",
     "ContestID_zh": "第 51 场双周赛"
+  },
+  {
+    "Rating": 1428.6483320166,
+    "ID": 3834,
+    "Title": "Merge Adjacent Equal Elements",
+    "TitleZH": "合并相邻且相等的元素",
+    "TitleSlug": "merge-adjacent-equal-elements",
+    "ContestSlug": "weekly-contest-488",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 488",
+    "ContestID_zh": "第 488 场周赛"
   },
   {
     "Rating": 1428.1443796872,
@@ -25650,6 +25683,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 410",
     "ContestID_zh": "第 410 场周赛"
+  },
+  {
+    "Rating": 1171.7374328673,
+    "ID": 3833,
+    "Title": "Count Dominant Indices",
+    "TitleZH": "统计主导元素下标数",
+    "TitleSlug": "count-dominant-indices",
+    "ContestSlug": "weekly-contest-488",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 488",
+    "ContestID_zh": "第 488 场周赛"
   },
   {
     "Rating": 1170.7936743933,
