@@ -2596,6 +2596,17 @@
     "ContestID_zh": "第 175 场周赛"
   },
   {
+    "Rating": 2384.3989621291,
+    "ID": 3841,
+    "Title": "Palindromic Path Queries in a Tree",
+    "TitleZH": "查询树上回文路径",
+    "TitleSlug": "palindromic-path-queries-in-a-tree",
+    "ContestSlug": "biweekly-contest-176",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 176",
+    "ContestID_zh": "第 176 场双周赛"
+  },
+  {
     "Rating": 2383.7724811656,
     "ID": 1521,
     "Title": "Find a Value of a Mysterious Function Closest to Target",
@@ -3023,6 +3034,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 142",
     "ContestID_zh": "第 142 场周赛"
+  },
+  {
+    "Rating": 2347.4483641639,
+    "ID": 3845,
+    "Title": "Maximum Subarray XOR with Bounded Range",
+    "TitleZH": "最大子数组异或值",
+    "TitleSlug": "maximum-subarray-xor-with-bounded-range",
+    "ContestSlug": "weekly-contest-489",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 489",
+    "ContestID_zh": "第 489 场周赛"
   },
   {
     "Rating": 2346.5717839654,
@@ -7390,6 +7412,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 65",
     "ContestID_zh": "第 65 场周赛"
+  },
+  {
+    "Rating": 1989.5764824732,
+    "ID": 3844,
+    "Title": "Longest Almost-Palindromic Substring",
+    "TitleZH": "最长的准回文子字符串",
+    "TitleSlug": "longest-almost-palindromic-substring",
+    "ContestSlug": "weekly-contest-489",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 489",
+    "ContestID_zh": "第 489 场周赛"
   },
   {
     "Rating": 1989.5369509422,
@@ -14058,6 +14091,17 @@
     "ContestID_zh": "第 96 场双周赛"
   },
   {
+    "Rating": 1618.9800584534,
+    "ID": 3840,
+    "Title": "House Robber V",
+    "TitleZH": "打家劫舍 V",
+    "TitleSlug": "house-robber-v",
+    "ContestSlug": "biweekly-contest-176",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 176",
+    "ContestID_zh": "第 176 场双周赛"
+  },
+  {
     "Rating": 1618.6016480451,
     "ID": 1503,
     "Title": "Last Moment Before All Ants Fall Out of a Plank",
@@ -18755,6 +18799,17 @@
     "ContestID_zh": "第 30 场双周赛"
   },
   {
+    "Rating": 1401.7975403221,
+    "ID": 3839,
+    "Title": "Number of Prefix Connected Groups",
+    "TitleZH": "前缀连接组的数目",
+    "TitleSlug": "number-of-prefix-connected-groups",
+    "ContestSlug": "biweekly-contest-176",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 176",
+    "ContestID_zh": "第 176 场双周赛"
+  },
+  {
     "Rating": 1401.2732392084,
     "ID": 3111,
     "Title": "Minimum Rectangles to Cover Points",
@@ -20337,6 +20392,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 456",
     "ContestID_zh": "第 456 场周赛"
+  },
+  {
+    "Rating": 1347.2281380782,
+    "ID": 3843,
+    "Title": "First Element with Unique Frequency",
+    "TitleZH": "频率唯一的第一个元素",
+    "TitleSlug": "first-element-with-unique-frequency",
+    "ContestSlug": "weekly-contest-489",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 489",
+    "ContestID_zh": "第 489 场周赛"
   },
   {
     "Rating": 1347.2146542772,
@@ -23727,6 +23793,17 @@
     "ContestID_zh": "第 268 场周赛"
   },
   {
+    "Rating": 1240.5761017553,
+    "ID": 3838,
+    "Title": "Weighted Word Mapping",
+    "TitleZH": "带权单词映射",
+    "TitleSlug": "weighted-word-mapping",
+    "ContestSlug": "biweekly-contest-176",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 176",
+    "ContestID_zh": "第 176 场双周赛"
+  },
+  {
     "Rating": 1239.1621762681,
     "ID": 2788,
     "Title": "Split Strings by Separator",
@@ -25980,6 +26057,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 116",
     "ContestID_zh": "第 116 场周赛"
+  },
+  {
+    "Rating": 1160.9529516199,
+    "ID": 3842,
+    "Title": "Toggle Light Bulbs",
+    "TitleZH": "切换灯泡开关",
+    "TitleSlug": "toggle-light-bulbs",
+    "ContestSlug": "weekly-contest-489",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 489",
+    "ContestID_zh": "第 489 场周赛"
   },
   {
     "Rating": 1160.8899403409,
