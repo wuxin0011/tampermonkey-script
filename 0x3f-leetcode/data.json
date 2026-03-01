@@ -7777,6 +7777,17 @@
     "ContestID_zh": "第 89 场双周赛"
   },
   {
+    "Rating": 1964.6174369373,
+    "ID": 3850,
+    "Title": "Count Sequences to K",
+    "TitleZH": "统计结果等于 K 的序列数目",
+    "TitleSlug": "count-sequences-to-k",
+    "ContestSlug": "weekly-contest-490",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 490",
+    "ContestID_zh": "第 490 场周赛"
+  },
+  {
     "Rating": 1964.3793590858,
     "ID": 815,
     "Title": "Bus Routes",
@@ -15312,6 +15323,17 @@
     "ContestID_zh": "第 463 场周赛"
   },
   {
+    "Rating": 1556.4396462723,
+    "ID": 3849,
+    "Title": "Maximum Bitwise XOR After Rearrangement",
+    "TitleZH": "重新排列后的最大按位异或值",
+    "TitleSlug": "maximum-bitwise-xor-after-rearrangement",
+    "ContestSlug": "weekly-contest-490",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 490",
+    "ContestID_zh": "第 490 场周赛"
+  },
+  {
     "Rating": 1556.3092642778,
     "ID": 3653,
     "Title": "XOR After Range Multiplication Queries I",
@@ -18346,6 +18368,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 352",
     "ContestID_zh": "第 352 场周赛"
+  },
+  {
+    "Rating": 1420.0008738262,
+    "ID": 3848,
+    "Title": "Check Digitorial Permutation",
+    "TitleZH": "阶数数字排列",
+    "TitleSlug": "check-digitorial-permutation",
+    "ContestSlug": "weekly-contest-490",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 490",
+    "ContestID_zh": "第 490 场周赛"
   },
   {
     "Rating": 1419.6326908404,
@@ -24286,6 +24319,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 134",
     "ContestID_zh": "第 134 场双周赛"
+  },
+  {
+    "Rating": 1223.4978877568,
+    "ID": 3847,
+    "Title": "Find the Score Difference in a Game",
+    "TitleZH": "计算比赛分数差",
+    "TitleSlug": "find-the-score-difference-in-a-game",
+    "ContestSlug": "weekly-contest-490",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 490",
+    "ContestID_zh": "第 490 场周赛"
   },
   {
     "Rating": 1223.406570396,
