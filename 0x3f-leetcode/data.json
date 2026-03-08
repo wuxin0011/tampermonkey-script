@@ -3388,6 +3388,17 @@
     "ContestID_zh": "第 94 场双周赛"
   },
   {
+    "Rating": 2302.2950547766,
+    "ID": 3859,
+    "Title": "Count Subarrays With K Distinct Integers",
+    "TitleZH": "统计包含 K 个不同整数的子数组",
+    "TitleSlug": "count-subarrays-with-k-distinct-integers",
+    "ContestSlug": "weekly-contest-491",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 491",
+    "ContestID_zh": "第 491 场周赛"
+  },
+  {
     "Rating": 2301.4069974024,
     "ID": 2897,
     "Title": "Apply Operations on Array to Maximize Sum of Squares",
@@ -5610,6 +5621,17 @@
     "ContestID_zh": "第 100 场周赛"
   },
   {
+    "Rating": 2095.4590096035,
+    "ID": 3854,
+    "Title": "Minimum Operations to Make Array Parity Alternating",
+    "TitleZH": "使数组奇偶交替的最少操作",
+    "TitleSlug": "minimum-operations-to-make-array-parity-alternating",
+    "ContestSlug": "biweekly-contest-177",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 177",
+    "ContestID_zh": "第 177 场双周赛"
+  },
+  {
     "Rating": 2094.592426537,
     "ID": 1976,
     "Title": "Number of Ways to Arrive at Destination",
@@ -5784,6 +5806,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 423",
     "ContestID_zh": "第 423 场周赛"
+  },
+  {
+    "Rating": 2085.3980002157,
+    "ID": 3855,
+    "Title": "Sum of K-Digit Numbers in a Range",
+    "TitleZH": "给定范围内 K 位数字之和",
+    "TitleSlug": "sum-of-k-digit-numbers-in-a-range",
+    "ContestSlug": "biweekly-contest-177",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 177",
+    "ContestID_zh": "第 177 场双周赛"
   },
   {
     "Rating": 2084.9697035674,
@@ -8017,6 +8050,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 212",
     "ContestID_zh": "第 212 场周赛"
+  },
+  {
+    "Rating": 1947.355455517,
+    "ID": 3858,
+    "Title": "Minimum Bitwise OR From Grid",
+    "TitleZH": "按位或的最小值",
+    "TitleSlug": "minimum-bitwise-or-from-grid",
+    "ContestSlug": "weekly-contest-491",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 491",
+    "ContestID_zh": "第 491 场周赛"
   },
   {
     "Rating": 1945.7515607928,
@@ -17204,6 +17248,17 @@
     "ContestID_zh": "第 147 场双周赛"
   },
   {
+    "Rating": 1471.9513024584,
+    "ID": 3853,
+    "Title": "Merge Close Characters",
+    "TitleZH": "合并靠近字符",
+    "TitleSlug": "merge-close-characters",
+    "ContestSlug": "biweekly-contest-177",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 177",
+    "ContestID_zh": "第 177 场双周赛"
+  },
+  {
     "Rating": 1471.8964024887,
     "ID": 2047,
     "Title": "Number of Valid Words in a Sentence",
@@ -21120,6 +21175,17 @@
     "ContestID_zh": "第 316 场周赛"
   },
   {
+    "Rating": 1322.3675896606,
+    "ID": 3857,
+    "Title": "Minimum Cost to Split into Ones",
+    "TitleZH": "拆分到 1 的最小总代价",
+    "TitleSlug": "minimum-cost-to-split-into-ones",
+    "ContestSlug": "weekly-contest-491",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 491",
+    "ContestID_zh": "第 491 场周赛"
+  },
+  {
     "Rating": 1321.9346201204,
     "ID": 1694,
     "Title": "Reformat Phone Number",
@@ -22174,6 +22240,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 475",
     "ContestID_zh": "第 475 场周赛"
+  },
+  {
+    "Rating": 1287.4101648258,
+    "ID": 3852,
+    "Title": "Smallest Pair With Different Frequencies",
+    "TitleZH": "不同频率的最小数对",
+    "TitleSlug": "smallest-pair-with-different-frequencies",
+    "ContestSlug": "biweekly-contest-177",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 177",
+    "ContestID_zh": "第 177 场双周赛"
   },
   {
     "Rating": 1287.1053917452,
@@ -26442,6 +26519,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 133",
     "ContestID_zh": "第 133 场双周赛"
+  },
+  {
+    "Rating": 1139.5275072,
+    "ID": 3856,
+    "Title": "Trim Trailing Vowels",
+    "TitleZH": "移除尾部元音字母",
+    "TitleSlug": "trim-trailing-vowels",
+    "ContestSlug": "weekly-contest-491",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 491",
+    "ContestID_zh": "第 491 场周赛"
   },
   {
     "Rating": 1139.4248492279,
