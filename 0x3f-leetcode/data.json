@@ -6787,6 +6787,17 @@
     "ContestID_zh": "第 186 场周赛"
   },
   {
+    "Rating": 2032.4612250461,
+    "ID": 3864,
+    "Title": "Minimum Cost to Partition a Binary String",
+    "TitleZH": "划分二进制字符串的最小费用",
+    "TitleSlug": "minimum-cost-to-partition-a-binary-string",
+    "ContestSlug": "weekly-contest-492",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 492",
+    "ContestID_zh": "第 492 场周赛"
+  },
+  {
     "Rating": 2030.922770301,
     "ID": 2919,
     "Title": "Minimum Increment Operations to Make Array Beautiful",
@@ -9425,6 +9436,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 80",
     "ContestID_zh": "第 80 场双周赛"
+  },
+  {
+    "Rating": 1859.9958119266,
+    "ID": 3863,
+    "Title": "Minimum Operations to Sort a String",
+    "TitleZH": "将一个字符串排序的最小操作次数",
+    "TitleSlug": "minimum-operations-to-sort-a-string",
+    "ContestSlug": "weekly-contest-492",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 492",
+    "ContestID_zh": "第 492 场周赛"
   },
   {
     "Rating": 1858.9581916885,
@@ -12560,6 +12582,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 130",
     "ContestID_zh": "第 130 场周赛"
+  },
+  {
+    "Rating": 1697.4726349681,
+    "ID": 3862,
+    "Title": "Find the Smallest Balanced Index",
+    "TitleZH": "找出最小平衡下标",
+    "TitleSlug": "find-the-smallest-balanced-index",
+    "ContestSlug": "weekly-contest-492",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 492",
+    "ContestID_zh": "第 492 场周赛"
   },
   {
     "Rating": 1697.2356875149,
@@ -26255,6 +26288,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 196",
     "ContestID_zh": "第 196 场周赛"
+  },
+  {
+    "Rating": 1154.1609831093,
+    "ID": 3861,
+    "Title": "Minimum Capacity Box",
+    "TitleZH": "容量最小的箱子",
+    "TitleSlug": "minimum-capacity-box",
+    "ContestSlug": "weekly-contest-492",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 492",
+    "ContestID_zh": "第 492 场周赛"
   },
   {
     "Rating": 1153.427255962,
