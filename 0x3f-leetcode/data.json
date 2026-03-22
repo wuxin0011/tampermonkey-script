@@ -3905,6 +3905,17 @@
     "ContestID_zh": "第 447 场周赛"
   },
   {
+    "Rating": 2254.7583594496,
+    "ID": 3869,
+    "Title": "Count Fancy Numbers in a Range",
+    "TitleZH": "统计区间内奇妙数的数目",
+    "TitleSlug": "count-fancy-numbers-in-a-range",
+    "ContestSlug": "biweekly-contest-178",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 178",
+    "ContestID_zh": "第 178 场双周赛"
+  },
+  {
     "Rating": 2250.9318291559,
     "ID": 1125,
     "Title": "Smallest Sufficient Team",
@@ -4585,6 +4596,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 37",
     "ContestID_zh": "第 37 场双周赛"
+  },
+  {
+    "Rating": 2198.1107944821,
+    "ID": 3873,
+    "Title": "Maximum Points Activated with One Addition",
+    "TitleZH": "添加一个点后可激活的最大点数",
+    "TitleSlug": "maximum-points-activated-with-one-addition",
+    "ContestSlug": "weekly-contest-493",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 493",
+    "ContestID_zh": "第 493 场周赛"
   },
   {
     "Rating": 2197.0951445919,
@@ -6587,6 +6609,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 442",
     "ContestID_zh": "第 442 场周赛"
+  },
+  {
+    "Rating": 2042.0488515965,
+    "ID": 3872,
+    "Title": "Longest Arithmetic Sequence After Changing At Most One Element",
+    "TitleZH": "替换最多一个元素后的最长等差子数组",
+    "TitleSlug": "longest-arithmetic-sequence-after-changing-at-most-one-element",
+    "ContestSlug": "weekly-contest-493",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 493",
+    "ContestID_zh": "第 493 场周赛"
   },
   {
     "Rating": 2040.5621123027,
@@ -14960,6 +14993,17 @@
     "ContestID_zh": "第 226 场周赛"
   },
   {
+    "Rating": 1578.9554353833,
+    "ID": 3868,
+    "Title": "Minimum Cost to Equalize Arrays Using Swaps",
+    "TitleZH": "通过交换使数组相等的最小花费",
+    "TitleSlug": "minimum-cost-to-equalize-arrays-using-swaps",
+    "ContestSlug": "biweekly-contest-178",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 178",
+    "ContestID_zh": "第 178 场双周赛"
+  },
+  {
     "Rating": 1578.8503818621,
     "ID": 1034,
     "Title": "Coloring A Border",
@@ -18777,6 +18821,17 @@
     "ContestID_zh": "第 244 场周赛"
   },
   {
+    "Rating": 1406.6278665696,
+    "ID": 3867,
+    "Title": "Sum of GCD of Formed Pairs",
+    "TitleZH": "数对的最大公约数之和",
+    "TitleSlug": "sum-of-gcd-of-formed-pairs",
+    "ContestSlug": "biweekly-contest-178",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 178",
+    "ContestID_zh": "第 178 场双周赛"
+  },
+  {
     "Rating": 1406.1279714442,
     "ID": 2451,
     "Title": "Odd String Difference",
@@ -19556,6 +19611,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 167",
     "ContestID_zh": "第 167 场双周赛"
+  },
+  {
+    "Rating": 1380.5094817853,
+    "ID": 3871,
+    "Title": "Count Commas in Range II",
+    "TitleZH": "统计范围内的逗号 II",
+    "TitleSlug": "count-commas-in-range-ii",
+    "ContestSlug": "weekly-contest-493",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 493",
+    "ContestID_zh": "第 493 场周赛"
   },
   {
     "Rating": 1380.1541980647,
@@ -24816,6 +24882,17 @@
     "ContestID_zh": "第 236 场周赛"
   },
   {
+    "Rating": 1209.4414891571,
+    "ID": 3866,
+    "Title": "First Unique Even Element",
+    "TitleZH": "找到第一个唯一偶数",
+    "TitleSlug": "first-unique-even-element",
+    "ContestSlug": "biweekly-contest-178",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 178",
+    "ContestID_zh": "第 178 场双周赛"
+  },
+  {
     "Rating": 1209.3722198224,
     "ID": 1523,
     "Title": "Count Odd Numbers in an Interval Range",
@@ -26442,6 +26519,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 402",
     "ContestID_zh": "第 402 场周赛"
+  },
+  {
+    "Rating": 1149.480126418,
+    "ID": 3870,
+    "Title": "Count Commas in Range",
+    "TitleZH": "统计范围内的逗号",
+    "TitleSlug": "count-commas-in-range",
+    "ContestSlug": "weekly-contest-493",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 493",
+    "ContestID_zh": "第 493 场周赛"
   },
   {
     "Rating": 1148.9437959817,
