@@ -4191,6 +4191,17 @@
     "ContestID_zh": "第 128 场周赛"
   },
   {
+    "Rating": 2230.1400164479,
+    "ID": 3878,
+    "Title": "Count Good Subarrays",
+    "TitleZH": "统计好子数组",
+    "TitleSlug": "count-good-subarrays",
+    "ContestSlug": "weekly-contest-494",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 494",
+    "ContestID_zh": "第 494 场周赛"
+  },
+  {
     "Rating": 2228.3454693625,
     "ID": 2581,
     "Title": "Count Number of Possible Root Nodes",
@@ -11737,6 +11748,17 @@
     "ContestID_zh": "第 323 场周赛"
   },
   {
+    "Rating": 1745.1254709049,
+    "ID": 3877,
+    "Title": "Minimum Removals to Achieve Target XOR",
+    "TitleZH": "达到目标异或值的最少删除次数",
+    "TitleSlug": "minimum-removals-to-achieve-target-xor",
+    "ContestSlug": "weekly-contest-494",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 494",
+    "ContestID_zh": "第 494 场周赛"
+  },
+  {
     "Rating": 1745.073572838,
     "ID": 3433,
     "Title": "Count Mentions Per User",
@@ -17906,6 +17928,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 172",
     "ContestID_zh": "第 172 场双周赛"
+  },
+  {
+    "Rating": 1443.8082904044,
+    "ID": 3876,
+    "Title": "Construct Uniform Parity Array II",
+    "TitleZH": "构造奇偶一致的数组 II",
+    "TitleSlug": "construct-uniform-parity-array-ii",
+    "ContestSlug": "weekly-contest-494",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 494",
+    "ContestID_zh": "第 494 场周赛"
   },
   {
     "Rating": 1443.2353621969,
@@ -25276,6 +25309,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 434",
     "ContestID_zh": "第 434 场周赛"
+  },
+  {
+    "Rating": 1199.6286181975,
+    "ID": 3875,
+    "Title": "Construct Uniform Parity Array I",
+    "TitleZH": "构造奇偶一致的数组 I",
+    "TitleSlug": "construct-uniform-parity-array-i",
+    "ContestSlug": "weekly-contest-494",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 494",
+    "ContestID_zh": "第 494 场周赛"
   },
   {
     "Rating": 1199.4477805501,
