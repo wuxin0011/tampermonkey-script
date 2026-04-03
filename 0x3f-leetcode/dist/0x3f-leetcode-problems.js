@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.5.9
+// @version      0.0.6.0
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -301,7 +301,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       let is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], true, String.name);
       is_stop = is_stop != "false" && is_stop != false;
       if (is_stop) {
-        _GM_addStyle(".t6Fde{ display:none !important;}");
+        _GM_addStyle(".t6Fde,.components_no-scrollbar__tRBQN{ display:none !important;}");
       }
       if (isDev()) {
         console.log("is_stop ", is_stop);
@@ -2370,7 +2370,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     if (randomProblemKey()) {
       document.addEventListener("keydown", async function(event) {
-        if (event.ctrlKey && event.altKey && event.key === "j") {
+        const isJ = event.code === "KeyJ" || event.key === "j";
+        if (event.ctrlKey && event.altKey && isJ) {
           randomProblem();
         }
       });

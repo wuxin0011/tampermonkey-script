@@ -86,7 +86,7 @@ export function stop_disscuss_command() {
         let is_stop = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], true, String.name)
         is_stop = is_stop != 'false' && is_stop != false
         if (is_stop) {
-            GM_addStyle('.t6Fde{ display:none !important;}')
+            GM_addStyle('.t6Fde,.components_no-scrollbar__tRBQN{ display:none !important;}')
         }
         if(isDev()) {
             console.log('is_stop ',is_stop)
