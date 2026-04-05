@@ -4807,6 +4807,17 @@
     "ContestID_zh": "第 90 场双周赛"
   },
   {
+    "Rating": 2172.4115085517,
+    "ID": 3883,
+    "Title": "Count Non Decreasing Arrays With Given Digit Sums",
+    "TitleZH": "统计满足数位和数组的非递减数组数目",
+    "TitleSlug": "count-non-decreasing-arrays-with-given-digit-sums",
+    "ContestSlug": "biweekly-contest-179",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 179",
+    "ContestID_zh": "第 179 场双周赛"
+  },
+  {
     "Rating": 2172.3890687963,
     "ID": 2896,
     "Title": "Apply Operations to Make Two Strings Equal",
@@ -5333,6 +5344,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 75",
     "ContestID_zh": "第 75 场周赛"
+  },
+  {
+    "Rating": 2128.3128561163,
+    "ID": 3887,
+    "Title": "Incremental Even-Weighted Cycle Queries",
+    "TitleZH": "增量偶权环查询",
+    "TitleSlug": "incremental-even-weighted-cycle-queries",
+    "ContestSlug": "weekly-contest-495",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 495",
+    "ContestID_zh": "第 495 场周赛"
   },
   {
     "Rating": 2127.5100545681,
@@ -7368,6 +7390,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 103",
     "ContestID_zh": "第 103 场周赛"
+  },
+  {
+    "Rating": 1999.2742892673,
+    "ID": 3886,
+    "Title": "Sum of Sortable Integers",
+    "TitleZH": "可排序整数求和",
+    "TitleSlug": "sum-of-sortable-integers",
+    "ContestSlug": "weekly-contest-495",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 495",
+    "ContestID_zh": "第 495 场周赛"
   },
   {
     "Rating": 1999.1208076854,
@@ -11231,6 +11264,17 @@
     "ContestID_zh": "第 414 场周赛"
   },
   {
+    "Rating": 1770.9328676037,
+    "ID": 3882,
+    "Title": "Minimum XOR Path in a Grid",
+    "TitleZH": "网格图中最小异或路径",
+    "TitleSlug": "minimum-xor-path-in-a-grid",
+    "ContestSlug": "biweekly-contest-179",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 179",
+    "ContestID_zh": "第 179 场双周赛"
+  },
+  {
     "Rating": 1770.8924569497,
     "ID": 1146,
     "Title": "Snapshot Array",
@@ -11416,6 +11460,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 273",
     "ContestID_zh": "第 273 场周赛"
+  },
+  {
+    "Rating": 1760.7597743663,
+    "ID": 3881,
+    "Title": "Direction Assignments with Exactly K Visible People",
+    "TitleZH": "恰好看到 K 个人的方向选择",
+    "TitleSlug": "direction-assignments-with-exactly-k-visible-people",
+    "ContestSlug": "biweekly-contest-179",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 179",
+    "ContestID_zh": "第 179 场双周赛"
   },
   {
     "Rating": 1759.2287478055,
@@ -15607,6 +15662,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 208",
     "ContestID_zh": "第 208 场周赛"
+  },
+  {
+    "Rating": 1548.0314387523,
+    "ID": 3885,
+    "Title": "Design Event Manager",
+    "TitleZH": "设计事件管理器",
+    "TitleSlug": "design-event-manager",
+    "ContestSlug": "weekly-contest-495",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 495",
+    "ContestID_zh": "第 495 场周赛"
   },
   {
     "Rating": 1547.5714796512,
@@ -23320,6 +23386,17 @@
     "ContestID_zh": "第 170 场周赛"
   },
   {
+    "Rating": 1257.4825201873,
+    "ID": 3880,
+    "Title": "Minimum Absolute Difference Between Two Values",
+    "TitleZH": "两个值之间的最小绝对差值",
+    "TitleSlug": "minimum-absolute-difference-between-two-values",
+    "ContestSlug": "biweekly-contest-179",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 179",
+    "ContestID_zh": "第 179 场双周赛"
+  },
+  {
     "Rating": 1257.323514611,
     "ID": 2114,
     "Title": "Maximum Number of Words Found in Sentences",
@@ -26332,6 +26409,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 116",
     "ContestID_zh": "第 116 场周赛"
+  },
+  {
+    "Rating": 1161.1147504109,
+    "ID": 3884,
+    "Title": "First Matching Character From Both Ends",
+    "TitleZH": "双端字符匹配",
+    "TitleSlug": "first-matching-character-from-both-ends",
+    "ContestSlug": "weekly-contest-495",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 495",
+    "ContestID_zh": "第 495 场周赛"
   },
   {
     "Rating": 1160.9529516199,
