@@ -3597,6 +3597,17 @@
     "ContestID_zh": "第 103 场双周赛"
   },
   {
+    "Rating": 2280.3553600661,
+    "ID": 3892,
+    "Title": "Minimum Operations to Achieve At Least K Peaks",
+    "TitleZH": "产生至少 K 个峰值的最少操作次数",
+    "TitleSlug": "minimum-operations-to-achieve-at-least-k-peaks",
+    "ContestSlug": "weekly-contest-496",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 496",
+    "ContestID_zh": "第 496 场周赛"
+  },
+  {
     "Rating": 2280.3143643878,
     "ID": 2407,
     "Title": "Longest Increasing Subsequence II",
@@ -8050,6 +8061,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 314",
     "ContestID_zh": "第 314 场周赛"
+  },
+  {
+    "Rating": 1952.7914119963,
+    "ID": 3891,
+    "Title": "Minimum Increase to Maximize Special Indices",
+    "TitleZH": "最大化特殊下标数目的最少增加次数",
+    "TitleSlug": "minimum-increase-to-maximize-special-indices",
+    "ContestSlug": "weekly-contest-496",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 496",
+    "ContestID_zh": "第 496 场周赛"
   },
   {
     "Rating": 1952.7073399331,
@@ -15983,6 +16005,17 @@
     "ContestID_zh": "第 119 场双周赛"
   },
   {
+    "Rating": 1534.419464685,
+    "ID": 3890,
+    "Title": "Integers With Multiple Sum of Two Cubes",
+    "TitleZH": "可由多种立方和构造的整数",
+    "TitleSlug": "integers-with-multiple-sum-of-two-cubes",
+    "ContestSlug": "weekly-contest-496",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 496",
+    "ContestID_zh": "第 496 场周赛"
+  },
+  {
     "Rating": 1534.325005151,
     "ID": 865,
     "Title": "Smallest Subtree with all the Deepest Nodes",
@@ -21591,6 +21624,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 457",
     "ContestID_zh": "第 457 场周赛"
+  },
+  {
+    "Rating": 1312.2328052186,
+    "ID": 3889,
+    "Title": "Mirror Frequency Distance",
+    "TitleZH": "镜像频次距离",
+    "TitleSlug": "mirror-frequency-distance",
+    "ContestSlug": "weekly-contest-496",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 496",
+    "ContestID_zh": "第 496 场周赛"
   },
   {
     "Rating": 1311.979717243,
