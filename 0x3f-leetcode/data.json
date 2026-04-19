@@ -1265,6 +1265,17 @@
     "ContestID_zh": "第 156 场双周赛"
   },
   {
+    "Rating": 2544.8104481675,
+    "ID": 3901,
+    "Title": "Good Subsequence Queries",
+    "TitleZH": "好子序列查询",
+    "TitleSlug": "good-subsequence-queries",
+    "ContestSlug": "weekly-contest-497",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 497",
+    "ContestID_zh": "第 497 场周赛"
+  },
+  {
     "Rating": 2540.7699757179,
     "ID": 3197,
     "Title": "Find the Minimum Area to Cover All Ones II",
@@ -5247,6 +5258,17 @@
     "ContestID_zh": "第 167 场双周赛"
   },
   {
+    "Rating": 2134.9861022118,
+    "ID": 3900,
+    "Title": "Longest Balanced Substring After One Swap",
+    "TitleZH": "一次交换后的最长平衡子串",
+    "TitleSlug": "longest-balanced-substring-after-one-swap",
+    "ContestSlug": "weekly-contest-497",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 497",
+    "ContestID_zh": "第 497 场周赛"
+  },
+  {
     "Rating": 2134.5448970405,
     "ID": 910,
     "Title": "Smallest Range II",
@@ -7434,6 +7456,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 321",
     "ContestID_zh": "第 321 场周赛"
+  },
+  {
+    "Rating": 1998.3906211301,
+    "ID": 3897,
+    "Title": "Maximum Value of Concatenated Binary Segments",
+    "TitleZH": "连接二进制片段得到的最大值",
+    "TitleSlug": "maximum-value-of-concatenated-binary-segments",
+    "ContestSlug": "biweekly-contest-180",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 180",
+    "ContestID_zh": "第 180 场双周赛"
   },
   {
     "Rating": 1998.0432529701,
@@ -18216,6 +18249,17 @@
     "ContestID_zh": "第 132 场周赛"
   },
   {
+    "Rating": 1435.3002996631,
+    "ID": 3896,
+    "Title": "Minimum Operations to Transform Array into Alternating Prime",
+    "TitleZH": "将数组转换为交替质数数组的最少操作次数",
+    "TitleSlug": "minimum-operations-to-transform-array-into-alternating-prime",
+    "ContestSlug": "biweekly-contest-180",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 180",
+    "ContestID_zh": "第 180 场双周赛"
+  },
+  {
     "Rating": 1435.0179887342,
     "ID": 2559,
     "Title": "Count Vowel Strings in Ranges",
@@ -18940,6 +18984,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 172",
     "ContestID_zh": "第 172 场周赛"
+  },
+  {
+    "Rating": 1407.1018903705,
+    "ID": 3899,
+    "Title": "Angles of a Triangle",
+    "TitleZH": "三角形的内角度数",
+    "TitleSlug": "angles-of-a-triangle",
+    "ContestSlug": "weekly-contest-497",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 497",
+    "ContestID_zh": "第 497 场周赛"
   },
   {
     "Rating": 1407.0629410799,
@@ -23012,6 +23067,17 @@
     "ContestID_zh": "第 262 场周赛"
   },
   {
+    "Rating": 1269.6604781768,
+    "ID": 3895,
+    "Title": "Count Digit Appearances",
+    "TitleZH": "统计数字出现总次数",
+    "TitleSlug": "count-digit-appearances",
+    "ContestSlug": "biweekly-contest-180",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 180",
+    "ContestID_zh": "第 180 场双周赛"
+  },
+  {
     "Rating": 1268.5768566953,
     "ID": 1447,
     "Title": "Simplified Fractions",
@@ -24684,6 +24750,17 @@
     "ContestID_zh": "第 184 场周赛"
   },
   {
+    "Rating": 1222.9538878773,
+    "ID": 3894,
+    "Title": "Traffic Signal Color",
+    "TitleZH": "交通信号灯的颜色",
+    "TitleSlug": "traffic-signal-color",
+    "ContestSlug": "biweekly-contest-180",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 180",
+    "ContestID_zh": "第 180 场双周赛"
+  },
+  {
     "Rating": 1222.2354919459,
     "ID": 2535,
     "Title": "Difference Between Element Sum and Digit Sum of an Array",
@@ -25298,6 +25375,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 305",
     "ContestID_zh": "第 305 场周赛"
+  },
+  {
+    "Rating": 1202.4960842955,
+    "ID": 3898,
+    "Title": "Find the Degree of Each Vertex",
+    "TitleZH": "统计每个顶点的度",
+    "TitleSlug": "find-the-degree-of-each-vertex",
+    "ContestSlug": "weekly-contest-497",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 497",
+    "ContestID_zh": "第 497 场周赛"
   },
   {
     "Rating": 1201.8730954169,
