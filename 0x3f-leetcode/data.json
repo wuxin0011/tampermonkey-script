@@ -4972,6 +4972,17 @@
     "ContestID_zh": "第 426 场周赛"
   },
   {
+    "Rating": 2160.2886328928,
+    "ID": 3906,
+    "Title": "Count Good Integers on a Grid Path",
+    "TitleZH": "统计网格路径中好整数的数目",
+    "TitleSlug": "count-good-integers-on-a-grid-path",
+    "ContestSlug": "weekly-contest-498",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 498",
+    "ContestID_zh": "第 498 场周赛"
+  },
+  {
     "Rating": 2159.4844281244,
     "ID": 2584,
     "Title": "Split the Array to Make Coprime Products",
@@ -13332,6 +13343,17 @@
     "ContestID_zh": "第 225 场周赛"
   },
   {
+    "Rating": 1671.4061227694,
+    "ID": 3905,
+    "Title": "Multi Source Flood Fill",
+    "TitleZH": "多源图像渲染",
+    "TitleSlug": "multi-source-flood-fill",
+    "ContestSlug": "weekly-contest-498",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 498",
+    "ContestID_zh": "第 498 场周赛"
+  },
+  {
     "Rating": 1668.9941164204,
     "ID": 3761,
     "Title": "Minimum Absolute Distance Between Mirror Pairs",
@@ -20636,6 +20658,17 @@
     "ContestID_zh": "第 257 场周赛"
   },
   {
+    "Rating": 1351.729829883,
+    "ID": 3904,
+    "Title": "Smallest Stable Index II",
+    "TitleZH": "最小稳定下标 II",
+    "TitleSlug": "smallest-stable-index-ii",
+    "ContestSlug": "weekly-contest-498",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 498",
+    "ContestID_zh": "第 498 场周赛"
+  },
+  {
     "Rating": 1351.6909336495,
     "ID": 2895,
     "Title": "Minimum Processing Time",
@@ -24374,6 +24407,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 123",
     "ContestID_zh": "第 123 场周赛"
+  },
+  {
+    "Rating": 1234.7518772931,
+    "ID": 3903,
+    "Title": "Smallest Stable Index I",
+    "TitleZH": "最小稳定下标 I",
+    "TitleSlug": "smallest-stable-index-i",
+    "ContestSlug": "weekly-contest-498",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 498",
+    "ContestID_zh": "第 498 场周赛"
   },
   {
     "Rating": 1234.7084656358,
