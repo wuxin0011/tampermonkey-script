@@ -3564,6 +3564,17 @@
     "ContestID_zh": "第 204 场周赛"
   },
   {
+    "Rating": 2288.0173330168,
+    "ID": 3915,
+    "Title": "Maximum Sum of Alternating Subsequence With Distance at Least K",
+    "TitleZH": "距离至少为 K 的交替子序列的最大和",
+    "TitleSlug": "maximum-sum-of-alternating-subsequence-with-distance-at-least-k",
+    "ContestSlug": "weekly-contest-499",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 499",
+    "ContestID_zh": "第 499 场周赛"
+  },
+  {
     "Rating": 2286.2394574531,
     "ID": 3463,
     "Title": "Check If Digits Are Equal in String After Operations II",
@@ -5069,6 +5080,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 143",
     "ContestID_zh": "第 143 场双周赛"
+  },
+  {
+    "Rating": 2155.5770176064,
+    "ID": 3911,
+    "Title": "K-th Smallest Remaining Even Integer in Subarray Queries",
+    "TitleZH": "移除子数组元素后第 K 小偶数",
+    "TitleSlug": "k-th-smallest-remaining-even-integer-in-subarray-queries",
+    "ContestSlug": "biweekly-contest-181",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 181",
+    "ContestID_zh": "第 181 场双周赛"
   },
   {
     "Rating": 2155.3424932408,
@@ -9592,6 +9614,17 @@
     "ContestID_zh": "第 492 场周赛"
   },
   {
+    "Rating": 1859.4380732602,
+    "ID": 3910,
+    "Title": "Count Connected Subgraphs with Even Node Sum",
+    "TitleZH": "统计节点和为偶数的连通子图",
+    "TitleSlug": "count-connected-subgraphs-with-even-node-sum",
+    "ContestSlug": "biweekly-contest-181",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 181",
+    "ContestID_zh": "第 181 场双周赛"
+  },
+  {
     "Rating": 1858.9581916885,
     "ID": 1744,
     "Title": "Can You Eat Your Favorite Candy on Your Favorite Day?",
@@ -13508,6 +13541,17 @@
     "ContestID_zh": "第 280 场周赛"
   },
   {
+    "Rating": 1662.1018866153,
+    "ID": 3914,
+    "Title": "Minimum Operations to Make Array Non Decreasing",
+    "TitleZH": "使数组非递减需要的最小累计值",
+    "TitleSlug": "minimum-operations-to-make-array-non-decreasing",
+    "ContestSlug": "weekly-contest-499",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 499",
+    "ContestID_zh": "第 499 场周赛"
+  },
+  {
     "Rating": 1661.0318170415,
     "ID": 3265,
     "Title": "Count Almost Equal Pairs I",
@@ -16291,6 +16335,17 @@
     "ContestID_zh": "第 14 场双周赛"
   },
   {
+    "Rating": 1524.6509354074,
+    "ID": 3913,
+    "Title": "Sort Vowels by Frequency",
+    "TitleZH": "按频率对元音排序",
+    "TitleSlug": "sort-vowels-by-frequency",
+    "ContestSlug": "weekly-contest-499",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 499",
+    "ContestID_zh": "第 499 场周赛"
+  },
+  {
     "Rating": 1524.5856276651,
     "ID": 2997,
     "Title": "Minimum Number of Operations to Make Array XOR Equal to K",
@@ -18953,6 +19008,17 @@
     "ContestID_zh": "第 360 场周赛"
   },
   {
+    "Rating": 1408.9521530586,
+    "ID": 3909,
+    "Title": "Compare Sums of Bitonic Parts",
+    "TitleZH": "比较双调部分的和",
+    "TitleSlug": "compare-sums-of-bitonic-parts",
+    "ContestSlug": "biweekly-contest-181",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 181",
+    "ContestID_zh": "第 181 场双周赛"
+  },
+  {
     "Rating": 1408.7923640745,
     "ID": 1588,
     "Title": "Sum of All Odd Length Subarrays",
@@ -21549,6 +21615,17 @@
     "ContestID_zh": "第 158 场双周赛"
   },
   {
+    "Rating": 1319.3161840109,
+    "ID": 3908,
+    "Title": "Valid Digit Number",
+    "TitleZH": "有效数字整数",
+    "TitleSlug": "valid-digit-number",
+    "ContestSlug": "biweekly-contest-181",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 181",
+    "ContestID_zh": "第 181 场双周赛"
+  },
+  {
     "Rating": 1317.9521104466,
     "ID": 999,
     "Title": "Available Captures for Rook",
@@ -22966,6 +23043,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 127",
     "ContestID_zh": "第 127 场周赛"
+  },
+  {
+    "Rating": 1273.3478695172,
+    "ID": 3912,
+    "Title": "Valid Elements in an Array",
+    "TitleZH": "数组中的有效元素",
+    "TitleSlug": "valid-elements-in-an-array",
+    "ContestSlug": "weekly-contest-499",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 499",
+    "ContestID_zh": "第 499 场周赛"
   },
   {
     "Rating": 1273.0588534723,
