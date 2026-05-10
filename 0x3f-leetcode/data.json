@@ -3839,6 +3839,17 @@
     "ContestID_zh": "第 276 场周赛"
   },
   {
+    "Rating": 2263.6224926573,
+    "ID": 3920,
+    "Title": "Maximize Fixed Points After Deletions",
+    "TitleZH": "删除元素后最大固定点数目",
+    "TitleSlug": "maximize-fixed-points-after-deletions",
+    "ContestSlug": "weekly-contest-500",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 500",
+    "ContestID_zh": "第 500 场周赛"
+  },
+  {
     "Rating": 2262.5641910108,
     "ID": 3048,
     "Title": "Earliest Second to Mark Indices I",
@@ -11295,6 +11306,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 158",
     "ContestID_zh": "第 158 场双周赛"
+  },
+  {
+    "Rating": 1776.835397588,
+    "ID": 3919,
+    "Title": "Minimum Cost to Move Between Indices",
+    "TitleZH": "在下标间移动的最小代价",
+    "TitleSlug": "minimum-cost-to-move-between-indices",
+    "ContestSlug": "weekly-contest-500",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 500",
+    "ContestID_zh": "第 500 场周赛"
   },
   {
     "Rating": 1775.854606648,
@@ -22198,6 +22220,17 @@
     "ContestID_zh": "第 53 场双周赛"
   },
   {
+    "Rating": 1301.1804118587,
+    "ID": 3918,
+    "Title": "Sum of Primes Between Number and Its Reverse",
+    "TitleZH": "区间内的质数和",
+    "TitleSlug": "sum-of-primes-between-number-and-its-reverse",
+    "ContestSlug": "weekly-contest-500",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 500",
+    "ContestID_zh": "第 500 场周赛"
+  },
+  {
     "Rating": 1301.1576743638,
     "ID": 2748,
     "Title": "Number of Beautiful Pairs",
@@ -25727,6 +25760,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 416",
     "ContestID_zh": "第 416 场周赛"
+  },
+  {
+    "Rating": 1198.8640761901,
+    "ID": 3917,
+    "Title": "Count Indices With Opposite Parity",
+    "TitleZH": "统计下标的相反奇偶性得分",
+    "TitleSlug": "count-indices-with-opposite-parity",
+    "ContestSlug": "weekly-contest-500",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 500",
+    "ContestID_zh": "第 500 场周赛"
   },
   {
     "Rating": 1198.8420836551,
