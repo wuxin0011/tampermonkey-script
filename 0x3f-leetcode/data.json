@@ -4719,6 +4719,17 @@
     "ContestID_zh": "第 464 场周赛"
   },
   {
+    "Rating": 2186.6174607749,
+    "ID": 3928,
+    "Title": "Minimum Cost to Buy Apples II",
+    "TitleZH": "购买苹果的最低成本 II",
+    "TitleSlug": "minimum-cost-to-buy-apples-ii",
+    "ContestSlug": "weekly-contest-501",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 501",
+    "ContestID_zh": "第 501 场周赛"
+  },
+  {
     "Rating": 2186.3802199168,
     "ID": 3377,
     "Title": "Digit Operations to Make Two Integers Equal",
@@ -6125,6 +6136,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 213",
     "ContestID_zh": "第 213 场周赛"
+  },
+  {
+    "Rating": 2079.5200791317,
+    "ID": 3924,
+    "Title": "Minimum Threshold Path With Limited Heavy Edges",
+    "TitleZH": "有限重边的最小阈值路径",
+    "TitleSlug": "minimum-threshold-path-with-limited-heavy-edges",
+    "ContestSlug": "biweekly-contest-182",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 182",
+    "ContestID_zh": "第 182 场双周赛"
   },
   {
     "Rating": 2079.1911227043,
@@ -9196,6 +9218,17 @@
     "ContestID_zh": "第 439 场周赛"
   },
   {
+    "Rating": 1883.4152059972,
+    "ID": 3923,
+    "Title": "Minimum Generations to Target Point",
+    "TitleZH": "得到目标点的最少代数",
+    "TitleSlug": "minimum-generations-to-target-point",
+    "ContestSlug": "biweekly-contest-182",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 182",
+    "ContestID_zh": "第 182 场双周赛"
+  },
+  {
     "Rating": 1883.3541964032,
     "ID": 2054,
     "Title": "Two Best Non-Overlapping Events",
@@ -11605,6 +11638,17 @@
     "ContestID_zh": "第 267 场周赛"
   },
   {
+    "Rating": 1759.1992848083,
+    "ID": 3922,
+    "Title": "Minimum Flips to Make Binary String Coherent",
+    "TitleZH": "使二进制字符串连贯的最少翻转次数",
+    "TitleSlug": "minimum-flips-to-make-binary-string-coherent",
+    "ContestSlug": "biweekly-contest-182",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 182",
+    "ContestID_zh": "第 182 场双周赛"
+  },
+  {
     "Rating": 1759.0629543156,
     "ID": 3835,
     "Title": "Count Subarrays With Cost Less Than or Equal to K",
@@ -13816,6 +13860,17 @@
     "ContestID_zh": "第 170 场周赛"
   },
   {
+    "Rating": 1651.6231918758,
+    "ID": 3927,
+    "Title": "Minimize Array Sum Using Divisible Replacements",
+    "TitleZH": "可整除替换后的数组最小元素和",
+    "TitleSlug": "minimize-array-sum-using-divisible-replacements",
+    "ContestSlug": "weekly-contest-501",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 501",
+    "ContestID_zh": "第 501 场周赛"
+  },
+  {
     "Rating": 1651.5845871727,
     "ID": 750,
     "Title": "Number Of Corner Rectangles",
@@ -14573,6 +14628,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 98",
     "ContestID_zh": "第 98 场双周赛"
+  },
+  {
+    "Rating": 1608.2817385559,
+    "ID": 3926,
+    "Title": "Count Valid Word Occurrences",
+    "TitleZH": "有效单词计数",
+    "TitleSlug": "count-valid-word-occurrences",
+    "ContestSlug": "weekly-contest-501",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 501",
+    "ContestID_zh": "第 501 场周赛"
   },
   {
     "Rating": 1607.9038975431,
@@ -23430,6 +23496,17 @@
     "ContestID_zh": "第 131 场双周赛"
   },
   {
+    "Rating": 1262.6558200509,
+    "ID": 3921,
+    "Title": "Score Validator",
+    "TitleZH": "分数验证器",
+    "TitleSlug": "score-validator",
+    "ContestSlug": "biweekly-contest-182",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 182",
+    "ContestID_zh": "第 182 场双周赛"
+  },
+  {
     "Rating": 1262.5890311992,
     "ID": 1089,
     "Title": "Duplicate Zeros",
@@ -26299,6 +26376,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 25",
     "ContestID_zh": "第 25 场双周赛"
+  },
+  {
+    "Rating": 1176.2218745016,
+    "ID": 3925,
+    "Title": "Concatenate Array With Reverse",
+    "TitleZH": "连接逆序数组",
+    "TitleSlug": "concatenate-array-with-reverse",
+    "ContestSlug": "weekly-contest-501",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 501",
+    "ContestID_zh": "第 501 场周赛"
   },
   {
     "Rating": 1175.637563525,
