@@ -3,10 +3,10 @@
 import {
     isProblem
 } from './index';
-import { getId, submitProblems, watchSaveStatus } from './problems';
+import { getId, submitProblems, watchSaveStatus,__0X3F_PROBLEM_KEYS__ } from './problems';
 
 import { isDev } from './index'
-
+import Cache from './cache'
 
 
 const local_url = window.location.href
@@ -77,18 +77,17 @@ export function watchSubmit() {
                         if (isDev()) {
                             console.log('query result', bodyText)
                         }
-                        if (!/https:\/\/leetcode\.(cn|com)\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
+                        if (!/https:\/\/leetcode\.(cn|com)\/submissions\/detail\/\d+\/(?:v\d+\/)?check\/.*/.test(url)) {
                             return
                         }
-
+                        const ID = getId(local_url)
                         if (res.status == 200 && res.ok) {
                             let result = JSON.parse(bodyText);
-                            const ID = getId(local_url)
                             const status = result?.status_msg == 'Accepted' ? 'ac' : result?.status_msg == 'Wrong Answer' ? 'notac' : 'null';
                             watchSaveStatus(ID, status)
                         }
                         const cache = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problmes_ac_key__'], true, Object.name)
-                        if (cache[ID] == 'null' || cache[ID] == null || cache[Id] == undefined) {
+                        if (cache[ID] == 'null' || cache[ID] == null || cache[ID] == undefined) {
                             submitProblems(local_url)
                         }
                     });

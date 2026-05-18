@@ -54,4 +54,15 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    cors: {
+      origin: 'https://leetcode.cn',
+      methods: ['GET'],
+      allowedHeaders: ['*']
+    },
+    headers: {
+      'Access-Control-Allow-Private-Network': 'true'
+    }
+    // https:true
+  }
 });

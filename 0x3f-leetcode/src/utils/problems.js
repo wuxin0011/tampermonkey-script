@@ -802,9 +802,6 @@ export function showProblemSolve() {
     let url = window.location.href
     if(!isProblem(url)) return
     let t = document.querySelector('#qd-content .text-body.flex.flex-none.items-center')
-    if(isDev()) {
-        console.log('show',t.textContent)
-    }
     if(!t) return
     let c = getLocalProblemStatus()
     let id = getId(url)

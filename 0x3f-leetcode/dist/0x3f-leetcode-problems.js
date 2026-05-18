@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         0x3f-problem-solution
 // @namespace    https://greasyfork.org//zh-CN/scripts/501134-0x3f-problem-solution
-// @version      0.0.6.0
+// @version      0.0.6.1
 // @author       wuxin0011
 // @description  自定义分数区间显示题目 标记题目状态 配合灵茶山艾府题单解题
 // @license      MIT
@@ -42,7 +42,7 @@
   var _GM_getValue = /* @__PURE__ */ (() => typeof GM_getValue != "undefined" ? GM_getValue : void 0)();
   var _GM_registerMenuCommand = /* @__PURE__ */ (() => typeof GM_registerMenuCommand != "undefined" ? GM_registerMenuCommand : void 0)();
   var _GM_setValue = /* @__PURE__ */ (() => typeof GM_setValue != "undefined" ? GM_setValue : void 0)();
-  let Cache$1 = class Cache2 {
+  class Cache {
     set(k, v) {
       _GM_setValue(k, v);
     }
@@ -83,8 +83,8 @@
     remove(k) {
       _GM_deleteValue(k);
     }
-  };
-  const Cache$2 = new Cache$1();
+  }
+  const Cache$1 = new Cache();
   function isEnglishENV() {
     return window.location.href.indexOf("https://leetcode.com") != -1;
   }
@@ -246,7 +246,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     });
   }
   function tips_message() {
-    if (isEnglish() && isZH() && Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"]) == "OK") {
+    if (isEnglish() && isZH() && Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type_tips__"]) == "OK") {
       ElementPlus.ElMessageBox.alert(
         `<div>
               <p>检查到当前环境为国服,如果需要同步功能需要切换到美服，或者复制一份题单到美服自己使用 否则仅保留替换链接功能，没有同步功能 </p>
@@ -263,10 +263,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           confirmButtonText: "不再提示"
         }
       ).then((e) => {
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"], "NO");
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type_tips__"], "NO");
       }).catch((e) => {
         if (e == "cancel") {
-          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"]) == "OK_1";
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type_tips__"]) == "OK_1";
           ElementPlus.ElMessage.warning({
             message: "下次切换到美服环境提示"
           });
@@ -298,7 +298,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   function stop_disscuss_command() {
     if (isLeetCodeCircleUrl()) {
-      let is_stop = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], true, String.name);
+      let is_stop = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_stop_discuss_"], true, String.name);
       is_stop = is_stop != "false" && is_stop != false;
       if (is_stop) {
         _GM_addStyle(".t6Fde,.components_no-scrollbar__tRBQN{ display:none !important;}");
@@ -307,14 +307,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         console.log("is_stop ", is_stop);
       }
       _GM_registerMenuCommand(`${is_stop ? "开启" : "关闭"}右侧讨论区📣`, () => {
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_stop_discuss_"], !is_stop);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_stop_discuss_"], !is_stop);
         window.location.reload();
       }, { title: "如果认为右侧讨论区太难看可以直接屏蔽😅" });
     }
   }
   const inf = 5e3;
   const mi = 800;
-  const __0X3F_PROBLEM_KEYS__$1 = {
+  const __0X3F_PROBLEM_KEYS__ = {
     "__0x3f_problmes_solution__": "__0x3f_problmes_solution__",
     // 基本信息
     "__0x3f_problmes_urls__": "__0x3f_problmes_urls__",
@@ -400,7 +400,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     sortedType: 0
   };
   function install_pos() {
-    return !Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], false, Boolean.name);
+    return !Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], false, Boolean.name);
   }
   function isShow(text, min, max) {
     if (!text) {
@@ -455,7 +455,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       max = Number(max);
       data.min = min;
       data.max = max;
-      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"], data);
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], data);
       const cache = getLocalProblemStatus();
       if (isDev()) {
         console.log("data", data.hiddenAc);
@@ -502,10 +502,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         if (u["select"] == void 0) u.select = true;
         if (u["loading"] == void 0 || u["loading"]) u["loading"] = false;
         let s = Object.values(u).join("");
-        if (s == "null" || !Cache$2.get(u.link) || !getAcCountKey(u.link) || !Cache$2.get(getAcCountKey(u.link))) {
+        if (s == "null" || !Cache$1.get(u.link) || !getAcCountKey(u.link) || !Cache$1.get(getAcCountKey(u.link))) {
           continue;
         }
-        let o = Cache$2.get(getAcCountKey(u.link));
+        let o = Cache$1.get(getAcCountKey(u.link));
         u["ac"] = isNaN(o["ac"]) ? 0 : parseInt(o["ac"]);
         u["tot"] = isNaN(o["tot"]) ? 0 : parseInt(o["tot"]);
         u["version"] = isNaN(u["version"]) ? 1 : parseInt(u["version"]);
@@ -529,7 +529,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   const initUrls = () => {
     var _a;
-    let saveUrls = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
+    let saveUrls = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true, Boolean.name) ? Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], true, Array.name) : defaultUrls;
     for (let i = 0; i < saveUrls.length; i++) {
       if (((_a = saveUrls[i]) == null ? void 0 : _a.link) && old_url_map[`${saveUrls[i].link}`]) {
         saveUrls[i].link = old_url_map[saveUrls[i].link];
@@ -538,7 +538,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return computeAcInfo(saveUrls);
   };
   const initObj = () => {
-    let obj = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"])) : defaultObj;
+    let obj = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"]) ? Object.assign(defaultObj, Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"])) : defaultObj;
     if (obj["showAcConfig"] == null || obj["showAcConfig"] == void 0) {
       obj.showAcConfig = true;
     }
@@ -584,40 +584,40 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
     return "";
   }
-  function postData(ID2) {
+  function postData(ID) {
     return {
       "query": "\n    query userQuestionStatus($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    status\n  }\n}\n    ",
       "variables": {
-        "titleSlug": ID2
+        "titleSlug": ID
       },
       "operationName": "userQuestionStatus"
     };
   }
-  async function queryStatus(ID2 = "", cache = {}, cur = void 0, watch2 = false) {
+  async function queryStatus(ID = "", cache = {}, cur = void 0, watch2 = false) {
     var _a, _b, _c;
-    if (!ID2) {
+    if (!ID) {
       return;
     }
-    if (cache[ID2] == void 0 || cache[ID2] != STATUS["AC"]) {
-      const response = await getProblemAcInfo(ID2);
+    if (cache[ID] == void 0 || cache[ID] != STATUS["AC"]) {
+      const response = await getProblemAcInfo(ID);
       if (isDev()) {
         console.log("query result response:", response);
       }
       if ((_a = response == null ? void 0 : response.data) == null ? void 0 : _a.question) {
         const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
-        if (cache[ID2] == void 0 || cache[ID2] != status) {
-          cache[ID2] = status == null ? "null" : status;
+        if (cache[ID] == void 0 || cache[ID] != status) {
+          cache[ID] = status == null ? "null" : status;
           if (watch2) {
             if (isDev()) {
-              console.log("save local status :", cache[ID2], "status = ", status, "get local status :", Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"])[ID2]);
+              console.log("save local status :", cache[ID], "status = ", status, "get local status :", Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"])[ID]);
             }
-            watchSaveStatus(ID2, cache[ID2]);
+            watchSaveStatus(ID, cache[ID]);
           }
-          createStatus(cache[ID2], cur);
+          createStatus(cache[ID], cur);
         }
       } else {
         console.warn("query result is undefined");
-        createStatus(cache[ID2], cur);
+        createStatus(cache[ID], cur);
       }
     }
   }
@@ -632,8 +632,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       if (!(cur instanceof HTMLElement)) {
         continue;
       }
-      const ID2 = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
-      if (!ID2) {
+      const ID = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
+      if (!ID) {
         continue;
       }
       if (install_pos()) {
@@ -642,15 +642,15 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       if (isReplaceEnglish && problems_doms[i].href) {
         problems_doms[i].href = problems_doms[i].href.replace("leetcode.cn", "leetcode.com");
       }
-      if (!cache[ID2] || cache[ID2] != STATUS["AC"] && asyncAc) {
+      if (!cache[ID] || cache[ID] != STATUS["AC"] && asyncAc) {
         await sleep(20);
-        await queryStatus(ID2, cache, cur, false);
+        await queryStatus(ID, cache, cur, false);
         query_cnt++;
         if (query_cnt % 10 == 0) {
-          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
         }
       } else {
-        let status = cache[ID2];
+        let status = cache[ID];
         uid++;
         createStatus(status, cur);
       }
@@ -659,32 +659,32 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       console.log("cache num :", uid, ",tot:", A.length);
     }
     getProcess();
-    Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+    Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
     let other = Array.from(document.querySelectorAll(`${linkCssSelector_pre()} p>a`)).filter((item) => item && item instanceof HTMLAnchorElement && isBilibili(item.href));
     for (let i = 0; i < other.length; i++) {
       createStatus("null", other[i]);
     }
   }
   const submitProblems = (url = window.location.href, timeout = 500) => {
-    const ID2 = getId(url);
-    if (!ID2) {
+    const ID = getId(url);
+    if (!ID) {
       return;
     }
     setTimeout(() => {
       const cache = getLocalProblemStatus();
       if (isDev()) {
-        console.log("ID:", ID2, "query status: ", cache[ID2]);
+        console.log("ID:", ID, "query status: ", cache[ID]);
       }
-      queryStatus(ID2, cache, void 0, true);
+      queryStatus(ID, cache, void 0, true);
     }, timeout);
   };
-  const watchSaveStatus = (ID2, status) => {
+  const watchSaveStatus = (ID, status) => {
     const cache = getLocalProblemStatus();
-    if (cache[ID2] != "ac") {
-      cache[ID2] = status;
-      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
-      window.localStorage.setItem(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_status_update__"], JSON.stringify({
-        "id": ID2,
+    if (cache[ID] != "ac") {
+      cache[ID] = status;
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
+      window.localStorage.setItem(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"], JSON.stringify({
+        "id": ID,
         "status": status
       }));
     }
@@ -692,7 +692,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   };
   const watchLinkStatusUpdate = (e) => {
     var _a;
-    if (e.key != __0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_status_update__"]) {
+    if (e.key != __0X3F_PROBLEM_KEYS__["__0x3f_problmes_status_update__"]) {
       return;
     }
     let { id, status } = JSON.parse(e.newValue);
@@ -732,35 +732,35 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     let cnt = 0;
     let tot = 0;
     for (let i = 0; i < A.length; i++) {
-      let ID2 = getId(A[i].href);
-      if (!(config == null ? void 0 : config.visiableMember) && ((_a = mapInfo.get(ID2)) == null ? void 0 : _a.member)) {
+      let ID = getId(A[i].href);
+      if (!(config == null ? void 0 : config.visiableMember) && ((_a = mapInfo.get(ID)) == null ? void 0 : _a.member)) {
         continue;
       }
-      if (ID2 && cache[ID2] == STATUS["AC"]) {
+      if (ID && cache[ID] == STATUS["AC"]) {
         cnt++;
       }
       tot++;
     }
     let url = window.location.href;
     if (A.length > 0 && getAcCountKey(url)) {
-      Cache$2.set(getAcCountKey(url), { "tot": tot, "ac": cnt });
+      Cache$1.set(getAcCountKey(url), { "tot": tot, "ac": cnt });
     }
     return [cnt, tot];
   }
   function getLocalProblemStatus() {
-    return Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
+    return Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
   }
   function getRandomInfo(array) {
     if (!Array.isArray(array)) return void 0;
     return array[Math.floor(Math.random() * array.length)];
   }
   function isEnglish() {
-    return Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type__"], Boolean.name) == true;
+    return Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type__"], Boolean.name) == true;
   }
   function changeEnglishType() {
-    Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type__"], !isEnglish());
-    if (Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"], String.name) != "NO") {
-      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_support_type_tips__"], "OK");
+    Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type__"], !isEnglish());
+    if (Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type_tips__"], String.name) != "NO") {
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_support_type_tips__"], "OK");
     }
     window.location.reload();
   }
@@ -778,13 +778,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       let response = await getProblemsJSON();
       if (Array.isArray(response)) {
         allProbmems = [...response];
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_all_problems__"], [...response]);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], [...response]);
       }
       if (isDev()) {
         console.log("response allProbmems", response, allProbmems);
       }
     } else {
-      allProbmems = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_all_problems__"], true, Array.name);
+      allProbmems = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_all_problems__"], true, Array.name);
       if (isDev()) {
         console.log("else allProbmems", allProbmems);
       }
@@ -805,7 +805,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         set.add(info.link);
       }
     }
-    let acMap = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
+    let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
     if (isDev()) {
       console.log("config and set", config, set);
       console.log("acMap", acMap);
@@ -843,7 +843,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   }
   async function randomProblem() {
     let responseDatas = await githubProblem();
-    let acMap = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
+    let acMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
     let config = initObj();
     let problems = responseDatas[0];
     let infos = [];
@@ -886,10 +886,10 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     return void 0;
   }
   async function handlerScore() {
-    let ok = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_"], true, String.name);
+    let ok = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_score_"], true, String.name);
     ok = ok != "false" && ok != false;
     _GM_registerMenuCommand(`${ok ? "关闭" : "显示"} 题目分数 🍳`, function() {
-      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_"], !ok);
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_score_"], !ok);
       window.location.reload();
     }, { title: "默认显示题目分数" });
     if (!ok) return;
@@ -904,7 +904,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     let contestUrlFind = false;
     let curRating = null;
     try {
-      let problemMap = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_tot_key"], true) ?? {};
+      let problemMap = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_score_tot_key"], true) ?? {};
       let problem = problemMap[id];
       if (!problem) {
         let p = await githubProblem(true);
@@ -915,14 +915,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           new_temp[k] = v;
         }
         problemMap = Object.assign({}, new_temp);
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_score_tot_key"], problemMap);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_score_tot_key"], problemMap);
         if (isDev()) {
           console.log("save __0x3f_problme_score_tot_key : 😺");
         }
       }
       problem = problemMap[id];
       score = problem == null ? void 0 : problem.score;
-      let rating = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_rating"], true) ?? {};
+      let rating = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_rating"], true) ?? {};
       if (!rating[id]) {
         let p = await getRating();
         let temp = {};
@@ -930,7 +930,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           temp[p[i]["TitleSlug"]] = p[i];
         }
         rating = Object.assign({}, temp);
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problme_rating"], rating);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problme_rating"], rating);
         if (isDev()) {
           console.log("save __0x3f_problme_rating : 😺");
         }
@@ -1003,9 +1003,6 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     let url = window.location.href;
     if (!isProblem(url)) return;
     let t = document.querySelector("#qd-content .text-body.flex.flex-none.items-center");
-    if (isDev()) {
-      console.log("show", t.textContent);
-    }
     if (!t) return;
     let c = getLocalProblemStatus();
     let id = getId(url);
@@ -1040,12 +1037,12 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           if (!(cur instanceof HTMLElement)) {
             continue;
           }
-          const ID2 = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
-          if (!ID2) continue;
+          const ID = getId((_a = problems_doms[i]) == null ? void 0 : _a.href);
+          if (!ID) continue;
           if (force) {
-            delete cache[ID2];
+            delete cache[ID];
           } else {
-            cache[ID2] = "null";
+            cache[ID] = "null";
             deleteAcLocalStorage(problems_doms[i].textContent);
           }
         }
@@ -1056,18 +1053,18 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           if (p["problemUrl"].indexOf(discuss_url) == -1) continue;
           for (let info of p["problems"]) {
             if (!(info == null ? void 0 : info.titleSlug)) continue;
-            let ID2 = titleSlug;
+            let ID = titleSlug;
             if (force) {
-              delete cache[ID2];
+              delete cache[ID];
             } else {
-              cache[ID2] = "null";
+              cache[ID] = "null";
               deleteAcLocalStorage(info == null ? void 0 : info.title);
             }
           }
           break;
         }
       }
-      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], cache);
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], cache);
     }
     if (isLeetCodeCircleUrl()) {
       _GM_registerMenuCommand(`重置进度 ⏱`, () => {
@@ -1139,13 +1136,13 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           }
           if (aLinks.length > 0 && runClear) {
             for (let i = 0; i < aLinks.length; i++) {
-              const ID2 = getId((_a = aLinks[i]) == null ? void 0 : _a.href);
-              if (!ID2) continue;
-              curCache[ID2] = "null";
+              const ID = getId((_a = aLinks[i]) == null ? void 0 : _a.href);
+              if (!ID) continue;
+              curCache[ID] = "null";
               createStatus("null", aLinks[i], true);
               deleteAcLocalStorage(aLinks[i].textContent);
             }
-            Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], curCache);
+            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], curCache);
           }
           return aLinks;
         };
@@ -1453,7 +1450,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             break;
           }
         }
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData));
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
       };
       const handlerDefault = () => {
         Message("确认使用默认题单，将会重置题单", () => {
@@ -1471,9 +1468,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
         });
       };
       window.addEventListener("beforeunload", () => {
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData).filter((u) => u != null && u != void 0));
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true);
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_add_cur__"], false);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData).filter((u) => u != null && u != void 0));
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], false);
       });
       vue.onMounted(async () => {
         if (support_plugins()) {
@@ -1510,7 +1507,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             break;
           }
         }
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], infos);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], infos);
       };
       const asyncButtonLoad = vue.ref(false);
       const asyncButtonLoadBreak = vue.ref(false);
@@ -1537,7 +1534,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
           var _a, _b, _c, _d, _e;
           let rowData = void 0;
           let asyncAll = (row == null ? void 0 : row.link) == TARGET_URL;
-          let cache = Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], true, Object.name);
+          let cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
           if (isDev()) {
             console.log("async ac cache:", cache);
           }
@@ -1600,16 +1597,16 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                     break;
                   }
                   await sleep(20);
-                  let ID2 = info2.titleSlug;
+                  let ID = info2.titleSlug;
                   let key = `${info2.origin}`;
                   let origin = map.get(key);
-                  if (cache[ID2] != "ac") {
-                    let response = await getProblemAcInfo(ID2);
+                  if (cache[ID] != "ac") {
+                    let response = await getProblemAcInfo(ID);
                     const status = (_c = (_b = response == null ? void 0 : response.data) == null ? void 0 : _b.question) == null ? void 0 : _c.status;
-                    cache[ID2] = status == null ? "null" : status;
+                    cache[ID] = status == null ? "null" : status;
                   }
                   if (origin) {
-                    if (cache[ID2] == "ac") {
+                    if (cache[ID] == "ac") {
                       origin.ac = origin.ac + 1;
                     }
                   }
@@ -1624,7 +1621,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
                   }
                 }
                 if (i % 100 == 0) {
-                  Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+                  Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
                 }
               }
             }
@@ -1635,8 +1632,8 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               rowData.loading = false;
             }
             asyncButtonLoad.value = false;
-            Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], vue.toRaw(tableData));
-            Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
+            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], vue.toRaw(tableData));
+            Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], Object.assign({}, cache));
             if (isDev()) {
               console.log("同步完成🥰", asyncProblemNum.value, allProblemNum.value, loadProcess.value);
             }
@@ -1653,7 +1650,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             asyncButtonLoadBreak.value = false;
             for (let i = 0; i < tableData.length; i++) {
               if (getAcCountKey((_d = tableData[i]) == null ? void 0 : _d.link)) {
-                Cache$2.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
+                Cache$1.set(getAcCountKey(tableData[i].link), { "tot": tableData[i].tot, "ac": tableData[i].ac });
               }
               if ((_e = tableData[i]) == null ? void 0 : _e.loading) {
                 tableData[i].loading = false;
@@ -2247,14 +2244,14 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     if (isNext) {
       return;
     }
-    const use = Cache$2.get(stopRankingKey);
+    const use = Cache$1.get(stopRankingKey);
     if (use) {
       conetstTimeId = setInterval(() => {
         run$1();
       }, 10);
     }
     _GM_registerMenuCommand(`${use ? "使用" : "关闭"} 排行榜`, () => {
-      Cache$2.set(stopRankingKey, !use);
+      Cache$1.set(stopRankingKey, !use);
       window.location.reload();
     }, { title: "对于不想看到排行榜的可以使用此功能 默认开启" });
   }
@@ -2316,17 +2313,17 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
               if (isDev()) {
                 console.log("query result", bodyText);
               }
-              if (!/https:\/\/leetcode\.(cn|com)\/submissions\/detail\/\d+\/check\/.*/.test(url)) {
+              if (!/https:\/\/leetcode\.(cn|com)\/submissions\/detail\/\d+\/(?:v\d+\/)?check\/.*/.test(url)) {
                 return;
               }
+              const ID = getId(local_url$1);
               if (res.status == 200 && res.ok) {
                 let result = JSON.parse(bodyText);
-                const ID2 = getId(local_url$1);
                 const status = (result == null ? void 0 : result.status_msg) == "Accepted" ? "ac" : (result == null ? void 0 : result.status_msg) == "Wrong Answer" ? "notac" : "null";
-                watchSaveStatus(ID2, status);
+                watchSaveStatus(ID, status);
               }
-              const cache = Cache.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
-              if (cache[ID] == "null" || cache[ID] == null || cache[Id] == void 0) {
+              const cache = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_ac_key__"], true, Object.name);
+              if (cache[ID] == "null" || cache[ID] == null || cache[ID] == void 0) {
                 submitProblems(local_url$1);
               }
             });
@@ -2342,7 +2339,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     }
   }
   const local_url = window.location.href;
-  const randomProblemKey = () => Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$2.get(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"]);
+  const randomProblemKey = () => Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]) == void 0 ? true : Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"]);
   let Container = null;
   if (isProblem() || isLeetCodeCircleUrl() || isHome()) {
     if (isDev()) {
@@ -2362,7 +2359,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
   if (isProblem() || isLeetCodeCircleUrl() || isHome()) {
     _GM_registerMenuCommand(`随机一道题 ☕`, randomProblem, { title: "随机一道题目，你可以通过ctrl+atl+j显示一道题目" });
     _GM_registerMenuCommand(`${randomProblemKey() ? "关闭" : "启用"} 随机题目快捷键 ☕`, () => {
-      Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
+      Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_random_problems_key__"], !randomProblemKey());
       window.location.reload();
     }, { title: "该功能是随机一道题的快捷键，你可以通过ctrl+atl+j显示一道题目" });
     if (isLeetCodeCircleUrl()) {
@@ -2383,7 +2380,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
     } else if (isLeetCodeCircleUrl(local_url)) {
       stop_disscuss_command();
       _GM_registerMenuCommand(`安装到${install_pos() ? "右侧" : "左侧"} 🎁`, () => {
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_insert_pos__"], install_pos());
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_insert_pos__"], install_pos());
         window.location.reload();
       }, { title: "AC标记安装位置，默认左侧，刷新生效" });
       _GM_registerMenuCommand(`同步题目状态 🚀`, () => {
@@ -2394,7 +2391,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       _GM_registerMenuCommand(`${initObj().onlyUrls ? "仅在收藏题单页面生效" : "所有题单生效"}`, () => {
         const u = initObj();
         u.onlyUrls = !u.onlyUrls;
-        Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_solution__"], u);
+        Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_solution__"], u);
       }, { title: "插件默认会在所有讨论发布页生效，如果只想在收藏链接生效，可以使用此功能" });
       _GM_registerMenuCommand(`添加本页`, () => {
         const urls = initUrls();
@@ -2427,9 +2424,9 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
             link: url
           });
           Container.style.display = "block";
-          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_urls__"], urls);
-          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_update__"], true);
-          Cache$2.set(__0X3F_PROBLEM_KEYS__$1["__0x3f_problmes_add_cur__"], true);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_urls__"], urls);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_update__"], true);
+          Cache$1.set(__0X3F_PROBLEM_KEYS__["__0x3f_problmes_add_cur__"], true);
           ElementPlus.ElMessage({
             message: "收藏成功！刷新生效",
             type: "success"
