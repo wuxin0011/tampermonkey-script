@@ -4983,6 +4983,17 @@
     "ContestID_zh": "第 400 场周赛"
   },
   {
+    "Rating": 2162.530467026,
+    "ID": 3934,
+    "Title": "Smallest Unique Subarray",
+    "TitleZH": "最短唯一子数组",
+    "TitleSlug": "smallest-unique-subarray",
+    "ContestSlug": "weekly-contest-502",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 502",
+    "ContestID_zh": "第 502 场周赛"
+  },
+  {
     "Rating": 2162.0729079623,
     "ID": 3830,
     "Title": "Longest Alternating Subarray After Removing At Most One Element",
@@ -6609,6 +6620,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 387",
     "ContestID_zh": "第 387 场周赛"
+  },
+  {
+    "Rating": 2052.7953163019,
+    "ID": 3933,
+    "Title": "Largest Local Values in a Matrix II",
+    "TitleZH": "矩阵中的局部最大值 II",
+    "TitleSlug": "largest-local-values-in-a-matrix-ii",
+    "ContestSlug": "weekly-contest-502",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 502",
+    "ContestID_zh": "第 502 场周赛"
   },
   {
     "Rating": 2051.519347574,
@@ -15816,6 +15838,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 95",
     "ContestID_zh": "第 95 场双周赛"
+  },
+  {
+    "Rating": 1548.8661885602,
+    "ID": 3932,
+    "Title": "Count K-th Roots in a Range",
+    "TitleZH": "统计区间内的完全 K 次幂数量",
+    "TitleSlug": "count-k-th-roots-in-a-range",
+    "ContestSlug": "weekly-contest-502",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 502",
+    "ContestID_zh": "第 502 场周赛"
   },
   {
     "Rating": 1548.4678056182,
@@ -26662,6 +26695,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 111",
     "ContestID_zh": "第 111 场双周赛"
+  },
+  {
+    "Rating": 1165.8762341513,
+    "ID": 3931,
+    "Title": "Check Adjacent Digit Differences",
+    "TitleZH": "检查相邻数字差",
+    "TitleSlug": "check-adjacent-digit-differences",
+    "ContestSlug": "weekly-contest-502",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 502",
+    "ContestID_zh": "第 502 场周赛"
   },
   {
     "Rating": 1165.8314068327,
