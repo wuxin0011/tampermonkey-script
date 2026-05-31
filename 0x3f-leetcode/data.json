@@ -2376,6 +2376,17 @@
     "ContestID_zh": "第 160 场双周赛"
   },
   {
+    "Rating": 2409.9040742694,
+    "ID": 3943,
+    "Title": "Number of Pairs After Increment",
+    "TitleZH": "递增后的数对数量",
+    "TitleSlug": "number-of-pairs-after-increment",
+    "ContestSlug": "weekly-contest-503",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 503",
+    "ContestID_zh": "第 503 场周赛"
+  },
+  {
     "Rating": 2409.7580728676,
     "ID": 1388,
     "Title": "Pizza With 3n Slices",
@@ -2968,6 +2979,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 348",
     "ContestID_zh": "第 348 场周赛"
+  },
+  {
+    "Rating": 2354.0101112594,
+    "ID": 3939,
+    "Title": "Count Non Adjacent Subsets in a Rooted Tree",
+    "TitleZH": "统计有根树中不相邻子集的数目",
+    "TitleSlug": "count-non-adjacent-subsets-in-a-rooted-tree",
+    "ContestSlug": "biweekly-contest-183",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 183",
+    "ContestID_zh": "第 183 场双周赛"
   },
   {
     "Rating": 2352.795754512,
@@ -3958,6 +3980,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 178",
     "ContestID_zh": "第 178 场双周赛"
+  },
+  {
+    "Rating": 2251.9378859552,
+    "ID": 3938,
+    "Title": "Maximum Path Intersection Sum in a Grid",
+    "TitleZH": "矩阵中最大共享路径和",
+    "TitleSlug": "maximum-path-intersection-sum-in-a-grid",
+    "ContestSlug": "biweekly-contest-183",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 183",
+    "ContestID_zh": "第 183 场双周赛"
   },
   {
     "Rating": 2250.9318291559,
@@ -9801,6 +9834,17 @@
     "ContestID_zh": "第 173 场周赛"
   },
   {
+    "Rating": 1854.8531323613,
+    "ID": 3942,
+    "Title": "Minimum Operations to Sort a Permutation",
+    "TitleZH": "排序排列的最少操作数",
+    "TitleSlug": "minimum-operations-to-sort-a-permutation",
+    "ContestSlug": "weekly-contest-503",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 503",
+    "ContestID_zh": "第 503 场周赛"
+  },
+  {
     "Rating": 1854.0126399812,
     "ID": 1269,
     "Title": "Number of Ways to Stay in the Same Place After Some Steps",
@@ -14375,6 +14419,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 178",
     "ContestID_zh": "第 178 场周赛"
+  },
+  {
+    "Rating": 1626.2197044825,
+    "ID": 3937,
+    "Title": "Minimum Operations to Make Array Modulo Alternating I",
+    "TitleZH": "使数组变为模交替数组的最少操作次数 I",
+    "TitleSlug": "minimum-operations-to-make-array-modulo-alternating-i",
+    "ContestSlug": "biweekly-contest-183",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 183",
+    "ContestID_zh": "第 183 场双周赛"
   },
   {
     "Rating": 1625.9636825798,
@@ -21032,6 +21087,17 @@
     "ContestID_zh": "第 261 场周赛"
   },
   {
+    "Rating": 1346.14277742,
+    "ID": 3936,
+    "Title": "Minimum Swaps to Move Zeros to End",
+    "TitleZH": "将 0 移到末尾的最少交换次数",
+    "TitleSlug": "minimum-swaps-to-move-zeros-to-end",
+    "ContestSlug": "biweekly-contest-183",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 183",
+    "ContestID_zh": "第 183 场双周赛"
+  },
+  {
     "Rating": 1345.737168609,
     "ID": 1679,
     "Title": "Max Number of K-Sum Pairs",
@@ -22911,6 +22977,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 193",
     "ContestID_zh": "第 193 场周赛"
+  },
+  {
+    "Rating": 1284.339107181,
+    "ID": 3941,
+    "Title": "Password Strength",
+    "TitleZH": "密码强度",
+    "TitleSlug": "password-strength",
+    "ContestSlug": "weekly-contest-503",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 503",
+    "ContestID_zh": "第 503 场周赛"
   },
   {
     "Rating": 1283.6412252736,
@@ -25661,6 +25738,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 497",
     "ContestID_zh": "第 497 场周赛"
+  },
+  {
+    "Rating": 1201.9392007469,
+    "ID": 3940,
+    "Title": "Limit Occurrences in Sorted Array",
+    "TitleZH": "限制有序数组中的元素出现次数",
+    "TitleSlug": "limit-occurrences-in-sorted-array",
+    "ContestSlug": "weekly-contest-503",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 503",
+    "ContestID_zh": "第 503 场周赛"
   },
   {
     "Rating": 1201.8730954169,
