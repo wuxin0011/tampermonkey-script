@@ -4444,6 +4444,17 @@
     "ContestID_zh": "第 391 场周赛"
   },
   {
+    "Rating": 2215.4516632445,
+    "ID": 3947,
+    "Title": "Maximum Number of Items From Sale II",
+    "TitleZH": "购买最多物品数目 II",
+    "TitleSlug": "maximum-number-of-items-from-sale-ii",
+    "ContestSlug": "weekly-contest-504",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 504",
+    "ContestID_zh": "第 504 场周赛"
+  },
+  {
     "Rating": 2214.4798747386,
     "ID": 1889,
     "Title": "Minimum Space Wasted From Packaging",
@@ -5586,6 +5597,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 469",
     "ContestID_zh": "第 469 场周赛"
+  },
+  {
+    "Rating": 2122.2230904777,
+    "ID": 3948,
+    "Title": "Lexicographically Maximum MEX Array",
+    "TitleZH": "字典序最大的 MEX 数组",
+    "TitleSlug": "lexicographically-maximum-mex-array",
+    "ContestSlug": "weekly-contest-504",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 504",
+    "ContestID_zh": "第 504 场周赛"
   },
   {
     "Rating": 2121.3147151648,
@@ -12318,6 +12340,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 149",
     "ContestID_zh": "第 149 场双周赛"
+  },
+  {
+    "Rating": 1728.0374911688,
+    "ID": 3946,
+    "Title": "Maximum Number of Items From Sale I",
+    "TitleZH": "购买最多物品数目 I",
+    "TitleSlug": "maximum-number-of-items-from-sale-i",
+    "ContestSlug": "weekly-contest-504",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 504",
+    "ContestID_zh": "第 504 场周赛"
   },
   {
     "Rating": 1725.4481937307,
@@ -25815,6 +25848,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 153",
     "ContestID_zh": "第 153 场双周赛"
+  },
+  {
+    "Rating": 1201.2169110885,
+    "ID": 3945,
+    "Title": "Digit Frequency Score",
+    "TitleZH": "计算数字频率得分",
+    "TitleSlug": "digit-frequency-score",
+    "ContestSlug": "weekly-contest-504",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 504",
+    "ContestID_zh": "第 504 场周赛"
   },
   {
     "Rating": 1200.9464053417,
