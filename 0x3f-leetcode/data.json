@@ -924,6 +924,17 @@
     "ContestID_zh": "第 422 场周赛"
   },
   {
+    "Rating": 2611.407493072,
+    "ID": 3957,
+    "Title": "Maximum Sum of M Non-Overlapping Subarrays II",
+    "TitleZH": "M 个非重叠子数组最大和 II",
+    "TitleSlug": "maximum-sum-of-m-non-overlapping-subarrays-ii",
+    "ContestSlug": "weekly-contest-505",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 505",
+    "ContestID_zh": "第 505 场周赛"
+  },
+  {
     "Rating": 2610.9906730644,
     "ID": 2056,
     "Title": "Number of Valid Move Combinations On Chessboard",
@@ -2561,6 +2572,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 299",
     "ContestID_zh": "第 299 场周赛"
+  },
+  {
+    "Rating": 2390.1956069603,
+    "ID": 3953,
+    "Title": "Maximum Score with Co-Prime Element",
+    "TitleZH": "互质元素的最大得分",
+    "TitleSlug": "maximum-score-with-co-prime-element",
+    "ContestSlug": "biweekly-contest-184",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 184",
+    "ContestID_zh": "第 184 场双周赛"
   },
   {
     "Rating": 2389.9634276167,
@@ -6554,6 +6576,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 141",
     "ContestID_zh": "第 141 场双周赛"
+  },
+  {
+    "Rating": 2060.7171353186,
+    "ID": 3956,
+    "Title": "Maximum Sum of M Non-Overlapping Subarrays I",
+    "TitleZH": "M 个非重叠子数组最大和 I",
+    "TitleSlug": "maximum-sum-of-m-non-overlapping-subarrays-i",
+    "ContestSlug": "weekly-contest-505",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 505",
+    "ContestID_zh": "第 505 场周赛"
   },
   {
     "Rating": 2060.379991517,
@@ -11649,6 +11682,17 @@
     "ContestID_zh": "第 454 场周赛"
   },
   {
+    "Rating": 1762.5072028268,
+    "ID": 3952,
+    "Title": "Maximum Total Value of Covered Indices",
+    "TitleZH": "下标覆盖处的最大总和",
+    "TitleSlug": "maximum-total-value-of-covered-indices",
+    "ContestSlug": "biweekly-contest-184",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 184",
+    "ContestID_zh": "第 184 场双周赛"
+  },
+  {
     "Rating": 1762.3115124143,
     "ID": 948,
     "Title": "Bag of Tokens",
@@ -16467,6 +16511,17 @@
     "ContestID_zh": "第 224 场周赛"
   },
   {
+    "Rating": 1529.9171164552,
+    "ID": 3951,
+    "Title": "Minimum Energy to Maintain Brightness",
+    "TitleZH": "维持亮度的最小总能量",
+    "TitleSlug": "minimum-energy-to-maintain-brightness",
+    "ContestSlug": "biweekly-contest-184",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 184",
+    "ContestID_zh": "第 184 场双周赛"
+  },
+  {
     "Rating": 1529.7617243868,
     "ID": 881,
     "Title": "Boats to Save People",
@@ -18698,6 +18753,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 122",
     "ContestID_zh": "第 122 场周赛"
+  },
+  {
+    "Rating": 1429.0223792705,
+    "ID": 3955,
+    "Title": "Valid Binary Strings With Cost Limit",
+    "TitleZH": "成本限制的有效二进制字符串",
+    "TitleSlug": "valid-binary-strings-with-cost-limit",
+    "ContestSlug": "weekly-contest-505",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 505",
+    "ContestID_zh": "第 505 场周赛"
   },
   {
     "Rating": 1428.7246677159,
@@ -23386,6 +23452,17 @@
     "ContestID_zh": "第 84 场双周赛"
   },
   {
+    "Rating": 1270.4393027234,
+    "ID": 3950,
+    "Title": "Exactly One Consecutive Set Bits Pair",
+    "TitleZH": "恰好一对连续置位",
+    "TitleSlug": "exactly-one-consecutive-set-bits-pair",
+    "ContestSlug": "biweekly-contest-184",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 184",
+    "ContestID_zh": "第 184 场双周赛"
+  },
+  {
     "Rating": 1270.0775640451,
     "ID": 2873,
     "Title": "Maximum Value of an Ordered Triplet I",
@@ -25485,6 +25562,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 449",
     "ContestID_zh": "第 449 场周赛"
+  },
+  {
+    "Rating": 1210.3149469758,
+    "ID": 3954,
+    "Title": "Sum of Compatible Numbers in Range I",
+    "TitleZH": "区间内的兼容数字之和 I",
+    "TitleSlug": "sum-of-compatible-numbers-in-range-i",
+    "ContestSlug": "weekly-contest-505",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 505",
+    "ContestID_zh": "第 505 场周赛"
   },
   {
     "Rating": 1209.6571020247,
