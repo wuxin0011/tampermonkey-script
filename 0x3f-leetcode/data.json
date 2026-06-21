@@ -627,6 +627,17 @@
     "ContestID_zh": "第 389 场周赛"
   },
   {
+    "Rating": 2672.423145098,
+    "ID": 3962,
+    "Title": "Maximum Subarray Sum After at Most K Swaps",
+    "TitleZH": "至多 K 次交换后最大子数组和",
+    "TitleSlug": "maximum-subarray-sum-after-at-most-k-swaps",
+    "ContestSlug": "weekly-contest-506",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 506",
+    "ContestID_zh": "第 506 场周赛"
+  },
+  {
     "Rating": 2671.1046123182,
     "ID": 3454,
     "Title": "Separate Squares II",
@@ -9438,6 +9449,17 @@
     "ContestID_zh": "第 67 场双周赛"
   },
   {
+    "Rating": 1879.7915834684,
+    "ID": 3961,
+    "Title": "Maximize Sum of Device Ratings",
+    "TitleZH": "设备评分的最大和",
+    "TitleSlug": "maximize-sum-of-device-ratings",
+    "ContestSlug": "weekly-contest-506",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 506",
+    "ContestID_zh": "第 506 场周赛"
+  },
+  {
     "Rating": 1877.8983358307,
     "ID": 1234,
     "Title": "Replace the Substring for Balanced String",
@@ -12241,6 +12263,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 49",
     "ContestID_zh": "第 49 场双周赛"
+  },
+  {
+    "Rating": 1737.2296628819,
+    "ID": 3960,
+    "Title": "Frequency Balance Subarray",
+    "TitleZH": "频率平衡子数组",
+    "TitleSlug": "frequency-balance-subarray",
+    "ContestSlug": "weekly-contest-506",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 506",
+    "ContestID_zh": "第 506 场周赛"
   },
   {
     "Rating": 1737.2065180671,
@@ -26453,6 +26486,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 329",
     "ContestID_zh": "第 329 场周赛"
+  },
+  {
+    "Rating": 1182.987792522,
+    "ID": 3959,
+    "Title": "Check Good Integer",
+    "TitleZH": "判定好整数",
+    "TitleSlug": "check-good-integer",
+    "ContestSlug": "weekly-contest-506",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 506",
+    "ContestID_zh": "第 506 场周赛"
   },
   {
     "Rating": 1182.6489068544,
