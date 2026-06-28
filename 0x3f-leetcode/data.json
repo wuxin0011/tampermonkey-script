@@ -4763,6 +4763,17 @@
     "ContestID_zh": "第 323 场周赛"
   },
   {
+    "Rating": 2194.7888816521,
+    "ID": 3971,
+    "Title": "Maximum Total Value",
+    "TitleZH": "最大总价值",
+    "TitleSlug": "maximum-total-value",
+    "ContestSlug": "weekly-contest-507",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 507",
+    "ContestID_zh": "第 507 场周赛"
+  },
+  {
     "Rating": 2190.1757477854,
     "ID": 1478,
     "Title": "Allocate Mailboxes",
@@ -7500,6 +7511,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 446",
     "ContestID_zh": "第 446 场周赛"
+  },
+  {
+    "Rating": 2006.0956272819,
+    "ID": 3966,
+    "Title": "Count Good Integers in a Range",
+    "TitleZH": "统计范围内的好整数",
+    "TitleSlug": "count-good-integers-in-a-range",
+    "ContestSlug": "biweekly-contest-185",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 185",
+    "ContestID_zh": "第 185 场双周赛"
   },
   {
     "Rating": 2005.6235019774,
@@ -10285,6 +10307,17 @@
     "ContestID_zh": "第 402 场周赛"
   },
   {
+    "Rating": 1840.160645972,
+    "ID": 3970,
+    "Title": "Shortest Path With At Most K Consecutive Identical Characters",
+    "TitleZH": "最多 K 个连续相同字符的最短路径",
+    "TitleSlug": "shortest-path-with-at-most-k-consecutive-identical-characters",
+    "ContestSlug": "weekly-contest-507",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 507",
+    "ContestID_zh": "第 507 场周赛"
+  },
+  {
     "Rating": 1839.9203623221,
     "ID": 2311,
     "Title": "Longest Binary Subsequence Less Than or Equal to K",
@@ -13024,6 +13057,17 @@
     "ContestID_zh": "第 441 场周赛"
   },
   {
+    "Rating": 1698.820018305,
+    "ID": 3965,
+    "Title": "Finish Time of Tasks I",
+    "TitleZH": "任务完成时间 I",
+    "TitleSlug": "finish-time-of-tasks-i",
+    "ContestSlug": "biweekly-contest-185",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 185",
+    "ContestID_zh": "第 185 场双周赛"
+  },
+  {
     "Rating": 1697.8500495479,
     "ID": 1017,
     "Title": "Convert to Base -2",
@@ -15585,6 +15629,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 146",
     "ContestID_zh": "第 146 场双周赛"
+  },
+  {
+    "Rating": 1572.3649510919,
+    "ID": 3964,
+    "Title": "Minimum Lights to Illuminate a Road",
+    "TitleZH": "照亮道路的最少灯泡数",
+    "TitleSlug": "minimum-lights-to-illuminate-a-road",
+    "ContestSlug": "biweekly-contest-185",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 185",
+    "ContestID_zh": "第 185 场双周赛"
   },
   {
     "Rating": 1571.1721048101,
@@ -19679,6 +19734,17 @@
     "ContestID_zh": "第 451 场周赛"
   },
   {
+    "Rating": 1397.1200270171,
+    "ID": 3969,
+    "Title": "Valid Subarrays With Matching Sum Digits I",
+    "TitleZH": "求和后首尾数字相同的有效子数组 I",
+    "TitleSlug": "valid-subarrays-with-matching-sum-digits-i",
+    "ContestSlug": "weekly-contest-507",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 507",
+    "ContestID_zh": "第 507 场周赛"
+  },
+  {
     "Rating": 1396.8422030812,
     "ID": 788,
     "Title": "Rotated Digits",
@@ -22165,6 +22231,17 @@
     "ContestID_zh": "第 265 场周赛"
   },
   {
+    "Rating": 1310.8113888611,
+    "ID": 3963,
+    "Title": "Create Grid With Exactly One Path",
+    "TitleZH": "构造恰好一条路径的网格",
+    "TitleSlug": "create-grid-with-exactly-one-path",
+    "ContestSlug": "biweekly-contest-185",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 185",
+    "ContestID_zh": "第 185 场双周赛"
+  },
+  {
     "Rating": 1309.8100518373,
     "ID": 1710,
     "Title": "Maximum Units on a Truck",
@@ -23296,6 +23373,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 110",
     "ContestID_zh": "第 110 场双周赛"
+  },
+  {
+    "Rating": 1278.709532321,
+    "ID": 3968,
+    "Title": "Maximum Manhattan Distance After All Moves",
+    "TitleZH": "移动后的最大曼哈顿距离",
+    "TitleSlug": "maximum-manhattan-distance-after-all-moves",
+    "ContestSlug": "weekly-contest-507",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 507",
+    "ContestID_zh": "第 507 场周赛"
   },
   {
     "Rating": 1278.0092842613,
