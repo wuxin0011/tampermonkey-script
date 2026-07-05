@@ -5830,6 +5830,17 @@
     "ContestID_zh": "第 66 场双周赛"
   },
   {
+    "Rating": 2102.9932435222,
+    "ID": 3977,
+    "Title": "Minimum Time to Reach Target With Limited Power",
+    "TitleZH": "有限电量到达目标节点的最少时间",
+    "TitleSlug": "minimum-time-to-reach-target-with-limited-power",
+    "ContestSlug": "weekly-contest-508",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 508",
+    "ContestID_zh": "第 508 场周赛"
+  },
+  {
     "Rating": 2101.867342004,
     "ID": 2430,
     "Title": "Maximum Deletions on a String",
@@ -7940,6 +7951,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 363",
     "ContestID_zh": "第 363 场周赛"
+  },
+  {
+    "Rating": 1981.0453403379,
+    "ID": 3976,
+    "Title": "Maximum Subarray Sum After Multiplier",
+    "TitleZH": "乘以系数后最大子数组和",
+    "TitleSlug": "maximum-subarray-sum-after-multiplier",
+    "ContestSlug": "weekly-contest-508",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 508",
+    "ContestID_zh": "第 508 场周赛"
   },
   {
     "Rating": 1979.9454101467,
@@ -16522,6 +16544,17 @@
     "ContestID_zh": "第 249 场周赛"
   },
   {
+    "Rating": 1533.1878282832,
+    "ID": 3975,
+    "Title": "Filter Occupied Intervals",
+    "TitleZH": "筛选忙碌区间",
+    "TitleSlug": "filter-occupied-intervals",
+    "ContestSlug": "weekly-contest-508",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 508",
+    "ContestID_zh": "第 508 场周赛"
+  },
+  {
     "Rating": 1532.3349133769,
     "ID": 2429,
     "Title": "Minimize XOR",
@@ -23835,6 +23868,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 131",
     "ContestID_zh": "第 131 场双周赛"
+  },
+  {
+    "Rating": 1262.8839092977,
+    "ID": 3974,
+    "Title": "Maximum Total Sum of K Selected Elements",
+    "TitleZH": "K 个元素的最大总和",
+    "TitleSlug": "maximum-total-sum-of-k-selected-elements",
+    "ContestSlug": "weekly-contest-508",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 508",
+    "ContestID_zh": "第 508 场周赛"
   },
   {
     "Rating": 1262.6558200509,

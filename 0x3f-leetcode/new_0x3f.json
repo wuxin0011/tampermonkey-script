@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/",
-    "createTime": "6/28/2026, 10:28:15 AM",
+    "createTime": "7/5/2026, 9:59:15 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2249,7 +2249,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/",
-    "createTime": "6/28/2026, 10:28:17 AM",
+    "createTime": "7/5/2026, 9:59:17 AM",
     "problems": [
       {
         "title": "讲解",
@@ -2735,6 +2735,13 @@
         "titleSlug": "longest-line-of-consecutive-one-in-matrix"
       },
       {
+        "title": "1424. 对角线遍历 II",
+        "url": "https://leetcode.cn/problems/diagonal-traverse-ii/",
+        "member": false,
+        "score": 1779,
+        "titleSlug": "diagonal-traverse-ii"
+      },
+      {
         "title": "讲解",
         "url": "https://leetcode.cn/problems/range-sum-query-immutable/solution/qian-zhui-he-ji-qi-kuo-zhan-fu-ti-dan-py-vaar/",
         "member": false,
@@ -3013,6 +3020,13 @@
         "member": false,
         "score": 2248,
         "titleSlug": "count-distinct-subarrays-divisible-by-k-in-sorted-array"
+      },
+      {
+        "title": "3969. 求和后首尾数字相同的有效子数组 I",
+        "url": "https://leetcode.cn/problems/valid-subarrays-with-matching-sum-digits-i/",
+        "member": false,
+        "score": 1397,
+        "titleSlug": "valid-subarrays-with-matching-sum-digits-i"
       },
       {
         "title": "2949. 统计美丽子字符串 II",
@@ -3454,6 +3468,13 @@
         "member": false,
         "score": 1569,
         "titleSlug": "corporate-flight-bookings"
+      },
+      {
+        "title": "3964. 照亮道路的最少灯泡数",
+        "url": "https://leetcode.cn/problems/minimum-lights-to-illuminate-a-road/",
+        "member": false,
+        "score": 1572,
+        "titleSlug": "minimum-lights-to-illuminate-a-road"
       },
       {
         "title": "3355. 零数组变换 I",
@@ -5136,6 +5157,13 @@
         "titleSlug": "find-x-sum-of-all-k-long-subarrays-ii"
       },
       {
+        "title": "3962. 至多 K 次交换后最大子数组和",
+        "url": "https://leetcode.cn/problems/maximum-subarray-sum-after-at-most-k-swaps/",
+        "member": false,
+        "score": 2672,
+        "titleSlug": "maximum-subarray-sum-after-at-most-k-swaps"
+      },
+      {
         "title": "LCP 24. 数字游戏",
         "url": "https://leetcode.cn/problems/5TxKeK/",
         "member": false,
@@ -5157,7 +5185,7 @@
         "titleSlug": "minimum-operations-to-make-subarray-elements-equal"
       },
       {
-        "title": "模板",
+        "title": "讲解（含模板代码）",
         "url": "https://leetcode.cn/problems/implement-trie-prefix-tree/solutions/2993894/cong-er-cha-shu-dao-er-shi-liu-cha-shu-p-xsj4/",
         "member": false,
         "score": 0,
@@ -6039,6 +6067,13 @@
         "titleSlug": "sum-of-beautiful-subsequences"
       },
       {
+        "title": "3962. 至多 K 次交换后最大子数组和",
+        "url": "https://leetcode.cn/problems/maximum-subarray-sum-after-at-most-k-swaps/",
+        "member": false,
+        "score": 2672,
+        "titleSlug": "maximum-subarray-sum-after-at-most-k-swaps"
+      },
+      {
         "title": "3382. 用点构造面积最大的矩形 II",
         "url": "https://leetcode.cn/problems/maximum-area-rectangle-with-point-constraints-ii/",
         "member": false,
@@ -6522,6 +6557,13 @@
         "titleSlug": "kth-smallest-path-xor-sum"
       },
       {
+        "title": "2846. 边权重均等查询",
+        "url": "https://leetcode.cn/problems/minimum-edge-weight-equilibrium-queries-in-a-tree/",
+        "member": false,
+        "score": 2507,
+        "titleSlug": "minimum-edge-weight-equilibrium-queries-in-a-tree"
+      },
+      {
         "title": "3234. 统计 1 显著的字符串的数量",
         "url": "https://leetcode.cn/problems/count-the-number-of-substrings-with-dominant-ones/",
         "member": false,
@@ -6771,7 +6813,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
-    "createTime": "6/28/2026, 10:28:19 AM",
+    "createTime": "7/5/2026, 9:59:20 AM",
     "problems": [
       {
         "title": "讲解",
@@ -11916,7 +11958,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/",
-    "createTime": "6/28/2026, 10:28:20 AM",
+    "createTime": "7/5/2026, 9:59:21 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -13169,7 +13211,7 @@
   {
     "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "6/28/2026, 10:28:22 AM",
+    "createTime": "7/5/2026, 9:59:23 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -14093,7 +14135,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "6/28/2026, 10:28:23 AM",
+    "createTime": "7/5/2026, 9:59:24 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -15017,7 +15059,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
-    "createTime": "6/28/2026, 10:28:25 AM",
+    "createTime": "7/5/2026, 9:59:26 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -15458,7 +15500,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
-    "createTime": "6/28/2026, 10:28:26 AM",
+    "createTime": "7/5/2026, 9:59:29 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -16410,7 +16452,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
-    "createTime": "6/28/2026, 10:28:27 AM",
+    "createTime": "7/5/2026, 9:59:30 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -18328,7 +18370,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/",
-    "createTime": "6/28/2026, 10:28:29 AM",
+    "createTime": "7/5/2026, 9:59:32 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -22031,7 +22073,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/",
-    "createTime": "6/28/2026, 10:28:31 AM",
+    "createTime": "7/5/2026, 9:59:35 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -25020,7 +25062,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/",
-    "createTime": "6/28/2026, 10:28:33 AM",
+    "createTime": "7/5/2026, 9:59:36 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",
@@ -25511,6 +25553,13 @@
         "member": false,
         "score": 1970,
         "titleSlug": "stream-of-characters"
+      },
+      {
+        "title": "1967. 作为子字符串出现在单词中的字符串数目",
+        "url": "https://leetcode.cn/problems/number-of-strings-that-appear-as-substrings-in-word/",
+        "member": false,
+        "score": 1231,
+        "titleSlug": "number-of-strings-that-appear-as-substrings-in-word"
       },
       {
         "title": "面试题 17.17. 多次搜索",
