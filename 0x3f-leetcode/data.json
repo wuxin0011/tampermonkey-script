@@ -4631,6 +4631,17 @@
     "ContestID_zh": "第 12 场双周赛"
   },
   {
+    "Rating": 2201.968109609,
+    "ID": 3985,
+    "Title": "Palindromic Subarray Sum",
+    "TitleZH": "回文子数组求和",
+    "TitleSlug": "palindromic-subarray-sum",
+    "ContestSlug": "weekly-contest-509",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 509",
+    "ContestID_zh": "第 509 场周赛"
+  },
+  {
     "Rating": 2201.8256032743,
     "ID": 3714,
     "Title": "Longest Balanced Substring II",
@@ -5531,6 +5542,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 75",
     "ContestID_zh": "第 75 场周赛"
+  },
+  {
+    "Rating": 2128.4247737794,
+    "ID": 3981,
+    "Title": "Count Distinct Ways to Form Target from Two Strings",
+    "TitleZH": "统计从两个字符串形成目标字符串的不同方案数",
+    "TitleSlug": "count-distinct-ways-to-form-target-from-two-strings",
+    "ContestSlug": "biweekly-contest-186",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 186",
+    "ContestID_zh": "第 186 场双周赛"
   },
   {
     "Rating": 2128.3128561163,
@@ -8470,6 +8492,17 @@
     "ContestID_zh": "第 287 场周赛"
   },
   {
+    "Rating": 1944.4722266435,
+    "ID": 3984,
+    "Title": "Divisible Game",
+    "TitleZH": "可整除游戏",
+    "TitleSlug": "divisible-game",
+    "ContestSlug": "weekly-contest-509",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 509",
+    "ContestID_zh": "第 509 场周赛"
+  },
+  {
     "Rating": 1943.095489145,
     "ID": 3381,
     "Title": "Maximum Subarray Sum With Length Divisible by K",
@@ -10219,6 +10252,17 @@
     "ContestID_zh": "第 175 场双周赛"
   },
   {
+    "Rating": 1845.6855148816,
+    "ID": 3980,
+    "Title": "Minimum Operations to Transform Binary String",
+    "TitleZH": "变换二进制字符串的最少操作次数",
+    "TitleSlug": "minimum-operations-to-transform-binary-string",
+    "ContestSlug": "biweekly-contest-186",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 186",
+    "ContestID_zh": "第 186 场双周赛"
+  },
+  {
     "Rating": 1845.6611654401,
     "ID": 2598,
     "Title": "Smallest Missing Non-negative Integer After Operations",
@@ -11922,6 +11966,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 128",
     "ContestID_zh": "第 128 场双周赛"
+  },
+  {
+    "Rating": 1754.7431866815,
+    "ID": 3983,
+    "Title": "Subsequence After One Replacement",
+    "TitleZH": "一次替换后的子序列",
+    "TitleSlug": "subsequence-after-one-replacement",
+    "ContestSlug": "weekly-contest-509",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 509",
+    "ContestID_zh": "第 509 场周赛"
   },
   {
     "Rating": 1754.1710323358,
@@ -21780,6 +21835,17 @@
     "ContestID_zh": "第 49 场双周赛"
   },
   {
+    "Rating": 1328.0453094794,
+    "ID": 3979,
+    "Title": "Maximum Valid Pair Sum",
+    "TitleZH": "最大有效数对和",
+    "TitleSlug": "maximum-valid-pair-sum",
+    "ContestSlug": "biweekly-contest-186",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 186",
+    "ContestID_zh": "第 186 场双周赛"
+  },
+  {
     "Rating": 1327.0282989915,
     "ID": 1086,
     "Title": "High Five",
@@ -26136,6 +26202,17 @@
     "ContestID_zh": "第 146 场双周赛"
   },
   {
+    "Rating": 1200.3250239331,
+    "ID": 3982,
+    "Title": "Sum of Integers with Maximum Digit Range",
+    "TitleZH": "最大数字范围的整数之和",
+    "TitleSlug": "sum-of-integers-with-maximum-digit-range",
+    "ContestSlug": "weekly-contest-509",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 509",
+    "ContestID_zh": "第 509 场周赛"
+  },
+  {
     "Rating": 1200.1921874908,
     "ID": 3550,
     "Title": "Smallest Index With Digit Sum Equal to Index",
@@ -26717,6 +26794,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 384",
     "ContestID_zh": "第 384 场周赛"
+  },
+  {
+    "Rating": 1180.4376959708,
+    "ID": 3978,
+    "Title": "Unique Middle Element",
+    "TitleZH": "唯一中间元素",
+    "TitleSlug": "unique-middle-element",
+    "ContestSlug": "biweekly-contest-186",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 186",
+    "ContestID_zh": "第 186 场双周赛"
   },
   {
     "Rating": 1180.3543157775,
