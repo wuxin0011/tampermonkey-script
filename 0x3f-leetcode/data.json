@@ -6732,6 +6732,17 @@
     "ContestID_zh": "第 34 场双周赛"
   },
   {
+    "Rating": 2054.6741405769,
+    "ID": 3988,
+    "Title": "Create Grid With Exactly K Paths I",
+    "TitleZH": "创建一个恰好有 K 条路径的网格图 I",
+    "TitleSlug": "create-grid-with-exactly-k-paths-i",
+    "ContestSlug": "weekly-contest-510",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 510",
+    "ContestID_zh": "第 510 场周赛"
+  },
+  {
     "Rating": 2053.7468090497,
     "ID": 839,
     "Title": "Similar String Groups",
@@ -7434,6 +7445,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 143",
     "ContestID_zh": "第 143 场周赛"
+  },
+  {
+    "Rating": 2013.6413901055,
+    "ID": 3989,
+    "Title": "Maximum Consistent Columns in a Grid",
+    "TitleZH": "网格中保持一致的最大列数",
+    "TitleSlug": "maximum-consistent-columns-in-a-grid",
+    "ContestSlug": "weekly-contest-510",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 510",
+    "ContestID_zh": "第 510 场周赛"
   },
   {
     "Rating": 2013.4354344791,
@@ -16135,6 +16157,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 95",
     "ContestID_zh": "第 95 场双周赛"
+  },
+  {
+    "Rating": 1549.6115401529,
+    "ID": 3987,
+    "Title": "Minimum Total Cost to Process All Elements",
+    "TitleZH": "处理所有元素的成本",
+    "TitleSlug": "minimum-total-cost-to-process-all-elements",
+    "ContestSlug": "weekly-contest-510",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 510",
+    "ContestID_zh": "第 510 场周赛"
   },
   {
     "Rating": 1548.8661885602,
@@ -26002,6 +26035,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 414",
     "ContestID_zh": "第 414 场周赛"
+  },
+  {
+    "Rating": 1205.3197977948,
+    "ID": 3986,
+    "Title": "Number of Elapsed Seconds Between Two Times",
+    "TitleZH": "统计起止时间经过的秒数",
+    "TitleSlug": "number-of-elapsed-seconds-between-two-times",
+    "ContestSlug": "weekly-contest-510",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 510",
+    "ContestID_zh": "第 510 场周赛"
   },
   {
     "Rating": 1205.202753772,
