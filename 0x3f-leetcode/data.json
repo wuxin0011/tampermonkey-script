@@ -5104,6 +5104,17 @@
     "ContestID_zh": "第 487 场周赛"
   },
   {
+    "Rating": 2161.9707214195,
+    "ID": 3999,
+    "Title": "Minimum Number of String Groups Through Transformations",
+    "TitleZH": "字符串变换后的最少分组数",
+    "TitleSlug": "minimum-number-of-string-groups-through-transformations",
+    "ContestSlug": "weekly-contest-511",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 511",
+    "ContestID_zh": "第 511 场周赛"
+  },
+  {
     "Rating": 2161.6248796745,
     "ID": 3373,
     "Title": "Maximize the Number of Target Nodes After Connecting Trees II",
@@ -5872,6 +5883,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 313",
     "ContestID_zh": "第 313 场周赛"
+  },
+  {
+    "Rating": 2100.7367066386,
+    "ID": 3995,
+    "Title": "Minimum Cost to Convert String III",
+    "TitleZH": "转换字符串的最小成本 III",
+    "TitleSlug": "minimum-cost-to-convert-string-iii",
+    "ContestSlug": "biweekly-contest-187",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 187",
+    "ContestID_zh": "第 187 场双周赛"
   },
   {
     "Rating": 2100.3248877105,
@@ -9834,6 +9856,17 @@
     "ContestID_zh": "第 150 场周赛"
   },
   {
+    "Rating": 1862.3952723083,
+    "ID": 3998,
+    "Title": "Transform Binary String Using Subsequence Sort",
+    "TitleZH": "使用子序列排序转换二进制字符串",
+    "TitleSlug": "transform-binary-string-using-subsequence-sort",
+    "ContestSlug": "weekly-contest-511",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 511",
+    "ContestID_zh": "第 511 场周赛"
+  },
+  {
     "Rating": 1861.7421056879,
     "ID": 3342,
     "Title": "Find Minimum Time to Reach Last Room II",
@@ -13011,6 +13044,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 344",
     "ContestID_zh": "第 344 场周赛"
+  },
+  {
+    "Rating": 1704.9360057053,
+    "ID": 3994,
+    "Title": "Minimum Adjacent Swaps to Partition Array",
+    "TitleZH": "划分数组的最少相邻交换次数",
+    "TitleSlug": "minimum-adjacent-swaps-to-partition-array",
+    "ContestSlug": "biweekly-contest-187",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 187",
+    "ContestID_zh": "第 187 场双周赛"
   },
   {
     "Rating": 1704.360891641,
@@ -18392,6 +18436,17 @@
     "ContestID_zh": "第 162 场双周赛"
   },
   {
+    "Rating": 1452.2020731911,
+    "ID": 3993,
+    "Title": "Maximum Value of an Alternating Sequence",
+    "TitleZH": "交替数列的最大元素",
+    "TitleSlug": "maximum-value-of-an-alternating-sequence",
+    "ContestSlug": "biweekly-contest-187",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 187",
+    "ContestID_zh": "第 187 场双周赛"
+  },
+  {
     "Rating": 1451.8103068349,
     "ID": 3227,
     "Title": "Vowels Game in a String",
@@ -19083,6 +19138,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 126",
     "ContestID_zh": "第 126 场周赛"
+  },
+  {
+    "Rating": 1426.5661260433,
+    "ID": 3997,
+    "Title": "Count Dominant Nodes in a Binary Tree",
+    "TitleZH": "统计二叉树中支配节点的数量",
+    "TitleSlug": "count-dominant-nodes-in-a-binary-tree",
+    "ContestSlug": "weekly-contest-511",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 511",
+    "ContestID_zh": "第 511 场周赛"
   },
   {
     "Rating": 1425.9672522649,
@@ -24068,6 +24134,17 @@
     "ContestID_zh": "第 326 场周赛"
   },
   {
+    "Rating": 1260.2059872115,
+    "ID": 3996,
+    "Title": "Even Number of Knight Moves",
+    "TitleZH": "偶数次骑士移动",
+    "TitleSlug": "even-number-of-knight-moves",
+    "ContestSlug": "weekly-contest-511",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 511",
+    "ContestID_zh": "第 511 场周赛"
+  },
+  {
     "Rating": 1260.1755576607,
     "ID": 1305,
     "Title": "All Elements in Two Binary Search Trees",
@@ -24473,6 +24550,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 169",
     "ContestID_zh": "第 169 场双周赛"
+  },
+  {
+    "Rating": 1251.3307194085,
+    "ID": 3992,
+    "Title": "Rearrange String to Avoid Character Pair",
+    "TitleZH": "重新排列字符串以避免字符对",
+    "TitleSlug": "rearrange-string-to-avoid-character-pair",
+    "ContestSlug": "biweekly-contest-187",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 187",
+    "ContestID_zh": "第 187 场双周赛"
   },
   {
     "Rating": 1250.8974254752,
