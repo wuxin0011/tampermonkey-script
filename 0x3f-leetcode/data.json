@@ -5676,6 +5676,17 @@
     "ContestID_zh": "第 469 场周赛"
   },
   {
+    "Rating": 2122.8602053579,
+    "ID": 4003,
+    "Title": "Minimum Cost Path with Alternating Directions III",
+    "TitleZH": "交替方向的最小路径代价 III",
+    "TitleSlug": "minimum-cost-path-with-alternating-directions-iii",
+    "ContestSlug": "weekly-contest-512",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 512",
+    "ContestID_zh": "第 512 场周赛"
+  },
+  {
     "Rating": 2122.2230904777,
     "ID": 3948,
     "Title": "Lexicographically Maximum MEX Array",
@@ -9029,6 +9040,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 245",
     "ContestID_zh": "第 245 场周赛"
+  },
+  {
+    "Rating": 1912.3257370029,
+    "ID": 4002,
+    "Title": "Count Valid Sequences",
+    "TitleZH": "统计有效序列数目",
+    "TitleSlug": "count-valid-sequences",
+    "ContestSlug": "weekly-contest-512",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 512",
+    "ContestID_zh": "第 512 场周赛"
   },
   {
     "Rating": 1912.1926699881,
@@ -17257,6 +17279,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 450",
     "ContestID_zh": "第 450 场周赛"
+  },
+  {
+    "Rating": 1506.3168035867,
+    "ID": 4001,
+    "Title": "Aggregate Two Time Series",
+    "TitleZH": "聚合两个时间序列",
+    "TitleSlug": "aggregate-two-time-series",
+    "ContestSlug": "weekly-contest-512",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 512",
+    "ContestID_zh": "第 512 场周赛"
   },
   {
     "Rating": 1505.8669082864,
@@ -26398,6 +26431,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 494",
     "ContestID_zh": "第 494 场周赛"
+  },
+  {
+    "Rating": 1199.6227912377,
+    "ID": 4000,
+    "Title": "Largest Integer With Given Digit Sum",
+    "TitleZH": "给定数位和的最大整数",
+    "TitleSlug": "largest-integer-with-given-digit-sum",
+    "ContestSlug": "weekly-contest-512",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 512",
+    "ContestID_zh": "第 512 场周赛"
   },
   {
     "Rating": 1199.4477805501,
