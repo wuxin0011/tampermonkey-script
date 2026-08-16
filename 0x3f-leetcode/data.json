@@ -1617,6 +1617,17 @@
     "ContestID_zh": "第 278 场周赛"
   },
   {
+    "Rating": 2498.8824273287,
+    "ID": 4009,
+    "Title": "Minimum Possible Maximum Waiting Time",
+    "TitleZH": "最小化最大可能等待时间",
+    "TitleSlug": "minimum-possible-maximum-waiting-time",
+    "ContestSlug": "biweekly-contest-188",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 188",
+    "ContestID_zh": "第 188 场双周赛"
+  },
+  {
     "Rating": 2497.2253203914,
     "ID": 3762,
     "Title": "Minimum Operations to Equalize Subarrays",
@@ -5212,6 +5223,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 197",
     "ContestID_zh": "第 197 场周赛"
+  },
+  {
+    "Rating": 2155.6436834044,
+    "ID": 4013,
+    "Title": "Count Subarrays With Even Odd Ratio II",
+    "TitleZH": "按奇偶比统计子数组 II",
+    "TitleSlug": "count-subarrays-with-even-odd-ratio-ii",
+    "ContestSlug": "weekly-contest-513",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 513",
+    "ContestID_zh": "第 513 场周赛"
   },
   {
     "Rating": 2155.599241516,
@@ -9163,6 +9185,17 @@
     "ContestID_zh": "第 473 场周赛"
   },
   {
+    "Rating": 1908.4326375714,
+    "ID": 4007,
+    "Title": "Widest Possible Fence",
+    "TitleZH": "栅栏的最宽宽度",
+    "TitleSlug": "widest-possible-fence",
+    "ContestSlug": "biweekly-contest-188",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 188",
+    "ContestID_zh": "第 188 场双周赛"
+  },
+  {
     "Rating": 1908.3866125757,
     "ID": 1124,
     "Title": "Longest Well-Performing Interval",
@@ -11671,6 +11704,17 @@
     "ContestID_zh": "第 500 场周赛"
   },
   {
+    "Rating": 1776.4913592991,
+    "ID": 4008,
+    "Title": "Minimum Initial Strength to Defeat All Monsters",
+    "TitleZH": "击败所有怪物的最小初始强度",
+    "TitleSlug": "minimum-initial-strength-to-defeat-all-monsters",
+    "ContestSlug": "biweekly-contest-188",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 188",
+    "ContestID_zh": "第 188 场双周赛"
+  },
+  {
     "Rating": 1775.854606648,
     "ID": 2531,
     "Title": "Make Number of Distinct Characters Equal",
@@ -12483,6 +12527,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 105",
     "ContestID_zh": "第 105 场双周赛"
+  },
+  {
+    "Rating": 1735.6591922244,
+    "ID": 4012,
+    "Title": "Count of Unfinished Tasks After Each Shift",
+    "TitleZH": "统计每个班次结束后的未完成任务数",
+    "TitleSlug": "count-of-unfinished-tasks-after-each-shift",
+    "ContestSlug": "weekly-contest-513",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 513",
+    "ContestID_zh": "第 513 场周赛"
   },
   {
     "Rating": 1735.4106121238,
@@ -20152,6 +20207,17 @@
     "ContestID_zh": "第 480 场周赛"
   },
   {
+    "Rating": 1391.7523336531,
+    "ID": 4011,
+    "Title": "Count Subarrays With Even Odd Ratio I",
+    "TitleZH": "按奇偶比统计子数组 I",
+    "TitleSlug": "count-subarrays-with-even-odd-ratio-i",
+    "ContestSlug": "weekly-contest-513",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 513",
+    "ContestID_zh": "第 513 场周赛"
+  },
+  {
     "Rating": 1391.7243180131,
     "ID": 1222,
     "Title": "Queens That Can Attack the King",
@@ -24937,6 +25003,17 @@
     "ContestID_zh": "第 84 场周赛"
   },
   {
+    "Rating": 1242.9626486655,
+    "ID": 4006,
+    "Title": "Count Valid Prefixes",
+    "TitleZH": "统计有效前缀数目",
+    "TitleSlug": "count-valid-prefixes",
+    "ContestSlug": "biweekly-contest-188",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 188",
+    "ContestID_zh": "第 188 场双周赛"
+  },
+  {
     "Rating": 1242.9383307344,
     "ID": 2716,
     "Title": "Minimize String Length",
@@ -25804,6 +25881,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 485",
     "ContestID_zh": "第 485 场周赛"
+  },
+  {
+    "Rating": 1216.380320906,
+    "ID": 4010,
+    "Title": "Maximize Pair Strength Using GCD",
+    "TitleZH": "数对的最大强度",
+    "TitleSlug": "maximize-pair-strength-using-gcd",
+    "ContestSlug": "weekly-contest-513",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 513",
+    "ContestID_zh": "第 513 场周赛"
   },
   {
     "Rating": 1215.7827321325,
