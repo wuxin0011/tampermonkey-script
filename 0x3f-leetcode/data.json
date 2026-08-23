@@ -1496,6 +1496,17 @@
     "ContestID_zh": "第 63 场双周赛"
   },
   {
+    "Rating": 2515.773375505,
+    "ID": 4017,
+    "Title": "Peaks in Array II",
+    "TitleZH": "数组中的峰值 II",
+    "TitleSlug": "peaks-in-array-ii",
+    "ContestSlug": "weekly-contest-514",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 514",
+    "ContestID_zh": "第 514 场周赛"
+  },
+  {
     "Rating": 2515.7520586008,
     "ID": 2272,
     "Title": "Substring With Largest Variance",
@@ -3707,6 +3718,17 @@
     "ContestID_zh": "第 310 场周赛"
   },
   {
+    "Rating": 2279.9033313977,
+    "ID": 4023,
+    "Title": "Elevator Requests II",
+    "TitleZH": "电梯请求 II",
+    "TitleSlug": "elevator-requests-ii",
+    "ContestSlug": "biweekly-contest-189",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 189",
+    "ContestID_zh": "第 189 场双周赛"
+  },
+  {
     "Rating": 2277.9557248587,
     "ID": 3031,
     "Title": "Minimum Time to Revert Word to Initial State II",
@@ -4695,6 +4717,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 263",
     "ContestID_zh": "第 263 场周赛"
+  },
+  {
+    "Rating": 2200.8632483994,
+    "ID": 4027,
+    "Title": "Elevator Requests III",
+    "TitleZH": "电梯请求 III",
+    "TitleSlug": "elevator-requests-iii",
+    "ContestSlug": "weekly-contest-515",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 515",
+    "ContestID_zh": "第 515 场周赛"
   },
   {
     "Rating": 2200.6623666057,
@@ -8371,6 +8404,17 @@
     "ContestID_zh": "第 455 场周赛"
   },
   {
+    "Rating": 1958.6578981998,
+    "ID": 4016,
+    "Title": "Maximum Area of Two Non-Overlapping Square Submatrices",
+    "TitleZH": "两个不重叠子正方形的最大面积",
+    "TitleSlug": "maximum-area-of-two-non-overlapping-square-submatrices",
+    "ContestSlug": "weekly-contest-514",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 514",
+    "ContestID_zh": "第 514 场周赛"
+  },
+  {
     "Rating": 1958.1499109036,
     "ID": 3720,
     "Title": "Lexicographically Smallest Permutation Greater Than Target",
@@ -8996,6 +9040,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 100",
     "ContestID_zh": "第 100 场双周赛"
+  },
+  {
+    "Rating": 1914.9718522367,
+    "ID": 4022,
+    "Title": "K-th Digit in Infinite String",
+    "TitleZH": "无限字符串里第 K 个数字",
+    "TitleSlug": "k-th-digit-in-infinite-string",
+    "ContestSlug": "biweekly-contest-189",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 189",
+    "ContestID_zh": "第 189 场双周赛"
   },
   {
     "Rating": 1914.6717285348,
@@ -13805,6 +13860,17 @@
     "ContestID_zh": "第 242 场周赛"
   },
   {
+    "Rating": 1675.2196170446,
+    "ID": 4026,
+    "Title": "Maximum Gap Between Stations",
+    "TitleZH": "工位的最大间隔",
+    "TitleSlug": "maximum-gap-between-stations",
+    "ContestSlug": "weekly-contest-515",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 515",
+    "ContestID_zh": "第 515 场周赛"
+  },
+  {
     "Rating": 1674.9985842835,
     "ID": 1339,
     "Title": "Maximum Product of Splitted Binary Tree",
@@ -16698,6 +16764,17 @@
     "ContestID_zh": "第 92 场周赛"
   },
   {
+    "Rating": 1534.1987521915,
+    "ID": 4015,
+    "Title": "Weighted Sum of a Tree",
+    "TitleZH": "树的加权和",
+    "TitleSlug": "weighted-sum-of-a-tree",
+    "ContestSlug": "weekly-contest-514",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 514",
+    "ContestID_zh": "第 514 场周赛"
+  },
+  {
     "Rating": 1534.0648719302,
     "ID": 1797,
     "Title": "Design Authentication Manager",
@@ -17114,6 +17191,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 345",
     "ContestID_zh": "第 345 场周赛"
+  },
+  {
+    "Rating": 1517.7749996146,
+    "ID": 4021,
+    "Title": "Minimum Operations to Make a Rotated Palindrome I",
+    "TitleZH": "得到旋转回文字符串的最少操作次数 I",
+    "TitleSlug": "minimum-operations-to-make-a-rotated-palindrome-i",
+    "ContestSlug": "biweekly-contest-189",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 189",
+    "ContestID_zh": "第 189 场双周赛"
   },
   {
     "Rating": 1517.259649092,
@@ -18423,6 +18511,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 419",
     "ContestID_zh": "第 419 场周赛"
+  },
+  {
+    "Rating": 1456.6506642486,
+    "ID": 4025,
+    "Title": "Minimize the Maximum Waiting Time at Synchronized Traffic Lights",
+    "TitleZH": "交通灯的最大等待时间",
+    "TitleSlug": "minimize-the-maximum-waiting-time-at-synchronized-traffic-lights",
+    "ContestSlug": "weekly-contest-515",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 515",
+    "ContestID_zh": "第 515 场周赛"
   },
   {
     "Rating": 1455.8516200241,
@@ -26785,6 +26884,17 @@
     "ContestID_zh": "第 187 场周赛"
   },
   {
+    "Rating": 1192.1392606464,
+    "ID": 4014,
+    "Title": "Minimum Total Price After Applying Discounts",
+    "TitleZH": "应用折扣后的最低总价",
+    "TitleSlug": "minimum-total-price-after-applying-discounts",
+    "ContestSlug": "weekly-contest-514",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 514",
+    "ContestID_zh": "第 514 场周赛"
+  },
+  {
     "Rating": 1191.3681720998,
     "ID": 2769,
     "Title": "Find the Maximum Achievable Number",
@@ -26873,6 +26983,17 @@
     "ContestID_zh": "第 145 场周赛"
   },
   {
+    "Rating": 1187.4205094136,
+    "ID": 4020,
+    "Title": "Elevator Requests I",
+    "TitleZH": "电梯请求 I",
+    "TitleSlug": "elevator-requests-i",
+    "ContestSlug": "biweekly-contest-189",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 189",
+    "ContestID_zh": "第 189 场双周赛"
+  },
+  {
     "Rating": 1187.1641565458,
     "ID": 1880,
     "Title": "Check if Word Equals Summation of Two Words",
@@ -26937,6 +27058,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 148",
     "ContestID_zh": "第 148 场双周赛"
+  },
+  {
+    "Rating": 1184.4599217229,
+    "ID": 4024,
+    "Title": "Nearest Available Drone",
+    "TitleZH": "最近的可用无人机",
+    "TitleSlug": "nearest-available-drone",
+    "ContestSlug": "weekly-contest-515",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 515",
+    "ContestID_zh": "第 515 场周赛"
   },
   {
     "Rating": 1184.4264833435,
