@@ -1,16 +1,5 @@
 [
   {
-    "Rating": 3773.7596150919,
-    "ID": 3235,
-    "Title": "Check if the Rectangle Corner Is Reachable",
-    "TitleZH": "判断矩形的两个角落是否可达",
-    "TitleSlug": "check-if-the-rectangle-corner-is-reachable",
-    "ContestSlug": "weekly-contest-408",
-    "ProblemIndex": "Q4",
-    "ContestID_en": "Weekly Contest 408",
-    "ContestID_zh": "第 408 场周赛"
-  },
-  {
     "Rating": 3124.5016688063,
     "ID": 3743,
     "Title": "Maximize Cyclic Partition Score",
