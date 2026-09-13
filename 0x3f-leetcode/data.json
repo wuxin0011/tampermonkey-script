@@ -6996,6 +6996,17 @@
     "ContestID_zh": "第 142 场双周赛"
   },
   {
+    "Rating": 2044.967093123,
+    "ID": 4046,
+    "Title": "Minimum Cost Path With At Most K Turns",
+    "TitleZH": "至多 K 次转向的最小路径代价",
+    "TitleSlug": "minimum-cost-path-with-at-most-k-turns",
+    "ContestSlug": "weekly-contest-518",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 518",
+    "ContestID_zh": "第 518 场周赛"
+  },
+  {
     "Rating": 2043.1015779104,
     "ID": 2735,
     "Title": "Collecting Chocolates",
@@ -9524,6 +9535,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 358",
     "ContestID_zh": "第 358 场周赛"
+  },
+  {
+    "Rating": 1888.1186243771,
+    "ID": 4045,
+    "Title": "Count Robot Groups",
+    "TitleZH": "统计机器人组数",
+    "TitleSlug": "count-robot-groups",
+    "ContestSlug": "weekly-contest-518",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 518",
+    "ContestID_zh": "第 518 场周赛"
   },
   {
     "Rating": 1886.7040111218,
@@ -19635,6 +19657,17 @@
     "ContestID_zh": "第 138 场周赛"
   },
   {
+    "Rating": 1417.7383858951,
+    "ID": 4044,
+    "Title": "Count Good Cyclic Rotations",
+    "TitleZH": "统计好循环移位的数量",
+    "TitleSlug": "count-good-cyclic-rotations",
+    "ContestSlug": "weekly-contest-518",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 518",
+    "ContestID_zh": "第 518 场周赛"
+  },
+  {
     "Rating": 1417.3934930077,
     "ID": 2139,
     "Title": "Minimum Moves to Reach Target Score",
@@ -26266,6 +26299,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 178",
     "ContestID_zh": "第 178 场双周赛"
+  },
+  {
+    "Rating": 1209.3985835891,
+    "ID": 4043,
+    "Title": "Count Rotations With Exactly K Equal Adjacent Pairs",
+    "TitleZH": "恰好有 K 对相等相邻字符的循环移位数量",
+    "TitleSlug": "count-rotations-with-exactly-k-equal-adjacent-pairs",
+    "ContestSlug": "weekly-contest-518",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 518",
+    "ContestID_zh": "第 518 场周赛"
   },
   {
     "Rating": 1209.3722198224,
