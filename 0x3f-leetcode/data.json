@@ -847,6 +847,17 @@
     "ContestID_zh": "第 93 场双周赛"
   },
   {
+    "Rating": 2630.7343277776,
+    "ID": 4055,
+    "Title": "Count Shadow Pairs II",
+    "TitleZH": "统计影子数对 II",
+    "TitleSlug": "count-shadow-pairs-ii",
+    "ContestSlug": "weekly-contest-519",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 519",
+    "ContestID_zh": "第 519 场周赛"
+  },
+  {
     "Rating": 2628.7957821141,
     "ID": 2213,
     "Title": "Longest Substring of One Repeating Character",
@@ -5434,6 +5445,17 @@
     "ContestID_zh": "第 102 场周赛"
   },
   {
+    "Rating": 2139.5915663634,
+    "ID": 4051,
+    "Title": "Count Subarrays with Distant Sums",
+    "TitleZH": "统计遥远子数组的数目",
+    "TitleSlug": "count-subarrays-with-distant-sums",
+    "ContestSlug": "biweekly-contest-191",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 191",
+    "ContestID_zh": "第 191 场双周赛"
+  },
+  {
     "Rating": 2139.3332541502,
     "ID": 3786,
     "Title": "Total Sum of Interaction Cost in Tree Groups",
@@ -5839,6 +5861,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 193",
     "ContestID_zh": "第 193 场周赛"
+  },
+  {
+    "Rating": 2113.9606221604,
+    "ID": 4053,
+    "Title": "Minimum Operations to Make Every Element Palindromic",
+    "TitleZH": "使每个元素变为回文数的最少操作次数",
+    "TitleSlug": "minimum-operations-to-make-every-element-palindromic",
+    "ContestSlug": "weekly-contest-519",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 519",
+    "ContestID_zh": "第 519 场周赛"
   },
   {
     "Rating": 2111.9501657249,
@@ -10912,6 +10945,17 @@
     "ContestID_zh": "第 183 场周赛"
   },
   {
+    "Rating": 1820.4115327599,
+    "ID": 4054,
+    "Title": "Count Shadow Pairs I",
+    "TitleZH": "统计影子数对 I",
+    "TitleSlug": "count-shadow-pairs-i",
+    "ContestSlug": "weekly-contest-519",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 519",
+    "ContestID_zh": "第 519 场周赛"
+  },
+  {
     "Rating": 1819.6800324413,
     "ID": 3148,
     "Title": "Maximum Difference Score in a Grid",
@@ -13495,6 +13539,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 336",
     "ContestID_zh": "第 336 场周赛"
+  },
+  {
+    "Rating": 1696.2511531619,
+    "ID": 4050,
+    "Title": "Minimum Days to Score Exactly N Points",
+    "TitleZH": "得到恰好 N 分的最少天数",
+    "TitleSlug": "minimum-days-to-score-exactly-n-points",
+    "ContestSlug": "biweekly-contest-191",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 191",
+    "ContestID_zh": "第 191 场双周赛"
   },
   {
     "Rating": 1695.3076664977,
@@ -20042,6 +20097,17 @@
     "ContestID_zh": "第 349 场周赛"
   },
   {
+    "Rating": 1405.0413522973,
+    "ID": 4049,
+    "Title": "Count Values With Equally Spaced Occurrences II",
+    "TitleZH": "统计等间距出现整数数目 II",
+    "TitleSlug": "count-values-with-equally-spaced-occurrences-ii",
+    "ContestSlug": "biweekly-contest-191",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 191",
+    "ContestID_zh": "第 191 场双周赛"
+  },
+  {
     "Rating": 1405.0021415178,
     "ID": 1457,
     "Title": "Pseudo-Palindromic Paths in a Binary Tree",
@@ -25091,6 +25157,17 @@
     "ContestID_zh": "第 159 场周赛"
   },
   {
+    "Rating": 1246.4670040627,
+    "ID": 4052,
+    "Title": "Cyclically Shift Rows and Columns",
+    "TitleZH": "行列循环移位",
+    "TitleSlug": "cyclically-shift-rows-and-columns",
+    "ContestSlug": "weekly-contest-519",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 519",
+    "ContestID_zh": "第 519 场周赛"
+  },
+  {
     "Rating": 1246.3593898992,
     "ID": 2932,
     "Title": "Maximum Strong Pair XOR I",
@@ -27047,6 +27124,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 353",
     "ContestID_zh": "第 353 场周赛"
+  },
+  {
+    "Rating": 1191.3520491344,
+    "ID": 4048,
+    "Title": "Count Values With Equally Spaced Occurrences I",
+    "TitleZH": "统计等间距出现整数数目 I",
+    "TitleSlug": "count-values-with-equally-spaced-occurrences-i",
+    "ContestSlug": "biweekly-contest-191",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 191",
+    "ContestID_zh": "第 191 场双周赛"
   },
   {
     "Rating": 1190.8529051552,
