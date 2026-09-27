@@ -3344,6 +3344,17 @@
     "ContestID_zh": "第 410 场周赛"
   },
   {
+    "Rating": 2321.5425562767,
+    "ID": 4059,
+    "Title": "Lexicographically Largest Power Array",
+    "TitleZH": "字典序最大的答案数组",
+    "TitleSlug": "lexicographically-largest-power-array",
+    "ContestSlug": "weekly-contest-520",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 520",
+    "ContestID_zh": "第 520 场周赛"
+  },
+  {
     "Rating": 2315.6037017989,
     "ID": 1187,
     "Title": "Make Array Strictly Increasing",
@@ -9392,6 +9403,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 81",
     "ContestID_zh": "第 81 场周赛"
+  },
+  {
+    "Rating": 1899.2757795359,
+    "ID": 4058,
+    "Title": "Maximum Pulse Value After One Subarray Rotation",
+    "TitleZH": "一个子数组循环移动后的最大脉冲值",
+    "TitleSlug": "maximum-pulse-value-after-one-subarray-rotation",
+    "ContestSlug": "weekly-contest-520",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 520",
+    "ContestID_zh": "第 520 场周赛"
   },
   {
     "Rating": 1898.8339532179,
@@ -18148,6 +18170,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 400",
     "ContestID_zh": "第 400 场周赛"
+  },
+  {
+    "Rating": 1483.3412665048,
+    "ID": 4057,
+    "Title": "Number of Intersecting Interval Pairs II",
+    "TitleZH": "统计相交区间对 II",
+    "TitleSlug": "number-of-intersecting-interval-pairs-ii",
+    "ContestSlug": "weekly-contest-520",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 520",
+    "ContestID_zh": "第 520 场周赛"
   },
   {
     "Rating": 1483.3041242255,
@@ -27982,6 +28015,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 116",
     "ContestID_zh": "第 116 场周赛"
+  },
+  {
+    "Rating": 1161.430308086,
+    "ID": 4056,
+    "Title": "Number of Intersecting Interval Pairs I",
+    "TitleZH": "统计相交区间对 I",
+    "TitleSlug": "number-of-intersecting-interval-pairs-i",
+    "ContestSlug": "weekly-contest-520",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 520",
+    "ContestID_zh": "第 520 场周赛"
   },
   {
     "Rating": 1161.1147504109,
