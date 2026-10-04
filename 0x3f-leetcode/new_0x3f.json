@@ -2,7 +2,7 @@
   {
     "title": "数学算法（数论/组合/概率期望/博弈/计算几何/随机算法",
     "problemUrl": "https://leetcode.cn/discuss/post/3584388/fen-xiang-gun-ti-dan-shu-xue-suan-fa-shu-gcai/",
-    "createTime": "9/20/2026, 10:14:01 AM",
+    "createTime": "10/4/2026, 11:18:17 AM",
     "problems": [
       {
         "title": "更快的模板（写法二）",
@@ -2431,7 +2431,7 @@
   {
     "title": "常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）",
     "problemUrl": "https://leetcode.cn/discuss/post/3583665/fen-xiang-gun-ti-dan-chang-yong-shu-ju-j-bvmv/",
-    "createTime": "9/20/2026, 10:14:03 AM",
+    "createTime": "10/4/2026, 11:18:19 AM",
     "problems": [
       {
         "title": "讲解",
@@ -2670,6 +2670,13 @@
         "member": false,
         "score": 1787,
         "titleSlug": "check-if-array-pairs-are-divisible-by-k"
+      },
+      {
+        "title": "1477. 找两个和为目标值且不重叠的子数组",
+        "url": "https://leetcode.cn/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/",
+        "member": false,
+        "score": 1850,
+        "titleSlug": "find-two-non-overlapping-sub-arrays-each-with-target-sum"
       },
       {
         "title": "1031. 两个无重叠子数组的最大和",
@@ -3022,6 +3029,13 @@
         "titleSlug": "shifting-letters"
       },
       {
+        "title": "4044. 统计好循环移位的数量",
+        "url": "https://leetcode.cn/problems/count-good-cyclic-rotations/",
+        "member": false,
+        "score": 1417,
+        "titleSlug": "count-good-cyclic-rotations"
+      },
+      {
         "title": "讲解",
         "url": "https://leetcode.cn/problems/subarray-sum-equals-k/solution/qian-zhui-he-ha-xi-biao-cong-liang-ci-bi-4mwr/",
         "member": false,
@@ -3085,6 +3099,13 @@
         "titleSlug": "find-longest-subarray-lcci"
       },
       {
+        "title": "4063. 至多一次取反能被 K 整除的最长子数组 I",
+        "url": "https://leetcode.cn/problems/longest-subarray-divisible-by-k-with-at-most-one-negation-i/",
+        "member": false,
+        "score": 1740,
+        "titleSlug": "longest-subarray-divisible-by-k-with-at-most-one-negation-i"
+      },
+      {
         "title": "3755. 最大平衡异或子数组的长度",
         "url": "https://leetcode.cn/problems/find-maximum-balanced-xor-subarray-length/",
         "member": false,
@@ -3099,18 +3120,18 @@
         "titleSlug": "maximum-good-subarray-sum"
       },
       {
-        "title": "1477. 找两个和为目标值且不重叠的子数组",
-        "url": "https://leetcode.cn/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/",
-        "member": false,
-        "score": 1850,
-        "titleSlug": "find-two-non-overlapping-sub-arrays-each-with-target-sum"
-      },
-      {
         "title": "1546. 和为目标值且不重叠的非空子数组的最大数目",
         "url": "https://leetcode.cn/problems/maximum-number-of-non-overlapping-subarrays-with-sum-equals-target/",
         "member": false,
         "score": 1855,
         "titleSlug": "maximum-number-of-non-overlapping-subarrays-with-sum-equals-target"
+      },
+      {
+        "title": "4058. 一个子数组循环移动后的最大脉冲值",
+        "url": "https://leetcode.cn/problems/maximum-pulse-value-after-one-subarray-rotation/",
+        "member": false,
+        "score": 1899,
+        "titleSlug": "maximum-pulse-value-after-one-subarray-rotation"
       },
       {
         "title": "1124. 表现良好的最长时间段",
@@ -3204,6 +3225,13 @@
         "titleSlug": "count-distinct-subarrays-divisible-by-k-in-sorted-array"
       },
       {
+        "title": "4064. 至多一次取反能被 K 整除的最长子数组 II",
+        "url": "https://leetcode.cn/problems/longest-subarray-divisible-by-k-with-at-most-one-negation-ii/",
+        "member": false,
+        "score": 2284,
+        "titleSlug": "longest-subarray-divisible-by-k-with-at-most-one-negation-ii"
+      },
+      {
         "title": "3969. 求和后首尾数字相同的有效子数组 I",
         "url": "https://leetcode.cn/problems/valid-subarrays-with-matching-sum-digits-i/",
         "member": false,
@@ -3279,6 +3307,13 @@
         "member": false,
         "score": 2089,
         "titleSlug": "count-subarrays-with-majority-element-ii"
+      },
+      {
+        "title": "4051. 统计遥远子数组的数目",
+        "url": "https://leetcode.cn/problems/count-subarrays-with-distant-sums/",
+        "member": false,
+        "score": 2139,
+        "titleSlug": "count-subarrays-with-distant-sums"
       },
       {
         "title": "2031. 1 比 0 多的子数组个数",
@@ -4156,6 +4191,13 @@
         "titleSlug": "maximum-score-from-removing-substrings"
       },
       {
+        "title": "4045. 统计机器人组数",
+        "url": "https://leetcode.cn/problems/count-robot-groups/",
+        "member": false,
+        "score": 1888,
+        "titleSlug": "count-robot-groups"
+      },
+      {
         "title": "2197. 替换数组中的非互质数",
         "url": "https://leetcode.cn/problems/replace-non-coprime-numbers-in-array/",
         "member": false,
@@ -4219,13 +4261,6 @@
         "titleSlug": "maximum-nesting-depth-of-the-parentheses"
       },
       {
-        "title": "1190. 反转每对括号间的子串",
-        "url": "https://leetcode.cn/problems/reverse-substrings-between-each-pair-of-parentheses/",
-        "member": false,
-        "score": 1485,
-        "titleSlug": "reverse-substrings-between-each-pair-of-parentheses"
-      },
-      {
         "title": "856. 括号的分数",
         "url": "https://leetcode.cn/problems/score-of-parentheses/",
         "member": false,
@@ -4247,13 +4282,6 @@
         "titleSlug": "minimum-number-of-swaps-to-make-the-string-balanced"
       },
       {
-        "title": "678. 有效的括号字符串",
-        "url": "https://leetcode.cn/problems/valid-parenthesis-string/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "valid-parenthesis-string"
-      },
-      {
         "title": "1111. 有效括号的嵌套深度",
         "url": "https://leetcode.cn/problems/maximum-nesting-depth-of-two-valid-parentheses-strings/",
         "member": false,
@@ -4268,6 +4296,13 @@
         "titleSlug": "minimum-insertions-to-balance-a-parentheses-string"
       },
       {
+        "title": "1190. 反转每对括号间的子串",
+        "url": "https://leetcode.cn/problems/reverse-substrings-between-each-pair-of-parentheses/",
+        "member": false,
+        "score": 1485,
+        "titleSlug": "reverse-substrings-between-each-pair-of-parentheses"
+      },
+      {
         "title": "2116. 判断一个括号字符串是否有效",
         "url": "https://leetcode.cn/problems/check-if-a-parentheses-string-can-be-valid/",
         "member": false,
@@ -4275,11 +4310,25 @@
         "titleSlug": "check-if-a-parentheses-string-can-be-valid"
       },
       {
+        "title": "678. 有效的括号字符串",
+        "url": "https://leetcode.cn/problems/valid-parenthesis-string/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "valid-parenthesis-string"
+      },
+      {
         "title": "32. 最长有效括号",
         "url": "https://leetcode.cn/problems/longest-valid-parentheses/",
         "member": false,
         "score": 0,
         "titleSlug": "longest-valid-parentheses"
+      },
+      {
+        "title": "2267. 检查是否有合法括号字符串路径",
+        "url": "https://leetcode.cn/problems/check-if-there-is-a-valid-parentheses-string-path/",
+        "member": false,
+        "score": 2084,
+        "titleSlug": "check-if-there-is-a-valid-parentheses-string-path"
       },
       {
         "title": "1006. 笨阶乘",
@@ -6312,13 +6361,6 @@
         "titleSlug": "alternating-groups-iii"
       },
       {
-        "title": "3027. 人员站位的方案数 II",
-        "url": "https://leetcode.cn/problems/find-the-number-of-ways-to-place-people-ii/",
-        "member": false,
-        "score": 2020,
-        "titleSlug": "find-the-number-of-ways-to-place-people-ii"
-      },
-      {
         "title": "1756. 设计最近使用（MRU）队列",
         "url": "https://leetcode.cn/problems/design-most-recently-used-queue/",
         "member": true,
@@ -6408,6 +6450,13 @@
         "member": false,
         "score": 2030,
         "titleSlug": "number-of-pairs-satisfying-inequality"
+      },
+      {
+        "title": "4051. 统计遥远子数组的数目",
+        "url": "https://leetcode.cn/problems/count-subarrays-with-distant-sums/",
+        "member": false,
+        "score": 2139,
+        "titleSlug": "count-subarrays-with-distant-sums"
       },
       {
         "title": "4013. 按奇偶比统计子数组 II",
@@ -6739,6 +6788,20 @@
         "titleSlug": "range-xor-queries-with-subarray-reversals"
       },
       {
+        "title": "3027. 人员站位的方案数 II",
+        "url": "https://leetcode.cn/problems/find-the-number-of-ways-to-place-people-ii/",
+        "member": false,
+        "score": 2020,
+        "titleSlug": "find-the-number-of-ways-to-place-people-ii"
+      },
+      {
+        "title": "4055. 统计影子数对 II",
+        "url": "https://leetcode.cn/problems/count-shadow-pairs-ii/",
+        "member": false,
+        "score": 2630,
+        "titleSlug": "count-shadow-pairs-ii"
+      },
+      {
         "title": "307. 区域和检索 - 数组可修改",
         "url": "https://leetcode.cn/problems/range-sum-query-mutable/",
         "member": false,
@@ -7065,7 +7128,7 @@
   {
     "title": "动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/",
-    "createTime": "9/20/2026, 10:14:06 AM",
+    "createTime": "10/4/2026, 11:18:21 AM",
     "problems": [
       {
         "title": "讲解",
@@ -12357,7 +12420,7 @@
   {
     "title": "图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）",
     "problemUrl": "https://leetcode.cn/discuss/post/3581143/fen-xiang-gun-ti-dan-tu-lun-suan-fa-dfsb-qyux/",
-    "createTime": "9/20/2026, 10:14:08 AM",
+    "createTime": "10/4/2026, 11:18:23 AM",
     "problems": [
       {
         "title": "547. 省份数量",
@@ -13664,9 +13727,9 @@
     ]
   },
   {
-    "title": "网格图（DFS/BFS/综合应用)",
+    "title": "位运算（基础/性质/拆位/试填/恒等式/贪心/脑筋急转弯）",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "9/20/2026, 10:14:11 AM",
+    "createTime": "10/4/2026, 11:18:24 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -14597,7 +14660,7 @@
   {
     "title": "网格图（DFS/BFS/综合应用)",
     "problemUrl": "https://leetcode.cn/discuss/post/3580371/fen-xiang-gun-ti-dan-wei-yun-suan-ji-chu-nth4/",
-    "createTime": "9/20/2026, 10:14:11 AM",
+    "createTime": "10/4/2026, 11:18:26 AM",
     "problems": [
       {
         "title": "3370. 仅含置位位的最小整数",
@@ -15528,7 +15591,7 @@
   {
     "title": "单调栈（矩形面积/贡献法/最小字典序",
     "problemUrl": "https://leetcode.cn/discuss/post/3579480/ti-dan-dan-diao-zhan-ju-xing-xi-lie-zi-d-u4hk/",
-    "createTime": "9/20/2026, 10:14:13 AM",
+    "createTime": "10/4/2026, 11:18:27 AM",
     "problems": [
       {
         "title": "739. 每日温度",
@@ -15976,7 +16039,7 @@
   {
     "title": "二分算法（二分答案/最小化最大值/最大化最小值/第K小",
     "problemUrl": "https://leetcode.cn/discuss/post/3579164/ti-dan-er-fen-suan-fa-er-fen-da-an-zui-x-3rqn/",
-    "createTime": "9/20/2026, 10:14:14 AM",
+    "createTime": "10/4/2026, 11:18:29 AM",
     "problems": [
       {
         "title": "34. 在排序数组中查找元素的第一个和最后一个位置",
@@ -16956,7 +17019,7 @@
   {
     "title": "滑动窗口（定长/不定长/多指针",
     "problemUrl": "https://leetcode.cn/discuss/post/3578981/ti-dan-hua-dong-chuang-kou-ding-chang-bu-rzz7/",
-    "createTime": "9/20/2026, 10:14:17 AM",
+    "createTime": "10/4/2026, 11:18:30 AM",
     "problems": [
       {
         "title": "【套路】教你解决定长滑窗！适用于所有定长滑窗题目！",
@@ -18979,7 +19042,7 @@
   {
     "title": "贪心算法（基本贪心策略/反悔/区间/字典序/数学/思维/构造）",
     "problemUrl": "https://leetcode.cn/discuss/post/3091107/fen-xiang-gun-ti-dan-tan-xin-ji-ben-tan-k58yb/",
-    "createTime": "9/20/2026, 10:14:19 AM",
+    "createTime": "10/4/2026, 11:18:32 AM",
     "problems": [
       {
         "title": "3074. 重新分装苹果",
@@ -22871,7 +22934,7 @@
   {
     "title": "链表、二叉树与一般树（前后指针/快慢指针/DFS/BFS/直径/LCA）",
     "problemUrl": "https://leetcode.cn/discuss/post/3142882/fen-xiang-gun-ti-dan-lian-biao-er-cha-sh-6srp/",
-    "createTime": "9/20/2026, 10:14:20 AM",
+    "createTime": "10/4/2026, 11:18:33 AM",
     "problems": [
       {
         "title": "1290. 二进制链表转整数",
@@ -25212,13 +25275,6 @@
         "titleSlug": "maximum-xor-of-two-non-overlapping-subtrees"
       },
       {
-        "title": "17. 电话号码的字母组合",
-        "url": "https://leetcode.cn/problems/letter-combinations-of-a-phone-number/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "letter-combinations-of-a-phone-number"
-      },
-      {
         "title": "78. 子集",
         "url": "https://leetcode.cn/problems/subsets/",
         "member": false,
@@ -25457,13 +25513,6 @@
         "titleSlug": "generate-parentheses"
       },
       {
-        "title": "301. 删除无效的括号",
-        "url": "https://leetcode.cn/problems/remove-invalid-parentheses/",
-        "member": false,
-        "score": 0,
-        "titleSlug": "remove-invalid-parentheses"
-      },
-      {
         "title": "46. 全排列",
         "url": "https://leetcode.cn/problems/permutations/",
         "member": false,
@@ -25576,6 +25625,13 @@
         "titleSlug": "letter-tile-possibilities"
       },
       {
+        "title": "301. 删除无效的括号",
+        "url": "https://leetcode.cn/problems/remove-invalid-parentheses/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "remove-invalid-parentheses"
+      },
+      {
         "title": "3646. 下一个特殊回文数",
         "url": "https://leetcode.cn/problems/next-special-palindrome-number/",
         "member": false,
@@ -25588,6 +25644,13 @@
         "member": false,
         "score": 2558,
         "titleSlug": "longest-subsequence-repeated-k-times"
+      },
+      {
+        "title": "17. 电话号码的字母组合",
+        "url": "https://leetcode.cn/problems/letter-combinations-of-a-phone-number/",
+        "member": false,
+        "score": 0,
+        "titleSlug": "letter-combinations-of-a-phone-number"
       },
       {
         "title": "3211. 生成不含相邻零的二进制字符串",
@@ -25965,7 +26028,7 @@
   {
     "title": "字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）",
     "problemUrl": "https://leetcode.cn/discuss/post/3144832/fen-xiang-gun-ti-dan-zi-fu-chuan-kmpzhan-ugt4/",
-    "createTime": "9/20/2026, 10:14:22 AM",
+    "createTime": "10/4/2026, 11:18:35 AM",
     "problems": [
       {
         "title": "28. 找出字符串中第一个匹配项的下标",

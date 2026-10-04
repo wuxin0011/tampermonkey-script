@@ -3718,6 +3718,17 @@
     "ContestID_zh": "第 223 场周赛"
   },
   {
+    "Rating": 2284.2623044608,
+    "ID": 4064,
+    "Title": "Longest Subarray Divisible by K with At Most One Negation II",
+    "TitleZH": "至多一次取反能被 K 整除的最长子数组 II",
+    "TitleSlug": "longest-subarray-divisible-by-k-with-at-most-one-negation-ii",
+    "ContestSlug": "biweekly-contest-192",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 192",
+    "ContestID_zh": "第 192 场双周赛"
+  },
+  {
     "Rating": 2281.8816902545,
     "ID": 2659,
     "Title": "Make Array Empty",
@@ -4871,6 +4882,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 28",
     "ContestID_zh": "第 28 场双周赛"
+  },
+  {
+    "Rating": 2189.9602300437,
+    "ID": 4068,
+    "Title": "Maximize Meeting Earnings with Idle Gaps",
+    "TitleZH": "考虑空闲时间的会议最大收益",
+    "TitleSlug": "maximize-meeting-earnings-with-idle-gaps",
+    "ContestSlug": "weekly-contest-521",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 521",
+    "ContestID_zh": "第 521 场周赛"
   },
   {
     "Rating": 2189.3802630548,
@@ -9031,6 +9053,17 @@
     "ContestID_zh": "第 65 场双周赛"
   },
   {
+    "Rating": 1917.8693140375,
+    "ID": 4067,
+    "Title": "Longest Subarray With Restricted Pair Sums",
+    "TitleZH": "数对和受限的最长子数组",
+    "TitleSlug": "longest-subarray-with-restricted-pair-sums",
+    "ContestSlug": "weekly-contest-521",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 521",
+    "ContestID_zh": "第 521 场周赛"
+  },
+  {
     "Rating": 1917.4314822412,
     "ID": 3002,
     "Title": "Maximum Size of a Set After Removals",
@@ -12639,6 +12672,17 @@
     "ContestID_zh": "第 140 场周赛"
   },
   {
+    "Rating": 1740.1499597527,
+    "ID": 4063,
+    "Title": "Longest Subarray Divisible by K with At Most One Negation I",
+    "TitleZH": "至多一次取反能被 K 整除的最长子数组 I",
+    "TitleSlug": "longest-subarray-divisible-by-k-with-at-most-one-negation-i",
+    "ContestSlug": "biweekly-contest-192",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 192",
+    "ContestID_zh": "第 192 场双周赛"
+  },
+  {
     "Rating": 1739.7696741336,
     "ID": 3776,
     "Title": "Minimum Moves to Balance Circular Array",
@@ -16104,6 +16148,17 @@
     "ContestID_zh": "第 70 场周赛"
   },
   {
+    "Rating": 1570.9606853679,
+    "ID": 4066,
+    "Title": "Maximum Equal Adjacent Pairs After at Most One Replacement",
+    "TitleZH": "至多一次替换后的最大相邻相等元素对数",
+    "TitleSlug": "maximum-equal-adjacent-pairs-after-at-most-one-replacement",
+    "ContestSlug": "weekly-contest-521",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 521",
+    "ContestID_zh": "第 521 场周赛"
+  },
+  {
     "Rating": 1570.8347522104,
     "ID": 1019,
     "Title": "Next Greater Node In Linked List",
@@ -19160,6 +19215,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 209",
     "ContestID_zh": "第 209 场周赛"
+  },
+  {
+    "Rating": 1437.5491452529,
+    "ID": 4062,
+    "Title": "Transform Array Using Pair Operations",
+    "TitleZH": "成对操作转化数组",
+    "TitleSlug": "transform-array-using-pair-operations",
+    "ContestSlug": "biweekly-contest-192",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 192",
+    "ContestID_zh": "第 192 场双周赛"
   },
   {
     "Rating": 1436.5343999134,
@@ -26521,6 +26587,17 @@
     "ContestID_zh": "第 337 场周赛"
   },
   {
+    "Rating": 1206.4148584286,
+    "ID": 4061,
+    "Title": "Minimum Queen Moves to Reach Target",
+    "TitleZH": "皇后到达目标格子的最少移动步数",
+    "TitleSlug": "minimum-queen-moves-to-reach-target",
+    "ContestSlug": "biweekly-contest-192",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 192",
+    "ContestID_zh": "第 192 场双周赛"
+  },
+  {
     "Rating": 1206.166674051,
     "ID": 3774,
     "Title": "Absolute Difference Between Maximum and Minimum K Elements",
@@ -27652,6 +27729,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 66",
     "ContestID_zh": "第 66 场周赛"
+  },
+  {
+    "Rating": 1172.1535615397,
+    "ID": 4065,
+    "Title": "Rearrange Array by Removing Distinct Values",
+    "TitleZH": "移除不同值重排数组",
+    "TitleSlug": "rearrange-array-by-removing-distinct-values",
+    "ContestSlug": "weekly-contest-521",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 521",
+    "ContestID_zh": "第 521 场周赛"
   },
   {
     "Rating": 1172.0548998046,
