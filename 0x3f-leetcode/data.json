@@ -5742,6 +5742,17 @@
     "ContestID_zh": "第 107 场双周赛"
   },
   {
+    "Rating": 2125.7676162641,
+    "ID": 4073,
+    "Title": "Count Good Strings",
+    "TitleZH": "统计好字符串数目",
+    "TitleSlug": "count-good-strings",
+    "ContestSlug": "weekly-contest-522",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 522",
+    "ContestID_zh": "第 522 场周赛"
+  },
+  {
     "Rating": 2125.3125624762,
     "ID": 1955,
     "Title": "Count Number of Special Subsequences",
@@ -8677,6 +8688,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 491",
     "ContestID_zh": "第 491 场周赛"
+  },
+  {
+    "Rating": 1946.056582542,
+    "ID": 4072,
+    "Title": "Maximum Alternating Subarray Sum With One Deletion",
+    "TitleZH": "一次删除后的最大交替子数组和",
+    "TitleSlug": "maximum-alternating-subarray-sum-with-one-deletion",
+    "ContestSlug": "weekly-contest-522",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 522",
+    "ContestID_zh": "第 522 场周赛"
   },
   {
     "Rating": 1945.7515607928,
@@ -15992,6 +16014,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 482",
     "ContestID_zh": "第 482 场周赛"
+  },
+  {
+    "Rating": 1579.3267956797,
+    "ID": 4071,
+    "Title": "Minimum Rotations to Dial a Number II",
+    "TitleZH": "拨号的最少旋转次数 II",
+    "TitleSlug": "minimum-rotations-to-dial-a-number-ii",
+    "ContestSlug": "weekly-contest-522",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 522",
+    "ContestID_zh": "第 522 场周赛"
   },
   {
     "Rating": 1579.2309881035,
@@ -28180,6 +28213,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 367",
     "ContestID_zh": "第 367 场周赛"
+  },
+  {
+    "Rating": 1156.9408950745,
+    "ID": 4070,
+    "Title": "Minimum Rotations to Dial a Number I",
+    "TitleZH": "拨号的最少旋转次数 I",
+    "TitleSlug": "minimum-rotations-to-dial-a-number-i",
+    "ContestSlug": "weekly-contest-522",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 522",
+    "ContestID_zh": "第 522 场周赛"
   },
   {
     "Rating": 1155.4545579447,
