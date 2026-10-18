@@ -1683,6 +1683,17 @@
     "ContestID_zh": "第 247 场周赛"
   },
   {
+    "Rating": 2485.9732882187,
+    "ID": 4077,
+    "Title": "Minimize Inversions in a Prefix Tree",
+    "TitleZH": "前缀树中的最小逆序对数目",
+    "TitleSlug": "minimize-inversions-in-a-prefix-tree",
+    "ContestSlug": "biweekly-contest-193",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 193",
+    "ContestID_zh": "第 193 场双周赛"
+  },
+  {
     "Rating": 2483.9435767299,
     "ID": 1932,
     "Title": "Merge BSTs to Create Single BST",
@@ -6015,6 +6026,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 66",
     "ContestID_zh": "第 66 场双周赛"
+  },
+  {
+    "Rating": 2104.1729586868,
+    "ID": 4081,
+    "Title": "Prime Subset Selection II",
+    "TitleZH": "选择质数子集 II",
+    "TitleSlug": "prime-subset-selection-ii",
+    "ContestSlug": "weekly-contest-523",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 523",
+    "ContestID_zh": "第 523 场周赛"
   },
   {
     "Rating": 2102.9932435222,
@@ -11891,6 +11913,17 @@
     "ContestID_zh": "第 236 场周赛"
   },
   {
+    "Rating": 1778.306521358,
+    "ID": 4080,
+    "Title": "Design Bus Seat Booking System",
+    "TitleZH": "设计公交车座位预订系统",
+    "TitleSlug": "design-bus-seat-booking-system",
+    "ContestSlug": "weekly-contest-523",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 523",
+    "ContestID_zh": "第 523 场周赛"
+  },
+  {
     "Rating": 1777.3786570233,
     "ID": 918,
     "Title": "Maximum Sum Circular Subarray",
@@ -13033,6 +13066,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 111",
     "ContestID_zh": "第 111 场双周赛"
+  },
+  {
+    "Rating": 1721.1340857948,
+    "ID": 4076,
+    "Title": "Longest Resilient Subarray II",
+    "TitleZH": "最长有韧性的子数组 II",
+    "TitleSlug": "longest-resilient-subarray-ii",
+    "ContestSlug": "biweekly-contest-193",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 193",
+    "ContestID_zh": "第 193 场双周赛"
   },
   {
     "Rating": 1720.7470612766,
@@ -16258,6 +16302,17 @@
     "ContestID_zh": "第 263 场周赛"
   },
   {
+    "Rating": 1567.0010108233,
+    "ID": 4075,
+    "Title": "Longest Resilient Subarray I",
+    "TitleZH": "最长有韧性的子数组 I",
+    "TitleSlug": "longest-resilient-subarray-i",
+    "ContestSlug": "biweekly-contest-193",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 193",
+    "ContestID_zh": "第 193 场双周赛"
+  },
+  {
     "Rating": 1566.2526716951,
     "ID": 769,
     "Title": "Max Chunks To Make Sorted",
@@ -18555,6 +18610,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 115",
     "ContestID_zh": "第 115 场双周赛"
+  },
+  {
+    "Rating": 1467.9941359036,
+    "ID": 4079,
+    "Title": "Prime Subset Selection I",
+    "TitleZH": "选择质数子集 I",
+    "TitleSlug": "prime-subset-selection-i",
+    "ContestSlug": "weekly-contest-523",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 523",
+    "ContestID_zh": "第 523 场周赛"
   },
   {
     "Rating": 1467.9366439696,
@@ -25806,6 +25872,17 @@
     "ContestID_zh": "第 4 场双周赛"
   },
   {
+    "Rating": 1232.4852383354,
+    "ID": 4074,
+    "Title": "Maximum Product Pair With Target Sum",
+    "TitleZH": "和为目标值的最大乘积对",
+    "TitleSlug": "maximum-product-pair-with-target-sum",
+    "ContestSlug": "biweekly-contest-193",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 193",
+    "ContestID_zh": "第 193 场双周赛"
+  },
+  {
     "Rating": 1231.999241335,
     "ID": 1492,
     "Title": "The kth Factor of n",
@@ -28565,6 +28642,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 123",
     "ContestID_zh": "第 123 场双周赛"
+  },
+  {
+    "Rating": 1134.4909473664,
+    "ID": 4078,
+    "Title": "Three Fibonacci Sum",
+    "TitleZH": "连续三项斐波那契数之和",
+    "TitleSlug": "three-fibonacci-sum",
+    "ContestSlug": "weekly-contest-523",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 523",
+    "ContestID_zh": "第 523 场周赛"
   },
   {
     "Rating": 1132.6812943289,
