@@ -86,7 +86,8 @@ export function stop_disscuss_command() {
         let is_stop = Cache.get(__0X3F_PROBLEM_KEYS__['__0x3f_problme_stop_discuss_'], true, String.name)
         is_stop = is_stop != 'false' && is_stop != false
         if (is_stop) {
-            GM_addStyle('.t6Fde,.components_no-scrollbar__tRBQN{ display:none !important;}')
+            // 新版 CSS Modules 哈希前置；限定主内容下的 sticky 侧栏，避免隐藏其他无滚动条区域。
+            GM_addStyle('.t6Fde,.components_no-scrollbar__tRBQN,#main-content > div > [class*="_no-scrollbar"].sticky{ display:none !important;}')
         }
         if(isDev()) {
             console.log('is_stop ',is_stop)
