@@ -2453,17 +2453,6 @@
     "ContestID_zh": "第 22 场双周赛"
   },
   {
-    "Rating": 2405.3375364501,
-    "ID": 2747,
-    "Title": "Count Zero Request Servers",
-    "TitleZH": "统计没有收到请求的服务器数目",
-    "TitleSlug": "count-zero-request-servers",
-    "ContestSlug": "biweekly-contest-107",
-    "ProblemIndex": "Q4",
-    "ContestID_en": "Biweekly Contest 107",
-    "ContestID_zh": "第 107 场双周赛"
-  },
-  {
     "Rating": 2404.2535453982,
     "ID": 3363,
     "Title": "Find the Maximum Number of Fruits Collected",
@@ -3630,6 +3619,17 @@
     "ContestID_zh": "第 113 场双周赛"
   },
   {
+    "Rating": 2294.62986828,
+    "ID": 2747,
+    "Title": "Count Zero Request Servers",
+    "TitleZH": "统计没有收到请求的服务器数目",
+    "TitleSlug": "count-zero-request-servers",
+    "ContestSlug": "biweekly-contest-107",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 107",
+    "ContestID_zh": "第 107 场双周赛"
+  },
+  {
     "Rating": 2294.0981174197,
     "ID": 932,
     "Title": "Beautiful Array",
@@ -3760,6 +3760,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Biweekly Contest 103",
     "ContestID_zh": "第 103 场双周赛"
+  },
+  {
+    "Rating": 2281.8211240346,
+    "ID": 4100,
+    "Title": "Minimum Cost Path With Even XOR Parity",
+    "TitleZH": "平衡异或路径的最小开销",
+    "TitleSlug": "minimum-cost-path-with-even-xor-parity",
+    "ContestSlug": "weekly-contest-526",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 526",
+    "ContestID_zh": "第 526 场周赛"
   },
   {
     "Rating": 2280.3553600661,
@@ -5060,17 +5071,6 @@
     "ContestID_zh": "第 440 场周赛"
   },
   {
-    "Rating": 2175.7874705227,
-    "ID": 2768,
-    "Title": "Number of Black Blocks",
-    "TitleZH": "黑格子的数目",
-    "TitleSlug": "number-of-black-blocks",
-    "ContestSlug": "biweekly-contest-108",
-    "ProblemIndex": "Q4",
-    "ContestID_en": "Biweekly Contest 108",
-    "ContestID_zh": "第 108 场双周赛"
-  },
-  {
     "Rating": 2175.6850426027,
     "ID": 1420,
     "Title": "Build Array Where You Can Find The Maximum Exactly K Comparisons",
@@ -5775,17 +5775,6 @@
     "ContestID_zh": "第 289 场周赛"
   },
   {
-    "Rating": 2126.1931814161,
-    "ID": 2746,
-    "Title": "Decremental String Concatenation",
-    "TitleZH": "字符串连接删减字母",
-    "TitleSlug": "decremental-string-concatenation",
-    "ContestSlug": "biweekly-contest-107",
-    "ProblemIndex": "Q3",
-    "ContestID_en": "Biweekly Contest 107",
-    "ContestID_zh": "第 107 场双周赛"
-  },
-  {
     "Rating": 2125.7676162641,
     "ID": 4073,
     "Title": "Count Good Strings",
@@ -6081,6 +6070,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 508",
     "ContestID_zh": "第 508 场周赛"
+  },
+  {
+    "Rating": 2102.2434823608,
+    "ID": 2746,
+    "Title": "Decremental String Concatenation",
+    "TitleZH": "字符串连接删减字母",
+    "TitleSlug": "decremental-string-concatenation",
+    "ContestSlug": "biweekly-contest-107",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 107",
+    "ContestID_zh": "第 107 场双周赛"
   },
   {
     "Rating": 2101.867342004,
@@ -8116,6 +8116,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 101",
     "ContestID_zh": "第 101 场周赛"
+  },
+  {
+    "Rating": 1988.743190047,
+    "ID": 2768,
+    "Title": "Number of Black Blocks",
+    "TitleZH": "黑格子的数目",
+    "TitleSlug": "number-of-black-blocks",
+    "ContestSlug": "biweekly-contest-108",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 108",
+    "ContestID_zh": "第 108 场双周赛"
   },
   {
     "Rating": 1987.9947081035,
@@ -10164,17 +10175,6 @@
     "ContestID_zh": "第 143 场双周赛"
   },
   {
-    "Rating": 1864.5644306171,
-    "ID": 2767,
-    "Title": "Partition String Into Minimum Beautiful Substrings",
-    "TitleZH": "将字符串分割为最少的美丽子字符串",
-    "TitleSlug": "partition-string-into-minimum-beautiful-substrings",
-    "ContestSlug": "biweekly-contest-108",
-    "ProblemIndex": "Q3",
-    "ContestID_en": "Biweekly Contest 108",
-    "ContestID_zh": "第 108 场双周赛"
-  },
-  {
     "Rating": 1864.4526192193,
     "ID": 3326,
     "Title": "Minimum Division Operations to Make Array Non Decreasing",
@@ -10921,6 +10921,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 227",
     "ContestID_zh": "第 227 场周赛"
+  },
+  {
+    "Rating": 1828.400075794,
+    "ID": 4099,
+    "Title": "Minimum Operations to Sort With Locked Indices",
+    "TitleZH": "将锁定数组排序的最少操作次数",
+    "TitleSlug": "minimum-operations-to-sort-with-locked-indices",
+    "ContestSlug": "weekly-contest-526",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 526",
+    "ContestID_zh": "第 526 场周赛"
   },
   {
     "Rating": 1828.2700238306,
@@ -12122,6 +12133,17 @@
     "ContestID_zh": "第 345 场周赛"
   },
   {
+    "Rating": 1768.9331658476,
+    "ID": 2767,
+    "Title": "Partition String Into Minimum Beautiful Substrings",
+    "TitleZH": "将字符串分割为最少的美丽子字符串",
+    "TitleSlug": "partition-string-into-minimum-beautiful-substrings",
+    "ContestSlug": "biweekly-contest-108",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 108",
+    "ContestID_zh": "第 108 场双周赛"
+  },
+  {
     "Rating": 1768.9138093037,
     "ID": 2718,
     "Title": "Sum of Matrix After Queries",
@@ -12989,6 +13011,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 157",
     "ContestID_zh": "第 157 场周赛"
+  },
+  {
+    "Rating": 1729.4376339596,
+    "ID": 4098,
+    "Title": "Minimize the Maximum Value of GCD-Connected Array",
+    "TitleZH": "最小化 GCD 连通数组的最大值",
+    "TitleSlug": "minimize-the-maximum-value-of-gcd-connected-array",
+    "ContestSlug": "weekly-contest-526",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 526",
+    "ContestID_zh": "第 526 场周赛"
   },
   {
     "Rating": 1729.1782719522,
@@ -15400,17 +15433,6 @@
     "ContestID_zh": "第 70 场双周赛"
   },
   {
-    "Rating": 1613.2485081262,
-    "ID": 2766,
-    "Title": "Relocate Marbles",
-    "TitleZH": "重新放置石块",
-    "TitleSlug": "relocate-marbles",
-    "ContestSlug": "biweekly-contest-108",
-    "ProblemIndex": "Q2",
-    "ContestID_en": "Biweekly Contest 108",
-    "ContestID_zh": "第 108 场双周赛"
-  },
-  {
     "Rating": 1613.0429766636,
     "ID": 1277,
     "Title": "Count Square Submatrices with All Ones",
@@ -15541,17 +15563,6 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 299",
     "ContestID_zh": "第 299 场周赛"
-  },
-  {
-    "Rating": 1607.4192947808,
-    "ID": 2745,
-    "Title": "Construct the Longest New String",
-    "TitleZH": "构造最长的新字符串",
-    "TitleSlug": "construct-the-longest-new-string",
-    "ContestSlug": "biweekly-contest-107",
-    "ProblemIndex": "Q2",
-    "ContestID_en": "Biweekly Contest 107",
-    "ContestID_zh": "第 107 场双周赛"
   },
   {
     "Rating": 1607.0005715974,
@@ -16071,17 +16082,6 @@
     "ContestID_zh": "第 382 场周赛"
   },
   {
-    "Rating": 1580.9748095835,
-    "ID": 2765,
-    "Title": "Longest Alternating Subarray",
-    "TitleZH": "最长交替子序列",
-    "TitleSlug": "longest-alternating-subarray",
-    "ContestSlug": "biweekly-contest-108",
-    "ProblemIndex": "Q1",
-    "ContestID_en": "Biweekly Contest 108",
-    "ContestID_zh": "第 108 场双周赛"
-  },
-  {
     "Rating": 1580.3620959714,
     "ID": 1839,
     "Title": "Longest Substring Of All Vowels in Order",
@@ -16179,6 +16179,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 431",
     "ContestID_zh": "第 431 场周赛"
+  },
+  {
+    "Rating": 1578.3686574641,
+    "ID": 2745,
+    "Title": "Construct the Longest New String",
+    "TitleZH": "构造最长的新字符串",
+    "TitleSlug": "construct-the-longest-new-string",
+    "ContestSlug": "biweekly-contest-107",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 107",
+    "ContestID_zh": "第 107 场双周赛"
   },
   {
     "Rating": 1577.1141767118,
@@ -17037,6 +17048,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Biweekly Contest 83",
     "ContestID_zh": "第 83 场双周赛"
+  },
+  {
+    "Rating": 1539.8153921087,
+    "ID": 2766,
+    "Title": "Relocate Marbles",
+    "TitleZH": "重新放置石块",
+    "TitleSlug": "relocate-marbles",
+    "ContestSlug": "biweekly-contest-108",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 108",
+    "ContestID_zh": "第 108 场双周赛"
   },
   {
     "Rating": 1539.2250193318,
@@ -18401,6 +18423,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 367",
     "ContestID_zh": "第 367 场周赛"
+  },
+  {
+    "Rating": 1482.6064048502,
+    "ID": 2765,
+    "Title": "Longest Alternating Subarray",
+    "TitleZH": "最长交替子序列",
+    "TitleSlug": "longest-alternating-subarray",
+    "ContestSlug": "biweekly-contest-108",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 108",
+    "ContestID_zh": "第 108 场双周赛"
   },
   {
     "Rating": 1481.960807786,
@@ -19943,6 +19976,17 @@
     "ContestID_zh": "第 413 场周赛"
   },
   {
+    "Rating": 1419.23492768,
+    "ID": 2744,
+    "Title": "Find Maximum Number of String Pairs",
+    "TitleZH": "最大字符串配对数目",
+    "TitleSlug": "find-maximum-number-of-string-pairs",
+    "ContestSlug": "biweekly-contest-107",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 107",
+    "ContestID_zh": "第 107 场双周赛"
+  },
+  {
     "Rating": 1418.9758090724,
     "ID": 2374,
     "Title": "Node With Highest Edge Score",
@@ -20315,17 +20359,6 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Biweekly Contest 90",
     "ContestID_zh": "第 90 场双周赛"
-  },
-  {
-    "Rating": 1405.8938478338,
-    "ID": 2744,
-    "Title": "Find Maximum Number of String Pairs",
-    "TitleZH": "最大字符串配对数目",
-    "TitleSlug": "find-maximum-number-of-string-pairs",
-    "ContestSlug": "biweekly-contest-107",
-    "ProblemIndex": "Q1",
-    "ContestID_en": "Biweekly Contest 107",
-    "ContestID_zh": "第 107 场双周赛"
   },
   {
     "Rating": 1405.8442434352,
@@ -28015,6 +28048,17 @@
     "ProblemIndex": "Q1",
     "ContestID_en": "Weekly Contest 481",
     "ContestID_zh": "第 481 场周赛"
+  },
+  {
+    "Rating": 1169.6793598112,
+    "ID": 4097,
+    "Title": "Minimum Value of Merged Integers",
+    "TitleZH": "合并整数后的最小值",
+    "TitleSlug": "minimum-value-of-merged-integers",
+    "ContestSlug": "weekly-contest-526",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 526",
+    "ContestID_zh": "第 526 场周赛"
   },
   {
     "Rating": 1169.4209117977,
