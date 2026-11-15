@@ -2684,6 +2684,17 @@
     "ContestID_zh": "第 176 场双周赛"
   },
   {
+    "Rating": 2384.2350534578,
+    "ID": 4109,
+    "Title": "Count Valid Suffix Sorts II",
+    "TitleZH": "统计有效后缀排序的数量 II",
+    "TitleSlug": "count-valid-suffix-sorts-ii",
+    "ContestSlug": "weekly-contest-527",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 527",
+    "ContestID_zh": "第 527 场周赛"
+  },
+  {
     "Rating": 2383.7724811656,
     "ID": 1521,
     "Title": "Find a Value of a Mysterious Function Closest to Target",
@@ -4651,6 +4662,17 @@
     "ProblemIndex": "Q4",
     "ContestID_en": "Weekly Contest 476",
     "ContestID_zh": "第 476 场周赛"
+  },
+  {
+    "Rating": 2208.9388633212,
+    "ID": 4105,
+    "Title": "Repeated String Match II",
+    "TitleZH": "重复字符串匹配 II",
+    "TitleSlug": "repeated-string-match-ii",
+    "ContestSlug": "biweekly-contest-195",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Biweekly Contest 195",
+    "ContestID_zh": "第 195 场双周赛"
   },
   {
     "Rating": 2208.5532172086,
@@ -7676,6 +7698,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 176",
     "ContestID_zh": "第 176 场周赛"
+  },
+  {
+    "Rating": 2015.7107137293,
+    "ID": 4108,
+    "Title": "Minimum Cost to Make Red Nodes Connected",
+    "TitleZH": "使红色节点连通的最小代价",
+    "TitleSlug": "minimum-cost-to-make-red-nodes-connected",
+    "ContestSlug": "weekly-contest-527",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 527",
+    "ContestID_zh": "第 527 场周赛"
   },
   {
     "Rating": 2014.7655493665,
@@ -12056,6 +12089,17 @@
     "ContestID_zh": "第 462 场周赛"
   },
   {
+    "Rating": 1775.3504482116,
+    "ID": 4104,
+    "Title": "Count Valid Substrings II",
+    "TitleZH": "统计有效子字符串 II",
+    "TitleSlug": "count-valid-substrings-ii",
+    "ContestSlug": "biweekly-contest-195",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Biweekly Contest 195",
+    "ContestID_zh": "第 195 场双周赛"
+  },
+  {
     "Rating": 1774.8764591297,
     "ID": 1238,
     "Title": "Circular Permutation in Binary Representation",
@@ -12252,6 +12296,17 @@
     "ProblemIndex": "Q3",
     "ContestID_en": "Weekly Contest 454",
     "ContestID_zh": "第 454 场周赛"
+  },
+  {
+    "Rating": 1762.9269109184,
+    "ID": 4103,
+    "Title": "Remove Elements by Type and Color",
+    "TitleZH": "按类型和颜色删除元素",
+    "TitleSlug": "remove-elements-by-type-and-color",
+    "ContestSlug": "biweekly-contest-195",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Biweekly Contest 195",
+    "ContestID_zh": "第 195 场双周赛"
   },
   {
     "Rating": 1762.5072028268,
@@ -15356,6 +15411,17 @@
     "ContestID_zh": "第 84 场双周赛"
   },
   {
+    "Rating": 1621.0443824266,
+    "ID": 4107,
+    "Title": "Count Valid Suffix Sorts I",
+    "TitleZH": "统计有效后缀排序的数量 I",
+    "TitleSlug": "count-valid-suffix-sorts-i",
+    "ContestSlug": "weekly-contest-527",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 527",
+    "ContestID_zh": "第 527 场周赛"
+  },
+  {
     "Rating": 1620.1553565725,
     "ID": 3132,
     "Title": "Find the Integer Added to Array II",
@@ -17125,6 +17191,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 168",
     "ContestID_zh": "第 168 场双周赛"
+  },
+  {
+    "Rating": 1535.9850537316,
+    "ID": 4102,
+    "Title": "Count Valid Substrings I",
+    "TitleZH": "统计有效子字符串 I",
+    "TitleSlug": "count-valid-substrings-i",
+    "ContestSlug": "biweekly-contest-195",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Biweekly Contest 195",
+    "ContestID_zh": "第 195 场双周赛"
   },
   {
     "Rating": 1535.3680469616,
@@ -22526,6 +22603,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 281",
     "ContestID_zh": "第 281 场周赛"
+  },
+  {
+    "Rating": 1333.1602718799,
+    "ID": 4106,
+    "Title": "Find Mismatched Segments Between Two Strings",
+    "TitleZH": "找出两个字符串的不匹配片段",
+    "TitleSlug": "find-mismatched-segments-between-two-strings",
+    "ContestSlug": "weekly-contest-527",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 527",
+    "ContestID_zh": "第 527 场周赛"
   },
   {
     "Rating": 1333.0179956774,
