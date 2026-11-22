@@ -5819,6 +5819,17 @@
     "ContestID_zh": "第 252 场周赛"
   },
   {
+    "Rating": 2124.4101229231,
+    "ID": 4114,
+    "Title": "Count Consistent Subarrays II",
+    "TitleZH": "统计一致子数组数目 II",
+    "TitleSlug": "count-consistent-subarrays-ii",
+    "ContestSlug": "weekly-contest-528",
+    "ProblemIndex": "Q4",
+    "ContestID_en": "Weekly Contest 528",
+    "ContestID_zh": "第 528 场周赛"
+  },
+  {
     "Rating": 2124.1329592058,
     "ID": 968,
     "Title": "Binary Tree Cameras",
@@ -11671,6 +11682,17 @@
     "ContestID_zh": "第 353 场周赛"
   },
   {
+    "Rating": 1791.1713865706,
+    "ID": 4113,
+    "Title": "Game of Divisible Sums",
+    "TitleZH": "整除和博弈",
+    "TitleSlug": "game-of-divisible-sums",
+    "ContestSlug": "weekly-contest-528",
+    "ProblemIndex": "Q3",
+    "ContestID_en": "Weekly Contest 528",
+    "ContestID_zh": "第 528 场周赛"
+  },
+  {
     "Rating": 1791.0336923305,
     "ID": 2712,
     "Title": "Minimum Cost to Make All Characters Equal",
@@ -13561,6 +13583,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Biweekly Contest 123",
     "ContestID_zh": "第 123 场双周赛"
+  },
+  {
+    "Rating": 1707.118743986,
+    "ID": 4112,
+    "Title": "Maximize Score After Zeroing Subtrees",
+    "TitleZH": "将子树置零后的最大得分",
+    "TitleSlug": "maximize-score-after-zeroing-subtrees",
+    "ContestSlug": "weekly-contest-528",
+    "ProblemIndex": "Q2",
+    "ContestID_en": "Weekly Contest 528",
+    "ContestID_zh": "第 528 场周赛"
   },
   {
     "Rating": 1705.2545641354,
@@ -20128,6 +20161,17 @@
     "ProblemIndex": "Q2",
     "ContestID_en": "Weekly Contest 276",
     "ContestID_zh": "第 276 场周赛"
+  },
+  {
+    "Rating": 1417.2366133971,
+    "ID": 4111,
+    "Title": "Count Consistent Subarrays I",
+    "TitleZH": "统计一致子数组数目 I",
+    "TitleSlug": "count-consistent-subarrays-i",
+    "ContestSlug": "weekly-contest-528",
+    "ProblemIndex": "Q1",
+    "ContestID_en": "Weekly Contest 528",
+    "ContestID_zh": "第 528 场周赛"
   },
   {
     "Rating": 1416.8961009909,
