@@ -301,7 +301,7 @@ C334.822,348.194,298.266,371.2,256,371.2z" />
       let is_stop = Cache$1.get(__0X3F_PROBLEM_KEYS__["__0x3f_problme_stop_discuss_"], true, String.name);
       is_stop = is_stop != "false" && is_stop != false;
       if (is_stop) {
-        _GM_addStyle(".t6Fde,.components_no-scrollbar__tRBQN{ display:none !important;}");
+        _GM_addStyle('.t6Fde,.components_no-scrollbar__tRBQN,#main-content > div > [class*="_no-scrollbar"].sticky{ display:none !important;}');
       }
       if (isDev()) {
         console.log("is_stop ", is_stop);
